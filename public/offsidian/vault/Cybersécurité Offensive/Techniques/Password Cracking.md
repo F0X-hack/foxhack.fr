@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔐 Password Cracking
+# Password Cracking
 
 > [!info] **En 1 phrase**
 > Retrouver le **mot de passe en clair** à partir d'un hash (offline) en testant des candidats —
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,13 +32,13 @@ flowchart LR
     C & D & E & F --> G[Clair trouvé]
 ```
 
-> [!info] 💡 **Les vitesses (idées)**
+> [!info] **Les vitesses (idées)**
 > MD5/NTLM : des milliards de tests/s sur GPU. bcrypt/Argon2 : des milliers. Le **type de hash**
 > décide la stratégie (dictionnaire d'abord, jamais de brute-force pur sur les lents).
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Identifier
@@ -61,7 +61,7 @@ cupp -i
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -72,20 +72,20 @@ cupp -i
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ne pas toujours cracker**
+> [!tip] **Ne pas toujours cracker**
 > Un hash **NTLM/NetNTLMv2** se **rejoue** directement (PtH). Le crack ne sert que si on a besoin
 > du clair (SSH, autres protocoles).
 
-> [!warning] ⚠️ **Piège** : WPA/Argon2/bcrypt sont lents → ne lance pas `-a 3` complet dessus. Vise une **wordlist ciblée** + règles.
+> [!warning] **Piège** : WPA/Argon2/bcrypt sont lents → ne lance pas `-a 3` complet dessus. Vise une **wordlist ciblée** + règles.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberoasting|🧀 Kerberoasting]] (source de hashes TGS)
-- [[AS-REP Roasting|☀️ AS-REP Roasting]]
-- [[LLMNR-NBT-NS Poisoning|🎙️ LLMNR Poisoning]] (source de NetNTLMv2)
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- → Note complète : [[08 - Password Cracking|🔐 Password Cracking]]
+- [[Kerberoasting| Kerberoasting]] (source de hashes TGS)
+- [[AS-REP Roasting| AS-REP Roasting]]
+- [[LLMNR-NBT-NS Poisoning| LLMNR Poisoning]] (source de NetNTLMv2)
+- [[Pass-the-Hash| Pass-the-Hash]]
+- → Note complète : [[08 - Password Cracking| Password Cracking]]

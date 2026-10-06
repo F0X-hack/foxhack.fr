@@ -1,11 +1,11 @@
 ---
 title: "Outil - Flipper Zero (USB & radio)"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: "Firmware officiel 1.4.x ; communautaires (Momentum mntm-01x, Unleashed unlshd-09x, RogueMaster RM...)"
 licence: Firmware officiel GPL-3.0 ; applications communautaires GPL-3.0 (Momentum/Unleashed/RogueMaster)
@@ -16,14 +16,14 @@ site: https://flipperzero.one/
 doc: https://docs.flipper.net/
 ---
 
-# 🔌 Flipper Zero (USB & radio) — USB / HID & Gadgets
+# Flipper Zero (USB & radio) — USB / HID & Gadgets
 
 > [!info] **En 1 phrase**
 > Le Flipper Zero est un couteau suisse de pentest physique : BadUSB (clavier HID), RFID/NFC, radio Sub-GHz, infrarouge et GPIO réunis dans un boîtier de poche.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -43,7 +43,7 @@ Le Flipper se distingue du reste de la famille USB/HID par son **multi-vecteurs*
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le Flipper Zero est un dispositif matériel portable pensé pour la sécurité offensive physique et radio. Il combine plusieurs interfaces dans une seule coque : **BadUSB** (injection de frappes via un profil clavier HID), **RFID 125 kHz** (lecture/émulation de badges EM410X, HID, Indala...), **NFC 13,56 MHz** (lecture/émulation MIFARE et autres), **radio Sub-GHz** (capture et rejeu de signaux 300-928 MHz : télécommandes, portails), **infrarouge** (télécommandes IR) et **GPIO/UART** (debug série, sniffing, flash).
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Notion | Détail |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # 1. Mettre à jour via l'application qFlipper (GUI, officielle) :
@@ -111,7 +111,7 @@ dfu-util -a 0 -D full.dfu -s 0x08000000:leave
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Dossiers de payloads (montage USB)
 
@@ -142,7 +142,7 @@ dfu-util -a 0 -D full.dfu -s 0x08000000:leave
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -162,7 +162,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Payload BadUSB (Duckyscript)
 
@@ -193,7 +193,7 @@ ENTER
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option BadUSB | Description |
 |---|---|
@@ -215,7 +215,7 @@ ENTER
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Basic — vol de mot de passe Wi-Fi Windows
 
@@ -251,7 +251,7 @@ Charge un exécutable de collecte (cookies, tokens) depuis un poste sans interac
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparation** — flasher le firmware (officiel ou Unleashed/Momentum), installer l'appli mobile et synchroniser le Flipper.
 2. **Reconnaissance physique** — au contact du site : lire un badge RFID/NFC au passage (fonction *Read*), noter le format (EM410X, HID, MIFARE...).
@@ -278,7 +278,7 @@ ENTER
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Vol de session via BadUSB
 
@@ -316,7 +316,7 @@ ENTER
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Description |
 |---|---|
@@ -329,7 +329,7 @@ ENTER
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Exemple Flipper |
 |---|---|---|
@@ -344,7 +344,7 @@ ENTER
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détections
 
@@ -385,7 +385,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Générer plusieurs payloads BadUSB à partir d'un modèle (hôtes fictifs)
@@ -410,7 +410,7 @@ for ip in targets:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le Flipper n'expose pas de sortie CLI globale : les résultats sont des **fichiers sur la microSD** (`/subghz`, `/nfc`, `/rfid`, `/badusb`) et la console USB.
 
@@ -431,9 +431,9 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - USB Rubber Ducky]] — même langage BadUSB/Duckyscript, clé officielle
 - [[Outil - Bash Bunny]] — HID + réseau + stockage, complémentaire
 - [[Techniques/Hardware - Flipper Zero]] — fiche technique dédiée
@@ -447,7 +447,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Domaine | Coût | Points forts | Points faibles |
 |---|---|---|---|---|
@@ -461,7 +461,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Autonomie** : ~4 h d'utilisation active (batterie ~1300 mAh) ; veille prolongée entre les phases.
 - **Portée Sub-GHz** : ~50 m en stock (murs), améliorable avec un module CC1101 / antenne (Horizon 433 Pro).
@@ -470,7 +470,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Problème : l'update firmware échoue / reboot en boucle
 
@@ -498,7 +498,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : la lecture/clonage de badges et l'émulation de signaux sont des actions intrusives — périmètre autorisé uniquement (accord écrit).
 - **Fréquences** : l'émission radio est règlementée (FCC Part 15, ETSI) — respecter les bandes et puissances licites.
@@ -507,7 +507,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de 2,4 GHz natif** : le BLE est présent, mais le WiFi/2,4 GHz nécessite un module nRF24 externe.
 - **Portée radio limitée** : la sensibilité Sub-GHz stock est faible face aux portails industriels.
@@ -518,7 +518,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 | Action | Parcours Flipper |
 |---|---|
@@ -535,7 +535,7 @@ grep -R "protocol" /media/user/FLIPPER/rfid/Saved/ | head
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 ```text
 # Payload BadUSB minimal (reverse shell, IP fictive)
@@ -554,7 +554,7 @@ dfu-util -a 0 -D full.dfu -s 0x08000000:leave
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -566,15 +566,15 @@ dfu-util -a 0 -D full.dfu -s 0x08000000:leave
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Installe un **firmware communautaire** (Unleashed/Momentum) pour étendre les fréquences et ajouter des apps utiles ; garde le stock pour les audits réglementaires.
 > - Sauvegarde tes captures (cartes, IR, radio) dans des dossiers organisés : c'est ta preuve d'engagement.
 > - Utilise la **reconnaissance passive** d'abord : lire un badge ne laisse quasiment aucune trace, contrairement au clonage actif.
 > - Momentum = bon défaut (stable, UI soignée) ; RogueMaster pour le nombre d'apps mais stabilité plus aléatoire.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Ne crois pas au rejeu universel** : les portails à *rolling code* rendent le rejeu inefficace — il faut une attaque dédiée (jammer + capture synchronisée).
 > - Les cartes **MIFARE Classic** ne se « déchiffrent » pas : sans clé sectorielle, pas de dump complet (utilise Proxmark + mfoc/mfcuk en lab).
 > - Le **BadUSB est de plus en plus détecté** par les EDR modernes (nouveaux périphériques HID) : teste tes payloads sur ta propre infra avant l'engagement.
@@ -582,9 +582,9 @@ dfu-util -a 0 -D full.dfu -s 0x08000000:leave
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [Site officiel Flipper Zero](https://flipperzero.one/)
 > - [Documentation Flipper](https://docs.flipper.net/)
 > - [GitHub firmware officiel](https://github.com/flipperdevices/flipperzero-firmware)
@@ -596,4 +596,4 @@ dfu-util -a 0 -D full.dfu -s 0x08000000:leave
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Hardware - Flipper Zero|Hardware - Flipper Zero]] · [[Techniques/Protocole USB|Protocole USB]] · [[Outils/Outil - USB Rubber Ducky|USB Rubber Ducky]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Hardware - Flipper Zero|Hardware - Flipper Zero]] · [[Techniques/Protocole USB|Protocole USB]] · [[Outils/Outil - USB Rubber Ducky|USB Rubber Ducky]]

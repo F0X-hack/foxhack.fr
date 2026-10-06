@@ -1,11 +1,11 @@
 ---
 title: "Outil - MobSF"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 4.5.2
 licence: GNU GPL v3
@@ -16,7 +16,7 @@ site: https://mobsf.github.io/Mobile-Security-Framework-MobSF/
 doc: https://mobsf.github.io/Mobile-Security-Framework-MobSF/
 ---
 
-# 📱 MobSF — Analyse de sécurité mobile (statique + dynamique)
+# MobSF — Analyse de sécurité mobile (statique + dynamique)
 
 > [!info] **En 1 phrase**
 > **MobSF (Mobile Security Framework)** est une plateforme web d'analyse **statique et dynamique**
@@ -25,13 +25,13 @@ doc: https://mobsf.github.io/Mobile-Security-Framework-MobSF/
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Mobile Security Framework (MobSF) |
 | Description | Plateforme web d'analyse statique et dynamique automatisée d'applications mobiles (Android, iOS, Windows) |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Scanner SAST mobile clé en main + analyse dynamique |
 | Fonction principale | Upload d'un APK/IPA/AAB → scan statique → rapport HTML/PDF/JSON (scorecard 0-100) |
 | Type d'outil | Application web (Django) + API REST + CLI (mobsf) |
@@ -49,7 +49,7 @@ doc: https://mobsf.github.io/Mobile-Security-Framework-MobSF/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 On dépose un APK/IPA (ou un projet source), MobSF le **décompile** (dex → smali, parse du manifest, des
 certs et des ressources), exécute une centaine de **contrôles de sécurité** (permissions, composants
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Docker (recommandé)
 
@@ -120,14 +120,14 @@ services:
       - ./mobsf:/root/.MobSF
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le **mode dynamique** exige un émulateur Android (AVD) configuré, une machine virtuelle, le framework Xposed et un proxy (Burp) : à préparer séparément.
 > - L'analyse **iOS** (IPA) ne fonctionne pleinement que sous **macOS**.
 > - Sous Windows, préférer Docker ou le sous-système WSL : certaines dépendances (aapt, wkhtmltopdf/weasyprint) posent problème en natif.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 MobSF se configure via des **variables d'environnement** (ou `MobSF/settings.py`).
 
@@ -143,7 +143,7 @@ MobSF se configure via des **variables d'environnement** (ou `MobSF/settings.py`
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Django** : framework web — UI (templates, JS), administration des scans, sessions et API.
 - **Modules d'analyse statique** : `static_analyzer/` avec des sous-modules Android (APK/AAB : aapt, apksigner, décompilation smali, règles), iOS (IPA : class-dump, otool), Windows (APPX), et analyse de code source (Java/Kotlin, Swift/Obj-C).
@@ -155,7 +155,7 @@ MobSF se configure via des **variables d'environnement** (ou `MobSF/settings.py`
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### CLI
 
@@ -192,7 +192,7 @@ La clé API se récupère dans l'UI (Settings → API) ou en CLI lors d'une conn
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### CLI
 
@@ -221,7 +221,7 @@ La clé API se récupère dans l'UI (Settings → API) ou en CLI lors d'une conn
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -264,7 +264,7 @@ curl http://127.0.0.1:8000/api/v1/report_json/<hash> -H "Authorization: $MOBSF_K
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : auditer rapidement une app et extraire la note + les secrets hardcodés.
 
@@ -289,7 +289,7 @@ curl http://127.0.0.1:8000/api/v1/report_json/abc123... -H "Authorization: EXEMP
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Scan de sécurité automatisé dans une CI/CD
 
@@ -323,7 +323,7 @@ curl http://127.0.0.1:8000/api/v1/report_json/$HASH -H "Authorization: $MOBSF_KE
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -335,7 +335,7 @@ curl http://127.0.0.1:8000/api/v1/report_json/$HASH -H "Authorization: $MOBSF_KE
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -349,7 +349,7 @@ curl http://127.0.0.1:8000/api/v1/report_json/$HASH -H "Authorization: $MOBSF_KE
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -399,7 +399,7 @@ rule Android_App_Binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scan d'un lot d'APK + génération d'un résumé CSV
@@ -431,7 +431,7 @@ print(scan_apk("app.apk"))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 MobSF expose le rapport complet en **JSON** via `/api/v1/report_json/<hash>` : structure documentée (manifest, permissions, secrets, domains, findings, librairies).
 
@@ -458,24 +458,24 @@ print(Counter(f.get("severity", "info") for f in r.get("findings", [])))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 CI/CD (Jenkins/GitHub Actions) → MobSF API (upload/scan/scorecard) → gate de merge + rapport PDF
 MobSF (findings) → jadx/APKTool (deep dive statique) → Frida (runtime) → Burp (MITM)
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - APKTool|📱 APKTool]] — repack / patch smali des apps signalées par MobSF
-- [[Outil - jadx|📱 jadx]] — lecture Java lisible pour approfondir les findings
-- [[Outil - Frida|📱 Frida]] — confirmation runtime des vulnérabilités statiques
-- [[Outil - objection|📱 objection]] — instrumentation rapide (SSL pinning, root)
-- [[Outil - Burp Suite|🕸️ Burp Suite]] — interception pendant l'analyse dynamique
-- [[Techniques/Insecure Deserialization|🧬 Désérialisation]] · [[Techniques/Insecure Source Code Management|🔗 SCM]]
+- [[Tools| Outils]] global
+- [[Outil - APKTool| APKTool]] — repack / patch smali des apps signalées par MobSF
+- [[Outil - jadx| jadx]] — lecture Java lisible pour approfondir les findings
+- [[Outil - Frida| Frida]] — confirmation runtime des vulnérabilités statiques
+- [[Outil - objection| objection]] — instrumentation rapide (SSL pinning, root)
+- [[Outil - Burp Suite| Burp Suite]] — interception pendant l'analyse dynamique
+- [[Techniques/Insecure Deserialization| Désérialisation]] · [[Techniques/Insecure Source Code Management| SCM]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -490,7 +490,7 @@ MobSF (findings) → jadx/APKTool (deep dive statique) → Frida (runtime) → B
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Un scan statique d'APK standard (10–50 Mo) prend **de ~1 à ~10 minutes** selon la machine, la taille et le niveau d'obfuscation.
 - Le scan est **séquentiel** par défaut (file d'attente) : pour des lots, prévoir plusieurs workers/instances.
@@ -500,7 +500,7 @@ MobSF (findings) → jadx/APKTool (deep dive statique) → Frida (runtime) → B
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -524,7 +524,7 @@ MobSF (findings) → jadx/APKTool (deep dive statique) → Frida (runtime) → B
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exposition** : MobSF expose l'UI + l'API : ne **jamais** le binder sur `0.0.0.0` en production, restreindre à `127.0.0.1` ou derrière un VPN.
 - **Clé API** : `MOBSF_API_KEY` par défaut absente (API ouverte) : la définir et la garder secrète (secret manager, pas en clair dans les scripts).
@@ -534,7 +534,7 @@ MobSF (findings) → jadx/APKTool (deep dive statique) → Frida (runtime) → B
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Faux positifs** : le scanner signale beaucoup de « hardcoded secrets » (URLs, noms de package) : chaque finding doit être confirmé manuellement.
 - **Pas de reverse profond** : MobSF donne la cartographie, pas la compréhension fine du flux — compléter avec jadx/APKTool/Frida.
@@ -545,7 +545,7 @@ MobSF (findings) → jadx/APKTool (deep dive statique) → Frida (runtime) → B
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrage Docker
@@ -578,7 +578,7 @@ curl -X POST http://127.0.0.1:8000/api/v1/delete_scan -d "hash=<hash>" -H "Autho
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ curl -X POST http://127.0.0.1:8000/api/v1/delete_scan -d "hash=<hash>" -H "Autho
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -604,27 +604,27 @@ curl -X POST http://127.0.0.1:8000/api/v1/delete_scan -d "hash=<hash>" -H "Autho
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **API pour la CI**
+> [!tip] **API pour la CI**
 > Appeler `/api/v1/scan` dans un pipeline (Jenkins, GitHub Actions) et bloquer le merge si score < 60 :
 > vrai contrôle qualité automatisé.
 
-> [!tip] 💡 **Le JSON est la mine d'or**
+> [!tip] **Le JSON est la mine d'or**
 > `report_json` contient tout (manifest, permissions, secrets, fichiers sensibles) : grep dessus pour
 > retrouver des flags/credentials en CTF.
 
-> [!warning] ⚠️ **Analyse dynamique = lourde**
+> [!warning] **Analyse dynamique = lourde**
 > Le module dynamique a besoin d'un émulateur (AVD) configuré, du framework (Xposed) et d'un proxy (Burp) :
 > réserve-le à l'investigation, pas au tri rapide.
 
-> [!warning] ⚠️ **Faux positifs**
+> [!warning] **Faux positifs**
 > MobSF signale beaucoup de "hardcoded secrets" (URLs, noms de package) → confirmer chaque finding
 > manuellement avant d'exploiter.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ curl -X POST http://127.0.0.1:8000/api/v1/delete_scan -d "hash=<hash>" -H "Autho
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - APKTool|📱 APKTool]] · [[Outil - jadx|📱 jadx]] · [[Outil - Frida|📱 Frida]] · [[Outil - objection|📱 objection]] · [[Outil - Burp Suite|🕸️ Burp Suite]] · [[Techniques/Insecure Source Code Management|🔗 SCM]] · [[Techniques/Insecure Deserialization|🧬 Désérialisation]]
+**Liens :** [[Tools| Outils]] · [[Outil - APKTool| APKTool]] · [[Outil - jadx| jadx]] · [[Outil - Frida| Frida]] · [[Outil - objection| objection]] · [[Outil - Burp Suite| Burp Suite]] · [[Techniques/Insecure Source Code Management| SCM]] · [[Techniques/Insecure Deserialization| Désérialisation]]

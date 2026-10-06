@@ -19,7 +19,7 @@ export default function Footer() {
               <div>
                 <p className="font-mono text-sm text-bone">© {profile.footer.year}</p>
                 <p className="font-mono text-[0.6rem] uppercase tracking-widest2 text-dim">
-                  {profile.title} · {profile.location.label} {profile.location.flag}
+                  {profile.title} · {profile.location.label}
                 </p>
               </div>
             </div>

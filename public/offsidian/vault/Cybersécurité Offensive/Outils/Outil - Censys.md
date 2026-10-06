@@ -1,7 +1,7 @@
 ---
 title: "Outil - Censys"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://search.censys.io
 doc: https://docs.censys.io
 ---
 
-# 🛰️ Censys — Moteur de recherche sur l'Internet réel
+# Censys — Moteur de recherche sur l'Internet réel
 
 > [!info] **En 1 phrase**
 > Censys indexe en continu les hôtes, services, certificats et vulnérabilités du monde entier pour cartographier la surface d'attaque d'une organisation.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.censys.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Censys est un moteur de recherche qui scanne l'ensemble de l'Internet : chaque hôte public est interrogé, ses services (banners, versions), ses certificats TLS et ses vulnérabilités sont indexés. Pour la recon offensive : retrouver tous les assets d'une organisation via les certificats émis pour ses domaines, chercher des services exposés (RDP, SSH, bases de données), identifier une version vulnérable d'un produit, et vérifier qu'un service n'est pas déjà public avant d'attaquer.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,14 +136,14 @@ pip install poetry
 poetry install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Compte gratuit requis sur search.censys.io pour obtenir les clés API (`censys config`).
 > - Le quota gratuit est limité : surveiller les recherches pour ne pas être bloqué temporairement.
 > - Python 3.8+ requis ; testé jusqu'à Python 3.10 par le projet.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier de configuration
 
@@ -165,7 +165,7 @@ poetry install
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Indexation continue** : des scanners (historiquement issus de ZMap/ZGrab de l'Université du Michigan) parcourent tout l'IPv4 (et IPv6) en interrogeant les ports TCP/UDP et en récupérant bannières, poignées de main TLS et réponses HTTP.
 - **Quatre index** : `hosts`, `certificates`, `configs`, `vulnerabilities` — stockés dans un backend de recherche distribuée (Censys Search 2.0, base en Rust/Go avec index inversés).
@@ -175,7 +175,7 @@ poetry install
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -212,7 +212,7 @@ censys search --from-query-file queries.txt --index-type hosts --format json
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -238,7 +238,7 @@ censys search --from-query-file queries.txt --index-type hosts --format json
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -287,7 +287,7 @@ censys search --from-query-file requetes.txt --index-type hosts --format json
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Configurer l'accès API**.
    ```bash
@@ -310,7 +310,7 @@ censys search --from-query-file requetes.txt --index-type hosts --format json
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : recherche d'une version vulnérable d'un produit
 
@@ -339,7 +339,7 @@ censys search --index-type vulnerabilities "cve: CVE-2024-xxxx"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -352,7 +352,7 @@ censys search --index-type vulnerabilities "cve: CVE-2024-xxxx"
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -366,7 +366,7 @@ censys search --index-type vulnerabilities "cve: CVE-2024-xxxx"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -426,7 +426,7 @@ rule Censys_CLI_Detection {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle sur les IP d'un export et interrogation détaillée
@@ -463,7 +463,7 @@ while True:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Formats : `table` (défaut), `json`, `csv`. Le format JSON est structuré (objet avec `result.hits`) et se pipe facilement.
 
@@ -488,16 +488,16 @@ for hit in data["result"]["hits"]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Shodan CLI|Shodan CLI]] / [[Outil - Shodan|Shodan]] — moteurs de recherche complémentaires
 - [[Outil - subfinder|subfinder]] — énumération passive des sous-domaines à confirmer via Censys
 - [[Outil - Amass|Amass]] — peut utiliser Censys comme source de données
 - [[Outil - httpx|httpx]] / [[Outil - naabu|naabu]] — confirmation active des hôtes et ports découverts
 - [[Outil - theHarvester|theHarvester]] — collecte OSINT complémentaire
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités sur les hôtes confirmés
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
@@ -505,7 +505,7 @@ Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -519,7 +519,7 @@ Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Indexation Internet complète (IPv4) renouvelée en continu : la fraîcheur dépend du cycle de scan (de quelques heures à quelques jours selon le service).
 - API paginée : 20 résultats par page par défaut, exploitable en profondeur avec `--page-size`/`--max-pages`.
@@ -531,7 +531,7 @@ Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -561,7 +561,7 @@ Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Clés API** : stockées en clair dans `censys.cfg` → restreindre les permissions du fichier, ne pas les committer, utiliser des secrets managers en CI.
 - **Données publiques** : les informations collectées (bannières, certs) sont visibles de tous — ne pas s'appuyer sur l'obscurité pour protéger son infrastructure.
@@ -571,7 +571,7 @@ Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Les données **datent du dernier scan** : état non garanti en temps réel.
 - Le quota gratuit est limité (recherches, pages, crédits) — les gros volumes nécessitent un abonnement.
@@ -581,7 +581,7 @@ Certificats CT → Censys → IP candidates → httpx / naabu → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Configuration initiale
@@ -607,7 +607,7 @@ censys search --index-type hosts "services.software.product:nginx" --format json
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -620,7 +620,7 @@ censys search --index-type hosts "services.software.product:nginx" --format json
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -632,15 +632,15 @@ censys search --index-type hosts "services.software.product:nginx" --format json
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Requête par certificat (`names:`) pour retrouver toute l'infra d'une organisation sans connaître ses IPs.
 > - `services.http.response.html_title` et `.body` permettent de chercher par technologie ou page.
 > - L'index `vulnerabilities` liste les vulnérabilités connues des services indexés.
 > - Utiliser `--fields` pour ne ramener que ce dont on a besoin : moins de quota, sorties plus légères.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le quota gratuit est limité : utilise `--max-pages` et `--page-size` pour ne pas le brûler.
 > - La syntaxe de requête est spécifique (champs `:` et opérateurs) : teste-la d'abord sur l'interface web.
 > - Les données datent du dernier scan : confirme toujours l'état réel (httpx, naabu).
@@ -648,7 +648,7 @@ censys search --index-type hosts "services.software.product:nginx" --format json
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -669,4 +669,4 @@ censys search --index-type hosts "services.software.product:nginx" --format json
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Shodan CLI|Shodan CLI]] · [[Outil - subfinder|subfinder]] · [[Outil - theHarvester|theHarvester]]
+**Liens :** [[Tools| Outils]] · [[Outil - Shodan CLI|Shodan CLI]] · [[Outil - subfinder|subfinder]] · [[Outil - theHarvester|theHarvester]]

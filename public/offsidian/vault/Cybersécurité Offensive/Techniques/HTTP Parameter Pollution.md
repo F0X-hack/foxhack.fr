@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧬 HPP — HTTP Parameter Pollution
+# HPP — HTTP Parameter Pollution
 
 > [!info] **En 1 phrase**
 > HPP = **dupliquer un paramètre** dans une requête (`?id=1&id=2`) pour exploiter la **divergence de parsing** entre le frontend (WAF/proxy) et le backend : le premier valide une valeur "propre", le second en utilise une autre → bypass WAF, bypass auth, modification de logique métier.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,7 +32,7 @@ flowchart LR
     C --> F[Bypass auth / contrôle]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > HTTP ne définit **aucune règle officielle** pour les paramètres dupliqués. Le serveur garde
 > **toutes les valeurs** mais chaque technologie décide ensuite laquelle utiliser (1ère, dernière,
 > ou tableau). On abuse de ce comportement pour que **WAF/proxy et app ne voient pas la même chose** :
@@ -50,9 +50,9 @@ flowchart LR
 
 ---
 
-## 🧩 Comportement des backends
+## Comportement des backends
 
-> [!tip] 💡 À mémoriser : **PHP/Django/Rails = dernier**, **JSP/Tomcat/Go/Flask = premier**,
+> [!tip] À mémoriser : **PHP/Django/Rails = dernier**, **JSP/Tomcat/Go/Flask = premier**,
 > **ASP.NET/Node/Zope = tableau**. Le tableau exact dépend de la fonction utilisée par le dev.
 
 Quand la requête est `?par1=a&par1=b`, `par1` vaut :
@@ -79,13 +79,13 @@ Quand la requête est `?par1=a&par1=b`, `par1` vaut :
 | **IBM HTTP Server / Lotus Domino** | Première occurrence | `a` |
 | **Perl CGI / Apache** | Première occurrence | `a` |
 
-> [!warning] ⚠️ **Préférer l'expérimentation au tableau.** Les versions, frameworks et fonctions
+> [!warning] **Préférer l'expérimentation au tableau.** Les versions, frameworks et fonctions
 > changent la règle (`get` vs `getlist`, parser `qs` vs `querystring`). Toujours tester en réel
 > via une page qui **reflète** la valeur reçue.
 
 ---
 
-## 🧨 Payloads
+## Payloads
 
 ### Doublon classique (URL)
 
@@ -120,7 +120,7 @@ Cookie: role=user; role=admin
 Cookie: session=abc; debug=true; debug=false
 ```
 
-> [!tip] 💡 Les **headers parsés** (Cookie, X-Forwarded-For...) peuvent aussi être dupliqués —
+> [!tip] Les **headers parsés** (Cookie, X-Forwarded-For...) peuvent aussi être dupliqués —
 > un parseur custom côté serveur peut lire la dernière valeur.
 
 ### Array injection
@@ -150,7 +150,7 @@ param[key1]=value1&param[key2]=value2 # imbrication (déréférence de tableau)
 
 ---
 
-## 🎯 Attaques
+## Attaques
 
 ### Bypass d'authentification / de contrôle
 
@@ -230,7 +230,7 @@ GET /api/v1/items?filter=active&filter=all       # fuite de données
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -250,7 +250,7 @@ done
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -263,19 +263,19 @@ done
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tester toujours la duplication**
+> [!tip] **Tester toujours la duplication**
 > Tout paramètre d'un endpoint sensible doit être testé avec `param=valeur&param=autre` :
 > montant, rôle, `admin`, `debug`, `page`, `size`, `filter`, `redirect`, `next`. Une seule
 > divergence WAF/app suffit.
 
-> [!tip] 💡 **Le HPP est un multiplicateur d'impact**
+> [!tip] **Le HPP est un multiplicateur d'impact**
 > Il ne crée pas la vulnérabilité : il **augmente la surface** d'un point d'injection existant
 > (SQLi, XSS, Open Redirect, désérialisation) en faisant porter la charge malveillante à une
 > position que le filtre ne voit pas.
 
-> [!warning] ⚠️ **Pièges de parsing**
+> [!warning] **Pièges de parsing**
 > - `application/json` vs `urlencoded` : un endpoint JSON peut accepter deux clés identiques
 >   (`{"test":"user","test":"admin"}`) alors que l'équivalent urlencodé est refusé (ou l'inverse).
 > - `&` encodé `%26` crée un **faux second paramètre** après décodage serveur.
@@ -284,7 +284,7 @@ done
 > - Un proxy peut **réordonner** les paramètres → la règle constatée en direct n'est pas celle du backend.
 > - PHP : `$_REQUEST` fusionne `$_GET`+`$_POST` — le même nom peut être écrasé entre les deux sources.
 
-> [!warning] ⚠️ **À ne pas oublier**
+> [!warning] **À ne pas oublier**
 > - HPP **client-side** : un lien construit par le JS (`new URL`, concaténation de query) peut
 >   laisser passer un second paramètre fourni par l'attaquant.
 > - Tester **cookie dupliqué** et **headers dupliqués**, pas seulement la query string.
@@ -292,10 +292,10 @@ done
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Web Cache Deception|🗑️ Cache Deception]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — HTTP Parameter Pollution](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/HTTP%20Parameter%20Pollution/README.md)
+- [[Injection SQL| SQLi]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Web Cache Deception| Cache Deception]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — HTTP Parameter Pollution](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/HTTP%20Parameter%20Pollution/README.md)

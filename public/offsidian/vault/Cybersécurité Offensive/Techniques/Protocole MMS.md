@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ⚡ Protocole MMS (IEC 61850)
+# Protocole MMS (IEC 61850)
 
 > [!info] **En 1 phrase**
 > **MMS** (Manufacturing Message Specification) est le protocole applicatif du standard
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
 
 ---
 
-## 🎯 Discovery
+## Discovery
 
 ### Clients MMS
 
@@ -52,20 +52,20 @@ nmap -d --script mms-identify.nse --script-args='mms-identify.timeout=500' -p 10
 
 ---
 
-## 🔎 Explorer MMS
+## Explorer MMS
 
 - [Client MMS — tutorial](https://libiec61850.com/documentation/iec-61850-client-tutorial/) — exemple de client libiec61850.
 - [Serveur MMS — tutorial](https://libiec61850.com/documentation/iec-61850-server-tutorial/) — exemple de serveur libiec61850.
 
 ---
 
-## 💥 Fuzzing MMS
+## Fuzzing MMS
 
 - [fkie-cad/61850-fuzzing](https://github.com/fkie-cad/61850-fuzzing) — fuzzer les implémentations IEC 61850 / MMS (malformed MMS PDU).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -75,7 +75,7 @@ nmap -d --script mms-identify.nse --script-args='mms-identify.timeout=500' -p 10
 | **Surveillance du trafic** | Détecter les énumérations (mms-identify) et requêtes anormales |
 | **Patch des IED** | Les serveurs MMS embarqués ont des vulns historiques (fuzzing finds) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - MMS parle **ISO-on-TCP sur 102** : si rien ne répond, vérifie que COTP/TPKT est bien dans Wireshark (`mms` dissector).
 - `mms-identify.nse` identifie le device (vendor, modèle, version) — précieux pour trouver des CVE.
@@ -84,7 +84,7 @@ nmap -d --script mms-identify.nse --script-args='mms-identify.timeout=500' -p 10
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — MMS](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/mms.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Protocole Modbus|🏭 Modbus]] · [[Protocole DNP3|🏗️ DNP3]] · [[Injection de commandes|💻 Injection de commandes]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Protocole Modbus| Modbus]] · [[Protocole DNP3| DNP3]] · [[Injection de commandes| Injection de commandes]]

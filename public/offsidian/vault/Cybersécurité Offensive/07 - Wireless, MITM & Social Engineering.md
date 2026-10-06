@@ -1,10 +1,10 @@
-# 📡 Wireless, MITM & Social Engineering
+# Wireless, MITM & Social Engineering
 
 > [!info] **C'est quoi ?**
 > Trois familles d'attaques complémentaires : le **réseau sans fil**, les **attaques MITM**
 > (homme du milieu) et l'**ingénierie sociale** (le maillon humain).
 
-> [!tip] 🗂️ **Sommaire**
+> [!tip] **Sommaire**
 > **Wireless** : §1-8 (WiFi) · §9 (WPA3/SAE) · §10 (Bluetooth/BLE) · §11 (Radio & SDR) · §12 (RFID/NFC) ·
 > **MITM** : §13-20 (ARP, DNS, HTTPS, LLMNR, NTLM relay, DHCPv6, JS injection) ·
 > **SE** : §21-25 (framework, phishing, MFA bypass, USB drop, vishing/smishing) ·
@@ -14,12 +14,12 @@
 
 ## 1. Attaques WiFi — Vue d'ensemble
 
-> 📘 Hub WiFi : [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Attaques WiFi]] · fiches dédiées :
-> [[Techniques/Attaques WiFi - Préparation & Basiques|🧰 Préparation]] ·
-> [[Techniques/Attaques WiFi - WEP|🔓 WEP]] · [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] ·
-> [[Techniques/Attaques WiFi - PMKID|📶 PMKID]] · [[Techniques/Attaques WiFi - WPS|🔢 WPS]] ·
-> [[Techniques/Attaques WiFi - Enterprise|🏢 Enterprise]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP]] ·
-> [[Techniques/Attaques WiFi - Outils & Recon|🧰 Outils & Recon]]
+> Hub WiFi : [[Techniques/Attaques WiFi (WPA2 et PMKID)| Attaques WiFi]] · fiches dédiées :
+> [[Techniques/Attaques WiFi - Préparation & Basiques| Préparation]] ·
+> [[Techniques/Attaques WiFi - WEP| WEP]] · [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]] ·
+> [[Techniques/Attaques WiFi - PMKID| PMKID]] · [[Techniques/Attaques WiFi - WPS| WPS]] ·
+> [[Techniques/Attaques WiFi - Enterprise| Enterprise]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP]] ·
+> [[Techniques/Attaques WiFi - Outils & Recon| Outils & Recon]]
 
 L'attaque WiFi vise à obtenir la **passphrase**, les **credentials réseau** ou la **confiance**
 d'un utilisateur via le protocole 802.11. Trois objectifs : **casser l'authentification** (PSK,
@@ -52,7 +52,7 @@ flowchart TD
 | **WPA3** | 2018 | GCMP/AES | SAE (Dragonfly) | Dragonblood, downgrade, side-channels |
 | **WPA3-Enterprise** | 2018 | GCMP/AES | EAP-TLS (192-bit) | Difficile — cibler l'utilisateur (SE) |
 
-> [!warning] 🚨 **Point clé**
+> [!warning] **Point clé**
 > La plupart des attaques ne **cassent pas** le chiffrement : elles capturent un **handshake** ou un
 > **hash** puis le **cassent hors-ligne** (dictionary). Le WiFi est une porte d'entrée : une fois le
 > PSK connu, on entre dans le réseau interne → [[04 - Exploitation Réseau]].
@@ -103,14 +103,14 @@ sudo iwconfig wlan0mon channel 6   # verrouiller le canal
 
 | Chipset | Bande | Moniteur | Injection | Verdict |
 |:--|:--:|:--:|:--:|:--|
-| **Atheros AR9271** | 2.4 GHz | ✅ | ✅ | Référence, très stable |
-| **Realtek rtl8812au** (Alfa AWUS036ACH) | 2.4+5 GHz | ✅ | ✅ | Le standard actuel (driver à installer) |
-| **Realtek rtl8187** (Alfa AWUS036H) | 2.4 GHz | ✅ | ✅ | Legacy fiable, pas de 5 GHz |
-| **Ralink RT5370** | 2.4 GHz | ✅ | ✅ | Pas cher, pas de 5 GHz |
-| Intel (7260, 8265...) | 2.4+5 GHz | ⚠️ | ❌ souvent | Galère, firmware bloqué |
-| Broadcom (BCM43xx) | 2.4+5 GHz | ⚠️ | ❌ | Drivers propriétaires → à éviter |
+| **Atheros AR9271** | 2.4 GHz | | | Référence, très stable |
+| **Realtek rtl8812au** (Alfa AWUS036ACH) | 2.4+5 GHz | | | Le standard actuel (driver à installer) |
+| **Realtek rtl8187** (Alfa AWUS036H) | 2.4 GHz | | | Legacy fiable, pas de 5 GHz |
+| **Ralink RT5370** | 2.4 GHz | | | Pas cher, pas de 5 GHz |
+| Intel (7260, 8265...) | 2.4+5 GHz | | souvent | Galère, firmware bloqué |
+| Broadcom (BCM43xx) | 2.4+5 GHz | | | Drivers propriétaires → à éviter |
 
-> [!tip] 💡 **Règle d'or** : vérifie AVANT d'acheter avec `airmon-ng` / `iw list` que
+> [!tip] **Règle d'or** : vérifie AVANT d'acheter avec `airmon-ng` / `iw list` que
 > `Monitor: yes` + `Packet injection: yes`. Sans injection : pas de deauth, pas d'ARP replay.
 
 ### 2.3 Région & canaux
@@ -122,8 +122,8 @@ sudo iwconfig wlan0mon channel 6   # verrouiller le canal
 | **JP** | 1-14 | 36-64 | canal 14 réservé 802.11b |
 | **CN** | 1-13 | 36-64, 149-165 | — |
 
-> 📘 Détails : [[Techniques/Attaques WiFi - Préparation & Basiques|🧰 Préparation]],
-> [[Techniques/Attaques WiFi - Outils & Recon|🔎 Outils & Recon]]
+> Détails : [[Techniques/Attaques WiFi - Préparation & Basiques| Préparation]],
+> [[Techniques/Attaques WiFi - Outils & Recon| Outils & Recon]]
 
 ---
 
@@ -187,11 +187,11 @@ hashcat -m 22000 hash.22000 wordlist.txt -r rules.rule
 sudo wifite --no-wps --no-pmkid --dict rockyou.txt   # tout automatiser
 ```
 
-> ⚠️ **Piège** : le hash 22000 doit contenir l'**ESSID correct** (header de la ligne). SSID
+> **Piège** : le hash 22000 doit contenir l'**ESSID correct** (header de la ligne). SSID
 > tronqué/absent (`?`) → crack voué à l'échec. Vérifier `cat hash.22000`.
 
-> 📘 Détail : [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]],
-> [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]], crack GPU : [[08 - Password Cracking]]
+> Détail : [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]],
+> [[Techniques/Attaques WiFi (WPA2 et PMKID)| Hub WiFi]], crack GPU : [[08 - Password Cracking]]
 
 ---
 
@@ -227,16 +227,16 @@ hashcat -m 22000 hash.22000 /usr/share/wordlists/rockyou.txt
 
 | Critère | Handshake 4-way | PMKID |
 |:--|:--|:--|
-| Client nécessaire | ✅ (deauth pour réasso) | ❌ (on s'associe nous-mêmes) |
+| Client nécessaire | (deauth pour réasso) | (on s'associe nous-mêmes) |
 | Trames nécessaires | EAPOL 1-4 | EAPOL message 1 seul |
 | Compatibilité matérielle | Toutes cartes | Cartes qui exposent le PMKID |
-| Fiabilité AP récents | ✅ | ⚠️ certains AP n'envoient pas de PMKID |
+| Fiabilité AP récents | | certains AP n'envoient pas de PMKID |
 | Crack | `aircrack-ng` / `hashcat -m 22000` | `hashcat -m 22000` |
 
-> [!note] 📌 **Astuce lab** : le PMKID est idéal (pas de client, pas de deauth). Sur matériel récent
+> [!note] **Astuce lab** : le PMKID est idéal (pas de client, pas de deauth). Sur matériel récent
 > (802.11w, AP durci), le handshake reste la référence — capte **les deux** si possible.
 
-> 📘 Fiche : [[Techniques/Attaques WiFi - PMKID|📶 PMKID]], outil : [[Outil - hcxdumptool]]
+> Fiche : [[Techniques/Attaques WiFi - PMKID| PMKID]], outil : [[Outil - hcxdumptool]]
 
 ---
 
@@ -284,12 +284,12 @@ sudo aireplay-ng -5 -b AA:BB:CC:DD:EE:FF wlan0mon                  # ~1500 octet
 
 | Méthode | Client requis | Vitesse | Complexité |
 |:--|:--:|:--:|:--|
-| **ARP replay** | ✅ | Très rapide | Simple |
-| **Chop-chop** | ❌ | Moyenne | Moyenne |
-| **Fragmentation** | ❌ | Moyenne | Moyenne |
+| **ARP replay** | | Très rapide | Simple |
+| **Chop-chop** | | Moyenne | Moyenne |
+| **Fragmentation** | | Moyenne | Moyenne |
 
-> [!warning] 🚨 Un AP en WEP = résidu des années 2000 : l'attaque prend **des minutes**. Rares en
-> réel → labs/CTF seulement. Fiche : [[Techniques/Attaques WiFi - WEP|🔓 WEP]]
+> [!warning] Un AP en WEP = résidu des années 2000 : l'attaque prend **des minutes**. Rares en
+> réel → labs/CTF seulement. Fiche : [[Techniques/Attaques WiFi - WEP| WEP]]
 
 ---
 
@@ -325,12 +325,12 @@ pixiewps --eapol ... --timeout ... --pke ... --pkr ... --es1 ... --es2 ...
 | Mesure | Effet | Bypass |
 |:--|:--|:--|
 | **Lockout après N échecs** | Bloque le bruteforce online | Attaque lente / AP reboot |
-| **Désactiver WPS** | Aucune attaque WPS | ✅ Le seul vrai remède |
+| **Désactiver WPS** | Aucune attaque WPS | Le seul vrai remède |
 | PIN 8 chiffres | 10^7 combinaisons max | Pixie Dust si chipset faible |
 
-> [!warning] ⚠️ Le Pixie Dust casse le **PIN**, pas la passphrase → il faut ensuite s'associer par
+> [!warning] Le Pixie Dust casse le **PIN**, pas la passphrase → il faut ensuite s'associer par
 > WPS pour récupérer la clé. Certains AP désactivent WPS après échecs → patience.
-> Fiche : [[Techniques/Attaques WiFi - WPS|🔢 WPS]], outil : [[Outil - Reaver]]
+> Fiche : [[Techniques/Attaques WiFi - WPS| WPS]], outil : [[Outil - Reaver]]
 
 ---
 
@@ -377,12 +377,12 @@ sudo wifiphisher -aI wlan0mon -e "FreeWifi" -p wifi_connect
 
 | Outil | Type | Portail captif | Deauth auto | Réalisme |
 |:--|:--|:--:|:--:|:--|
-| `airbase-ng` | Rogue AP | Manuel (hostapd+dnsmasq) | ❌ | Bon |
-| `hostapd-mana` | Evil Twin | ✅ + harvester | ⚠️ | Très bon |
-| `Wifiphisher` | Evil Twin | ✅ (scénarios) | ✅ | Excellent |
-| `WiFi Pineapple` | Hardware | ✅ (modules) | ✅ | La référence physique |
+| `airbase-ng` | Rogue AP | Manuel (hostapd+dnsmasq) | | Bon |
+| `hostapd-mana` | Evil Twin | + harvester | | Très bon |
+| `Wifiphisher` | Evil Twin | (scénarios) | | Excellent |
+| `WiFi Pineapple` | Hardware | (modules) | | La référence physique |
 
-> 📘 Fiche : [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP]], outil : [[Outil - Wifiphisher]],
+> Fiche : [[Techniques/Attaques WiFi - Rogue AP| Rogue AP]], outil : [[Outil - Wifiphisher]],
 > hardware : [[Outil - WiFi Pineapple]]
 
 ---
@@ -399,8 +399,8 @@ la clé du réseau mais le **login + mot de passe** (ou hash NetNTLMv2) de l'uti
 |:--|:--:|:--|:--|
 | **PEAP-MSCHAPv2** | TLS (cert serveur) | MSCHAPv2 | hostapd-wpe → hash NetNTLMv2 crackable |
 | **EAP-TTLS** | TLS | PAP/CHAP/MSCHAPv2 | hash capturé (selon inner) |
-| **EAP-MSCHAPv2** | ❌ | MSCHAPv2 | hash directement |
-| **EAP-TLS** | TLS | Certificats client | ❌ très dur (certs requis) |
+| **EAP-MSCHAPv2** | | MSCHAPv2 | hash directement |
+| **EAP-TLS** | TLS | Certificats client | très dur (certs requis) |
 | **EAP-GTC** | TLS | OTP | Rogue AP + harvester OTP |
 
 ```mermaid
@@ -430,9 +430,9 @@ hashcat -m 5500 mschapv2-hash.txt /usr/share/wordlists/rockyou.txt
 - **Relay** : les hashes capturés peuvent être **relayés** (voir §18).
 - **Cert non vérifié** : si la victime ne valide pas le cert serveur, le rogue AP s'intercale.
 
-> [!warning] 🚨 **EAP-TLS (le rempart)** : il exige un **certificat client** → le rogue AP classique
+> [!warning] **EAP-TLS (le rempart)** : il exige un **certificat client** → le rogue AP classique
 > échoue. Les pentesters EAP ciblent surtout **PEAP/MSCHAPv2** legacy.
-> Fiche : [[Techniques/Attaques WiFi - Enterprise|🏢 Enterprise]], cross-ref : [[05 - Active Directory]]
+> Fiche : [[Techniques/Attaques WiFi - Enterprise| Enterprise]], cross-ref : [[05 - Active Directory]]
 
 ---
 
@@ -480,7 +480,7 @@ hcxpcapngtool -o hash.22000 sae.pcapng
 hashcat -m 22000 hash.22000 rockyou.txt
 ```
 
-> [!note] 📌 **En pratique** : le WPA3 pur est **dur à casser par le WiFi**. Les vraies portes :
+> [!note] **En pratique** : le WPA3 pur est **dur à casser par le WiFi**. Les vraies portes :
 > **transition mode** (downgrade), l'**utilisateur** (SE/phishing), le **poste** (autres vulns).
 > Ne passe pas 3 heures sur un WPA3 pur.
 
@@ -532,13 +532,13 @@ btlejack -c
 
 | Pairing | Méthode | MITM | Faiblesse |
 |:--|:--|:--:|:--|
-| Legacy | PIN 4 chiffres | ❌ | Bruteforce PIN, sniff |
-| SSP - Numeric comparison | Confirmation visuelle | ✅ | UI induite en erreur |
-| SSP - Just Works | Aucune confirmation | ❌ | MITM transparent |
-| SSP - Passkey (BLE) | PIN 6 chiffres | ⚠️ | Bruteforce local |
-| LE Legacy pairing | TK | ❌ | MITM trivial |
+| Legacy | PIN 4 chiffres | | Bruteforce PIN, sniff |
+| SSP - Numeric comparison | Confirmation visuelle | | UI induite en erreur |
+| SSP - Just Works | Aucune confirmation | | MITM transparent |
+| SSP - Passkey (BLE) | PIN 6 chiffres | | Bruteforce local |
+| LE Legacy pairing | TK | | MITM trivial |
 
-> 📘 Fiche : [[Techniques/Protocole Bluetooth|🔵 Bluetooth]], IoT : [[13 - Hardware & IoT]],
+> Fiche : [[Techniques/Protocole Bluetooth| Bluetooth]], IoT : [[13 - Hardware & IoT]],
 > [[Outil - Flipper Zero (USB & radio)]] (BLE Spam / Sniffer)
 
 ---
@@ -574,10 +574,10 @@ urh                                                  # analyse + rejeu avancé
 
 | Matériel | Bande | TX | Usages |
 |:--|:--|:--:|:--|
-| **RTL-SDR** | 24 MHz - 1.7 GHz | ❌ | Scanning, AM/FM, ATC, capteurs |
-| **HackRF One** | 1 MHz - 6 GHz | ✅ | Replay, jamming léger |
-| **LimeSDR** | 100 kHz - 3.8 GHz | ✅ | Large bande, GSM/LTE |
-| **USRP** | selon modèle | ✅ | Lab, recherche |
+| **RTL-SDR** | 24 MHz - 1.7 GHz | | Scanning, AM/FM, ATC, capteurs |
+| **HackRF One** | 1 MHz - 6 GHz | | Replay, jamming léger |
+| **LimeSDR** | 100 kHz - 3.8 GHz | | Large bande, GSM/LTE |
+| **USRP** | selon modèle | | Lab, recherche |
 
 | Outil | Rôle |
 |:--|:--|
@@ -586,10 +586,10 @@ urh                                                  # analyse + rejeu avancé
 | `Universal Radio Hacker` | Analyse/modulation/replay |
 | `GNU Radio` / `multimon-ng` | DSP / POCSAG, APRS, DTMF |
 
-> [!warning] ⚠️ **Cadre légal strict** : émettre sur des fréquences non possédées (même rejouer sa
+> [!warning] **Cadre légal strict** : émettre sur des fréquences non possédées (même rejouer sa
 > propre télécommande) peut violer la réglementation télécoms. Tests sur **ton** matériel, en lab.
 
-> 📘 Fiche : [[Techniques/Hardware - SDR|📻 SDR]], cross-ref : [[13 - Hardware & IoT]]
+> Fiche : [[Techniques/Hardware - SDR| SDR]], cross-ref : [[13 - Hardware & IoT]]
 
 ---
 
@@ -627,10 +627,10 @@ hf mf cli --restore --dmp dump.mfd   # restaurer un dump
 
 | Technologie | Fréquence | Sécurité | Clonage | Usage |
 |:--|:--:|:--|:--:|:--|
-| **EM410X** | 125 kHz | ❌ aucune | Instantané | Badges bas de gamme |
-| **HID Prox** | 125 kHz | ❌ Wiegand clair | Instantané | Accès bâtiment |
-| **MIFARE Classic** | 13.56 MHz | ⚠️ Crypto1 cassée | Moyen | Transports, cantines |
-| **MIFARE Plus / DESFire** | 13.56 MHz | ✅ AES | Dur | Accès récent, paiement |
+| **EM410X** | 125 kHz | aucune | Instantané | Badges bas de gamme |
+| **HID Prox** | 125 kHz | Wiegand clair | Instantané | Accès bâtiment |
+| **MIFARE Classic** | 13.56 MHz | Crypto1 cassée | Moyen | Transports, cantines |
+| **MIFARE Plus / DESFire** | 13.56 MHz | AES | Dur | Accès récent, paiement |
 | **NTAG / NFC** | 13.56 MHz | Variable | Selon type | Étiquettes, démo |
 
 ```bash
@@ -638,7 +638,7 @@ hf mf cli --restore --dmp dump.mfd   # restaurer un dump
 # HydraNFC / iCopy-X : clonage "grand public"
 ```
 
-> 📘 Hub : [[13 - Hardware & IoT]] · fiches : [[Techniques/Hardware - RFID et NFC]],
+> Hub : [[13 - Hardware & IoT]] · fiches : [[Techniques/Hardware - RFID et NFC]],
 > [[Techniques/Hardware - RFID MIFARE (HF 13.56 MHz)|MIFARE]], [[Techniques/Hardware - RFID LF (HID, EM410X, Indala, HiTag)|RFID LF]],
 > [[Techniques/Hardware - Proxmark|Proxmark]], [[Techniques/Hardware - HydraNFC]], [[Techniques/Hardware - iCopy-X]]
 
@@ -671,18 +671,18 @@ flowchart LR
 
 | Scénario | Statut | Pourquoi |
 |:--|:--:|:--|
-| Trafic HTTP brut (réseau local) | ✅ | Pas de chiffrement |
-| Windows/AD (LLMNR, NTLM) | ✅ | Protocoles legacy |
-| HTTPS avec cert installé chez la victime | ✅ | Confiance du root store |
-| HTTPS moderne (HSTS preload, pinning, HTTP/2) | ❌ | Le navigateur refuse |
-| Apps mobiles / cert pinning | ❌ | Signature vérifiée dans l'app |
-| DNS over HTTPS (DoH) | ⚠️ | DNS spoofing inopérant |
+| Trafic HTTP brut (réseau local) | | Pas de chiffrement |
+| Windows/AD (LLMNR, NTLM) | | Protocoles legacy |
+| HTTPS avec cert installé chez la victime | | Confiance du root store |
+| HTTPS moderne (HSTS preload, pinning, HTTP/2) | | Le navigateur refuse |
+| Apps mobiles / cert pinning | | Signature vérifiée dans l'app |
+| DNS over HTTPS (DoH) | | DNS spoofing inopérant |
 
-> [!info] 💡 **La philosophie MITM** : sur un réseau moderne, le MITM simple **ne suffit plus**. On
+> [!info] **La philosophie MITM** : sur un réseau moderne, le MITM simple **ne suffit plus**. On
 > cible ce qui reste en clair (HTTP, SMB, NTLM, DNS) ou on dégrade (HTTPS → HTTP, WPA2 → rogue). La
 > priorité : **capturer des credentials ou des hashes**.
 
-> 📘 Fiche : [[Techniques/ARP Spoofing et MITM|🕸️ ARP Spoofing / MITM]]
+> Fiche : [[Techniques/ARP Spoofing et MITM| ARP Spoofing / MITM]]
 
 ---
 
@@ -731,9 +731,9 @@ sudo bettercap -iface eth0
 | DHCP snooping + DAI | Trames ARP non conformes | Spoof après échange DHCP |
 | Segmentation (VLAN) | Limite la portée | Cible accessible choisie |
 
-> [!warning] ⚠️ **Piège** : sans `ip_forward=1` (ou règle FORWARD DROP), la victime **perd
+> [!warning] **Piège** : sans `ip_forward=1` (ou règle FORWARD DROP), la victime **perd
 > Internet** → coupure visible. Vérifier `sysctl -w net.ipv4.ip_forward=1` + `iptables -P FORWARD
-> ACCEPT`. Fiche : [[Techniques/ARP Spoofing et MITM|🕸️ ARP Spoofing / MITM]], outil : [[Outil - bettercap]]
+> ACCEPT`. Fiche : [[Techniques/ARP Spoofing et MITM| ARP Spoofing / MITM]], outil : [[Outil - bettercap]]
 
 ---
 
@@ -779,7 +779,7 @@ sudo dnsspoof -i eth0 -f hosts.txt        # requiert le MITM ARP
 # Outils : rebind.telekom / nippon / rebinder local
 ```
 
-> [!note] 📌 **Limites modernes** : DoH/DoT ignore nos réponses ; HSTS + HTTPS refuse le HTTP
+> [!note] **Limites modernes** : DoH/DoT ignore nos réponses ; HSTS + HTTPS refuse le HTTP
 > downgrade (voir §16) ; Android/iOS peuvent prioriser leur propre DNS.
 
 ---
@@ -833,12 +833,12 @@ mitmdump --mode transparent -s inject.py -p 8080
 | Technique | Principe | Efficacité |
 |:--|:--|:--:|
 | **HSTS preload** | Domaine dans la liste de pré-chargement | Bloque tout downgrade |
-| **Variant de domaine** | `bank.com.evil.io`, `bank.com.` | ⚠️ selon navigateur |
-| **Première visite** | HSTS pas encore appris | ✅ si non preloadé |
-| **Sous-domaines non couverts** | `cdn.bank.com` non listé | ⚠️ |
-| **Cert racine installé** | On devient un CA de confiance | ✅ le plus fiable |
+| **Variant de domaine** | `bank.com.evil.io`, `bank.com.` | selon navigateur |
+| **Première visite** | HSTS pas encore appris | si non preloadé |
+| **Sous-domaines non couverts** | `cdn.bank.com` non listé | |
+| **Cert racine installé** | On devient un CA de confiance | le plus fiable |
 
-> [!warning] 🚨 **Le MITM HTTPS moderne = certificat ou rien** : sans cert installé chez la victime,
+> [!warning] **Le MITM HTTPS moderne = certificat ou rien** : sans cert installé chez la victime,
 > les sites modernes **refusent** toute interception. Le meilleur usage du MITM reste le trafic
 > **non chiffré** et les **hashes** (§17-18). Outils : [[Outil - mitmproxy]], [[Outil - bettercap]]
 
@@ -889,7 +889,7 @@ john hashes.txt --format=netntlmv2 --wordlist=/usr/share/wordlists/rockyou.txt
 # (options dans [[Outil - Responder]] et [[Outil - CrackMapExec]])
 ```
 
-> [!warning] 🚨 **Bruit AD** : Responder poisons **toutes** les requêtes du segment → très visible
+> [!warning] **Bruit AD** : Responder poisons **toutes** les requêtes du segment → très visible
 > en prod (SIEM, timings DNS). Cibler proprement en contrat.
 > Fiche : [[Techniques/LLMNR-NBT-NS Poisoning]], cross-ref : [[05 - Active Directory]]
 
@@ -939,7 +939,7 @@ sudo ntlmrelayx.py -t mssql://192.168.1.30 -smb2support   # relay MSSQL
 # Outils : printerbug.py, SpoolSample, rpcdump.py |spoolsv|
 ```
 
-> [!warning] 🚨 **Le mur : SMB signing** : si le signing est **obligatoire**, le relay échoue
+> [!warning] **Le mur : SMB signing** : si le signing est **obligatoire**, le relay échoue
 > (obligatoire par défaut sur les DC récents). Parade : cibler **LDAP** ou exploiter
 > CVE-2019-1040 (MIC drop) pour désactiver le signing.
 > Fiche : [[Techniques/NTLM Relay]], outils : [[Outil - Responder]], [[Outil - CrackMapExec]]
@@ -984,7 +984,7 @@ sudo ntlmrelayx.py -6 -t ldaps://192.168.1.10 -wh wpad -l /tmp/logs
 | SMB/HTTP | Auth déclenchée | Hash NetNTLMv2 → relay |
 | LDAP | Cible privilégiée du relay | DCSync / ajout de compte |
 
-> [!note] 📌 mitm6 transforme un réseau **durci côté IPv4** en porte d'entrée par **l'IPv6
+> [!note] mitm6 transforme un réseau **durci côté IPv4** en porte d'entrée par **l'IPv6
 > oubliée**. Beaucoup d'AD se prennent comme ça en interne. Outil : [[Outil - mitm6]],
 > cross-ref : [[05 - Active Directory]]
 
@@ -1029,7 +1029,7 @@ sudo beef-xss
 | HTTPS (proxy + cert) | Large | Cert de confiance installé |
 | XSS dans l'app ([[Outil - XSStrike]]) | Périmètre de l'app | Point d'injection |
 
-> 📘 Outils : [[Outil - BeEF]], [[Outil - bettercap]], [[Outil - XSStrike]],
+> Outils : [[Outil - BeEF]], [[Outil - bettercap]], [[Outil - XSStrike]],
 > voir [[Techniques/XSS (Cross-Site Scripting)]]
 
 ---
@@ -1074,7 +1074,7 @@ flowchart LR
 - **Fausse nouvelle** : énoncer une fausse info, écouter la correction.
 - **Collègue de confiance** : se faire passer pour un nouvel employé perdu.
 
-> [!success] 🏆 **Règle d'or** : le facteur humain domine — **scénario crédible > technique**. Un
+> [!success] **Règle d'or** : le facteur humain domine — **scénario crédible > technique**. Un
 > email bien ciblé bat n'importe quel exploit. La partie technique (payload) est souvent le
 > **dernier** problème.
 
@@ -1132,7 +1132,7 @@ swaks --to victime@domaine.fr --from "it-support@domaine.fr" \
   --header "Subject: Verification" --body "Cliquez : http://att" --server smtp-relay.corp
 ```
 
-> [!warning] ⚠️ **Le phishing \"moche\"** : domaine faux + pas de cert + grammaire mauvaise = échec.
+> [!warning] **Le phishing \"moche\"** : domaine faux + pas de cert + grammaire mauvaise = échec.
 > Pense : domaine similaire, HTTPS valide, en-têtes propres, **urgence crédible**. Pour le MFA, §23.
 > Outils : [[Outil - GoPhish]], [[Outil - SET]], [[Outil - King-Phisher]], [[Outil - SocialFish]], [[Outil - CredSniper]], [[Outil - Weeman]]
 
@@ -1187,7 +1187,7 @@ evilginx> proxy on
 - **Consent phishing** : app OAuth malveillante approuvée (Azure) → accès en son nom.
 - **SIM swap** : détourner le numéro pour recevoir les SMS OTP (cross-ref §25).
 
-> [!warning] ⚠️ **Protections efficaces** : MFA **phishing-resistant** (FIDO2 / WebAuthn, passkeys)
+> [!warning] **Protections efficaces** : MFA **phishing-resistant** (FIDO2 / WebAuthn, passkeys)
 > neutralise le relay OTP : la clé est liée au domaine légitime. Cross-ref : §27.
 > Outils : [[Outil - Evilginx2]], [[Outil - Modlishka]], [[Outil - CredSniper]], [[Outil - SocialFish]], [[Outil - Weeman]]
 
@@ -1242,8 +1242,8 @@ Q DELAY 1000 ; Q GUI r ; Q STRING powershell -w hidden -enc BASE64_PAYLOAD ; Q E
 # exfil via RNDIS_ETHERNET / dossier loot
 ```
 
-> [!warning] ⚠️ **Cas d'usage** : efficace mais **bruyant** (caméras, DLP). Brille en **red team**
-> et en **sensibilisation** (clés de test contrôlées). Voir aussi [[Techniques/Protocole USB|🔌 USB]]
+> [!warning] **Cas d'usage** : efficace mais **bruyant** (caméras, DLP). Brille en **red team**
+> et en **sensibilisation** (clés de test contrôlées). Voir aussi [[Techniques/Protocole USB| USB]]
 
 ---
 
@@ -1279,7 +1279,7 @@ setoolkit
 | URL raccourcies | Cacher la destination | Hover + rapports anti-phishing |
 | SIM swap | Voler le canal SMS OTP | Alerte opérateur, MFA FIDO2 |
 
-> [!warning] ⚠️ **Cadre strict** : usurpation d'identité téléphonique + IA vocale = **encadrées**
+> [!warning] **Cadre strict** : usurpation d'identité téléphonique + IA vocale = **encadrées**
 > par la loi. Tests avec autorisation écrite, prétextes génériques.
 > Cross-ref : §23 pour le SIM swap / relay OTP.
 
@@ -1314,7 +1314,7 @@ flowchart LR
     C --> E["Accès au réseau<br>(AD / poste)"]
 ```
 
-> 📘 Référence : https://attack.mitre.org/techniques/T1557/ · règles : [[Outil - Sigma]] ·
+> Référence : https://attack.mitre.org/techniques/T1557/ · règles : [[Outil - Sigma]] ·
 > cross-ref : [[05 - Active Directory]]
 
 ---
@@ -1359,39 +1359,39 @@ nmap --script smb2-security-mode -p 445 192.168.1.20   # SMB signing
 - **Durcir les legacy** : LLMNR/NBT-NS off, SMB signing, EAP-TLS, HSTS preload.
 - **Formation continue** : campagnes de phishing internes (GoPhish) + feedback.
 
-> 📘 Cross-ref : [[10 - Cheatsheets]], [[Outil - Sigma]], [[Outil - Kismet]]
+> Cross-ref : [[10 - Cheatsheets]], [[Outil - Sigma]], [[Outil - Kismet]]
 
 ---
 
-## 28. 🧠 Tips & Pièges
+## 28. Tips & Pièges
 
-> [!tip] 🛰️ **Adapter le bon adaptateur WiFi (le vrai point bloquant)**
+> [!tip] **Adapter le bon adaptateur WiFi (le vrai point bloquant)**
 > - Il faut un chipset **compatible moniteur mode + packet injection** :
 >   - **Alfa AWUS036ACH / AWUS036NHA** (les références)
 >   - Chipset Realtek **rtl8812au**, Atheros, Intel (certains), Broadcom (galère)
 > - Vérifie : `airmon-ng` / `airmon-ng check`
 > - Sans packet injection, pas de deauth, pas de capture utile → ça bloque tout.
 
-> [!tip] 🇫🇷 **Régulation : définir la bonne région**
+> [!tip] **Régulation : définir la bonne région**
 > ```bash
 > # La carte est souvent limitée à la région US par défaut → canaux limités
 > iw reg set FR
 > # Ex : le canal 13 / DFS ne sont accessibles qu'avec la bonne région
 > ```
 
-> [!tip] 🔐 **WPA3 / transition mode**
+> [!tip] **WPA3 / transition mode**
 > - WPA3 (SAE) ne capte pas avec `aircrack` directement : il faut **capturer le handshake SAE**.
 > - Les réseaux en **transition (WPA2/WPA3)** autorisent toujours WPA2 → capture classique.
 > - En entreprise, le **PMKID** marche même sans client (voir §4).
 
-> [!tip] 🎭 **Evil Twin entreprise (le plus efficace en réel)**
+> [!tip] **Evil Twin entreprise (le plus efficace en réel)**
 > ```bash
 > # hostapd-wpe : capturer les credentials EAP (PEAP/MSCHAPv2) sans rien casser
 > # → un utilisateur se connecte au faux AP "Entreprise" → login+hash → cracker ou relayer
 > hashcat -m 5500 mschapv2.txt rockyou.txt
 > ```
 
-> [!tip] 🕸️ **bettercap : l'injection JavaScript**
+> [!tip] **bettercap : l'injection JavaScript**
 > ```bash
 > sudo bettercap -iface eth0
 > > set http.proxy.script /path/hook.js
@@ -1401,14 +1401,14 @@ nmap --script smb2-security-mode -p 445 192.168.1.20   # SMB signing
 > # (nécessite d'être MITM - voir plus haut)
 > ```
 
-> [!warning] ⚠️ **Piège n°1 : le MITM moderne ne marche plus "tout seul"**
+> [!warning] **Piège n°1 : le MITM moderne ne marche plus "tout seul"**
 > HSTS, HTTPS-only, cert pinning, ARP filtering, DHCP snooping... Sur du trafic moderne,
 > le MITM simple échoue. Il faut :
 > - un **certificat** installé chez la victime (ou proxy explicitement configuré)
 > - ou se concentrer sur les protocoles **non chiffrés** et les **hashes** (LLMNR/NTLMv2)
 > - ou un point d'accès compromis / contrôle réseau réel.
 
-> [!warning] ⚠️ **Piège n°2 : arp.spoof = coupure réseau visible**
+> [!warning] **Piège n°2 : arp.spoof = coupure réseau visible**
 > Si la victime perd Internet, c'est qu'on a **cassé le forwarding** :
 > ```bash
 > sysctl -w net.ipv4.ip_forward=1
@@ -1416,34 +1416,34 @@ nmap --script smb2-security-mode -p 445 192.168.1.20   # SMB signing
 > # ne pas spoof la passerelle ET la cible en même temps par erreur
 > ```
 
-> [!warning] ⚠️ **Piège n°3 : le phishing "moche"**
+> [!warning] **Piège n°3 : le phishing "moche"**
 > - Domaine **faux** (typosquatting) + **pas de certificat** = échec quasi certain.
 > - Pense **Evilginx / Modlishka** (proxy de phishing avec **MFA bypass** en temps réel)
 > - Le facteur humain domine : scénario crédible > technique.
 
-> [!success] 🏆 **Le combo SE le plus efficace (en lab approuvé)**
+> [!success] **Le combo SE le plus efficace (en lab approuvé)**
 > **OSINT ciblée** (nom, rôle, habitudes) + **email crédible** (domaine similaire)
 > + **urgence** + **lien vers un portail cloné** (harvest) → taux de clic 60-80%.
 > La partie "technique" (payload) est souvent le **dernier** problème.
 
 ### 28.1 Pièges supplémentaires
 
-> [!warning] ⚠️ **Piège n°4 : oublier IPv6** : on durcit l'IPv4 (ARP, DHCP) et on oublie l'**IPv6** :
+> [!warning] **Piège n°4 : oublier IPv6** : on durcit l'IPv4 (ARP, DHCP) et on oublie l'**IPv6** :
 > DHCPv6 spoofing (mitm6) re-pointe tout le DNS. Toujours vérifier `ip -6 addr`, DHCPv6 sur le
 > segment. Voir §19.
 
-> [!warning] ⚠️ **Piège n°5 : Responder trop gourmand** : il **répond à tout** → incidents, SIEM,
+> [!warning] **Piège n°5 : Responder trop gourmand** : il **répond à tout** → incidents, SIEM,
 > services cassés. En contrat : la bonne interface, options minimales (`-w`), ciblage.
 
-> [!tip] 💡 **Wifite pour vérifier la config** : `sudo wifite --list` affiche les capacités
+> [!tip] **Wifite pour vérifier la config** : `sudo wifite --list` affiche les capacités
 > (moniteur, injection) en une commande avant l'attaque manuelle.
 
-> [!tip] 💡 **Cross-check des résultats** : croiser handshake + PMKID + WPS → si 2 méthodes
+> [!tip] **Cross-check des résultats** : croiser handshake + PMKID + WPS → si 2 méthodes
 > convergent, la passphrase est quasi certaine. Un seul hash peut être corrompu.
 
 ---
 
-## 29. ⚡ Méthode express
+## 29. Méthode express
 
 ### 29.1 Le workflow SE express
 
@@ -1490,11 +1490,11 @@ flowchart TD
 4. Tracking (ouvert / cliqué / soumis)
 5. Reporting précis de la chaîne de compromission
 
-> [!success] 🏆 **En un mot**
+> [!success] **En un mot**
 > **Wireless** : la capture de hash + crack offline gagne la partie. **MITM** : ne cible que ce qui
 > reste en clair ou dégrade proprement. **SE** : le prétexte crédible bat toute la technique.
 
 ---
 
-> [!warning] ⚖️ **Rappel strict** : l'ingénierie sociale **sans autorisation écrite** est illégale.
-> Tout est à tester sur ton lab / campagnes approuvées. 🔒
+> [!warning] **Rappel strict** : l'ingénierie sociale **sans autorisation écrite** est illégale.
+> Tout est à tester sur ton lab / campagnes approuvées.

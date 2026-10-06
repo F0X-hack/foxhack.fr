@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎭 LDAP Injection
+# LDAP Injection
 
 > [!info] **En 1 phrase**
 > LDAP Injection = injecter des **opérateurs LDAP** (parenthèses, `&`, `|`, `!`, `*`) dans une
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,14 +35,14 @@ flowchart LR
     C --> G[Lecture userPassword]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > L'app concatène l'entrée brute dans un filtre LDAP (`(&(uid=$user)(userPassword=$pass))`).
 > En injectant **parenthèses et opérateurs**, on "sort" du contexte prévu et on **réécrit
 > la logique** du filtre.
 
 ---
 
-## 📚 Rappel : syntaxe LDAP
+## Rappel : syntaxe LDAP
 
 Un filtre LDAP est une chaîne entre parenthèses combinant **attribut**, **opérateur** et **valeur** :
 
@@ -61,7 +61,7 @@ Un filtre LDAP est une chaîne entre parenthèses combinant **attribut**, **opé
 (&(uid=admin)(userPassword=mdp))
 ```
 
-> [!warning] ⚠️ **Règle d'or** : la **syntaxe des filtres est le cœur de la vulnérabilité**.
+> [!warning] **Règle d'or** : la **syntaxe des filtres est le cœur de la vulnérabilité**.
 > Une parenthèse fermante `)` ou une étoile `*` suffisent à casser la structure.
 
 ### Quand ça s'applique
@@ -73,7 +73,7 @@ Un filtre LDAP est une chaîne entre parenthèses combinant **attribut**, **opé
 
 ---
 
-## 🚪 Bypass d'authentification
+## Bypass d'authentification
 
 Principe : injecter une condition **toujours vraie** qui neutralise le check du mot de passe.
 
@@ -114,12 +114,12 @@ login = *)(|(uid=*)(uid=*)
 login = *)(uid=*))|(uid=*
 ```
 
-> [!tip] 💡 **Astuce** : tester d'abord `*` seul dans le login. Si la réponse diffère
+> [!tip] **Astuce** : tester d'abord `*` seul dans le login. Si la réponse diffère
 > (page admin, autre message), la connexion passe par un filtre LDAP **injectable**.
 
 ---
 
-## 🙈 Blind LDAP Injection
+## Blind LDAP Injection
 
 Quand la réponse ne montre pas les résultats directement (login OK/KO, page 404/200),
 on extrait des données **caractère par caractère** avec des oracles booléens.
@@ -155,13 +155,13 @@ _ @ { } - / ( ) ! " $ % = ^ [ ] : ;
 # + éventuellement espaces et * (attention au wildcard)
 ```
 
-> [!warning] ⚠️ **Piège du wildcard en blind** : tester le caractère `*` dans une position
+> [!warning] **Piège du wildcard en blind** : tester le caractère `*` dans une position
 > peut rendre le test **toujours vrai** (il devient un joker). Le retirer de l'alphabet ou
 > l'encoder en `%2a` quand c'est possible.
 
 ---
 
-## 🔍 Information disclosure
+## Information disclosure
 
 ### Attributs intéressants
 
@@ -258,7 +258,7 @@ end
 
 ---
 
-## 🛡️ Bypass de filtres (WAF / validation)
+## Bypass de filtres (WAF / validation)
 
 ### Encodages
 
@@ -283,7 +283,7 @@ end
 ```txt
 \00  (null byte)    → termine la chaîne côté C → permet de "couper" le filtre
                       Exemple : admin\00 → (&(uid=admin\00)(...)) → check tronqué
-# ⚠️ Null byte souvent filtré en entrée → essayer %00, \x00, URL-encoded.
+# Null byte souvent filtré en entrée → essayer %00, \x00, URL-encoded.
 ```
 
 ### Casse & normalisation
@@ -303,7 +303,7 @@ LDAP (RFC 4515) ignore la casse des mots-clés :  (UID=*) = (uid=*)
 
 ---
 
-## 🧰 Outils
+## Outils
 
 ```bash
 # ldapsearch : recherche directe sur l'annuaire (post-auth / port ouvert 389)
@@ -324,7 +324,7 @@ nmap -p 389 --script ldap-search target
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -339,26 +339,26 @@ nmap -p 389 --script ldap-search target
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **La syntaxe est le cœur**
+> [!tip] **La syntaxe est le cœur**
 > Toute l'attaque repose sur **parenthèses + opérateurs + wildcard**. Avant de brute-forcer,
 > dessine le filtre final (ce que l'app concatène) → tu sais exactement quoi fermer (`)`)
 > et quoi ouvrir (`(&` / `(|`).
 
-> [!warning] ⚠️ **Contexte recherche vs authentification**
+> [!warning] **Contexte recherche vs authentification**
 > - **Recherche** : on peut souvent **extraire** des données (`(uid=a*)`, blind, attributs).
 > - **Authentification** : on vise surtout le **bypass** (le résultat du bind décide du login).
 > Un payload qui marche pour bypasser n'exfiltre rien, et inversement.
 
-> [!warning] ⚠️ **Pièges du wildcard `*`**
+> [!warning] **Pièges du wildcard `*`**
 > - `(uid=*)` matche **n'importe quelle valeur présente** → parfait pour le test d'existence,
 >   dangereux pour la précision (l'ordre de renvoi n'est pas garanti).
 > - En blind, un `*` dans la position testée peut rendre le test **toujours vrai**.
 > - `%2a` vs `*` : si un WAF décode l'URL, `%2a` redevient `*` ; si une regex bloque `*`,
 >   l'encodage aide.
 
-> [!warning] ⚠️ **Pièges techniques**
+> [!warning] **Pièges techniques**
 > - `userPassword` n'est pas une chaîne mais un **OCTET STRING** : les comparaisons
 >   `>`/`<` utilisent `userPassword:2.5.13.18:=\xx\xx` (matching rule octetStringOrderingMatch).
 > - Le résultat d'une recherche avec `*` peut renvoyer **plusieurs entrées** : l'app ne doit
@@ -366,7 +366,7 @@ nmap -p 389 --script ldap-search target
 > - Certains serveurs tolèrent les filtres **non fermés** → `*` seul peut suffire.
 > - L'ordre d'évaluation : `(&(A)(B))` exige A **et** B ; `(|(A)(B))` suffit d'un seul.
 
-> [!tip] 💡 **Démarche recommandée**
+> [!tip] **Démarche recommandée**
 > 1. Identifier la requête LDAP injectée (draw le filtre final).
 > 2. Bypass d'auth : `*` → `admin)(&` → `*)(uid=*` → variantes OR.
 > 3. Blind : alphabet complet + oracle booléen/time, automatisé.
@@ -375,10 +375,10 @@ nmap -p 389 --script ldap-search target
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]] — même philosophie de payloads (tautologie, blind, timing)
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[SAML|🔐 SAML]] — l'annuaire LDAP est souvent l'IdP derrière le SAML
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — LDAP Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LDAP%20Injection/README.md)
+- [[Injection SQL| SQLi]] — même philosophie de payloads (tautologie, blind, timing)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[SAML| SAML]] — l'annuaire LDAP est souvent l'IdP derrière le SAML
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — LDAP Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LDAP%20Injection/README.md)

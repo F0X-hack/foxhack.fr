@@ -1,7 +1,7 @@
 ---
 title: "Outil - kubectl"
 type: outil
-categorie: ☁️ Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://kubernetes.io/
 doc: https://kubernetes.io/docs/reference/kubectl/
 ---
 
-# 🛠️ kubectl — Le couteau suisse Kubernetes
+# kubectl — Le couteau suisse Kubernetes
 
 > [!info] **En 1 phrase**
 > La CLI de contrôle de Kubernetes : une fois un kubeconfig en main, elle te donne les clés du cluster pour énumérer, pivoter et exfiltrer.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | kubectl |
 | Description | CLI officielle de Kubernetes qui pilote l'API server (REST, port 6443) : get/describe/create/exec pour énumérer, escalader et exfiltrer dans un cluster |
-| Catégorie | ☁️ Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Kubernetes / Orchestration / Post-exploitation containers |
 | Type d'outil | CLI |
 | Licence | Apache-2.0 |
@@ -50,7 +50,7 @@ doc: https://kubernetes.io/docs/reference/kubectl/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 kubectl est la CLI officielle qui parle à l'**API server** de Kubernetes (port 6443) via des requêtes REST, avec un **kubeconfig** décrivant cluster, contexte et identité. En pentest Kubernetes, c'est l'outil de base dès qu'un accès est obtenu : kubeconfig volé (CI, poste d'admin, `admin.conf` du nœud), **token de service account** lu depuis un pod compromis, ou secret leaké. kubectl permet de : **énumérer** les namespaces, ressources, secrets et permissions RBAC ; **escalader** en créant des pods privilégiés, des rolebindings ou des contrôleurs ; **pivoter** via `exec`/`port-forward` ; et **exfiltrer** des données depuis un pod ou les volumes montés.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 kubectl se télécharge en binaire unique depuis `dl.k8s.io`, via les gestionnaires de paquets, ou Docker.
 
@@ -132,14 +132,14 @@ winget install Kubernetes.kubectl
 docker run --rm -v "$HOME/.kube:/root/.kube" bitnami/kubectl:latest get nodes
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - kubectl requiert un kubeconfig valide (`~/.kube/config`) ou un accès réseau à l'API server ; `kubectl config current-context` montre le contexte actif.
 > - Version de kubectl au plus 1 mineure au-dessus de l'API server (sinon `version mismatch`).
 > - En pentest, `--insecure-skip-tls-verify=true` contourne la vérification TLS du token, mais un admission controller/proxy peut bloquer la requête.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 kubectl se configure via le **kubeconfig** (contextes, users) et des flags ponctuels. Il n'y a pas de fichier de config global autre que le kubeconfig.
 
@@ -157,7 +157,7 @@ kubectl se configure via le **kubeconfig** (contextes, users) et des flags ponct
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 kubectl est un binaire Go qui expose des **commandes verbe + ressource** (`kubectl <verbe> <ressource> [flags]`), communiquant avec l'API server en REST/JSON :
 
@@ -179,7 +179,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -218,7 +218,7 @@ kubectl port-forward -n default svc/example-service 8080:80
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -240,7 +240,7 @@ kubectl port-forward -n default svc/example-service 8080:80
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -295,7 +295,7 @@ cat /host/var/lib/kubelet/config.yaml
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Obtenir un accès** — kubeconfig volé, token SA lu depuis un pod compromis, ou API server exposé sans auth.
    ```bash
@@ -323,7 +323,7 @@ cat /host/var/lib/kubelet/config.yaml
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Escalade RBAC via une RoleBinding modifiable
 
@@ -353,7 +353,7 @@ cat /host/etc/kubernetes/pki/ca.crt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -366,7 +366,7 @@ cat /host/etc/kubernetes/pki/ca.crt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -384,7 +384,7 @@ cat /host/etc/kubernetes/pki/ca.crt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -425,7 +425,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — énumération automatique des permissions et secrets
@@ -437,7 +437,7 @@ done
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 kubectl sort en `wide`, `yaml`, `json`, `name`, ou `custom-columns`. Le JSON est la meilleure forme pour le parsing automatisé.
 
@@ -453,9 +453,9 @@ kubectl get pods -A -o json | \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - kube-hunter|kube-hunter]] — scan de vulnérabilités du cluster avant l'accès
 - [[Outil - kube-bench|kube-bench]] — benchmark CIS du cluster (défense et posture)
 - [[Outil - peirates|peirates]] — post-exploitation Kubernetes automatisée (pivot, escape)
@@ -469,7 +469,7 @@ cloudfox (EKS) → kubeconfig volé → kubectl (enum/esc) → peirates (post-ex
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -483,7 +483,7 @@ cloudfox (EKS) → kubeconfig volé → kubectl (enum/esc) → peirates (post-ex
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Réseau** : chaque commande est une requête HTTP vers l'API server (latence réseau dominante) ; `--v=6` affiche les requêtes exactes.
 - **Énumération** : `get -A -o json` est une requête unique par ressource — très rapide même sur de gros clusters (sauf pagination de gros résultats).
@@ -492,7 +492,7 @@ cloudfox (EKS) → kubeconfig volé → kubectl (enum/esc) → peirates (post-ex
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -516,7 +516,7 @@ cloudfox (EKS) → kubeconfig volé → kubectl (enum/esc) → peirates (post-ex
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : kubectl ne « détecte » rien, il exécute les permissions du token ; n'utiliser que sur des clusters autorisés (pentest signé, lab).
 - **Traçabilité** : chaque commande est journalisée dans les audit logs de l'API server — l'énumération offensive est détectable a posteriori.
@@ -526,7 +526,7 @@ cloudfox (EKS) → kubeconfig volé → kubectl (enum/esc) → peirates (post-ex
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Permissions = capacité** : sans droits RBAC, kubectl ne fait rien ; c'est le principe de l'outil, pas un bug.
 - **Pas de scan de vulnérabilités** : kubectl n'identifie pas les failles (CVE) ; combiner avec kube-hunter/kube-bench.
@@ -536,7 +536,7 @@ cloudfox (EKS) → kubeconfig volé → kubectl (enum/esc) → peirates (post-ex
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Accès & identité
@@ -568,7 +568,7 @@ kubectl create rolebinding pwn-admin --clusterrole=cluster-admin \
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -581,7 +581,7 @@ kubectl create rolebinding pwn-admin --clusterrole=cluster-admin \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -593,16 +593,16 @@ kubectl create rolebinding pwn-admin --clusterrole=cluster-admin \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `kubectl auth can-i --list -A` est LE premier réflexe : il liste toutes les actions autorisées pour le token courant en une commande.
 > - Le token SA est monté par défaut dans `/var/run/secrets/kubernetes.io/serviceaccount/` : check-le sur tout pod compromis.
 > - Teste les permissions avec `--as=system:serviceaccount:<ns>:<sa>` pour valider sans créer de pod.
 > - Utilise `-o json` systématiquement pour parser les résultats avec jq.
 > - `kubectl cp` permet d'exfiltrer des fichiers du pod vers ton poste (kubeconfig, secrets).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans permissions, kubectl ne fait rien : `auth can-i` te dit immédiatement ce qui est possible.
 > - `kubectl run` crée un Deployment par défaut en versions récentes : utilise `--restart=Never` pour un pod éphémère.
 > - `--insecure-skip-tls-verify` est bruyant et peut être bloqué par un admission controller.
@@ -611,7 +611,7 @@ kubectl create rolebinding pwn-admin --clusterrole=cluster-admin \
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -638,4 +638,4 @@ kubectl create rolebinding pwn-admin --clusterrole=cluster-admin \
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - kube-hunter|kube-hunter]] · [[Outil - peirates|peirates]] · [[Outil - kube-bench|kube-bench]]
+**Liens :** [[Tools| Outils]] · [[Outil - kube-hunter|kube-hunter]] · [[Outil - peirates|peirates]] · [[Outil - kube-bench|kube-bench]]

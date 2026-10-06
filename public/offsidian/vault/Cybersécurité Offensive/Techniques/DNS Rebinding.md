@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔁 DNS Rebinding
+# DNS Rebinding
 
 > [!info] **En 1 phrase**
 > DNS Rebinding = faire **re-résoudre** un nom de domaine contrôlé par l'attaquant vers une **IP interne** (127.0.0.1, réseau local) après une première résolution légitime, pour que le navigateur de la victime parle à un service interne **sous une origine « autorisée »**.
@@ -21,14 +21,14 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
-    participant V as 🖥️ Victime (navigateur)
-    participant D as 🌐 DNS attaquant<br>(TTL très court)
-    participant A as 🎯 Serveur attaquant<br>203.0.113.1
-    participant I as 🔐 Service interne<br>192.168.1.1 / 127.0.0.1
+    participant V as Victime (navigateur)
+    participant D as DNS attaquant<br>(TTL très court)
+    participant A as Serveur attaquant<br>203.0.113.1
+    participant I as Service interne<br>192.168.1.1 / 127.0.0.1
 
     Note over V: La victime visite evil.com<br>(phishing, pub, xss...)
     V->>D: DNS query evil.com
@@ -38,18 +38,18 @@ sequenceDiagram
     Note over V: TTL expiré
     V->>D: DNS query evil.com (re-résolution)
     D-->>V: 192.168.1.1 (IP interne)
-    V->>I: GET / (Host: evil.com)<br>⚠️ même origine pour le navigateur !
+    V->>I: GET / (Host: evil.com)<br>même origine pour le navigateur !
     I-->>V: Réponse lue par le JS<br>(SOP contournée)
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > La **Same-Origin Policy (SOP)** compare les **origines** (`schéma://hôte:port`), pas les IP.
 > Comme `evil.com` reste `evil.com`, le navigateur considère que la requête vers l'IP interne
 > vient **de la même origine** → le JS peut **lire la réponse** (contrairement à un XSS/SSRF simple).
 
 ---
 
-## 🧠 Le principe en détail
+## Le principe en détail
 
 ### Le même nom DNS, deux réponses
 
@@ -65,14 +65,14 @@ sequenceDiagram
 - Une autre approche : alterner les réponses **IP attaquant / IP interne** à chaque requête
   (round-robin DNS sur 2 réponses) — le navigateur finit par tomber sur l'IP interne.
 
-> [!warning] ⚠️ **SOP vs DNS**
+> [!warning] **SOP vs DNS**
 > La SOP ne connaît **pas les IP** : elle ne regarde que l'**origine** (host + port + schéma).
 > Un nom DNS qui pointe vers n'importe quelle IP reste « la même origine » → le JS peut
 > **envoyer ET lire** les réponses du service interne.
 
 ---
 
-## 🛠️ Outils & services de rebinding
+## Outils & services de rebinding
 
 ### Frameworks complets
 
@@ -99,12 +99,12 @@ curl http://192.168.1.1.nip.io/
 # il faut une réponse DIFFÉRENTE entre la 1re et la 2e requête → pas suffisant seul
 ```
 
-> [!tip] 💡 Ces services ne font **qu'une seule résolution** (pas de re-binding automatique) :
+> [!tip] Ces services ne font **qu'une seule résolution** (pas de re-binding automatique) :
 > ils servent à tester une cible précise, pas à faire tourner une attaque DNS rebinding complète.
 
 ---
 
-## ⚔️ Exploitation
+## Exploitation
 
 ### Workflow d'attaque
 
@@ -123,7 +123,7 @@ curl http://192.168.1.1.nip.io/
 
 ### Combinaison avec CORS / CSWSH
 
-> [!info] 💡 **Le duo de choc**
+> [!info] **Le duo de choc**
 > DNS rebinding + **misconfiguration CORS** = vol de données complet.
 > Le rebinding place la requête dans l'**origine légitime** (`evil.com`), le serveur interne
 > répond avec `Access-Control-Allow-Origin: <Origin de la requête>` (miroir ou `*`) →
@@ -139,7 +139,7 @@ curl http://192.168.1.1.nip.io/
 
 ---
 
-## 💻 Scripts / PoC
+## Scripts / PoC
 
 ### Page HTML + JS (auto-scan de l'interne)
 
@@ -253,7 +253,7 @@ dig @IP_SINGULARITY evil.com +short          # → 192.168.1.1
 
 ---
 
-## 🧱 Limites & contraintes
+## Limites & contraintes
 
 | Limite | Explication |
 |---|---|
@@ -266,7 +266,7 @@ dig @IP_SINGULARITY evil.com +short          # → 192.168.1.1
 
 ---
 
-## 🚪 Bypass de protections
+## Bypass de protections
 
 > Les protections DNS (DNS firewalls, RPZ) bloquent surtout les **réponses DNS** contenant des IP
 > privées (RFC 1918, loopback). Plusieurs contournements documentés par NCC Group :
@@ -309,7 +309,7 @@ localhost.evil.com.           381     IN      CNAME   localhost.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -325,15 +325,15 @@ localhost.evil.com.           381     IN      CNAME   localhost.
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Prérequis pour que ça marche**
+> [!tip] **Prérequis pour que ça marche**
 > 1. **Contrôler un nom de domaine** (délégation NS vers son serveur DNS ou DNS dynamique).
 > 2. **TTL très court** (1–5 s) servi par SON résolveur.
 > 3. Une **cible interne HTTP** accessible (service web, API, admin) avec **pas de validation du `Host`**.
 > 4. La victime sur un navigateur qui **re-résout le DNS** (et si possible pas de DoH).
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - **HTTPS tue le rebind** : sans cert valide pour l'IP interne, le navigateur bloque. Vise le HTTP ou les services tolérants.
 > - **Le pinning des navigateurs** : Chrome garde parfois la résolution plus longtemps que le TTL → multiplier les tentatives / sous-domaines.
 > - **Différence avec l'Open Redirect** : l'open redirect envoie la **victime elle-même** sur un domaine externe contrôlé (rebond via un endpoint). Le DNS rebinding **ne change pas de domaine** : il change l'**IP** que le nom résout — le navigateur reste sur la même origine, le SOP ne dit rien.
@@ -343,14 +343,14 @@ localhost.evil.com.           381     IN      CNAME   localhost.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[SSRF|🌐 SSRF]]
-- [[CORS|🌐 CORS]]
-- [[Web Sockets|🔌 Web Sockets]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — DNS Rebinding](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/DNS%20Rebinding/README.md)
-- 📖 [NCC Group — How Do DNS Rebinding Attacks Work?](https://github.com/nccgroup/singularity/wiki/How-Do-DNS-Rebinding-Attacks-Work%3F)
-- 🧰 [Singularity of Origin (nccgroup)](https://github.com/nccgroup/singularity) / [Protection Bypasses](https://github.com/nccgroup/singularity/wiki/Protection-Bypasses)
-- 🧰 [rbndr (taviso)](https://github.com/taviso/rbndr) / [RebindRanger](https://github.com/crazy-wasim/RebindRanger) / [rbsession](https://github.com/rbsec/rbsession)
+- [[SSRF| SSRF]]
+- [[CORS| CORS]]
+- [[Web Sockets| Web Sockets]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — DNS Rebinding](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/DNS%20Rebinding/README.md)
+- [NCC Group — How Do DNS Rebinding Attacks Work?](https://github.com/nccgroup/singularity/wiki/How-Do-DNS-Rebinding-Attacks-Work%3F)
+- [Singularity of Origin (nccgroup)](https://github.com/nccgroup/singularity) / [Protection Bypasses](https://github.com/nccgroup/singularity/wiki/Protection-Bypasses)
+- [rbndr (taviso)](https://github.com/taviso/rbndr) / [RebindRanger](https://github.com/crazy-wasim/RebindRanger) / [rbsession](https://github.com/rbsec/rbsession)

@@ -1,7 +1,7 @@
 ---
 title: "Outil - Parrot OS"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.parrotsec.org
 doc: https://docs.parrot.sh/
 ---
 
-# 🦜 Parrot OS — Sécurité ET vie privée au quotidien
+# Parrot OS — Sécurité ET vie privée au quotidien
 
 > [!info] **En 1 phrase**
 > Parrot OS est une distribution basée sur Debian qui combine outils de pentest (600+) et fonctionnalités d'anonymat (Anonsurf, Tor) pour servir à la fois de plateforme offensive et de système de travail quotidien respectueux de la vie privée.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Parrot OS (anciennement Parrot Security OS) |
 | Description | Distribution Debian combinant pentest (800+ outils dans l'édition Security), forensics, vie privée et anonymat |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution offensive + vie privée |
 | Fonction principale | Plateforme de pentest, OSINT anonyme, système de travail quotidien durci |
 | Type d'outil | Distribution Linux complète (CLI + GUI MATE) |
@@ -50,7 +50,7 @@ doc: https://docs.parrot.sh/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Parrot OS est développée par **Parrot Security CIC** (Frozenbox) sur une base **Debian** et se distingue de Kali par une **double philosophie** : le pentest ET la protection de la vie privée. L'édition **Security** embarque plus de 800 outils (méta-paquet `parrot-tools-full`), tandis que l'édition **Home** fournit un bureau durci pour le travail quotidien, sans arsenal offensif. Le système utilise par défaut l'environnement **MATE**, réputé léger (2 Go de RAM suffisent), et un modèle de mise à jour semi-rolling.
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -90,7 +90,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Téléchargement et vérification
 
@@ -130,14 +130,14 @@ sudo apt update && sudo apt full-upgrade -y
 sudo parrot-upgrade
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'édition **Security** nécessite plus de ressources que Home (outils nombreux).
 > - Anonsurf nécessite une connexion Tor fonctionnelle ; vérifier `anonsurf status` après démarrage.
 > - Sur une VM, installer les **guest additions** pour un bureau confortable.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -150,7 +150,7 @@ sudo parrot-upgrade
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Parrot est un dérivé Debian : **`apt`/`dpkg`**, `systemd`, structure `/usr`, `/etc`, `/var`, et un noyau Linux compilé avec des options de durcissement. L'architecture des outils suit le modèle des **méta-paquets** : `parrot-tools-full` installe l'arsenal Security complet ; des paquets plus ciblés permettent une installation minimale.
 
@@ -165,7 +165,7 @@ L'édition Security organise les outils par **menus** (parrot-menu) : « Informa
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -202,7 +202,7 @@ torify theHarvester -d exemple.com -b all
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -223,7 +223,7 @@ torify theHarvester -d exemple.com -b all
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -265,7 +265,7 @@ torify sherlock username
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Durcir le système** — changer les mots de passe par défaut et mettre à jour.
    ```bash
@@ -303,7 +303,7 @@ torify sherlock username
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : OSINT anonyme depuis Parrot Home
 
@@ -329,7 +329,7 @@ Utiliser Parrot **Home** comme système de travail quotidien durci et lancer Par
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -346,7 +346,7 @@ Utiliser Parrot **Home** comme système de travail quotidien durci et lancer Par
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -361,7 +361,7 @@ Utiliser Parrot **Home** comme système de travail quotidien durci et lancer Par
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -402,7 +402,7 @@ alert tcp any any -> any any (msg:"ET SCAN NMAP SYN window"; flags:S; window:102
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — cycle Anonsurf pour renouveler l'identité Tor en OSINT
@@ -425,7 +425,7 @@ with urllib.request.urlopen("https://check.torproject.org/api/ip") as r:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les outils de Parrot produisent des sorties standard : la gestion se fait comme sous Debian.
 
@@ -453,9 +453,9 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Kali Linux]] — la distribution offensive de référence (base similaire)
 - [[Outil - Tails OS]] — l'anonymat amnésique (Tor natif, sans outils offensifs)
 - [[Outil - Wireshark]] — capture et analyse réseau
@@ -473,7 +473,7 @@ Nmap → Metasploit → post-exploitation → rapport
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ Nmap → Metasploit → post-exploitation → rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **RAM** : 2 Go suffisent en bureau léger, 4 Go confortables, 8 Go pour Metasploit + navigation.
 - **Disque** : ~8 Go pour Home, ~20 Go pour Security complète.
@@ -500,7 +500,7 @@ Nmap → Metasploit → post-exploitation → rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -530,7 +530,7 @@ Nmap → Metasploit → post-exploitation → rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Anonymat ≠ impunité** : Anonsurf masque l'IP mais pas l'empreinte comportementale ; à utiliser pour des tâches légitimes (OSINT, journalisme).
 - **Identifiants par défaut** : l'image live utilise des comptes connus (`user`/`user` ou `root`/`toor`) ; les changer immédiatement sur toute machine exposée.
@@ -540,7 +540,7 @@ Nmap → Metasploit → post-exploitation → rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas un système de production** : semi-rolling, outils offensifs détectables.
 - **Anonsurf n'est pas un VPN commercial** : la sortie Tor peut être bloquée par certains services (captcha, géo-blocage).
@@ -550,7 +550,7 @@ Nmap → Metasploit → post-exploitation → rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Anonymat
@@ -575,7 +575,7 @@ wireshark &
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -588,7 +588,7 @@ wireshark &
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -600,22 +600,22 @@ wireshark &
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Vérifie `sudo anonsurf status` avant toute action sensible : ne te fie jamais à l'interface seule.
 > - Utilise l'édition **Home** pour le travail quotidien et la **Security** dans une VM pour les engagements : isolation totale.
 > - Parrot tourne bien en **live USB avec persistance chiffrée** : aucun trace sur la machine hôte.
 > - Installe les outils par **méta-paquets** (`parrot-tools-*`) pour un système léger et maintenable.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Anonsurf ne protège pas contre les fuites DNS/IPv6** si mal configuré : teste avec `torsocks` et vérifie `check.torproject.org`.
 > - Les outils offensifs de Parrot sont les mêmes que ceux de Kali : les utiliser sans autorisation est **illégal**.
 > - Ne confonds pas « anonymat » et « impunité » : Tor ne protège pas du profilage comportemental (empreinte navigateur, timing).
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -639,8 +639,8 @@ wireshark &
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://www.parrotsec.org/
 > - https://docs.parrotsec.org/
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Tails OS|🕵️ Tails OS]] · [[Outil - Wireshark|📡 Wireshark]] · [[Outil - Kali Linux|🐉 Kali Linux]] · [[Outil - Metasploit|🛠️ Metasploit]] · [[Outil - Nmap|📡 Nmap]] · [[Outil - bettercap|🎯 bettercap]]
+**Liens :** [[Tools| Outils]] · [[Outil - Tails OS| Tails OS]] · [[Outil - Wireshark| Wireshark]] · [[Outil - Kali Linux| Kali Linux]] · [[Outil - Metasploit| Metasploit]] · [[Outil - Nmap| Nmap]] · [[Outil - bettercap| bettercap]]

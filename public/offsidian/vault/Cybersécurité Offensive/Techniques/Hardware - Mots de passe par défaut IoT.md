@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔑 Mots de passe par défaut IoT
+# Mots de passe par défaut IoT
 
 > [!info] **En 1 phrase**
 > Les devices IoT embarquent des **mots de passe par défaut** (root/admin/123456…)
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible à Moyenne |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Device IoT (caméra, routeur…)"] --> B["Interface de login (Telnet/SSH/Web)"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > L'utilisation de **mots de passe par défaut** est l'une des vecteurs d'attaque les plus anciens et les plus efficaces contre les devices IoT. Le botnet **Mirai** (2016) a démontré qu'une simple liste de ~60 couples login/mot de passe pouvait compromettre des centaines de milliers de caméras, routeurs et DVR dans le monde entier. Cette technique exploite la négligence humaine : les fabricants incluent des credentials standard, et les utilisateurs ne les changent jamais.
 
@@ -59,7 +59,7 @@ flowchart TB
     style C fill:#ffcdd2
 ```
 
-> [!info] 💡 **Ce qu'on obtient**
+> [!info] **Ce qu'on obtient**
 > - Un **shell** (souvent root) sur le device → exfiltration firmware, config, secrets.
 > - L'accès au **backend** de gestion (cloud camera, routeur) souvent avec les mêmes creds.
 > - De quoi **propager** : beaucoup d'exploits IoT sont des combos « port telnet + creds par défaut ».
@@ -67,7 +67,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Pourquoi les creds par défaut persistent
 
@@ -109,7 +109,7 @@ flowchart LR
 
 ---
 
-## 🌐 Rechercher un mot de passe par défaut
+## Rechercher un mot de passe par défaut
 
 > Base de référence en ligne : **[defpass.com](https://www.defpass.com)** — recherche de mot de passe
 > par défaut par fabricant/modèle de device IoT.
@@ -132,7 +132,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/scadastrangelove/SCADA
 
 ---
 
-## 🤖 La wordlist Mirai
+## La wordlist Mirai
 
 > Les couples login/mot de passe utilisés par le **botnet Mirai** (2016, caméras/DVR) —
 > c'est la liste de référence des creds faibles réellement présents sur l'Internet IoT.
@@ -202,7 +202,7 @@ mother fucker
 
 ---
 
-## 📋 Tableau détaillé des mots de passe par défaut
+## Tableau détaillé des mots de passe par défaut
 
 ### Caméras IP
 
@@ -298,7 +298,7 @@ mother fucker
 
 ---
 
-## 🛠️ Comment l'exploiter
+## Comment l'exploiter
 
 ### Scan réseau et identification
 
@@ -399,7 +399,7 @@ if __name__ == "__main__":
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Adaptateurs pour UART (accès hors réseau)
 
@@ -429,9 +429,9 @@ putty -serial COM3 -speed 115200
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Test rapide de creds Mirai
+### Débutant — Test rapide de creds Mirai
 
 ```bash
 # Étape 1 : Scanner les ports
@@ -444,7 +444,7 @@ telnet 192.168.1.100
 # Essayer : root / (vide)
 ```
 
-### 🟡 Intermédiaire — Hydra sur plusieurs devices
+### Intermédiaire — Hydra sur plusieurs devices
 
 ```bash
 #!/bin/bash
@@ -462,7 +462,7 @@ for i in $(seq 1 254); do
 done
 ```
 
-### 🔴 Avancé — Script Python complet d'exploitation IoT
+### Avancé — Script Python complet d'exploitation IoT
 
 ```python
 #!/usr/bin/env python3
@@ -554,7 +554,7 @@ if __name__ == "__main__":
         print(f"[-] Aucun credential trouvé sur {target}")
 ```
 
-### ⚫ Expert — Pivot réseau depuis un IoT compromis
+### Expert — Pivot réseau depuis un IoT compromis
 
 ```python
 #!/usr/bin/env python3
@@ -586,7 +586,7 @@ def pivot_scan(compromised_ip, ssh_user, ssh_pass, subnet="192.168.2"):
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -628,7 +628,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Audit complet d'un parc IoT (caméras IP)
 
@@ -638,7 +638,7 @@ flowchart TB
 | **Matériel** | PC, nmap, Hydra, Mirai wordlist |
 | **Étapes** | 1. Scan réseau 2. Identification caméras 3. Test Mirai creds 4. Dump firmware 5. Rapport |
 | **Résultat** | % de devices compromis, CVE identifiés, recommandations |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -656,11 +656,11 @@ flowchart LR
 | **Matériel** | PC, nmap, Hydra, SSH client |
 | **Étapes** | 1. Identifier le routeur 2. Tester creds par défaut 3. Obtenir shell 4. Scanner le LAN interne 5. Pivoter vers d'autres devices |
 | **Résultat** | Accès au réseau interne, liste des hosts internes |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -678,7 +678,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -711,7 +711,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -766,7 +766,7 @@ systemctl enable fail2ban
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -836,7 +836,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -871,12 +871,12 @@ cat results.txt | grep -E "^\[.*\]\s+telnet://"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Identification de puces|🔬 Identification de puces]] — Identifier les composants IoT
-- [[Hardware - Recherche FCC ID|🛰️ FCC ID]] — Documentation interne des devices
-- [[Hardware - Flipper Zero|🏴‍☠️ Flipper Zero]] — Outil de test RF/IoT
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Identification de puces| Identification de puces]] — Identifier les composants IoT
+- [[Hardware - Recherche FCC ID| FCC ID]] — Documentation interne des devices
+- [[Hardware - Flipper Zero| Flipper Zero]] — Outil de test RF/IoT
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -893,7 +893,7 @@ cat results.txt | grep -E "^\[.*\]\s+telnet://"
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -913,7 +913,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -934,7 +934,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -978,7 +978,7 @@ cat /var/log/auth.log
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -1000,7 +1000,7 @@ cat /var/log/auth.log
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -1022,7 +1022,7 @@ cat /var/log/auth.log
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -1052,7 +1052,7 @@ cat /var/log/auth.log
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -1066,7 +1066,7 @@ cat /var/log/auth.log
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -1088,7 +1088,7 @@ cat /var/log/auth.log
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **root/(none)** signifie un champ vide — beaucoup de scripts de brute force échouent sur ce cas.
 - Les couples **ubnt/ubnt** (Ubiquiti) et **realtek** (routeurs Realtek) ouvrent des familles entières de devices.
@@ -1107,9 +1107,9 @@ cat /var/log/auth.log
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Default IoT Passwords](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/other/default-iot-passwords.md)
 > - [Mirai Botnet Source Code Analysis](https://github.com/jgamblin/Mirai-Source-Code)
 > - [SecLists — Mirai Wordlist](https://github.com/danielmiessler/SecLists/tree/master/Passwords/Malware)
@@ -1142,4 +1142,4 @@ cat /var/log/auth.log
 | Practical IoT Hacking | Fotios Chantzis | 2021 |
 | The IoT Hacker's Handbook | Aditya Gupta | 2019 |
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Identification de puces|🔬 Identification de puces]] · [[Hardware - Recherche FCC ID|🛰️ FCC ID]] · [[Hardware - Flipper Zero|🏴‍☠️ Flipper Zero]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Identification de puces| Identification de puces]] · [[Hardware - Recherche FCC ID| FCC ID]] · [[Hardware - Flipper Zero| Flipper Zero]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌉 Pivoting & Tunneling
+# Pivoting & Tunneling
 
 > [!info] **En 1 phrase**
 > Pivoting = passer d'une machine compromise (publique) aux machines internes que **seule** cette
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -30,13 +30,13 @@ flowchart LR
     B -.->|pas d'accès direct| K
 ```
 
-> [!info] 💡 **Les 2 familles**
+> [!info] **Les 2 familles**
 > - **Tunnel simple** : forward un port précis (`127.0.0.1:8080 → interne:80`).
 > - **SOCKS proxy** : toute la navigation/scans passent par la machine compromise.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # SSH - local forward (port précis)
@@ -65,7 +65,7 @@ socat TCP-LISTEN:4444,fork TCP:192.168.1.20:3389
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -75,17 +75,17 @@ socat TCP-LISTEN:4444,fork TCP:192.168.1.20:3389
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Proxychains = TCP only**
+> [!tip] **Proxychains = TCP only**
 > `nmap -sT -Pn` obligatoire (pas de SYN, pas d'UDP/ICMP à travers SOCKS).
 
-> [!warning] ⚠️ **Piège** : la machine compromise doit avoir **2 interfaces** (publique + interne) pour pivoter. Vérifie `ip a` / `netstat -rn` / `ipconfig` avant.
+> [!warning] **Piège** : la machine compromise doit avoir **2 interfaces** (publique + interne) pour pivoter. Vérifie `ip a` / `netstat -rn` / `ipconfig` avant.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Reverse Shells|🕸️ Reverse Shells]]
-- [[SSRF|🌐 SSRF]] (une entrée vers l'interne côté web)
-- → Note complète : [[04 - Exploitation Réseau|💥 Exploitation Réseau]]
+- [[Reverse Shells| Reverse Shells]]
+- [[SSRF| SSRF]] (une entrée vers l'interne côté web)
+- → Note complète : [[04 - Exploitation Réseau| Exploitation Réseau]]

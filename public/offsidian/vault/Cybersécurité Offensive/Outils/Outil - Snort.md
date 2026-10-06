@@ -1,11 +1,11 @@
 ---
 title: "Outil - Snort"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 3.12.2.0 (Snort 3, 2026-04-23) — Snort 2 en fin de vie
 licence: GPLv2+ (Snort), règles communautaires GPL
@@ -16,7 +16,7 @@ site: https://www.snort.org
 doc: https://docs.snort.org
 ---
 
-# 🛡️ Snort — Défense & SIEM
+# Snort — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Snort est l'IDS/IPS **à base de règles** le plus connu : il analyse le trafic en temps réel et
@@ -24,13 +24,13 @@ doc: https://docs.snort.org
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Snort |
 | Description | IDS/IPS réseau à base de signatures : analyse du trafic temps réel, alertes ou blocage selon des règles |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | NIDS / NIPS / Signature-based detection |
 | Fonction principale | Détecter (alert) et/ou bloquer (drop) le trafic malveillant via des règles + préprocesseurs |
 | Type d'outil | Daemon réseau (CLI + config), bibliothèque libdaq pour l'interface |
@@ -51,7 +51,7 @@ doc: https://docs.snort.org
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Snort est un **IDS (Intrusion Detection System)** qui écoute le réseau en 3 modes : **sniffer** (affiche le trafic), **packet logger** (enregistre les paquets) et **IDS/IPS** (détecte via des règles puis journalise ou bloque). Il se déploie en **mirror SPAN** sur un switch pour voir tout le trafic sans être dans le chemin de données. En mode **inline (IPS)**, il se place réellement dans le flux (via **DAQ**, Data AcQuisition : NFQueue/iptables, AF_PACKET, netmap...) et peut appliquer les actions `drop`/`reject`.
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -90,7 +90,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux (Snort 2, dépôts)
 
@@ -132,7 +132,7 @@ sudo dnf install -y snort3     # via le dépôt snort.org RPM
 docker run --rm --net=host -it -v /etc/snort:/etc/snort --name snort snort:latest
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - La validation `snort -T` doit retourner `1` (config saine) ; une erreur de règle bloque le démarrage.
 > - En Snort 3, les variables se déclarent en Lua (`HOME_NET = '10.10.20.0/24'`) : ne pas mélanger la syntaxe `ipvar` de Snort 2.
 > - Le mode IPS nécessite **iptables/NFQUEUE** (Snort 2) ou le DAQ `af_packet` en inline (Snort 3) avec des privilèges root.
@@ -140,7 +140,7 @@ docker run --rm --net=host -it -v /etc/snort:/etc/snort --name snort snort:lates
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -161,7 +161,7 @@ docker run --rm --net=host -it -v /etc/snort:/etc/snort --name snort snort:lates
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -177,7 +177,7 @@ Flux type : paquet entrant → DAQ → decodeurs → préprocesseurs (frag3, str
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -226,7 +226,7 @@ barnyard2 -c /etc/snort/barnyard2.conf -d /var/log/snort -w /var/log/snort/spool
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -251,7 +251,7 @@ barnyard2 -c /etc/snort/barnyard2.conf -d /var/log/snort -w /var/log/snort/spool
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -312,7 +312,7 @@ snort -c /usr/local/etc/snort/snort.lua -Q -i eth0:eth1 -z auto -l /var/log/snor
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Configurer le réseau à surveiller** dans la config : `HOME_NET` à `10.10.20.0/24`, `EXTERNAL_NET` à `!$HOME_NET`.
 2. **Créer une règle maison** dans `local.rules` pour détecter un ping :
@@ -324,7 +324,7 @@ snort -c /usr/local/etc/snort/snort.lua -Q -i eth0:eth1 -z auto -l /var/log/snor
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : rejouer une capture d'attaque pour valider ses règles
 
@@ -364,7 +364,7 @@ sudo snort -r shell.pcap -c /etc/snort/snort.conf -A console
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -377,7 +377,7 @@ sudo snort -r shell.pcap -c /etc/snort/snort.conf -A console
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -392,7 +392,7 @@ sudo snort -r shell.pcap -c /etc/snort/snort.conf -A console
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -432,7 +432,7 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET 4444 (msg:"Possible reverse shell"; flo
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — mise à jour des règles Snort 3 + rechargement
@@ -446,7 +446,7 @@ grep '"event_type":"alert"' /var/log/snort/alert_json.txt | jq -r \
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Snort 2 produit des logs texte (`alert` fast/full) et **unified2** (binaire → Barnyard2 → BDD). Snort 3 produit **alert_fast** (une ligne), **alert_json** (JSON structuré) et **alert_csv**. Les événements JSON contiennent `timestamp`, `src_ip`, `src_port`, `dst_ip`, `dst_port`, `proto`, `alert{signature, signature_id, action}`.
 
@@ -458,7 +458,7 @@ jq -r 'select(.event_type=="alert") | .alert.signature' /var/log/snort/alert_jso
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Switch SPAN → Snort → alert_json → Filebeat → Elastic / Graylog / Splunk
@@ -467,7 +467,7 @@ Snort 2 → unified2 → Barnyard2 → MySQL/PostgreSQL
 Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture réseau complète
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Suricata]] — alternative multi-thread, même langage de règles
 - [[Outil - Zeek]] — métadonnées réseau complémentaires aux alertes Snort
 - [[Outil - Elastic]] — collecte des alertes JSON et corrélation SIEM
@@ -478,7 +478,7 @@ Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture résea
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -492,7 +492,7 @@ Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture résea
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Snort 2 est **mono-thread** : sur lien >1 Gbps, penser à Snort 3 (`-z auto`) qui parallélise par flux (affinité CPU).
 - Snort 3 utilise **Hyperscan** (Intel) pour accélérer les `content` ; le multi-pattern réduit fortement la charge CPU.
@@ -506,7 +506,7 @@ Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture résea
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -536,7 +536,7 @@ Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture résea
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : Snort tourne en root pour l'écoute puis drop vers `-u snort -g snort` ; ne jamais exposer le process à des données non fiables sans isolation.
 - **Config réseau** : en mode IPS, une mauvaise règle `drop` peut couper la production : déployer en `alert` d'abord, passer en `drop` progressivement.
@@ -547,7 +547,7 @@ Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture résea
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Signature-based** : détecte ce que les règles décrivent, pas les attaques inconnues (0-day) ni les évassions de signatures.
 - **Trafic chiffré** : le TLS légitime n'est pas inspecté (hors interception) : une partie du C2 moderne passe inaperçue.
@@ -558,7 +558,7 @@ Snort (IPS) + Zeek (métadonnées) + Suricata (règles ET) → couverture résea
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Valider la config
@@ -587,7 +587,7 @@ snort -c /usr/local/etc/snort/snort.lua -Q -i eth0:eth1 -z auto -D
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -600,7 +600,7 @@ snort -c /usr/local/etc/snort/snort.lua -Q -i eth0:eth1 -z auto -D
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -613,29 +613,29 @@ snort -c /usr/local/etc/snort/snort.lua -Q -i eth0:eth1 -z auto -D
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Toujours valider avant de déployer**
+> [!tip] **Toujours valider avant de déployer**
 > `sudo snort -c /etc/snort/snort.conf -T` — une sortie propre = config saine. Teste chaque nouvelle règle sur un **pcap de test** (`-r`) avant de l'activer en production.
 
-> [!tip] 💡 **Règles maison avec sid > 1 000 000**
+> [!tip] **Règles maison avec sid > 1 000 000**
 > Utilise les plages `sid:1000000+` pour tes règles locales : les plages basses sont réservées aux règles officielles et entrent en collision avec les mises à jour.
 
-> [!tip] 💡 **Déploie en alert avant de passer en drop**
+> [!tip] **Déploie en alert avant de passer en drop**
 > En IPS, bascule progressivement : `alert` d'abord pour mesurer le bruit, puis `drop` sur les règles stables uniquement.
 
-> [!warning] ⚠️ **Piège** : Snort est un **IDS à signature**.
+> [!warning] **Piège** : Snort est un **IDS à signature**.
 > Il ne voit que ce que les règles décrivent, pas les anomalies inconnues. Le combiner avec des métadonnées (Zeek) et une couche hôte (osquery/Wazuh).
 
-> [!warning] ⚠️ **Piège** : une règle trop large noie les vraies alertes.
+> [!warning] **Piège** : une règle trop large noie les vraies alertes.
 > `any any` sans tuning génère des milliers d'alertes : sans `suppress`/`threshold`, les analystes ignorent les logs.
 
-> [!warning] ⚠️ **Piège** : ne pas mélanger Snort 2 et Snort 3.
+> [!warning] **Piège** : ne pas mélanger Snort 2 et Snort 3.
 > La syntaxe de config (`snort.conf` vs `snort.lua`) et certains outils (Barnyard2) ne s'appliquent pas aux deux générations.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -659,4 +659,4 @@ snort -c /usr/local/etc/snort/snort.lua -Q -i eth0:eth1 -z auto -D
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting / Tunneling]] · [[Techniques/ARP Spoofing et MITM|📡 ARP Spoofing / MITM]] · [[Outil - Suricata]] · [[Outil - Zeek]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Wazuh]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting / Tunneling]] · [[Techniques/ARP Spoofing et MITM| ARP Spoofing / MITM]] · [[Outil - Suricata]] · [[Outil - Zeek]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Wazuh]]

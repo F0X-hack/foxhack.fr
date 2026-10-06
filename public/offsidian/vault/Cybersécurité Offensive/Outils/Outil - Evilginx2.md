@@ -1,7 +1,7 @@
 ---
 title: "Outil - Evilginx2"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://breakdev.org/evilginx/
 doc: https://github.com/kgretzky/evilginx2/wiki
 ---
 
-# 🕵️ Evilginx2 — Le framework de reverse proxy pour le détournement de session (2FA bypass)
+# Evilginx2 — Le framework de reverse proxy pour le détournement de session (2FA bypass)
 
 > [!info] **En 1 phrase**
 > Evilginx2 est un framework de phishing avancé qui agit comme un reverse proxy entre la victime et le vrai site web, volant cookies de session, jetons et données 2FA en temps réel sans héberger de site cloné.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Evilginx2 (successeur d'Evilginx, v1 basée sur nginx) |
 | Description | Reverse proxy man-in-the-middle (AiTM) : relais du vrai site, capture de cookies de session et de jetons 2FA, lures et sessions trackées |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing AiTM / Session Hijacking |
 | Type d'outil | Framework (binaire Go autonome avec serveur HTTP + DNS intégrés) |
 | Licence | BSD-3-Clause |
@@ -48,7 +48,7 @@ doc: https://github.com/kgretzky/evilginx2/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Evilginx2, développé par Kuba Gretzky, n'héberge pas de fausses pages : il **proxie en temps réel** le trafic entre la victime et le vrai site (Google, Microsoft, GitHub, etc.). La victime voit une URL contrôlée par l'attaquant (par exemple `https://login-security.microsoft-verif.example.com`), mais le contenu provient du site réel. Chaque requête est relayée, ce qui permet de capturer les **cookies de session** après la saisie des identifiants ET du code 2FA (MFA). C'est l'outil phare du phishing de type "adversary-in-the-middle" (AiTM), extrêmement efficace contre le 2FA par SMS ou TOTP. Il exige un domaine contrôlé, des certificats SSL valides (auto-obtenus via Let's Encrypt par défaut) et un DNS wildcard (`*.domaine.com`) pointant vers le serveur.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Binaire précompilé (recommandé)
 
@@ -112,7 +112,7 @@ sudo ./bin/evilginx
 sudo apt install evilginx2
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Domaine contrôlé + DNS wildcard `*.<domaine>` vers l'IP publique du serveur** : sans cela, les lures ne résolvent pas.
 > - Le port **443** (et 80 pour l'HTTP challenge ACME) doit être ouvert ; `sudo` requis pour les ports privilégiés.
 > - `config autocert on` (défaut) nécessite un accès Internet sortant vers Let's Encrypt ; en lab, utiliser `config autocert off` + certificats custom dans `~/.evilginx/crt/sites/<hostname>/`.
@@ -120,7 +120,7 @@ sudo apt install evilginx2
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait par **commandes interactives** à l'intérieur du shell Evilginx2 (persistées dans `~/.evilginx/`), pas par fichier de config global.
 
@@ -160,7 +160,7 @@ login:
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Evilginx2 est un **binaire Go autonome** qui embarque son propre serveur HTTP et son propre serveur DNS :
 
@@ -176,7 +176,7 @@ Flux d'exécution : la victime clique un lure → DNS résout vers votre IP → 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ sessions export
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -233,7 +233,7 @@ sessions export
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -283,7 +283,7 @@ lures create microsoft
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Configurer le domaine et le DNS** — créer un sous-domaine wildcard et pointer le DNS vers votre VPS.
    ```bash
@@ -311,7 +311,7 @@ lures create microsoft
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : MFA bypass complet sur Microsoft 365
 
@@ -363,7 +363,7 @@ lures create portal_internal
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -376,7 +376,7 @@ lures create portal_internal
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -391,7 +391,7 @@ lures create portal_internal
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -434,7 +434,7 @@ alert tcp any any -> any 443 (msg:"ET Suspicious evilginx phish domain pattern";
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — envoi du lure via l'intégration GoPhish (fork kgretzky/gophish)
@@ -447,7 +447,7 @@ sudo ./evilginx
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sessions capturées s'affichent dans le shell (`sessions <id>`) et sont persistées dans `~/.evilginx/sessions/` en JSON : cookies (domaine, path, valeurs), credentials (username/password), tokens et User-Agent.
 
@@ -461,9 +461,9 @@ jq '.' ~/.evilginx/sessions/*.json | head -60
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - GoPhish]] — envoi des lures (intégration officielle 3.3.0 via le fork `kgretzky/gophish`)
 - [[Outil - Modlishka]] — reverse proxy alternatif multi-domaine
 - [[Outil - CredSniper]] — phishing 2FA simplifié, complément lab
@@ -478,7 +478,7 @@ GoPhish → lure → victime → Evilginx2 proxy → site réel → session vol�
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -492,7 +492,7 @@ GoPhish → lure → victime → Evilginx2 proxy → site réel → session vol�
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Binaire Go unique, **très léger** : un VPS 1 vCPU / 1 Go suffit pour des dizaines de victimes.
 - Le serveur DNS intégré répond en quelques millisecondes ; l'ACME n'ajoute du travail qu'à la création de nouveaux hostnames.
@@ -504,7 +504,7 @@ GoPhish → lure → victime → Evilginx2 proxy → site réel → session vol�
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -528,7 +528,7 @@ GoPhish → lure → victime → Evilginx2 proxy → site réel → session vol�
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Légalité** : Evilginx2 est une arme d'accès — usage uniquement sur périmètre autorisé par écrit.
 - **Données sensibles** : cookies/identifiants capturés = données personnelles ; restreindre l'accès aux sessions (`~/.evilginx/`), chiffrer le stockage.
@@ -538,7 +538,7 @@ GoPhish → lure → victime → Evilginx2 proxy → site réel → session vol�
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **FIDO2/WebAuthn non contournable** : le 2FA par clé matérielle résiste à Evilginx2.
 - Nécessite **domaine + certificat valide + DNS wildcard** : l'attaque échoue sans cette infrastructure.
@@ -549,7 +549,7 @@ GoPhish → lure → victime → Evilginx2 proxy → site réel → session vol�
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer Evilginx2
@@ -580,7 +580,7 @@ config autocert off
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,7 +593,7 @@ config autocert off
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -606,15 +606,15 @@ config autocert off
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Activez un phishlet à la fois et utilisez des sous-domaines réalistes : un phishlet mal configuré casse toute la démo.
 > - Faites un premier test avec un compte jetable pour valider le phishlet et la capture de session avant la vraie campagne.
 > - Utilisez `lures preview <id>` pour vérifier que le lien affiche bien une vraie page de connexion.
 > - Conservez les sessions sauvegardées (`sessions export`) pour la preuve d'engagement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans **vrai domaine + certificat SSL valide**, la victime verra une alerte de certificat et l'attaque échouera.
 > - Le **DNS wildcard** est obligatoire pour que chaque sous-domaine de phishing fonctionne.
 > - Les cookies capturés expirent rapidement : rejouez la session immédiatement après capture.
@@ -622,7 +622,7 @@ config autocert off
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -646,4 +646,4 @@ config autocert off
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Modlishka|Modlishka]] · [[Outil - GoPhish|GoPhish]] · [[Outil - CredSniper|CredSniper]] · [[Outil - SET|SET]]
+**Liens :** [[Tools| Outils]] · [[Outil - Modlishka|Modlishka]] · [[Outil - GoPhish|GoPhish]] · [[Outil - CredSniper|CredSniper]] · [[Outil - SET|SET]]

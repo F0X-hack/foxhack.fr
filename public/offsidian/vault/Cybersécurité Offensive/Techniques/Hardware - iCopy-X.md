@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🏷️ iCopy-X
+# iCopy-X
 
 > [!info] **En 1 phrase**
 > iCopy-X = un **copieur RFID portable « super-automatisé »** basé sur
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["iCopy-X"] --> B["Read — lecture RFID"]
@@ -46,7 +46,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 L'iCopy-X est un device RFID portable autonome basé sur le **Proxmark3 RDV 4.01**. Il combine un écran LCD, des boutons de navigation, un processeur ARM Cortex-A7 (600 MHz) et 256 MB de RAM pour exécuter des opérations de lecture, craquage et duplication de badges RFID **sans ordinateur**. Le modèle **iCopy-XS** est open source et exécute le firmware Iceman Proxmark3.
 
@@ -63,7 +63,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### RFID LF vs HF
 
@@ -92,7 +92,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -149,7 +149,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Protocoles RFID supportés
 
@@ -165,7 +165,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -208,7 +208,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres iCopy-X
 
@@ -229,7 +229,7 @@ Le dictionnaire est mis à jour via les firmwares OTA.
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes standalone (écran)
 
@@ -269,9 +269,9 @@ pm3 --> hw tune                  # Mesure antenne RF
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Clonage automatisé
+### Débutant — Clonage automatisé
 
 ```text
 1. Allumer l'iCopy-X
@@ -284,7 +284,7 @@ pm3 --> hw tune                  # Mesure antenne RF
 8. Vérifier la copie en relisant le nouveau badge
 ```
 
-### 🟡 Intermédiaire — Sniffing de trafic RFID
+### Intermédiaire — Sniffing de trafic RFID
 
 ```text
 1. Sélectionner "Sniff" dans le menu
@@ -295,7 +295,7 @@ pm3 --> hw tune                  # Mesure antenne RF
 6. Extraire les clés depuis la trace
 ```
 
-### 🔴 Avancé — Attaque MIFARE complète via PC-Mode
+### Avancé — Attaque MIFARE complète via PC-Mode
 
 ```bash
 # Brancher l'iCopy-X au PC
@@ -317,7 +317,7 @@ pm3 --> hf mf dump
 pm3 --> hf mf restore
 ```
 
-### ⚫ Expert — Clonage iCLASS SE avec iCS Decoder
+### Expert — Clonage iCLASS SE avec iCS Decoder
 
 ```text
 1. Connecter l'accessoire iCS Decoder à l'iCopy-X
@@ -330,7 +330,7 @@ pm3 --> hf mf restore
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -384,7 +384,7 @@ Vérifier le numéro de série
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Pentest physique complet (badges bureau)
 
@@ -394,7 +394,7 @@ Vérifier le numéro de série
 | **Matériel** | iCopy-XS, badges vierges iCopy-X |
 | **Étapes** | 1. Collecter les badges (scan discret)<br>2. Auto Clone sur iCopy-X<br>3. Tester les badges clonés sur les lecteurs<br>4. Documenter les badges non sécurisés |
 | **Résultat** | Rapport de vulnérabilités RFID |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -411,11 +411,11 @@ flowchart LR
 | **Matériel** | iCopy-XS, PC, iCS Decoder (si iCLASS) |
 | **Étapes** | 1. Identifier le type de badge (LF/HF)<br>2. Sniff du trafic lecteur/carte<br>3. Analyser le chiffrement<br>4. Craquer les clés<br>5. Documenter les faiblesses |
 | **Résultat** | Analyse complète du système RFID |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -433,7 +433,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -452,7 +452,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -483,7 +483,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -513,7 +513,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -526,10 +526,10 @@ if __name__ == "__main__":
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - RFID et NFC| RFID/NFC]]
 - [[Hardware - Proxmark]] — Proxmark3 complet
 
 | Outils associés | Usage complémentaire |
@@ -540,7 +540,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -559,7 +559,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -571,7 +571,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -603,7 +603,7 @@ pm3 --> lf t55xx detect
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -623,7 +623,7 @@ pm3 --> lf t55xx detect
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -642,7 +642,7 @@ pm3 --> lf t55xx detect
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -672,7 +672,7 @@ pm3 --> lf t55xx detect
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -686,7 +686,7 @@ pm3 --> lf t55xx detect
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -708,7 +708,7 @@ pm3 --> lf t55xx detect
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Les badges MIFARE Classic sont **craqués en ~12 secondes** — ne pas les utiliser pour la sécurité.
 - **Piège 2** : Les cartes blanches doivent être **iCopy-X specific** — les génériques ne fonctionnent pas sur le device.
@@ -725,9 +725,9 @@ pm3 --> lf t55xx detect
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — iCopy-X](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/icopy-x.md)
 > - [iCopy-X — Site officiel](https://icopy-x.com/)
 > - [iCopy-X-Community — GitHub](https://github.com/iCopy-X-Community)
@@ -757,4 +757,4 @@ pm3 --> lf t55xx detect
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - RFID et NFC| RFID/NFC]]

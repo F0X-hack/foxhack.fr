@@ -1,7 +1,7 @@
 ---
 title: "Outil - tcpdump"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://www.tcpdump.org/
 doc: https://www.tcpdump.org/manpages/tcpdump.1.html
 ---
 
-# 📡 tcpdump — Capture de paquets en ligne de commande
+# tcpdump — Capture de paquets en ligne de commande
 
 > [!info] **En 1 phrase**
 > tcpdump est l'outil de capture et d'analyse de paquets en ligne de commande, léger, omniprésent sur les systèmes Unix, idéal pour une analyse réseau rapide.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://www.tcpdump.org/manpages/tcpdump.1.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 tcpdump capture les paquets bruts au niveau des couches 2/3 (via **libpcap**) et les affiche avec un **décodage statique simplifié** (pas de GUI, pas de dissection applicative poussée comme Wireshark). Il excelle pour : vérifier qu'une IP répond, identifier du trafic DNS/ARP/ICMP suspect, enregistrer des captures `.pcap` réutilisables dans Wireshark, et tourner en **mode non interactif** sur un serveur sans interface graphique. En offensive, il permet de vérifier qu'un reverse shell sortant aboutit, d'observer des credentials en clair ou de repérer un canal C2.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -131,14 +131,14 @@ git clone https://github.com/the-tcpdump-group/tcpdump && cd tcpdump
 ./configure && make && sudo make install   # libpcap installé au préalable
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Root requis** pour capturer (sockets raw) ; en lecture de fichier (`-r`), aucun privilège.
 > - tcpdump 4.99.6 exige libpcap 1.10.5+ pour passer les tests ; dépendances : libpcap-dev, flex, bison.
 > - Sur du fort trafic, augmenter le buffer noyau avec `-B` (ex : `-B 4096`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 tcpdump n'a **pas** de fichier de configuration principal : tout se passe en ligne de commande. Les paramètres récurrents se mettent dans un alias ou un wrapper shell.
 
@@ -153,7 +153,7 @@ tcpdump n'a **pas** de fichier de configuration principal : tout se passe en lig
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 tcpdump est un programme C unique s'appuyant sur **libpcap**, qui abstrait les mécanismes propres à chaque OS :
 
@@ -167,7 +167,7 @@ tcpdump est un programme C unique s'appuyant sur **libpcap**, qui abstrait les m
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -200,7 +200,7 @@ sudo tcpdump -i eth0 -nn -T snmp udp port 161
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -233,7 +233,7 @@ sudo tcpdump -i eth0 -nn -T snmp udp port 161
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -278,7 +278,7 @@ tshark -r /var/log/net/incident.pcap.gz -Y 'http.request' -T fields -e http.host
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Trouver l'interface** — lister les interfaces de capture :
    ```bash
@@ -312,7 +312,7 @@ tshark -r /var/log/net/incident.pcap.gz -Y 'http.request' -T fields -e http.host
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : vérification d'un reverse shell sortant
 
@@ -346,7 +346,7 @@ sudo tcpdump -i eth0 -n 'tcp[13] & 2 != 0 and not dst host 10.10.20.1'
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -359,7 +359,7 @@ sudo tcpdump -i eth0 -n 'tcp[13] & 2 != 0 and not dst host 10.10.20.1'
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -373,7 +373,7 @@ sudo tcpdump -i eth0 -n 'tcp[13] & 2 != 0 and not dst host 10.10.20.1'
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -415,7 +415,7 @@ alert tcp any any -> any any (msg:"Possible port scan - many SYNs from single so
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — capture tournante quotidienne compressée, conservation 7 jours
@@ -438,7 +438,7 @@ print(sorted(hosts))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte (stdout, utilisable en pipe), savefile binaire pcap (`-w`), compteurs sur stderr à l'arrêt. Pour du JSON/CSV structuré, passer par tshark ou par le parsing pcap en Python.
 
@@ -459,9 +459,9 @@ for p in rdpcap("cap.pcap"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - tshark]] — même moteur que Wireshark en CLI : parsing structuré des captures tcpdump
 - [[Outil - Wireshark]] — GUI d'analyse des fichiers `.pcap`
 - [[Outil - tcpreplay]] — rejoue les captures pour tester un IDS
@@ -476,7 +476,7 @@ hping3/Scapy ────────> tcpdump (validation) ───> rapport
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -490,7 +490,7 @@ hping3/Scapy ────────> tcpdump (validation) ───> rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Filtrage dans le noyau** : les paquets non retenus par le BPF ne montent jamais en user-space.
 - **Buffer noyau** : par défaut ~256 KiB (Linux) ; `dropped by kernel` signale un sous-dimensionnement → `-B` (ex : `-B 8192`).
@@ -499,7 +499,7 @@ hping3/Scapy ────────> tcpdump (validation) ───> rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -523,7 +523,7 @@ hping3/Scapy ────────> tcpdump (validation) ───> rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : root requis pour capturer ; utiliser `-Z user` pour abandonner les droits dès l'ouverture du flux.
 - **Télémétrie** : aucune ; mais la résolution DNS (`-n` oublié) fuite des requêtes vers un serveur tiers.
@@ -533,7 +533,7 @@ hping3/Scapy ────────> tcpdump (validation) ───> rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de GUI, pas de dissection applicative poussée (TLS décrypté…) — passer par tshark/Wireshark.
 - Pas de filtres d'affichage ré-applicables : le tri se fait par l'expression BPF de lancement.
@@ -545,7 +545,7 @@ hping3/Scapy ────────> tcpdump (validation) ───> rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lister les interfaces
@@ -578,7 +578,7 @@ sudo tcpdump -i eth0 -w out.pcap -C 100 -W 10 -z gzip
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -590,7 +590,7 @@ sudo tcpdump -i eth0 -w out.pcap -C 100 -W 10 -z gzip
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -602,16 +602,16 @@ sudo tcpdump -i eth0 -w out.pcap -C 100 -W 10 -z gzip
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours `-n` (ou `-nn`) : la résolution DNS ralentit et fuite des requêtes vers un serveur tiers.
 > - Filtrer le plus tôt possible (BPF) : moins de paquets montent en user-space, moins de drops.
 > - `-s 0` (ou le défaut 262144 en 4.99) pour conserver le payload complet dans les fichiers `-w`.
 > - Combiner `tcpdump -r fichier.pcap -q -tt` pour des sorties compactes et scriptables.
 > - Utiliser `-Z tcpdump` sur les serveurs de capture permanents.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Oublier `sudo` provoque un échec silencieux ou « Permission denied ».
 > - L'expression BPF doit être **quotée** : les parenthèses et `and/or/not` sont interprétés par le shell sinon.
 > - `dropped by kernel` n'est pas une erreur : c'est un signal de dimensionnement du buffer.
@@ -620,7 +620,7 @@ sudo tcpdump -i eth0 -w out.pcap -C 100 -W 10 -z gzip
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -645,4 +645,4 @@ sudo tcpdump -i eth0 -w out.pcap -C 100 -W 10 -z gzip
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Wireshark|Wireshark]] · [[Outil - tshark|tshark]] · [[Outil - tcpreplay|tcpreplay]] · [[Outil - Hping3|hping3]]
+**Liens :** [[Tools| Outils]] · [[Outil - Wireshark|Wireshark]] · [[Outil - tshark|tshark]] · [[Outil - tcpreplay|tcpreplay]] · [[Outil - Hping3|hping3]]

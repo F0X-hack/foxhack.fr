@@ -1,11 +1,11 @@
 ---
 title: "Outil - Kerbrute"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 1.0.3
 licence: Apache-2.0
@@ -16,14 +16,14 @@ site: https://blog.ropnop.com/using-kerbrute-for-windows-active-directory-user-e
 doc: https://github.com/ropnop/kerbrute#readme
 ---
 
-# 👑 Kerbrute — Active Directory & Windows
+# Kerbrute — Active Directory & Windows
 
 > [!info] **En 1 phrase**
 > Kerbrute est un outil Go d'**énumération et de brute-force Kerberos** : il valide des noms d'utilisateurs du domaine (**sans aucun compte**) et teste des mots de passe, avec **très peu de bruit**.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,7 +40,7 @@ doc: https://github.com/ropnop/kerbrute#readme
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Kerbrute exploite une différence de réponse du **KDC Kerberos** lors de la requête **AS-REQ** (pré-authentification) : la réponse diffère selon que le compte existe ou non. On peut donc **énumérer les comptes du domaine sans aucun compte valide** (avec `userenum`) — ce qui ne déclenche **pas** de verrouillage — puis faire un **password spraying** (`passwordspray`, 1 mot de passe sur tous les comptes) ou un brute-force ciblé (`bruteuser`, `bruteforce`). Dans un pentest AD, il se place en tout début de la phase d'attaque : avant même d'avoir un foothold, il fournit la liste des comptes qui alimentera ensuite Impacket (GetNPUsers, GetUserSPNs), Rubeus ou un spray via hydra. Son trafic est du pur Kerberos (TCP/UDP 88), discret comparé aux connexions SMB. Point clé : il ne requiert **ni outil d'administration, ni droits particuliers**, juste une IP de contrôleur de domaine joignable — d'où son efficacité en test black-box sur un domaine.
 
@@ -55,7 +55,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans Kerbrute |
 |---|---|
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Téléchargement
 
@@ -93,7 +93,7 @@ go install github.com/ropnop/kerbrute/v2@latest
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Kerbrute est 100 % CLI : il n'y a ni fichier de configuration ni variable d'environnement. Le seul « réglage » est le choix des **flags de discrétion** (threads, délai) et la liste d'utilisateurs.
 
@@ -112,7 +112,7 @@ Kerbrute est 100 % CLI : il n'y a ni fichier de configuration ni variable d'envi
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Langage** : Go, un seul binaire statique sans dépendances externes (facile à transporter, aucune installation).
 - **Implémentation Kerberos** : Kerbrute implémente lui-même le client Kerberos (encodage ASN.1 DER, chiffrement RC4/AES) — pas de dépendance à un runtime Python ou à des bibliothèques système.
@@ -123,7 +123,7 @@ Kerbrute est 100 % CLI : il n'y a ni fichier de configuration ni variable d'envi
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -186,7 +186,7 @@ Kerbrute est 100 % CLI : il n'y a ni fichier de configuration ni variable d'envi
 ./kerbrute bruteuser -d corp.local --dc 192.168.1.10 -v alice rockyou.txt
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -208,7 +208,7 @@ Kerbrute est 100 % CLI : il n'y a ni fichier de configuration ni variable d'envi
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -251,7 +251,7 @@ hashcat -m 18200 asrep.txt rockyou.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : la convention de nommage `prenom.nom@corp.local` est connue.
 
@@ -275,7 +275,7 @@ Scénario : la convention de nommage `prenom.nom@corp.local` est connue.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Enchaînement userenum → AS-REP Roasting
 
@@ -305,7 +305,7 @@ Après l'énumération, forcer un seul compte à fort potentiel avec un dictionn
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -318,7 +318,7 @@ Après l'énumération, forcer un seul compte à fort potentiel avec un dictionn
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -330,7 +330,7 @@ Après l'énumération, forcer un seul compte à fort potentiel avec un dictionn
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > Kerbrute est avant tout un outil de **Discovery** (T1087) et de **Credential Access** (T1110) ; il ne fait pas lui-même l'AS-REP Roast (c'est GetNPUsers/Rubeus).
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -346,7 +346,7 @@ Après l'énumération, forcer un seul compte à fort potentiel avec un dictionn
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -358,7 +358,7 @@ Après l'énumération, forcer un seul compte à fort potentiel avec un dictionn
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Sortie console** : couleurs (vert = compte valide / succès, rouge = échec), affichage du nombre de tentatives par seconde.
 - **Fichiers** : avec `-o <fichier>`, Kerbrute écrit les résultats (utilisateurs valides, creds trouvés) pour exploitation ultérieure.
@@ -372,7 +372,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème Kerbrute |
 |---|---|
@@ -386,7 +386,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -397,7 +397,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -408,7 +408,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -421,7 +421,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Pas de stockage de credentials** : Kerbrute ne persiste rien localement (les mots de passe testés restent en mémoire/CLI).
 - **Historique shell** : les mots de passe passés en argument peuvent apparaître dans l'historique → utiliser des scripts avec variables ou supprimer l'historique en lab.
@@ -431,7 +431,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Kerberos uniquement** : ne fonctionne que sur les domaines avec KDC joignable (pas pour les environnements sans Kerberos).
 - **Pas d'énumération avancée** : ne fournit que l'existence des comptes (pas les ACL, sessions, groupes).
@@ -441,7 +441,7 @@ grep -iE 'SUCCESS|VALID' results.txt | tee found.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Énumération (aucun compte requis, aucun lockout)
@@ -464,7 +464,7 @@ hashcat -m 18200 asrep.txt rockyou.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -477,7 +477,7 @@ hashcat -m 18200 asrep.txt rockyou.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -490,25 +490,25 @@ hashcat -m 18200 asrep.txt rockyou.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Discret** : `userenum` ne déclenche **pas** de verrouillage de compte. Fais d'abord l'énumération, puis un **password spray** (1 mdp sur tous les comptes) plutôt qu'un brute-force.
+> [!tip] **Discret** : `userenum` ne déclenche **pas** de verrouillage de compte. Fais d'abord l'énumération, puis un **password spray** (1 mdp sur tous les comptes) plutôt qu'un brute-force.
 
-> [!tip] 💡 **Réutilise les listes** : la liste des comptes valides alimente directement Impacket (`GetNPUsers.py`, `GetUserSPNs.py`) et Rubeus pour les attaques Kerberos suivantes.
+> [!tip] **Réutilise les listes** : la liste des comptes valides alimente directement Impacket (`GetNPUsers.py`, `GetUserSPNs.py`) et Rubeus pour les attaques Kerberos suivantes.
 
-> [!tip] 💡 **`-v` pour valider** : en sortie verbeuse, la couleur verte indique les comptes **valides** (existant + mot de passe bon), rouge les échecs. Utilise-la pour trier les résultats du spray.
+> [!tip] `-v` pour valider** : en sortie verbeuse, la couleur verte indique les comptes **valides** (existant + mot de passe bon), rouge les échecs. Utilise-la pour trier les résultats du spray.
 
-> [!warning] ⚠️ **Piège** : `-d` = **domaine**, `-dc`/`--dc` = **contrôleur**. Inverser les deux (confusion fréquente avec le `-dc-ip` d'Impacket) donne des erreurs de résolution obscures.
+> [!warning] **Piège** : `-d` = **domaine**, `-dc`/`--dc` = **contrôleur**. Inverser les deux (confusion fréquente avec le `-dc-ip` d'Impacket) donne des erreurs de résolution obscures.
 
-> [!warning] ⚠️ **Piège** : un brute-force agressif (`-t 50` ou sur un seul compte admin) déclenche le **lockout** et **alarme le SOC**. Reste sur du spray et des threads modérés.
+> [!warning] **Piège** : un brute-force agressif (`-t 50` ou sur un seul compte admin) déclenche le **lockout** et **alarme le SOC**. Reste sur du spray et des threads modérés.
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/ropnop/kerbrute
 - Blog de l'auteur (ropnop) : https://blog.ropnop.com/using-kerbrute-for-windows-active-directory-user-enumeration/
 - Releases : https://github.com/ropnop/kerbrute/releases
 
-➡️ **Liens :** [[Outil - Kerbrute]] | [[Outil - Impacket]] | [[Outil - Rubeus]] | [[Outil - Evil-WinRM]] | [[Outil - BloodHound]] | [[Outil - Hydra]] | [[Outil - Nmap]]
+**Liens :** [[Outil - Kerbrute]] | [[Outil - Impacket]] | [[Outil - Rubeus]] | [[Outil - Evil-WinRM]] | [[Outil - BloodHound]] | [[Outil - Hydra]] | [[Outil - Nmap]]
 

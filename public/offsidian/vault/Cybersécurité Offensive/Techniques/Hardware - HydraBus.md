@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🚌 HydraBus
+# HydraBus
 
 > [!info] **En 1 phrase**
 > HydraBus = une **plateforme open source multifonction** (à base de LPC4330) qui
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -35,7 +35,7 @@ statut: publie
 | **Complexité** | Moyenne → Élevée (multi-protocole) |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     HB["HydraBus v1<br>LPC4330 Cortex-M4/M0"] --> SPI["SPI"]
@@ -52,7 +52,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > HydraBus est une plateforme open-source basée sur le microcontrôleur **NXP LPC4330**
 > (double cœur ARM Cortex-M4 à 204 MHz + Cortex-M0). Elle supporte nativement une multitude
@@ -77,7 +77,7 @@ flowchart TB
     style HB fill:#e8f5e9
 ```
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **LPC4330** : double cœur ARM (M4 204 MHz + M0 32 MHz), 264 Ko SRAM, Ethernet, 2x USB HS
 > - **HydraFW** : firmware open-source pour HydraBus et HydraNFC Shield
 > - **Mode binaire** : chaque protocole (SPI, I2C, UART...) a un mode optimisé pour la vitesse
@@ -87,7 +87,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Architecture HydraBus
 
@@ -126,7 +126,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -151,7 +151,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### SPI
 
@@ -208,7 +208,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -262,7 +262,7 @@ minicom -D /dev/ttyACM0 -b 115200
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres HydraFW
 
@@ -283,7 +283,7 @@ minicom -D /dev/ttyACM0 -b 115200
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -342,9 +342,9 @@ uart> bridge
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Identification d'une puce flash SPI
+### Débutant — Identification d'une puce flash SPI
 
 ```text
 # 1. Connecter HydraBus à la puce flash
@@ -360,7 +360,7 @@ spi> [ 0x9F r:3 ]
 #    Ex: 0xEF 0x40 0x16 → Winbond W25Q32
 ```
 
-### 🟡 Intermédiaire — Dump de firmware NAND
+### Intermédiaire — Dump de firmware NAND
 
 ```text
 # 1. Connecter HydraBus aux broches NAND
@@ -376,7 +376,7 @@ nand> read 0 0x100000
 # 4. Sauvegarder sur microSD (si HydraNFC connecté)
 ```
 
-### 🔴 Avancé — Communication I2C avec EEPROM
+### Avancé — Communication I2C avec EEPROM
 
 ```text
 # 1. Connecter SDA et SCL à l'EEPROM cible
@@ -397,7 +397,7 @@ i2c> [ 0xA0 [ 0x00 0x48 0x65 0x6C 0x6C 0x6F ]
 # Écrit "Hello" à l'adresse 0x00
 ```
 
-### ⚫ Expert — JTAG debug ARM Cortex
+### Expert — JTAG debug ARM Cortex
 
 ```text
 # 1. Connecter les broches JTAG
@@ -418,7 +418,7 @@ jtag> read <address> <length>
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -450,7 +450,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Dump de firmware SPI Flash
 
@@ -460,7 +460,7 @@ flowchart TB
 | **Matériel** | HydraBus v1 + câbles + pince SOIC8 |
 | **Étapes** | 1. Identifier SPI Flash → 2. Connecter → 3. Lire JEDEC ID → 4. Dump complet |
 | **Résultat** | Firmware extrait, prêt pour le reverse engineering |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -478,11 +478,11 @@ flowchart LR
 | **Matériel** | HydraBus v1 + connecteur OBD-II |
 | **Étapes** | 1. Connecter au port OBD-II → 2. Mode CAN → 3. Capture → 4. Analyse protocole |
 | **Résultat** | Messages CAN capturés, identification des IDs |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -501,7 +501,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -531,7 +531,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -575,7 +575,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -643,7 +643,7 @@ dump_flash(ser, "firmware_dump.bin")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -669,13 +669,13 @@ binwalk firmware_dump.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - UART|🔌 UART]]
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]]
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
-- [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - UART| UART]]
+- [[Hardware - I2C et SPI| I2C/SPI]]
+- [[Hardware - JTAG et SWD| JTAG/SWD]]
+- [[Hardware - RFID et NFC| RFID/NFC]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -685,7 +685,7 @@ binwalk firmware_dump.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -704,7 +704,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -725,7 +725,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -763,7 +763,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -786,7 +786,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -806,7 +806,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -840,7 +840,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -858,7 +858,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -881,7 +881,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Chaque mode (SPI, I2C, UART) a des broches assignées différentes — toujours vérifier `show pins`.
 - **Piège 2** : Le mode binaire est plus rapide mais les réponses ne sont pas lisibles directement.
@@ -898,9 +898,9 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — HydraBus](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/hydrabus.md)
 > - [Wiki HydraFW — HydraBus/HydraFW](https://github.com/hydrabus/hydrafw/wiki/)
 > - [Spécifications HydraBus v1.0](https://hydrabus.com/hydrabus-1-0-specifications)
@@ -933,4 +933,4 @@ screen /dev/ttyACM0 115200
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - HydraNFC|🏷️ HydraNFC]] · [[Hardware - HydraUSB3|🧪 HydraUSB3]] · [[Hardware - UART|🔌 UART]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - HydraNFC| HydraNFC]] · [[Hardware - HydraUSB3| HydraUSB3]] · [[Hardware - UART| UART]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Bibliothèque technique| Index]]

@@ -1,7 +1,7 @@
 ---
 title: "Outil - Weeman"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://github.com/samyoyo/weeman
 doc: https://github.com/samyoyo/weeman
 ---
 
-# 🌪️ Weeman — Cloneur de pages web pour le credential harvesting (HTTP)
+# Weeman — Cloneur de pages web pour le credential harvesting (HTTP)
 
 > [!info] **En 1 phrase**
 > Weeman est un petit outil en Python qui clone une page de connexion HTTP, la sert sur un port local et capture les identifiants saisis par la victime en toute simplicité.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Weeman — HTTP server for phishing |
 | Description | Cloneur de pages web ultra-léger : télécharge une page de login, la sert en HTTP local et intercepte les formulaires POST pour capturer les identifiants |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing, Credential Harvesting, Clone de sites |
 | Fonction principale | Servir une page de connexion clonée et capturer les identifiants saisis |
 | Type d'outil | CLI (prompt interactif `weeman >`) |
@@ -50,7 +50,7 @@ doc: https://github.com/samyoyo/weeman
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Weeman, développé par **Hypsurus** (outil éducatif, annoncé sur la liste Full-Disclosure en 2015), est un cloneur de pages web très léger : il télécharge la page cible, la sert sur un port local (par défaut 8080) et intercepte les formulaires **POST** pour capturer les identifiants. Il fonctionne exclusivement en **HTTP** (pas de HTTPS), ce qui le destine avant tout à l'apprentissage du phishing et à des démonstrations en environnement contrôlé. Son interface est en ligne de commande avec un prompt interactif (`weeman >`) où l'on configure la cible puis lance le serveur (`run`).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux / macOS / Windows
 
@@ -110,14 +110,14 @@ chmod +x weeman.py
 ./weeman.py
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - La version d'origine exige **Python ≤ 2.7** et **BeautifulSoup 4** ; Python 2 n'est plus fourni par les distributions récentes (utiliser `pyenv` pour installer 2.7.18, cf. doc Kali « Using EoL Python Versions »).
 > - Aucun paquet `apt install weeman` dans Kali/BlackArch n'a pu être confirmé — privilégier le clone Git.
 > - Pour écouter sur le port 80, lancer avec **root** (`sudo`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait entièrement dans le **prompt interactif** de Weeman (`weeman >`). Il n'y a pas de fichier de configuration externe.
 
@@ -134,7 +134,7 @@ La configuration se fait entièrement dans le **prompt interactif** de Weeman (`
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Weeman est un script Python mono-processus simple :
 
@@ -156,7 +156,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -187,7 +187,7 @@ printf 'set url http://192.168.1.10/login.php\nset port 8080\nrun\n' | python2 w
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 Weeman n'a pas d'options CLI : toute la configuration se fait dans le prompt. Les « options » ci-dessous sont les variables `set` disponibles.
 
@@ -205,7 +205,7 @@ Weeman n'a pas d'options CLI : toute la configuration se fait dans le prompt. Le
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -259,7 +259,7 @@ ssh -R 8080:localhost:8080 utilisateur@serveur-public.example.com
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer Weeman.**
    ```bash
@@ -281,7 +281,7 @@ ssh -R 8080:localhost:8080 utilisateur@serveur-public.example.com
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : capture de formulaire POST ciblé avec relais
 
@@ -329,7 +329,7 @@ weeman > run
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -341,7 +341,7 @@ weeman > run
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -355,7 +355,7 @@ weeman > run
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -398,7 +398,7 @@ alert http any any -> any any (msg:"Potential Weeman harvester POST"; flow:to_se
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer Weeman non interactif via pipe de commandes
@@ -421,7 +421,7 @@ sudo bettercap -eval "set dns.spoof.domains login.example.com; dns.spoof on"
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie principale de Weeman est la **console** : chaque POST capturé est affiché dans le prompt avec les champs du formulaire. Si l'exécution est redirigée vers un fichier, on peut la parser.
 
@@ -446,24 +446,24 @@ for user, pw in re.findall(r'(?:user(?:name)?|login)[^:]*:\s*(\S+)[^\n]*pass(?:w
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 DNS Spoof (ettercap/bettercap) → Weeman (page clonée HTTP) → Credentials capturés → Rejeu (portail interne) → SIEM
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - SocialFish]] — harvester équivalent plus récent (avec tunneling)
 - [[Outil - SET]] — framework complet pour aller plus loin (payloads, mass mailer)
 - [[Outil - Evilginx2]] · [[Outil - Modlishka]] — reverse proxies 2FA (HTTP→HTTPS)
 - [[Outil - Responder]] — capture de hashes NTLM en complément
 - [[Outil - mitmproxy]] — proxy d'interception pour étendre le scénario
 - [[Outil - Nmap]] — repérer le serveur harvester exposé / valider le port
-- [[07 - Wireless, MITM & Social Engineering|🎭 Wireless, MITM & Social Engineering]]
+- [[07 - Wireless, MITM & Social Engineering| Wireless, MITM & Social Engineering]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -478,7 +478,7 @@ DNS Spoof (ettercap/bettercap) → Weeman (page clonée HTTP) → Credentials ca
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ressources** : minimales — un script Python + un serveur HTTP mono-processus ; CPU/RAM quasi nuls.
 - **Connexions** : le serveur HTTP de base gère les connexions séquentiellement ; plusieurs victimes simultanées peuvent ralentir la réponse.
@@ -491,7 +491,7 @@ DNS Spoof (ettercap/bettercap) → Weeman (page clonée HTTP) → Credentials ca
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ DNS Spoof (ettercap/bettercap) → Weeman (page clonée HTTP) → Credentials ca
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **HTTP en clair** : tout le trafic (page clonée + credentials) circule sans chiffrement — visible par un observateur réseau.
 - **Données capturées** : les identifiants sont affichés en clair dans la console et stockés dans les logs si redirigés — nettoyer après usage.
@@ -537,7 +537,7 @@ DNS Spoof (ettercap/bettercap) → Weeman (page clonée HTTP) → Credentials ca
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **HTTP seulement** : impossible de cloner directement un site HTTPS sans dégrader l'URL (le navigateur affiche « non sécurisé »).
 - **Python 2** : la version d'origine est incompatible avec Python 3 ; projet non maintenu depuis la 1.7.1.
@@ -548,7 +548,7 @@ DNS Spoof (ettercap/bettercap) → Weeman (page clonée HTTP) → Credentials ca
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation (fork miroir, Python 2)
@@ -571,7 +571,7 @@ weeman > run
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -584,7 +584,7 @@ weeman > run
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -597,16 +597,16 @@ weeman > run
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `set action_url` pour que le harvester **relaie les données au vrai serveur** : la victime croit avoir envoyé le formulaire normalement.
 > - Testez d'abord avec une page locale (`192.168.1.10`) pour valider la capture avant de viser un site public (ex : `testphp.vulnweb.com`).
 > - C'est un excellent outil pédagogique pour expliquer le fonctionnement d'un credential harvester sans overhead.
 > - Le prompt accepte `help` : la liste des commandes disponibles est affichée en mémoire.
 > - Redirigez la sortie vers un fichier (`> harvest.log`) pour garder une trace exploitable de la démo.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Weeman ne gère **que le HTTP** : un site en HTTPS ne peut pas être cloné directement sans dégrader l'URL.
 > - Les navigateurs modernes affichent « non sécurisé » sur les pages HTTP : la victime avertie se méfiera.
 > - Le clonage de pages riches (JS, CSS, redirections) est incomplet : certaines pages ne s'affichent pas correctement.
@@ -615,7 +615,7 @@ weeman > run
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -637,4 +637,4 @@ weeman > run
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - SocialFish|SocialFish]] · [[Outil - SET|SET]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - Modlishka|Modlishka]] · [[Outil - Responder|Responder]] · [[Outil - mitmproxy|mitmproxy]]
+**Liens :** [[Tools| Outils]] · [[Outil - SocialFish|SocialFish]] · [[Outil - SET|SET]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - Modlishka|Modlishka]] · [[Outil - Responder|Responder]] · [[Outil - mitmproxy|mitmproxy]]

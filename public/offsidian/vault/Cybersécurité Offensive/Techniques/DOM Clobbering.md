@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧱 DOM Clobbering
+# DOM Clobbering
 
 > [!info] **En 1 phrase**
 > DOM Clobbering = **saturer les variables globales** du navigateur en injectant des balises HTML
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -48,13 +48,13 @@ flowchart LR
 | Résultat | Payload exécuté immédiatement | Sink exécuté **par le code applicatif** (souvent second order / stocké) |
 | Détection | Réflexion visible dans le DOM | Invisible : dépend du code JS analysé |
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Une seule **injection HTML** (n'importe où dans le DOM, même non exécutable) suffit.
 > On ne tape pas dans le moteur JS : on **modifie l'environnement** dans lequel le script tourne.
 
 ---
 
-## 🧩 Payloads de base
+## Payloads de base
 
 ### Variable globale simple (`id`)
 
@@ -65,7 +65,7 @@ flowchart LR
 <!-- Sink applicatif -->
 <script>
   if (window.alert) {          // true : window.alert existe !
-    alert("Bypassé ?");        // ❌ Type error : alert est un DIV
+    alert("Bypassé ?");        // Type error : alert est un DIV
   }
 </script>
 ```
@@ -132,13 +132,13 @@ Les iframes `srcdoc` permettent de **surcharger la chaîne** au-delà de `x.y.z`
 <script>x.y.forEach(element=>alert(element))</script>
 ```
 
-> [!tip] 💡 **Astuce**
+> [!tip] **Astuce**
 > Le navigateur ajoute automatiquement `forEach` aux collections d'éléments nommées **du même nom**
 > → des gadgets de framework qui itèrent sur `x.y.forEach(...)` tombent dans notre piège.
 
 ---
 
-## 💥 Attaques : bypass & « clobbering » de bibliothèques
+## Attaques : bypass & « clobbering » de bibliothèques
 
 ### Bypasser la validation des variables
 
@@ -227,7 +227,7 @@ Les propriétés `href` parsées de l'élément `<a>` remplacent les propriété
 
 ---
 
-## 🚀 Escalade XSS (clobber → execution)
+## Escalade XSS (clobber → execution)
 
 ### Principe
 
@@ -258,7 +258,7 @@ Le clobbering seul n'exécute rien. L'exécution arrive quand le code applicatif
   4. injecté dans <img src="cid:" onerror="alert(1)//">  → XSS ! -->
 ```
 
-> [!warning] ⚠️ **Pourquoi `cid:` ?**
+> [!warning] **Pourquoi `cid:` ?**
 > DOMPurify autorise le protocole `cid:` **sans encoder les double quotes** → on peut "sortir" de
 > l'attribut cible et poser un handler `onerror`. Le commentaire `//` neutralise la fin de l'attribut.
 
@@ -285,7 +285,7 @@ Le clobbering seul n'exécute rien. L'exécution arrive quand le code applicatif
 
 ---
 
-## 🧬 Gadgets connus (frameworks & librairies)
+## Gadgets connus (frameworks & librairies)
 
 | Cible | Pattern clobberé | Résultat |
 |---|---|---|
@@ -299,7 +299,7 @@ Le clobbering seul n'exécute rien. L'exécution arrive quand le code applicatif
 
 ### Gadget `?.` (optional chaining)
 
-> [!warning] ⚠️ **L'optional chaining ne protège PAS contre le clobbering.**
+> [!warning] **L'optional chaining ne protège PAS contre le clobbering.**
 > `window.foo?.bar?.baz` vérifie que les propriétés **existent** — or c'est exactement ce que le
 > clobbering fournit : un objet DOM truthy avec les propriétés demandées. Le `?.` bloque les `undefined`,
 > pas les éléments contrôlés.
@@ -316,7 +316,7 @@ Le clobbering seul n'exécute rien. L'exécution arrive quand le code applicatif
 
 ---
 
-## 🔎 Détection
+## Détection
 
 ### Méthodo (en injection HTML)
 
@@ -344,7 +344,7 @@ x.constructor        → "function HTMLFormElement"
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -364,7 +364,7 @@ x.constructor        → "function HTMLFormElement"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -380,23 +380,23 @@ x.constructor        → "function HTMLFormElement"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **`name` ≠ `id`**
+> [!tip] `name` ≠ `id`**
 > - `id` → crée `window.<id>` **et** indexe `document.<id>`.
 > - `name` → crée la variable globale **seulement pour certains éléments** (`form`, `img`, `iframe`, `embed`, `object`) — pas pour les `<div>`/`<span>`.
 > - `id` est interdit sur `<html>` dans la spec mais **les navigateurs l'acceptent quand même** (pratique pour overrider `getElementById`).
 
-> [!tip] 💡 **Tester dans la console**
+> [!tip] **Tester dans la console**
 > `x.y.z` → observer le type retourné. Un objet DOM = clobber possible. Comparer avec le rendu attendu du script
 > (le clobbering se voit au **changement de comportement**, pas à l'écran forcément).
 
-> [!tip] 💡 **L'ordre du DOM compte**
+> [!tip] **L'ordre du DOM compte**
 > - Le clobbering ne fonctionne que si l'élément injecté est **déjà dans le DOM** quand le script lit la variable.
 > - Deux éléments `id=x` : le **premier** remporte `window.x`, les suivants sont accessibles par index dans la collection.
 > - Les scripts de la page chargés **avant** notre injection sont hors de portée (sauf re-lecture tardive).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `?.` ne protège pas (voir gadgets) — le clobbering **crée** les propriétés manquantes.
 > - `getElementById` overrider marche via `<html>`/`<svg><body>` avec le même `id` — bien vérifier `innerText`/`innerHTML` du sink.
 > - Le `forEach` clobberé est **Chrome-only** ; les payloads `<base>` diffèrent Firefox/Chrome.
@@ -406,13 +406,13 @@ x.constructor        → "function HTMLFormElement"
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Prototype Pollution|🧬 Prototype Pollution]]
-- [[SSRF|🌐 SSRF]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — DOM Clobbering](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/DOM%20Clobbering.md)
-- 🔬 [PortSwigger — DOM Clobbering](https://portswigger.net/web-security/dom-based/dom-clobbering)
-- 🔬 [Bypassing CSP via DOM clobbering (Gareth Heyes)](https://portswigger.net/research/bypassing-csp-via-dom-clobbering)
-- 🔬 [Hijacking service workers via DOM Clobbering (Gareth Heyes)](https://portswigger.net/research/hijacking-service-workers-via-dom-clobbering)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Prototype Pollution| Prototype Pollution]]
+- [[SSRF| SSRF]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — DOM Clobbering](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/DOM%20Clobbering.md)
+- [PortSwigger — DOM Clobbering](https://portswigger.net/web-security/dom-based/dom-clobbering)
+- [Bypassing CSP via DOM clobbering (Gareth Heyes)](https://portswigger.net/research/bypassing-csp-via-dom-clobbering)
+- [Hijacking service workers via DOM Clobbering (Gareth Heyes)](https://portswigger.net/research/hijacking-service-workers-via-dom-clobbering)

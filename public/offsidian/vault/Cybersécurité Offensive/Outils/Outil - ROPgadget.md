@@ -1,7 +1,7 @@
 ---
 title: "Outil - ROPgadget"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/JonathanSalwan/ROPgadget
 doc: https://github.com/JonathanSalwan/ROPgadget/tree/master/README.md
 ---
 
-# 🧩 ROPgadget — Le générateur de gadgets et de ROP chains
+# ROPgadget — Le générateur de gadgets et de ROP chains
 
 > [!info] **En 1 phrase**
 > Cherchez dans un binaire tous les « gadgets » (morceaux de code réutilisables) et générez automatiquement des ROP chains pour détourner le contrôle d'exécution malgré NX.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -49,7 +49,7 @@ doc: https://github.com/JonathanSalwan/ROPgadget/tree/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ROPgadget analyse un fichier binaire (ELF, PE, Mach-O) et liste les **gadgets ROP** : de petites séquences d'instructions se terminant par un `ret` (ex. `pop rdi ; ret`). Ces gadgets, enchaînés en **ROP chain**, permettent de construire des appels arbitraires (ex. `execve("/bin/sh", NULL, NULL)`) sans exécuter de code dans la stack, contournant ainsi la protection NX. ROPgadget offre aussi `--ropchain` qui génère automatiquement la chaîne complète à partir de gadgets trouvés dans le binaire. Indispensable en pwn moderne : avec seulement quelques gadgets et la bonne adresse, on dévie l'exécution vers la fonction gagnante ou un shell.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -118,14 +118,14 @@ python3 setup.py install
 ROPgadget --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Dépend de `capstone>=5.0.1`, `pyelftools`, `filebytes` — installées automatiquement par pip.
 > - Le mode `--ropchain` exige les gadgets 64 bits appropriés ; sur 32 bits, l'API diffère.
 > - L'exécution du script via `ROPgadget` nécessite le chemin dans `PATH` (ou `python3 -m ROPgadget`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -145,7 +145,7 @@ ROPgadget --version
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Scan multi-arch** : ROPgadget désassemble le binaire (capstone) et balaye chaque adresse à la recherche de séquences se terminant par un `ret` (ou `jmp`/`call` en mode `--all`).
 - **Détection de format** : il détecte ELF (pyelftools), PE (filebytes) et Mach-O pour parcourir sections `.text`, `.plt`, `.init`...
@@ -156,7 +156,7 @@ ROPgadget --version
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -200,7 +200,7 @@ ROPgadget --binary ./challenge --binary --depth 6 > gadgets.bin
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -223,7 +223,7 @@ ROPgadget --binary ./challenge --binary --depth 6 > gadgets.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -266,7 +266,7 @@ ROPgadget --binary /lib/x86_64-linux-gnu/libc.so.6 --only "pop rdi|pop rsi|ret" 
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Vérifier les protections** (avec pwntools/GDB) :
    ```bash
@@ -290,7 +290,7 @@ ROPgadget --binary /lib/x86_64-linux-gnu/libc.so.6 --only "pop rdi|pop rsi|ret" 
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : ret2libc avec ROPgadget + pwntools
 
@@ -331,7 +331,7 @@ ROPgadget --binary ./challenge --only "leave|ret"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -344,7 +344,7 @@ ROPgadget --binary ./challenge --only "leave|ret"
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -358,7 +358,7 @@ ROPgadget --binary ./challenge --only "leave|ret"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -406,7 +406,7 @@ rule rop_chain_detection
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script : extraire les gadgets pop/ret d'un lot de binaires
@@ -439,7 +439,7 @@ chain = subprocess.check_output(
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Format texte : adresse : gadget
@@ -465,22 +465,22 @@ diff a.txt b.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 checksec (pwntools) → ROPgadget (gadgets) → ROP() pwntools (chaîne) → gdb-peda (debug)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - pwntools]] — construction du payload final et envoi
 - [[Outil - gdb-peda]] — debug et validation de la chaîne
 - [[Outil - Ghidra]] — analyse statique complémentaire
 - [[Outil - radare2]] — désassemblage interactif alternatif
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -494,7 +494,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() pwntools (chaîne) → gdb
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Scan** : le désassemblage complet d'un binaire/une libc prend de quelques secondes à quelques dizaines de secondes (profondeur et `--all` inclus).
 - **--depth** : augmenter la profondeur augmente fortement le nombre de gadgets et le temps.
@@ -507,7 +507,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() pwntools (chaîne) → gdb
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -533,7 +533,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() pwntools (chaîne) → gdb
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution locale** : ROPgadget désassemble sans exécuter de code ; sûr pour l'analyse de binaires malveillants.
 - **Sortie** : `--binary` produit des octets bruts à ne pas exécuter par accident.
@@ -542,7 +542,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() pwntools (chaîne) → gdb
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Chaîne auto limitée** : `--ropchain` génère surtout `execve("/bin/sh")` ; les chaînes complexes (multi-appels) se font à la main.
 - **Bad bytes** : le filtre `--filter` est simple (pas de détection d'alignement complet).
@@ -552,7 +552,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() pwntools (chaîne) → gdb
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Tous les gadgets
@@ -577,7 +577,7 @@ ROPgadget --binary ./challenge --only "syscall|ret"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -590,7 +590,7 @@ ROPgadget --binary ./challenge --only "syscall|ret"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -601,16 +601,16 @@ ROPgadget --binary ./challenge --only "syscall|ret"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `--only "pop|ret"` est le filtre le plus courant : on y trouve `pop rdi ; ret`.
 > - Vérifiez les gadgets **de la libc** pour les ret2libc (plus de choix que le binaire).
 > - Utilisez `--rebase` dès que le binaire est PIE (adresses runtime après leak).
 > - `--depth` plus grand révèle des gadgets utiles (`mov rdi, rax ; ret`).
 > - Recoupez ROPgadget avec `ROP()` de pwntools pour confirmer les adresses.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `--rebase`, les adresses d'un binaire PIE sont fausses à l'exécution.
 > - Les bad bytes (`0x0a`, `0x00`) invalident les adresses dans les chaînes : filtrez-les.
 > - `--only "pop|ret"` peut rater les gadgets `mov`/`syscall` nécessaires aux chaînes complexes.
@@ -619,7 +619,7 @@ ROPgadget --binary ./challenge --only "syscall|ret"
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -642,4 +642,4 @@ ROPgadget --binary ./challenge --only "syscall|ret"
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - pwntools|🎯 pwntools]] · [[Outil - gdb-peda|🛠️ gdb-peda]] · [[Outil - Ghidra|🔬 Ghidra]] · [[Outil - radare2|🕵️ radare2]] · [[Outil - CyberChef|🧪 CyberChef]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - pwntools| pwntools]] · [[Outil - gdb-peda| gdb-peda]] · [[Outil - Ghidra| Ghidra]] · [[Outil - radare2| radare2]] · [[Outil - CyberChef| CyberChef]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

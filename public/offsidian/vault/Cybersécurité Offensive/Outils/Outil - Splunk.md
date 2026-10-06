@@ -1,11 +1,11 @@
 ---
 title: "Outil - Splunk"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 9.4.14 (Splunk Enterprise, ligne 9.4 — fix list du 2026-07-10)
 licence: Propriétaire (licence par volume d'ingestion/jour, free 500 Mo/jour)
@@ -16,7 +16,7 @@ site: https://www.splunk.com
 doc: https://docs.splunk.com
 ---
 
-# 🛡️ Splunk — Défense & SIEM
+# Splunk — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Splunk est le **SIEM leader du marché** : il ingère des flux de logs, les **indexe** par
@@ -25,13 +25,13 @@ doc: https://docs.splunk.com
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Splunk Enterprise |
 | Description | Plateforme de log management et SIEM : ingestion, indexation, recherche SPL, dashboards, alertes |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | SIEM / Log management / Corrélation & Threat detection |
 | Fonction principale | Collecter, parser, indexer, rechercher et alerter sur des données machine à grande échelle |
 | Type d'outil | Suite de services serveur (indexer, search head, forwarders) + API REST |
@@ -52,7 +52,7 @@ doc: https://docs.splunk.com
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Splunk centralise **tous les logs** (systèmes, applications, réseau, endpoints) dans un index, puis les interroge avec **SPL** : une syntaxe pipeline (`|`) proche du shell, qui filtre, enrichit (`lookup`), agrège (`stats`), et visualise. Le **sourcetype** dit à Splunk *comment* parser un log ; l'index délimite les périmètres (index=main, index=security). Les **forwarders** (agents légers) poussent les logs vers l'indexeur ; l'analyse se fait dans la console web avec dashboards et **alertes** (seuils, cron, actions). Splunk est l'outil SOC par défaut des grands comptes : il vaut par la richesse de **SPL** et la **recherche à grande échelle**, et par son écosystème d'apps (Enterprise Security, add-ons par source).
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Serveur Linux (indexer / search head)
 
@@ -130,7 +130,7 @@ docker run -p 8000:8000 -p 8088:8088 -e SPLUNK_START_ARGS=--accept-license \
 # UI sur http://localhost:8000, forwarder : config outputs.conf vers l'indexeur
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Licence : sans licence, le **free tier 500 Mo/jour** s'arrête à 60 jours (mode trial) ; au-delà, achat par volume.
 > - Les indexeurs et search heads doivent être dimensionnés (RAM ≥ 16 Go recommandé, stockage selon le volume).
 > - Ports : 8000 (UI), 8088 (HEC), 9997 (forwarder→indexer), 8089 (management), 514 (syslog).
@@ -138,7 +138,7 @@ docker run -p 8000:8000 -p 8088:8088 -e SPLUNK_START_ARGS=--accept-license \
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -157,7 +157,7 @@ docker run -p 8000:8000 -p 8088:8088 -e SPLUNK_START_ARGS=--accept-license \
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -172,7 +172,7 @@ Flux type : `monitor:///var/log/auth.log` → UF → indexeur (sourcetype `linux
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales (SPL — dans Search & Reporting)
 
@@ -208,7 +208,7 @@ index=security earliest=-24h latest=now action=failure | stats count by user src
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -232,7 +232,7 @@ index=security earliest=-24h latest=now action=failure | stats count by user src
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -293,7 +293,7 @@ index=_audit action=edit object=savedsearch
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Installer un forwarder** sur un serveur Linux, configurer `inputs.conf` :
    `monitor:///var/log/auth.log` avec `index=main sourcetype=linux_secure`.
@@ -308,7 +308,7 @@ index=_audit action=edit object=savedsearch
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : détection de bruteforce / credential stuffing
 
@@ -346,7 +346,7 @@ index=wineventlog OR index=sysmon dest_user=SVCT_APP | stats count by CommandLin
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -359,7 +359,7 @@ index=wineventlog OR index=sysmon dest_user=SVCT_APP | stats count by CommandLin
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -375,7 +375,7 @@ index=wineventlog OR index=sysmon dest_user=SVCT_APP | stats count by CommandLin
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -415,7 +415,7 @@ index=security sourcetype=linux_secure "Failed password" earliest=-5m
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — envoi d'un événement via HEC (port 8088)
@@ -437,7 +437,7 @@ actions = email, webhook
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Splunk produit des résultats au format **JSON**, **CSV**, **XML** ou tableau dans la console. La sortie SPL (`| table`, `| stats`) est structurée ; les événements bruts restent dans `_raw` et les champs extraits (indexés ou pas) sont accessibles en `field`.
 
@@ -451,7 +451,7 @@ curl -sk https://10.10.20.15:8089/services/search/jobs -u admin:CHANGEME \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Forwarders (Linux/Windows) → Splunk (9997)
@@ -461,7 +461,7 @@ Suricata/Zeek → syslog → Splunk (détection réseau)
 Splunk → webhook → Slack / PagerDuty / ServiceNow
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Elastic]] — alternative open source (Elastic Stack) à Splunk
 - [[Outil - Graylog]] — alternative open source légère pour log management
 - [[Outil - Wazuh]] — XDR open source dont les alertes peuvent alimenter Splunk
@@ -472,7 +472,7 @@ Splunk → webhook → Slack / PagerDuty / ServiceNow
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -486,7 +486,7 @@ Splunk → webhook → Slack / PagerDuty / ServiceNow
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Le moteur de recherche est **distribué** : les indexeurs exécutent la recherche en parallèle et le search head agrège — dimensionner les indexeurs selon le volume quotidien (ingestion GB/jour).
 - Les **buckets** (hot/warm/cold/frozen) gèrent la rétention : le `cold` peut être déplacé vers du stockage lent, `frozen` = suppression/archivage.
@@ -500,7 +500,7 @@ Splunk → webhook → Slack / PagerDuty / ServiceNow
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -536,7 +536,7 @@ Splunk → webhook → Slack / PagerDuty / ServiceNow
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Accès console** : port 8000 derrière un reverse-proxy SSO/MFA, whitelist IP, rôles RBAC minimaux (pas de compte admin partagé).
 - **Données sensibles** : les logs contiennent des secrets — restreindre les permissions d'index, chiffrer au repos, rotation des tokens HEC.
@@ -546,7 +546,7 @@ Splunk → webhook → Slack / PagerDuty / ServiceNow
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Coût** : licence par volume d'ingestion/jour — le principal frein à grande échelle.
 - **Moteur fermé** : pas de fork/audit complet du code (contrairement à Elastic/OpenSearch).
@@ -557,7 +557,7 @@ Splunk → webhook → Slack / PagerDuty / ServiceNow
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```spl
 # Recherche cadrée
@@ -591,7 +591,7 @@ curl -k https://10.10.20.15:8088/services/collector \
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -604,7 +604,7 @@ curl -k https://10.10.20.15:8088/services/collector \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -616,26 +616,26 @@ curl -k https://10.10.20.15:8088/services/collector \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Pense « stats » dès le départ**
+> [!tip] **Pense « stats » dès le départ**
 > La vraie force de SPL est l'agrégation : `index=* | stats count by source` sur 5 minutes donne immédiatement la **couverture** des sources. En investigation, commence toujours par `index=` + `sourcetype=` + une fenêtre temporelle courte, puis élargis.
 
-> [!tip] 💡 **Teste tes alertes sur une plage courte**
+> [!tip] **Teste tes alertes sur une plage courte**
 > Crée la recherche d'alerte avec `earliest=-5m latest=now`, vérifie le volume de résultats dans la console, puis planifie. Une alerte sur un champ mal extrait ne se déclenche jamais.
 
-> [!warning] ⚠️ **Piège** : une recherche sans **fenêtre temporelle** scanne l'index complet.
+> [!warning] **Piège** : une recherche sans **fenêtre temporelle** scanne l'index complet.
 > Sur un gros SIEM c'est lent et coûteux. Toujours fixer `earliest=-1h` ou une plage précise.
 
-> [!warning] ⚠️ **Piège** : `index=_internal` est trompeur.
+> [!warning] **Piège** : `index=_internal` est trompeur.
 > Il contient les logs de Splunk **et** les erreurs de pipeline : ne pas en conclure trop vite sur une « panne » sans filtrer `sourcetype=splunkd`.
 
-> [!warning] ⚠️ **Piège** : les champs ne sont pas tous indexés.
+> [!warning] **Piège** : les champs ne sont pas tous indexés.
 > Par défaut Splunk indexe le texte (`_raw` + champs indexés) ; les champs extraits à la recherche (`EXTRACT`, `rex`) sont plus lents. Modéliser le sourcetype avant les grosses recherches.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -659,4 +659,4 @@ curl -k https://10.10.20.15:8088/services/collector \
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Techniques/Injection de commandes|🐚 Injection de commandes]] · [[Techniques/Privilege Escalation Windows|🕹️ Privesc Windows]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Wazuh]] · [[Outil - Suricata]] · [[Outil - Sigma]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Injection de commandes| Injection de commandes]] · [[Techniques/Privilege Escalation Windows| Privesc Windows]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Wazuh]] · [[Outil - Suricata]] · [[Outil - Sigma]]

@@ -1,11 +1,11 @@
 ---
 title: "Outil - Canarytokens"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: latest (image Docker thinkst/canarytokens ; build continu, pas de version semver)
 licence: BSD-3-Clause
@@ -16,20 +16,20 @@ site: https://canarytokens.org
 doc: https://docs.canary.tools/
 ---
 
-# 🔎 Canarytokens — Forensics, Threat Intel & Honeypots
+# Canarytokens — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > Canarytokens est un service de honeypot « léger » qui génère des leurres (URL, DNS, document Word/PDF, clé AWS, QR code...) qui déclenchent une alerte dès qu'ils sont ouverts ou consultés.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Canarytokens |
 | Description | Service de « canari » : leurres (URL, DNS, documents, clés AWS, QR codes) qui alertent dès qu'ils sont touchés |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Honeypot / Déception |
 | Fonction principale | Détection précoce d'accès non autorisé via des artefacts piégés |
 | Type d'outil | Service SaaS (canarytokens.org) + auto-hébergement Docker |
@@ -51,7 +51,7 @@ doc: https://docs.canary.tools/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Un canarytoken est un leurre inséré dans un objet déposé à un endroit stratégique : un lien URL dans un email, un enregistrement DNS, un document Word/PDF sur un serveur de fichiers, une clé AWS factice dans un dépôt git. Dès que la cible interagit avec le leurre (clic, ouverture, résolution DNS, usage de la clé), le service `canarytokens.org` envoie une alerte en temps réel — par **email** ou **webhook** (Slack, Teams, SIEM). C'est la version « canari » du honeypot : détection immédiate d'une intrusion sans infrastructure lourde. Deux modes d'emploi : le **service hébergé** (zéro installation) et l'**auto-hébergement Docker** pour garder le contrôle des données et des domaines. Les cas d'usage défensifs : détection précoce d'accès non autorisé (ouverture du document), piège à exfiltration (copie de dossier), veille de fuite (token cherché sur Internet), traçage de copies de documents confidentiels et détection de phishing. Complémentaire de Cowrie : là où Cowrie capture des attaques réseau, Canarytokens capte des actions ciblées sur des artefacts.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Option A : service hébergé — aucune installation
@@ -98,11 +98,11 @@ cd canarytokens && docker compose up -d
 # Redis + SMTP ou webhook vers le SIEM : recevoir les alertes
 ```
 
-> [!warning] ⚠️ Prudence : l'auto-hébergement expose une interface web (frontend PWA) : mettre à jour régulièrement l'image Docker (advisory XSS GHSA-6734-fqcj-x5h3 de février 2026).
+> [!warning] Prudence : l'auto-hébergement expose une interface web (frontend PWA) : mettre à jour régulièrement l'image Docker (advisory XSS GHSA-6734-fqcj-x5h3 de février 2026).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Exemple |
 |---|---|---|
@@ -128,7 +128,7 @@ cd canarytokens && docker compose up -d
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux :
 
@@ -143,7 +143,7 @@ Flux type : token généré → placé par l'utilisateur → interaction cible �
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -178,7 +178,7 @@ curl "https://canarytokens.org/history?auth_token=YOUR_HISTORY_TOKEN"
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -196,7 +196,7 @@ curl "https://canarytokens.org/history?auth_token=YOUR_HISTORY_TOKEN"
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -239,7 +239,7 @@ docker compose up -d && docker compose logs -f
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Créer le token** : `canarytokens.org` → choisir `Document Word` → renseigner email/webhook et un libellé mémorisable (`LAB-INC-2026-SRV-DOC`).
 2. **Étape 2 — Placer le leurre** : télécharger le document et le déposer au point stratégique (partage `\\SRV-FILES\backup\`, dossier backup, repo) sous un nom discret (`plan_reprise_activite.docx`).
@@ -250,7 +250,7 @@ docker compose up -d && docker compose logs -f
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Piège à moissonneurs de secrets (clé AWS factice)
 Détecter l'exfiltration de secrets depuis un dépôt git public.
@@ -302,7 +302,7 @@ Associer un token dans un répertoire accessible par un honeypot SSH : l'attaqua
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -316,7 +316,7 @@ Associer un token dans un répertoire accessible par un honeypot SSH : l'attaqua
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -332,7 +332,7 @@ Associer un token dans un répertoire accessible par un honeypot SSH : l'attaqua
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -368,7 +368,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — déployer une batterie de tokens sur les partages
@@ -399,7 +399,7 @@ print(json.dumps(registre, indent=2))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 L'API `/history` renvoie le détail des tokens (type, memo, domaine, dates) ; les alertes arrivent dans le webhook/email avec l'adresse IP source, l'heure et le type d'interaction.
 
@@ -423,7 +423,7 @@ print(data.get("token_url", data.get("download_url", data)))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Canarytokens → webhook → Slack / Teams / Mattermost → SOC
@@ -434,16 +434,16 @@ Canarytokens → API REST (génération automatisée)
 Canarytokens auto-hébergé → Redis + SMTP + domaine propre
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - Cowrie|🔎 Cowrie]] — honeypot SSH/Telnet complémentaire
-- [[Outils/Outil - MISP|🔎 MISP]] — corrélation des alertes et des IOCs
-- [[Outils/Outil - Wazuh|🛡️ Wazuh]] — réception des webhooks dans le SIEM
-- [[Outils/Outil - Elastic|🛡️ Elastic]] — indexation des alertes
-- [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[Tools| Outils]]
+- [[Outils/Outil - Cowrie| Cowrie]] — honeypot SSH/Telnet complémentaire
+- [[Outils/Outil - MISP| MISP]] — corrélation des alertes et des IOCs
+- [[Outils/Outil - Wazuh| Wazuh]] — réception des webhooks dans le SIEM
+- [[Outils/Outil - Elastic| Elastic]] — indexation des alertes
+- [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -457,7 +457,7 @@ Canarytokens auto-hébergé → Redis + SMTP + domaine propre
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Coût réseau** : quasi nul (un ping par interaction), aucun impact sur la prod.
 - **Latence d'alerte** : en moins de 30 secondes via webhook (email plus lent).
@@ -470,7 +470,7 @@ Canarytokens auto-hébergé → Redis + SMTP + domaine propre
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -506,7 +506,7 @@ Canarytokens auto-hébergé → Redis + SMTP + domaine propre
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Domaine** : utiliser un domaine propre (auto-hébergé) pour ne pas dépendre d'un domaine public connu des attaquants.
 - **`memo`** : ne jamais mettre d'information sensible dans le libellé (visible si l'attaquant inspecte l'interface).
@@ -517,7 +517,7 @@ Canarytokens auto-hébergé → Redis + SMTP + domaine propre
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Faux positifs** : antivirus, crawlers, analystes « qui vérifient ».
 - **Portée** : ne détecte que l'interaction avec le leurre (pas l'attaque complète).
@@ -528,7 +528,7 @@ Canarytokens auto-hébergé → Redis + SMTP + domaine propre
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Token URL
@@ -553,7 +553,7 @@ curl "https://canarytokens.org/history?auth_token=YOUR_HISTORY_TOKEN"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -562,11 +562,11 @@ curl "https://canarytokens.org/history?auth_token=YOUR_HISTORY_TOKEN"
 | **Commande principale** | `curl -X POST .../generate -F "type=url" -F "memo=..." -F "webhook=..."` |
 | **Alternative principale** | Thinkst Canary, Cowrie, MHN |
 | **Concepts importants** | Token, canari, ping, webhook, memo, auto-hébergement |
-| **Liens associés** | [[Outils/Outil - Cowrie|🔎 Cowrie]] · [[Outils/Outil - MISP|🔎 MISP]] · [[Outils/Outil - Wazuh|🛡️ Wazuh]] |
+| **Liens associés** | [[Outils/Outil - Cowrie| Cowrie]] · [[Outils/Outil - MISP| MISP]] · [[Outils/Outil - Wazuh| Wazuh]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -578,21 +578,21 @@ curl "https://canarytokens.org/history?auth_token=YOUR_HISTORY_TOKEN"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Active l'option `webhook` pour recevoir les alertes dans le canal du SOC : l'email classique se perd dans les boîtes saturées, le webhook déclenche directement le ticket.
 > - Utilise les tokens `DNS` comme signature de fuite : même un document converti en PDF ou recopié conserve la référence DNS dans ses métadonnées.
 > - Déploie des tokens sur les partages sensibles, les machines de domaine et les environnements de pré-production pour une couverture homogène.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un token URL ouvert par un antivirus, un crawler ou un analyste qui « vérifie » génère un faux positif : croise toujours l'alerte avec l'adresse IP et l'User-Agent.
 > - Ne génère jamais de token depuis un poste compromis avec des informations sensibles dans le `memo` : le trafic vers canarytokens.org révélerait tes placements à l'attaquant.
 > - Tiers fournis : le service hébergé envoie les alertes via des domaines connus ; en environnement très durci, préfère l'auto-hébergement.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -614,4 +614,4 @@ curl "https://canarytokens.org/history?auth_token=YOUR_HISTORY_TOKEN"
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Cowrie|🔎 Cowrie]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]] · [[Techniques/11 - Glossaire|📖 Glossaire]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Cowrie| Cowrie]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]] · [[Techniques/11 - Glossaire| Glossaire]]

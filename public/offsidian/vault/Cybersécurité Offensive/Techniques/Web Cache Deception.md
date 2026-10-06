@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🗑️ Web Cache Deception
+# Web Cache Deception
 
 > [!info] **En 1 phrase**
 > WCD = tromper le **CDN/cache** pour qu'il mette en cache une **page dynamique privée** en la faisant passer
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,7 +33,7 @@ flowchart LR
     D --> E[Attaquant : GET /account.php/x.css<br>lecture du cache → vol de données]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le **cache** et le **serveur d'origine** interprètent l'URL **différemment** :
 > - le **CDN** décide de la cacheabilité sur l'**extension** (`.css` = statique = on cache) ;
 > - l'**origine** sert la **route dynamique** (`/account.php`) en ignorant la fin du path ;
@@ -41,7 +41,7 @@ flowchart LR
 
 ---
 
-## 🆚 WCD vs Web Cache Poisoning (WCP)
+## WCD vs Web Cache Poisoning (WCP)
 
 | | **Web Cache Deception** | **Web Cache Poisoning** |
 |---|---|---|
@@ -50,14 +50,14 @@ flowchart LR
 | **Mécanisme** | URL trompeuse → page dynamique mise en cache | **Input non-keyed** (header, cookie...) injecté dans la réponse **cachée** |
 | **Impact** | ATO, fuite de tokens/PII, déni de confidentialité | XSS persistant massif, défacement, drive-by |
 
-> [!warning] ⚠️ **Attention à la terminologie**
+> [!warning] **Attention à la terminologie**
 > Dans le WCP, l'attaquant contrôle ce qui est **stocké**. Dans le WCD, il contrôle seulement la **URL**
 > (la donnée stockée, c'est celle de la **victime**). Deux clés de cache différentes, deux buts opposés.
 > Beaucoup de rapports de bug bounty sont à tort étiquetés « WCD » alors qu'il s'agit de WCP — ou l'inverse.
 
 ---
 
-## ⚙️ Mécanisme en détail
+## Mécanisme en détail
 
 1. L'attaquant construit un lien vers `http://example.com/home.php/non-existent.css` et le fait ouvrir à une **victime loggée**.
 2. Le navigateur de la victime demande cette URL au **cache serveur** (CDN / reverse proxy) : **miss** (pas en cache).
@@ -68,12 +68,12 @@ flowchart LR
 7. Le cache crée une entrée sous `/home.php/non-existent.css` et y stocke **la réponse privée de la victime**.
 8. L'attaquant demande `http://example.com/home.php/non-existent.css` → le cache répond **hit** avec **les données de la victime**.
 
-> [!tip] 💡 C'est la **divergence d'interprétation du path** entre cache et origine qui crée la vulnérabilité,
+> [!tip] C'est la **divergence d'interprétation du path** entre cache et origine qui crée la vulnérabilité,
 > pas un défaut de config « classique » du cache. Le cache croit servir du **statique**, l'origine croit servir du **dynamique**.
 
 ---
 
-## 🧪 Payloads de base
+## Payloads de base
 
 ### Patterns d'URL à tester
 
@@ -111,14 +111,14 @@ https://example.com/account.php?filename=foo.css
 https://example.com/account.php?url=//cdn.example.com/x.js
 ```
 
-> [!warning] ⚠️ **Désaccord de normalisation (2 axes)**
+> [!warning] **Désaccord de normalisation (2 axes)**
 > - **Délimiteurs** : `/settings/profile;script.js` → l'origine voit `/settings/profile`, le cache voit `.js`.
 > - **Traversal** : `/wcd/..%2fprofile` → l'origine décode `%2f` et résout `..` → `/profile`, le cache voit un path "propre" `/wcd/..%2fprofile` avec extension... ou non.
 > Le but est **toujours** de créer un path que l'origine ignore partiellement mais que le cache juge **statique**.
 
 ---
 
-## 🗂️ Les patterns connus
+## Les patterns connus
 
 | Pattern | Exemple | Clé du désaccord |
 |---|---|---|
@@ -131,14 +131,14 @@ https://example.com/account.php?url=//cdn.example.com/x.js
 | **Cache key vs cache entry** | clé = path complet, entrée = réponse de la route | la **clé** est l'URL trompeuse, la **réponse** est la page privée |
 | **Normalisation (traversal)** | `/wcd/..%2fprofile` | l'origine résout `..`, le cache garde le path encodé tel quel |
 
-> [!info] 💡 **Cache key ≠ contenu**
+> [!info] **Cache key ≠ contenu**
 > Le cache identifie une entrée par une **clé** (souvent le path + une partie des query params).
 > Si la page dynamique est servie **sous la clé trompeuse**, c'est exactement ce qu'on veut :
 > la clé est `.../foo.css`, l'entrée contient la page privée de `/account.php`.
 
 ---
 
-## 💥 Exploitation — vol de données privées
+## Exploitation — vol de données privées
 
 ### Cibles classiques
 
@@ -159,13 +159,13 @@ https://example.com/account.php?url=//cdn.example.com/x.js
 5. La réponse de la victime est **mise en cache**.
 6. **Relire** le cache avec la même URL → contenu privé de la victime.
 
-> [!warning] ⚠️ **Rôle de la victime**
+> [!warning] **Rôle de la victime**
 > Sans victime, il n'y a que votre propre page en cache : l'impact réel exige qu'**un autre utilisateur loggé**
 > visite l'URL trompeuse. L'exfiltration passe par votre **propre lecture** du cache, pas par un serveur externe.
 
 ---
 
-## 🧪 PoC complet (curl)
+## PoC complet (curl)
 
 ```bash
 # ========== ÉTAPE 1 : CONFIRMER LE CACHE ==========
@@ -209,11 +209,11 @@ done
 
 ---
 
-## 🔗 Combinaisons
+## Combinaisons
 
 ### Avec Request Smuggling (HTTP Request Smuggling)
 
-> [!tip] 💡 **Le smuggling fournit la partie dynamique**
+> [!tip] **Le smuggling fournit la partie dynamique**
 > La requête **devant** (front-end) pointe vers une ressource statique innocente (qui sera la **clé de cache**),
 > la requête **derrière** (backend) désigne la page **privée**. Le front-end cache la réponse de la seconde
 > sous la clé de la première — sans même que la victime ait à cliquer un lien bizarre.
@@ -261,9 +261,9 @@ Cache-Control: public, no-cache
 
 ---
 
-## 🕵️ Détection du cache & de la vulnérabilité
+## Détection du cache & de la vulnérabilité
 
-> [!tip] 💡 **D'abord identifier le cache, ensuite tester la déception.** Un WCD sans cache = inexistant.
+> [!tip] **D'abord identifier le cache, ensuite tester la déception.** Un WCD sans cache = inexistant.
 
 ### Confirmer qu'un cache existe
 
@@ -293,14 +293,14 @@ curl -si "https://target.com/account.php/foo.css" | grep -iE "cache-control|age|
 curl -si "https://target.com/account.php/foo.css" | grep -iE "age|x-cache|cf-cache-status"
 ```
 
-> [!warning] ⚠️ **Faux positifs**
+> [!warning] **Faux positifs**
 > - `Age` présent mais **petit et constant** : ok, c'est bien un cache — mais **vérifier que le contenu reflète la session** (donnée privée). Une page publique mise en cache n'est PAS une vulnérabilité.
 > - Un header `Cache-Control` **public** n'est pas suffisant : sans **Age**/`X-Cache` il n'y a pas de cache effectif → pas d'exploit.
 > - Le premier GET renvoie souvent `Age: 0` ou pas d'`Age` du tout (la réponse vient d'être stockée) : refaire la requête.
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -318,12 +318,12 @@ ffuf -u "https://target.com/account.phpFUZZ" -w <(printf ".css\n.js\n.png\n;.js\
 curl -si "https://target.com/account.php/foo.css" | grep -iE "^HTTP|^age:|^x-cache|^cf-cache-status|^cache-control|^content-type"
 ```
 
-> [!tip] 💡 **Liste des extensions cachées par défaut chez Cloudflare** : `7Z CSV GIF MIDI PNG TIF ZIP AVI DOC GZ MKV PPT TIFF ZST AVIF DOCX ICO MP3 PPTX TTF CSS APK DMG ISO MP4 PS WEBM FLAC BIN EJS JAR OGG RAR WEBP MID BMP EOT JPG OTF SVG WOFF PLS BZ2 EPS JPEG PDF SVGZ WOFF2 TAR CLASS EXE JS PICT SWF XLS XLSX`.
+> [!tip] **Liste des extensions cachées par défaut chez Cloudflare** : `7Z CSV GIF MIDI PNG TIF ZIP AVI DOC GZ MKV PPT TIFF ZST AVIF DOCX ICO MP3 PPTX TTF CSS APK DMG ISO MP4 PS WEBM FLAC BIN EJS JAR OGG RAR WEBP MID BMP EOT JPG OTF SVG WOFF PLS BZ2 EPS JPEG PDF SVGZ WOFF2 TAR CLASS EXE JS PICT SWF XLS XLSX`.
 > Si l'extension cible n'est pas dans la liste du CDN, le test échoue **avant** même l'exploitation.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -340,16 +340,16 @@ curl -si "https://target.com/account.php/foo.css" | grep -iE "^HTTP|^age:|^x-cac
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre méthodologique**
+> [!tip] **Ordre méthodologique**
 > 1. **Trouver le cache** : grep `Age`, `X-Cache`, `CF-Cache-Status`, `Via` sur n'importe quelle réponse.
 > 2. **Vérifier la cacheabilité de la page dynamique** : URL nue vs URL + extension → compare les headers.
 > 3. **Confirmer le stockage** : 2 requêtes identiques → `Age` croissant / `x-cache: HIT`.
 > 4. **Tester les patterns** : `;`, `//`, `%2f..%2f`, `?x=1`, extensions — un par un, avec un **buster**.
 > 5. **Exploiter avec une vraie victime loggée**, relire le cache, prouver l'impact (données privées, pas juste `200 OK`).
 
-> [!warning] ⚠️ **Pièges fréquents**
+> [!warning] **Pièges fréquents**
 > - **Buster obligatoire** : sans paramètre random, la victime écrase votre entrée de cache ou l'inverse — impossible de prouver qui a caché quoi.
 > - **`Age` absent ≠ pas de cache** : sur un miss récent l'`Age` peut manquer. Refaites la requête avant de conclure.
 > - **Une page publique cachée n'est pas une vuln** : il faut des **données de session** dans la réponse (PII, tokens, CSRF lié à la session).
@@ -362,7 +362,7 @@ curl -si "https://target.com/account.php/foo.css" | grep -iE "^HTTP|^age:|^x-cac
 
 ---
 
-## 🧪 Labs & Références
+## Labs & Références
 
 - PortSwigger Labs (Web Cache Poisoning / Deception) : https://portswigger.net/web-security/all-labs#web-cache-poisoning
 - Liste des délimiteurs (lab PortSwigger) : https://portswigger.net/web-security/web-cache-deception/wcd-lab-delimiter-list
@@ -370,12 +370,12 @@ curl -si "https://target.com/account.php/foo.css" | grep -iE "^HTTP|^age:|^x-cac
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[HTTP Request Smuggling|🚂 Smuggling]]
-- [[Race Condition|🏁 Race Conditions]]
-- [[Open Redirect|↩️ Open Redirect]]
-- [[SSRF|🌐 SSRF]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Web Cache Deception](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Web%20Cache%20Deception/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[HTTP Request Smuggling| Smuggling]]
+- [[Race Condition| Race Conditions]]
+- [[Open Redirect|↩Open Redirect]]
+- [[SSRF| SSRF]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Web Cache Deception](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Web%20Cache%20Deception/README.md)

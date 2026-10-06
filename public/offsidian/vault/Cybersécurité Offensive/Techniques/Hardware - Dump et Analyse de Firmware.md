@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 💾 Dump et Analyse de Firmware
+# Dump et Analyse de Firmware
 
 > [!info] **En 1 phrase**
 > Dumper le firmware = **récupérer tout le logiciel** d'un objet connecté depuis sa mémoire flash,
@@ -19,7 +19,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -31,7 +31,7 @@ statut: publie
 | **Complexité** | Moyenne → Élevée |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Dump firmware"] --> B["Extraction"]
@@ -43,7 +43,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le dump de firmware consiste à extraire le contenu binaire de la mémoire flash d'un device IoT/embedded, puis à l'analyser pour en comprendre le fonctionnement, trouver des failles, extraire des secrets (credentials, clés), ou préparer une attaque (reverse shell, backdoor). C'est la pierre angulaire du pentest hardware.
 
@@ -67,11 +67,11 @@ flowchart TB
     style L fill:#ffcdd2
 ```
 
-> [!info] 💡 **Le plus gros secret se trouve souvent dans le bootloader / U-Boot** : `printenv` peut révéler serveurs, IP, chemins, parfois des mots de passe.
+> [!info] **Le plus gros secret se trouve souvent dans le bootloader / U-Boot** : `printenv` peut révéler serveurs, IP, chemins, parfois des mots de passe.
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Types de mémoire flash
 
@@ -117,7 +117,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -143,7 +143,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles de dump
+## Protocoles de dump
 
 ### SPI Flash (méthode reine)
 
@@ -175,7 +175,7 @@ flowchart TB
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -221,7 +221,7 @@ cd radare2 && sys/install.sh
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Configuration flashrom
 
@@ -251,7 +251,7 @@ cd radare2 && sys/install.sh
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### 1. Dump du firmware
 
@@ -351,9 +351,9 @@ picotool load firmware.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Premier dump SPI avec CH341A
+### Débutant — Premier dump SPI avec CH341A
 
 ```bash
 # 1. Identifier le chip flash (W25Q64, MX25L256…)
@@ -368,7 +368,7 @@ ls -la dump.bin
 md5sum dump.bin
 ```
 
-### 🟡 Intermédiaire — Extraction complète avec binwalk
+### Intermédiaire — Extraction complète avec binwalk
 
 ```bash
 # 1. Dump du firmware
@@ -394,7 +394,7 @@ grep -rniE 'password|secret|key|api' ./squashfs-root/
 find . -name "*.conf" -exec grep -l "pass" {} \;
 ```
 
-### 🔴 Avancé — Analyse complète avec reverse engineering
+### Avancé — Analyse complète avec reverse engineering
 
 ```bash
 # 1. Dump et extraction
@@ -420,7 +420,7 @@ radare2 -A -a arm -b 32 squashfs-root/usr/bin/app
 # Rechercher les appels réseau (connect, send, recv)
 ```
 
-### ⚫ Expert — Extraction avec bypass de protection
+### Expert — Extraction avec bypass de protection
 
 ```python
 #!/usr/bin/env python3
@@ -477,7 +477,7 @@ if data:
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -524,7 +524,7 @@ Analyser le dump (binwalk, strings, reverse), extraire les secrets, documenter l
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Dump complet d'un routeur compromis
 
@@ -534,7 +534,7 @@ Analyser le dump (binwalk, strings, reverse), extraire les secrets, documenter l
 | **Matériel** | CH341A, clip SOIC-8, logic analyzer, PC |
 | **Étapes** | 1. Identifier W25Q128 → 2. Dump SPI (16MB) → 3. binwalk extraction → 4. Trouver U-Boot → 5. Extraire rootfs → 6. Trouver script de config avec credentials root |
 | **Résultat** | Backdoor hardcoded dans le script de config |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -553,11 +553,11 @@ flowchart LR
 | **Matériel** | ChipWhisperer, ST-Link V2, préchauffeur, RT809H |
 | **Étapes** | 1. Tenter JTAG → RDP bloquant → 2. Voltage glitch sur le bootloader → 3. Bypass RDP → 4. Dump complet → 5. Analyse |
 | **Résultat** | Firmware complet malgré la protection |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -577,7 +577,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -607,7 +607,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -651,7 +651,7 @@ esptool.py --port COM3 burn_efuse JTAG_DISABLE
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -732,7 +732,7 @@ for s in secrets[:20]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -766,15 +766,15 @@ grep -iE 'pass|key|token' strings_full.txt > secrets.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - CH341A|💾 CH341A]] pour les dumps SPI
-- [[Hardware - Bus Pirate|🏴‍☠️ Bus Pirate]] pour les dumps multi-protocole
-- [[Hardware - Memory Programmer|🗄️ Memory Programmer]] pour eMMC/NAND
-- [[Hardware - Logic Analyzer|📈 Logic Analyzer]] pour le sniffing
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] pour le debug
-- [[Hardware - UART|🔌 UART]] pour la console
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - CH341A| CH341A]] pour les dumps SPI
+- [[Hardware - Bus Pirate| Bus Pirate]] pour les dumps multi-protocole
+- [[Hardware - Memory Programmer| Memory Programmer]] pour eMMC/NAND
+- [[Hardware - Logic Analyzer| Logic Analyzer]] pour le sniffing
+- [[Hardware - JTAG et SWD| JTAG/SWD]] pour le debug
+- [[Hardware - UART| UART]] pour la console
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -791,7 +791,7 @@ grep -iE 'pass|key|token' strings_full.txt > secrets.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -810,7 +810,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -831,7 +831,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -874,7 +874,7 @@ binwalk -Y dump.bin
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -896,7 +896,7 @@ binwalk -Y dump.bin
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -916,7 +916,7 @@ binwalk -Y dump.bin
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -951,7 +951,7 @@ binwalk -Y dump.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -964,7 +964,7 @@ binwalk -Y dump.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -984,7 +984,7 @@ binwalk -Y dump.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : **Entropie haute ≠ forcément chiffré** — un firmware peut être compressé (LZMA) → encore extractible. Un vrai chiffrement (AES) reste un mur.
 - **Piège 2** : **Compare deux dumps** pour valider l'extraction (contacts de clip instables).
@@ -1000,9 +1000,9 @@ binwalk -Y dump.bin
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Firmware Dumping](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/firmware/firmware-dumping.md)
 > - [HardwareAllTheThings — Firmware Reverse Engineering](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/firmware/firmware-reverse-engineering.md)
 > - [binwalk — GitHub](https://github.com/ReFirmLabs/binwalk)
@@ -1037,4 +1037,4 @@ binwalk -Y dump.bin
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - UART|🔌 UART]] · [[Hardware - CH341A|💾 CH341A]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - UART| UART]] · [[Hardware - CH341A| CH341A]]

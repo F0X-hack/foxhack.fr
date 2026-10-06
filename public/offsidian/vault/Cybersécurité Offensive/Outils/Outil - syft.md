@@ -1,7 +1,7 @@
 ---
 title: "Outil - syft"
 type: outil
-categorie: 🔒 Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://github.com/anchore/syft
 doc: https://anchore.com/syft/
 ---
 
-# 🧬 syft - Le générateur d'empreinte logicielle (SBOM)
+# syft - Le générateur d'empreinte logicielle (SBOM)
 
 > [!info] **En 1 phrase**
 > syft génère un SBOM (inventaire des packages) d'une image conteneur ou d'un filesystem : la matière première qui alimente grype pour le scan de vulnérabilités.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | syft |
 | Description | Générateur de SBOM (Software Bill of Materials) : catalogue les packages (dpkg, rpm, apk, npm, pip, go, jar, ...) d'une image conteneur ou d'un filesystem dans des formats standardisés |
-| Catégorie | 🔒 Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | DevSecOps / SBOM / Inventaire logiciel |
 | Type d'outil | CLI Go (binaire unique) |
 | Licence | Apache-2.0 |
@@ -50,7 +50,7 @@ doc: https://anchore.com/syft/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 syft examine le contenu d'une image conteneur (ou d'un dossier, d'un tar, d'un registre) **couche par couche** et identifie chaque paquet logiciel installé : gestionnaire (dpkg, rpm, apk), langages (npm, pip, go.mod, composer), fichiers JAR/Java, etc. Il produit ensuite un **SBOM** dans des formats standardisés : `cyclonedx-json`, `spdx-json`, `syft-json`, table, ou des formats relationnels.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 syft s'installe en binaire unique, via curl, Homebrew, Docker ou les sources.
 
@@ -127,14 +127,14 @@ go build .
 ./syft version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'analyse d'images nécessite un accès au démon Docker ou un tar exporté (`docker save`).
 > - Registres privés : `registry:user:pass@image` ou variables d'environnement.
 > - Les formats de sortie sont nombreux : vérifier les besoins du consommateur (grype, SIEM, CI) avant le choix.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 syft se configure par flags, variables `SYFT_*` ou fichier `~/.syft.yaml`.
 
@@ -151,7 +151,7 @@ syft se configure par flags, variables `SYFT_*` ou fichier `~/.syft.yaml`.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 syft est un binaire Go structuré en pipeline d'analyse :
 
@@ -172,7 +172,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ syft convert sbom.cdx.json -o spdx-json
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -220,7 +220,7 @@ syft convert sbom.cdx.json -o spdx-json
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -264,7 +264,7 @@ syft nginx:latest --template '{{range .Artifacts}}{{.Name}} {{.Version}} {{.Type
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer la cible** - image locale, registre, ou tar en post-exploitation.
    ```bash
@@ -286,7 +286,7 @@ syft nginx:latest --template '{{range .Artifacts}}{{.Name}} {{.Version}} {{.Type
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Empreinte d'un conteneur compromis avant escalade
 
@@ -320,7 +320,7 @@ done | sort | uniq -c | sort -rn | head -20
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -333,7 +333,7 @@ done | sort | uniq -c | sort -rn | head -20
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -346,7 +346,7 @@ done | sort | uniq -c | sort -rn | head -20
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -381,7 +381,7 @@ level: low
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash - SBOM systématique des images d'un registre
@@ -404,7 +404,7 @@ for comp in sbom.get("components", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le format `syft-json` structure les artifacts avec `id`, `name`, `version`, `type`, `locations`. CycloneDX utilise `components[]` ; SPDX `packages[]`.
 
@@ -418,9 +418,9 @@ jq -r '.components[] | select(.purl|test("pkg:npm")) | .name' sbom.cdx.json
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🛠 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - grype|grype]] - scan des vulnérabilités des SBOM produits (couple officiel)
 - [[Outil - trivy|trivy]] - consommation de SBOM et scan complémentaire
 - [[Outil - kube-bench|kube-bench]] - posture Kubernetes complémentaire
@@ -434,7 +434,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -445,7 +445,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide** : analyse d'une image moyenne en quelques secondes.
 - **`squashed` vs `all-layers`** : le premier consolide les couches (rapide), le second préserve le détail (plus lent).
@@ -454,7 +454,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -478,7 +478,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : analyse statique de conteneurs/fichiers ; sur des artefacts autorisés.
 - **Données** : les SBOM listent composants et licences : informations d'infrastructure.
@@ -488,7 +488,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de CVE** : syft inventorie mais n'évalue pas la vulnérabilité (le rôle de grype).
 - **Statique** : l'analyse reflète le contenu déclaré, pas le runtime réel.
@@ -498,7 +498,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # SBOM table d'une image
@@ -529,7 +529,7 @@ syft version
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -542,7 +542,7 @@ syft version
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -553,15 +553,15 @@ syft version
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Produis le SBOM en CycloneDX : c'est le format le plus largement accepté (grype, trivy, SIEM).
 > - Couple toujours syft avec grype : l'inventaire sans CVE ne sert qu'à moitié en pentest.
 > - `--scope all-layers` quand tu cherches un composant caché dans une couche intermédiaire.
 > - Sur un conteneur récupéré, repère les outils de pivot (curl, socat, python) dans le SBOM.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - L'absence d'un package dans le SBOM ne garantit pas son absence réelle (cataloguer incomplet).
 > - syft ne dit rien de la sécurité : un SBOM vierge de CVE n'arrive qu'après le passage de grype.
 > - Les images scratch/multi-stage produisent des SBOM très pauvres.
@@ -569,7 +569,7 @@ syft version
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -591,4 +591,4 @@ syft version
 
 ---
 
-➡️ **Liens :** [[Tools|🛠 Outils]] · [[Outil - grype|grype]] · [[Outil - trivy|trivy]] · [[Outil - kube-bench|kube-bench]]
+**Liens :** [[Tools| Outils]] · [[Outil - grype|grype]] · [[Outil - trivy|trivy]] · [[Outil - kube-bench|kube-bench]]

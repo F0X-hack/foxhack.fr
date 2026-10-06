@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🚂 HTTP Request Smuggling
+# HTTP Request Smuggling
 
 > [!info] **En 1 phrase**
 > HTTP Request Smuggling (ou *HTTP desync*) = profiter du **désaccord entre le front-end et le back-end**
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le désaccord naît quand **plusieurs composants** (proxy → serveur) découpent la requête différemment
 > et que l'un d'eux **n'envoie pas la réponse attendue** pour la requête que l'autre croit traiter.
@@ -48,7 +48,7 @@ sequenceDiagram
 | **Front-end** (reverse proxy, WAF, CDN, LB) | `Content-Length` | la **taille du corps** (en octets) |
 | **Back-end** (serveur applicatif, framework) | `Transfer-Encoding: chunked` | les **chunks** (`<taille hex>\r\n<data>\r\n...0\r\n\r\n`) |
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > On envoie une requête qui contient **les deux headers à la fois** (ce qui est toléré par la norme).
 > Le front-end et le back-end s'arrêtent à **des endroits différents** : le back-end finit avant le front-end,
 > et **tout ce qui reste** est lu par le back-end comme le **début de la requête suivante** (pipelining HTTP/1.1,
@@ -65,7 +65,7 @@ sequenceDiagram
 
 ---
 
-## 🧮 Les 3 types en détail
+## Les 3 types en détail
 
 ### 1. CL.TE — le front lit `Content-Length`, le back lit `Transfer-Encoding`
 
@@ -148,7 +148,7 @@ x=1
 0
 ```
 
-> [!warning] ⚠️ **Envoi via Burp Repeater**
+> [!warning] **Envoi via Burp Repeater**
 > - Décocher **"Update Content-Length"** dans le menu Repeater (sinon Burp recalcule CL et casse le payload).
 > - Terminer par la séquence `\r\n\r\n` après le `0` final (Burp enlève parfois le double CRLF).
 > - Envoyé via la requête *suivante* sur la même connexion : la réponse de `GPOST` est servie comme réponse
@@ -179,12 +179,12 @@ Transfer-Encoding
 # - injection \r\n ou \n dans la valeur (header "X: X\nTransfer-Encoding: chunked")
 ```
 
-> [!tip] 💡 **Procédure TE.TE** : pour chaque obfuscation, relancer le **test de détection CL.TE** ci-dessous.
+> [!tip] **Procédure TE.TE** : pour chaque obfuscation, relancer le **test de détection CL.TE** ci-dessous.
 > Si l'une d'elles est ignorée par le back → ce back retombe sur `Content-Length` → on rejoue un CL.TE classique.
 
 ---
 
-## 🧪 Tester — détecter le désaccord
+## Tester — détecter le désaccord
 
 ### Principe 1 : le timing (requête "pendante")
 
@@ -202,7 +202,7 @@ Transfer-Encoding: chunked
 G
 ```
 
-> [!info] 📖 **Lecture du résultat**
+> [!info] **Lecture du résultat**
 > - **CL.TE** : le back (TE) s'arrête à `0\r\n\r\n`, il reste `G` → la 2e requête sur la même connexion
 >   devient `GPOST / HTTP/1.1...` → **erreur** `400 Unrecognized method` (ou réponse décalée).
 > - **Pas vulnérable** : 2× `200 OK` propres.
@@ -218,7 +218,7 @@ Transfer-Encoding: chunked
 X
 ```
 
-> [!info] 📖 **Lecture du résultat**
+> [!info] **Lecture du résultat**
 > - **TE.CL** : le front attend la fin du chunk `5c` (92 octets) qu'on ne lui donne jamais → **timeout / connexion qui reste ouverte**.
 > - **Pas vulnérable** : réponse immédiate.
 
@@ -266,15 +266,15 @@ printf 'POST / HTTP/1.1\r\nHost: cible.com\r\nContent-Length: 4\r\nTransfer-Enco
 printf 'POST / HTTP/1.1\r\nHost: cible.com\r\nContent-Length: 6\r\nTransfer-Encoding: xchunked\r\n\r\n0\r\n\r\nG' | nc cible.com 80
 ```
 
-> [!warning] ⚠️ **Impossible en une seule connexion par requête séparée**
+> [!warning] **Impossible en une seule connexion par requête séparée**
 > Il faut **deux requêtes sur la même connexion TCP** (ou 1 seule requête avec la requête 2 déjà concaténée
 > dans le même envoi). Un scan normal (1 requête / 1 connexion) ne détectera jamais un smuggling.
 
 ---
 
-## 💥 Attaques
+## Attaques
 
-### 🖼️ Request Smuggling → XSS (contaminer la requête d'une autre victime)
+### Request Smuggling → XSS (contaminer la requête d'une autre victime)
 
 On injecte une requête qui **préfixe** la requête de la prochaine victime sur la connexion, pour
 **refléter son contenu dans la page** ou la rediriger vers une charge XSS stockée.
@@ -292,12 +292,12 @@ GET /blog?title=<script>alert(document.domain)</script> HTTP/1.1
 X-Ignore: X
 ```
 
-> [!tip] 💡 **Calculer le `Content-Length` exact** (il compte **tout** : CRLF inclus) :
+> [!tip] **Calculer le `Content-Length` exact** (il compte **tout** : CRLF inclus) :
 > ```bash
 > printf '0\r\n\r\nGET /blog?title=PAYLOAD HTTP/1.1\r\nX-Ignore: X' | wc -c
 > ```
 
-### 🔐 Bypass de contrôles d'accès / sécurité
+### Bypass de contrôles d'accès / sécurité
 
 Le front-end applique l'ACL/WAF sur la **première requête** (ex: `GET /` autorisé), mais le back-end
 traite la requête **smuggled** vers une ressource protégée (`/admin`, `/internal`).
@@ -315,7 +315,7 @@ GET /admin HTTP/1.1
 X-Ignore: X
 ```
 
-### 🗑️ Web Cache Poisoning / Content Poisoning (CP)
+### Web Cache Poisoning / Content Poisoning (CP)
 
 On empoisonne le cache en faisant associer une **URL publique** à la **réponse d'une requête contrôlée** :
 la victime qui demande la même URL reçoit notre contenu (XSS, exfil).
@@ -338,7 +338,7 @@ X-Ignore: X
 # → injection dans la page + exécution de notre JS via un cache désynchronisé
 ```
 
-### ↩️ RPO (Relative Path Overwrite)
+### ↩RPO (Relative Path Overwrite)
 
 La réponse d'une requête smuggled est **interprétée comme le corps d'une page**, mais les **chemins
 relatifs** de cette page pointent vers nos ressources → on remplace un `<script src="/js/app.js">`
@@ -356,7 +356,7 @@ GET /attacker/%2e%2e/... HTTP/1.1
 X-Ignore: X
 ```
 
-### 🌐 DNS Rebinding (pour atteindre un service local via la victime)
+### DNS Rebinding (pour atteindre un service local via la victime)
 
 Quand le backend est sur `localhost`/réseau interne, on fait **rebinder un nom de domaine contrôlé**
 sur `127.0.0.1` **après** le premier résolve (voir *Client-Side Desync* ci-dessous) : le navigateur de la
@@ -364,9 +364,9 @@ victime envoie notre requête smuggled au service interne.
 
 ---
 
-## 🚀 Exploitation avancée
+## Exploitation avancée
 
-### 🙈 Capturer les requêtes des autres utilisateurs (blind)
+### Capturer les requêtes des autres utilisateurs (blind)
 
 On fait **préfixer** la requête de la victime par un **POST contrôlé** : la fin de sa requête (ex: sa session,
 son cookie) est absorbée comme **valeur d'un paramètre**, qu'on lit ensuite dans la réponse/app.
@@ -387,12 +387,12 @@ Content-Length: 200
 username=attacker&password=
 ```
 
-> [!info] 📖 **Ce qui se passe**
+> [!info] **Ce qui se passe**
 > La victime envoie `POST /search?query=...` → côté back, sa requête est **concaténée après
 > `password=`** (car notre `Content-Length: 200` "absorbe" ses données). On récupère sa requête
 > complète (cookie, token) dans la valeur `password` → affichée/loggée/stockée → on la lit.
 
-### 📥 Capturer les requêtes par la réponse (response queue poisoning)
+### Capturer les requêtes par la réponse (response queue poisoning)
 
 On désynchronise la **file de réponses** pour que la réponse d'une requête contrôlée soit **servie à la
 victime** → la victime reçoit notre réponse (page avec un `redirect` vers un domaine attaquant, XSS…).
@@ -410,7 +410,7 @@ GET /404 HTTP/1.1
 X-Ignore: X
 ```
 
-### 🔀 HTTP/2 downgrade (H2.CL / H2.TE)
+### HTTP/2 downgrade (H2.CL / H2.TE)
 
 Si le front-end convertit une requête **HTTP/2** vers **HTTP/1.1**, on peut y glisser un
 `Content-Length` ou un `Transfer-Encoding` invalide, ou des **CRLF** : la version HTTP/1.1 du back
@@ -431,11 +431,11 @@ header ignored\r\n\r\nGET / HTTP/1.1\r\nHost: www.cible.com
 transfer-encoding: chunked
 ```
 
-> [!warning] ⚠️ HTTP/2 **natif** ne connaît ni `Content-Length` (explicite) ni `Transfer-Encoding` →
+> [!warning] HTTP/2 **natif** ne connaît ni `Content-Length` (explicite) ni `Transfer-Encoding` →
 > le désaccord n'existe que si un composant **traduit** H2 → H1. Toujours tester les endpoints HTTP/2
 > (h2c) en plus de HTTP/1.1.
 
-### 🖥️ Client-Side Desync (attaque via le navigateur de la victime)
+### Client-Side Desync (attaque via le navigateur de la victime)
 
 Certains serveurs **ignorent le corps des POST** et répondent comme à un GET → un corps contenant
 `GET / HTTP/1.1\r\nHost: cible.com` est traité comme **deux requêtes** alors que le navigateur n'en a
@@ -464,14 +464,14 @@ fetch('https://www.cible.com/redirect', {
 })
 ```
 
-> [!info] 📖 **Ce que ça permet**
+> [!info] **Ce que ça permet**
 > - faire **stocker des identifiants de la victime** là où on peut les lire ;
 > - utiliser le navigateur de la victime comme **proxy** pour attaquer des sites internes ;
 > - exécuter du **JavaScript arbitraire** *au nom de la cible* (les réponses se mélangent).
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -495,7 +495,7 @@ python2 smuggle.py -u http://cible.com/ --exploit --upstream-proxy=http://127.0.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -511,16 +511,16 @@ python2 smuggle.py -u http://cible.com/ --exploit --upstream-proxy=http://127.0.
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Procédure de test rapide**
+> [!tip] **Procédure de test rapide**
 > 1. Tester **CL.TE** (2 requêtes pipelinées, préfixe `G` → erreur sur la 2e).
 > 2. Tester **TE.CL** (chunk `5c` jamais terminé → timeout).
 > 3. Tester **TE.TE** (chaque obfuscation du header, rejouer le test CL.TE).
 > 4. Rejouer sur les endpoints **HTTP/2** (h2c) et sur toutes les routes (`/`, `/api/*`, POST).
 > 5. Exploiter : XSS → bypass → cache poisoning → capture de requêtes.
 
-> [!warning] ⚠️ **Les pièges du test**
+> [!warning] **Les pièges du test**
 > - **Ordre des headers** : certains frameworks exigent TE **avant** CL, ou inversement — tester les deux ordres.
 > - **"Update Content-Length"** dans Burp Repeater recalcule CL et **détruit** le payload → toujours le décocher.
 > - Terminer par le **`\r\n\r\n` final** après le `0` (le 0 des chunks) — sinon le corps est incomplet.
@@ -529,20 +529,20 @@ python2 smuggle.py -u http://cible.com/ --exploit --upstream-proxy=http://127.0.
 > - Le **désaccord** ne se voit que via **2 requêtes sur la même connexion** : 1 requête / 1 connexion = jamais de détection.
 > - Certains fronts (nginx, HAProxy, certains WAF) **normalisent** tout → aucune vulnérabilité malgré un back permissif.
 
-> [!tip] 💡 **Différences entre protocoles**
+> [!tip] **Différences entre protocoles**
 > - **HTTP/1.0** : pas de `Transfer-Encoding` → pas de TE.CL/TE.TE (mais possible via un back qui lit quand même TE).
 > - **HTTP/1.1** : champ d'action principal (pipelining + keep-alive).
 > - **HTTP/2** : pas de TE natif → vulnérabilité uniquement lors du **downgrade** H2→H1 (headers `transfer-encoding` ou CRLF cachés dans les pseudo-headers/valeurs).
 > - **TLS + HTTP/1.1** : le desync marche pareil, mais il faut **tester les deux** (un proxy TLS peut normaliser différemment).
 
-> [!warning] ⚠️ **Attention aux Labs / cibles**
+> [!warning] **Attention aux Labs / cibles**
 > - Toujours utiliser une **instance de test dédiée** : une mauvaise manip de *cache poisoning* peut **empoisonner le cache de prod**.
 > - La capture de requêtes (blind) **vole des sessions réelles** → en environnement autorisé uniquement, et sans rejouer les sessions.
 > - Les réponses de *response queue poisoning* peuvent **brouiller des utilisateurs réels** : préférer un domaine de test isolé.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — HTTP request smuggling, basic CL.TE : https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te
 - PortSwigger — HTTP request smuggling, basic TE.CL : https://portswigger.net/web-security/request-smuggling/lab-basic-te-cl
@@ -552,13 +552,13 @@ python2 smuggle.py -u http://cible.com/ --exploit --upstream-proxy=http://127.0.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[CRLF Injection|↩️ CRLF]]
-- [[Web Cache Deception|🗑️ Cache Deception]]
-- [[Open Redirect|↩️ Open Redirect]]
-- [[SSRF|🌐 SSRF]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Request Smuggling](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Request%20Smuggling/README.md)
-- 📖 Références : [HTTP Desync Attacks: Request Smuggling Reborn — James Kettle (albinowax)](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn) · [Advanced Request Smuggling — PortSwigger](https://portswigger.net/web-security/request-smuggling/advanced) · [Browser-Powered Desync Attacks — James Kettle](https://portswigger.net/research/browser-powered-desync-attacks)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[CRLF Injection|↩CRLF]]
+- [[Web Cache Deception| Cache Deception]]
+- [[Open Redirect|↩Open Redirect]]
+- [[SSRF| SSRF]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Request Smuggling](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Request%20Smuggling/README.md)
+- Références : [HTTP Desync Attacks: Request Smuggling Reborn — James Kettle (albinowax)](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn) · [Advanced Request Smuggling — PortSwigger](https://portswigger.net/web-security/request-smuggling/advanced) · [Browser-Powered Desync Attacks — James Kettle](https://portswigger.net/research/browser-powered-desync-attacks)

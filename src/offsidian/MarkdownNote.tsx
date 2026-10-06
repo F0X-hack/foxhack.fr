@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement, useEffect, useId, useMemo, useState } from 'react'
+import React, { cloneElement, isValidElement, memo, useEffect, useId, useMemo, useState } from 'react'
 import ReactMarkdown, { type Components, defaultUrlTransform } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import {
@@ -247,7 +247,7 @@ type MarkdownNoteProps = {
   onOpenNote: OpenNote
 }
 
-export default function MarkdownNote({ source, note, manifest, resolver, onOpenNote }: MarkdownNoteProps) {
+function MarkdownNote({ source, note, manifest, resolver, onOpenNote }: MarkdownNoteProps) {
   const markdown = useMemo(() => prepareObsidianMarkdown(source, note, resolver), [note, resolver, source])
 
   const makeHeading = (level: 1 | 2 | 3 | 4) => {
@@ -263,7 +263,7 @@ export default function MarkdownNote({ source, note, manifest, resolver, onOpenN
     }
   }
 
-  const components: Components = {
+  const components = useMemo<Components>(() => ({
     h1: makeHeading(1),
     h2: makeHeading(2),
     h3: makeHeading(3),
@@ -342,10 +342,13 @@ export default function MarkdownNote({ source, note, manifest, resolver, onOpenN
     },
     table: ({ children }) => <div className="offsidian-table-wrap"><table>{children}</table></div>,
     hr: () => <hr aria-hidden="true" />,
-  }
+  }), [manifest, note, onOpenNote, resolver])
 
-  return (
-    <article className="offsidian-markdown" data-note-id={note.id}>
+  /* react-markdown ré-analyse le Markdown à chaque rendu (aucune mémorisation
+     interne). On garde l'élément en cache : tant que la note ne change pas,
+     React réutilise le même arbre au lieu de re-parser 70 Ko de texte. */
+  const rendered = useMemo(
+    () => (
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkOffsidianHeadings]}
         skipHtml
@@ -357,6 +360,17 @@ export default function MarkdownNote({ source, note, manifest, resolver, onOpenN
       >
         {markdown}
       </ReactMarkdown>
+    ),
+    [components, markdown],
+  )
+
+  return (
+    <article className="offsidian-markdown" data-note-id={note.id}>
+      {rendered}
     </article>
   )
 }
+
+/* Le lecteur met à jour la barre de progression et le titre actif pendant le
+   défilement : sans `memo`, la note entière serait re-rendue à chaque frame. */
+export default memo(MarkdownNote)

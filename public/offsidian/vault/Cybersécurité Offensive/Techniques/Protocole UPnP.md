@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏠 Protocole UPnP (SSDP)
+# Protocole UPnP (SSDP)
 
 > [!info] **En 1 phrase**
 > **UPnP** permet aux devices d'**auto-découverte** (SSDP) et de **contrôle mutuel** (SOAP) :
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
 
 ---
 
-## 🎯 Discovery (M-SEARCH)
+## Discovery (M-SEARCH)
 
 Le device s'annonce (NOTIFY) et répond aux requêtes de découverte :
 
@@ -57,7 +57,7 @@ nmap -sU -p 1900 --script upnp-info <target>
 
 ---
 
-## 💥 Attaques UPnP
+## Attaques UPnP
 
 ### SSRF via UPnP (contrôle SOAP)
 
@@ -86,7 +86,7 @@ nmap -sU -p 1900 --script upnp-info <target>
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -96,7 +96,7 @@ nmap -sU -p 1900 --script upnp-info <target>
 | **Valider les requêtes SSRF** | Le contrôle UPnP ne doit pas atteindre des ressources internes arbitraires |
 | **Patcher / durcir les devices** | Les implémentations UPnP ont un historique de vulns (buffer overflow, XML) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **SSDP écoute en UDP 1900 multicast** : scanne-le avec `nmap -sU` — beaucoup de devices répondent sans aucune auth.
 - `M-SEARCH` avec `ST: ssdp:all` liste **tous** les devices UPnP du réseau en une requête.
@@ -106,7 +106,7 @@ nmap -sU -p 1900 --script upnp-info <target>
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — UPnP](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/upnp.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[SSRF|🌐 SSRF]] · [[Protocole HTTP (IoT)|🌍 HTTP (IoT)]] · [[Protocole MQTT|📨 MQTT]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[SSRF| SSRF]] · [[Protocole HTTP (IoT)| HTTP (IoT)]] · [[Protocole MQTT| MQTT]]

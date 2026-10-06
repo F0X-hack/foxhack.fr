@@ -1,11 +1,11 @@
 ---
 title: "Outil - Ligolo-ng"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: v0.8.3 (2026-02-15)
 licence: GPL-3.0
@@ -16,20 +16,20 @@ site: https://docs.ligolo.ng
 doc: https://docs.ligolo.ng
 ---
 
-# 🕹️ Ligolo-ng — C2 & Post-Exploitation
+# Ligolo-ng — C2 & Post-Exploitation
 
 > [!info] **En 1 phrase**
 > Ligolo-ng est un outil de tunneling et de pivoting « reverse » : un agent tourne sur la machine compromise, un proxy sur l'attaquant, et une interface TUN crée un accès réseau transparent au réseau interne.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Ligolo-ng |
 | Description | Tunneling/pivoting par interface TUN avec connexion reverse : accès réseau transparent au réseau interne |
-| Catégorie | 🕹️ C2 & Post-Exploitation |
+| Catégorie | C2 & Post-Exploitation |
 | Sous-catégorie | Pivoting, tunneling, redirection de ports |
 | Fonction principale | Créer une interface TUN côté attaquant pour router vers le réseau interne |
 | Type d'outil | CLI (agent + proxy) |
@@ -50,7 +50,7 @@ doc: https://docs.ligolo.ng
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Ligolo-ng repose sur une architecture **reverse** : contrairement aux tunnels « forward » (chisel, `ssh -R`), c'est la **victime qui initie la connexion sortante** vers le proxy de l'attaquant — ce qui franchit les firewalls qui bloquent les entrées. Le proxy (côté attaquant) crée ensuite une interface **TUN** : les paquets destinés au réseau interne y sont routés, comme si l'attaquant était connecté physiquement au réseau. Aucun socat ni proxy supplémentaire n'est requis sur la cible, et l'agent n'exige pas de droits administrateur.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Binaires précompilés (toutes plateformes)
 
@@ -112,14 +112,14 @@ sudo ip tuntap add user $(whoami) mode tun ligolo
 sudo ip link set ligolo up
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'interface TUN doit exister **avant** le lancement du proxy, avec l'utilisateur autorisé (`user $(whoami)`).
 > - Côté cible, aucun privilège admin n'est nécessaire pour l'agent (connexion sortante).
 > - Windows : driver TUN (wintun) embarqué dans le binaire agent — aucune installation.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait principalement par **flags de ligne de commande** ; la v0.8+ accepte un **fichier de configuration** pour le proxy.
 
@@ -136,7 +136,7 @@ La configuration se fait principalement par **flags de ligne de commande** ; la 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Ligolo-ng = deux binaires Go : l'**agent** (cible) et le **proxy** (attaquant). L'agent ouvre une connexion **TLS sortante** vers le proxy ; le proxy maintient une session par agent et expose un menu interactif (`session`, `ifconfig`, `start`, `stop`, `listener_add`, `listener_list`).
 
@@ -162,7 +162,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -197,7 +197,7 @@ sudo ./proxy -selfcert -http-connect-proxy http://10.10.14.1:3128
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -216,7 +216,7 @@ sudo ./proxy -selfcert -http-connect-proxy http://10.10.14.1:3128
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -262,7 +262,7 @@ nc -lvnp 4444
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Démarrer le proxy** et créer l'interface TUN côté attaquant.
    ```bash
@@ -284,7 +284,7 @@ nc -lvnp 4444
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Pivoting en cascade vers un sous-réseau plus profond
 
@@ -315,7 +315,7 @@ nc -lvnp 4444
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -328,7 +328,7 @@ nc -lvnp 4444
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -343,7 +343,7 @@ nc -lvnp 4444
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -394,7 +394,7 @@ rule Ligolo_ng_example {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 La v0.8+ expose une **API REST** et une **Web UI** multijoueur pour administrer les tunnels à plusieurs opérateurs. En script, on pilote le proxy et les sessions.
 
@@ -419,7 +419,7 @@ import requests
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le proxy produit des logs sur stdout (mode verbeux pour déboguer les sessions) ; le menu interactif affiche agents, sessions, interfaces et listeners.
 
@@ -436,25 +436,25 @@ grep -ci "new agent" /var/log/ligolo-proxy.log
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Compromission initiale → agent Ligolo-ng → TUN → nmap/curl/MSF/RDP → exploitation interne
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]]
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]]
-- [[Outil - Chisel|🧵 Chisel]]
-- [[Outil - Nmap|🕵️ Nmap]]
-- [[Outil - Metasploit|🎯 Metasploit]]
-- [[Outil - Covenant|🐉 Covenant]]
-- [[Outil - socat|🔌 socat]]
-- [[Outil - Netcat|🐚 Netcat]]
+- [[Tools| Outils]]
+- [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]]
+- [[Techniques/Reverse Shells| Reverse Shells]]
+- [[Outil - Chisel| Chisel]]
+- [[Outil - Nmap| Nmap]]
+- [[Outil - Metasploit| Metasploit]]
+- [[Outil - Covenant| Covenant]]
+- [[Outil - socat| socat]]
+- [[Outil - Netcat| Netcat]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -468,7 +468,7 @@ Compromission initiale → agent Ligolo-ng → TUN → nmap/curl/MSF/RDP → exp
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - TUN couche 3 : chaque paquet est encapsulé dans le canal TLS ; débit = f(connexion de l'agent, CPU de l'attaquant).
 - Binaires Go statiques légers (~5-15 Mo) ; un proxy gère plusieurs agents (Web UI multijoueur en v0.8+).
@@ -476,7 +476,7 @@ Compromission initiale → agent Ligolo-ng → TUN → nmap/curl/MSF/RDP → exp
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -500,7 +500,7 @@ Compromission initiale → agent Ligolo-ng → TUN → nmap/curl/MSF/RDP → exp
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Chiffrement** : canal TLS agent ↔ proxy ; `-selfcert` suffit en lab, en red team distribuer un certificat signé et retirer `-ignore-cert`.
 - **Authentification** : pas d'authentification forte par défaut — toute personne joignant l'IP/port du proxy peut connecter un agent. Restreindre par firewall.
@@ -510,7 +510,7 @@ Compromission initiale → agent Ligolo-ng → TUN → nmap/curl/MSF/RDP → exp
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Chaque sous-réseau nécessite une route `ip route add dev ligolo`.
 - Pas de compression/optimisation par défaut : un scan massif peut saturer le canal TLS.
@@ -520,7 +520,7 @@ Compromission initiale → agent Ligolo-ng → TUN → nmap/curl/MSF/RDP → exp
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Proxy + TUN (attaquant)
@@ -538,7 +538,7 @@ sudo ip route add 172.16.5.0/24 dev ligolo
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -547,11 +547,11 @@ sudo ip route add 172.16.5.0/24 dev ligolo
 | **Commande principale** | `sudo ./proxy -selfcert` puis `./agent -connect <ip>:11601 -ignore-cert` |
 | **Alternative principale** | Chisel (SOCKS/port forwarding) |
 | **Concepts importants** | TUN, reverse, agent/proxy, routes, TLS, listeners |
-| **Liens associés** | [[Outil - Chisel\|🧵 Chisel]] · [[Techniques/Pivoting et Tunneling\|🌉 Pivoting]] |
+| **Liens associés** | [[Outil - Chisel\| Chisel]] · [[Techniques/Pivoting et Tunneling\| Pivoting]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -562,15 +562,15 @@ sudo ip route add 172.16.5.0/24 dev ligolo
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Pensez au **pivoting en cascade** : déposez un second agent sur une machine interne pour rejoindre un sous-réseau plus profond.
 > - Combinez `-autoreconnect` pour résister aux interruptions réseau.
 > - **Windows (agent)** : driver TUN fourni dans le binaire (wintun) — aucune installation.
 > - Ajoutez les routes **après** `start`, sinon les paquets partent par l'interface par défaut.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `start`, le tunnel ne route rien — et n'oubliez pas `ip route add <réseau> dev ligolo`.
 > - Vérifiez que la cible autorise la sortie vers `11601` ; sinon `-http-connect-proxy` ou un port autorisé (443) via un reverse de Chisel.
 > - Ne lancez pas le proxy sans interface TUN : le `start` échouera.
@@ -578,7 +578,7 @@ sudo ip route add 172.16.5.0/24 dev ligolo
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -598,4 +598,4 @@ sudo ip route add 172.16.5.0/24 dev ligolo
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]] · [[Outil - Chisel|🧵 Chisel]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]] · [[Outil - Chisel| Chisel]] · [[Techniques/Reverse Shells| Reverse Shells]]

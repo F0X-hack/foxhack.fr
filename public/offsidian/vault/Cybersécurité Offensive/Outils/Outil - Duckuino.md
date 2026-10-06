@@ -1,12 +1,12 @@
 ---
 title: "Outil - Duckuino"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: "1.x (générateur web et CLI)"
 licence: MIT (forks Dckuino.js) ; GPL/composantes variées (duckuino.js)
@@ -17,14 +17,14 @@ site: https://duckuino.js.org (web)
 doc: https://github.com/nemus/duckuino.js
 ---
 
-# ⚙️ Duckuino — Du Duckyscript au microcontrôleur (BadUSB DIY)
+# Duckuino — Du Duckyscript au microcontrôleur (BadUSB DIY)
 
 > [!info] **En 1 phrase**
 > Un convertisseur qui transforme un script **Duckyscript** en **sketch Arduino** (.ino) pour toute carte à microcontrôleur **ATmega32u4** (Leonardo, Micro, Pro Micro, Teensy) — le BadUSB « fait maison » à quelques euros.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -45,7 +45,7 @@ Le convertisseur est **indépendant du matériel** : il produit du code, c'est l
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Duckuino est un **générateur** : il prend un payload écrit en Duckyscript (le langage du USB Rubber Ducky) et le convertit en code Arduino utilisant l'API HID native de l'**ATmega32u4**. Contrairement à l'UNO (ATmega328p, sans HID USB natif), les cartes **Leonardo / Micro / Pro Micro / Teensy** embarquent un contrôleur USB capable de s'énumérer en **clavier HID** : une fois le sketch flashé, la carte se présente comme un clavier et frappe le payload. Le principe est identique au Rubber Ducky, mais :
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Notion | Détail |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Le générateur lui-même ne s'installe pas : il s'utilise en **ligne** (générateur web Duckuino / Dckuino.js) ou en **local** (clone du dépôt). L'installation concerne surtout la chaîne Arduino :
 
@@ -114,7 +114,7 @@ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:leonardo payload.ino
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier `boards.txt` — changer l'identité USB
 
@@ -130,7 +130,7 @@ Pour que la carte ne se présente plus comme « Arduino » mais comme un **clavi
 # Après modification : redémarrer l'IDE, re-upload. Vérifier : lsusb
 ```
 
-> [!warning] ⚠️ **Précision**
+> [!warning] **Précision**
 > Masquer un périphérique derrière un VID/PID tiers est un artefact de contournement : en test autorisé, documenter cette action. Ne pas imiter une marque réelle sans accord (usurpation).
 
 ### Règles udev Linux (ModemManager)
@@ -146,7 +146,7 @@ sudo udevadm control --reload && sudo udevadm trigger
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -167,7 +167,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 Le langage de travail est le **Duckyscript** (côté entrée) et la bibliothèque **`Keyboard.h`** (côté sortie générée) :
 
@@ -197,7 +197,7 @@ ENTER
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / paramètre | Description |
 |---|---|
@@ -217,7 +217,7 @@ ENTER
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Basic — extraction d'informations d'identification (Windows)
 
@@ -269,7 +269,7 @@ if (millis() > 1800000) {
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Écrire le payload** en Duckyscript (ex. reverse shell PowerShell) dans le générateur Duckuino.
 2. **Générer le .ino** — Duckuino produit un sketch avec les appels `Keyboard.*` (et éventuellement `delay` avant l'attaque).
@@ -286,7 +286,7 @@ grep -n "Keyboard\." payload.ino
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Clé BadUSB économique (reverse shell PowerShell)
 
@@ -344,7 +344,7 @@ Keyboard.write(KEY_RETURN);
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Description |
 |---|---|
@@ -357,7 +357,7 @@ Keyboard.write(KEY_RETURN);
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Exemple Duckuino |
 |---|---|---|
@@ -371,7 +371,7 @@ Keyboard.write(KEY_RETURN);
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Journalisation
 
@@ -418,7 +418,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 Générer des payloads paramétrés en boucle (campagnes, variantes par langue) :
 
@@ -441,7 +441,7 @@ for p in payloads:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Duckuino ne produit pas de sortie « CLI » : sa sortie est le **sketch .ino** (texte), puis éventuellement le **binaire hex** généré par le compilateur. Le retour d'exécution se fait par **port série** (débug) et par l'**analyse USB** côté hôte.
 
@@ -457,9 +457,9 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - USB Rubber Ducky]] — même langage Duckyscript, matériel officiel HID seul
 - [[Outil - Bash Bunny]] — Duckyscript + modes réseau/stockage (niveau supérieur)
 - [[Outil - Flipper Zero (USB & radio)]] — BadUSB embarqué + RFID/NFC/radio
@@ -472,7 +472,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Matériel | Coût | Points forts | Points faibles |
 |---|---|---|---|---|
@@ -486,7 +486,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Latence de déclenchement** : le sketch démarre dès l'alimentation USB (quelques centaines de ms + `delay()` initial) — quasi immédiat après le boot de la cible.
 - **Vitesse de frappe** : l'OS peut perdre des scancodes si les frappes sont trop rapides → prévoir des `DELAY` entre les commandes sensibles.
@@ -495,7 +495,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Problème : la carte n'apparaît pas au branchement
 
@@ -517,7 +517,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : l'insertion d'une carte programmée sur un poste tiers est une intrusion (test autorisé obligatoire, accord écrit).
 - **Contrefaçon** : modifier VID/PID pour imiter une marque est une usurpation — rester dans le cadre documenté du test.
@@ -526,7 +526,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Uniquement ATmega32u4 (ou compatibles)** : une UNO (ATmega328p) ne peut PAS émuler de clavier HID natif — sans reflash du pont USB, l'attaque est impossible.
 - **HID seul** : pas de réseau, pas de stockage, pas de double slot (contrairement au [[Outil - Bash Bunny]]).
@@ -537,7 +537,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 | Action | Syntaxe |
 |---|---|
@@ -556,7 +556,7 @@ lsusb | grep -i -E "2341|1b4f"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 ```cpp
 // Minimum viable : clavier HID qui frappe un texte puis valide
@@ -580,7 +580,7 @@ python duckuino.py payload.txt > payload.ino \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -592,15 +592,15 @@ python duckuino.py payload.txt > payload.ino \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Tester sur **Linux ET Windows** : l'énumération et les timings diffèrent (boot, drivers).
 > - Sur la Pro Micro, utiliser la **broche 2 (auto-reset)** pour fiabiliser le flash avant le premier upload.
 > - Garder le `delay()` initial ≥ 1 s : le clavier doit être prêt avant la première frappe, sinon le payload démarre dans le vide.
 > - Vérifier les VID/PID réels avec `lsusb` avant une campagne pour calibrer la défense.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Uniquement ATmega32u4** : une UNO (ATmega328p) ne peut PAS émuler de clavier HID natif — sans shield supplémentaire, l'attaque est impossible.
 > - Le VID/PID Arduino est une signature : en test autorisé avec analyse USB, la carte est identifiée en quelques secondes.
 > - Le générateur ne gère pas toutes les combinaisons de touches exotiques (maj, dead keys) : relire le sketch généré avant flash.
@@ -608,9 +608,9 @@ python duckuino.py payload.txt > payload.ino \
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub — Plazmaz/Duckuino (original)](https://github.com/Plazmaz/Duckuino)
 > - [GitHub — nemus/duckuino.js](https://github.com/nemus/duckuino.js)
 > - [GitHub — Dukweeno/Duckuino](https://github.com/Dukweeno/Duckuino)
@@ -623,4 +623,4 @@ python duckuino.py payload.txt > payload.ino \
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Hardware - Arduino|🎛️ Arduino]] · [[Outil - USB Rubber Ducky|🦆 USB Rubber Ducky]] · [[Techniques/Protocole USB|🔌 Protocole USB]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Hardware - Arduino| Arduino]] · [[Outil - USB Rubber Ducky| USB Rubber Ducky]] · [[Techniques/Protocole USB| Protocole USB]]

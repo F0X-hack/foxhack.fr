@@ -11,14 +11,14 @@ statut: publie
 
 
 
-# 🔌 micro:bit
+# micro:bit
 
 > [!info] **En 1 phrase**
 > Le micro:bit (BBC) est une carte de prototypage éducative à base de **nRF52833** (Nordic, ARM Cortex-M4F + BLE 5.1) : en pentest, son intérêt réside dans **l'extraction du code source JavaScript MakeCode** depuis le firmware, et dans le **dump de flash via SWD** (OpenOCD + ST-LINK v2).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -30,7 +30,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["micro:bit v2"] --> B["nRF52833 (ARM Cortex-M4F)"]
@@ -43,7 +43,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le micro:bit embarque un SoC Nordic **nRF52833** (ARM Cortex-M4F, 64 MHz, 512 KB flash, 128 KB RAM) avec BLE 5.1. Le firmware contient le code source utilisateur (JavaScript MakeCode ou MicroPython) en clair ou compressé. Le dump via SWD permet d'extraire ce code, révélant IP, secrets et logique applicative.
 
@@ -61,7 +61,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### nRF52833 et SWD
 
@@ -90,7 +90,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -160,7 +160,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Protocoles supportés
 
@@ -175,7 +175,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -209,7 +209,7 @@ openocd --version
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier de commandes OpenOCD (`dump_fw.cfg`)
 
@@ -226,7 +226,7 @@ exit
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Dump du firmware via SWD
 
@@ -252,9 +252,9 @@ strings image.bin | grep -iE "password|key|token|secret"
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Extraction de code MakeCode
+### Débutant — Extraction de code MakeCode
 
 ```text
 1. Récupérer le fichier .hex du firmware (téléchargé ou dumpé)
@@ -265,7 +265,7 @@ strings image.bin | grep -iE "password|key|token|secret"
 6. Bruteforcer l'offset LZMA pour décompresser le JSON
 ```
 
-### 🟡 Intermédiaire — Extraction complète avec script Python
+### Intermédiaire — Extraction complète avec script Python
 
 ```python
 import bincopy
@@ -308,7 +308,7 @@ for i in range(200):
         continue
 ```
 
-### 🔴 Avancé — Dump SWD + MicroPython extraction
+### Avancé — Dump SWD + MicroPython extraction
 
 ```bash
 # Dump complet via SWD
@@ -320,7 +320,7 @@ sudo openocd -f interface/stlink-v2-1.cfg \
 strings full_dump.bin | grep -A 20 "main.py"
 ```
 
-### ⚫ Expert — Reconstruction de firmware
+### Expert — Reconstruction de firmware
 
 ```text
 1. Dump complet via SWD (0x00000000 → 0x00040000)
@@ -333,7 +333,7 @@ strings full_dump.bin | grep -A 20 "main.py"
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -382,7 +382,7 @@ grep -iE "api_key|token|password|secret" extracted_code.js
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Extraction de code source MakeCode
 
@@ -392,7 +392,7 @@ grep -iE "api_key|token|password|secret" extracted_code.js
 | **Matériel** | ST-LINK v2, câbles, PC |
 | **Étapes** | 1. Dump firmware via SWD<br>2. Extraire bloc code depuis .hex<br>3. Décompresser LZMA<br>4. Lire JSON avec main.ts |
 | **Résultat** | Code source JavaScript complet |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -409,11 +409,11 @@ flowchart LR
 | **Matériel** | ST-LINK v2, PC |
 | **Étapes** | 1. Dump via SWD<br>2. `strings` sur le dump<br>3. Identifier le code MicroPython<br>4. Extraire les secrets en clair |
 | **Résultat** | Secrets et code propriétaire |
-| **Difficulté** | ⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -431,7 +431,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -449,7 +449,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -478,7 +478,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -523,7 +523,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -541,11 +541,11 @@ strings dump.bin | grep -iE "main.py|import|password|key"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
+- [[Hardware - JTAG et SWD| JTAG/SWD]]
 - [[Hardware - Raspberry Pi]] — Plateforme de debug alternative
 
 | Outils associés | Usage complémentaire |
@@ -556,7 +556,7 @@ strings dump.bin | grep -iE "main.py|import|password|key"
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -573,7 +573,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -583,7 +583,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -610,7 +610,7 @@ file dump.bin
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -630,7 +630,7 @@ file dump.bin
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -648,7 +648,7 @@ file dump.bin
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -672,7 +672,7 @@ file dump.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -686,7 +686,7 @@ file dump.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -706,7 +706,7 @@ file dump.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : `split('\n\n')` suppose le format MakeCode — un fichier HEX "simple" ne donne rien.
 - **Piège 2** : Le bruteforce LZMA dépend de `lzma` sur le PATH système.
@@ -724,9 +724,9 @@ file dump.bin
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — micro:bit](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/micro-bit.md)
 > - [micro:bit Hardware](https://tech.microbit.org/hardware/)
 > - [micro:bit v2 Datasheet](https://microbit.org/get-started/features/overview/)
@@ -752,4 +752,4 @@ file dump.bin
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Raspberry Pi]] · [[Hardware - SDR]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Raspberry Pi]] · [[Hardware - SDR]]

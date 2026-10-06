@@ -1,11 +1,11 @@
 ---
 title: "Outil - hashid"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 3.1.4
 licence: GPLv3+
@@ -16,14 +16,14 @@ site: https://psypanda.github.io/hashID/
 doc: https://www.kali.org/tools/hashid/
 ---
 
-# 💥 hashid — Exploitation & Cracking
+# hashid — Exploitation & Cracking
 
 > [!info] **En 1 phrase**
 > hashID est un script Python qui identifie le type d'un hash à partir de signatures (longueur, caractères) et affiche directement les modes hashcat et John the Ripper correspondants.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 hashID est un identifieur de hash écrit en Python (compatible Python 2 ≥ 2.7 et Python 3 ≥ 3.3), publié par psypanda sous licence GPLv3+. Sa dernière version stable, **3.1.4** (mars 2015), est disponible sur PyPI (`pip install hashid`), est empaquetée dans Kali Linux (`hashid` 3.1.4-5) et dans Debian. Le projet compte ~1 500 étoiles sur GitHub et 397 commits.
 
@@ -41,7 +41,7 @@ hashID est un identifieur de hash écrit en Python (compatible Python 2 ≥ 2.7 
 
 ---
 
-## 🎯 Concept
+## Concept
 
 hashID (par psypanda) est un identifieur de hash léger, préinstallé sur Kali, qui confronte un hash à une base de signatures : longueur, alphabet (hexadécimal, base64...), préfixes (`$1$`, `$2a$`, `$P$`...) et patterns connus. Il retourne les types possibles en précisant pour chacun le **mode hashcat** (`-m`) et le **format John** (`-j`).
 
@@ -61,7 +61,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Qu'est-ce qu'un hash de mot de passe ?
 
@@ -99,7 +99,7 @@ hashID **n'attaque pas** : il ne fait que classer. Le cracking (hashcat/John) es
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 hashID est préinstallé sur Kali Linux et disponible dans les dépôts Debian.
 
@@ -140,7 +140,7 @@ hashid 'e99a18c428cb38d5f260853678922e03'
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 hashID ne possède **aucun fichier de configuration** (pas de `~/.hashidrc` ni de fichier par projet) : son comportement est entièrement piloté par les arguments de la ligne de commande.
 
@@ -164,12 +164,12 @@ La seule « configuration » possible est la **base de signatures** `prototypes.
 
 Pour personnaliser (ajouter un format maison), on édite `prototypes.json` puis on relance le script — aucune recompilation nécessaire.
 
-> [!warning] ⚠️ À manipuler avec précaution
+> [!warning] À manipuler avec précaution
 > Un `prototypes.json` modifié peut changer la fiabilité des identifications. Conserver une sauvegarde de l'original avant édition.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 hashID est un **script Python unique** (`hashid.py`) accompagné de sa base de signatures (`prototypes.json`), sans dépendance externe. Le flux de traitement est le suivant :
 
@@ -197,7 +197,7 @@ Points clés de l'implémentation :
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ```bash
 # Identifier un hash en argument
@@ -227,7 +227,7 @@ hashid --version
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Effet |
 |---|---|
@@ -242,7 +242,7 @@ hashid --version
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Identifier un hash MD5
 
@@ -285,7 +285,7 @@ Analyzing '$2a$08$VPzNKPAY60FsAbnq.c.h5.XTCZtC1z.j3hnlDFGImN9FcpfR1QnLq'
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer le hash** — ex. un hash de mot de passe depuis `/etc/shadow` (`$6$...`) ou une fuite (`2d7116...`).
 2. **Identifier** :
@@ -312,7 +312,7 @@ Analyzing '$2a$08$VPzNKPAY60FsAbnq.c.h5.XTCZtC1z.j3hnlDFGImN9FcpfR1QnLq'
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Traitement par lot
 ```bash
@@ -334,7 +334,7 @@ hashcat -m 1000 ntlm.txt /usr/share/wordlists/rockyou.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 ### Pentest / Red team
 - **Tri des identifiants récupérés** : après un dump NTDS.dit, un dump LSASS ou une fuite de base, `hashid` classe chaque matériau pour choisir l'algorithme de crack, avec les modes hashcat sortis directement par `-m -j`.
@@ -349,7 +349,7 @@ Les flags sont souvent des hashes : identifier le type (MD5, SHA, bcrypt...) est
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 hashID n'est pas une technique à part entière mais un **outil de support** du vol d'identifiants et du cracking. Il intervient en aval des techniques de collecte de credentials :
 
@@ -367,7 +367,7 @@ hashID n'est pas une technique à part entière mais un **outil de support** du 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Indicateurs d'usage malveillant
 
@@ -396,7 +396,7 @@ yara  : script Python "hashid.py" accompagné de "prototypes.json"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Intégration dans un pipeline de cracking
 
@@ -413,12 +413,12 @@ for mode in $(grep -oP 'Mode: \K[0-9]+' resultat.txt | sort -un); do
 done
 ```
 
-> [!tip] 💡 **CI / logs**
+> [!tip] **CI / logs**
 > Dans un pipeline, `--no-color` évite les codes ANSI dans les logs ; `-o` produit un rapport stable analysable par un script.
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Format de sortie
 
@@ -442,7 +442,7 @@ hashid hashes.txt | grep "^\[+\]" | sort | uniq -c | sort -rn
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -455,7 +455,7 @@ Exemple de chaîne complète : `dump NTDS` → `hashid -m -j` → `hashcat -m 10
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence avec hashID |
 |---|---|
@@ -464,12 +464,12 @@ Exemple de chaîne complète : `dump NTDS` → `hashid -m -j` → `hashcat -m 10
 | hashcat `--example-hashes` | Vérification des formats par exemple, mais pas d'identification |
 | Services en ligne (CrackStation, hashes.org) | Identification + résolution de hashes connus, mais exfiltration du hash vers un tiers |
 
-> [!warning] ⚠️ Confidentiel
+> [!warning] Confidentiel
 > En contexte de pentest sur des données clients ou sensibles, privilégier une identification **locale** (hashID, Name-That-Hash) plutôt que des services en ligne, pour ne pas exfiltrer des hashes hors du périmètre.
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapidité** : hashID applique des regex sur des chaînes courtes ; l'identification d'un hash est quasi instantanée (de l'ordre de la milliseconde), même sur des fichiers de plusieurs milliers de hashes.
 - **Comparaison** : bien plus rapide en batch que l'interactif hash-identifier ; sans commune mesure avec le coût réel du cracking (hashID ne cracke pas).
@@ -479,7 +479,7 @@ Exemple de chaîne complète : `dump NTDS` → `hashid -m -j` → `hashcat -m 10
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -491,7 +491,7 @@ Exemple de chaîne complète : `dump NTDS` → `hashid -m -j` → `hashcat -m 10
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Licence** : GPLv3+ — libre, source ouverte, aucune dépendance (stdlib uniquement) : surface d'attaque minimale.
 - **Maintenance** : dernière version 3.1.4 (2015) ; projet **peu actif** depuis — la base de signatures peut être obsolète sur les formats récents.
@@ -500,7 +500,7 @@ Exemple de chaîne complète : `dump NTDS` → `hashid -m -j` → `hashcat -m 10
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Base de signatures vieillissante** (2015) : les formats récents (argon2, KDFs custom) peuvent manquer ou être mal classés.
 - **Identification ≠ vérité** : la longueur et l'alphabet ne suffisent pas toujours ; un hash de 32 hex peut être MD5 **ou** NTLM — le contexte est décisif.
@@ -509,7 +509,7 @@ Exemple de chaîne complète : `dump NTDS` → `hashid -m -j` → `hashcat -m 10
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Identifier un hash
@@ -528,7 +528,7 @@ hashid -e '<hash>'
 hashid --no-color -m -j -o rapport.txt hashes.txt
 ```
 
-## ⚡ Quick reference
+## Quick reference
 
 | Hash | Mode hashcat | Format John |
 |---|---|---|
@@ -545,7 +545,7 @@ hashid --no-color -m -j -o rapport.txt hashes.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -559,9 +559,9 @@ hashid --no-color -m -j -o rapport.txt hashes.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise systématiquement `-m -j` pour avoir directement les commandes de crack prêtes à l'emploi.
 > - Pour les formats ambigus, recoupe avec `Name-That-Hash` : deux outils valent mieux qu'un sur un hash qui rapporte gros.
 > - Le mode `--extended` est utile sur les formats rares (crypt() Unix, formats applicatifs custom).
@@ -571,7 +571,7 @@ hashid --no-color -m -j -o rapport.txt hashes.txt
 > - `--brief` ne garde que les candidats « certain » (le reste est masqué) : utile dans un pipeline pour trancher vite entre deux formats.
 > - Sur les systèmes Unix, mets le hash entre **guillemets simples** : le `$` des préfixes (`$6$`, `$P$`) est interprété par le shell sinon.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La base de signatures de hashID est **ancienne** : certains formats récents (ex. bcrypt-PBKDF2 modernes, KDFs custom) peuvent manquer ou être mal classés.
 > - L'outil est **100 % interactif/argumentaire simple** : pas de fuzzing ; il ne cracke pas, il identifie.
 > - Ne fais pas confiance aveuglément : un candidat unique mais faux (ex. identifié MD5 alors que c'est un NTLM) te fera perdre du temps — vérifie toujours avec le contexte.
@@ -579,21 +579,21 @@ hashid --no-color -m -j -o rapport.txt hashes.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub psypanda/hashID](https://github.com/psypanda/hashID)
 > - [Page Kali hashid](https://www.kali.org/tools/hashid/)
 > - [Site officiel psypanda.github.io/hashID](https://psypanda.github.io/hashID/)
 > - [PyPI hashID](https://pypi.org/project/hashID/)
 
 ### Security & Community
-> [!info] 📚 **Ressources complémentaires**
+> [!info] **Ressources complémentaires**
 > - [hashcat example hashes (vérification des modes)](https://hashcat.net/wiki/doku.php?id=example_hashes)
 > - [Openwall John wiki — sample hashes](https://openwall.info/wiki/john/sample-hashes)
 > - [passlib (contexte des formats)](https://pythonhosted.org/passlib/)
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - Name-That-Hash|Name-That-Hash]] · [[Outils/Outil - hashcat|hashcat]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - Name-That-Hash|Name-That-Hash]] · [[Outils/Outil - hashcat|hashcat]]

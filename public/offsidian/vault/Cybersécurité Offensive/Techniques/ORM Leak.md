@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🗃️ ORM Leak
+# ORM Leak
 
 > [!info] **En 1 phrase**
 > ORM Leak = l'ORM construit des requêtes à partir d'un **objet de filtre contrôlé par l'attaquant** (mass assignment des paramètres) → l'attaquant accède à des **colonnes et relations cachées** et **exfiltre** les données.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,12 +32,12 @@ flowchart LR
     D --> E
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Les ORM (Django, Prisma, Ransack) utilisent la **syntaxe de paramètres nommés** pour construire les filtres. Si l'input utilisateur est passé **en bloc** (`filter(**request.data)`, `where: req.query.filter`), l'attaquant contrôle **champ**, **opérateur** et **traversée de relations** — même des champs non exposés par l'API.
 
 ---
 
-## 🐍 Django (Python)
+## Django (Python)
 
 ```python
 users = User.objects.filter(**request.data)   # VULNÉRABLE
@@ -90,7 +90,7 @@ serializer = UserSerializer(users, many=True)
 
 ---
 
-## ⚙️ Prisma (Node.JS)
+## Prisma (Node.JS)
 
 ```js
 const posts = await prisma.article.findMany({
@@ -126,7 +126,7 @@ GET /articles?filter[createdBy][resetToken][startsWith]=06
 }
 ```
 
-> [!tip] 💡 **Time-based**
+> [!tip] **Time-based**
 > Prisma supporte le **time-based** : avec une clause `contains` lente + une colonne cible en `startsWith`, on brute-force caractère par caractère (outil **plormber**).
 
 ```bash
@@ -139,9 +139,9 @@ plormber prisma-contains --chars '0123456789abcdef' \
 
 ---
 
-## 💎 Ransack (Ruby on Rails)
+## Ransack (Ruby on Rails)
 
-> ⚠️ Vulnérable uniquement en **Ransack < 4.0.0**. Les paramètres `q[...]` sont passés aux recherches.
+> Vulnérable uniquement en **Ransack < 4.0.0**. Les paramètres `q[...]` sont passés aux recherches.
 
 ```text
 # Extraction du reset_password_token d'un user (blind prefix)
@@ -155,7 +155,7 @@ GET /labs?q[creator_roles_name_cont]=superadmin&q[creator_recoveries_key_start]=
 
 ---
 
-## 📋 CVE notables
+## CVE notables
 
 | CVE | Produit |
 |---|---|
@@ -165,7 +165,7 @@ GET /labs?q[creator_roles_name_cont]=superadmin&q[creator_recoveries_key_start]=
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -178,14 +178,14 @@ GET /labs?q[creator_roles_name_cont]=superadmin&q[creator_recoveries_key_start]=
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Mode opératoire**
+> [!tip] **Mode opératoire**
 > 1. Tester `champ__startswith`/`__contains` sur des valeurs connues (ex: `admin`) → l'API répond-elle différemment ?
 > 2. Remonter les **relations** (`__user__password__contains`) pour atteindre les champs sensibles.
 > 3. Bruteforcer par **prefix** (dichotomie, time/boolean selon le framework).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ce n'est pas une SQLi classique : on ne sort pas de la requête, on **contrôle la structure** d'un filtre déjà validé.
 > - Les champs sensibles ne sont pas forcément **rendus** — on les détecte en **blind** (différence de résultats/erreurs).
 > - La traversée **Many-to-Many** exige plusieurs niveaux `some`/`__` (chaînes longues) → prévoir des payloads profondes.
@@ -194,11 +194,11 @@ GET /labs?q[creator_roles_name_cont]=superadmin&q[creator_recoveries_key_start]=
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Mass Assignment|⚖️ Mass Assignment]]
-- [[Injection SQL|💾 SQLi]]
-- [[Regular Expression|🔤 Regular Expression (ReDoS)]]
-- [[API Key Leaks|🔑 API Key Leaks]]
-- → [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — ORM Leak](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/ORM%20Leak/README.md)
+- [[Mass Assignment| Mass Assignment]]
+- [[Injection SQL| SQLi]]
+- [[Regular Expression| Regular Expression (ReDoS)]]
+- [[API Key Leaks| API Key Leaks]]
+- → [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — ORM Leak](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/ORM%20Leak/README.md)

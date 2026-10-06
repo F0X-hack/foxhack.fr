@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 💾 CH341A
+# CH341A
 
 > [!info] **En 1 phrase**
 > La **CH341A** est la petite carte USB (quelques euros) qui transforme ton PC en
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["CH341A"] --> B["SPI Flash NOR"]
@@ -46,7 +46,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > La puce CH341 de WCH (Nanjing Qinheng Microelectronics) est un contrôleur USB qui intègre trois interfaces : SPI (programmeur flash), I2C (EEPROM), et UART (série TTL). La carte CH341A est le format le plus courant : un USB dongle avec des broches pour connecter des clips ou des sondes, idéal pour lire/écrire des flash SPI NOR et des EEPROM I2C sur des PCB IoT.
 
@@ -67,7 +67,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Puce CH341 et ses variantes
 
@@ -101,7 +101,7 @@ Les EEPROM I2C (24C02, 24C256, etc.) stockent la configuration, les paramètres 
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -167,7 +167,7 @@ Connexion clip SOIC-8 :
   Clip Pin 7 → GND
   Clip Pin 8 → CS#
 
-  ⚠️ Vérifier le pinout exact du chip cible
+  Vérifier le pinout exact du chip cible
      (W25Q32 vs MX25L256 peuvent différer)
 ```
 
@@ -191,7 +191,7 @@ Connexion clip SOIC-8 :
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### SPI (Serial Peripheral Interface)
 
@@ -235,7 +235,7 @@ Connexion clip SOIC-8 :
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -292,7 +292,7 @@ lsusb | grep 1a86
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres logiciels
 
@@ -321,15 +321,15 @@ Sélecteur de tension CH341A v1.7 :
   Position 1 : 1.8V (flash basse tension)
   Position 2 : 2.5V (flash basse tension)
   Position 3 : 3.3V (standard — la plupart des flash)
-  Position 4 : 5V (⚠️ dangereux pour les flash 3.3V)
+  Position 4 : 5V (dangereux pour les flash 3.3V)
 
-  ⚠️ TOUJOURS vérifier la tension du chip cible AVANT la lecture
-  ⚠️ La plupart des flash SPI NOR fonctionnent en 3.3V
+  TOUJOURS vérifier la tension du chip cible AVANT la lecture
+  La plupart des flash SPI NOR fonctionnent en 3.3V
 ```
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -357,7 +357,7 @@ sudo flashrom -V --programmer ch341a_spi -r dump.bin -c W25Q16.V
 # Lecture partielle (1 Ko à partir de l'offset 0)
 sudo flashrom -V --programmer ch341a_spi -r dump.bin -l 0x400
 
-# Écriture (⚠️ ATTENTION : écrase le contenu actuel)
+# Écriture (ATTENTION : écrase le contenu actuel)
 sudo flashrom -V --programmer ch341a_spi -w new_firmware.bin
 
 # Vérification (comparer dump avec contenu actuel)
@@ -379,9 +379,9 @@ sudo ./ch341eeprom -v -s 24c512 -r -l 65536 full_dump.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Premier dump SPI avec clip
+### Débutant — Premier dump SPI avec clip
 
 ```bash
 # 1. Identifier le chip flash sur le PCB (silkscreen : W25Q32, MX25L256…)
@@ -397,7 +397,7 @@ sudo flashrom -V --programmer ch341a_spi -r dump.bin
 ls -la dump.bin
 ```
 
-### 🟡 Intermédiaire — Dump fiable avec comparaison
+### Intermédiaire — Dump fiable avec comparaison
 
 ```bash
 # 1. Premier dump
@@ -421,7 +421,7 @@ binwalk -Me dump1.bin
 strings -n 6 dump1.bin | grep -iE 'pass|key|token|secret'
 ```
 
-### 🔴 Avancé — Dump EEPROM I2C + analyse config
+### Avancé — Dump EEPROM I2C + analyse config
 
 ```bash
 # 1. Scanner les adresses I2C (via Bus Pirate ou CH341A mode I2C)
@@ -442,13 +442,13 @@ grep -ra "password\|secret\|key\|token" eeprom_dump.bin
 cp eeprom_dump.bin /evidence/eeprom_$(date +%Y%m%d_%H%M%S).bin
 ```
 
-### ⚫ Expert — Re-flash avec firmware modifié
+### Expert — Re-flash avec firmware modifié
 
 ```python
 #!/usr/bin/env python3
 """
 Script expert : modification et re-flash d'un firmware
-⚠️ ATTENTION : risque de brick du device
+ATTENTION : risque de brick du device
 """
 import subprocess
 import hashlib
@@ -508,7 +508,7 @@ verify_and_flash("modified.bin")
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -553,7 +553,7 @@ Analyser le dump (binwalk, strings, reverse), extraire les secrets, documenter l
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Dump d'un routeur avec protection anti-clip
 
@@ -563,7 +563,7 @@ Analyser le dump (binwalk, strings, reverse), extraire les secrets, documenter l
 | **Matériel** | CH341A, fer à souder, préchauffeur, pistolet thermique |
 | **Étapes** | 1. Identifier le chip sous le bouclier → 2. Découper le bouclier (Dremel) → 3. Dessouder le chip → 4. Souder sur un adaptateur SOP8→DIP8 → 5. Lire avec CH341A |
 | **Résultat** | Firmware complet du routeur |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -582,11 +582,11 @@ flowchart LR
 | **Matériel** | CH341A, sondes Hook, mode I2C |
 | **Étapes** | 1. Scanner I2C → 2. Identifier EEPROM 24C256 à 0xA0 → 3. Lire 32KB → 4. Parser la config → 5. Extraire les credentials |
 | **Résultat** | Identifiants admin de la caméra IP |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -605,7 +605,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -636,7 +636,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -671,7 +671,7 @@ flowchart TB
 flashrom -p ch341a_spi -r /dev/null
 
 # 2. Activer le write protect
-# ⚠️ Cette opération peut être irréversible
+# Cette opération peut être irréversible
 # Référez-vous à la datasheet du chip
 
 # Vérifier le secure boot (ESP32)
@@ -683,7 +683,7 @@ esptool.py --port COM3 encrypt_flash --flash_mode dio
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -749,7 +749,7 @@ analyze_dump(dump)
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -795,13 +795,13 @@ cat dump.hex | tr -d ":" | tr -d "\n" | xxd -r -p | strings
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Bus Pirate|🏴‍☠️ Bus Pirate]] pour comparaison
-- [[Hardware - Memory Programmer|🗄️ Memory Programmer]] pour programmeurs avancés
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] pour détails des protocoles
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse post-dump
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Bus Pirate| Bus Pirate]] pour comparaison
+- [[Hardware - Memory Programmer| Memory Programmer]] pour programmeurs avancés
+- [[Hardware - I2C et SPI| I2C/SPI]] pour détails des protocoles
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse post-dump
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -818,7 +818,7 @@ cat dump.hex | tr -d ":" | tr -d "\n" | xxd -r -p | strings
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -838,7 +838,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -859,7 +859,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -909,7 +909,7 @@ md5sum test1.bin test2.bin
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -931,7 +931,7 @@ md5sum test1.bin test2.bin
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -953,7 +953,7 @@ md5sum test1.bin test2.bin
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -980,7 +980,7 @@ md5sum test1.bin test2.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -993,7 +993,7 @@ md5sum test1.bin test2.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -1013,7 +1013,7 @@ md5sum test1.bin test2.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : La CH341A n'est pas isolée — vérifier la tension (3.3V, certains modules en 5V).
 - **Piège 2** : Le dump doit être complet — `flashrom` lit par défaut toute la puce, conserver le fichier brut.
@@ -1029,9 +1029,9 @@ md5sum test1.bin test2.bin
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — CH341A](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/ch341a.md)
 > - [flashrom — Supported Hardware](https://www.flashrom.org/supported_hw/supported_programmers.html)
 > - [NeoProgrammer — CH341A Chip List](https://tecmikro.com/documentos-software/ch341a-programmer-devicelist.txt)
@@ -1063,4 +1063,4 @@ md5sum test1.bin test2.bin
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - UART|🔌 UART]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - UART| UART]]

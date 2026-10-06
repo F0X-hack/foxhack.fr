@@ -1,7 +1,7 @@
 ---
 title: "Outil - katana"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/katana/usage
 ---
 
-# 🗡️ katana — Crawler web haute vitesse (dont crawl JavaScript)
+# katana — Crawler web haute vitesse (dont crawl JavaScript)
 
 > [!info] **En 1 phrase**
 > katana parcourt les sites web (SPA comprises) et en extrait les URLs, endpoints et routes cachées dans le JavaScript.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.projectdiscovery.io/tools/katana/usage
 
 ---
 
-## 🎯 Concept
+## Concept
 
 katana est le crawler de projectdiscovery. Il navigue dans les sites, suit les liens, formulaires et redirections, et surtout le JavaScript (`-jc`) pour extraire des URLs et endpoints jamais exposés dans le HTML. En mode headless (`-headless`), il exécute réellement le JS des applications modernes (React, Angular, Vue) et capture les requêtes XHR. Position : phase de découverte d'endpoints, après le probing httpx et avant les tests actifs (nuclei, fuzzing de paramètres). Il peut aussi fonctionner en mode passif (sources Wayback) pour minimiser l'empreinte.
 
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -131,14 +131,14 @@ go build -o katana cmd/katana/main.go
 sudo mv katana /usr/local/bin/
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Go 1.21+ pour la compilation.
 > - Le mode `-headless` requiert l'exécution d'un navigateur (Chromium headless) : plus gourmand en ressources.
 > - Un crawl trop agressif peut saturer la cible ou déclencher le WAF : régler `-rate-limit` et `-concurrency`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout passe par les options CLI.
 
@@ -161,7 +161,7 @@ Pas de fichier de configuration : tout passe par les options CLI.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Parser HTML** : extraction des liens (`<a href>`, `<link>`, `<form action>`…), des scripts (`<script src>`) et des sources d'assets.
 - **Analyseur JS** : parsing des fichiers JavaScript (`-jc`) pour en extraire les URLs, chemins d'API, endpoints et routes.
@@ -172,7 +172,7 @@ Pas de fichier de configuration : tout passe par les options CLI.
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -204,7 +204,7 @@ echo https://example.com | katana -passive -silent
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ echo https://example.com | katana -passive -silent
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -277,7 +277,7 @@ katana -u https://example.com -d 2 -fn "admin|login|api" -silent
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lister les cibles web** — partir des hôtes vivants identifiés par httpx.
    ```bash
@@ -302,7 +302,7 @@ katana -u https://example.com -d 2 -fn "admin|login|api" -silent
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : SPA headless — découvrir les routes de l'application
 
@@ -329,7 +329,7 @@ echo https://example.com | katana -passive -silent -o passive_urls.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -341,7 +341,7 @@ echo https://example.com | katana -passive -silent -o passive_urls.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -354,7 +354,7 @@ echo https://example.com | katana -passive -silent -o passive_urls.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -418,7 +418,7 @@ rule Katana_Binary_Detection {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — crawl périodique d'une liste d'applications
@@ -450,7 +450,7 @@ for ep in crawl("https://example.com", ["-jc", "-headless", "-xhr", "-d", "2"]):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte (une URL par ligne) ou JSON (`-json`).
 
@@ -476,16 +476,16 @@ with open("data.json") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - httpx|httpx]] — source amont : hôtes web vivants à crawler
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités sur les endpoints extraits
 - [[Outil - ffuf|ffuf]] — fuzzing de chemins et de paramètres après crawl
 - [[Outil - gau|gau]] / [[Outil - waybackurls|waybackurls]] — URLs historiques complémentaires
 - [[Outil - Amass|Amass]] / [[Outil - subfinder|subfinder]] — source des sous-domaines
 - [[Outil - httpx|httpx]] — validation des URLs avant crawl (`-u-probe`)
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 subfinder → dnsx → httpx → katana → nuclei / ffuf
@@ -494,7 +494,7 @@ subfinder → dnsx → httpx → katana → nuclei / ffuf
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -509,7 +509,7 @@ subfinder → dnsx → httpx → katana → nuclei / ffuf
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Moteur Go à haut débit : crawl concurrent (`-concurrency`) avec connexions persistantes.
 - Le mode `-headless` est nettement plus lent et gourmand (navigateur réel) : à réserver aux SPA.
@@ -521,7 +521,7 @@ subfinder → dnsx → httpx → katana → nuclei / ffuf
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -551,7 +551,7 @@ subfinder → dnsx → httpx → katana → nuclei / ffuf
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Volumétrie** : un crawl agressif est détectable (logs WAF, charge serveur) — à doser selon l'engagement.
 - **Headless** : l'exécution d'un navigateur augmente la charge côté cible comme côté attaquant.
@@ -561,7 +561,7 @@ subfinder → dnsx → httpx → katana → nuclei / ffuf
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Le crawl actif est bruyant et détectable.
 - Le headless est lent et gourmand en ressources.
@@ -571,7 +571,7 @@ subfinder → dnsx → httpx → katana → nuclei / ffuf
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Crawl simple
@@ -598,7 +598,7 @@ katana -u https://example.com -jc -json -silent -o data.json
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -611,7 +611,7 @@ katana -u https://example.com -jc -json -silent -o data.json
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -622,15 +622,15 @@ katana -u https://example.com -jc -json -silent -o data.json
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours restreindre le scope (`-rf`) en bug bounty pour rester dans le périmètre autorisé.
 > - Utilise `-ef` (css, images, polices) pour éliminer le bruit avant de trier.
 > - Sur une SPA, la triade `-jc -headless -xhr` est indispensable pour découvrir les endpoints API.
 > - Couple katana avec nuclei dans un pipeline pour passer de la découverte au test.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le headless ralentit considérablement le crawl : réserve-le aux applications qui en ont besoin.
 > - Un crawl agressif peut bloquer ton IP chez la cible : dose `-concurrency` et `-rate-limit`.
 > - Sans `-rf`, le crawl peut sortir du périmètre et découvrir des sous-domaines hors scope.
@@ -638,7 +638,7 @@ katana -u https://example.com -jc -json -silent -o data.json
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -659,4 +659,4 @@ katana -u https://example.com -jc -json -silent -o data.json
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - httpx|httpx]] · [[Outil - nuclei|nuclei]] · [[01 - Reconnaissance|🔎 Reconnaissance]]
+**Liens :** [[Tools| Outils]] · [[Outil - httpx|httpx]] · [[Outil - nuclei|nuclei]] · [[01 - Reconnaissance| Reconnaissance]]

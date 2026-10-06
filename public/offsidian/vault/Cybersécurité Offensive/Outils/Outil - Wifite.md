@@ -1,11 +1,11 @@
 ---
 title: "Outil - Wifite"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: wifite2 v2.7.0 (Kali) ; fork communautaire kimocoder/wifite2 ; wifit3 en développement
 licence: GPL-2.0
@@ -16,20 +16,20 @@ site: https://github.com/derv82/wifite2
 doc: https://github.com/derv82/wifite2
 ---
 
-# 📡 Wifite — Wireless & Réseau
+# Wifite — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Script d'attaque WiFi **entièrement automatisé** : scan des réseaux, sélection automatique de la cible la plus faible et lancement de l'attaque WEP/WPA/WPS adaptée — un « push-button » pensé pour gagner du temps.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | wifite (wifite2) |
 | Description | Auditeur WiFi automatisé : scan, classement des cibles, attaque WEP/WPA/WPA2/WPS (handshake, PMKID, pixie dust), crack par dictionnaire et sauvegarde des captures |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque & Cracking WiFi (automatisation) |
 | Fonction principale | Orchestrer aircrack-ng, reaver/pixiewps, tshark et hashcat en une commande « push-button » |
 | Type d'outil | Script Python CLI (orchestrateur) |
@@ -50,7 +50,7 @@ doc: https://github.com/derv82/wifite2
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `wifite` (v2 par derv82) orchestre la suite `aircrack-ng`, `reaver`/`pixiewps`, `tshark` et `hashcat` en un seul flux : il scanne, classe les cibles (par puissance, chiffrement, WPS actif), lance l'attaque adaptée et écrit les résultats dans un dossier `hs/`. Il cible en priorité le **WPS** (via reaver/pixiewps), puis le **WPA/WPA2** (capture de handshake + crack par dictionnaire) et le **WEP** (ARP replay). Idéal pour les audits rapides et la vérification de la posture d'un parc de points d'accès.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,7 +136,7 @@ git clone https://github.com/derv82/wifite2.git && cd wifite2
 sudo python3 setup.py install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Carte Wi-Fi **mode moniteur + injection** obligatoire (chipset compatible aircrack-ng).
 > - Outils requis à jour : `aircrack-ng`, `reaver`/`pixiewps`, `hashcat`, `tshark` (détection WPS).
 > - Wifite est conçu pour les **dernières versions de Kali** : les autres distros ont souvent des outils obsolètes.
@@ -144,7 +144,7 @@ sudo python3 setup.py install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Wifite se configure **en ligne de commande**. Les options clés filtrent les cibles, choisissent les vecteurs et gèrent la discrétion.
 
@@ -164,7 +164,7 @@ Wifite se configure **en ligne de commande**. Les options clés filtrent les cib
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Wifite est un **script Python 3** qui orchestre des binaires externes :
 
@@ -181,7 +181,7 @@ Wifite n'introduit pas de nouveau protocole : sa valeur est le **pipeline** et l
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ sudo wifite --2ghz --power 60 --wpa --dict rockyou.txt --all
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -238,7 +238,7 @@ sudo wifite --2ghz --power 60 --wpa --dict rockyou.txt --all
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -279,7 +279,7 @@ sudo wifite --wpa --dict wordlist.txt --bssid AA:BB:CC:DD:EE:FF -vvv
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : audit rapide d'un site avec plusieurs box.**
 
@@ -299,7 +299,7 @@ sudo wifite --wpa --dict wordlist.txt --bssid AA:BB:CC:DD:EE:FF -vvv
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Attaque WPS offline (pixiewps) sur les routeurs vulnérables
 
@@ -355,7 +355,7 @@ sudo wifite --2ghz --power 60 --wpa --dict rockyou.txt --all
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -367,7 +367,7 @@ sudo wifite --2ghz --power 60 --wpa --dict rockyou.txt --all
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -382,7 +382,7 @@ sudo wifite --2ghz --power 60 --wpa --dict rockyou.txt --all
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -424,7 +424,7 @@ alert wlan any any -> any any (msg:"Deauth flood - possible wifite"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Exemple : audit nocturne automatique d'un parc (test autorisé)
@@ -455,7 +455,7 @@ for key in parse_keys():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie console suit le pipeline étape par étape ; les **captures et clés** sont écrites dans `hs/`. Le fichier `hs/cracked.txt` (si présent) liste les passphrases trouvées.
 
@@ -482,7 +482,7 @@ for idx, bssid, essid, enc in targets:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 wifite (orchestrateur) → aircrack-ng / reaver / pixiewps / hashcat → clés + hs/
@@ -490,7 +490,7 @@ wifite (capture) → hcxpcapngtool → hashcat -m 22000 → crack GPU
 wifite (scan) → rapport d'audit → SIEM / documentation
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - aircrack-ng]] — moteur de capture/crack utilisé par wifite
 - [[Outil - Reaver]] / pixiewps — vecteur WPS de wifite
 - [[Outil - hcxdumptool]] — capture PMKID alternative (workflow 22000)
@@ -499,7 +499,7 @@ wifite (scan) → rapport d'audit → SIEM / documentation
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -513,7 +513,7 @@ wifite (scan) → rapport d'audit → SIEM / documentation
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - La vitesse dépend entièrement des outils sous-jacents : handshake (quelques minutes en deauth) puis crack (dictionnaire → CPU/GPU).
 - Le **WPS pixie dust** est le chemin le plus rapide (secondes) quand la puce est vulnérable.
@@ -523,7 +523,7 @@ wifite (scan) → rapport d'audit → SIEM / documentation
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -559,7 +559,7 @@ wifite (scan) → rapport d'audit → SIEM / documentation
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - Wifite exécute des attaques **actives** (deauth, injection) : usage strictement limité aux périmètres autorisés.
 - Les captures dans `hs/` contiennent des handshakes et des métadonnées réseau : à protéger et détruire après l'audit.
@@ -569,7 +569,7 @@ wifite (scan) → rapport d'audit → SIEM / documentation
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Orchestrateur** : dépend de la présence et de la version des outils sous-jacents (distros non-Kali souvent incompatibles).
 - Le crack WPA/WPA2 ne vaut que ce que vaut le **dictionnaire**.
@@ -580,7 +580,7 @@ wifite (scan) → rapport d'audit → SIEM / documentation
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan + attaque interactive
@@ -614,7 +614,7 @@ hashcat -m 22000 handshake.22000 /usr/share/wordlists/rockyou.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -623,11 +623,11 @@ hashcat -m 22000 handshake.22000 /usr/share/wordlists/rockyou.txt
 | **Commande principale** | `sudo wifite --dict /usr/share/wordlists/rockyou.txt` |
 | **Alternative principale** | aircrack-ng manuel (contrôle fin) |
 | **Concepts importants** | Orchestration, dossier `hs/`, handshake, PMKID, WPS/pixie, dictionnaire |
-| **Liens associés** | [[Techniques/Attaques WiFi (WPA2 et PMKID)\|📶 Hub WiFi]] · [[Outil - aircrack-ng]] · [[Outil - Reaver]] |
+| **Liens associés** | [[Techniques/Attaques WiFi (WPA2 et PMKID)\| Hub WiFi]] · [[Outil - aircrack-ng]] · [[Outil - Reaver]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -640,17 +640,17 @@ hashcat -m 22000 handshake.22000 /usr/share/wordlists/rockyou.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 Wifite garde les handshakes dans `hs/` et **saute les réseaux déjà attaqués** (sauf `--new-hs`) : c'est une vraie optimisation pour les campagnes sur plusieurs sites.
+> [!tip] Wifite garde les handshakes dans `hs/` et **saute les réseaux déjà attaqués** (sauf `--new-hs`) : c'est une vraie optimisation pour les campagnes sur plusieurs sites.
 
-> [!warning] ⚠️ Le mode par défaut fait des **deauth automatiques** très visibles (le réseau tombe) et peut déclencher des alarmes. En test autorisé, préférer `--no-deauth` ou ne cibler que le WPS. `--pixie` ne marche que sur les puces WPS vulnérables (défauts du fabricant).
+> [!warning] Le mode par défaut fait des **deauth automatiques** très visibles (le réseau tombe) et peut déclencher des alarmes. En test autorisé, préférer `--no-deauth` ou ne cibler que le WPS. `--pixie` ne marche que sur les puces WPS vulnérables (défauts du fabricant).
 
-> [!tip] 💡 Vérifie que la carte est bien en mode moniteur avant de lancer : `sudo airmon-ng start wlan0`, puis `iw dev` pour confirmer le nom d'interface (`wlan0mon`).
+> [!tip] Vérifie que la carte est bien en mode moniteur avant de lancer : `sudo airmon-ng start wlan0`, puis `iw dev` pour confirmer le nom d'interface (`wlan0mon`).
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -673,8 +673,8 @@ hashcat -m 22000 handshake.22000 /usr/share/wordlists/rockyou.txt
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel wifite2](https://github.com/derv82/wifite2)
 > - [Fork kimocoder/wifite2 (version la plus supportée)](https://github.com/kimocoder/wifite2)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Techniques/Attaques WiFi - WPS|🔢 WPS]] · [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Outil - aircrack-ng]] · [[Outil - Reaver]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Techniques/Attaques WiFi - WPS| WPS]] · [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Outil - aircrack-ng]] · [[Outil - Reaver]]

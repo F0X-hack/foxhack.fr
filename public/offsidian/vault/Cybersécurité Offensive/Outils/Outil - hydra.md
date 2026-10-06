@@ -1,11 +1,11 @@
 ---
 title: "Outil - hydra"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 9.7
 licence: AGPLv3
@@ -16,14 +16,14 @@ site: https://www.thc.org/thc-hydra/
 doc: https://www.kali.org/tools/hydra/
 ---
 
-# 💥 Hydra — Brute-force de connexions
+# Hydra — Brute-force de connexions
 
 > [!info] **En 1 phrase**
 > Hydra = brute-force de login multi-protocoles : il teste des couples user/mot de passe sur SSH, FTP, HTTP(S), RDP, SMB et des dizaines d'autres services.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 THC-Hydra est le brute-forcer **en ligne** de référence : développé en C par van Hauser (THC) avec de nombreux modules écrits par David Maciejak, sous licence **AGPLv3**, il est maintenu sur `vanhauser-thc/thc-hydra` (~12 000 étoiles). La version stable actuelle est **9.7** (mai 2026) ; la 9.6 (septembre 2025) a apporté le support FreeRDP v3, les corrections gcc-15 et le support HTTP 403 ; la 9.7 ajoute xhydra GTK3, MongoDB v2 et corrige un buffer overflow dans le module POP3.
 
@@ -42,7 +42,7 @@ Contrairement au cracking hors-ligne (hashcat sur un hash volé), Hydra ouvre de
 
 ---
 
-## 🎯 Concept
+## Concept
 Hydra (THC-Hydra) est l'outil de **dictionnaire en ligne** (online attack) par excellence : au lieu de cracker un hash hors-ligne, il teste de vraies connexions sur le service cible. On lui fournit un ou plusieurs utilisateurs (`-l`/`-L`) et un ou plusieurs mots de passe (`-p`/`-P`), et il essaie toutes les combinaisons via un module dédié à chaque protocole (SSH, FTP, HTTP(S) GET/POST, RDP, SMB, SMTP, IMAP, LDAP, SNMP, MSSQL, MySQL...). Dans un pentest, il s'utilise après la reconnaissance : une fois un service ouvert et un nom d'utilisateur deviné (ou énuméré), hydra vérifie si un mot de passe faible donne accès. La syntaxe modulaire `hydra <options> service://cible` et le paramètre `-t` (tâches parallèles) permettent d'ajuster la vitesse, tandis que `-f` stoppe au premier succès pour limiter le bruit et les lockouts.
 
 ```mermaid
@@ -56,7 +56,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Attaque en ligne vs attaque hors-ligne
 
@@ -91,7 +91,7 @@ Hydra accepte soit `hydra <opts> <hôte> <service>` (ex. `hydra -l admin 10.10.1
 
 ---
 
-## 🛠️ Installation
+## Installation
 ```bash
 # Linux (Kali / Debian / Ubuntu)
 sudo apt update && sudo apt install -y hydra
@@ -123,7 +123,7 @@ cd thc-hydra
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Hydra ne possède pas de fichier de configuration utilisateur : tout se passe en ligne de commande ou au build.
 
@@ -136,7 +136,7 @@ Hydra ne possède pas de fichier de configuration utilisateur : tout se passe en
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Hydra est écrit en C, organisé autour d'un noyau (`hydra.c`, gestion du parallélisme et de la distribution) et d'un **module par protocole** (`hydra-ssh.c`, `hydra-ftp.c`, `hydra-http.c`, `hydra-smb.c`, `hydra-rdp.c`...).
 
@@ -160,7 +160,7 @@ Fonctionnement :
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 ```bash
 # SSH : un user + dictionnaire
 hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://10.10.10.10
@@ -178,7 +178,7 @@ hydra -L users.txt -P pass.txt rdp://10.10.10.10
 hydra -l user@corp.local -P pass.txt smtp://10.10.10.10
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Effet |
 |---|---|
@@ -222,7 +222,7 @@ hydra -l admin -P pass.txt 10.10.10.10 snmp
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Bruteforce SSH simple
 ```bash
@@ -255,7 +255,7 @@ hydra -l admin -P pass.txt -M cibles.txt ssh -t 4 -F
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 1. **Étape 1 — Repérer le service** : Nmap confirme un SSH ouvert sur `10.10.10.10` avec l'utilisateur `admin` (info leak sur la page web).
    ```bash
    nmap -sV -p 22 10.10.10.10
@@ -278,7 +278,7 @@ hydra -l admin -P pass.txt -M cibles.txt ssh -t 4 -F
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 ### Scénario 1 : Credential stuffing à partir d'un fichier de couples `user:pass`
 Tester directement un dump de combinaisons volées avec `-C`.
 ```bash
@@ -301,7 +301,7 @@ Il reprend au point d'arrêt au lieu de tout recommencer. (`-I` ignore le fichie
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 ### Pentest / Red team
 - **Validation de credentials** : après énumération de comptes (web, LDAP, convention de nommage), hydra teste les mots de passe faibles sur SSH, RDP, FTP, SMB.
@@ -318,7 +318,7 @@ Il reprend au point d'arrêt au lieu de tout recommencer. (`-I` ignore le fichie
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rôle de hydra |
 |---|---|---|
@@ -333,7 +333,7 @@ Il reprend au point d'arrêt au lieu de tout recommencer. (`-I` ignore le fichie
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Indicateurs d'attaque
 
@@ -355,7 +355,7 @@ Il reprend au point d'arrêt au lieu de tout recommencer. (`-I` ignore le fichie
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Boucle sur plusieurs services et hôtes
 
@@ -386,7 +386,7 @@ python3 -c "import json;d=json.load(open('resultats.json'));[print(r['login']+':
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **STDOUT** : résultats en direct avec le format `[<port>][<service>] host: <hôte> login: <user> password: <pass>`.
 - **Fichier** : `-o <fichier>` ; le format est choisi avec `-b` : `text`, `jsonv1` ou `json`.
@@ -403,7 +403,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -416,7 +416,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence avec hydra |
 |---|---|
@@ -428,7 +428,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Parallélisme** : `-t` (jusqu'à plusieurs dizaines de tâches) accélère fortement les services qui le tolèrent.
 - **Limites réalistes** : la vitesse dépend du réseau, du serveur et du protocole — souvent de l'ordre de centaines à quelques milliers de tentatives/minute, très loin des millions/s du GPU hors-ligne.
@@ -442,7 +442,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -456,7 +456,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Licence** : AGPLv3, source ouverte ; README : « This tool is for legal purposes only! » et avertissement contre l'usage militaire/secret-service ou illégal.
 - **Historique de bugs** : la 9.7 corrige un buffer overflow dans le module POP3 — toujours utiliser la dernière version.
@@ -464,7 +464,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Détectable** : les échecs de login apparaissent dans les logs et les SIEM (contrairement au cracking hors-ligne).
 - **Lockout** : les politiques de verrouillage limitent fortement l'efficacité.
@@ -474,7 +474,7 @@ grep "^\[" found.txt | awk '{print $NF}' | tr ':' ' '
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # SSH
@@ -508,7 +508,7 @@ hydra -R
 hydra -l admin -P pass.txt -b jsonv1 -o out.json ssh://IP
 ```
 
-## ⚡ Quick reference
+## Quick reference
 
 | Service | Syntaxe |
 |---|---|
@@ -527,7 +527,7 @@ hydra -l admin -P pass.txt -b jsonv1 -o out.json ssh://IP
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 | Signe | Défense |
 |---|---|
 | Pic de connexions échouées sur un même compte (événement 4625 Windows / auth.log) | Politique de **lockout** et seuil de verrouillage de compte |
@@ -539,8 +539,8 @@ hydra -l admin -P pass.txt -b jsonv1 -o out.json ssh://IP
 
 ---
 
-## ⚠️ Tips & Pièges
-> [!tip] 💡 **Tips**
+## Tips & Pièges
+> [!tip] **Tips**
 > - Utilise `-f` pour arrêter au premier succès et limiter le bruit.
 > - Pense au **credential stuffing** : un couple trouvé sur SSH vaut souvent pour la webapp et l'email de la même organisation.
 > - `-e nsr` élargit les essais sans nouveau dictionnaire (login vide, login = pass, login inversé).
@@ -548,7 +548,7 @@ hydra -l admin -P pass.txt -b jsonv1 -o out.json ssh://IP
 > - `-u` est ton allié pour le spraying : on change de user après chaque mot de passe testé, pas l'inverse.
 > - Déduplique les wordlists (`sort -u`) et filtre avec `pw-inspector` : un dictionnaire propre fait gagner énormément de temps.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le brute-force **en ligne** déclenche lockout et logs : préfère une attaque **hors-ligne** (hashcat) dès qu'un hash est disponible.
 > - Sans `-f`, hydra continue de taper sur le compte même après succès → verrouillage possible.
 > - Sur HTTP, la cible peut modifier l'URL ou le message d'erreur : ajuste le critère `F=`/`S=` sinon hydra signale de faux positifs.
@@ -556,20 +556,20 @@ hydra -l admin -P pass.txt -b jsonv1 -o out.json ssh://IP
 
 ---
 
-## 📚 References
+## References
 
 ### Official
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [vanhauser-thc/thc-hydra (GitHub)](https://github.com/vanhauser-thc/thc-hydra)
 > - [Manuel hydra (Kali)](https://www.kali.org/tools/hydra/)
 > - [Site THC-Hydra](https://www.thc.org/thc-hydra/)
 > - [Docker vanhauser/hydra](https://hub.docker.com/r/vanhauser/hydra)
 
 ### Security & Community
-> [!info] 📚 **Ressources complémentaires**
+> [!info] **Ressources complémentaires**
 > - [Releases hydra (notes de version 9.x)](https://github.com/vanhauser-thc/thc-hydra/releases)
 > - [MITRE ATT&CK — Brute Force T1110](https://attack.mitre.org/techniques/T1110/)
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Spraying|🧂 Password Spraying]] · [[Techniques/Privilege Escalation Linux|🐧 PrivEsc Linux]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - ncrack|ncrack]] · [[Outils/Outil - Medusa|Medusa]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Spraying| Password Spraying]] · [[Techniques/Privilege Escalation Linux| PrivEsc Linux]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - ncrack|ncrack]] · [[Outils/Outil - Medusa|Medusa]]

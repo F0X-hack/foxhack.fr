@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏢 Attaques WiFi — Enterprise (EAP)
+# Attaques WiFi — Enterprise (EAP)
 
 > [!info] **En 1 phrase**
 > En **WPA2-Enterprise** (802.1X/EAP), il n'y a pas de passphrase à cracker — l'utilisateur s'authentifie par
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,14 +32,14 @@ flowchart LR
     D -.-> A
 ```
 
-> [!info] 💡 **Différence clé avec le PSK**
+> [!info] **Différence clé avec le PSK**
 > - PSK : on cracke une passphrase partagée.
 > - Enterprise : on **phish les credentials** de l'utilisateur (login/mot de passe, souvent AD).
 > - L'utilisateur **n'a aucun moyen simple de vérifier l'identité du serveur** si le certificat n'est pas vérifié.
 
 ---
 
-## 🧰 EAPHammer — installation
+## EAPHammer — installation
 
 ```bash
 git clone https://github.com/s0lst1c3/eaphammer.git
@@ -52,7 +52,7 @@ cd eaphammer
 
 ---
 
-## 🔑 Vol de credentials RADIUS
+## Vol de credentials RADIUS
 
 ```bash
 # Attaque basique
@@ -68,7 +68,7 @@ aireplay-ng -0 0 -a MAC_ADDR_AP -c MAC_ADDR_TARGET wlan0mon
 
 ---
 
-## 🏦 Hostile Portal (creds Active Directory)
+## Hostile Portal (creds Active Directory)
 
 > Voler des credentials **AD** (page de login Microsoft/Corporate).
 
@@ -84,7 +84,7 @@ aireplay-ng -0 0 -a MAC_ADDR_AP -c MAC_ADDR_TARGET wlan0mon
 
 ---
 
-## 🚪 Captive Portal
+## Captive Portal
 
 ```bash
 # Captive portal simple (page de consentement)
@@ -99,7 +99,7 @@ aireplay-ng -0 0 -a MAC_ADDR_AP -c MAC_ADDR_TARGET wlan0mon
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -109,14 +109,14 @@ aireplay-ng -0 0 -a MAC_ADDR_AP -c MAC_ADDR_TARGET wlan0mon
 | **WIDS** | Repère les AP clonés (même ESSID, autre BSSID/signature) |
 | **Sensibilisation** | Les utilisateurs ne doivent pas ignorer les avertissements de certificat |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le **certificat** du faux AP est auto-signé → il faut un template convaincant (ou rogue-cert-prompt).
 - **EAP-MSCHAPv2/PEAP** = le plus courant et le plus attaquable ; **EAP-TLS** beaucoup plus robuste.
 - La **deauth** (`aireplay-ng -0 0`) précipite la reconnexion des clients vers le faux AP.
 - On vole des **credentials**, pas une clé : après capture, on peut se connecter au vrai réseau (ou le pivoter en AD).
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-corporate.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-corporate.md) · Wiki EAPHammer (RADIUS / hostile portal / captive portal)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - Rogue AP|🎭 Rogue AP]] · [[Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Password Spraying|🔑 Password Spraying]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - Rogue AP| Rogue AP]] · [[Attaques WiFi - Préparation & Basiques| Préparation]] · [[Password Spraying| Password Spraying]] · [[Bibliothèque technique| Index]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📨 Protocole MQTT
+# Protocole MQTT
 
 > [!info] **En 1 phrase**
 > **MQTT** est le protocole de messagerie **léger** des objets connectés : les devices
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart TB
@@ -37,7 +37,7 @@ flowchart TB
 
 ---
 
-## 🎯 Discovery & exploration
+## Discovery & exploration
 
 ### Clients MQTT
 
@@ -59,7 +59,7 @@ nmap -p 1883 -vvv --script=mqtt-subscribe -d sensors.domain.com
 
 ---
 
-## 🕵️ Explorer le broker (Python)
+## Explorer le broker (Python)
 
 Se connecter et **souscrire à tous les topics** avec le wildcard `#` :
 
@@ -85,7 +85,7 @@ client.loop_forever()
 
 ---
 
-## ✍️ Publier des messages
+## Publier des messages
 
 ```python
 import paho.mqtt.client as mqtt
@@ -103,13 +103,13 @@ client.publish('smarthouse/garage/door', "{'open':'true'}")
 
 ---
 
-## 💥 Fuzzing
+## Fuzzing
 
 - [F-Secure/mqtt_fuzz](https://github.com/F-Secure/mqtt_fuzz) — fuzzer un broker MQTT (malformed packets, CONNECT/CONNACK abuse…).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -119,7 +119,7 @@ client.publish('smarthouse/garage/door', "{'open':'true'}")
 | **Ne pas exposer 1883 sur Internet** | Pare-feu + broker sur réseau privé |
 | **Surveillance** | Détecter des connexions anonymes répétées ou des subs `#` inhabituelles |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Un broker **sans auth** = lecture **et écriture** : tu peux à la fois **espionner** et **injecter**.
 - Le wildcard `#` permet aussi de souscrire aux topics **non publics** si les ACL sont mal configurées.
@@ -129,7 +129,7 @@ client.publish('smarthouse/garage/door', "{'open':'true'}")
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — MQTT](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/mqtt.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Injection de commandes|💻 Injection de commandes]] · [[SSRF|🌐 SSRF]] · [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Injection de commandes| Injection de commandes]] · [[SSRF| SSRF]] · [[Attaques WiFi (WPA2 et PMKID)| WiFi]]

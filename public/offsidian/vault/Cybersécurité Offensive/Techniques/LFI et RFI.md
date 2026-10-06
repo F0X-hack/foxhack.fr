@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📂 LFI / RFI & Path Traversal — Hub & Index
+# LFI / RFI & Path Traversal — Hub & Index
 
 > [!info] **En 1 phrase**
 > LFI (Local File Inclusion) = amener le serveur à **inclure un fichier local** (`include()`),
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,24 +36,24 @@ flowchart LR
     E --> G
 ```
 
-> [!info] 💡 **La différence clé**
+> [!info] **La différence clé**
 > - **Path Traversal** = **lecture brute** d'un fichier (`../../../etc/passwd`).
 > - **File Inclusion** = **include()** → le fichier est **interprété** → potentiel de **RCE**.
 > - Un point d'inclusion = un plus gros potentiel qu'un simple traversal.
 
 ---
 
-## 🗂️ Les fiches dédiées
+## Les fiches dédiées
 
 | Fiche | Principe | Impact |
 |---|---|---|
-| [[Path Traversal\|🛣️ Path Traversal]] | Remonter hors docroot (`../`) pour **lire** un fichier | Lecture de sources, secrets, configs |
-| [[LFI - Local File Inclusion\|📂 LFI]] | `include()` d'un fichier **local** | Lecture + **RCE** (wrappers PHP, log poisoning) |
-| [[RFI - Remote File Inclusion\|🌐 RFI]] | `include()` d'un fichier **distant** contrôlé | RCE quasi direct (si `allow_url_include = On`) |
+| [[Path Traversal\| Path Traversal]] | Remonter hors docroot (`../`) pour **lire** un fichier | Lecture de sources, secrets, configs |
+| [[LFI - Local File Inclusion\| LFI]] | `include()` d'un fichier **local** | Lecture + **RCE** (wrappers PHP, log poisoning) |
+| [[RFI - Remote File Inclusion\| RFI]] | `include()` d'un fichier **distant** contrôlé | RCE quasi direct (si `allow_url_include = On`) |
 
 ---
 
-## ⚔️ LFI vs RFI
+## LFI vs RFI
 
 | Critère | LFI | RFI |
 |---|---|---|
@@ -70,14 +70,14 @@ include($file);   // vulnérable : LFI / RFI
 ?>
 ```
 
-> [!warning] ⚠️ **LFI ≠ Path Traversal**
+> [!warning] **LFI ≠ Path Traversal**
 > Le Path Traversal exploite un mécanisme de **lecture** de fichier. La File Inclusion exécute un
 > **include()** : c'est ce qui permet d'atteindre la **RCE** (le fichier inclus est interprété
 > comme du PHP).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -90,7 +90,7 @@ include($file);   // vulnérable : LFI / RFI
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — File path traversal : https://portswigger.net/web-security/all-labs#file-path-traversal
 - PortSwigger — File inclusion : https://portswigger.net/web-security/all-labs#file-inclusion
@@ -98,8 +98,8 @@ include($file);   // vulnérable : LFI / RFI
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [PayloadsAllTheThings — File Inclusion](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/File%20Inclusion)
 > - [PayloadsAllTheThings — Directory & Path Traversal](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Directory%20and%20Path%20Traversal/README.md)
 
-➡️ **Liens :** [[Path Traversal|🛣️ Path Traversal]] · [[LFI - Local File Inclusion|📂 LFI]] · [[RFI - Remote File Inclusion|🌐 RFI]] · [[Injection SQL|💾 SQLi]] · [[SSRF|🌐 SSRF]] · [[Injection de commandes|🐚 Injection de commandes]] · [[03 - Exploitation Web|🌍 Exploitation Web]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Path Traversal| Path Traversal]] · [[LFI - Local File Inclusion| LFI]] · [[RFI - Remote File Inclusion| RFI]] · [[Injection SQL| SQLi]] · [[SSRF| SSRF]] · [[Injection de commandes| Injection de commandes]] · [[03 - Exploitation Web| Exploitation Web]] · [[Bibliothèque technique| Index]]

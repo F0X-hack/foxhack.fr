@@ -1,7 +1,7 @@
 ---
 title: "Outil - Ncat"
 type: outil
-categorie: 🛠️ Divers
+categorie: Divers
 tags:
   - cyber
   - outil
@@ -17,14 +17,14 @@ site: https://nmap.org/ncat/
 doc: https://nmap.org/book/ncat-man.html
 ---
 
-# 🔒 Ncat — Le netcat nouvelle génération
+# Ncat — Le netcat nouvelle génération
 
 > [!info] **En 1 phrase**
 > Ncat, l'implémentation de Nmap, reprend netcat et y ajoute le chiffrement TLS, les connexions par proxy, le mode broker, les listes de contrôle d'accès et l'exécution de commandes.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: https://nmap.org/book/ncat-man.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Ncat est la réponse du projet Nmap aux limites de netcat : il conserve le modèle « stdin ↔ socket » mais ajoute ce qui manque à l'original — **TLS** (côté client ET serveur), **proxying** (HTTP, SOCKS4, SOCKS5), **broker** (relais multi-clients), **contrôle d'accès** (`--allow`/`--deny`), **exécution** (`--exec`/`--sh-exec`) et **journalisation** des flux (`--output-log`). Il est rétrocompatible avec la plupart des usages de `nc` (`-l`, `-p`, `-e`, `-u`, `-v`…).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -119,7 +119,7 @@ brew install nmap
 ncat.exe --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - `--lua-exec` exige la compilation avec Lua (pas activé par défaut partout).
 > - Sur RHEL, le paquet s'appelle `nmap-ncat` dans certaines versions ; sinon `dnf install nmap`.
 > - L'écoute sur un port < 1024 requiert root.
@@ -127,7 +127,7 @@ ncat.exe --version
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration global : Ncat se configure en arguments. Les options récurrentes pour l'automatisation et la sécurité.
 
@@ -148,7 +148,7 @@ Pas de fichier de configuration global : Ncat se configure en arguments. Les opt
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Ncat reprend l'architecture de netcat et la complète par des couches de services :
 
@@ -171,7 +171,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -207,7 +207,7 @@ ncat -lk --deny 192.168.1.0/24 -p 4444
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -238,7 +238,7 @@ ncat -lk --deny 192.168.1.0/24 -p 4444
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -285,7 +285,7 @@ ncat --ssl --chat -l -p 4444
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Écouter chiffré côté attaquant** :
    ```bash
@@ -303,7 +303,7 @@ ncat --ssl --chat -l -p 4444
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : exfiltration à travers un proxy d'entreprise
 
@@ -339,7 +339,7 @@ ncat -lk --ssl -p 4444 --exec /bin/bash --output-log /tmp/sh.log
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -352,7 +352,7 @@ ncat -lk --ssl -p 4444 --exec /bin/bash --output-log /tmp/sh.log
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -368,7 +368,7 @@ ncat -lk --ssl -p 4444 --exec /bin/bash --output-log /tmp/sh.log
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -409,7 +409,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — tester la connectivité sortante vers plusieurs ports
@@ -432,7 +432,7 @@ print(f"sha256: {h}")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Ncat écrit ses messages de connexion sur **stderr** (verbeux `-v`) et les données échangées sur stdout. `--output-log` persiste le flux dans un fichier, ce qui facilite les audits.
 
@@ -447,9 +447,9 @@ strings /tmp/session.log | head
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Netcat]] — l'ancêtre ; Ncat en est le remplaçant moderne
 - [[Outil - socat]] — l'alternative la plus complète (SSL, UNIX sockets)
 - [[Outil - Nmap]] — Ncat est distribué avec Nmap et s'utilise avec ses résultats
@@ -464,7 +464,7 @@ ncat --broker -l <port> → relais multi-clients
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -477,7 +477,7 @@ ncat --broker -l <port> → relais multi-clients
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Léger** : un binaire, aucune dépendance dynamique lourde (OpenSSL seulement pour `--ssl`).
 - **Chiffrement** : TLS ajoute un léger coût CPU ; sur de gros transferts, préférer `--ssl` (aes) plutôt que le clair pour la sécurité, en acceptant le surcoût.
@@ -489,7 +489,7 @@ ncat --broker -l <port> → relais multi-clients
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -525,7 +525,7 @@ ncat --broker -l <port> → relais multi-clients
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Chiffrement** : `--ssl` protège le flux ; sans lui, tout est en clair (comme netcat).
 - **Certificats** : un serveur Ncat auto-signé est vulnérable au MITM si le client ne vérifie pas (`--ssl-verify` + `--ssl-trustfile`).
@@ -537,7 +537,7 @@ ncat --broker -l <port> → relais multi-clients
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - `--exec` indisponible sur Windows.
 - Le chiffrement TLS nécessite OpenSSL (présent sur la quasi-totalité des systèmes).
@@ -548,7 +548,7 @@ ncat --broker -l <port> → relais multi-clients
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Écoute claire / chiffrée
@@ -577,7 +577,7 @@ ncat --broker -lvnp 4444
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -590,7 +590,7 @@ ncat --broker -lvnp 4444
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -602,16 +602,16 @@ ncat --broker -lvnp 4444
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours chiffrer un canal de transfert : `--ssl` est en une option.
 > - Pour une exfiltration propre, passer par un proxy SOCKS5 (`--proxy-type socks5`).
 > - Utiliser `--output-log` pour conserver la preuve d'un échange (utile en audit).
 > - Restreindre systématiquement les listeners avec `--allow`/`--deny`.
 > - Sur Windows, privilégier `--sh-exec` (pas de `--exec`).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un serveur TLS auto-signé sans vérification client est vulnérable au MITM.
 > - `--allow`/`--deny` ne protègent pas le contenu : sans `--ssl`, le flux reste en clair.
 > - Le broker est un point d'écoute unique : ne jamais l'exposer sans restriction.
@@ -620,7 +620,7 @@ ncat --broker -lvnp 4444
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -643,4 +643,4 @@ ncat --broker -lvnp 4444
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Netcat|Netcat]] · [[Outil - socat|socat]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]]
+**Liens :** [[Tools| Outils]] · [[Outil - Netcat|Netcat]] · [[Outil - socat|socat]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]]

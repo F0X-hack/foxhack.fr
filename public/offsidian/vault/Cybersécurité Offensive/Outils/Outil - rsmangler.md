@@ -1,7 +1,7 @@
 ---
 title: "Outil - rsmangler"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://digi.ninja/projects/rsmangler.php
 doc: https://github.com/digininja/RSMangler
 ---
 
-# 🔀 rsmangler — Mangleur de wordlists par permutations et mutations
+# rsmangler — Mangleur de wordlists par permutations et mutations
 
 > [!info] **En 1 phrase**
 > rsmangler prend une petite liste de mots (noms, marques, produits) et la transforme en une wordlist réaliste : permutations, casse, leet, années, nombres et suffixes — le style John the Ripper en Ruby.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | RSMangler |
 | Description | Applique à une wordlist d'entrée des manipulations type John the Ripper, plus un mode permutations qui combine chaque mot avec les autres |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Mutation / mangling de wordlists (CLI) |
 | Fonction principale | Transformer une petite liste de mots-clés en une wordlist de candidats réalistes (permutations, casse, leet, chiffres, années, suffixes) |
 | Type d'outil | CLI (script Ruby) |
@@ -50,7 +50,7 @@ doc: https://github.com/digininja/RSMangler
 
 ---
 
-## 🎯 Concept
+## Concept
 
 rsmangler (Robin Wood, digi.ninja) est l'étape « mangling » du pipeline de cracking : là où CeWL récolte des mots sur un site et CUPP interroge un profil, rsmangler **transforme** une petite liste de mots-clés en une wordlist de candidats humains réalistes. Son fonctionnement est inspiré des règles de John the Ripper, avec un point fort unique : le **mode permutations** qui combine chaque mot avec tous les autres (l'ordre compte : ce sont des permutations, pas des combinaisons) — `freds`, `fresh`, `fish` produisent ainsi `fredsfresh`, `freshfish`, `fredsfreshfish`, etc. Un **acronyme** des mots dans leur ordre d'entrée est aussi calculé et ajouté à la matière (`proactive security management` → `psm`), puis chaque mot issu de ces étapes subit les autres mangles.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -121,12 +121,12 @@ docker run --rm -v "$PWD:/data" -w /data ruby:3 \
 
 Inutile : le script s'exécute directement (`chmod +x rsmangler.rb`). Aucune gem ou binaire externe n'est requis.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Ruby doit être installé (la v1.5 supporte Ruby 1.9.x et plus). Sous Kali, le paquet `rsmangler` installe la commande `rsmangler` directement. L'avertissement « plus de 5 mots » n'est pas bloquant : `--force` le supprime.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout se passe en options de ligne de commande. La règle d'or est de **désactiver les mangles inutiles** pour contrôler le volume et la pertinence.
 
@@ -140,7 +140,7 @@ Pas de fichier de configuration : tout se passe en options de ligne de commande.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 RSMangler est un **script Ruby unique** (`rsmangler.rb`, ~400 lignes) sans gem externe. Son fonctionnement interne se décompose en trois étapes logiques. **Ingestion** : lecture du fichier (`--file`) ou du flux stdin (`--file -`), une ligne par mot, nettoyage des retours à la ligne et mots vides. **Expansion** : génération des permutations de tous les mots (n! — d'où l'explosion combinatoire) et de l'acronyme, qui rejoignent la liste des mots de travail ; ces nouveaux mots passent ensuite dans les autres mangles. **Mangling et émission** : chaque mot subit successivement les transformations actives (casse, leet, chiffres, années, ed/ing, doublage, ponctuation, préfixes/suffixes communs), chaque variante est filtrée par les bornes `-m`/`-x` puis — nouveauté v1.5 suggérée par Thomas d'Otreppe — hachée en **CRC32** ; si l'empreinte est inconnue, le mot est émis immédiatement (stdout ou fichier) et son CRC est mémorisé, sinon il est abandonné. Ce streaming évite de matérialiser toute la wordlist en mémoire : avant la v1.5, l'outil bufferisait tout puis appliquait `uniq`, ce qui pouvait dépasser 3 Go de RAM sur quelques centaines de mots.
 
@@ -148,7 +148,7 @@ Le leetspeak est géré par une table de substitutions (`a→4`, `e→3`, `i→1
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -182,7 +182,7 @@ printf "pet\n2020\n" | rsmangler -T -m 6 -x 12 | sort -u
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 Toutes les options de mangling sont **ON par défaut** : les passer les désactive.
 
@@ -218,7 +218,7 @@ Toutes les options de mangling sont **ON par défaut** : les passer les désacti
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -268,7 +268,7 @@ rsmangler -f /tmp/crackes.txt -m 8 -x 16 -o /tmp/etendus.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer une petite liste de mots-clés** (5 mots max recommandé, sinon les permutations explosent) :
    ```bash
@@ -294,7 +294,7 @@ rsmangler -f /tmp/crackes.txt -m 8 -x 16 -o /tmp/etendus.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : wordlist d'entreprise à partir des mots du site
 
@@ -335,7 +335,7 @@ hashcat -m 1000 ntlm.txt /tmp/etendus.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -347,7 +347,7 @@ hashcat -m 1000 ntlm.txt /tmp/etendus.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -360,7 +360,7 @@ hashcat -m 1000 ntlm.txt /tmp/etendus.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -402,7 +402,7 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"Potential password spray - HTT
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline : CeWL → rsmangler → filtre → hashcat
@@ -441,7 +441,7 @@ print("cracks :", len(cracks), "-> étendus :", len(nouveaux))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie est du **texte brut, un candidat par ligne** : stdout par défaut, ou fichier via `--output`. La déduplication CRC32 est active par défaut (désactivable).
 
@@ -470,7 +470,7 @@ print("fins par 4 chiffres :", fin_annee, "| avec leet :", leet)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 CeWL / CUPP / SecLists → rsmangler (mangling) → wordlist → hashcat / hydra / John
@@ -478,17 +478,17 @@ rsmangler --stdin → pipelines : cat mots | rsmangler -m 8 -x 14 | sort -u | ha
 rsmangler (remangle des cracks) → itération d'élargissement de la couverture
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - CeWL|CeWL]] et [[Outil - CUPP|CUPP]] — production des mots-clés en amont
 - [[Outil - hashcat|hashcat]] et [[Outil - John the Ripper|John the Ripper]] — consommation des wordlists
 - [[Outil - Mentalist|Mentalist]] — GUI et export de règles hashcat/John (alternative visuelle)
 - [[Outil - pydictor|pydictor]] — alternative plus riche (plugins, outils de post-traitement)
 - [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] — règles de mutation à la volée (complément)
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -502,13 +502,13 @@ rsmangler (remangle des cracks) → itération d'élargissement de la couverture
 
 ---
 
-## ⚡ Performance
+## Performance
 
 Le coût est dominé par les **permutations** : le README documente 3 mots d'entrée → 5 345 mots de sortie, 5 mots → 108 557. Quelques centaines de mots font dépasser **3 Go de RAM** en mode bufferisé — d'où l'avertissement au-delà de 5 mots et l'option `--force` pour l'outrepasser. La v1.5 a changé l'architecture mémoire : au lieu de stocker toutes les chaînes puis de dédupliquer, chaque mot généré est émis immédiatement après vérification d'un **CRC32**, ce qui limite la RAM à un entier par mot unique et permet de streamer vers un fichier. La CPU reste le goulot (génération des permutations, substitutions leet) ; `--allow-duplicates` accélère en sautant la vérification de doublons. Les bornes `-m`/`-x` filtrent à l'émission (elles ne réduisent pas l'énumération des permutations). Pour des entrées importantes, restreindre les mangles (`-p -d -r`) et utiliser `--force` avec prudence.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -544,13 +544,13 @@ Le coût est dominé par les **permutations** : le README documente 3 mots d'ent
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 rsmangler est un script local sans réseau ni télémétrie : pas de collecte de données. Ses risques sont liés à l'usage : générer des candidats de mots de passe et les utiliser sans autorisation est illégal — l'outil ne doit servir que dans un cadre autorisé (audit mandaté, lab, CTF). Les wordlists produites contiennent des dérivés de données réelles (noms, dates, marques) : les considérer comme sensibles, les chiffrer au repos et les effacer après l'engagement. Côté supply chain, privilégier le dépôt officiel `digininja/RSMangler` ou le paquet Kali, et vérifier l'intégrité du script (petit, lisible, sans obfuscation). Aucune fonctionnalité de vol de données n'existe dans l'outil ; la licence CC BY-SA 2.0 UK impose d'attribuer l'auteur en cas de redistribution.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Explosion combinatoire** : les permutations deviennent vite ingérables (3 mots → 5 345 mots ; centaines de mots → 3 Go RAM avant v1.5, avertissement > 5 mots).
 - **Avertissement > 5 mots** : entrées importantes nécessitent `--force` (danger de mémoire/CPU).
@@ -561,7 +561,7 @@ rsmangler est un script local sans réseau ni télémétrie : pas de collecte de
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -589,7 +589,7 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -598,11 +598,11 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt
 | **Commande principale** | `rsmangler --file mots.txt -m 8 -x 14 -o final.txt` |
 | **Alternative principale** | pydictor (riche, plugins), Mentalist (GUI + règles), hashcat `-r` (mutations à la volée) |
 | **Concepts importants** | Permutations (ordre compte), acronyme, déduplication CRC32, mangles ON par défaut, bornes `-m`/`-x` |
-| **Liens associés** | [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - CeWL|CeWL]] · [[Outil - hashcat|hashcat]] |
+| **Liens associés** | [[Techniques/Password Cracking| Password Cracking]] · [[Outil - CeWL|CeWL]] · [[Outil - hashcat|hashcat]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -614,17 +614,17 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > Reste en dessous de **5 mots d'entrée** : les permutations explosent (3 mots → 5 345 lignes, 5 mots → 108 557). Cadre les longueurs dès la génération avec `-m`/`-x` pour coller à la politique et réduire le volume. Enchaîne CeWL → rsmangler → hashcat en pipeline. Réutilise les mots déjà crackés (`--show`) comme matière d'une seconde passe. Déduplique après coup avec `sort -u` pour un fichier propre.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > Tous les mangles sont actifs par défaut : les options les **désactivent** — vérifie `rsmangler --help` avant de lancer. `-f` attend un fichier : pour stdin, précise `-f -` ou pipe sans argument. La sortie par défaut est stdout : redirige-la ou utilise `-o` (sinon un terminal sature). Les bornes `-m`/`-x` filtrent à l'émission mais ne réduisent pas l'énumération des permutations : le coût CPU/RAM est payé quand même. `--force` sur une grosse entrée peut faire exploser la mémoire.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - CeWL|CeWL]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - hashcat|hashcat]] · [[Outil - Mentalist|Mentalist]] · [[Outil - pydictor|pydictor]] · [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]]
+**Liens :** [[Tools| Outils]] · [[Outil - CeWL|CeWL]] · [[Techniques/Password Cracking| Password Cracking]] · [[Outil - hashcat|hashcat]] · [[Outil - Mentalist|Mentalist]] · [[Outil - pydictor|pydictor]] · [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]]

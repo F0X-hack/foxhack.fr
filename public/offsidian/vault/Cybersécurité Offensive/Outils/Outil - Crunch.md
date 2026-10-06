@@ -1,7 +1,7 @@
 ---
 title: "Outil - Crunch"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://crunch-wordlist.sourceforge.io/
 doc: https://manpages.org/crunch
 ---
 
-# 🔢 Crunch — Générateur de mots de passe par masque
+# Crunch — Générateur de mots de passe par masque
 
 > [!info] **En 1 phrase**
 > Crunch génère toutes les combinaisons possibles à partir d'une longueur (min/max) et d'un jeu de caractères, avec des masques `-t` (majuscules, chiffres, symboles) — le générateur exhaustif par excellence.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Crunch — wordlist generator |
 | Description | Génère toutes les combinaisons et permutations d'un jeu de caractères (ou d'un masque `-t`) pour des longueurs min/max données, avec compression, découpage et reprise de génération |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Génération de wordlists par masque / énumération exhaustive |
 | Fonction principale | Produire des listes de candidats mots de passe (stream, fichier ou fichier compressé) |
 | Type d'outil | CLI (binaire C) |
@@ -50,7 +50,7 @@ doc: https://manpages.org/crunch
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Crunch énumère **exhaustivement** un espace de candidats : pour des longueurs min/max et un jeu de caractères donnés, il produit toutes les combinaisons (univers = |charset|^longueur). Il complète cette génération « brute » par trois grands modes : le **masque** `-t` (structure connue : `@` minuscule, `,` majuscule, `%` chiffre, `^` symbole, le reste littéral), les **permutations** de mots (`-p`, ou `-q` depuis un fichier) et les **jeux de caractères prédéfinis** (`-f /usr/share/crunch/charset.lst`).
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian / Ubuntu / Kali (préinstallé sur Kali)
@@ -108,7 +108,7 @@ make && sudo make install
 # Windows : compiler avec MinGW (gcc) puis copier crunch.exe dans le PATH
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Dépendance unique : libc6 (Linux). Aucun runtime tiers.
 > - Le `make install` installe aussi `charset.lst` (souvent dans `/usr/share/crunch/`) et la page de man `crunch.1`.
 > - Sur Kali, le fichier est `/usr/share/crunch/charset.lst` ; sur d'autres distros vérifier le chemin avec `dpkg -L crunch`.
@@ -116,7 +116,7 @@ make && sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Crunch n'a **pas de fichier de configuration** : tout est en ligne de commande. Le seul fichier de données est `charset.lst`, liste de jeux de caractères nommés utilisés avec `-f`.
 
@@ -136,7 +136,7 @@ Crunch n'a **pas de fichier de configuration** : tout est en ligne de commande. 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Crunch est un **programme C mono-fichier** (`crunch.c`, ~2 000 lignes) qui tourne sur un modèle de compteur « odomètre » :
 
@@ -152,7 +152,7 @@ Flux : `min/max/charset/pattern → générateur odomètre (ou permute) → filt
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -187,7 +187,7 @@ crunch 8 8 abcdefghijklmnopqrstuvwxyz 0123456789 -t @%%%%%%% -d 2 -o mix.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -212,7 +212,7 @@ crunch 8 8 abcdefghijklmnopqrstuvwxyz 0123456789 -t @%%%%%%% -d 2 -o mix.txt
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -263,7 +263,7 @@ wait
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Connaître les contraintes** — politique de mots de passe ou format observé (ex : PSK WPA de 8 chiffres).
 2. **Estimer l'univers avant génération** :
@@ -291,7 +291,7 @@ wait
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : PSK Wi-Fi 100 % numérique (WPA2)
 
@@ -325,7 +325,7 @@ crunch 7 7 abcdefghijklmnopqrstuvwxyz0123456789 -s abc0000 -r -o /tmp/reprise.tx
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -338,7 +338,7 @@ crunch 7 7 abcdefghijklmnopqrstuvwxyz0123456789 -s abc0000 -r -o /tmp/reprise.tx
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ crunch 7 7 abcdefghijklmnopqrstuvwxyz0123456789 -s abc0000 -r -o /tmp/reprise.tx
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 Crunch est un outil **hors-ligne** : côté serveur, rien n'est détectable tant que les listes ne sont pas utilisées contre un service. La détection porte donc sur la **machine de l'attaquant** et sur les **attaques en ligne** déclenchées ensuite.
 
@@ -402,7 +402,7 @@ alert tcp any any -> any 22 (msg:"SSH brute force from generated wordlist";
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — générer par bandes et concaténer (parallélisation CPU)
@@ -417,7 +417,7 @@ cat /tmp/bande*.txt | sort -u > /tmp/psk8.txt
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Crunch sort sur **stdout** par défaut (une valeur par ligne), dans un **fichier** avec `-o`, dans des **chunks** avec `-o START` (+ `-b`/`-c`), ou **compressé** avec `-z`. Avec `-o START`, les noms de fichiers reflètent le premier et dernier mot du chunk (`000-499.txt`).
 
@@ -433,13 +433,13 @@ crunch 3 3 abc -o /tmp/b.txt && head -3 /tmp/b.txt && tail -3 /tmp/b.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng / hydra → comptes ou clés
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - hashcat|hashcat]] — cracking GPU ; `-a 3` (masque) remplace Crunch sur les gros univers
 - [[Outil - John the Ripper|John the Ripper]] — `--stdin` consume le flux Crunch sans fichier
 - [[Outil - aircrack-ng|aircrack-ng]] — attaque de PSK WPA2 avec wordlist (ou `<(crunch …)`)
@@ -447,12 +447,12 @@ Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng /
 - [[Outil - kwprocessor|kwprocessor]] — mot de passe par parcours clavier (complément masque)
 - [[Outil - CeWL|CeWL]] · [[Outil - CUPP|CUPP]] · [[Outil - rsmangler|rsmangler]] · [[Outil - Mentalist|Mentalist]] · [[Outil - pydictor|pydictor]] · [[Outil - SecLists|SecLists]] — autres générateurs/collections
 - [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] — règles de mutation appliquées ensuite par hashcat
-- [[08 - Password Cracking|🔑 Password Cracking]] · [[07 - Wireless, MITM & Social Engineering|📡 Wireless]] · [[01 - Reconnaissance|🕵️ Reconnaissance]]
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi (WPA2 & PMKID)]] · [[Techniques/Attaques WiFi - WPA2 PSK|WPA2 PSK]] · [[Techniques/Attaques WiFi - PMKID|PMKID]]
+- [[08 - Password Cracking| Password Cracking]] · [[07 - Wireless, MITM & Social Engineering| Wireless]] · [[01 - Reconnaissance| Reconnaissance]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi (WPA2 & PMKID)]] · [[Techniques/Attaques WiFi - WPA2 PSK|WPA2 PSK]] · [[Techniques/Attaques WiFi - PMKID|PMKID]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -468,7 +468,7 @@ Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng /
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Univers** : `n^L` pour chaque longueur L entre min et max (n = taille du charset) ; les permutations sont `N!`. Estimer **avant** de lancer.
 - **Débit** : génération CPU pure, de l'ordre de plusieurs millions de lignes/min sur un processeur moderne (dépend du shell et de la longueur).
@@ -482,7 +482,7 @@ Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng /
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -524,7 +524,7 @@ Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng /
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Hors-ligne** : Crunch ne contacte aucun réseau et n'envoie aucune donnée ; aucune télémétrie. L'usage est donc invisible pour la cible.
 - **Usage légal** : les listes générées servent à attaquer des mots de passe — strictement réservées aux périmètres autorisés (lab, audit écrit).
@@ -534,7 +534,7 @@ Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng /
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de règles de mutation** : Crunch ne fait que combiner ; les transformations (majuscules alternées, leet speak) nécessitent des règles hashcat ou [[Outil - rsmangler|rsmangler]].
 - **CPU uniquement** : pour les gros univers, `hashcat -a 3` (GPU) est très supérieur.
@@ -546,7 +546,7 @@ Contraintes/masque → Crunch (liste ou flux) → hashcat / John / aircrack-ng /
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Combinaisons simples (min max charset)
@@ -582,7 +582,7 @@ crunch 8 8 0123456789 | john --stdin wpa.hccapx
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -595,7 +595,7 @@ crunch 8 8 0123456789 | john --stdin wpa.hccapx
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -607,16 +607,16 @@ crunch 8 8 0123456789 | john --stdin wpa.hccapx
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours **estimer l'univers** (`n^L`) avant `-o` : `crunch 8 8 0123456789 | wc -l` évite les surprises disque.
 > - Compresser systématiquement les gros runs (`-z gzip`) et utiliser `-o START` pour découper en chunks exploitables.
 > - Combiner `-d 2`/`-d 3` : les mots à répétitions (`aaaa1234`) sont les premiers tentés par tout attaquant et polluent l'espace.
 > - En Wi-Fi, un PSK **numérique 8 chiffres** reste le cas d'école : `-d 3` + hashcat `-m 22000`.
 > - Pour les univers massifs, basculer sur `hashcat -a 3` (GPU) : plus rapide et zéro disque.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne **jamais** mélanger `-p`/`-q` avec `-t` ou un charset : les permutations les ignorent (utiliser `0 0`).
 > - Sans charset ni `-f`, Crunch se contente d'afficher l'aide et s'arrête.
 > - Un PSK alphanumérique 8 caractères = ~2,8×10^14 combinaisons : des décennies même en GPU — le brute-force pur n'est viable que sur des univers courts ou contraints.
@@ -625,7 +625,7 @@ crunch 8 8 0123456789 | john --stdin wpa.hccapx
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -648,4 +648,4 @@ crunch 8 8 0123456789 | john --stdin wpa.hccapx
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hashcat|hashcat]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - aircrack-ng|aircrack-ng]] · [[Outil - John the Ripper|John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - hashcat|hashcat]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Password Cracking| Password Cracking]] · [[Outil - aircrack-ng|aircrack-ng]] · [[Outil - John the Ripper|John the Ripper]]

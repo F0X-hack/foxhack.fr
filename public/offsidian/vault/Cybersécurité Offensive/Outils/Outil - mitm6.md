@@ -1,11 +1,11 @@
 ---
 title: "Outil - mitm6"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 0.3.0
 licence: GPLv2
@@ -16,14 +16,14 @@ site: https://blog.fox-it.com/2018/01/11/mitm6-compromising-ipv4-networks-via-ip
 doc: https://github.com/dirkjanm/mitm6#readme
 ---
 
-# 👑 mitm6 — Empoisonnement IPv6 / DHCPv6 pour NTLM Relay
+# mitm6 — Empoisonnement IPv6 / DHCPv6 pour NTLM Relay
 
 > [!info] **En 1 phrase**
 > mitm6 empoisonne **IPv6/DHCPv6** : il se fait désigner comme **DNS** et **WPAD** par les postes Windows du domaine, puis **relaie l'authentification NTLM** vers ntlmrelayx pour prendre le contrôle du domaine.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,7 +40,7 @@ doc: https://github.com/dirkjanm/mitm6#readme
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Par défaut, les postes Windows **activent IPv6** et envoient des requêtes **DHCPv6** au boot et régulièrement. Si personne ne répond, l'attaquant peut répondre à la place : le poste configure l'attaquant comme **serveur DNS** et **serveur WPAD**. Le client demande alors `wpad.<domaine>` → l'attaquant répond (proxy frauduleux) → le poste s'authentifie en NTLM → le hash est **relayé** par `ntlmrelayx` vers SMB ou LDAP. Peu connu, mais très efficace car **très peu de monitoring couvre IPv6**.
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans mitm6 |
 |---|---|
@@ -74,7 +74,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Installation
 
@@ -98,7 +98,7 @@ mitm6 -h
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 mitm6 se configure uniquement par **ligne de commande**. Le réglage principal est le domaine (`-d`) et éventuellement l'interface (`-i`). Tout le reste de la configuration (cible du relais, WPAD) se passe du côté de `ntlmrelayx.py`.
 
@@ -116,7 +116,7 @@ mitm6 se configure uniquement par **ligne de commande**. Le réglage principal e
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Basé sur Twisted** : mitm6 utilise le framework réseau asynchrone Twisted pour écouter sur plusieurs sockets (DHCPv6, DNS, HTTP) simultanément.
 - **Serveur DHCPv6** : mitm6 répond aux requêtes SOLICIT/REQUEST DHCPv6 en proposant des adresses IPv6 et surtout les options DNS (RDNSS) et Domain Search List (DNSSL).
@@ -127,7 +127,7 @@ mitm6 se configure uniquement par **ligne de commande**. Le réglage principal e
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -171,7 +171,7 @@ sudo ntlmrelayx.py -t ldaps://dc01.corp.local --delegate-access -wh wpad.corp.lo
 sudo ntlmrelayx.py -t smb://192.168.1.10 -of /tmp/hashes.txt -wh wpad.corp.local -6
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -194,7 +194,7 @@ sudo ntlmrelayx.py -t smb://192.168.1.10 -of /tmp/hashes.txt -wh wpad.corp.local
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -237,7 +237,7 @@ sudo ntlmrelayx.py -t smb://192.168.1.10 -wh wpad.corp.local -6
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : un poste Windows du domaine se connecte au réseau (VLAN invité, Wi-Fi).
 
@@ -257,7 +257,7 @@ La patience est la clé : l'empoisonnement DHCPv6 ne rapporte que lorsqu'un post
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : RBCD — prise de contrôle du domaine via LDAP
 
@@ -288,7 +288,7 @@ Les deux vecteurs (IPv4 et IPv6) sont couverts même si LLMNR est désactivé. A
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -301,7 +301,7 @@ Les deux vecteurs (IPv4 et IPv6) sont couverts même si LLMNR est désactivé. A
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -314,7 +314,7 @@ Les deux vecteurs (IPv4 et IPv6) sont couverts même si LLMNR est désactivé. A
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > mitm6 relève de **T1557** (poisoning + relay) ; la phase d'exploitation (SMB/LDAP) est exécutée par ntlmrelayx.
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -330,7 +330,7 @@ Les deux vecteurs (IPv4 et IPv6) sont couverts même si LLMNR est désactivé. A
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -341,7 +341,7 @@ Les deux vecteurs (IPv4 et IPv6) sont couverts même si LLMNR est désactivé. A
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **mitm6** : sortie console indiquant les requêtes DHCPv6 reçues et les réponses envoyées.
 - **ntlmrelayx** : affiche les sessions NTLM relayées (succès/échec) ; avec `-of`, écrit les hashes capturés.
@@ -355,7 +355,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème mitm6 |
 |---|---|
@@ -369,7 +369,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -380,7 +380,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -391,7 +391,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -404,7 +404,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : mitm6 doit tourner en root (sockets DHCPv6/DNS) → restreindre l'exécution à un compte dédié et un réseau de test.
 - **Portée** : l'empoisonnement DHCPv6 affecte **tout le segment** (les postes du réseau visé) → à n'utiliser que sur des segments autorisés.
@@ -414,7 +414,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Dépendance au trafic** : nécessite qu'un poste Windows boote/se reconnecte sur le segment.
 - **Signing bloquant** : le relais échoue si SMB/LDAP signing est obligatoire (repli sur la capture + crack).
@@ -424,7 +424,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Terminal 1 : empoisonnement IPv6/DHCPv6
@@ -445,7 +445,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -457,7 +457,7 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -470,24 +470,24 @@ hashcat -m 5600 /tmp/hashes.txt rockyou.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Complément naturel** : mitm6 + ntlmrelayx fonctionne même quand **LLMNR/NBT-NS sont désactivés** (il attaque IPv6 et WPAD). Le couple Responder + mitm6 couvre les mondes IPv4 et IPv6.
+> [!tip] **Complément naturel** : mitm6 + ntlmrelayx fonctionne même quand **LLMNR/NBT-NS sont désactivés** (il attaque IPv6 et WPAD). Le couple Responder + mitm6 couvre les mondes IPv4 et IPv6.
 
-> [!tip] 💡 **Test rapide de vulnérabilité** : lance `sudo mitm6 -d corp.local` + `ntlmrelayx.py -t smb://<dc>` quelques minutes : si un poste apparaît dans les logs d'authentification relayée, le réseau est vulnérable au relais NTLM.
+> [!tip] **Test rapide de vulnérabilité** : lance `sudo mitm6 -d corp.local` + `ntlmrelayx.py -t smb://<dc>` quelques minutes : si un poste apparaît dans les logs d'authentification relayée, le réseau est vulnérable au relais NTLM.
 
-> [!warning] ⚠️ **Piège** : s'il y a un **serveur DHCPv6 légitime** qui répond plus vite, mitm6 n'obtient rien. Vérifie qu'aucun DHCPv6 n'est actif (ou profite des reboots).
+> [!warning] **Piège** : s'il y a un **serveur DHCPv6 légitime** qui répond plus vite, mitm6 n'obtient rien. Vérifie qu'aucun DHCPv6 n'est actif (ou profite des reboots).
 
-> [!warning] ⚠️ **Piège** : le relais échoue si **SMB/LDAP signing** est activé sur la cible. Dans ce cas le hash est **capturé mais pas relayé** : bascule sur le crack (hashcat mode 5600) ou change de cible.
+> [!warning] **Piège** : le relais échoue si **SMB/LDAP signing** est activé sur la cible. Dans ce cas le hash est **capturé mais pas relayé** : bascule sur le crack (hashcat mode 5600) ou change de cible.
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/dirkjanm/mitm6
 - Blog dirkjanm (attaque combo) : https://blog.fox-it.com/2018/01/11/mitm6-compromising-ipv4-networks-via-ipv6/
 - The Hacker Recipes — mitm6 : https://www.thehacker.recipes/ad/movement/mitm-and-coerced-authentications/mitm6
 - Portail Obsidian `Techniques` : [[Coerce - PrinterBug et PetitPotam]], [[ACL Abuse AD]]
 
-➡️ **Liens :** [[Outil - mitm6]] | [[Outil - Responder]] | [[Outil - Impacket]] | [[Outil - CrackMapExec]] | [[Outil - BloodHound]] | [[Outil - Evil-WinRM]] | [[Outil - hashcat]] | [[Outil - Nmap]]
+**Liens :** [[Outil - mitm6]] | [[Outil - Responder]] | [[Outil - Impacket]] | [[Outil - CrackMapExec]] | [[Outil - BloodHound]] | [[Outil - Evil-WinRM]] | [[Outil - hashcat]] | [[Outil - Nmap]]
 

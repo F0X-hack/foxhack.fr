@@ -1,7 +1,7 @@
 ---
 title: "Outil - Scapy"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -17,14 +17,14 @@ site: https://scapy.net/
 doc: https://scapy.readthedocs.io/
 ---
 
-# 🐍 Scapy — La forgerie de paquets en Python
+# Scapy — La forgerie de paquets en Python
 
 > [!info] **En 1 phrase**
 > Scapy est une bibliothèque Python capable de créer, envoyer, intercepter, disséquer et manipuler des paquets réseau de n'importe quel protocole, en interactif ou en scripts.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: https://scapy.readthedocs.io/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Scapy repose sur un modèle **par couches** : un paquet est un objet où chaque couche (`Ether`, `IP`, `TCP`…) est un nœud d'un arbre, composé avec l'opérateur `/`. `IP(dst="10.10.20.15")/TCP(dport=80, flags="S")` construit un paquet SYN complet, `DNS(rd=1)/DNSQR(qname="example.com")` une requête DNS. On envoie avec `send()`/`sendp()`, on reçoit avec `sr()/sr1()` (send+receive) ou `sniff()`, on dissèque tout protocole supporté, et on lit/écrit des fichiers pcap avec `rdpcap()`/`wrpcap()`.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -118,7 +118,7 @@ git clone https://github.com/secdev/scapy.git && cd scapy
 pip install -e .
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Root requis pour `sendp`/`sniff` (sockets brutes) ; sur Windows, Npcap obligatoire.
 > - Python 3.7+ nécessaire ; Scapy 2.x ne supporte pas Python 2.
 > - `sniff()` sans interface précise peut nécessiter `conf.iface`.
@@ -126,7 +126,7 @@ pip install -e .
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Scapy se configure via l'objet global `conf` et via les arguments des fonctions d'envoi/capture.
 
@@ -142,7 +142,7 @@ Scapy se configure via l'objet global `conf` et via les arguments des fonctions 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Scapy fonctionne en **arbres de couches** : chaque paquet est un objet où la couche la plus haute est la racine (`Ether`, `IP`, ou autre), et où chaque couche pointe vers la suivante via `payload`.
 
@@ -164,7 +164,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ sr1(IP(dst="8.8.8.8")/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="example.com")), ti
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Élément | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -225,7 +225,7 @@ sr1(IP(dst="8.8.8.8")/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="example.com")), ti
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -280,7 +280,7 @@ for p in pkts:
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Prototyper en interactif** — explorer les couches :
    ```bash
@@ -303,7 +303,7 @@ for p in pkts:
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : ARP spoofing (lab)
 
@@ -337,7 +337,7 @@ sniff(iface="eth0", filter="tcp", prn=detect, store=0)
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -350,7 +350,7 @@ sniff(iface="eth0", filter="tcp", prn=detect, store=0)
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -365,7 +365,7 @@ sniff(iface="eth0", filter="tcp", prn=detect, store=0)
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -406,7 +406,7 @@ alert tcp any any -> any 80 (msg:"Possible Scapy SYN burst"; flags:S; flow:to_se
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 # Script — scan SYN réutilisable
@@ -430,7 +430,7 @@ print(f"{len(pkts)} paquets capturés")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Scapy produit des objets `Packet` manipulables par programmation : `p.show()` (arbre), `p.summary()` (une ligne), `p.sprintf(...)` (formatage), `p[TCP].dport` (accès direct aux champs).
 
@@ -455,9 +455,9 @@ Ether / IP 10.10.20.15 > 10.10.20.1 TCP 10.10.20.15:55555 > 8.8.8.8:53 DNS ...
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - tcpdump]] / [[Outil - tshark]] — complément de capture ; Scapy lit leurs pcaps (`rdpcap`)
 - [[Outil - Wireshark]] — visualiser les pcaps générés par Scapy
 - [[Outil - Hping3]] — l'équivalent CLI ; Scapy en est l'évolution Python
@@ -473,7 +473,7 @@ tcpdump -w → rdpcap → Scapy (analyse programmée)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ tcpdump -w → rdpcap → Scapy (analyse programmée)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse** : la forgerie en Python est plus lente que les outils C ; utiliser des listes et éviter les `sr()` sur de gros volumes.
 - **sniff()** : `store=0` + `prn=` réduit l'usage mémoire sur les longues captures.
@@ -500,7 +500,7 @@ tcpdump -w → rdpcap → Scapy (analyse programmée)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -536,7 +536,7 @@ tcpdump -w → rdpcap → Scapy (analyse programmée)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : sockets brutes = root (ou CAP_NET_RAW) ; vérifier qui peut exécuter Python en root.
 - **Données** : les captures contiennent du trafic sensible — chiffrer les pcaps et restreindre l'accès.
@@ -547,7 +547,7 @@ tcpdump -w → rdpcap → Scapy (analyse programmée)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Plus lent que les outils C pour la forgerie de masse.
 - Nécessite Python 3 et libpcap/Npcap pour l'envoi/capture.
@@ -558,7 +558,7 @@ tcpdump -w → rdpcap → Scapy (analyse programmée)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```python
 from scapy.all import *
@@ -580,7 +580,7 @@ arping("10.10.20.0/24")
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,7 +593,7 @@ arping("10.10.20.0/24")
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -605,16 +605,16 @@ arping("10.10.20.0/24")
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Prototyper dans la console `scapy` avant de scriptiser.
 > - `conf.verb = 0` pour des scripts propres.
 > - Toujours un `timeout=` sur `sr()`/`sr1()` pour éviter les blocages.
 > - `store=0` + `prn=` pour les captures longues (mémoire).
 > - Relire les pcaps de tshark avec `rdpcap()` pour une analyse programmée.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `send()` route via la table locale : pour du L2, utiliser `sendp()`.
 > - Oublier `timeout=` gèle le script indéfiniment.
 > - L'ARP spoofing en production casse la connectivité des victimes.
@@ -623,7 +623,7 @@ arping("10.10.20.0/24")
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ arping("10.10.20.0/24")
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Hping3|Hping3]] · [[Outil - tshark|tshark]] · [[Outil - tcpdump|tcpdump]] · [[Outil - Nmap|Nmap]]
+**Liens :** [[Tools| Outils]] · [[Outil - Hping3|Hping3]] · [[Outil - tshark|tshark]] · [[Outil - tcpdump|tcpdump]] · [[Outil - Nmap|Nmap]]

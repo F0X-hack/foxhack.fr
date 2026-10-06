@@ -1,7 +1,7 @@
 ---
 title: "Outil - exiftool"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://exiftool.org
 doc: https://exiftool.org/exiftool_pod.html
 ---
 
-# 🏷️ ExifTool — L'arsenal des métadonnées de fichiers
+# ExifTool — L'arsenal des métadonnées de fichiers
 
 > [!info] **En 1 phrase**
 > Lire, écrire et manipuler les métadonnées (EXIF, IPTC, XMP...) de tout type de fichier : le flag se cache souvent dans un champ « Commentaire » oublié.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -48,7 +48,7 @@ doc: https://exiftool.org/exiftool_pod.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ExifTool est un outil en ligne de commande qui expose l'intégralité des métadonnées d'un fichier. Les formats concernés vont bien au-delà des images : PDF, MP4, DOCX, ZIP, audio, RAW... Chaque fichier embarque des tags regroupés en **familles** (EXIF, IPTC, XMP, GPS, Composite, etc.) que l'outil liste, lit, écrit ou supprime à volonté. En CTF, un « simple » challenge d'image ou de PDF cache souvent le flag dans un commentaire, un auteur, un titre ou des coordonnées GPS. En OSINT, les coordonnées GPS d'une photo permettent la géolocalisation. En défense, `-all=` purge les métadonnées avant publication d'un document sensible. C'est **le premier outil à lancer** sur n'importe quel fichier suspect.
 
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -125,13 +125,13 @@ git clone https://github.com/exiftool/exiftool.git
 cd exiftool && perl Makefile.PL && make && make test
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le binaire Windows est un .exe autonome (aucun runtime requis) ; sous Linux/macOS, Perl est généralement préinstallé.
 > - Les alias (ex. `exiftool` vs `exiftool.exe`) peuvent différer selon le shell Windows.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -148,7 +148,7 @@ cd exiftool && perl Makefile.PL && make && make test
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Un seul script Perl** : ExifTool est un module Perl (`Image::ExifTool`) aussi distribué en exécutable autonome (packé avec `PAR`/`pp` pour Windows et macOS).
 - **Traitement par familles** : l'outil analyse le fichier par blocs de format (headers JPEG/TIFF, tables EXIF, blobs IPTC/XMP) et mappe chaque valeur vers un tag nommé dans le bon groupe.
@@ -159,7 +159,7 @@ cd exiftool && perl Makefile.PL && make && make test
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -194,7 +194,7 @@ exiftool -a -u -g1 image.jpg
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -222,7 +222,7 @@ exiftool -a -u -g1 image.jpg
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -266,7 +266,7 @@ exiftool -tagsfromfile modele.jpg -Comment -Artist -UserComment dest.png
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Lister les métadonnées du fichier suspect** :
    ```bash
@@ -290,7 +290,7 @@ exiftool -tagsfromfile modele.jpg -Comment -Artist -UserComment dest.png
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : flag dans les données GPS ou Make/Model
 
@@ -323,7 +323,7 @@ exiftool -n -GPSLatitude image.jpg     # vérifie la suppression
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -337,7 +337,7 @@ exiftool -n -GPSLatitude image.jpg     # vérifie la suppression
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -351,7 +351,7 @@ exiftool -n -GPSLatitude image.jpg     # vérifie la suppression
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -400,7 +400,7 @@ rule exif_flag_hunt
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — indexer récursivement un dossier puis agréger
@@ -424,7 +424,7 @@ for f in ["a.jpg", "b.jpg"]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # JSON : un objet par fichier, idéal pour jq
@@ -445,24 +445,24 @@ print(data.get("Comment", data.get("Author", "no flag")))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Fichier suspect → exiftool (métadonnées) → zsteg / stegsolve (stégo de l'extrait)
 → binwalk (blobs) → CyberChef (décodage) → rapport
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - zsteg]] — analyse stégo de l'image après lecture des tags
 - [[Outil - stegsolve]] — exploration visuelle des plans de bits
 - [[Outil - binwalk]] — extraction des fichiers embarqués
 - [[Outil - CyberChef]] — décodage des valeurs extraites
 - [[Outil - Ghidra]] — analyse du binaire si le fichier en cache un
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -477,7 +477,7 @@ Fichier suspect → exiftool (métadonnées) → zsteg / stegsolve (stégo de l'
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Volume** : `-r` parcourt des dossiers entiers efficacement (milliers de fichiers en quelques secondes sur disque local).
 - **Sortie** : `-json` et `-csv` restent légères même sur de gros lots ; `-a -u -g1` génère beaucoup plus de lignes.
@@ -490,7 +490,7 @@ Fichier suspect → exiftool (métadonnées) → zsteg / stegsolve (stégo de l'
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -516,7 +516,7 @@ Fichier suspect → exiftool (métadonnées) → zsteg / stegsolve (stégo de l'
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Confidentialité** : ExifTool n'effectue aucun appel réseau ; tout est local.
 - **Exécution de fichiers** : l'analyse de fichiers malveillants peut déclencher des comportements de parsers buggés — exécuter de préférence dans une VM/sandbox.
@@ -526,7 +526,7 @@ Fichier suspect → exiftool (métadonnées) → zsteg / stegsolve (stégo de l'
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas un outil de stéganographie** : il lit/écrit des tags standards, pas des données cachées arbitraires (voir [[Outil - zsteg]], [[Outil - stegsolve]]).
 - **Formats limités** : certains formats propriétaires (Office OOXML imbriqué, certains RAW) ne sont que partiellement couverts.
@@ -536,7 +536,7 @@ Fichier suspect → exiftool (métadonnées) → zsteg / stegsolve (stégo de l'
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lire toutes les métadonnées
@@ -564,7 +564,7 @@ exiftool -tagsfromfile src.jpg -Comment dst.jpg
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -577,7 +577,7 @@ exiftool -tagsfromfile src.jpg -Comment dst.jpg
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -589,16 +589,16 @@ exiftool -tagsfromfile src.jpg -Comment dst.jpg
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `-json` pour du texte facile à lire et à grepper sans bruit.
 > - Le flag peut être caché dans les **octets bruts** de la valeur (`-b`), pas seulement affiché en clair.
 > - Pensez à `grep -i flag` sur PDF/MP4/script : ExifTool fonctionne sur bien plus que les images.
 > - `-s` donne une sortie compacte, parfaite pour les terminaux étroits ou les scripts.
 > - `-tagsfromfile` permet de recopier massivement des tags d'un modèle vers des fichiers.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un champ vide en sortie standard peut contenir des données avec `-u` (valeurs inconnues) : ne négligez pas.
 > - `-all=` écrase les métadonnées : faites toujours une copie avant d'écrire.
 > - Les fichiers avec EXIF modifié peuvent se corrompre (XMP mal réécrit) : validez avec `file` et un visualiseur.
@@ -606,7 +606,7 @@ exiftool -tagsfromfile src.jpg -Comment dst.jpg
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -630,4 +630,4 @@ exiftool -tagsfromfile src.jpg -Comment dst.jpg
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - zsteg|📦 zsteg]] · [[Outil - stegsolve|🖼️ StegSolve]] · [[Outil - binwalk|🧱 binwalk]] · [[Outil - CyberChef|🧪 CyberChef]] · [[Outil - Ghidra|🔬 Ghidra]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - zsteg| zsteg]] · [[Outil - stegsolve| StegSolve]] · [[Outil - binwalk| binwalk]] · [[Outil - CyberChef| CyberChef]] · [[Outil - Ghidra| Ghidra]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

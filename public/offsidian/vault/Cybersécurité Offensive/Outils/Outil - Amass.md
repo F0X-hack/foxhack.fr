@@ -1,11 +1,11 @@
 ---
 title: "Outil - Amass"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: v5.1.1
 licence: Apache License 2.0
@@ -16,14 +16,14 @@ site: https://owasp.org/www-project-amass/
 doc: https://owasp-amass.github.io/docs/
 ---
 
-# 🕵️ Amass — Reconnaissance & Scan
+# Amass — Reconnaissance & Scan
 
 > [!info] **En 1 phrase**
 > Amass (OWASP) est l'outil de référence pour l'énumération de sous-domaines : il agrège plus de 200 sources OSINT passives et des techniques actives (DNS, certificats) pour cartographier la surface d'attaque d'un domaine.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://owasp-amass.github.io/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Amass appartient à la phase de **reconnaissance** : il collecte les sous-domaines d'une organisation via des sources publiques (Certificate Transparency, DNS brute-force, reverse DNS, archives web, moteurs de recherche, API de threat intel) puis les corrèle en un **graphe de relations** (sous-domaines, IP, ASN, services). Les résultats sont stockés dans une **base de données d'actifs** locale : on peut relancer des énumérations successives sans reperdre les données, et suivre l'évolution de la surface d'attaque au fil des engagements. Le mode `-passive` ne contacte **jamais** la cible (données publiques uniquement) ; le mode `-active` effectue des requêtes DNS directes, des tentatives de transfert de zone et des sondes de services.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -138,14 +138,14 @@ CGO_ENABLED=0 go install -v github.com/owasp-amass/amass/v5/cmd/amass@main
 go install -v github.com/owasp-amass/amass/v4/...@master
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Nécessite Go 1.21+ (v5 : Go 1.26 minimum selon les releases récentes).
 > - En v5, la CLI client a besoin d'un **engine** configuré (`options.engine` dans `config.yaml`, ex. `http://127.0.0.1:4000/graphql`) et d'une base (`options.database`, ex. Neo4j ou PostgreSQL via `asset-db`).
 > - Les clés API se gèrent dans le fichier de configuration, pas dans des variables d'environnement individuelles (sauf `AMASS_CONFIG`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Emplacements
 
@@ -170,7 +170,7 @@ go install -v github.com/owasp-amass/amass/v4/...@master
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **v4** : binaire monolithique avec un moteur interne, une **base de graphe** locale (Neo4j par défaut, via le sous-ensemble `asset-db`), des packages de sources de données, et des sous-commandes `enum` / `intel` / `viz` / `db` / `track`.
 - **v5** : séparation **client / engine**. La CLI (`amass enum`, un client) parle au **moteur REST/GraphQL** (`internal/engine`), qui orchestre les énumérations et le persiste dans l'**asset-db** (Neo4j ou PostgreSQL). Le catalogue des transformations est déclaré dans `config.yaml` (clé `transformations`, ex. `FQDN->DNS`) avec TTL, confiance et priorité par type de transition.
@@ -180,7 +180,7 @@ go install -v github.com/owasp-amass/amass/v4/...@master
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -223,7 +223,7 @@ amass enum -passive -d example.com -r 8.8.8.8,1.1.1.1 -o subs.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -255,7 +255,7 @@ amass enum -passive -d example.com -r 8.8.8.8,1.1.1.1 -o subs.txt
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -300,7 +300,7 @@ amass enum -active -brute -timeout 20 -d example.com \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Recon passive initiale** : `amass enum -passive -d example.com -o subs.txt`.
 2. **Élargir avec brute-force** : `amass enum -active -brute -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -d example.com -o subs_plus.txt`.
@@ -310,7 +310,7 @@ amass enum -active -brute -timeout 20 -d example.com \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Cartographie d'un ASN complet
 
@@ -345,7 +345,7 @@ comm -13 scan_2026_07.txt scan_2026_08.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -358,7 +358,7 @@ comm -13 scan_2026_07.txt scan_2026_08.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -374,7 +374,7 @@ comm -13 scan_2026_07.txt scan_2026_08.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -446,7 +446,7 @@ alert dns any any -> any any (msg:"Potential Amass-style DNS enumeration"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle sur plusieurs domaines, un rapport par domaine
@@ -482,7 +482,7 @@ print("Nouveaux sous-domaines :", len(new))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Formats natifs : texte (`-o`), JSON (`-json`), multi-formats (`-oA` → `.txt`, `.json`, `.csv`). La sortie texte est une ligne par nom.
 
@@ -517,9 +517,9 @@ for item in data:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - subfinder|subfinder]] — complément passif rapide (croiser les deux sorties)
 - [[Outil - dnsx|dnsx]] — validation DNS des sous-domaines découverts
 - [[Outil - httpx|httpx]] — probing HTTP des hôtes vivants
@@ -527,7 +527,7 @@ for item in data:
 - [[Outil - Censys|Censys]] / [[Outil - Shodan CLI|Shodan CLI]] — sources de données à configurer dans le fichier de config
 - [[Outil - theHarvester|theHarvester]] — collecte OSINT complémentaire (emails, hôtes)
 - [[Outil - Nmap|Nmap]] / [[Outil - naabu|naabu]] — scan des hôtes identifiés
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 Domaines → Amass → subfinder → dnsx → httpx → nuclei
@@ -536,7 +536,7 @@ Domaines → Amass → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -551,7 +551,7 @@ Domaines → Amass → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Parallélisation : énumérations concurrentes par source, résolution DNS massive avec contrôle (`-max-dns-queries`, `-timeout`).
 - Le mode passif ne consomme que des API tierces : la durée dépend du nombre de sources configurées et de leurs quotas.
@@ -563,7 +563,7 @@ Domaines → Amass → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -593,7 +593,7 @@ Domaines → Amass → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Mode passif** : ne contacte jamais la cible — le plus sûr légalement ; le mode `-active` et le brute-force sont **détectables** (logs DNS, transferts de zone).
 - **Clés API** : stockées en clair dans `config.yaml` / `config.ini` → permissions restrictives (`chmod 600`), ne jamais committer ces fichiers.
@@ -603,7 +603,7 @@ Domaines → Amass → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Les sources OSINT contiennent des données **périmées** : un nom découvert ne prouve pas qu'il est encore actif (valider avec dnsx/httpx).
 - La v5 a retiré les sous-commandes historiques (`intel`, `viz`, `db`, `track`) du binaire core : courbe d'apprentissage et documentation éclatée.
@@ -613,7 +613,7 @@ Domaines → Amass → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Énumération passive (départ)
@@ -642,7 +642,7 @@ amass viz -d3 -o graph.html
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -655,7 +655,7 @@ amass viz -d3 -o graph.html
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -668,15 +668,15 @@ amass viz -d3 -o graph.html
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Configurer les API keys (Shodan, Censys, OTX) dans le fichier de configuration décuple les sources passives (résultats bien plus complets).
 > - Croiser avec d'autres outils : `subfinder -d example.com -all` ou `crt.sh` donnent souvent des sous-domaines différents — toujours croiser 2-3 outils.
 > - Utiliser `-src` pour savoir quelle source a trouvé chaque nom : utile pour le rapport.
 > - En v5, penser au monitoring programmatique : la base d'actifs permet des requêtes et des diffs sans repasser par la CLI.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le brute-force (`-brute`) est bruyant et long : limiter avec `-timeout` et une wordlist raisonnable.
 > - Les sources OSINT contiennent des données périmées : valider chaque sous-domaine par résolution DNS avant de le considérer comme vivant.
 > - Sans API key, certaines sources (VirusTotal, AlienVault) limitent à quelques requêtes/jour : espacer les scans.
@@ -684,7 +684,7 @@ amass viz -d3 -o graph.html
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -707,4 +707,4 @@ amass viz -d3 -o graph.html
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - theHarvester|📧 theHarvester]] · [[Outil - SpiderFoot|🕸️ SpiderFoot]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - theHarvester| theHarvester]] · [[Outil - SpiderFoot| SpiderFoot]]

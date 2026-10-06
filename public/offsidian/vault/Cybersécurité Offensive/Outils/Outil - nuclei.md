@@ -1,11 +1,11 @@
 ---
 title: "Outil - nuclei"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: v3.11.1 (août 2026)
 licence: MIT
@@ -16,20 +16,20 @@ site: https://projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/nuclei
 ---
 
-# 🔍 nuclei — Scanner de vulnérabilités piloté par templates (ProjectDiscovery)
+# nuclei — Scanner de vulnérabilités piloté par templates (ProjectDiscovery)
 
 > [!info] **En 1 phrase**
 > nuclei est un scanner de vulnérabilités piloté par des templates YAML, ultra-rapide, communautaire et extensible.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | nuclei |
 | Description | Scanner de vulnérabilités à templates : exécute des modèles YAML (requêtes + matchers) pour détecter CVEs, expositions et misconfigurations à grande échelle |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Scanner de vulnérabilités / template-based DAST |
 | Fonction principale | Valider des vulnérabilités connues sur des cibles grâce à des templates communautaires |
 | Type d'outil | CLI (binaire unique, exécutable aussi en service) |
@@ -47,7 +47,7 @@ doc: https://docs.projectdiscovery.io/tools/nuclei
 
 ---
 
-## 🎯 Concept
+## Concept
 
 nuclei (ProjectDiscovery) détecte les vulnérabilités en exécutant des templates YAML : chaque template décrit une requête et des matchers (statut, regex, taille, corps). Le scanner gère le parallélisme, la déduplication et l'envoi des résultats vers des endpoints de notification (Slack, Discord). Il est écrit en Go : un seul binaire statique, aucun runtime requis, des milliers de requêtes par seconde possibles.
 
@@ -64,7 +64,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 - **Templates YAML** : un modèle décrit une ou plusieurs requêtes (`requests`), les conditions de détection (`matchers`) et les métadonnées (`info` : nom, sévérité, tags, classification CVE).
 - **Matchers** : comparaison de la réponse — types `word` (texte), `regex`, `status`, `size`, `dsl`, `binary`, `xpath`, `json` — combinables avec `matchers-condition: and|or`.
@@ -78,7 +78,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Binaire précompilé (Linux amd64) — télécharger la dernière release
@@ -104,7 +104,7 @@ nuclei -version
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichiers de configuration
 
@@ -139,7 +139,7 @@ nuclei -as -u http://10.10.10.10
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```text
 nuclei (binaire Go, monolithe)
@@ -159,7 +159,7 @@ nuclei (binaire Go, monolithe)
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes de base
 
@@ -213,7 +213,7 @@ nuclei -l urls.txt -stats -stats-json -stats-interval 2
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Options générales
 
@@ -293,7 +293,7 @@ requests:
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -352,7 +352,7 @@ nuclei -l urls.txt -hpd -stats-json
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Mettre à jour les templates** :
    ```bash
@@ -378,7 +378,7 @@ nuclei -l urls.txt -hpd -stats-json
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Scan d'un périmètre entier avec tri et notification
 
@@ -452,7 +452,7 @@ nuclei -u http://10.10.10.10 -t /tmp/generated.yaml
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -465,7 +465,7 @@ nuclei -u http://10.10.10.10 -t /tmp/generated.yaml
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -479,7 +479,7 @@ nuclei -u http://10.10.10.10 -t /tmp/generated.yaml
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -538,7 +538,7 @@ rule Nuclei_Templates {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Scan quotidien daté + archive
@@ -588,7 +588,7 @@ jobs:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 nuclei produit une sortie texte lisible et une sortie **JSONL** (`-jsonl`), et peut générer des rapports formatés : **markdown, HTML, SARIF, JSON** (`-report-format`, `-report-config`).
 
@@ -617,7 +617,7 @@ nuclei -u http://10.10.10.10 -report-format sarif -report-config config.yaml
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 subfinder -> httpx -> nuclei -> rapports (JSONL / SARIF / markdown)
@@ -627,7 +627,7 @@ nuclei -> Burp Suite (flux -im burp) -> reprise des requêtes interceptées
 nuclei -> SIEM -> ingestion des JSONL pour corrélation
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - httpx]] — détection de technologies et probing avant nuclei
 - [[Outil - subfinder]] — énumération de sous-domaines en amont
 - [[Outil - nikto]] — balayage serveur complémentaire (inventaire vs validation)
@@ -636,7 +636,7 @@ nuclei -> SIEM -> ingestion des JSONL pour corrélation
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -650,7 +650,7 @@ nuclei -> SIEM -> ingestion des JSONL pour corrélation
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Go / parallélisme** : binaire statique, des milliers de requêtes par seconde (`-c` concurrence, défaut 25).
 - **Déduplication** : pas de requêtes doublées pour un même template/cible.
@@ -664,7 +664,7 @@ nuclei -> SIEM -> ingestion des JSONL pour corrélation
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -700,7 +700,7 @@ nuclei -> SIEM -> ingestion des JSONL pour corrélation
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Templates = code** : les templates peuvent exécuter du code (`code`, `javascript`) et envoyer des requêtes — ne charger que des templates de confiance.
 - **Durcissement récent** : v3.10 a ajouté la sandbox du protocole `code`, les vérifications de policy réseau et les protections YAML include ; v3.11 exige des templates `javascript:` **signés**.
@@ -710,7 +710,7 @@ nuclei -> SIEM -> ingestion des JSONL pour corrélation
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Template-based** : ne détecte que ce que les templates savent chercher ; une CVE sans template ne sera pas trouvée.
 - **Faux positifs/négatifs** : les matchers larges génèrent des faux positifs ; les templates trop précis, des faux négatifs.
@@ -721,7 +721,7 @@ nuclei -> SIEM -> ingestion des JSONL pour corrélation
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Mise à jour (à faire avant chaque engagement)
@@ -761,7 +761,7 @@ nuclei -validate -t mon-template.yaml
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -774,7 +774,7 @@ nuclei -validate -t mon-template.yaml
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -786,16 +786,16 @@ nuclei -validate -t mon-template.yaml
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lance `nuclei -update-templates` régulièrement avant chaque engagement : les templates communautaires évoluent aussi vite que les CVEs.
 > - Préfère `-jsonl` + jq pour trier les findings par sévérité ou par hôte dans un pipeline.
 > - Utilise `-tags` pour limiter le bruit : ne lancer que les checks utiles à la cible (ex: `wordpress`, `cve`).
 > - `-as` (scan automatique) réduit le nombre de requêtes en ne lançant que les templates pertinents pour les technologies détectées.
 > - `-nt` ne lance que les nouveaux templates — utile pour détecter les CVE très récentes en priorité.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un « match » nuclei ne prouve pas l'exploitabilité. Confirme chaque finding avec Burp/curl et un test d'exploitation maîtrisé avant de l'écrire au rapport.
 > - Sans `-rate`, nuclei peut saturer un petit serveur ou déclencher un WAF.
 > - Un template obsolète peut donner de faux positifs : vérifie toujours la version des templates et l'âge du template matché.
@@ -804,7 +804,7 @@ nuclei -validate -t mon-template.yaml
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -827,4 +827,4 @@ nuclei -validate -t mon-template.yaml
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - httpx|Httpx]] · [[Outil - subfinder|Subfinder]] · [[Outil - nikto|Nikto]] · [[Outil - Nmap|Nmap]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/SSRF|SSRF]] · [[Techniques/XXE|XXE]]
+**Liens :** [[Tools| Outils]] · [[Outil - httpx|Httpx]] · [[Outil - subfinder|Subfinder]] · [[Outil - nikto|Nikto]] · [[Outil - Nmap|Nmap]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/SSRF|SSRF]] · [[Techniques/XXE|XXE]]

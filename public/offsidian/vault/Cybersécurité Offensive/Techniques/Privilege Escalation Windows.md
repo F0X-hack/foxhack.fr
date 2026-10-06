@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🪟 Privilege Escalation Windows
+# Privilege Escalation Windows
 
 > [!info] **En 1 phrase**
 > Passer d'un utilisateur limité à **SYSTEM/Administrateur** en abusant des services, des ACL,
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```powershell
 # Automatisation d'abord
@@ -70,7 +70,7 @@ msiexec /quiet /qn /i evil.msi
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -82,18 +82,18 @@ msiexec /quiet /qn /i evil.msi
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **winpeas en couleur**
+> [!tip] **winpeas en couleur**
 > Les lignes **rouges** = pistes prioritaires (services modifiables, creds, AlwaysInstallElevated).
 
-> [!warning] ⚠️ **Piège** : les Potatoes ne marchent plus sur les Windows récents sans service vulnérable (spoolsv, print spooler). Vérifie `whoami /priv` + services avant.
+> [!warning] **Piège** : les Potatoes ne marchent plus sur les Windows récents sans service vulnérable (spoolsv, print spooler). Vérifie `whoami /priv` + services avant.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[DLL Hijacking|🧩 DLL Hijacking]]
-- [[Privilege Escalation Linux|🐧 Privesc Linux]]
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- → Note complète : [[06 - Post-Exploitation|🕹️ Post-Exploitation]]
+- [[DLL Hijacking| DLL Hijacking]]
+- [[Privilege Escalation Linux| Privesc Linux]]
+- [[Pass-the-Hash| Pass-the-Hash]]
+- → Note complète : [[06 - Post-Exploitation| Post-Exploitation]]

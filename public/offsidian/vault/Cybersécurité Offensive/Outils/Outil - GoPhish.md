@@ -1,7 +1,7 @@
 ---
 title: "Outil - GoPhish"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://getgophish.com
 doc: https://docs.getgophish.com
 ---
 
-# 🎣 GoPhish — La plateforme open source de gestion de campagnes de phishing
+# GoPhish — La plateforme open source de gestion de campagnes de phishing
 
 > [!info] **En 1 phrase**
 > GoPhish est un framework web open source qui permet de créer, envoyer et suivre des campagnes de phishing réalistes avec des templates dynamiques, des groupes de cibles et des rapports statistiques.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | GoPhish |
 | Description | Plateforme de gestion de campagnes de phishing : cibles, templates, landing pages, envoi SMTP, tracking (ouverture/clic/soumission), API REST |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing Campaign Management |
 | Type d'outil | Application web (binaire Go autonome) |
 | Licence | MIT |
@@ -45,7 +45,7 @@ doc: https://docs.getgophish.com
 
 ---
 
-## 🎯 Concept
+## Concept
 
 GoPhish est un logiciel écrit en Go, développé par Jordan Wright, qui centralise toute la vie d'une campagne de phishing : gestion des cibles par groupes, création de templates avec variables dynamiques (`.FirstName`, `.LastName`, `.Email`, `.Position`), campagne de landing pages (pages de credential harvesting), envoi des emails via SMTP et tracking complet (ouverture, clic, soumission de formulaire, email renvoyé). Il fournit une interface web administrateur (port 3333) et un serveur de phishing (port 80 par défaut). Grâce à son API REST et à ses templates prédéfinis, il est l'outil de référence pour les campagnes de sensibilisation internes et les audits de sécurité humaine.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Binaire précompilé (Linux x64)
 
@@ -121,7 +121,7 @@ sudo ./gophish
 docker run -it --rm -p 3333:3333 -p 80:80 ghcr.io/gophish/gophish
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le **mot de passe admin initial est généré et affiché dans la console** au premier démarrage — le récupérer avant de fermer le terminal.
 > - Les ports 3333 (admin) et 80 (phishing) doivent être libres ; `sudo` pour les ports < 1024.
 > - Avant v0.10.1, le compte par défaut était `admin:gophish` — toujours le changer après upgrade.
@@ -129,7 +129,7 @@ docker run -it --rm -p 3333:3333 -p 80:80 ghcr.io/gophish/gophish
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait dans **`config.json`** à côté du binaire (généré au premier lancement), puis via l'interface web pour les profils, templates et campagnes.
 
@@ -160,7 +160,7 @@ Exemple de `config.json` :
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 GoPhish est un **binaire Go unique** composé de deux serveurs HTTP :
 
@@ -175,7 +175,7 @@ Flux d'exécution : la campagne envoie les emails via le profil SMTP → chaque 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ grep -i password /var/log/gophish.log
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -219,7 +219,7 @@ grep -i password /var/log/gophish.log
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -262,7 +262,7 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Lancer GoPhish et récupérer les identifiants** — le mot de passe admin est affiché en console au premier démarrage.
    ```bash
@@ -289,7 +289,7 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : phishing automatisé via l'API REST
 
@@ -331,7 +331,7 @@ L'API permet aussi de lister campagnes et événements (`GET /api/campaigns/`, `
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -344,7 +344,7 @@ L'API permet aussi de lister campagnes et événements (`GET /api/campaigns/`, `
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -359,7 +359,7 @@ L'API permet aussi de lister campagnes et événements (`GET /api/campaigns/`, `
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -401,7 +401,7 @@ alert tcp any any -> any 80 (msg:"ET GoPhish campaign POST to landing page"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer une campagne et attendre les résultats
@@ -439,7 +439,7 @@ print(f"Soumissions : {sum(1 for x in results if x['status'] == 'success')}")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 GoPhish expose les résultats par l'**API REST** (JSON) et par l'**export CSV** de l'interface. Chaque événement est horodaté : envoi, ouverture, clic, soumission, échec.
 
@@ -463,9 +463,9 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Evilginx2]] — intégration officielle des lures (fork `kgretzky/gophish`, v3.3.0)
 - [[Outil - SET]] — vecteurs d'email alternatifs (payloads, HTA)
 - [[Outil - BeEF]] — hook du navigateur après clic sur la landing
@@ -475,7 +475,7 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Un binaire Go autonome : **très économe** (quelques dizaines de Mo de RAM).
 - SQLite convient jusqu'à quelques dizaines de milliers de cibles ; au-delà, passer à **MySQL**.
@@ -496,7 +496,7 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -526,7 +526,7 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Panel admin** : activer `use_tls` sur le serveur admin et ne jamais l'exposer sur Internet (accès réseau d'engagement uniquement).
 - **Clé API** : la protéger ; elle donne accès à toutes les campagnes et données capturées.
@@ -537,7 +537,7 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de phishing 2FA persistant : la capture d'un OTP ne donne pas une session rejouable (utiliser Evilginx2).
 - Le tracking d'ouverture est faussé par les clients qui bloquent les images distantes.
@@ -548,7 +548,7 @@ print(f"Taux clic : {clicked/total*100:.1f}%  Taux soumission : {submitted/total
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer GoPhish
@@ -574,7 +574,7 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -587,7 +587,7 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -600,15 +600,15 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez les variables dynamiques `{{.FirstName}}` et `{{.Position}}` : un email personnalisé passe 5 à 10 fois mieux les filtres anti-spam et attire plus de clics.
 > - Mettez en place le **tracking d'ouverture** via un pixel : analysez les horaires de lecture pour cibler vos tests de sensibilisation.
 > - Importez vos cibles en CSV avec les colonnes `first_name,last_name,email,position` : la personnalisation fonctionne immédiatement.
 > - Pour un rendu réaliste, clonez la page de login de l'entreprise avec l'outil *Import* de la landing page (URL source) puis masquez la bannière GoPhish.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le serveur d'admin `:3333` ne doit jamais être exposé publiquement : activez `use_tls` et limitez l'accès au réseau interne.
 > - Sans **Sending Profile** avec DKIM configuré, les emails partent en spam et la campagne est faussée.
 > - La redirection après capture est essentielle : sans elle, la victime sait immédiatement qu'elle a été piégée.
@@ -616,7 +616,7 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -639,4 +639,4 @@ curl -s -u admin:APIKEY https://localhost:3333/api/campaigns/1/results/ --insecu
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - SET|SET]] · [[Outil - King-Phisher|King-Phisher]] · [[Outil - BeEF|BeEF]]
+**Liens :** [[Tools| Outils]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - SET|SET]] · [[Outil - King-Phisher|King-Phisher]] · [[Outil - BeEF|BeEF]]

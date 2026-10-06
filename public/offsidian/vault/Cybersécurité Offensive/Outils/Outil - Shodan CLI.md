@@ -1,7 +1,7 @@
 ---
 title: "Outil - Shodan CLI"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://www.shodan.io
 doc: https://cli.shodan.io
 ---
 
-# 🌍 Shodan CLI — Moteur de recherche des services exposés en ligne de commande
+# Shodan CLI — Moteur de recherche des services exposés en ligne de commande
 
 > [!info] **En 1 phrase**
 > Shodan indexe les bannières de millions de services (RDP, SSH, caméras, bases de données) : sa CLI permet de fouiller cette base depuis le terminal.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://cli.shodan.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Shodan est le moteur de recherche des services exposés sur Internet : il collecte les bannières de tous les protocoles (pas seulement HTTP) — SSH, RDP, telnet, MongoDB, MySQL, HTTP, protocoles industriels (modbus, BACnet, s7) — ainsi que les métadonnées géographiques, organisationnelles et les vulnérabilités associées. La CLI Python (`shodan`) expose toute la puissance : recherche par filtres (`port`, `country`, `product`, `net`, `org`, `vuln`, `ssl.cert.subject.CN`...), détails hôte, statistiques, découverte de sous-domaines via les certificats (`shodan domain`), alertes, score honeypot (`honeyscore`) et téléchargement de datasets.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### pip (Linux, macOS, Windows)
 
@@ -115,7 +115,7 @@ shodan info        # quota et plan du compte
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Initialisation de la clé API
 
@@ -145,7 +145,7 @@ export SHODAN_API_KEY="<VOTRE_CLE_API>"
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -165,7 +165,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -202,7 +202,7 @@ shodan info
 
 ---
 
-## 🚩 Options et flags
+## Options et flags
 
 | Option | Commande(s) | Effet |
 |---|---|---|
@@ -230,7 +230,7 @@ shodan info
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Recherche basique
 
@@ -277,7 +277,7 @@ shodan info
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Initialiser la CLI.**
    ```bash
@@ -308,7 +308,7 @@ shodan info
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Inventaire des services exposés d'un périmètre
 
@@ -344,7 +344,7 @@ shodan search --fields ip_str,port,hostnames "ssl.cert.subject.CN:example.com"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -357,7 +357,7 @@ shodan search --fields ip_str,port,hostnames "ssl.cert.subject.CN:example.com"
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec Shodan CLI |
 |---|---|---|
@@ -370,7 +370,7 @@ shodan search --fields ip_str,port,hostnames "ssl.cert.subject.CN:example.com"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -385,7 +385,7 @@ shodan search --fields ip_str,port,hostnames "ssl.cert.subject.CN:example.com"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Script de revue d'exposition
 
@@ -416,7 +416,7 @@ for banner in api.search("product:nginx", limit=50)["matches"]:
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Sortie search avec champs
 
@@ -444,7 +444,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -458,7 +458,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -470,7 +470,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -482,7 +482,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -496,7 +496,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -508,7 +508,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -521,7 +521,7 @@ shodan parse --fields ip_str,port example_dataset.json.gz
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Init et quota
@@ -549,7 +549,7 @@ shodan alert list
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -565,7 +565,7 @@ shodan alert list
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -577,32 +577,32 @@ shodan alert list
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Utilise `--fields` pour des sorties exploitables**
+> [!tip] **Utilise `--fields` pour des sorties exploitables**
 > `--fields ip_str,port,org,hostnames` donne un TSV directement parsable.
 
-> [!tip] 💡 **`shodan domain` est une source de sous-domaines rapide et passive**
+> [!tip] `shodan domain` est une source de sous-domaines rapide et passive**
 > Via les certificats (CT), sans contacter la cible.
 
-> [!tip] 💡 **`stats --facets` donne une vue macro**
+> [!tip] `stats --facets` donne une vue macro**
 > Pays, ports, produits : très utile en recon large et peu coûteux en quota.
 
-> [!warning] ⚠️ **Le plan gratuit est limité**
+> [!warning] **Le plan gratuit est limité**
 > ~100 requêtes/mois : privilégie `count` (gratuit) avant `search`.
 
-> [!warning] ⚠️ **Les honeypots polluent les résultats**
+> [!warning] **Les honeypots polluent les résultats**
 > Vérifie avec `honeyscore` avant d'exploiter une cible.
 
-> [!warning] ⚠️ **Les données peuvent dater**
+> [!warning] **Les données peuvent dater**
 > Confirme l'état réel avec naabu/httpx avant exploitation.
 
-> [!danger] 🚫 **Ne pas scanner/attaquer des cibles non autorisées**
+> [!danger] **Ne pas scanner/attaquer des cibles non autorisées**
 > Shodan donne de l'information publique, pas le droit d'agir dessus.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [Shodan](https://www.shodan.io)
@@ -619,4 +619,4 @@ shodan alert list
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - Shodan|🌍 Shodan]] · [[Outil - Censys|🔎 Censys]] · [[Outil - theHarvester|🍯 theHarvester]] · [[Outil - Maltego|🕸️ Maltego]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - Shodan| Shodan]] · [[Outil - Censys| Censys]] · [[Outil - theHarvester| theHarvester]] · [[Outil - Maltego| Maltego]]

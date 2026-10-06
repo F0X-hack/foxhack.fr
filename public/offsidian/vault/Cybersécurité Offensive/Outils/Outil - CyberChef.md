@@ -1,7 +1,7 @@
 ---
 title: "Outil - CyberChef"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://gchq.github.io/CyberChef/
 doc: https://github.com/gchq/CyberChef/wiki
 ---
 
-# 🧪 CyberChef — Le couteau suisse de l'encodage
+# CyberChef — Le couteau suisse de l'encodage
 
 > [!info] **En 1 phrase**
 > La « Cyber Cheesecake Factory » : un outil web pour chaîner décodages, encodages, transformations et crypto en un simple glisser-déposer.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/gchq/CyberChef/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 CyberChef est un utilitaire web développé par le **GCHQ** permettant de transformer des données via un **workflow visuel d'opérations chaînées** : les « recettes » (*recipes*). Chaque étape (From Base64, From Hex, XOR, ROT13, Gunzip…) est une opération appliquée séquentiellement sur l'entrée pour produire la sortie. Tout le traitement se fait **côté client** (dans le navigateur), ce qui permet de traiter des données sensibles ou classifiées sans les exposer, et de fonctionner hors-ligne via le build local.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -140,14 +140,14 @@ npm start        # serveur de dev
 npm run build    # build de production (CyberChef_vX.Y.Z.zip)
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Node.js version exigée selon la release (Node 18+/20+ recommandés) — vérifier le README pour la version exacte.
 > - Le build complet nécessite plusieurs Go ; prévoir de la RAM et du temps.
 > - En usage web en ligne, seuls les navigateurs modernes sont supportés (pas de traitement serveur).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 CyberChef se configure essentiellement **dans l'interface** : options d'affichage, profils d'opérations masquées, thème, et URL de partage des recettes.
 
@@ -165,7 +165,7 @@ CyberChef se configure essentiellement **dans l'interface** : options d'affichag
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Frontend** : application **Vue.js** (Single Page Application) ; l'interface est une colonne Input, une colonne Recipe (drag & drop d'opérations), une colonne Output.
 - **Moteur d'opérations** : chaque opération est une classe JavaScript (héritant de `Operation`) avec un `run(input, args)` ; le moteur exécute la chaîne séquentiellement, gère le découpage d'entrée, les branches (Fork/Merge), les variables (Register/Unregister) et les sauts conditionnels (v10+).
@@ -176,7 +176,7 @@ CyberChef se configure essentiellement **dans l'interface** : options d'affichag
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -214,7 +214,7 @@ node node_modules/cyberchef/src/node/index.mjs \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -234,7 +234,7 @@ node node_modules/cyberchef/src/node/index.mjs \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -279,7 +279,7 @@ Recipe : Register 'key' -> From Base64 -> XOR ($key) -> Unregister 'key'
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Coller la donnée brute** dans le champ « Input » :
    ```text
@@ -296,7 +296,7 @@ Recipe : Register 'key' -> From Base64 -> XOR ($key) -> Unregister 'key'
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : déchiffrer un AES-ECB avec clé connue
 
@@ -339,7 +339,7 @@ Recipe : Find / Replace -> XOR (clé trouvée) -> Gunzip
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -353,7 +353,7 @@ Recipe : Find / Replace -> XOR (clé trouvée) -> Gunzip
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -367,7 +367,7 @@ Recipe : Find / Replace -> XOR (clé trouvée) -> Gunzip
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -409,7 +409,7 @@ alert http any any -> any any (msg:"Suspicious repeated base64 in URI"; uriconte
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — défanger un lot de fichiers IOCs via l'interface d'URL
@@ -434,7 +434,7 @@ print(decoded)  # flag{C0yber0NE}
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie dépend de l'opération : texte, hex, binaire ou fichier téléchargé. Pour les pipelines, CyberChef est souvent remplacé par des équivalents CLI, mais ses **recettes** servent de spécification exacte du traitement.
 
@@ -457,25 +457,25 @@ for b in blobs:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Logs / captures → CyberChef (defang + extraction) → rapport SOC
 Blob C2 → CyberChef (XOR + Gunzip) → analyse statique
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - RsaCtfTool]] — crypto RSA complémentaire (CyberChef gère les cas simples)
 - [[Outil - exiftool]] — métadonnées des fichiers avant analyse
 - [[Outil - binwalk]] — extraction des blobs avant transformation
 - [[Outil - zsteg]] / [[Outil - stegsolve]] — stéganographie d'images à décoder ensuite
 - [[Outil - Ghidra]] — reverse des binaires dont on a décodé le config
 - [[Outil - hashcat]] / [[Outil - John the Ripper]] — cracking des hashs extraits
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -490,7 +490,7 @@ Blob C2 → CyberChef (XOR + Gunzip) → analyse statique
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Côté navigateur** : toute la charge CPU est locale ; les grosses entrées (centaines de Mo) peuvent geler l'onglet — réduire la taille d'input et désactiver Auto Bake.
 - **Magic** : l'auto-détection lance de nombreuses transformations ; mode « intensive » très gourmand → l'utiliser seulement sur de petits inputs.
@@ -503,7 +503,7 @@ Blob C2 → CyberChef (XOR + Gunzip) → analyse statique
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -529,7 +529,7 @@ Blob C2 → CyberChef (XOR + Gunzip) → analyse statique
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Confidentialité** : le traitement est local (navigateur) — vérifier toutefois qu'aucune extension ou proxy n'intercepte ; en environnement classifié, utiliser le build local ou Docker.
 - **Mises à jour** : le build web hébergé (`gchq.github.io`) est mis à jour régulièrement ; pour l'air-gap, builder depuis le dépôt.
@@ -538,7 +538,7 @@ Blob C2 → CyberChef (XOR + Gunzip) → analyse statique
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas un interpréteur** : logique de programmation limitée (les Conditional Jumps v10+ restent basiques).
 - **Crypto** : CyberChef déchiffre avec des clés connues ; il ne **casse pas** les algorithmes (aucune attaque RSA/factorisation — voir [[Outil - RsaCtfTool]]).
@@ -549,7 +549,7 @@ Blob C2 → CyberChef (XOR + Gunzip) → analyse statique
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Décode un base64
@@ -576,7 +576,7 @@ JWT Decode (Split by '.' -> From Base64 URL-safe)
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -589,7 +589,7 @@ JWT Decode (Split by '.' -> From Base64 URL-safe)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -601,16 +601,16 @@ JWT Decode (Split by '.' -> From Base64 URL-safe)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Active **Magic** en premier : il détecte souvent l'encodage et propose la recette complète automatiquement.
 > - Utilise **Extract Hash** / **Strings** pour fouiller un binaire ou un firmware directement dans le workflow.
 > - La barre « Bake » (%) sauvegarde votre recette : très utile pour documenter un write-up.
 > - **Fork + Merge** permettent de traiter un fichier ligne par ligne sans sortir de CyberChef.
 > - Le générateur « Generate all hashes » est pratique pour identifier un hash inconnu en CTF.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne pas confondre `From Base64` (décode) et `To Base64` (encode) : l'ordre des opérations compte.
 > - XOR « Brute Force » ne trouve pas les clés multi-octets : il faut connaître la clé ou tester manuellement.
 > - Le déchiffrement AES nécessite de connaître le **mode** et l'IV ; se tromper donne un output illisible.
@@ -619,7 +619,7 @@ JWT Decode (Split by '.' -> From Base64 URL-safe)
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -643,4 +643,4 @@ JWT Decode (Split by '.' -> From Base64 URL-safe)
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - RsaCtfTool|🔑 RsaCtfTool]] · [[Outil - pwntools|🎯 pwntools]] · [[Outil - stegsolve|🖼️ stegsolve]] · [[Outil - exiftool|🏷️ ExifTool]] · [[Outil - binwalk|🧱 binwalk]] · [[Outil - zsteg|📦 zsteg]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - RsaCtfTool| RsaCtfTool]] · [[Outil - pwntools| pwntools]] · [[Outil - stegsolve| stegsolve]] · [[Outil - exiftool| ExifTool]] · [[Outil - binwalk| binwalk]] · [[Outil - zsteg| zsteg]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

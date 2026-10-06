@@ -1,7 +1,7 @@
 ---
 title: "Outil - tcpreplay"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://tcpreplay.appneta.com/
 doc: https://tcpreplay.appneta.com/wiki/
 ---
 
-# 🎞️ tcpreplay — Le rejeu de trafic réseau
+# tcpreplay — Le rejeu de trafic réseau
 
 > [!info] **En 1 phrase**
 > tcpreplay rejoue des captures pcap sur un réseau réel à un débit contrôlé, en réécrivant si besoin les adresses MAC/IP/ports pour tester des équipements, des IDS ou des scénarios d'attaque reproductibles.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://tcpreplay.appneta.com/wiki/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 tcpreplay prend un fichier de capture (`-r`-like, ici `-i <fichier>` pour l'entrée) et **réinjecte les paquets sur une interface réseau réelle**, à une vitesse choisie : plus vite que le temps réel (`--topspeed`), à un débit précis (`--pps`, `--mbps`) ou aussi vite que le réseau le permet. Contrairement à un scanner, il ne génère pas de trafic : il **rejoue exactement ce qui a été capturé**, ce qui garantit une reproduction fidèle d'un scénario (même timestamps, mêmes payloads, mêmes flags TCP).
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -123,7 +123,7 @@ make -j$(nproc)
 sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le rejeu nécessite `root` (socket brut) ou les capacités appropriées.
 > - `libpcap` doit être présent (`apt install libpcap-dev` pour compiler).
 > - Windows : tcpreplay est compilable sous Cygwin mais le support est partiel ; préférer une VM Linux.
@@ -131,7 +131,7 @@ sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait essentiellement par arguments de ligne de commande (comportement d'envoi, interfaces, débit). Quelques paramètres d'environnement et options récurrentes méritent attention.
 
@@ -147,7 +147,7 @@ La configuration se fait essentiellement par arguments de ligne de commande (com
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 La suite tcpreplay est organisée en binaires spécialisés qui s'enchaînent dans un pipeline :
 
@@ -173,7 +173,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -206,7 +206,7 @@ sudo tcpreplay --netmap -i netmap:eth0 -t capture.pcap
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -237,7 +237,7 @@ sudo tcpreplay --netmap -i netmap:eth0 -t capture.pcap
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -286,7 +286,7 @@ tcpreplay --print-pcap-info capture.pcap
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Inspecter la capture** — confirmer DLT, résolution et nombre de paquets :
    ```bash
@@ -306,7 +306,7 @@ tcpreplay --print-pcap-info capture.pcap
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : test d'un IDS Suricata en inline
 
@@ -344,7 +344,7 @@ sudo tcpreplay -i eth0 --mbps=100 --duration=30 --stats=5 gros.pcap
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -357,7 +357,7 @@ sudo tcpreplay -i eth0 --mbps=100 --duration=30 --stats=5 gros.pcap
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -368,7 +368,7 @@ sudo tcpreplay -i eth0 --mbps=100 --duration=30 --stats=5 gros.pcap
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -408,7 +408,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — rejouer toutes les captures d'un dossier, une par une
@@ -435,7 +435,7 @@ for line in out.splitlines():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 tcpreplay écrit ses statistiques sur **stderr** (affichage par défaut) ou via `--stats=N` pour un rapport périodique. Le format inclut les taux (pps, Mbps), le nombre de paquets émis et le pourcentage de réussite.
 
@@ -449,9 +449,9 @@ sudo tcpreplay -i eth0 --pps=1000 --stats=5 capture.pcap
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - tcpdump]] — capture le trafic rejoué pour validation
 - [[Outil - tshark]] / [[Outil - Wireshark]] — analyse et validation des pcaps avant/après rejeu
 - [[Outil - Scapy]] — génère les pcaps de test, complément de forgerie
@@ -465,7 +465,7 @@ Capture → tshark -V → tcpreplay → tcpdump -w out.pcap → diff des signatu
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -479,7 +479,7 @@ Capture → tshark -V → tcpreplay → tcpdump -w out.pcap → diff des signatu
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **`--topspeed` + `-K`** : la précharge en RAM supprime les lectures disque et maximise le débit.
 - **netmap / DPDK / PF_RING** : modes accélérés pour dépasser la limite libpcap (jusqu'à plusieurs millions de pps sur NIC adaptées).
@@ -492,7 +492,7 @@ Capture → tshark -V → tcpreplay → tcpdump -w out.pcap → diff des signatu
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -528,7 +528,7 @@ Capture → tshark -V → tcpreplay → tcpdump -w out.pcap → diff des signatu
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : l'envoi de paquets bruts exige `root` (ou les capacités `CAP_NET_RAW`).
 - **Risque réseau** : le rejeu peut déstabiliser un réseau réel (ARP, sessions, charges) — à utiliser uniquement en lab ou sur segment dédié.
@@ -539,7 +539,7 @@ Capture → tshark -V → tcpreplay → tcpdump -w out.pcap → diff des signatu
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Ne modifie pas le contenu applicatif : seul le rejeu d'en-têtes est natif (payloads inchangés).
 - Le timing d'origine est perdu en `--topspeed` ; les modes `--pps`/`--mbps` rythment mais ne reproduisent pas les micro-variations.
@@ -549,7 +549,7 @@ Capture → tshark -V → tcpreplay → tcpdump -w out.pcap → diff des signatu
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Inspecter une capture
@@ -576,7 +576,7 @@ sudo tcpreplay -i eth0 --pps=1000 --stats=5 cap.pcap
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -589,7 +589,7 @@ sudo tcpreplay -i eth0 --pps=1000 --stats=5 cap.pcap
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -601,16 +601,16 @@ sudo tcpreplay -i eth0 --pps=1000 --stats=5 cap.pcap
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours vérifier le pcap avec `tcpcapinfo` avant de rejouer : DLT, résolution, snap length.
 > - Pour un test réaliste, réécrire les MAC/IP avec `tcprewrite` avant le rejeu, puis `--fixcsum`.
 > - Utiliser `--stats=N` pour vérifier que le débit demandé est bien atteint.
 > - En lab, préférer un réseau isolé : le rejeu produit des ARP et des sessions potentiellement perturbatrices.
 > - Combiner `-K` (preload) et `--topspeed` pour un stress maximal simple.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Oublier `--fixcsum` après réécriture : les équipements testés droppent le trafic sur checksum invalide.
 > - Un cache `tcpprep` recréé avec un autre pcap casse le rejeu (erreur « cache file »).
 > - `--topspeed` ne préserve pas le timing d'origine : les scénarios temporels (beaconing) perdent leur rythme.
@@ -619,7 +619,7 @@ sudo tcpreplay -i eth0 --pps=1000 --stats=5 cap.pcap
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -642,4 +642,4 @@ sudo tcpreplay -i eth0 --pps=1000 --stats=5 cap.pcap
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - tcpdump|tcpdump]] · [[Outil - tshark|tshark]] · [[Outil - Wireshark|Wireshark]] · [[Outil - Scapy|Scapy]]
+**Liens :** [[Tools| Outils]] · [[Outil - tcpdump|tcpdump]] · [[Outil - tshark|tshark]] · [[Outil - Wireshark|Wireshark]] · [[Outil - Scapy|Scapy]]

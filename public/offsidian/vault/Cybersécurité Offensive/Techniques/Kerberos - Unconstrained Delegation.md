@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔓 Kerberos — Unconstrained Delegation
+# Kerberos — Unconstrained Delegation
 
 > [!info] **En 1 phrase**
 > La délégation non contrainte fait que le service **garde le TGT** de chaque utilisateur dans sa mémoire :
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -29,7 +29,7 @@ flowchart LR
     A["Attaquant (SYSTEM)"] -->|"monitor + coerce<br>puis vol du TGT"| C
 ```
 
-> [!info] 💡 **Pourquoi c'est dangereux**
+> [!info] **Pourquoi c'est dangereux**
 > Normalement, seul le **TGS** (le ticket du service) circule. Avec `TRUSTED_FOR_DELEGATION`
 > (bit `0x80000` de `userAccountControl`), le KDC confie au service le **TGT brut** de l'utilisateur
 > afin qu'il puisse le rejouer vers d'autres services. Le service peut donc s'impersonner
@@ -37,7 +37,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation — vol d'un TGT d'admin
+## Exploitation — vol d'un TGT d'admin
 
 > Nécessite : **SYSTEM sur la machine compromise** (celle qui a la délégation).
 
@@ -71,7 +71,7 @@ secretsdump.py -just-dc -k domain/dc\$@dc.domain.local
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -83,20 +83,20 @@ secretsdump.py -just-dc -k domain/dc\$@dc.domain.local
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Coerce + Unconstrained = DCSync**
+> [!tip] **Coerce + Unconstrained = DCSync**
 > On coerce le DC, on vole son TGT, puis on fait `lsadump::dcsync` : c'est le chemin le plus court vers le hash **krbtgt**.
 
-> [!warning] ⚠️ **Les DC ont presque TOUJOURS la délégation non contrainte** — et le compte `DC$` a le droit **DCSync**. C'est la cible classique du trio "coerce + délégation + DCSync".
+> [!warning] **Les DC ont presque TOUJOURS la délégation non contrainte** — et le compte `DC$` a le droit **DCSync**. C'est la cible classique du trio "coerce + délégation + DCSync".
 
-> [!warning] ⚠️ **Piège** : coerce via une **IP** peut ne ramener que du **NTLM**. Force un **hostname** (FQDN) pour obtenir un ticket Kerberos utilisable.
+> [!warning] **Piège** : coerce via une **IP** peut ne ramener que du **NTLM**. Force un **hostname** (FQDN) pour obtenir un ticket Kerberos utilisable.
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [InternalAllTheThings — Kerberos Delegation](https://github.com/swisskyrepo/InternalAllTheThings/tree/main/docs/active-directory)
 > - [Harmj0y — Another Word on Delegation](https://blog.harmj0y.net/activedirectory/another-word-on-delegation/)
 > - [The Hacker Recipes — Delegations](https://www.thehacker.recipes/ad/movement/kerberos/delegations)
 
-➡️ **Liens :** [[Kerberos Delegation|🎯 Hub Délégation]] · [[Kerberos - Constrained Delegation|🔗 Constrained]] · [[Kerberos - RBCD (Resource-Based Constrained Delegation)|🧬 RBCD]] · [[Coerce - PrinterBug et PetitPotam|🧲 Coerce]] · [[Kerberos - Le protocole|👑 Kerberos]]
+**Liens :** [[Kerberos Delegation| Hub Délégation]] · [[Kerberos - Constrained Delegation| Constrained]] · [[Kerberos - RBCD (Resource-Based Constrained Delegation)| RBCD]] · [[Coerce - PrinterBug et PetitPotam| Coerce]] · [[Kerberos - Le protocole| Kerberos]]

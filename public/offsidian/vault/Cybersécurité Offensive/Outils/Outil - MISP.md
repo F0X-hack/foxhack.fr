@@ -1,11 +1,11 @@
 ---
 title: "Outil - MISP"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: 2.5.44 (2026) ; 2.5.42 = release sécurité (2026-06-22)
 licence: AGPL-3.0
@@ -16,20 +16,20 @@ site: https://www.misp-project.org
 doc: https://misp.github.io/MISP/
 ---
 
-# 🔎 MISP — Plateforme de partage de Threat Intelligence
+# MISP — Plateforme de partage de Threat Intelligence
 
 > [!info] **En 1 phrase**
 > MISP (Malware Information Sharing Platform) est une plateforme open source de partage de threat intelligence : elle centralise événements, indicateurs de compromission (IoC), galaxies de taxonomies et flux synchronisés entre organisations.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | MISP — Malware Information Sharing Platform |
 | Description | Plateforme de partage de threat intelligence : centralise événements, IoC, galaxies, taxonomies et synchronisation inter-organisations |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Threat Intelligence / IoC Management |
 | Fonction principale | Centraliser, enrichir, corréler et partager les indicateurs de compromission et les analyses d'attaques |
 | Type d'outil | Serveur web (PHP/MySQL) + API REST + clients (PyMISP) |
@@ -50,7 +50,7 @@ doc: https://misp.github.io/MISP/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 MISP est un serveur de threat intel qui modélise la connaissance en **événements** (une attaque, un incident), chacun contenant des **attributs** (les IoC : IP, hash, domaines, emails) reliés par des **relations**. Chaque objet peut être tagué avec une **galaxie** (MITRE ATT&CK, malwares, ransomware, etc.) pour être catégorisé et recherchable. C'est la pierre angulaire d'un SOC : centraliser les IoC, les enrichir et les partager en automatique.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Deux voies : Docker Compose officiel (recommandée) ou installation classique LAMP :
 
@@ -107,14 +107,14 @@ ansible-playbook -i inventory.yml playbooks/site.yml
 
 Première connexion : `https://<ip>/users/login` avec les identifiants par défaut fournis par le déploiement Docker ; changer immédiatement le mot de passe et configurer le nom de l'organisation.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Changer les identifiants par défaut et la clé de chiffrement (`encryption_key`) dès la première connexion.
 > - Activer HTTPS (reverse proxy ou TLS natif) avant toute synchronisation.
 > - Les modules MISP (enrichissement) nécessitent un service externe `misp-modules` à déployer séparément.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -133,7 +133,7 @@ Première connexion : `https://<ip>/users/login` avec les identifiants par défa
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -149,7 +149,7 @@ Flux type : un analyste (ou un script) crée un événement → ajoute des attri
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -204,7 +204,7 @@ for e in misp.search_events(limit=5):
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Paramètre | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -225,7 +225,7 @@ for e in misp.search_events(limit=5):
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -277,7 +277,7 @@ misp.add_event(event, pythonify=True)
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. Activer un feed : menu `Sync Actions → Feeds` → activer le feed `CIRCL` (événements partagés) et lancer `Fetch all feed events`.
 2. Créer un événement d'incident : `Add Event` → info `INC-2026-042 - Emotet via malspam`, distribution `Community only`.
@@ -289,7 +289,7 @@ misp.add_event(event, pythonify=True)
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Remontée automatique d'IoC depuis un honeypot
 
@@ -339,7 +339,7 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -352,7 +352,7 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -368,7 +368,7 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -411,7 +411,7 @@ alert dns any any -> any any (msg:"MISP IoC - C2 domain";
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — cron : push des IP du honeypot Cowrie vers MISP
@@ -435,7 +435,7 @@ with open("/tmp/ioc_domains.txt", "w") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 L'API renvoie du **JSON** : `response[]` contient les `Event` avec leurs `Attribute[]` (champs `value`, `type`, `category`, `to_ids`, `timestamp`). Les exports peuvent aussi être produits en CSV, MISP XML, STIX, OpenIOC.
 
@@ -464,7 +464,7 @@ for ev in r.json().get("response", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 MISP (API restSearch) → SIEM (Elastic/Splunk/Graylog) → liste de blocage
@@ -475,9 +475,9 @@ MISP ↔ TheHive / Cortex → cas d'incident et enrichissement
 MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - OpenCTI|🔎 OpenCTI]] — plateforme STIX complémentaire (synchronisation)
-- [[Outils/Outil - YARA|🔎 YARA]] — hash/signatures issus des analyses croisés avec les IoC
+- [[Tools| Outils]]
+- [[Outils/Outil - OpenCTI| OpenCTI]] — plateforme STIX complémentaire (synchronisation)
+- [[Outils/Outil - YARA| YARA]] — hash/signatures issus des analyses croisés avec les IoC
 - [[Outil - Cowrie]] — honeypot SSH alimentant MISP en IP attaquantes
 - [[Outil - Canarytokens]] — canary triggers remontant des incidents dans MISP
 - [[Outil - Elastic]] — ingestion des IoC MISP pour corrélation
@@ -486,7 +486,7 @@ MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -500,7 +500,7 @@ MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Corrélation** : le moteur indexe chaque attribut ; sur les grosses instances, désactiver la corrélation sur les types peu discriminants (emails, filename) pour limiter la charge.
 - **Feeds** : l'import massif de feeds peut saturer CPU/MySQL : planifier les fetches (cron) et importer par lots.
@@ -513,7 +513,7 @@ MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -549,7 +549,7 @@ MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Accès** : UI et API protégées par comptes/MFA ; clés API par service avec privilèges minimaux et rotation.
 - **Chiffrement** : HTTPS obligatoire (reverse proxy) ; base MySQL et sauvegardes chiffrées.
@@ -560,7 +560,7 @@ MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas un SIEM** : MISP partage des IoC, ne fait pas de corrélation temps réel sur les logs.
 - **Qualité des données** : la valeur dépend de la rigueur des contributeurs (IoC périmés, mal tagués).
@@ -571,7 +571,7 @@ MISP → IDS/EDR (IoC to_ids) → règles Suricata/Snort, blocs DNS
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Créer un événement
@@ -599,7 +599,7 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -608,11 +608,11 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 | **Commande principale** | API `POST /events` + `POST /attributes` ; recherche via `/events/restSearch` |
 | **Alternative principale** | OpenCTI, ThreatConnect, Abuse.ch (feeds) |
 | **Concepts importants** | Event, Attribute, Galaxy, Taxonomy, Warninglist, Feed, Synchronisation, Distribution |
-| **Liens associés** | [[Outils/Outil - OpenCTI|🔎 OpenCTI]] · [[Outils/Outil - YARA|🔎 YARA]] |
+| **Liens associés** | [[Outils/Outil - OpenCTI| OpenCTI]] · [[Outils/Outil - YARA| YARA]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -624,22 +624,22 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 Activez la **corrélation** par défaut et utilisez `restSearch` avec le filtre `tag`: vous transformez MISP en moteur de recherche d'attaques liées (mêmes acteurs, mêmes outils).
+> [!tip] Activez la **corrélation** par défaut et utilisez `restSearch` avec le filtre `tag`: vous transformez MISP en moteur de recherche d'attaques liées (mêmes acteurs, mêmes outils).
 
-> [!warning] ⚠️ Un événement partagé en `distribution: 3` devient visible de toutes les organisations connectées : ne jamais y mettre d'infrastructure interne ou d'informations personnelles.
+> [!warning] Un événement partagé en `distribution: 3` devient visible de toutes les organisations connectées : ne jamais y mettre d'infrastructure interne ou d'informations personnelles.
 
-> [!tip] 💡 Renseignez `first_seen`/`last_seen` sur les attributs : les IoC expirés (plus vus depuis des mois) doivent être retirés ou marqués, sinon ils génèrent des alertes mortes.
+> [!tip] Renseignez `first_seen`/`last_seen` sur les attributs : les IoC expirés (plus vus depuis des mois) doivent être retirés ou marqués, sinon ils génèrent des alertes mortes.
 
-> [!warning] ⚠️ L'import de feeds non modérés introduit du bruit : activez-les en mode « proposé » (import manuel) avant de passer en automatique, et surveillez les doublons entre feeds.
+> [!warning] L'import de feeds non modérés introduit du bruit : activez-les en mode « proposé » (import manuel) avant de passer en automatique, et surveillez les doublons entre feeds.
 
-> [!warning] ⚠️ **Piège** : une clé API compromis = accès à tous les événements.
+> [!warning] **Piège** : une clé API compromis = accès à tous les événements.
 > Stockez les clés dans un coffre, limitez par service, activez la rotation (`Security.authkey_rotate`).
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -664,4 +664,4 @@ curl -k -H "Authorization: <authkey>" -H "Accept: application/json" \
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - OpenCTI|🔎 OpenCTI]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - OpenCTI| OpenCTI]] · [[Outils/Outil - YARA| YARA]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

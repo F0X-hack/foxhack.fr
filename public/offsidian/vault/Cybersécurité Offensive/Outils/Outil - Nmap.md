@@ -1,11 +1,11 @@
 ---
 title: "Outil - Nmap"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 7.991
 licence: Nmap Public Source License (NPSL, basée sur la GPLv2)
@@ -16,14 +16,14 @@ site: https://nmap.org
 doc: https://nmap.org/book/man.html
 ---
 
-# 🕵️ Nmap — Reconnaissance & Scan
+# Nmap — Reconnaissance & Scan
 
 > [!info] **En 1 phrase**
 > Nmap (« Network Mapper ») est le scanner de ports de référence pour cartographier un réseau, identifier services, versions, OS et déclencher des scripts d'énumération (NSE).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -48,7 +48,7 @@ doc: https://nmap.org/book/man.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Nmap est l'outil central de la phase de **scan & énumération** : il découvre les hôtes vivants, les ports ouverts, les versions de services et le système d'exploitation. Il s'utilise en scan **actif** (il envoie des paquets à la cible) — donc uniquement sur des cibles autorisées. Son moteur de scripts **NSE** (Nmap Scripting Engine) permet d'aller beaucoup plus loin : énumération SMB, brute-force, détection de vulnérabilités, etc. C'est le premier outil lancé sur toute machine de THM/HTB/Bug Bounty.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian/Ubuntu/Kali · Arch · Fedora/RHEL · macOS · Docker
@@ -102,14 +102,14 @@ git clone https://github.com/nmap/nmap && cd nmap
 ./configure && make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - `-sS`, `-O`, `-sU` nécessitent **root** (sockets raw) ; sans root, Nmap bascule en `-sT`.
 > - Dépendances de compilation : `libpcap-dev`, `libssl-dev` (optionnel), `lua5.4-dev`, `flex`, `bison`, `libdnet`.
 > - Windows : driver **Npcap** requis pour les paquets bruts.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Nmap n'utilise **pas** de fichier de configuration utilisateur type `.nmaprc` (confirmé par les développeurs). La configuration passe par des **fichiers de données** et des **options CLI**.
 
@@ -125,7 +125,7 @@ Nmap n'utilise **pas** de fichier de configuration utilisateur type `.nmaprc` (c
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 La suite Nmap est composée de plusieurs programmes distincts (dépôt `nmap/nmap`) :
 
@@ -139,7 +139,7 @@ Flux d'exécution : probes via sockets raw (Unix, root) ou Npcap (Windows) ; ré
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -174,7 +174,7 @@ sudo nmap -p 80 --script http-enum --script-args http-enum.displayall 10.10.10.1
 sudo nmap -sS -T1 -f --data-length 200 -D 8.8.8.8,1.1.1.1 -Pn 10.10.10.10
 ```
 
-### 🧩 Scripts NSE utiles
+### Scripts NSE utiles
 
 ```bash
 sudo nmap -p 445 --script smb-enum-shares,smb-os-discovery 10.10.10.10
@@ -186,7 +186,7 @@ Scripts fréquents : `dns-zone-transfer`, `ftp-anon`, `smb-vuln-ms17-010`, `http
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -218,7 +218,7 @@ Scripts fréquents : `dns-zone-transfer`, `ftp-anon`, `smb-vuln-ms17-010`, `http
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -257,7 +257,7 @@ sudo nmap -sS -T1 -f --data-length 200 -D 8.8.8.8,1.1.1.1 -Pn 10.10.10.10
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Découverte** : `nmap -sn 10.10.10.0/24` → 3 hôtes vivants, on cible 10.10.10.10.
 2. **Scan complet des ports** : `sudo nmap -p- --min-rate 4000 -oN allports 10.10.10.10` → 22, 80, 8080.
@@ -268,7 +268,7 @@ sudo nmap -sS -T1 -f --data-length 200 -D 8.8.8.8,1.1.1.1 -Pn 10.10.10.10
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Énumération HTTP + vérification MS17-010
 
@@ -292,7 +292,7 @@ sudo nmap -sV -iL cibles.txt --exclude 10.10.10.10 -oG scan.gnmap
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -305,7 +305,7 @@ sudo nmap -sV -iL cibles.txt --exclude 10.10.10.10 -oG scan.gnmap
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -319,7 +319,7 @@ sudo nmap -sV -iL cibles.txt --exclude 10.10.10.10 -oG scan.gnmap
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -365,7 +365,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scan de plusieurs cibles, un rapport par hôte
@@ -387,7 +387,7 @@ for host in nm.all_hosts():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Nmap produit 4 formats : normal (`-oN`), XML (`-oX`), greppable (`-oG`), « script kiddie » (`-oS`). `-oA` combine normal/XML/greppable.
 
@@ -414,9 +414,9 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Masscan]] — scan UDP/grandes portées ultra-rapide
 - [[Outil - RustScan]] — 65 535 ports en quelques secondes, relais vers Nmap
 - [[Outil - naabu]] — scanner Go avec sortie JSON
@@ -424,12 +424,12 @@ for host in tree.getroot().findall('host'):
 - [[Outil - tshark]] / [[Outil - tcpdump]] — validation des échanges réseau
 - [[Outil - nikto]] / [[Outil - nuclei]] — complément de scan web
 - [[Outil - Hydra]] — brute-force sur les services identifiés
-- [[02 - Scan & Énumération|🔍 Scan & Énum]] · [[01 - Reconnaissance|🕵️ Reconnaissance]]
-- [[Techniques/Virtual Hosts|🌐 Virtual Hosts]]
+- [[02 - Scan & Énumération| Scan & Énum]] · [[01 - Reconnaissance| Reconnaissance]]
+- [[Techniques/Virtual Hosts| Virtual Hosts]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -444,7 +444,7 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Scan par défaut : **1000 ports les plus fréquents** (`nmap-services`), `-F` = 100, `--top-ports N` adapte.
 - Parallélisation dynamique : `--min-parallelism`, `--min-rate`, `--max-retries` et templates `-T*` pilotent probes simultanées et timeouts RTT.
@@ -456,7 +456,7 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -482,7 +482,7 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permission** : le scan actif nécessite root ; à n'utiliser que sur des cibles autorisées (cadre légal des tests d'intrusion).
 - **Faux négatifs** : une absence de réponse ne prouve pas que le port est fermé (firewall silencieux, IDS). Corréler avec Masscan/naabu.
@@ -491,7 +491,7 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Ne détecte pas les vulnérabilités de façon exhaustive : `--script vuln` ne couvre qu'une fraction des CVE.
 - Scan UDP très lent : limiter aux top-ports sur les réseaux larges.
@@ -502,7 +502,7 @@ for host in tree.getroot().findall('host'):
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Découverte d'hôtes
@@ -533,7 +533,7 @@ sudo nmap -sC -sV -oX rapport.xml 10.10.10.10
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -546,7 +546,7 @@ sudo nmap -sC -sV -oX rapport.xml 10.10.10.10
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -558,14 +558,14 @@ sudo nmap -sC -sV -oX rapport.xml 10.10.10.10
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours lancer `-p-` d'abord, puis `-sC -sV` seulement sur les ports ouverts : 10× plus rapide et plus fiable.
 > - Ajouter `-Pn` systématiquement sur THM/HTB : beaucoup de machines filtrent ICMP.
 > - Sauvegarder chaque scan avec `-oA base` : 3 formats pour le rapport et la reprise (`--resume`).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - UDP est oublié 9 fois sur 10 : un port UDP ouvert (SNMP 161, DNS 53) est souvent la porte d'entrée.
 > - `-A` et `-sC` font du bruit : sur une cible réelle, adapter le timing (`-T1`, sans scripts).
 > - Faux négatifs avec `-T5` : perte de paquets, timeouts ; re-vérifier les ports importants à un timing plus bas.
@@ -573,7 +573,7 @@ sudo nmap -sC -sV -oX rapport.xml 10.10.10.10
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ sudo nmap -sC -sV -oX rapport.xml 10.10.10.10
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[02 - Scan & Énumération|🔍 Scan & Énum]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Techniques/Virtual Hosts|🌐 Virtual Hosts]]
+**Liens :** [[Tools| Outils]] · [[02 - Scan & Énumération| Scan & Énum]] · [[01 - Reconnaissance| Reconnaissance]] · [[Techniques/Virtual Hosts| Virtual Hosts]]

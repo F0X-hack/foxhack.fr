@@ -1,11 +1,11 @@
 ---
 title: "Outil - Wifiphisher"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: v1.4 (paquet Kali : 1.4+git20260522)
 licence: GPL-3.0
@@ -16,20 +16,20 @@ site: https://wifiphisher.org/
 doc: https://github.com/wifiphisher/wifiphisher
 ---
 
-# 📡 Wifiphisher — Wireless & Réseau
+# Wifiphisher — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Outil d'**evil twin / rogue AP** qui clône un réseau WiFi et sert un **portail captif de phishing** (templates de « mise à jour du routeur », de login, etc.) pour voler la passphrase WPA ou des identifiants — la pièce maîtresse du social engineering WiFi.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | wifiphisher |
 | Description | Framework de rogue AP / evil twin : clône le SSID d'une cible, déauthentifie ses clients et sert un portail captif de phishing (templates « firmware update », login, connectivity check…) |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque WiFi (social engineering / evil twin) |
 | Fonction principale | Vol de passphrase WPA/WPA2 et d'identifiants via portail captif |
 | Type d'outil | Framework (Python + binaires externes hostapd/dnsmasq/aircrack-ng) |
@@ -50,7 +50,7 @@ doc: https://github.com/wifiphisher/wifiphisher
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `wifiphisher` crée un **point d'accès jumeau** portant le SSID de la victime : le client se connecte au faux AP (souvent via une deauth du vrai) et reçoit un **portail captif** prêt à l'emploi. Les **templates** (`firmware-update`, `login`, `connectivity-check`, `wifi-password`, `oauth-login`, …) imitent les messages légitimes (ex: « firmware du routeur à mettre à jour, entrez la clé WiFi »). Une fois la passphrase récoltée, il vérifie qu'elle correspond bien au vrai réseau avant de l'afficher.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -138,7 +138,7 @@ sudo python3 setup.py install
 # vérifier : wifiphisher --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Deux cartes Wi-Fi recommandées : une pour le rogue AP (`-aI`), une pour la deauth/écoute (`-eI`).
 > - Dépendances `hostapd`, `dnsmasq`, `aircrack-ng`, `iptables` : le `setup.py` les installe sur Kali.
 > - Driver compatible **monitor mode + AP mode** (hostapd) : toutes les cartes ne supportent pas le mode AP simultané.
@@ -146,7 +146,7 @@ sudo python3 setup.py install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Wifiphisher se configure **en ligne de commande** ; les templates (textes, langues, pages) sont **personnalisables** dans `templates/`.
 
@@ -165,7 +165,7 @@ Wifiphisher se configure **en ligne de commande** ; les templates (textes, langu
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Wifiphisher orchestre un ensemble de binaires Linux autour d'un noyau Python :
 
@@ -181,7 +181,7 @@ Les templates sont des dossiers HTML statiques + fichiers de config (langues, pr
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p wifi-password --no-deauth
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p wifi-password --no-deauth
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -274,7 +274,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p freebox-update --logging
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : récupérer la clé WPA2 d'une "Box SFR-4567".**
 
@@ -292,7 +292,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p freebox-update --logging
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Template « oauth-login » pour voler des identifiants de comptes
 
@@ -341,7 +341,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p wifi-password --no-deauth
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -353,7 +353,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p wifi-password --no-deauth
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -368,7 +368,7 @@ sudo wifiphisher -aI wlan0 -e "Freebox-ABC" -p wifi-password --no-deauth
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -408,7 +408,7 @@ alert wlan any any -> any any (msg:"Possible evil twin - SSID duplication"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Exemple : script d'audit social engineering (test autorisé, période contrôlée)
@@ -446,7 +446,7 @@ scan_essids()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie console donne l'état de l'attaque ; les **credentials et appareils** sont journalisés avec `--logging` (fichiers texte/dossier de logs). La passphrase trouvée est **vérifiée** puis affichée :
 
@@ -475,7 +475,7 @@ for mac in macs:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 wifiphisher (rogue AP) → portail captif → passphrase → connexion au réseau cible
@@ -484,7 +484,7 @@ wifiphisher (templates) ← personalisation → scripts d'audit social engineeri
 wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - aircrack-ng]] — capture/vérification du handshake (validation de la clé récoltée)
 - [[Outil - mdk4]] — deauth massive en amont de la bascule
 - [[Outil - bettercap]] — MITM/appui du scénario (dns.spoof vers le portail)
@@ -492,7 +492,7 @@ wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -505,7 +505,7 @@ wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Charge CPU faible : le gros du travail (hostapd, dnsmasq, serveur web) est léger sur un poste standard.
 - Le **nombre de clients** simultanés dépend de la carte AP (hostapd) — quelques dizaines réalistes en USB.
@@ -515,7 +515,7 @@ wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -551,7 +551,7 @@ wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - Wifiphisher est un outil de **phishing actif** : son usage sans autorisation est illégal dans la plupart des juridictions.
 - Il manipule **iptables, hostapd, dnsmasq** en root : à ne lancer que sur un système dédié ou une VM contrôlée.
@@ -562,7 +562,7 @@ wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Nécessite un **client connecté au moment de l'attaque** : sans victime, pas de capture.
 - L'**evil twin** est détectable par WIDS/inventaire (BSSID différent, OUI inconnu).
@@ -573,7 +573,7 @@ wifiphisher → rapport (--logging) → SIEM / documentation d'audit
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Assistant interactif complet
@@ -600,7 +600,7 @@ sudo wifiphisher -aI wlan0 -e "Box-1234" -p firmware-update --dns 8.8.8.8
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -609,11 +609,11 @@ sudo wifiphisher -aI wlan0 -e "Box-1234" -p firmware-update --dns 8.8.8.8
 | **Commande principale** | `sudo wifiphisher -aI wlan0 -e "Box-1234" -p firmware-update` |
 | **Alternative principale** | fluxion / airbase-ng + hostapd manuel |
 | **Concepts importants** | Rogue AP, evil twin, portail captif, deauth, hostapd/dnsmasq, templates |
-| **Liens associés** | [[Techniques/Attaques WiFi - Rogue AP\|🎭 Rogue AP & MITM]] · [[Outil - mdk4]] · [[Outil - aircrack-ng]] |
+| **Liens associés** | [[Techniques/Attaques WiFi - Rogue AP\| Rogue AP & MITM]] · [[Outil - mdk4]] · [[Outil - aircrack-ng]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -626,17 +626,17 @@ sudo wifiphisher -aI wlan0 -e "Box-1234" -p firmware-update --dns 8.8.8.8
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 Les **templates** sont dupliquables et personnalisables dans `wifiphisher/templates/` : adapter le texte au contexte (langue, fournisseur) multiplie le taux de succès. `-eI` avec une seconde carte stabilise la deauth.
+> [!tip] Les **templates** sont dupliquables et personnalisables dans `wifiphisher/templates/` : adapter le texte au contexte (langue, fournisseur) multiplie le taux de succès. `-eI` avec une seconde carte stabilise la deauth.
 
-> [!tip] 💡 Utilise `--logging` systématiquement : le rapport final (appareils capturés, clés, timestamps) est indispensable pour un test autorisé.
+> [!tip] Utilise `--logging` systématiquement : le rapport final (appareils capturés, clés, timestamps) est indispensable pour un test autorisé.
 
-> [!warning] ⚠️ L'attaque est **bruyante** (le vrai AP est perturbé par les deauth) et peut déclencher des alarmes WIDS. Sans client connecté au moment de l'attaque, le portail ne sert à rien — le timing doit cibler un moment d'activité. Ne pas oublier que c'est du phishing : rester strictement dans le cadre d'un **test autorisé**.
+> [!warning] L'attaque est **bruyante** (le vrai AP est perturbé par les deauth) et peut déclencher des alarmes WIDS. Sans client connecté au moment de l'attaque, le portail ne sert à rien — le timing doit cibler un moment d'activité. Ne pas oublier que c'est du phishing : rester strictement dans le cadre d'un **test autorisé**.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -659,8 +659,8 @@ sudo wifiphisher -aI wlan0 -e "Box-1234" -p firmware-update --dns 8.8.8.8
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel wifiphisher](https://github.com/wifiphisher/wifiphisher)
 > - [Kali Package Tracker — wifiphisher (1.4+git20260522)](https://pkg.kali.org/pkg/wifiphisher)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP & MITM]] · [[Techniques/Attaques WiFi - Enterprise|🏢 Enterprise (EAP)]] · [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Outil - mdk4]] · [[Outil - aircrack-ng]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP & MITM]] · [[Techniques/Attaques WiFi - Enterprise| Enterprise (EAP)]] · [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Outil - mdk4]] · [[Outil - aircrack-ng]]

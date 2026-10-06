@@ -1,11 +1,11 @@
 ---
 title: "Outil - ncrack"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 0.7 (24 août 2019)
 licence: GPLv2
@@ -16,20 +16,20 @@ site: https://nmap.org/ncrack/
 doc: https://nmap.org/ncrack/man.html
 ---
 
-# 💥 ncrack — Exploitation & Cracking
+# ncrack — Exploitation & Cracking
 
 > [!info] **En 1 phrase**
 > ncrack est l'outil de cracking réseau haute vitesse de la suite Nmap : il brute-force les authentifications de services (SSH, RDP, HTTP, SMB, FTP, VNC...) en exploitant des connexions concurrentes par hôte.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | ncrack — Network Authentication Cracker |
 | Description | Brute-force en ligne haute vitesse des services d'authentification, issu de la suite Nmap, avec connexions concurrentes par hôte et contrôles de débit fins |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Brute-force / credential stuffing en ligne |
 | Fonction principale | Tester des combinaisons utilisateur/mot de passe sur des services distants (SSH, RDP, HTTP, SMB, FTP, VNC...) |
 | Type d'outil | CLI (C/C++, modèle Nmap) |
@@ -50,7 +50,7 @@ doc: https://nmap.org/ncrack/man.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ncrack (Network Authentication Cracker) fait partie de la suite Nmap. Contrairement à hydra, il a été conçu pour **monter en charge** : il ouvre plusieurs connexions simultanées vers le même hôte pour différents mots de passe, ce qui le rend très rapide sur les services qui autorisent les connexions parallèles. Les services supportés incluent RDP, SSH, HTTP/HTTPS, SMB, FTP, Telnet, VNC, POP3, IMAP et bien d'autres (MySQL, MongoDB, Wordpress, DICOM, MQTT, CVS, SMB2...).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -123,14 +123,14 @@ git clone https://github.com/nmap/ncrack.git && cd ncrack
 ./configure && make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - La compilation nécessite OpenSSL (headers de dev) et le moteur Nsock fourni dans le dépôt.
 > - ncrack est conçu pour les **systèmes Unix** ; le support Windows via releases binaires est fonctionnel mais moins testé.
 > - Pour les formats les plus récents ou des protocoles exotiques, vérifier la présence du module dans `ncrack -h`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ncrack se pilote **exclusivement par options de ligne de commande** : aucun fichier de configuration ni variable d'environnement. Le principal « réglage » est la spécification de service, qui définit le module et le port par défaut.
 
@@ -147,7 +147,7 @@ ncrack se pilote **exclusivement par options de ligne de commande** : aucun fich
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ncrack est écrit en C/C++ et repose sur **Nsock**, la bibliothèque réseau événementielle de Nmap. Chaque service disposé derrière un **module** implémente son propre protocole d'authentification et ses options spécifiques.
 
@@ -175,7 +175,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -210,7 +210,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -r -oN resume.log
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -244,7 +244,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -r -oN resume.log
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -297,7 +297,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -r -oN /tmp/etape2.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Reconnaissance** — identifier le service et le port avec Nmap :
    ```bash
@@ -318,7 +318,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -r -oN /tmp/etape2.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : RDP sur un parc avec timing contrôlé
 
@@ -354,7 +354,7 @@ ncrack -U users.txt -P pass.txt http://10.10.20.15 --port 8080 -T3
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 ncrack intervient dans la phase **exploitation / Credential Access** : il transforme une liste de services exposés en liste d'identifiants valides.
 
@@ -373,7 +373,7 @@ Nmap (-sV) → ncrack (SSH/RDP/SMB) → Identifiants valides → crackmapexec / 
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -386,7 +386,7 @@ Nmap (-sV) → ncrack (SSH/RDP/SMB) → Identifiants valides → crackmapexec / 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 Contrairement au cracking hors-ligne, ncrack est **bruyant et détectable** : chaque tentative est une connexion réelle qui laisse des traces dans les logs du service et de l'OS.
 
@@ -428,7 +428,7 @@ alert tcp any any -> any 22 (msg:"Potential SSH brute force - many connections f
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Lancer ncrack sur plusieurs cibles et n'afficher que les identifiants trouvés
@@ -458,7 +458,7 @@ for service in root.iter("service"):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie par défaut est **humaine** : progression par service (`Cracking host ...`), puis à la fin la ligne `Discovered credentials for <service>://<cible> <user>:<pass>`. Deux formats exploitables sont disponibles : texte normal (`-oN`) et **XML** (`-oX`).
 
@@ -486,13 +486,13 @@ print(creds)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM / RDP → Lateral Movement
 ```
 
-- [[Tools|🧰 Outils]] — catalogue des outils du vault
+- [[Tools| Outils]] — catalogue des outils du vault
 - [[Outils/Outil - hydra|hydra]] — alternative brute-force multi-protocoles
 - [[Outil - Medusa|Medusa]] — alternative parallelisée par modules
 - [[Outil - Patator|Patator]] — brute-force/fuzzing hautement customisable
@@ -504,7 +504,7 @@ Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -518,7 +518,7 @@ Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Concurrence par hôte** : `--cl` ouvre plusieurs connexions simultanées vers le même service — c'est ce qui rend ncrack nettement plus rapide que les outils séquentiels sur RDP/SMB.
 - **Moteur Nsock** : pile événementielle non bloquante, capable de gérer des milliers de sockets sans un thread par connexion.
@@ -528,7 +528,7 @@ Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -564,7 +564,7 @@ Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Outil très bruyant** : chaque tentative est une connexion réelle — logs du service, logs système, IDS/IPS. Toute utilisation en ligne déclenche des alertes quasi certaines.
 - **Risque de DoS** : un débit mal réglé verrouille des comptes et peut paralyser un service (en particulier RDP) — c'est une forme de déni de service involontaire.
@@ -574,7 +574,7 @@ Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Modules moins nombreux que hydra** : pas de support de tous les protocoles exotiques ; vérifier `ncrack -h`.
 - **Bruyant** : conçu pour la vitesse, pas pour la furtivité ; la randomisation ne cache pas le volume.
@@ -586,7 +586,7 @@ Nmap -sV → ncrack (SSH/RDP/SMB) → Identifiants → crackmapexec / Evil-WinRM
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Brute-force SSH classique
@@ -616,7 +616,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -v 2>&1 | grep "Discovered cre
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -629,7 +629,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -v 2>&1 | grep "Discovered cre
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -642,16 +642,16 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -v 2>&1 | grep "Discovered cre
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Combine ncrack avec la sortie de **Nmap** (`-sV`) pour cibler le bon service et le bon port, sinon les tentatives échouent inutilement.
 > - En engagement, préfère un **timing prudent** (`--max-rate`) et vérifie d'abord la politique de verrouillage : un compte bloqué peut ruiner la discrétion.
 > - Utilise `--pair` pour les **credential stuffing** (fuites de mots de passe) : c'est beaucoup plus efficace qu'un brute-force pur.
 > - `-oX` permet d'intégrer les résultats au rapport XML global d'un audit Nmap.
 > - Pense à `--cl` : monte-le sur RDP/SMB (parallélisme) et baisse-le sur SSH (services fragiles).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `-T5`/`-f` peut **déclencher les verrouillages de comptes** et provoquer un DoS d'authentification sur la cible — à éviter hors lab.
 > - Les modules sont moins nombreux que chez hydra : pour des protocoles exotiques, préfère `hydra` ou `medusa`.
 > - Sur RDP, certaines cibles limitent les connexions simultanées : un débit trop élevé fait échouer les tentatives en masse (faux négatifs).
@@ -660,7 +660,7 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -v 2>&1 | grep "Discovered cre
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -683,4 +683,4 @@ ncrack -U users.txt -P pass.txt ssh://10.10.20.15 -v 2>&1 | grep "Discovered cre
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Outils/Outil - hydra|hydra]] · [[Outil - Medusa|Medusa]] · [[Outil - Patator|Patator]] · [[Outil - Nmap|Nmap]] · [[Outil - CrackMapExec|CrackMapExec]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Outils/Outil - hydra|hydra]] · [[Outil - Medusa|Medusa]] · [[Outil - Patator|Patator]] · [[Outil - Nmap|Nmap]] · [[Outil - CrackMapExec|CrackMapExec]]

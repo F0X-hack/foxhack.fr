@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🐬 Flipper Zero
+# Flipper Zero
 
 > [!info] **En 1 phrase**
 > Le **Flipper Zero** est le couteau suisse du pentester hardware : **RFID/NFC**, **Sub-GHz**,
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Faible (GUI intégrée) → Élevée (GPIO/UART scripting) |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     FZ["Flipper Zero"] --> NFC["NFC/RFID<br>125 kHz + 13.56 MHz"]
@@ -47,7 +47,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le Flipper Zero est un microcontrôleur **STM32WB55** (ARM Cortex-M4, 64 MHz, 1 Mo Flash,
 > 256 Ko RAM) doté d'un écran OLED 1.1", de capteurs RFID/NFC LF+HF, d'un émetteur
@@ -72,7 +72,7 @@ flowchart TB
     style EXFIL fill:#ffcdd2
 ```
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **STM32WB55** : double cœur Cortex-M4 (64 MHz) + Cortex-M0 (32 MHz pour BLE)
 > - **Flash** : 8 Mo (firmware + applications) — pas la même que la RAM (256 Ko)
 > - **RFID LF** : 125 kHz (EM410X, HID, Indala, HiTag, etc.) via antenne interne
@@ -83,7 +83,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Architecture matérielle
 
@@ -143,7 +143,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -168,7 +168,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### RFID/LF (125 kHz)
 
@@ -218,7 +218,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -260,7 +260,7 @@ RogueMaster : https://lab.flipper.net/?url=...&channel=RM
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres système
 
@@ -286,7 +286,7 @@ RogueMaster : https://lab.flipper.net/?url=...&channel=RM
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles (menu Flipper)
 
@@ -319,9 +319,9 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Clonage d'un badge RFID LF
+### Débutant — Clonage d'un badge RFID LF
 
 ```text
 1. Menu → RFID → Read
@@ -332,7 +332,7 @@ screen /dev/ttyACM0 115200
 6. Badge cloné !
 ```
 
-### 🟡 Intermédiaire — Capture et rejeu Sub-GHz
+### Intermédiaire — Capture et rejeu Sub-GHz
 
 ```text
 1. Menu → Sub-GHz → Read
@@ -343,7 +343,7 @@ screen /dev/ttyACM0 115200
 6. "Send" → tester le rejeu
 ```
 
-### 🔴 Avancé — BadUSB + exfiltration WiFi
+### Avancé — BadUSB + exfiltration WiFi
 
 ```text
 # Créer un script BadUSB (DuckyScript)
@@ -362,7 +362,7 @@ GUI c
 DELAY 100
 ```
 
-### ⚫ Expert — UART bridge + dump firmware via GPIO
+### Expert — UART bridge + dump firmware via GPIO
 
 ```text
 # 1. Connecter Flipper à la cible
@@ -382,7 +382,7 @@ DELAY 100
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -418,7 +418,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Red team: Clonage de badge + accès physique
 
@@ -428,7 +428,7 @@ flowchart TB
 | **Matériel** | Flipper Zero + carte T5577 vierge |
 | **Étapes** | 1. RFID → Read badge → 2. Sauvegarder → 3. Write sur T5577 |
 | **Résultat** | Badge cloné, accès physique compromis |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -445,11 +445,11 @@ flowchart LR
 | **Matériel** | Flipper Zero + antenne externe |
 | **Étapes** | 1. Sub-GHz → Read → 2. Capturer tous signaux → 3. Analyser sur PC |
 | **Résultat** | Protocoles RF identifiés, signaux réjouables |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -470,7 +470,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -503,7 +503,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -542,7 +542,7 @@ echo 'SUBSYSTEM=="input", KERNEL=="event*", ATTRS{idVendor}=="0483", ACTION=="ad
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -600,7 +600,7 @@ send_command(ser, "input press back")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -630,12 +630,12 @@ cat saved_signal.sub
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
-- [[Hardware - UART|🔌 UART]]
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - RFID et NFC| RFID/NFC]]
+- [[Hardware - UART| UART]]
+- [[Hardware - JTAG et SWD| JTAG/SWD]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -652,7 +652,7 @@ cat saved_signal.sub
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -671,7 +671,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -694,7 +694,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -737,7 +737,7 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -762,7 +762,7 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -784,7 +784,7 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -822,7 +822,7 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -843,7 +843,7 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -868,7 +868,7 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : 5V sur le GPIO peut endommager une cible 3.3V — toujours vérifier la tension avec un multimètre.
 - **Piège 2** : Les firmware custom sont souvent incompatibles entre eux — reflash complet nécessaire.
@@ -885,9 +885,9 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Flipper Zero](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/flipper-zero.md)
 > - [Flipper Zero Official](https://flipperzero.one/)
 > - [Momentum Firmware](https://github.com/Next-Flip/Momentum-Firmware)
@@ -923,4 +923,4 @@ Solution : Installer Unleashed ou Momentum
 
 ---
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]] · [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)|📡 LF]] · [[Hardware - Proxmark|📡 Proxmark]] · [[Hardware - UART|🔌 UART]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Bibliothèque technique|🏠 Index]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - RFID et NFC| RFID/NFC]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] · [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)| LF]] · [[Hardware - Proxmark| Proxmark]] · [[Hardware - UART| UART]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Bibliothèque technique| Index]]

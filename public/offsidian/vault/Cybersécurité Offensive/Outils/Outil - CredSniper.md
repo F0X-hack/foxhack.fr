@@ -1,7 +1,7 @@
 ---
 title: "Outil - CredSniper"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://github.com/ustayready/CredSniper
 doc: https://github.com/ustayready/CredSniper#readme
 ---
 
-# 🎯 CredSniper — Phishing avec support du 2FA (credential harvesting léger)
+# CredSniper — Phishing avec support du 2FA (credential harvesting léger)
 
 > [!info] **En 1 phrase**
 > CredSniper est un framework de phishing en Python/Flask qui supporte la capture d'identifiants avec un flux 2FA (token OTP), l'intégration SSL et le tunneling pour générer des URL HTTPS, avec un tracking basique.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | CredSniper |
 | Description | Framework de phishing modulaire (Flask) : pages de login clonées, capture identifiants + token 2FA, SSL via Let's Encrypt, API REST de récupération |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Credential Harvesting |
 | Type d'outil | Framework web (serveur Flask + modules) |
 | Licence | MIT (à vérifier sur le dépôt) |
@@ -48,7 +48,7 @@ doc: https://github.com/ustayready/CredSniper#readme
 
 ---
 
-## 🎯 Concept
+## Concept
 
 CredSniper, initialement publié par phin3has (Colby Prior), est un petit framework Flask conçu pour démontrer le phishing avec un **flux 2FA intégré** : il clone un site, capture l'identifiant et le mot de passe, puis affiche une page simulant une demande de code 2FA pour capturer aussi le token OTP. Il inclut la génération de certificats SSL auto-signés (via OpenSSL), un serveur HTTP/HTTPS, et un support de tunneling pour exposer l'attaque à distance.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Depuis les sources (Python 3)
 
@@ -104,7 +104,7 @@ python3 credsniper.py --help
 python3 -m pip install flask jinja2 mechanicalsoup requests
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Python 3 requis** (le dépôt d'origine Python 2 ne compile plus sur les distributions récentes).
 > - Le module Gmail utilise `mechanicalsoup` pour rejouer l'authentification réelle et déclencher le 2FA : si Google modifie ses champs de formulaire, la capture échoue (bug connu, issue #19).
 > - Le mode `--ssl` attend des certificats dans `certs/<hostname>.cert.pem` et `certs/<hostname>.privkey.pem` (script de génération ou Let's Encrypt).
@@ -112,7 +112,7 @@ python3 -m pip install flask jinja2 mechanicalsoup requests
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 CredSniper se configure principalement par **arguments en ligne de commande** et par un fichier de configuration partagé pour l'API.
 
@@ -141,7 +141,7 @@ Exemple de config JSON pour l'API :
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 CredSniper est une application Flask minimale pilotée par la classe `CredSniper()` dans `credsniper.py` :
 
@@ -155,7 +155,7 @@ Le module **gmail** reproduit le flux multi-étapes de Google (login → passwor
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -185,7 +185,7 @@ curl -s "http://10.10.20.15/creds/view?api_token=TOKEN" | python3 -m json.tool
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -202,7 +202,7 @@ curl -s "http://10.10.20.15/creds/view?api_token=TOKEN" | python3 -m json.tool
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -248,7 +248,7 @@ watch -n 5 "curl -s 'http://10.10.20.15/creds/view?api_token=TOKEN' | jq '.'"
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Cloner et installer les dépendances.**
    ```bash
@@ -268,7 +268,7 @@ watch -n 5 "curl -s 'http://10.10.20.15/creds/view?api_token=TOKEN' | jq '.'"
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : phishing avec flux 2FA complet
 
@@ -309,7 +309,7 @@ curl -s "http://10.10.20.15/creds/seen/1?api_token=TOKEN" -X POST
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -322,7 +322,7 @@ curl -s "http://10.10.20.15/creds/seen/1?api_token=TOKEN" -X POST
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -337,7 +337,7 @@ curl -s "http://10.10.20.15/creds/seen/1?api_token=TOKEN" -X POST
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -377,7 +377,7 @@ alert tcp any any -> any 80 (msg:"Potential CredSniper phishing form POST"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer le harvester et surveiller l'API
@@ -407,7 +407,7 @@ while True:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les captures sont émises sur **stdout** (mode `--verbose`) et stockées en **JSON** dans `.sniped` puis exposées par l'**API REST** (`/creds/view`). Le format est interrogeable avec `jq`.
 
@@ -434,9 +434,9 @@ with open(".sniped") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Evilginx2]] — la « vraie » alternative proxy pour un bypass 2FA persistant
 - [[Outil - SocialFish]] — clone statique simple, complément pédagogique
 - [[Outil - GoPhish]] — envoi des emails de phishing dont le lien pointe vers CredSniper
@@ -450,7 +450,7 @@ SocialFish → clone simple → CredSniper → 2FA capture → Evilginx2 (sessio
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -464,7 +464,7 @@ SocialFish → clone simple → CredSniper → 2FA capture → Evilginx2 (sessio
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Framework **très léger** (Flask) : un VPS de petite taille (1 vCPU / 1 Go RAM) gère facilement des dizaines de victimes simultanées.
 - Le clonage statique limite la charge : pas de réécriture de contenu en vol, contrairement aux reverse proxies.
@@ -476,7 +476,7 @@ SocialFish → clone simple → CredSniper → 2FA capture → Evilginx2 (sessio
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -506,7 +506,7 @@ SocialFish → clone simple → CredSniper → 2FA capture → Evilginx2 (sessio
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Données capturées** : identifiants et tokens sont **sensibles** ; `.sniped` doit être protégé (chmod 600) et purgé en fin de mission.
 - **API REST** : protéger le `api_token` (affiché en clair au démarrage) — il donne accès à toutes les captures.
@@ -516,7 +516,7 @@ SocialFish → clone simple → CredSniper → 2FA capture → Evilginx2 (sessio
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Le flux 2FA est **simulé ou semi-réel** : il capture le code saisi mais ne fournit pas de session persistante rejouable (contrairement à Evilginx2/Modlishka).
 - Clonage **statique** : assets externes non répliqués, mises en page qui cassent, pas de réécriture d'URL.
@@ -526,7 +526,7 @@ SocialFish → clone simple → CredSniper → 2FA capture → Evilginx2 (sessio
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Phishing simple sans 2FA
@@ -553,7 +553,7 @@ jq '.' .sniped
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -566,7 +566,7 @@ jq '.' .sniped
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -579,15 +579,15 @@ jq '.' .sniped
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `--ssl` pour servir du HTTPS : les navigateurs signalent moins de risques avec un certificat (même auto-signé, l'alerte peut être dépassée par un utilisateur pressé).
 > - En lab, testez le flux 2FA avec `--twofactor` pour comprendre comment une victime peut croire qu'elle est sur le vrai service.
 > - Mappez le domaine cible vers votre IP dans le fichier `hosts` pour des tests 100 % locaux.
 > - Consommez l'API `/creds/view` pour alimenter automatiquement votre rapport plutôt que de copier le terminal.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le projet est ancien et basé sur Python 2 : sans fork maintenu, l'installation peut échouer sur les distributions récentes.
 > - Le **flux 2FA est simulé** : il ne capte pas un vrai token de session (contrairement à un reverse proxy type Evilginx2).
 > - Un certificat auto-signé déclenche une alerte navigateur explicite : la victime avertie se méfiera.
@@ -595,7 +595,7 @@ jq '.' .sniped
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -617,4 +617,4 @@ jq '.' .sniped
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - SocialFish|SocialFish]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SET|SET]]
+**Liens :** [[Tools| Outils]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - SocialFish|SocialFish]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SET|SET]]

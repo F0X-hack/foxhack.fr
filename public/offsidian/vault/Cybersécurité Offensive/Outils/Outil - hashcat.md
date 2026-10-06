@@ -1,11 +1,11 @@
 ---
 title: "Outil - hashcat"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 7.1.2 (2025-08-23)
 licence: MIT
@@ -16,20 +16,20 @@ site: https://hashcat.net/hashcat/
 doc: https://hashcat.net/wiki/
 ---
 
-# 💥 Hashcat — Cracking GPU/CPU haute performance
+# Hashcat — Cracking GPU/CPU haute performance
 
 > [!info] **En 1 phrase**
 > Hashcat = le cracker de hashes le plus rapide : GPU (CUDA/OpenCL) et CPU, 500+ modes (`-m`) et 7 types d'attaques (`-a`) sur les hashes d'Active Directory comme sur le Wi-Fi.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | hashcat (anciennement oclHashcat pour la version GPU) |
 | Description | Cracker de hashes hors-ligne : dictionnaire, masque, règles, combinator et hybrides, sur GPU/CPU/APU |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Cracking de mots de passe |
 | Type d'outil | CLI (avec variantes distribuées et wrappers) |
 | Licence | MIT |
@@ -46,7 +46,7 @@ doc: https://hashcat.net/wiki/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Casse des hashes **hors-ligne** à très haute vitesse grâce au parallélisme GPU. Le mode (`-m`) identifie le format : `1000` (NTLM), `13100` (Kerberoast RC4), `19700` (Kerberoast AES), `5600` (NetNTLMv2), `22000` (WPA/WPA2/WPA3 PMKID et handshake). L'attaque (`-a`) choisit la stratégie : `0` dictionnaire, `1` combinator, `3` masque (brute-force), `6`/`7` hybrides. Les **règles** (`-r best64.rule`) mutent les mots du dictionnaire. Les résultats vont dans le **potfile** (`~/.hashcat/hashcat.potfile`), relu avec `--show`.
 
@@ -64,7 +64,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -80,7 +80,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -125,14 +125,14 @@ git clone https://github.com/hashcat/hashcat && cd hashcat
 sudo make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - GPU requis pour la performance ; pilotes : AMD Linux (AMDGPU 21.50+ / ROCm 5.0+), NVIDIA (440.64+ / CUDA 9.0+), Intel (OpenCL Runtime 16.1.1+).
 > - Sans GPU, hashcat fonctionne en CPU (lent) : utiliser `-D 1` pour forcer le CPU.
 > - En VM ou sans pilote OpenCL : `--force` ignore les avertissements mais réduit la fiabilité.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -148,7 +148,7 @@ sudo make && sudo make install
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **CLI en C** : parseur d'arguments, gestion des sessions, orchestration des devices (`-I`), boucle de restauration (`--restore`).
 - **Kernels par mode** : chaque `-m` a un kernel OpenCL/CUDA/Metal dédié dans `OpenCL/` ; `-O` sélectionne les variantes optimisées.
@@ -159,7 +159,7 @@ sudo make && sudo make install
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -191,7 +191,7 @@ hashcat -m 1000 ntlm.txt mots.txt chiffres.txt -a 1
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -225,7 +225,7 @@ hashcat -m 1000 ntlm.txt mots.txt chiffres.txt -a 1
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -258,7 +258,7 @@ hashcat -m 19700 tgs_aes.txt rockyou.txt -w 3
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Capturer les hashes** — Responder (LLMNR/NBT-NS Poisoning) récupère un **NetNTLMv2** dans `hash.txt`.
 2. **Identifier le format et cracker** :
@@ -283,7 +283,7 @@ hashcat -m 19700 tgs_aes.txt rockyou.txt -w 3
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Kerberoasting complet (hashcat + règles)
 
@@ -313,7 +313,7 @@ hashcat --session wpa_scan --restore
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -326,7 +326,7 @@ hashcat --session wpa_scan --restore
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -340,7 +340,7 @@ hashcat --session wpa_scan --restore
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -373,7 +373,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle de crack par mode identifié, puis export
@@ -393,7 +393,7 @@ for name, mode in {"ntlm": 1000, "netntlmv2": 5600, "kerberoast": 13100}.items()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie de crack est du texte (statut `Cracked`, vitesses H/s, progression). Les résultats **craqués** se récupèrent via `--show` ou `-o` avec `--outfile-format`.
 
@@ -416,7 +416,7 @@ print(len(cracks), "hashes craqués")
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Responder/secretsdump/Rubeus → hashid/Name-That-Hash → hashcat → John (interop) → réutilisation
@@ -430,12 +430,12 @@ Responder/secretsdump/Rubeus → hashid/Name-That-Hash → hashcat → John (int
 - [[Outil - hcxdumptool]] — capture WiFi + conversion `.hc22000` (hcxpcapngtool)
 - [[Outil - Responder]] — capture NetNTLMv2 à cracker en mode 5600
 - [[Outil - Rubeus]] — Kerberoasting / AS-REP à cracker en 13100/19700
-- [[Tools|🧰 Outils]] global
-- [[Techniques/Password Cracking|🔓 Password Cracking]] · [[Techniques/Kerberoasting|🧀 Kerberoasting]] · [[Techniques/AS-REP Roasting|🌄 AS-REP Roasting]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS]] · [[Techniques/Dump NTDS.dit|🗄️ Dump NTDS.dit]]
+- [[Tools| Outils]] global
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Kerberoasting| Kerberoasting]] · [[Techniques/AS-REP Roasting| AS-REP Roasting]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS]] · [[Techniques/Dump NTDS.dit| Dump NTDS.dit]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -449,7 +449,7 @@ Responder/secretsdump/Rubeus → hashid/Name-That-Hash → hashcat → John (int
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse GPU** : le GPU est ~100x plus rapide que le CPU (ordre de grandeur empirique, chiffre issu de la communauté).
 - **Exemple** : un MD5 (`-m 0`) se teste en **dizaines de GH/s** sur un GPU moderne ; un bcrypt (`-m 3200`) tombe à quelques **kH/s** — d'où la supériorité des KDF lents.
@@ -459,7 +459,7 @@ Responder/secretsdump/Rubeus → hashid/Name-That-Hash → hashcat → John (int
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -485,16 +485,16 @@ Responder/secretsdump/Rubeus → hashid/Name-That-Hash → hashcat → John (int
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
-- **⚠️ CVE non patchées (v7.1.2)** : trois vulnérabilités CVSS 9.8 publient des buffer overflows — dont **CVE-2026-42482** (moteur de règles `rp_cpu.c`, déclenché par un fichier de règles malveillant) et **CVE-2026-42483** (Kerberos). PR #4618 ouverte depuis janvier 2026, non fusionnée. **Recommandations** : ne charger que des fichiers de hashes/règles **de confiance**, isoler le processus (VM/container), mettre à jour dès qu'un patch sort.
+- **CVE non patchées (v7.1.2)** : trois vulnérabilités CVSS 9.8 publient des buffer overflows — dont **CVE-2026-42482** (moteur de règles `rp_cpu.c`, déclenché par un fichier de règles malveillant) et **CVE-2026-42483** (Kerberos). PR #4618 ouverte depuis janvier 2026, non fusionnée. **Recommandations** : ne charger que des fichiers de hashes/règles **de confiance**, isoler le processus (VM/container), mettre à jour dès qu'un patch sort.
 - **Input = exécutable** : les fichiers de règles et de hashes sont du code aux yeux du moteur : traiter tout fichier tiers comme dangereux.
 - **Données sensibles** : le potfile contient les mots de passe en clair — le chiffrer/protéger, le nettoyer après engagement.
 - **Usage légal** : uniquement sur des hashes autorisés (audit, test d'intrusion, lab).
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Hors-ligne uniquement** : ne peut pas attaquer un service en ligne (contrairement à hydra/Medusa).
 - **Formats non supportés** : quelques formats exotiques ne sont pas couverts — vérifier `hashcat --help | grep -i <format>`.
@@ -505,7 +505,7 @@ Responder/secretsdump/Rubeus → hashid/Name-That-Hash → hashcat → John (int
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # NTLM (dump secretsdump) avec dictionnaire
@@ -531,7 +531,7 @@ hashcat -m 1000 ntlm.txt --show --outfile-format 2 -o cracked.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -540,11 +540,11 @@ hashcat -m 1000 ntlm.txt --show --outfile-format 2 -o cracked.txt
 | **Commande principale** | `hashcat -m <mode> -a 0 hashes.txt rockyou.txt` |
 | **Alternative principale** | John the Ripper (formats rares/CPU), Hashtopolis (distribution) |
 | **Concepts importants** | `-m` mode, `-a` attaque, règles (`-r`), masques (`?l?u?d?s?a`), potfile (`--show`) |
-| **Liens associés** | [[Outil - hashid]] · [[Outil - Name-That-Hash]] · [[Outil - John the Ripper]] · [[Outil - SecLists]] · [[Techniques/Kerberoasting|🧀 Kerberoasting]] |
+| **Liens associés** | [[Outil - hashid]] · [[Outil - Name-That-Hash]] · [[Outil - John the Ripper]] · [[Outil - SecLists]] · [[Techniques/Kerberoasting| Kerberoasting]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -557,16 +557,16 @@ hashcat -m 1000 ntlm.txt --show --outfile-format 2 -o cracked.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lance `--show` (potfile) avant de relancer : ne recasse jamais ce qui est déjà cracké.
 > - Privilégie les **règles** aux masques : un petit dictionnaire + `best64.rule` bat souvent un gros brute-force.
 > - Le GPU est ~100x plus rapide que le CPU : garde les pilotes OpenCL/CUDA à jour.
 > - Utilise `--session <nom>` pour les longues attaques : tu peux suspendre (`Ctrl+C`) et reprendre avec `--restore` sans perdre la progression.
 > - `hashcat -b` (benchmark) te dit quel mode/stratégie est viable sur ton matériel avant de lancer.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `--show` sans le même `-m` (et même fichier) ne renvoie rien.
 > - Un WPA en **PMKID** (`-m 22000`) se cracke sans client connecté, mais il faut convertir le .cap avec **hcxpcapngtool**.
 > - `-a 3` avec 8+ caractères inconnus = années de calcul : préfère dict + rules.
@@ -575,7 +575,7 @@ hashcat -m 1000 ntlm.txt --show --outfile-format 2 -o cracked.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ hashcat -m 1000 ntlm.txt --show --outfile-format 2 -o cracked.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Kerberoasting|🧀 Kerberoasting]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Kerberoasting| Kerberoasting]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS]]

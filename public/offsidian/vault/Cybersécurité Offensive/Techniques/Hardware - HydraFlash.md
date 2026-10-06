@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# ⚡ HydraFlash
+# HydraFlash
 
 > [!info] **En 1 phrase**
 > HydraFlash = le **shield NAND Flash** de l'HydraBus, conçu pour **dumper le
@@ -19,7 +19,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -31,7 +31,7 @@ statut: publie
 | **Complexité** | Moyenne → Élevée |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["NAND Flash (PCB cible)"] -->|"soudures / test pads"| B["HydraFlash shield"]
@@ -44,7 +44,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Les puces **NAND Flash** stockent le firmware et les données de routeurs, caméras, smart TV et objets connectés. HydraFlash est un shield open hardware qui se connecte à l'HydraBus v1 pour lire et écrire directement ces puces NAND. L'outil `DumpFlash.py` gère les bad blocks, la lecture en pages, et l'extraction de partitions (U-Boot, kernel, rootfs).
 
@@ -61,7 +61,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### NAND Flash vs NOR Flash
 
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -137,7 +137,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Bus NAND Flash
 
@@ -151,7 +151,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -196,7 +196,7 @@ HydraBus v1 (via HydraFlash shield)
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Mode HydraBus
 
@@ -219,7 +219,7 @@ Le firmware HydraFW supporte le mode NAND Flash natif.
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes DumpFlash
 
@@ -261,9 +261,9 @@ DumpFlash.py -i
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lecture de l'ID NAND
+### Débutant — Lecture de l'ID NAND
 
 ```bash
 # Connecter HydraBus + HydraFlash au PCB cible
@@ -272,7 +272,7 @@ python2 DumpFlash.py -d /dev/hydrabus -i
 # Résultat : Fabricant, modèle, taille de la puce
 ```
 
-### 🟡 Intermédiaire — Dump complet d'un routeur
+### Intermédiaire — Dump complet d'un routeur
 
 ```bash
 # Dump complet de 16 MB
@@ -287,7 +287,7 @@ binwalk routeur_dump.bin
 strings routeur_dump.bin | head -50
 ```
 
-### 🔴 Avancé — Extraction de credentials depuis NAND dump
+### Avancé — Extraction de credentials depuis NAND dump
 
 ```python
 #!/usr/bin/env python3
@@ -334,7 +334,7 @@ if __name__ == "__main__":
     parse_nand_dump(sys.argv[1])
 ```
 
-### ⚫ Expert — Reconstruction de filesystem JFFS2
+### Expert — Reconstruction de filesystem JFFS2
 
 ```text
 1. Dump complet de la NAND (256 MB - 1 GB)
@@ -347,7 +347,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -397,7 +397,7 @@ python3 analyze_nand.py nand_dump.bin
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Dump firmware routeur Linksys/Ethical
 
@@ -407,7 +407,7 @@ python3 analyze_nand.py nand_dump.bin
 | **Matériel** | HydraBus + HydraFlash, clips SOIC-48, PC |
 | **Étapes** | 1. Identifier NAND sur PCB<br>2. Connecter clips<br>3. Dump 16-256 MB<br>4. Analyser avec binwalk |
 | **Résultat** | Firmware complet extrait |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -425,11 +425,11 @@ flowchart LR
 | **Matériel** | HydraBus + HydraFlash, PC |
 | **Étapes** | 1. Démonter la caméra<br>2. Identifier la NAND (souvent TSOP48)<br>3. Dump complet<br>4. Extraire les fichiers de config |
 | **Résultat** | Credentials admin, RTSP stream URL |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -447,7 +447,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -465,7 +465,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -495,7 +495,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -533,7 +533,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -551,11 +551,11 @@ binwalk nand_dump.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
+- [[Hardware - I2C et SPI| I2C/SPI]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -565,7 +565,7 @@ binwalk nand_dump.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -583,7 +583,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -593,7 +593,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -619,7 +619,7 @@ lsusb | grep -i hydrabus
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -638,7 +638,7 @@ lsusb | grep -i hydrabus
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -657,7 +657,7 @@ lsusb | grep -i hydrabus
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -683,7 +683,7 @@ lsusb | grep -i hydrabus
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -696,7 +696,7 @@ lsusb | grep -i hydrabus
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -716,7 +716,7 @@ lsusb | grep -i hydrabus
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : NAND ≠ NOR : la NAND a des **bad blocks** et une disposition en pages.
 - **Piège 2** : Toujours relire la puce **plusieurs fois** et comparer les hashs.
@@ -733,9 +733,9 @@ lsusb | grep -i hydrabus
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — HydraFlash](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/hydraflash.md)
 > - [HydraFlash — GitHub](https://github.com/hydrabus/HydraFlash)
 > - [DumpFlash-Hydrabus — GitHub](https://github.com/hydrabus/DumpFlash-Hydrabus)
@@ -764,4 +764,4 @@ lsusb | grep -i hydrabus
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - I2C et SPI| I2C/SPI]]

@@ -1,7 +1,7 @@
 ---
 title: "Outil - zsteg"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/zed-0xff/zsteg
 doc: https://github.com/zed-0xff/zsteg/blob/master/README.md
 ---
 
-# 📦 zsteg — La détection automatique de stéganographie (PNG & BMP)
+# zsteg — La détection automatique de stéganographie (PNG & BMP)
 
 > [!info] **En 1 phrase**
 > Détectez et extrayez en une seule commande les données cachées dans les images PNG/BMP : LSB, bits plans, données embarquées, chaînes.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -48,7 +48,7 @@ doc: https://github.com/zed-0xff/zsteg/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 zsteg est un outil écrit en Ruby qui scanne automatiquement les images (PNG, BMP, parfois GIF/JPEG via des plugins) pour y chercher de la stéganographie. Contrairement à StegSolve (analyse visuelle manuelle), zsteg applique **toutes les techniques courantes en parallèle** : LSB sur chaque canal (RGB/GRB/BGR...), plans de bits, LSB par paires de bits, coordonnées XY vs scanlines, données JPEG/PNG embarquées (append), et même la détection de chaînes ASCII/UTF-8. En un seul passage (`zsteg image.png`), il liste les données cachées trouvées — souvent directement le flag. C'est l'outil de premier choix pour tout challenge stego d'image, avant même l'analyse visuelle manuelle.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -124,14 +124,14 @@ zsteg --help
 zsteg --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Ruby et `gem` requis ; sous Windows utiliser RubyInstaller avec DevKit.
 > - Les plugins JPEG/GIF peuvent nécessiter des gemmes supplémentaires (`zsteg` inclut les dépendances de base).
 > - Sur certaines distributions, `gem install` requiert les droits root ou un `--user-install`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Option | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -154,7 +154,7 @@ zsteg --version
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Gem Ruby** : un exécutable `zsteg` qui charge l'image via les bibliothèques Ruby (chunky_png, zlib...).
 - **Moteur de techniques** : zsteg implémente les variantes LSB (1 bit, 2 bits...), les bit planes, l'ordre des canaux, l'ordre XY/scanline, les décalages et pas — appliquées en boucle sur l'image.
@@ -165,7 +165,7 @@ zsteg --version
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -206,7 +206,7 @@ zsteg -l 0 -E "b4,rgb,msb,yx" image.png
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -229,7 +229,7 @@ zsteg -l 0 -E "b4,rgb,msb,yx" image.png
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -277,7 +277,7 @@ zsteg --shift 4 --step 2 -E "b1,rgb,lsb" image.png
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Scan automatique** :
    ```bash
@@ -300,7 +300,7 @@ zsteg --shift 4 --step 2 -E "b1,rgb,lsb" image.png
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : flag compressé (zlib)
 
@@ -333,7 +333,7 @@ zsteg -E "b1,r,g,lsb,yx" image.png | base64 -d
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -345,7 +345,7 @@ zsteg -E "b1,r,g,lsb,yx" image.png | base64 -d
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -359,7 +359,7 @@ zsteg -E "b1,r,g,lsb,yx" image.png | base64 -d
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -405,7 +405,7 @@ rule suspicious_zlib_in_png
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scanner tout un dossier d'images
@@ -433,7 +433,7 @@ done
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Sortie type : couches trouvées puis chaînes
@@ -458,22 +458,22 @@ print(flags)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Image → zsteg (auto) → stegsolve (visuel, confirmation) → CyberChef (décodage) → flag
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - stegsolve]] — analyse visuelle complémentaire des plans
 - [[Outil - exiftool]] — métadonnées avant scan stego
 - [[Outil - binwalk]] — fichiers embarqués (append, blobs)
 - [[Outil - CyberChef]] — décodage des données extraites
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -488,7 +488,7 @@ Image → zsteg (auto) → stegsolve (visuel, confirmation) → CyberChef (déco
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide** : un scan `zsteg <image>` sur une image CTF standard prend moins d'une seconde.
 - **`-a` exhaustif** : beaucoup de combinaisons (canaux × bits × ordres) — quelques secondes selon la taille.
@@ -500,7 +500,7 @@ Image → zsteg (auto) → stegsolve (visuel, confirmation) → CyberChef (déco
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -526,7 +526,7 @@ Image → zsteg (auto) → stegsolve (visuel, confirmation) → CyberChef (déco
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution locale** : zsteg ne fait pas d'appels réseau ; les images sont lues localement.
 - **Données extraites** : ne jamais exécuter un fichier extrait sans l'analyser (`file`, `strings`, sandbox).
@@ -534,7 +534,7 @@ Image → zsteg (auto) → stegsolve (visuel, confirmation) → CyberChef (déco
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Formats** : pensé pour **PNG et BMP** ; le JPEG/GIF n'est pas toujours supporté.
 - **Techniques** : ne couvre pas tout (LSB d'ordre supérieur, stégo de palette complexe, fichiers audio).
@@ -544,7 +544,7 @@ Image → zsteg (auto) → stegsolve (visuel, confirmation) → CyberChef (déco
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan automatique
@@ -571,7 +571,7 @@ zsteg -E "b1,rgb,lsb,xy" image.png > out.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -584,7 +584,7 @@ zsteg -E "b1,rgb,lsb,xy" image.png > out.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -595,16 +595,16 @@ zsteg -E "b1,rgb,lsb,xy" image.png > out.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lancez toujours `zsteg <image>` **en premier** : c'est le plus rapide pour trouver le flag LSB classique.
 > - La couche `b1,rgb,lsb,xy` est la plus courante : testez son extraction `-E` directement.
 > - Si rien, augmentez `-b` (2, 4 bits) et essayez `--msb`.
 > - Le flag peut être codé en **base64** ou **rot13** dans les bits : décodez la sortie extraite avant de conclure.
 > - Croisez avec [[Outil - stegsolve]] pour les couches visuelles (QR, images) que zsteg ne lit pas.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - zsteg cible PNG/BMP : sur un JPEG, convertir en PNG ou changer d'outil.
 > - Les données aléatoires produisent des faux positifs : cherchez la structure `flag{...}`.
 > - `-l` (défaut 256) peut tronquer un flag long : augmentez la limite si la chaîne semble coupée.
@@ -613,7 +613,7 @@ zsteg -E "b1,rgb,lsb,xy" image.png > out.bin
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -635,4 +635,4 @@ zsteg -E "b1,rgb,lsb,xy" image.png > out.bin
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - stegsolve|🖼️ StegSolve]] · [[Outil - binwalk|🧱 binwalk]] · [[Outil - exiftool|🏷️ ExifTool]] · [[Outil - CyberChef|🧪 CyberChef]] · [[Outil - Ghidra|🔬 Ghidra]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - stegsolve| StegSolve]] · [[Outil - binwalk| binwalk]] · [[Outil - exiftool| ExifTool]] · [[Outil - CyberChef| CyberChef]] · [[Outil - Ghidra| Ghidra]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

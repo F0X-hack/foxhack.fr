@@ -1,7 +1,7 @@
 ---
 title: "Outil - pwntools"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://pwntools.com
 doc: https://docs.pwntools.com
 ---
 
-# 🎯 pwntools — Le framework d'exploitation pwn en Python
+# pwntools — Le framework d'exploitation pwn en Python
 
 > [!info] **En 1 phrase**
 > La boîte à outils Python ultime pour construire des payloads, interagir avec des binaires et automatiser l'exploitation de vulnérabilités.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -49,7 +49,7 @@ doc: https://docs.pwntools.com
 
 ---
 
-## 🎯 Concept
+## Concept
 
 pwntools est un framework Python spécialement conçu pour le pwn (exploitation de binaires) en CTF. Il encapsule tout le travail pénible : interaction avec les processus locaux et distants, fabrication de payloads (`p32`, `p64`), calcul d'adresses avec `ELF()`, assembly/désassemblage, ROP chains automatiques, et analyse de protection (`checksec`). On écrit un script d'exploit en Python et pwntools gère l'I/O, les encodages et les logiques de debug (gdb attaché). C'est l'outil indispensable pour les challenges de type buffer overflow, format string ou ROP. Il s'accompagne de la commande `pwn` (CLI) qui fournit `checksec`, `cyclic`, `asm`, `disasm`, `hex`, etc.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -124,14 +124,14 @@ pwn version
 python3 -c "from pwn import *; print(context.arch)"
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Ubuntu LTS recommandé** ; sous d'autres distributions, des dépendances système (binutils, gcc) sont requises.
 > - Python 2 n'est plus supporté sur les versions récentes (Python 3.8+ requis).
 > - WSL est nécessaire sous Windows natif ; certaines fonctionnalités (process local) sont limitées en WSL1.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -149,7 +149,7 @@ python3 -c "from pwn import *; print(context.arch)"
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Modules** : `pwnlib.tubes` (I/O), `pwnlib.elf` (ELF), `pwnlib.rop` (ROP), `pwnlib.asm`/`shellcraft`, `pwnlib.util` (packing, cyclic, misc), `pwnlib.gdb`.
 - **Tubes** : abstraction unifiée `process`/`remote`/`listen`/`tube` — toutes les primitives d'I/O (`send`, `sendline`, `recv`, `recvuntil`, `recvall`) partagent la même interface.
@@ -160,7 +160,7 @@ python3 -c "from pwn import *; print(context.arch)"
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales (CLI `pwn`)
 
@@ -184,7 +184,7 @@ pwn unhex 666c61677b
 
 ---
 
-## 🎚️ Options et flags| API / paramètre | Description | Exemple | Niveau |
+## Options et flags| API / paramètre | Description | Exemple | Niveau |
 |---|---|---|---|
 | `p32()` / `p64()` | Packing little-endian | `p64(0x401234)` | Basic |
 | `u32()` / `u64()` | Unpacking | `u64(b"A"*8)` | Basic |
@@ -205,7 +205,7 @@ pwn unhex 666c61677b
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -267,7 +267,7 @@ p.interactive()
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Analyser les protections** :
    ```bash
@@ -299,7 +299,7 @@ p.interactive()
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 2 : format string pour leak d'adresses
 
@@ -325,7 +325,7 @@ p.interactive()
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -338,7 +338,7 @@ p.interactive()
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ p.interactive()
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -403,7 +403,7 @@ rule pwntools_import
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 # Automatisation : bruteforce d'un offset sur plusieurs runs
@@ -428,7 +428,7 @@ pwn cyclic 300 | ./challenge
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```python
 # Parsing d'un flag retourné par la cible
@@ -456,24 +456,24 @@ pwn unhex 666c61677b...
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 checksec (pwntools) → ROPgadget (gadgets) → ROP() (chaîne) → gdb.attach (debug)
 → CyberChef (décodage des données) → rapport
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - gdb-peda]] — debug interactif attaché au processus
 - [[Outil - ROPgadget]] — gadgets complémentaires pour ROP()
 - [[Outil - Ghidra]] — reverse statique du binaire cible
 - [[Outil - radare2]] — analyse et debug alternatifs
 - [[Outil - CyberChef]] — décodage des sorties/encodages récoltés
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -488,7 +488,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() (chaîne) → gdb.attach (
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide** : les tubes et primitives sont légers ; le goulot est l'I/O réseau/processus.
 - **ROP()** : le scan des gadgets de la libc prend quelques secondes la première fois ; la chaîne générée est directe.
@@ -501,7 +501,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() (chaîne) → gdb.attach (
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -526,7 +526,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() (chaîne) → gdb.attach (
 - **Solution** : `context.timeout=10`, vérifier `nc -vz <host> <port>`. **Vérif** : `remote(...).sendline(b"")`.
 
 ---
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution locale** : pwntools lance des processus locaux et peut attach GDB — exécuter dans un environnement contrôlé (VM).
 - **Shellcodes générés** : `shellcraft.sh()` produit du code arbitraire ; ne pas exécuter sur des machines sensibles.
@@ -535,7 +535,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() (chaîne) → gdb.attach (
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Python uniquement** : nécessite un environnement Python 3.8+.
 - **Plateforme** : Windows natif non supporté (WSL recommandé).
@@ -545,7 +545,7 @@ checksec (pwntools) → ROPgadget (gadgets) → ROP() (chaîne) → gdb.attach (
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```python
 # Setup
@@ -580,7 +580,7 @@ asm(shellcraft.sh())
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,7 +593,7 @@ asm(shellcraft.sh())
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -604,16 +604,16 @@ asm(shellcraft.sh())
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Configurez `context.binary = e` pour que pwntools aligne automatiquement arch/bits.
 > - `context.log_level='debug'` montre tout l'I/O : indispensable pour déboguer.
 > - `cyclic_find(p.corefile.fault_addr)` donne l'offset sans chercher manuellement.
 > - `gdb.attach(p)` au bon endroit (avant `sendline`) pour voir l'état exact.
 > - `pwn shellcraft -r` assemble et exécute directement un shellcode en test.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Oublier l'endianness : `p64` sur un binaire 32 bits casse tout (`p32` requis).
 > - Un `remote` sans `context.timeout` peut bloquer indéfiniment.
 > - PIE : les adresses absolues changent ; penser au leak et à `e.address`.
@@ -622,7 +622,7 @@ asm(shellcraft.sh())
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -646,4 +646,4 @@ asm(shellcraft.sh())
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - gdb-peda|🛠️ gdb-peda]] · [[Outil - ROPgadget|🧩 ROPgadget]] · [[Outil - Ghidra|🔬 Ghidra]] · [[Outil - radare2|🕵️ radare2]] · [[Outil - CyberChef|🧪 CyberChef]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - gdb-peda| gdb-peda]] · [[Outil - ROPgadget| ROPgadget]] · [[Outil - Ghidra| Ghidra]] · [[Outil - radare2| radare2]] · [[Outil - CyberChef| CyberChef]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

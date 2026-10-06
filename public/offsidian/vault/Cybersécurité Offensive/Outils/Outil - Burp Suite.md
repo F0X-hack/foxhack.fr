@@ -1,11 +1,11 @@
 ---
 title: "Outil - Burp Suite"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 2026.4 (Professional / Community, release stable 2026.x)
 licence: propriétaire (Community : freeware ; Professional / Enterprise : commercial)
@@ -16,14 +16,14 @@ site: https://portswigger.net/burp
 doc: https://portswigger.net/burp/documentation
 ---
 
-# 💥 Burp Suite — Proxy d'interception Web
+# Burp Suite — Proxy d'interception Web
 
 > [!info] **En 1 phrase**
 > Burp Suite = le proxy d'interception web de référence : on s'intercale entre le navigateur et la cible pour capturer, modifier, rejouer et fuzzer chaque requête HTTP/S.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://portswigger.net/burp/documentation
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Burp Suite, développé par **PortSwigger** depuis 2004, est un **proxy man-in-the-middle local** : le navigateur est configuré sur `127.0.0.1:8080` et un **certificat CA racine** est installé dans le navigateur pour déchiffrer le TLS. Tout le trafic HTTP/S transite alors par l'onglet **Proxy** (interception on/off, HTTP history, WebSocket history) avant d'être routé vers des outils dédiés : **Target** (sitemap + scope), **Repeater** (rejeu manuel), **Intruder** (fuzzing / brute-force), **Decoder** (encodage), **Comparer** (diff) et **Scanner** (détection automatique).
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -160,7 +160,7 @@ git clone https://github.com/PortSwigger/turbo-intruder.git
 # puis chargement du .jar dans Burp : Extensions -> Add -> Type "Java"
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Java** : les installeurs 2026.x embarquent leur JRE (Java 25.0.1) ; pour lancer le `.jar` à la main, un **JDK/JRE 21+** est requis (les anciens JRE 11 peuvent échouer).
 > - **Mémoire** : 4 Go de RAM minimum recommandés, davantage pour les grosses applications (configurable via `-Xmx`).
 > - **Licence Pro** : sans licence valide, le scanner actif et Collaborator sont inaccessibles (Community).
@@ -168,7 +168,7 @@ git clone https://github.com/PortSwigger/turbo-intruder.git
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -186,7 +186,7 @@ git clone https://github.com/PortSwigger/turbo-intruder.git
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Burp Suite est une application **Java desktop** organisée en modules qui partagent le même moteur réseau et le même projet :
 
@@ -201,7 +201,7 @@ Flux typique : navigateur → Proxy (déchiffrement) → HTTP history → `Send 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -247,7 +247,7 @@ java -Xmx4g -jar burpsuite_pro.jar
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -271,7 +271,7 @@ java -Xmx4g -jar burpsuite_pro.jar
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -332,7 +332,7 @@ curl -k -s -X POST "http://127.0.0.1:7000/v0.1/scan" \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Configurer le navigateur** — pointer le proxy sur `127.0.0.1:8080` (FoxyProxy), installer le certificat CA de Burp et désactiver l'interception.
    ```bash
@@ -347,7 +347,7 @@ curl -k -s -X POST "http://127.0.0.1:7000/v0.1/scan" \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : SQLi en aveugle (time-based) via Repeater + sqlmap
 
@@ -394,7 +394,7 @@ Confirmer une Server-Side Request Forgery quand l'application fetch une URL four
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -408,7 +408,7 @@ Confirmer une Server-Side Request Forgery quand l'application fetch une URL four
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -423,7 +423,7 @@ Confirmer une Server-Side Request Forgery quand l'application fetch une URL four
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -480,7 +480,7 @@ rule PortSwigger_CA_Certificate {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 Burp s'automatise via sa **REST API** (Pro), les **extensions** (Montoya API/Jython) et les outils externes (curl, sqlmap, scripts).
 
@@ -524,7 +524,7 @@ for uid in range(1, 101):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Burp produit des **rapports** (HTML/XML/JSON) et des **exports** (historique, findings, requêtes). En CLI, le plus efficace est de sortir les requêtes en `curl` puis de parser les réponses.
 
@@ -552,7 +552,7 @@ for issue in tree.getroot().iter("issue"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Navigateur (Firefox/Chromium) -> Burp Suite (proxy 127.0.0.1:8080) -> cible
@@ -561,7 +561,7 @@ Burp Suite -> REST API (Pro) -> pipeline CI/CD / SIEM
 Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywhere
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Burp Extensions (BApp Store)|Burp Extensions (BApp Store)]] — extensions qui étendent Burp (Autorize, Turbo Intruder, Collaborator)
 - [[Outil - sqlmap]] — automatisation SQLi depuis les requêtes exportées (`-r request.txt`)
 - [[Outil - ffuf]] / [[Outil - gobuster]] / [[Outil - Feroxbuster]] — découverte de contenu en amont de Burp
@@ -573,7 +573,7 @@ Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywher
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -587,7 +587,7 @@ Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywher
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Mémoire** : application Java gourmande — 4 Go de RAM minimum, 8 Go+ conseillés pour scanner de grosses applications (configurable via `-Xmx`).
 - **Intruder (Community)** : débit throttlé (attaque ralentie) ; en Pro, le débit dépend des threads de l'onglet Intruder.
@@ -600,7 +600,7 @@ Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywher
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -636,7 +636,7 @@ Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywher
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Certificat racine** : la CA `PortSwigger CA` permet de déchiffrer tout le TLS du navigateur configuré → ne pas l'installer sur des postes de production, la désinstaller après engagement.
 - **Exposition réseau** : le proxy écoute par défaut sur `127.0.0.1` uniquement ; ne jamais l'exposer sur l'interface réseau sans authentification.
@@ -647,7 +647,7 @@ Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywher
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Propriétaire et payant** : Community est limitée (pas de scanner actif, Intruder throttlé) et Pro est un abonnement.
 - **Pas de DAST natif hors navigateur** : le scan JS/SPA nécessite le navigateur embarqué ; les tests de logique métier restent manuels.
@@ -658,7 +658,7 @@ Burp Extensions (BApp Store) -> Autorize, Turbo Intruder, Collaborator Everywher
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer Burp avec un projet sur disque
@@ -686,7 +686,7 @@ java -Xmx8g -jar burpsuite_pro.jar
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -699,7 +699,7 @@ java -Xmx8g -jar burpsuite_pro.jar
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -712,16 +712,16 @@ java -Xmx8g -jar burpsuite_pro.jar
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Définis toujours le **scope** dans Target : les outils ne touchent alors que la cible et évitent les domaines tiers.
 > - Utilise **Ctrl+R / Ctrl+I** systématiquement et **Copy as curl** pour exporter les requêtes vers sqlmap, ffuf ou curl.
 > - Active **ActiveScan++** et les extensions du BApp Store pour couvrir les checks récents de l'OWASP Top 10.
 > - Garde **Repeater** comme outil de validation finale : un finding de scanner n'est valable qu'une fois rejoué à la main.
 > - Sur les engagements longs, enregistre ton travail dans un **projet sur disque** (`.burp`) pour ne rien perdre.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La **Community** edition n'a pas de scanner actif et limite le débit d'Intruder : le test manuel est obligatoire.
 > - Sans navigateur configuré sur le proxy, l'interception « bloque » le navigateur : désactive `Intercept` quand tu ne testes pas.
 > - En Pro, le scanner génère du bruit : restreins le scope et vérifie chaque finding par un rejeu manuel avant de le déclarer.
@@ -730,7 +730,7 @@ java -Xmx8g -jar burpsuite_pro.jar
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -755,4 +755,4 @@ java -Xmx8g -jar burpsuite_pro.jar
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Burp Extensions (BApp Store)|Burp Extensions (BApp Store)]] · [[Outil - sqlmap|sqlmap]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/Injection SQL|💾 Injection SQL]] · [[Techniques/SSRF|🌐 SSRF]] · [[Techniques/IDOR|🔑 IDOR]]
+**Liens :** [[Tools| Outils]] · [[Outil - Burp Extensions (BApp Store)|Burp Extensions (BApp Store)]] · [[Outil - sqlmap|sqlmap]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/Injection SQL| Injection SQL]] · [[Techniques/SSRF| SSRF]] · [[Techniques/IDOR| IDOR]]

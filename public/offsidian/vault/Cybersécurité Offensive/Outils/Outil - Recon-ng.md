@@ -1,11 +1,11 @@
 ---
 title: "Outil - Recon-ng"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 5.1.2
 licence: GPL-3.0
@@ -16,14 +16,14 @@ site: https://github.com/lanmaster53/recon-ng
 doc: https://github.com/lanmaster53/recon-ng/wiki
 ---
 
-# 🕵️ Recon-ng — Framework de reconnaissance façon « Metasploit »
+# Recon-ng — Framework de reconnaissance façon « Metasploit »
 
 > [!info] **En 1 phrase**
 > Recon-ng est un framework de reconnaissance modulaire en ligne de commande (Tim Tomes / Black Hills InfoSec) qui centralise des centaines de modules OSINT sous une interface façon « Metasploit ».
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/lanmaster53/recon-ng/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Recon-ng reprend le modèle de Metasploit appliqué à la **reconnaissance** : une console interactive avec un prompt de commandes, des *modules* spécialisés organisés en arborescence (`recon/domains-hosts/...`, `recon/hosts-ports/...`), des *workspaces* pour isoler chaque engagement, et des *marketplaces* pour installer de nouveaux modules. Chaque module interroge une source de données (crtsh, HackerTarget, Shodan, VirusTotal, Google, WHOIS...) et stocke ses résultats dans une **base de données SQLite locale**. La valeur ajoutée majeure par rapport à des scripts isolés est la **réutilisabilité** : les résultats d'un module alimentent automatiquement les suivants (résolution des hôtes découverts, reverse DNS, recherche de ports sur les hôtes stockés) sans ressaisie ni fichier intermédiaire.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Kali Linux / Debian / Ubuntu
 
@@ -124,7 +124,7 @@ python3 recon-ng
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichiers et répertoires
 
@@ -171,7 +171,7 @@ keys remove <service>              # supprimer une clé
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Recon-ng est structuré en couches Python :
 
@@ -194,7 +194,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -238,7 +238,7 @@ recon-ng
 
 ---
 
-## 🚩 Options et flags
+## Options et flags
 
 ### Options communes aux modules
 
@@ -263,7 +263,7 @@ run
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Énumération de sous-domaines via crtsh (certificats)
 
@@ -313,7 +313,7 @@ run
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Objectif : cartographier la surface d'attaque publique d'un domaine.
 
@@ -360,7 +360,7 @@ Objectif : cartographier la surface d'attaque publique d'un domaine.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Chasse aux emails et contacts sur un domaine
 
@@ -412,7 +412,7 @@ show vulns
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -425,7 +425,7 @@ show vulns
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec Recon-ng |
 |---|---|---|
@@ -440,7 +440,7 @@ show vulns
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 Recon-ng est un outil **dual-use** : il permet au défenseur de connaître sa propre exposition.
 
@@ -456,7 +456,7 @@ Recon-ng est un outil **dual-use** : il permet au défenseur de connaître sa pr
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Resource file (script de commandes rejouable)
 
@@ -496,7 +496,7 @@ EOF
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Tables principales de la base SQLite
 
@@ -532,7 +532,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -546,7 +546,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -559,7 +559,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -571,7 +571,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -587,7 +587,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -600,7 +600,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -615,7 +615,7 @@ sqlite3 ~/.recon-ng/workspaces/example_engagement/spider.db \
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrer avec un workspace
@@ -647,7 +647,7 @@ run
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -664,7 +664,7 @@ run
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -676,32 +676,32 @@ run
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Penser « base de données »**
+> [!tip] **Penser « base de données »**
 > Le vrai pouvoir de Recon-ng est la **réutilisabilité** : les résultats d'un module alimentent les suivants sans ressaisie (`show hosts`, `show contacts`). Toujours recharger avec `SOURCE default` pour traiter ce qui est déjà en base.
 
-> [!tip] 💡 **Configurer `keys add` pour chaque service**
+> [!tip] **Configurer `keys add` pour chaque service**
 > Shodan, VirusTotal, Censys, BinaryEdge débloquent les modules les plus intéressants et augmentent les quotas.
 
-> [!tip] 💡 **Tester le chaînage sur un petit workspace d'abord**
+> [!tip] **Tester le chaînage sur un petit workspace d'abord**
 > Un engagement réel peut générer des milliers d'entités : valider les modules sur un domaine de test (`example.com`) avant de lancer sur la cible réelle.
 
-> [!warning] ⚠️ **`marketplace install all` peut être long**
+> [!warning] `marketplace install all` peut être long**
 > Il installe des modules dépendants d'API : installer par familles selon le besoin.
 
-> [!warning] ⚠️ **Beaucoup de modules sont périmés**
+> [!warning] **Beaucoup de modules sont périmés**
 > Les sources changent (API, captchas) : un module qui ne renvoie rien n'est pas forcément une erreur — vérifier `show hosts` après chaque `run` et tenter une source alternative.
 
-> [!warning] ⚠️ **Clés API sensibles**
+> [!warning] **Clés API sensibles**
 > `keys.db` stocke les clés en clair : ne pas la versionner, ne pas l'exporter.
 
-> [!danger] 🚫 **Pas de module = pas d'autorisation**
+> [!danger] **Pas de module = pas d'autorisation**
 > La recon sur une cible dont on n'est pas propriétaire reste encadrée par la loi. Obtenir une autorisation écrite avant tout scan.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [Dépôt officiel — Recon-ng](https://github.com/lanmaster53/recon-ng)
@@ -718,4 +718,4 @@ run
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - Amass|🌐 Amass]] · [[Outil - spiderfoot|🕸️ SpiderFoot]] · [[Outil - Shodan|🔍 Shodan]] · [[Outil - theHarvester|🍯 theHarvester]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - Amass| Amass]] · [[Outil - spiderfoot| SpiderFoot]] · [[Outil - Shodan| Shodan]] · [[Outil - theHarvester| theHarvester]]

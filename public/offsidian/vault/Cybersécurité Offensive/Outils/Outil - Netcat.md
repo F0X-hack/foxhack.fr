@@ -1,7 +1,7 @@
 ---
 title: "Outil - Netcat"
 type: outil
-categorie: 🛠️ Divers
+categorie: Divers
 tags:
   - cyber
   - outil
@@ -17,14 +17,14 @@ site: https://nc110.sourceforge.io/
 doc: https://linux.die.net/man/1/nc
 ---
 
-# 🔌 Netcat — Le couteau suisse TCP/IP
+# Netcat — Le couteau suisse TCP/IP
 
 > [!info] **En 1 phrase**
 > Netcat (`nc`) est l'outil de référence pour toute opération TCP/UDP en ligne de commande : connexions, écoute, transferts de fichiers, scans et surtout shells inversés.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: https://linux.die.net/man/1/nc
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Netcat fournit une **socket TCP/UDP brute** accessible en ligne de commande : on lui donne une cible et un port (mode client) ou on lui demande d'écouter (mode serveur). Tout ce qui arrive sur la connexion est redirigé vers stdout, et tout ce qui est tapé sur stdin part dans la connexion. Cette bidirectionnalité « stdin ↔ socket » en fait la brique de base de la plupart des post-exploitations : un shell, un fichier ou un flux est « branché » sur la socket.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -127,7 +127,7 @@ nc -h
 where nc
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **`-e` absent** sur netcat-openbsd (compilé sans `GAPING_SECURITY_HOLE`) : utiliser `ncat --exec` ou netcat-traditional pour les shells.
 > - Télécharger un binaire netcat depuis un site non officiel est un **risque** (trojan courant) : compiler ou utiliser le paquet officiel.
 > - L'écoute sur port < 1024 requiert root.
@@ -135,7 +135,7 @@ where nc
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Netcat n'a pas de fichier de configuration : tout se passe en arguments. Les comportements clés à connaître pour l'automatiser.
 
@@ -155,7 +155,7 @@ Netcat n'a pas de fichier de configuration : tout se passe en arguments. Les com
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Netcat est volontairement minimaliste : un binaire, aucune dépendance, un modèle « pipe » universel. Sa logique se décompose en quelques étapes :
 
@@ -177,7 +177,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -215,7 +215,7 @@ nc -uzv 10.10.20.15 1-1024
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -237,7 +237,7 @@ nc -uzv 10.10.20.15 1-1024
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -287,7 +287,7 @@ while true; do nc -l -p 4444; done
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Écouter côté attaquant** — ouvrir le récepteur :
    ```bash
@@ -305,7 +305,7 @@ while true; do nc -l -p 4444; done
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : reverse shell fiabilisé (traditionnel)
 
@@ -343,7 +343,7 @@ done
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -356,7 +356,7 @@ done
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -371,7 +371,7 @@ done
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -414,7 +414,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scan de ports d'une cible et rapport
@@ -438,7 +438,7 @@ for port in [22, 80, 443, 4444]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 netcat est minimaliste : ses seules sorties structurées sont les messages de `-v` (connexions ouvertes/fermées) écrits sur **stderr**, et les données brutes échangées sur stdout.
 
@@ -454,9 +454,9 @@ nc -zvw 1 10.10.20.15 1-1000 2>&1 | grep succeeded
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Ncat]] — la version Nmap : `--ssl`, `--proxy`, `--exec`, plus complète que `nc`
 - [[Outil - socat]] — l'évolution « suisse armée » : SSL, UNIX sockets, relais avancés
 - [[Outil - Nmap]] — le scan de ports moderne ; netcat pour la vérification manuelle
@@ -471,7 +471,7 @@ nc -l -p <port> < fifo | nc <cible> <port> > fifo  →  port forwarding
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -483,7 +483,7 @@ nc -l -p <port> < fifo | nc <cible> <port> > fifo  →  port forwarding
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Léger** : un seul binaire, aucune dépendance, démarrage instantané.
 - **Scan** : `-z` sans `-w` attend le timeout du noyau par port — toujours préciser `-w 1` pour accélérer.
@@ -495,7 +495,7 @@ nc -l -p <port> < fifo | nc <cible> <port> > fifo  →  port forwarding
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -525,7 +525,7 @@ nc -l -p <port> < fifo | nc <cible> <port> > fifo  →  port forwarding
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Chiffrement** : aucun — tout le trafic est en clair. Ne transporter que des données non sensibles ou tunneler le flux.
 - **Binaires** : les netcat « piratés » distribués en ligne sont une méthode d'infection courante — compiler ou installer depuis les dépôts.
@@ -536,7 +536,7 @@ nc -l -p <port> < fifo | nc <cible> <port> > fifo  →  port forwarding
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de chiffrement natif (ni TLS, ni SSH).
 - `-e` indisponible sur netcat-openbsd ; dépendance à la variante installée.
@@ -547,7 +547,7 @@ nc -l -p <port> < fifo | nc <cible> <port> > fifo  →  port forwarding
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Écoute
@@ -575,7 +575,7 @@ nc -u -l -p 53
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -588,7 +588,7 @@ nc -u -l -p 53
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -600,16 +600,16 @@ nc -u -l -p 53
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours ajouter `-w` dans les scans/scripts pour éviter les blocages.
 > - Pour un transfert fiable, fermer avec `-q 0` côté émetteur.
 > - Stabiliser le shell inversé (pty) avant d'utiliser des outils interactifs comme `vim` ou `su`.
 > - Utiliser `-n` pour accélérer et éviter de polluer le DNS de la victime.
 > - Vérifier la variante installée (`nc -h`) avant d'écrire un script dépendant de `-e`.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `-e` absent sur netcat-openbsd : ne pas supposer son support.
 > - Un shell inversé sans TTY est fragile : il casse à la moindre erreur d'E/S.
 > - Le trafic netcat est en clair : un intermédiaire peut lire les données (et les credentials).
@@ -618,7 +618,7 @@ nc -u -l -p 53
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -641,4 +641,4 @@ nc -u -l -p 53
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Ncat|Ncat]] · [[Outil - socat|socat]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]]
+**Liens :** [[Tools| Outils]] · [[Outil - Ncat|Ncat]] · [[Outil - socat|socat]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]]

@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 🔐 Secure Boot
+# Secure Boot
 
 > [!info] **En 1 phrase**
 > Le **Secure Boot** garantit qu'**uniquement des logiciels signés et de confiance** se chargent
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,21 +33,21 @@ statut: publie
 | **Complexité** | Moyenne → Très élevée |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     ROM["UEFI/ROM"] -->|"vérifie"| OROM["Option ROM"]
 >     OROM -->|"vérifie"| BOOT["Bootloader"]
 >     BOOT -->|"vérifie"| KERNEL["Kernel"]
 >     KERNEL -->|"vérifie"| OS["Système"]
->     ROM -.->|"signature invalide"| BLOCK["⛔ Refus"]
+>     ROM -.->|"signature invalide"| BLOCK["Refus"]
 >     style BLOCK fill:#ffcdd2
 >     style OS fill:#c8e6c9
 > ```
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le Secure Boot établit une chaîne de confiance : chaque composant du boot vérifie la signature du suivant. Si un lien est compromis ou absent, le boot s'arrête. L'attaque consiste à casser cette chaîne.
 
@@ -55,7 +55,7 @@ statut: publie
 flowchart TB
     A["Power On"] --> B["ROM vérifie signature"]
     B -->|"valide"| C["Bootloader"]
-    B -->|"invalide"| D["⛔ Refus boot"]
+    B -->|"invalide"| D["Refus boot"]
     C -->|"vérifie"| D2["Kernel"]
     D2 -->|"vérifie"| E["OS / Apps"]
     ATK["Attaquant"] -.->|"exploit"| B
@@ -63,7 +63,7 @@ flowchart TB
     style D fill:#ffcdd2
 ```
 
-> [!info] 💡 **Ce qui est vérifié**
+> [!info] **Ce qui est vérifié**
 > - **Pilotes UEFI** (option ROMs)
 > - **Applications EFI**
 > - **Pilotes et binaires de l'OS**
@@ -71,7 +71,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### La chaîne de confiance UEFI
 
@@ -93,7 +93,7 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    PK["🔑 PK"] -->|"signe"| KEK["KEK"]
+    PK["PK"] -->|"signe"| KEK["KEK"]
     KEK -->|"signe"| DB["db (clés autorisées)"]
     DB -->|"signe"| BOOT["Bootloaders signés"]
     BOOT -->|"vérifie"| SIG["Signatures"]
@@ -113,7 +113,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -136,7 +136,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Chaîne de vérification UEFI
 
@@ -162,7 +162,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -183,7 +183,7 @@ Pour PC : accès BIOS + accès physique flash SPI
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### UEFI Secure Boot (BIOS)
 
@@ -204,7 +204,7 @@ Pour PC : accès BIOS + accès physique flash SPI
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Lecture/U-Boot
 
@@ -244,9 +244,9 @@ sudo openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Vérifier Secure Boot (Linux)
+### Débutant — Vérifier Secure Boot (Linux)
 
 ```bash
 # Vérifier l'état du Secure Boot
@@ -257,7 +257,7 @@ mokutil --sb-state
 dmesg | grep -i secure
 ```
 
-### 🟡 Intermédiaire — Désactiver Secure Boot (BIOS)
+### Intermédiaire — Désactiver Secure Boot (BIOS)
 
 ```text
 1. Redémarrer → accéder au BIOS (Suppr/F2)
@@ -266,7 +266,7 @@ dmesg | grep -i secure
 4. Vérifier : mokutil --sb-state
 ```
 
-### 🔴 Avancé — Bypass U-Boot IoT
+### Avancé — Bypass U-Boot IoT
 
 ```bash
 # 1. Connecter UART
@@ -281,14 +281,14 @@ saveenv
 boot
 ```
 
-### ⚫ Expert — Bootkit UEFI (memN0ps)
+### Expert — Bootkit UEFI (memN0ps)
 
 | Élément | Détail |
 |---|---|
 | **Objectif** | Installer un bootkit UEFI persistant |
 | **Méthode** | Modifier la partition ESP, signer avec clé volée |
 | **Résultat** | Code exécuté avant l'OS, persistence totale |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```text
 Bootkit en Rust (memN0ps) :
@@ -300,7 +300,7 @@ Bootkit en Rust (memN0ps) :
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -308,7 +308,7 @@ flowchart TB
     B -->|"UEFI (PC)"| C["CHIPSEC audit"]
     B -->|"U-Boot (IoT)"| D["UART access"]
     C --> E{"Secure Boot actif ?"}
-    E -->|"non"| F["🟢 Boot custom libre"]
+    E -->|"non"| F["Boot custom libre"]
     E -->|"oui"| G["Chercher bypass"]
     D --> H{"Console accessible ?"}
     H -->|"oui"| I["Modifier bootargs"]
@@ -328,7 +328,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — PC : bypass Secure Boot via CVE
 
@@ -337,7 +337,7 @@ flowchart TB
 | **Objectif** | Installer bootkit malgré Secure Boot |
 | **Méthode** | Exploit CVE-2023-24932 (BlackLotus) |
 | **Étapes** | Vol clé → signer bootkit → modifier ESP → boot |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — IoT : bypass U-Boot signé
 
@@ -346,7 +346,7 @@ flowchart TB
 | **Objectif** | Boot custom firmware sur routeur |
 | **Méthode** | Fault injection + UART |
 | **Étapes** | Glitch vérif signature → U-Boot console → tftpboot |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -359,7 +359,7 @@ flowchart LR
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -377,7 +377,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -397,7 +397,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -415,7 +415,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -450,7 +450,7 @@ else:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Vérification état
@@ -466,21 +466,21 @@ strings efi_bootkit.bin | grep -iE 'boot|efi|sign'
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - Secure Boot]] (cette fiche)
-- [[Hardware - Fault Injection|⚡ Fault Injection]]
+- [[Hardware - Fault Injection| Fault Injection]]
 
 | Outil | Usage |
 |---|---|
 | [[Hardware - UART]] | U-Boot access |
 | [[Hardware - Fault Injection]] | Bypass vérif |
-| [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] | Extraction firmware |
+| [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] | Extraction firmware |
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -490,7 +490,7 @@ strings efi_bootkit.bin | grep -iE 'boot|efi|sign'
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur |
 |---|---|
@@ -500,7 +500,7 @@ strings efi_bootkit.bin | grep -iE 'boot|efi|sign'
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -517,7 +517,7 @@ chipsec_main -m common.secureboot
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -531,7 +531,7 @@ chipsec_main -m common.secureboot
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -541,7 +541,7 @@ chipsec_main -m common.secureboot
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -559,7 +559,7 @@ chipsec_main -m common.secureboot
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -572,7 +572,7 @@ chipsec_main -m common.secureboot
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -583,7 +583,7 @@ chipsec_main -m common.secureboot
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Désactiver Secure Boot en BIOS** est trivial avec accès physique.
 - **Bootkit signé** passe tout le Secure Boot : hygiène db/dbx cruciale.
@@ -595,9 +595,9 @@ chipsec_main -m common.secureboot
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Secure Boot](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/secure-boot/README.md)
 > - [memN0ps Bootkit Rust](https://github.com/memN0ps/bootkit-rs)
 > - [Awesome UEFI Security](https://github.com/river-li/awesome-uefi-security)
@@ -610,4 +610,4 @@ chipsec_main -m common.secureboot
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - Fault Injection|⚡ Fault Injection]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - Fault Injection| Fault Injection]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]

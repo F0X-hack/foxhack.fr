@@ -1,11 +1,11 @@
 ---
 title: "Outil - Responder"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 4.1.0
 licence: GPL-3.0
@@ -16,14 +16,14 @@ site: https://github.com/lgandx/Responder
 doc: https://github.com/lgandx/Responder/blob/master/README.md
 ---
 
-# 👑 Responder — Active Directory & Windows
+# Responder — Active Directory & Windows
 
 > [!info] **En 1 phrase**
 > Responder empoisonne les protocoles de résolution de noms **LLMNR, NBT-NS et mDNS** pour **capturer les hashes NTLMv2** des clients Windows du réseau local, ensuite crackables (hashcat mode **5600**).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,15 +40,15 @@ doc: https://github.com/lgandx/Responder/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Quand Windows ne résout pas un nom (typo, partage manquant), il envoie des requêtes **LLMNR / NBT-NS / mDNS**. Responder **répond à la place du serveur légitime** : le client envoie alors son **hash NTLMv2** (challenge/réponse) à l'attaquant. En bonus, le **WPAD** (proxy auto-détecté) force chaque navigateur à s'authentifier. C'est l'attaque de base de tout pentest sur réseau local. Dans un engagement, Responder se lance dès la mise en place de l'accès réseau : en quelques minutes, des comptes utilisateurs, de service ou admin déposent leurs hashes NetNTLMv2, qu'on cracke en local (hashcat mode 5600) ou qu'on relaye (ntlmrelayx) quand SMB signing est désactivé.
 
 ```mermaid
 flowchart LR
-    A["📡 Interface réseau locale"] --> B["sudo responder -I eth0"]
+    A["Interface réseau locale"] --> B["sudo responder -I eth0"]
     B --> C["LLMNR / NBT-NS / mDNS empoisonnés"]
-    C --> D["📥 Hash NTLMv2 capturé"]
+    C --> D["Hash NTLMv2 capturé"]
     D --> E["hashcat -m 5600 hash.txt rockyou.txt"]
     C --> F["WPAD → proxy frauduleux"]
     F --> D
@@ -56,7 +56,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans Responder |
 |---|---|
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Installation
 
@@ -103,7 +103,7 @@ responder -h
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Responder se configure via la ligne de commande (interface, modes) et via `responder.conf` (activation des serveurs, ports, options). La config principale à surveiller : désactiver les serveurs qui entrent en conflit avec d'autres outils d'écoute.
 
@@ -124,7 +124,7 @@ Responder se configure via la ligne de commande (interface, modes) et via `respo
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Multi-écouteurs** : Responder ouvre des sockets sur de nombreux ports (53 DNS, 137 NBT-NS, 445 SMB, 80 HTTP, 389 LDAP, 21 FTP, 25 SMTP, …) via Python.
 - **Moteur de résolution** : il implémente LLMNR, NBT-NS et mDNS et répond de façon prioritaire pour tout nom non résolu, en usurpant l'identité demandée.
@@ -135,7 +135,7 @@ Responder se configure via la ligne de commande (interface, modes) et via `respo
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -183,7 +183,7 @@ sudo ntlmrelayx.py -t smb://192.168.1.10 -smb2support
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -202,7 +202,7 @@ sudo ntlmrelayx.py -t smb://192.168.1.10 -smb2support
 > [!tip] Options les plus utiles au quotidien
 > `-I` (interface), `-A` (diagnostic), `-wF` (WPAD forcé), `-v` (détail).
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -246,7 +246,7 @@ sudo ntlmrelayx.py -t ldap://dc01.corp.local --delegate-access -6
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : poste dans le réseau local d'un client, aucun accès pour l'instant.
 
@@ -270,7 +270,7 @@ Scénario : poste dans le réseau local d'un client, aucun accès pour l'instant
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Relais NTLM vers un serveur web (ntlmrelayx)
 
@@ -305,7 +305,7 @@ sudo responder -I eth0
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -318,7 +318,7 @@ sudo responder -I eth0
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -331,7 +331,7 @@ sudo responder -I eth0
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > Responder relève de **T1557** (LLMNR/NBT-NS/WPAD) ; le cracking et le relais sont les étapes suivantes (T1110, T1557 relay).
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -347,7 +347,7 @@ sudo responder -I eth0
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -359,7 +359,7 @@ sudo responder -I eth0
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Console** : chaque capture affiche `[+] SMB-NTLMv2-SSP Hash : <user>::<DOM>:<hash>`.
 - **Fichiers** : Responder écrit dans `logs/` (un fichier par session avec date et interface) les hashes au format hashcat (`NETNTLMv2`) et john.
@@ -373,7 +373,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème Responder |
 |---|---|
@@ -387,7 +387,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -399,7 +399,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -410,7 +410,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -422,7 +422,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Portée** : l'empoisonnement affecte **tout le segment local** → à n'utiliser que sur des réseaux autorisés.
 - **Données capturées** : les hashes NetNTLMv2 sont sensibles → protéger les fichiers de logs, les effacer après analyse.
@@ -432,7 +432,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Nécessite du trafic** : sans erreur de résolution ou requête WPAD, rien n'est capturé (patience / provocation).
 - **NetNTLMv2 non relançable en PtH** : le hash capturé ne s'utilise pas directement en Pass-the-Hash (seul le relais ou le crack fonctionne).
@@ -442,7 +442,7 @@ hashcat -m 5600 hashes.txt rockyou.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Lancement
@@ -464,7 +464,7 @@ sudo mitm6 -d corp.local
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -477,7 +477,7 @@ sudo mitm6 -d corp.local
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -489,23 +489,23 @@ sudo mitm6 -d corp.local
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Systématique en début d'engagement** : lance Responder dès la mise en place. Les premiers hashes arrivent en quelques minutes, souvent depuis des comptes **de service ou admin**. Lance d'abord `-A` quelques minutes pour diagnostiquer le trafic LLMNR/NBT-NS présent sans perturber le réseau, puis bascule en mode actif.
+> [!tip] **Systématique en début d'engagement** : lance Responder dès la mise en place. Les premiers hashes arrivent en quelques minutes, souvent depuis des comptes **de service ou admin**. Lance d'abord `-A` quelques minutes pour diagnostiquer le trafic LLMNR/NBT-NS présent sans perturber le réseau, puis bascule en mode actif.
 
-> [!warning] ⚠️ **Piège** : le hash capturé est un **NetNTLMv2**, pas un hash NTLM : il ne s'utilise **pas** en Pass-the-Hash. Soit on le cracke (mode 5600), soit on le relaye.
+> [!warning] **Piège** : le hash capturé est un **NetNTLMv2**, pas un hash NTLM : il ne s'utilise **pas** en Pass-the-Hash. Soit on le cracke (mode 5600), soit on le relaye.
 
-> [!warning] ⚠️ **Piège** : ne lance pas Responder en parallèle d'un autre service SMB/HTTP sur la même interface : **conflit de ports**. Vérifie `responder.conf` et les services déjà en écoute.
+> [!warning] **Piège** : ne lance pas Responder en parallèle d'un autre service SMB/HTTP sur la même interface : **conflit de ports**. Vérifie `responder.conf` et les services déjà en écoute.
 
-> [!warning] ⚠️ **Piège** : si LLMNR/NBT-NS sont désactivés par GPO (parc durci), Responder seul ne capturera rien : passe sur le couple mitm6 + ntlmrelayx (IPv6/WPAD).
+> [!warning] **Piège** : si LLMNR/NBT-NS sont désactivés par GPO (parc durci), Responder seul ne capturera rien : passe sur le couple mitm6 + ntlmrelayx (IPv6/WPAD).
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/lgandx/Responder
 - The Hacker Recipes — LLMNR/NBT-NS poisoning : https://www.thehacker.recipes/ad/movement/mitm-and-coerced-authentications/responder-llmnr
 - Microsoft — Désactiver LLMNR : https://learn.microsoft.com/en-us/windows/security/security-policy-settings/
 
-➡️ **Liens :** [[Outil - Responder]] | [[Outil - mitm6]] | [[Outil - Impacket]] | [[Outil - hashcat]] | [[Outil - CrackMapExec]] | [[Outil - BloodHound]] | [[Outil - Evil-WinRM]] | [[Outil - Nmap]]
+**Liens :** [[Outil - Responder]] | [[Outil - mitm6]] | [[Outil - Impacket]] | [[Outil - hashcat]] | [[Outil - CrackMapExec]] | [[Outil - BloodHound]] | [[Outil - Evil-WinRM]] | [[Outil - Nmap]]
 

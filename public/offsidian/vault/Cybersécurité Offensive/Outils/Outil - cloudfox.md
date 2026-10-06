@@ -1,7 +1,7 @@
 ---
 title: "Outil - cloudfox"
 type: outil
-categorie: ☁️ Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -19,20 +19,20 @@ site: https://bishopfox.com/tools/cloudfox-tool
 doc: https://github.com/BishopFox/CloudFox/wiki
 ---
 
-# 🦊 cloudfox — La boîte à outils de contexte cloud
+# cloudfox — La boîte à outils de contexte cloud
 
 > [!info] **En 1 phrase**
 > CLI de pénétration cloud de Bishop Fox qui cartographie les chemins de confiance (IAM, réseaux, containers) pour trouver des mouvements latéraux invisibles.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | CloudFox |
 | Description | CLI Go de pénétration cloud qui explore AWS, Azure et GCP pour construire une cartographie des « chemins de confiance » : rôles assumables, policies IAM, Security Groups, secrets, containers — afin de révéler des mouvements latéraux et escalades de privilèges |
-| Catégorie | ☁️ Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Énumération cloud / Cartographie des chemins d'attaque |
 | Type d'outil | CLI (binaire Go autonome + REPL interactif) |
 | Licence | MIT |
@@ -48,11 +48,11 @@ doc: https://github.com/BishopFox/CloudFox/wiki
 | Systèmes compatibles | Linux, macOS, Windows (binaires précompilés) |
 
 > [!note] Pour vérifier / compléter
-> Version vérifiée sur https://github.com/BishopFox/cloudfox/releases (v2.0.5, mai 2026). ⚠️ Les versions antérieures à v1.17.0 ne fonctionnent plus : elles dépendaient d'un fichier JSON AWS dont le format a changé — toujours utiliser v1.17.0+.
+> Version vérifiée sur https://github.com/BishopFox/cloudfox/releases (v2.0.5, mai 2026). Les versions antérieures à v1.17.0 ne fonctionnent plus : elles dépendaient d'un fichier JSON AWS dont le format a changé — toujours utiliser v1.17.0+.
 
 ---
 
-## 🎯 Concept
+## Concept
 
 cloudfox est un outil Go de Bishop Fox dédié au pentest cloud. Il explore l'environnement (AWS en priorité, Azure et GCP en cours de maturité) et construit une cartographie des **chemins de confiance** : rôles assumables, policies attachées aux rôles/utilisateurs/instances, Security Groups et ports exposés, secrets dans Secrets Manager et Parameter Store, volumes EBS, points de montage, clusters EKS, enregistrements Route 53. Contrairement à un scanner de configuration (Prowler, ScoutSuite), il cherche les **relations** qui permettent des mouvements latéraux et des escalades : « quel rôle cette instance peut-elle assumer ? quel port est ouvert vers ce subnet ? quel rôle est assumable depuis un compte compromis ? ».
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 cloudfox est distribué en **binaires précompilés** (Linux, macOS, Windows) et via Homebrew ; pas de dépendance Python.
 
@@ -121,7 +121,7 @@ Invoke-WebRequest https://github.com/BishopFox/cloudfox/releases/latest/download
 docker run --rm -v "$PWD":/app -w /app golang:latest go build -o cloudfox .
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Version impérative ≥ v1.17.0** : les versions antérieures cassent à cause d'un fichier JSON AWS ayant changé de format.
 > - La compilation via `go install` nécessite Go 1.25+ et télécharge le module complet ; privilégier les binaires officiels.
 > - Le binaire n'a aucune dépendance runtime : un binaire par plateforme, vérifier l'architecture (`amd64` vs `arm64`).
@@ -129,7 +129,7 @@ docker run --rm -v "$PWD":/app -w /app golang:latest go build -o cloudfox .
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 cloudfox se configure par **ligne de commande** et s'appuie sur les mécanismes d'authentification standard des SDK cloud (profils AWS, variables d'environnement, fichier de credentials Azure, service account GCP). Il n'y a pas de fichier de configuration global.
 
@@ -148,7 +148,7 @@ cloudfox se configure par **ligne de commande** et s'appuie sur les mécanismes 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 cloudfox est écrit en **Go** et organisé autour d'une CLI Cobra avec deux sous-commandes principales : `aws` (fournisseur AWS, le plus riche) et `interactive` (REPL).
 
@@ -171,7 +171,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -207,7 +207,7 @@ cloudfox aws --profile pentest env-vars
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / Commande | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -227,7 +227,7 @@ cloudfox aws --profile pentest env-vars
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -282,7 +282,7 @@ ls ./cloudfox-loot
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Se positionner** — on part d'un rôle AWS assumable par une instance compromise ou de clés leakées.
    ```bash
@@ -313,7 +313,7 @@ ls ./cloudfox-loot
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Trouver un chemin de confiance vers un rôle admin
 
@@ -351,7 +351,7 @@ ls ./loot   # CSV contenant paths, keys et valeurs décryptées
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -364,7 +364,7 @@ ls ./loot   # CSV contenant paths, keys et valeurs décryptées
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -382,7 +382,7 @@ ls ./loot   # CSV contenant paths, keys et valeurs décryptées
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -422,7 +422,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — collecte complète en loot puis archivage
@@ -440,7 +440,7 @@ EOF
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 cloudfox affiche les résultats en console (tables colorées) et peut les écrire en **CSV** (et JSON) dans `--outdir` avec `--write-loot`/`loot`. Ces fichiers sont directement exploitables.
 
@@ -455,9 +455,9 @@ jq -r '.[] | select(.permissions | contains("AssumeRole")) | "\(.role_arn) -> \(
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Pacu|Pacu]] — exploiter les chemins détectés (assume-role, modules de backdoor)
 - [[Outil - Prowler|Prowler]] / [[Outil - ScoutSuite|ScoutSuite]] — constat de posture avant la recherche de chemins
 - [[Outil - kubectl|kubectl]] — exploration des clusters EKS une fois les kubeconfig volés
@@ -471,7 +471,7 @@ Prowler (posture) → cloudfox (chemins) → Pacu / kubectl (exploitation) → B
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -485,7 +485,7 @@ Prowler (posture) → cloudfox (chemins) → Pacu / kubectl (exploitation) → B
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Collecte initiale** : le premier chargement (mode interactif) interroge tous les services et régions configurés : sur un compte massif, il peut prendre plusieurs minutes — d'où l'intérêt du REPL qui ne collecte qu'une fois.
 - **Requêtes ensuite** : en mode interactif, les commandes répondent en mémoire, quasi instantanément.
@@ -495,7 +495,7 @@ Prowler (posture) → cloudfox (chemins) → Pacu / kubectl (exploitation) → B
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -525,7 +525,7 @@ Prowler (posture) → cloudfox (chemins) → Pacu / kubectl (exploitation) → B
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : cloudfox est pensé pour le pentest autorisé (modèles « objective based penetration testing », CloudFoxable pour s'entraîner légalement) ; ne l'utiliser que sur des comptes couverts par un engagement.
 - **Accès** : conçu pour tourner avec un principal aux permissions **limitées** ; les échecs d'API sont silencieux, les données renvoyées prouvent l'accès réel.
@@ -536,7 +536,7 @@ Prowler (posture) → cloudfox (chemins) → Pacu / kubectl (exploitation) → B
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **AWS prioritaire** : la couverture AWS est riche (~34 commandes), Azure et GCP sont en développement (peu de commandes) ; le support Kubernetes reste planifié.
 - **Pas de test de vulnérabilité** : cloudfox ne vérifie AUCUNE faille exploitable — il fournit du contexte, l'exploitation reste manuelle.
@@ -547,7 +547,7 @@ Prowler (posture) → cloudfox (chemins) → Pacu / kubectl (exploitation) → B
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -575,7 +575,7 @@ cloudfox aws --profile audit cape --accounts 111122223333,444455556666
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -588,7 +588,7 @@ cloudfox aws --profile audit cape --accounts 111122223333,444455556666
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -600,16 +600,16 @@ cloudfox aws --profile audit cape --accounts 111122223333,444455556666
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `cloudfox interactive` précharge toutes les données en mémoire : les commandes suivantes répondent instantanément.
 > - `network` est précieux en pentest de périmètre : il montre les ports réellement ouverts, y compris sur des cibles que tu n'aurais pas scannées.
 > - Utilise `--outdir` + `--write-loot` pour générer des CSV réutilisables (jq, Excel, [[Outil - BloodHound|BloodHound]]).
 > - Commence toujours par `whoami` puis `permissions` pour calibrer l'accès avant de lancer l'énumération.
 > - Enregistre les fichiers de loot avec la date : ils servent de preuve de cheminement dans le rapport.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - cloudfox ne teste AUCUNE vulnérabilité : il fournit du contexte, c'est toi qui exploites.
 > - Les permissions insuffisantes génèrent des sorties vides et trompeuses : vérifie l'accès avant de conclure.
 > - Sur des comptes massifs, la collecte initiale peut être longue : cible les régions et services pertinents.
@@ -618,7 +618,7 @@ cloudfox aws --profile audit cape --accounts 111122223333,444455556666
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -644,4 +644,4 @@ cloudfox aws --profile audit cape --accounts 111122223333,444455556666
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Pacu|Pacu]] · [[Outil - kubectl|kubectl]]
+**Liens :** [[Tools| Outils]] · [[Outil - Pacu|Pacu]] · [[Outil - kubectl|kubectl]]

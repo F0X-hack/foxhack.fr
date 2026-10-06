@@ -1,12 +1,12 @@
 ---
 title: "Outil - Bash Bunny"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: "1.7 (Mark II)"
 licence: Firmware propriétaire (Hak5) ; payloads communautaires (licence Hak5)
@@ -17,20 +17,20 @@ site: https://shop.hak5.org/products/bash-bunny
 doc: https://docs.hak5.org/bash-bunny/
 ---
 
-# 🐰 Bash Bunny — Le multi-vecteur USB (HID + réseau + stockage)
+# Bash Bunny — Le multi-vecteur USB (HID + réseau + stockage)
 
 > [!info] **En 1 phrase**
 > Une clé USB « quad-core » qui combine **injection HID**, **émulation de stockage**, **adaptateur réseau** et **port série** en un seul branchement — avec deux attaques sélectionnables par un switch physique.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Hak5 Bash Bunny (Mark I / Mark II) |
 | Description | Plateforme d'attaque USB « multi-vecteurs » : injection clavier HID, stockage de masse, adaptateur réseau (RNDIS/ECM) et port série, sélectionnés par un switch physique à 2 positions |
-| Catégorie | 🔌 USB / HID & Gadgets |
+| Catégorie | USB / HID & Gadgets |
 | Sous-catégorie | BadUSB / Keystroke injection / USB network implant |
 | Fonction principale | Déclencher un payload (BunnyScript) au branchement pour obtenir un shell, exfiltrer des fichiers ou créer un point d'appui réseau |
 | Type d'outil | Matériel (USB gadget autonome) + langage de scripts (BunnyScript) |
@@ -51,7 +51,7 @@ doc: https://docs.hak5.org/bash-bunny/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le Bash Bunny (Hak5) est une plateforme d'attaque USB qui se présente comme une **clé USB / câble de charge classique** mais embarque un système embarqué complet. Contrairement au [[Outil - USB Rubber Ducky]] (HID seul), il peut activer **simultanément** plusieurs modes USB : `HID` (clavier émulé), `STORAGE` (partition de stockage pour exfiltration directe), `NET` (adaptateur Ethernet USB en RNDIS/ECM — le gadget devient un point d'accès au réseau de la cible) et `SERIAL` (port série pour debug/backdoor). Cette combinaison en fait un outil « quad-core » : une seule insertion suffit pour ouvrir un canal de commande ET exfiltrer des données.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # 1. Mettre à jour le firmware (Mark II, version >= 1.7) :
@@ -109,7 +109,7 @@ git clone https://github.com/hak5/bashbunny-payloads
 # 4. Copier le payload choisi dans payloads/switch1/ puis éjecter
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Mark I ≠ Mark II** : ne jamais flasher le firmware 1.7 sur un Mark I (rend le device inopérant). Le Mark II ne doit jamais être downgradé en dessous de 1.7.
 > - Ne **pas extraire** le `.tar.gz` de firmware et ne pas le renommer, sous peine de boot loop sur firmwares 1.0–1.3.
 > - Ne jamais débrancher pendant le flash (10 minutes max, LED rouge clignotante).
@@ -117,7 +117,7 @@ git clone https://github.com/hak5/bashbunny-payloads
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -131,7 +131,7 @@ git clone https://github.com/hak5/bashbunny-payloads
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **SoC / plateforme** : le Mark II embarque un SoC basse consommation exécutant Linux ; le Mark I utilise un microcontrôleur ARM. Le firmware expose une couche **BunnyScript** interprétée.
 - **MicroSD** : stocke les payloads (`payloads/switch1/`, `payloads/switch2/`), le dossier `loot/` (exfil) et les scripts auxiliaires.
@@ -142,7 +142,7 @@ git clone https://github.com/hak5/bashbunny-payloads
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -185,7 +185,7 @@ Q ENTER
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / argument | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -205,7 +205,7 @@ Q ENTER
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -277,7 +277,7 @@ LED FINISH
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer la microSD** — `payloads/switch1/payload.txt` (attaque) et `payloads/switch2/payload.txt` (payload « propre ») pour la parade en contrôle physique.
 2. **Mettre à jour le firmware** — mode ARMING, copier l'archive de https://downloads.hak5.org/bunny à la racine, rebrancher, attendre le flash (LED rouge/bleue puis bleue lente).
@@ -288,7 +288,7 @@ LED FINISH
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Exfiltration des Documents vers la partition STORAGE
 
@@ -343,7 +343,7 @@ LED CLEAN
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -356,7 +356,7 @@ LED CLEAN
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -373,7 +373,7 @@ LED CLEAN
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -415,7 +415,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — préparation d'un payload avec variable d'environnement
@@ -437,7 +437,7 @@ EOF
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le Bash Bunny ne produit pas de sortie « CLI » classique : ses sorties sont le **log d'exécution** (sur la microSD), le **contenu du dossier `loot/`** et le **feedback LED**.
 
@@ -457,9 +457,9 @@ find loot_bunny -name "*.txt" -exec strings {} \; | grep -E "user|pass|login" | 
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - USB Rubber Ducky]] — même écosystème Duckyscript, HID seul
 - [[Outil - O.MG Cable]] — injecteur HID WiFi, complémentaire en persistance longue
 - [[Outil - P4wnP1 A.L.O.A.]] — Raspberry Pi Zero W en gadget USB équivalent
@@ -476,7 +476,7 @@ Bash Bunny → (NET) RNDIS → Responder → hash NTLMv2 → hashcat
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -490,7 +490,7 @@ Bash Bunny → (NET) RNDIS → Responder → hash NTLMv2 → hashcat
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse d'injection** : le Mark II atteint des cadences de frappe compatibles Duckyscript 3 (~890 frappes/s selon les benchmarks Hak5) ; à moduler avec `DEFAULT_DELAY` pour passer les EDR.
 - **Boot time** : moins d'une seconde à l'insertion (payload déclenché quasi instantanément).
@@ -503,7 +503,7 @@ Bash Bunny → (NET) RNDIS → Responder → hash NTLMv2 → hashcat
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ Bash Bunny → (NET) RNDIS → Responder → hash NTLMv2 → hashcat
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : usage réservé aux tests autorisés (accord écrit). L'insertion d'un gadget USB sur une cible tierce est illégale sans mandat.
 - **Perte/vol du matériel** : le contenu de la microSD (payloads, loot) est une fuite potentielle — chiffrer les payloads sensibles et vider `loot/` après chaque engagement.
@@ -537,7 +537,7 @@ Bash Bunny → (NET) RNDIS → Responder → hash NTLMv2 → hashcat
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de batterie** : un poste éteint ou une borne morte neutralise l'attaque.
 - **Modes USB visibles** : `NET` (RNDIS) et `STORAGE` apparaissent dans le gestionnaire de périphériques — détectable par un SOC.
@@ -548,7 +548,7 @@ Bash Bunny → (NET) RNDIS → Responder → hash NTLMv2 → hashcat
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Structure de la microSD
@@ -579,7 +579,7 @@ nc -lvnp 4444
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -592,7 +592,7 @@ nc -lvnp 4444
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -605,15 +605,15 @@ nc -lvnp 4444
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Exploiter le **slot 2** avec un payload « propre » (clavier + LED verte) : réflexe de discrétion en contrôle physique.
 > - Résoudre **toujours** le volume amovible en PowerShell (`Get-Volume`) plutôt que d'utiliser une lettre de lecteur fixe.
 > - Tester `ATTACKMODE` combiné sur plusieurs OS : le boot USB et le fast startup modifient les timings.
 > - La LED donne l'état exact (`SETUP`/`ATTACK`/`FINISH`) : indispensable pour un déploiement à distance ou en équipe.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Ne pas flasher le firmware 1.7 sur un Mark I** ; ne pas downgrader un Mark II sous 1.7 (device inopérant).
 > - Le mode `NET` modifie la configuration réseau de la cible (nouvelle NIC) : très visible pour un SOC.
 > - Le boot Windows moderne (Secure Boot, WDAC) peut bloquer les pilotes de gadgets RNDIS.
@@ -621,7 +621,7 @@ nc -lvnp 4444
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ nc -lvnp 4444
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Protocole USB|🔌 Protocole USB]] · [[Outil - USB Rubber Ducky|🦆 USB Rubber Ducky]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 Poisoning réseau]] · [[Outil - P4wnP1 A.L.O.A.|🥧 P4wnP1]] · [[Outil - O.MG Cable|🔌 O.MG Cable]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Protocole USB| Protocole USB]] · [[Outil - USB Rubber Ducky| USB Rubber Ducky]] · [[Techniques/LLMNR-NBT-NS Poisoning| Poisoning réseau]] · [[Outil - P4wnP1 A.L.O.A.| P4wnP1]] · [[Outil - O.MG Cable| O.MG Cable]]

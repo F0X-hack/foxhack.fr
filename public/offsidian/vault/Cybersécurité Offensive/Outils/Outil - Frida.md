@@ -1,11 +1,11 @@
 ---
 title: "Outil - Frida"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 17.17.0
 licence: wxWindows Library Licence v3.1 (dérivée de la LGPL)
@@ -16,7 +16,7 @@ site: https://frida.re
 doc: https://frida.re/docs/
 ---
 
-# 📱 Frida — Mobile & Reverse Engineering
+# Frida — Mobile & Reverse Engineering
 
 > [!info] **En 1 phrase**
 > Frida est la **boîte à outils d'instrumentation dynamique** de référence : il injecte du **JavaScript**
@@ -25,13 +25,13 @@ doc: https://frida.re/docs/
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Frida (framework d'instrumentation dynamique) |
 | Description | Injection de JavaScript dans des processus (Android, iOS, Windows, macOS, Linux) pour hooker des fonctions, tracer les appels, lire/modifier la mémoire, contourner les protections |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Instrumentation dynamique (hook runtime) |
 | Fonction principale | `frida-server` (device) + scripts JS injectés dans le processus cible |
 | Type d'outil | Framework (bibliothèques C/JS/Python) + CLI (`frida`, `frida-trace`, `frida-ps`) |
@@ -49,7 +49,7 @@ doc: https://frida.re/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Frida fonctionne en deux temps : un **agent** (moteur d'instrumentation) est injecté dans le processus cible, et un **client** (Python/CLI) communique avec lui par IPC (USB ou réseau). L'injection se fait soit via un **serveur privilégié** (`frida-server` sur device rooté/jailbreaké), soit via un **gadget** embarqué dans l'application elle-même (patched APK, sans root), soit via l'injection dynamique sur le host (Linux/macOS/Windows). Une fois l'agent en place, le moteur **GumJS** exécute du JavaScript dans le processus cible : `Interceptor.attach()` patche l'entrée d'une fonction pour appeler du code JS à l'aller (`onEnter`) et au retour (`onLeave`), `Java.use()` manipule les classes Java (Android), `ObjC.classes` les classes Objective-C (iOS).
 
@@ -64,7 +64,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -116,7 +116,7 @@ adb forward tcp:27042 tcp:27042
 # Puis : ssh root@<ip> ; frida-server &
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Même version** entre `frida` (pip), `frida-tools` et `frida-server` : tout écart provoque `unable to connect to device` ou des crashs.
 > - Sur device **non rooté**, `frida-server` ne peut pas injecter dans d'autres apps → utiliser le **Frida Gadget** (via `objection patchapk`).
 > - Android 7+ : installer `frida-server` dans `/data/local/tmp` (exécutable) et non dans un dossier noexec.
@@ -125,7 +125,7 @@ adb forward tcp:27042 tcp:27042
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Frida n'a pas de gros fichier de configuration : la configuration passe par les **options CLI** et les **variables du device**.
 
@@ -143,7 +143,7 @@ Frida n'a pas de gros fichier de configuration : la configuration passe par les 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **frida-core** : cœur de Frida (C) — gestion des devices, injection, session, message passing.
 - **Gum** : moteur d'instrumentation bas niveau (patching, inline hooks, Interceptor, Stalker).
@@ -156,7 +156,7 @@ Frida n'a pas de gros fichier de configuration : la configuration passe par les 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -175,7 +175,7 @@ Frida n'a pas de gros fichier de configuration : la configuration passe par les 
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -194,7 +194,7 @@ Frida n'a pas de gros fichier de configuration : la configuration passe par les 
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -263,7 +263,7 @@ frida -U -l rpc_hooks.js -f com.example.app
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : contourner la détection de root et intercepter la fonction de login.**
 
@@ -299,7 +299,7 @@ frida -U -l rpc_hooks.js -f com.example.app
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : bypass SSL Pinning d'un binaire natif
 
@@ -352,7 +352,7 @@ Java.perform(function () {
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -364,7 +364,7 @@ Java.perform(function () {
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -377,7 +377,7 @@ Java.perform(function () {
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -413,7 +413,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — déployer frida-server sur un device et vérifier la version
@@ -449,7 +449,7 @@ input()  # attendre, puis Ctrl+C
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Frida ne produit pas de format de rapport structuré : la sortie est le **log des scripts** (stdout) et les traces de `frida-trace`. Les données utiles s'extraient via le script JS lui-même (JSON.stringify, envoi de messages structurés).
 
@@ -478,25 +478,25 @@ def on_message(msg, data):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 jadx (statique : classes à hooker) → Frida (hooks JS) → Burp Suite (MITM) → objection (commandes métier)
 MobSF (analyse dynamique) → utilise Frida en interne (instrument, api_monitor)
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - objection|📱 objection]] — surcouche Frida : commandes clic-bouton, `patchapk`
-- [[Outil - jadx|📱 jadx]] — localiser les classes/méthodes à hooker en statique
-- [[Outil - APKTool|📱 APKTool]] — repackage/analyse statique complémentaire
-- [[Outil - MobSF|📱 MobSF]] — intégration Frida pour l'analyse dynamique automatisée
-- [[Outil - Burp Suite|🕸️ Burp Suite]] — interception après bypass du pinning
-- [[Techniques/Insecure Deserialization|🧬 Désérialisation]] · [[Techniques/Password Cracking|🔐 Cracking]]
-- [[09 - Reverse Engineering & Malware|🧬 Reverse & Malware]]
+- [[Tools| Outils]] global
+- [[Outil - objection| objection]] — surcouche Frida : commandes clic-bouton, `patchapk`
+- [[Outil - jadx| jadx]] — localiser les classes/méthodes à hooker en statique
+- [[Outil - APKTool| APKTool]] — repackage/analyse statique complémentaire
+- [[Outil - MobSF| MobSF]] — intégration Frida pour l'analyse dynamique automatisée
+- [[Outil - Burp Suite| Burp Suite]] — interception après bypass du pinning
+- [[Techniques/Insecure Deserialization| Désérialisation]] · [[Techniques/Password Cracking| Cracking]]
+- [[09 - Reverse Engineering & Malware| Reverse & Malware]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -508,7 +508,7 @@ MobSF (analyse dynamique) → utilise Frida en interne (instrument, api_monitor)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - L'injection d'un script Frida ajoute **quelques dizaines de ms** au démarrage de l'app en spawn.
 - `Interceptor.attach` sur une fonction chaude (appelée très souvent) ralentit l'exécution : privilégier des hooks ciblés.
@@ -518,7 +518,7 @@ MobSF (analyse dynamique) → utilise Frida en interne (instrument, api_monitor)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -542,7 +542,7 @@ MobSF (analyse dynamique) → utilise Frida en interne (instrument, api_monitor)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permission** : `frida-server` nécessite root (Android/iOS) — installer uniquement sur des devices d'analyse dédiés.
 - **Secrets** : les scripts qui loggent des credentials doivent être effacés après l'engagement (fichiers en clair, historique shell).
@@ -551,7 +551,7 @@ MobSF (analyse dynamique) → utilise Frida en interne (instrument, api_monitor)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Nécessite un **device rooté/jailbreaké** pour instrumenter d'autres apps (sinon gadget intégré à l'app, signature cassée).
 - Les **apps durcies** (obfuscation native, vérification de stack, anti-Frida avancé) compliquent l'instrumentation.
@@ -561,7 +561,7 @@ MobSF (analyse dynamique) → utilise Frida en interne (instrument, api_monitor)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Déploiement frida-server (Android)
@@ -585,7 +585,7 @@ frida -H 10.10.20.15:27042 -f com.example.app -l hook.js
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -598,7 +598,7 @@ frida -H 10.10.20.15:27042 -f com.example.app -l hook.js
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -611,20 +611,20 @@ frida -H 10.10.20.15:27042 -f com.example.app -l hook.js
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Spawn plutôt qu'attacher**
+> [!tip] **Spawn plutôt qu'attacher**
 > `frida -U -f pkg` exécute l'app en pause : les checks anti-Frida faits à l'init n'ont pas encore tourné. Pour les hooks précoces, c'est la seule méthode fiable.
 
-> [!warning] ⚠️ **Hook sur une classe inexistante**
+> [!warning] **Hook sur une classe inexistante**
 > Une signature erronée fait échouer le script en silence. Vérifie le chemin exact des classes avec `objection android hooking list classes` ou `frida-trace -U -f pkg -i "isRooted"`.
 
-> [!warning] ⚠️ **La détection Frida est courante**
+> [!warning] **La détection Frida est courante**
 > Les apps durcies scannent les maps et le port 27042 : prévoir de renommer les artefacts et de hooker les fonctions de détection.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ frida -H 10.10.20.15:27042 -f com.example.app -l hook.js
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - objection|📱 objection]] · [[Outil - jadx|📱 jadx]] · [[Outil - APKTool|📱 APKTool]] · [[Outil - MobSF|📱 MobSF]] · [[Outil - Burp Suite|🕸️ Burp Suite]] · [[Techniques/Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Techniques/Insecure Deserialization|🧬 Désérialisation]]
+**Liens :** [[Tools| Outils]] · [[Outil - objection| objection]] · [[Outil - jadx| jadx]] · [[Outil - APKTool| APKTool]] · [[Outil - MobSF| MobSF]] · [[Outil - Burp Suite| Burp Suite]] · [[Techniques/Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Techniques/Insecure Deserialization| Désérialisation]]

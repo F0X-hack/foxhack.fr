@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🤖 Pwnagotchi
+# Pwnagotchi
 
 > [!info] **En 1 phrase**
 > Le **Pwnagotchi** est un Raspberry Pi Zero W doté d'un écran e-ink et d'une « IA » qui
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Faible (setup) → Moyenne (plugins, cracking) |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     PG["Pwnagotchi<br>RPi Zero W + e-ink"] -->|mode monitor| MON["Capture passive"]
@@ -48,7 +48,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le Pwnagotchi est un projet open-source créé par **evilsocket** (Simone Margaritelli).
 > C'est un **Raspberry Pi Zero W** combiné à un **écran e-ink Waveshare 2.13"** qui
@@ -74,7 +74,7 @@ flowchart TB
     style CRACK fill:#ffcdd2
 ```
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **RPi Zero W** : BCM2835 (ARM11, 1 GHz), 512 Mo RAM, WiFi 802.11b/g/n, 1 GPIO 40-pin
 > - **Écran e-ink** : Waveshare 2.13" v3/v4 (250x122 pixels, noir & blanc)
 > - **OS** : pwnagotchi.ai (Raspbian custom) — image préconfigurée
@@ -85,7 +85,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Handshake WPA2 (4-way)
 
@@ -132,7 +132,7 @@ sequenceDiagram
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -155,7 +155,7 @@ sequenceDiagram
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### 802.11 WiFi
 
@@ -179,7 +179,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -223,7 +223,7 @@ main.plugins.grid.exclude = "MonReseoWifi"
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres principaux
 
@@ -286,7 +286,7 @@ main.plugins.onlinehashcrack.email = "email@example.com"
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -329,9 +329,9 @@ http://pwnagotchi.local:8080
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Setup et premières captures
+### Débutant — Setup et premières captures
 
 ```text
 1. Flasher l'image sur la carte SD
@@ -343,7 +343,7 @@ http://pwnagotchi.local:8080
 7. Cracker avec aircrack-ng
 ```
 
-### 🟡 Intermédiaire — Plugin GPS + upload automatique
+### Intermédiaire — Plugin GPS + upload automatique
 
 ```toml
 main.plugins.gps.enabled = true
@@ -354,7 +354,7 @@ main.plugins.memtemp-plus.enabled = true
 main.plugins.aircrackonly.enabled = true
 ```
 
-### 🔴 Avancé — Custom image + plugins avancés
+### Avancé — Custom image + plugins avancés
 
 ```bash
 # SSH dans le Pwnagotchi
@@ -370,7 +370,7 @@ main.plugins.montemplate.enabled = true
 sudo systemctl restart pwnagotchi
 ```
 
-### ⚫ Expert — Automatisation complète
+### Expert — Automatisation complète
 
 ```python
 #!/usr/bin/env python3
@@ -439,7 +439,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -471,7 +471,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Wardriving avec Pwnagotchi
 
@@ -481,7 +481,7 @@ flowchart TB
 | **Matériel** | Pwnagotchi + batterie PiSugar + GPS USB |
 | **Étapes** | 1. Config GPS plugin → 2. Promenade → 3. Récupérer .pcap + GPS coords → 4. Analyser |
 | **Résultat** | Handshakes géolocalisés, prêts pour cracking |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -499,11 +499,11 @@ flowchart LR
 | **Matériel** | Pwnagotchi + WiFi USB Alfa AWUS036NH |
 | **Étapes** | 1. Identifier le BSSID → 2. Whitelist (exclure les autres) → 3. Proximité → 4. Capture |
 | **Résultat** | Handshake du réseau ciblé |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -521,7 +521,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -551,7 +551,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -588,7 +588,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -633,7 +633,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -659,10 +659,10 @@ ls /root/handshakes/*.pcap | wc -l
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Attaques WiFi (WPA2 et PMKID)| WiFi]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -673,7 +673,7 @@ ls /root/handshakes/*.pcap | wc -l
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -692,7 +692,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -713,7 +713,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -758,7 +758,7 @@ iw dev wlan0 scan
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -781,7 +781,7 @@ iw dev wlan0 scan
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -802,7 +802,7 @@ iw dev wlan0 scan
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -830,7 +830,7 @@ iw dev wlan0 scan
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -848,7 +848,7 @@ iw dev wlan0 scan
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -871,7 +871,7 @@ iw dev wlan0 scan
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Les .pcap sans handshake utile sont inutiles — vérifier avec `tshark -r file.pcap -Y "eapol"`.
 - **Piège 2** : Le mot de passe par défaut `pi/raspberry` est connu de tous — le changer immédiatement.
@@ -888,9 +888,9 @@ iw dev wlan0 scan
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Pwnagotchi](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/pwnagotchi.md)
 > - [Pwnagotchi — documentation officielle](https://pwnagotchi.ai/)
 > - [jayofelony's Pwnagotchi images](https://github.com/jayofelony/pwnagotchi)
@@ -924,4 +924,4 @@ iw dev wlan0 scan
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]] · [[Hardware - Flipper Zero|🐬 Flipper]] · [[Hardware - Proxmark|📡 Proxmark]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Attaques WiFi (WPA2 et PMKID)| WiFi]] · [[Hardware - Flipper Zero| Flipper]] · [[Hardware - Proxmark| Proxmark]] · [[Bibliothèque technique| Index]]

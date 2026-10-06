@@ -1,11 +1,11 @@
 ---
 title: "Outil - Sigma"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: CLI v3.0.3 (2026)
 licence: DRL-1.1 (règles officielles) ; Apache-2.0/MIT (outils de conversion)
@@ -16,20 +16,20 @@ site: https://sigmahq.io
 doc: https://sigmahq.io/docs
 ---
 
-# 🔎 Sigma — Forensics, Threat Intel & Honeypots
+# Sigma — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > Sigma est un format ouvert et générique de règles de détection orientées logs, comparable à YARA mais pour les journaux, convertible automatiquement vers Splunk, Elastic, Suricata, QRadar et plus d'une vingtaine de SIEM/EDR.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Sigma |
 | Description | Format ouvert de règles de détection orientées logs : YAML neutre convertible vers les SIEM/EDR |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Detection as Code / Règles de détection |
 | Fonction principale | Écrire une règle de détection une fois, la convertir pour Splunk, Elastic, QRadar, Sentinel, Suricata... |
 | Type d'outil | CLI Python (sigma convert/validate/list) + dépôt de règles YAML |
@@ -50,7 +50,7 @@ doc: https://sigmahq.io/docs
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Là où YARA matche des octets, Sigma matche des **logs** : chaque règle décrit une condition sur les champs d'un événement (ex. `CommandLine` contient `powershell -enc`) dans un **YAML neutre**, indépendant du SIEM. Un convertisseur (`sigma convert`) traduit ensuite la règle vers la syntaxe cible : Splunk SPL, Elasticsearch, Microsoft Sentinel (KQL), QRadar, Suricata, Sysmon, etc. C'est l'approche « écrire une fois, déployer partout ». Une règle Sigma est structurée : `title`, `id`, `status` (experimental → test → stable), `tags` (MITRE ATT&CK, ex. `attack.t1059.001`), `logsource` (product, category, service), `detection` (sélections + `condition`), `falsepositives`, `level`. On l'utilise pour détecter des TTPs via les **règles officielles SigmaHQ** maintenues par la communauté, complétées par des **règles maison** pour des comportements observés en interne. L'intérêt défensif : partager et maintenir une bibliothèque de détection cohérente entre équipes et outils, sans dupliquer la logique dans chaque SIEM.
 
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 La CLI officielle est fournie par le projet **Sigmalogic** (nouveau dépôt de la CLI) :
 
@@ -101,14 +101,14 @@ git clone https://github.com/SigmaHQ/sigma.git /opt/sigma
 
 Le dossier `/opt/sigma/rules` contient les règles officielles triées par plateforme (windows, linux, macos, network, cloud, web).
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Python 3.9+ requis ; utiliser un environnement virtuel (`venv`) pour éviter les conflits de dépendances.
 > - Ne pas confondre les deux CLI (`sigma-cli` vs `sigmalogic`) : les options `-t`/`-p` sont similaires mais l'output peut différer.
 > - Les règles du dépôt SigmaHQ évoluent vite : mettre à jour régulièrement (`git pull`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre (règle) | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -128,7 +128,7 @@ Le dossier `/opt/sigma/rules` contient les règles officielles triées par plate
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -142,7 +142,7 @@ Flux type : règle YAML → `sigma validate` → `sigma convert -t <backend> [-p
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -197,7 +197,7 @@ sigma convert -t elasticsearch -p ecs_windows -p ecs_cloud rule.yaml
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -215,7 +215,7 @@ sigma convert -t elasticsearch -p ecs_windows -p ecs_cloud rule.yaml
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Advanced
 
@@ -252,7 +252,7 @@ level: high
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Écrire une règle maison** : détecter un `schtasks.exe` lancé avec un argument encodé en base64, technique de persistance courante (voir exemple en scénario).
 2. **Étape 2 — Valider** : `sigma validate schtasks.yaml` → corriger les éventuelles erreurs de champ.
@@ -263,7 +263,7 @@ level: high
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection de persistance par schtasks encodé en base64
 
@@ -345,7 +345,7 @@ sigma convert -t splunk ps_base64.yaml
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -358,7 +358,7 @@ sigma convert -t splunk ps_base64.yaml
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -374,7 +374,7 @@ sigma convert -t splunk ps_base64.yaml
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -423,7 +423,7 @@ rule Suspicious_PowerShell_Downloader {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — convertir tout le dépôt windows/process_creation pour Splunk
@@ -450,7 +450,7 @@ print("Recherche créée dans Splunk")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie de `sigma convert` est une **recherche/requête au format du SIEM cible** (SPL, Lucene, KQL, AQL, règle Suricata). Le mode par défaut affiche le texte de la recherche ; `-o` écrit dans un fichier.
 
@@ -466,7 +466,7 @@ sigma convert -t suricata rule_net.yaml
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Sigma → Splunk (SPL), Elasticsearch (Lucene/DSL), Sentinel (KQL), QRadar (AQL)
@@ -476,9 +476,9 @@ SigmaHQ règles → pipeline ECS → Elastic (modules ECS)
 Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - YARA|🔎 YARA]] — pendant de Sigma pour les fichiers/binaires
-- [[Outils/Outil - OpenCTI|🔎 OpenCTI]] — cartographie des techniques reliées aux règles
+- [[Tools| Outils]]
+- [[Outils/Outil - YARA| YARA]] — pendant de Sigma pour les fichiers/binaires
+- [[Outils/Outil - OpenCTI| OpenCTI]] — cartographie des techniques reliées aux règles
 - [[Outil - Splunk]] — backend SPL cible des conversions
 - [[Outil - Elastic]] — backend Elasticsearch avec pipeline ECS
 - [[Outil - Suricata]] — cible des conversions réseau (règles)
@@ -487,7 +487,7 @@ Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -502,7 +502,7 @@ Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Conversion** : rapide (processus local) même sur des milliers de règles ; le goulot est la validation sur les gros dossiers.
 - **Règles déployées** : le coût est celui de la recherche SIEM — les règles complexes (regex, multiples sélections) sont plus chères à exécuter.
@@ -515,7 +515,7 @@ Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -551,7 +551,7 @@ Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Règles** : n'importer que des règles de sources fiables (SigmaHQ, règles maison auditées) : une règle malveillante peut créer des recherches coûteuses ou des alertes bidon.
 - **Dépôt** : protéger le dépôt Git (signatures, revues) en environnement de production.
@@ -561,7 +561,7 @@ Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Dépend de la télémetrie** : une règle est muette si les logs ne collectent pas les champs.
 - **Pas d'exécution** : Sigma est un format de règles, pas un moteur de détection.
@@ -572,7 +572,7 @@ Sigma + YARA → détection complémentaire (logs + fichiers/binaires)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Valider une règle
@@ -599,7 +599,7 @@ sigma convert -t splunk /opt/sigma/rules/windows/process_creation/ -o splunk_all
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -608,11 +608,11 @@ sigma convert -t splunk /opt/sigma/rules/windows/process_creation/ -o splunk_all
 | **Commande principale** | `sigma convert -t <backend> rule.yaml` |
 | **Alternative principale** | Règles natives du SIEM, YARA (fichiers) |
 | **Concepts importants** | logsource, detection/condition, modificateurs, backend, pipeline, status/level |
-| **Liens associés** | [[Outils/Outil - YARA|🔎 YARA]] · [[Outils/Outil - OpenCTI|🔎 OpenCTI]] |
+| **Liens associés** | [[Outils/Outil - YARA| YARA]] · [[Outils/Outil - OpenCTI| OpenCTI]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -624,24 +624,24 @@ sigma convert -t splunk /opt/sigma/rules/windows/process_creation/ -o splunk_all
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Regarde d'abord les règles officielles SigmaHQ avant d'en écrire une : la TTP est très probablement déjà couverte, il suffit de l'adapter à son environnement.
 > - Utilise `-p` (pipeline) avec le bon corpus : `sigma convert -t elasticsearch -p ecs_windows` traduit les noms de champs Sigma vers ceux de ton cluster.
 > - Renseigne `logsource` (product, category, service) : c'est ce qui cible le bon flux de logs à la conversion.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Une règle Sigma ne s'exécute pas toute seule : la conversion dépend des champs réellement présents dans tes logs. Un SIEM qui ne collecte pas `CommandLine` rend la règle muette.
 > - Les règles `experimental` des dépôts communautaires produisent souvent des faux positifs : relève le seuil de confiance avant production et mesure le bruit dans ton environnement.
 > - Ne confonds pas le format de règle (Sigma) avec le SIEM de destination : chaque backend a sa propre syntaxe de champs.
 
-> [!warning] ⚠️ **Piège** : les modificateurs ont une syntaxe précise.
+> [!warning] **Piège** : les modificateurs ont une syntaxe précise.
 > `Field|contains|all` s'écrit `CommandLine|contains|all` et non `CommandLine contains all` : une erreur de modificateur invalide silencieusement la règle.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -664,4 +664,4 @@ sigma convert -t splunk /opt/sigma/rules/windows/process_creation/ -o splunk_all
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Outils/Outil - OpenCTI|🔎 OpenCTI]] · [[Techniques/10 - Cheatsheets|📜 Cheatsheets]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - YARA| YARA]] · [[Outils/Outil - OpenCTI| OpenCTI]] · [[Techniques/10 - Cheatsheets| Cheatsheets]]

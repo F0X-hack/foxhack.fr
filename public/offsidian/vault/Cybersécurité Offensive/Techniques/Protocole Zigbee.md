@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏠 Protocole Zigbee
+# Protocole Zigbee
 
 > [!info] **En 1 phrase**
 > **Zigbee** est le standard radio **IEEE 802.15.4** basse consommation des objets (domotique,
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart TB
@@ -39,7 +39,7 @@ flowchart TB
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 - [riverloopsec/killerbee](https://github.com/riverloopsec/killerbee) — toolkit de recherche en sécurité IEEE 802.15.4 / ZigBee (sniff, injection, dev env).
 - [APIMote](https://www.attify-store.com/products/apimote) — hardware de recherche ZigBee pour évaluer la sécurité des réseaux 802.15.4/ZigBee (usage autorisé).
@@ -47,7 +47,7 @@ flowchart TB
 
 ---
 
-## 🔑 Default Trust Center Link Key
+## Default Trust Center Link Key
 
 > Zigbee empile des couches de sécurité dont l'**AES-128** pour sécuriser le trafic.
 > La **Default Trust Center Link Key** est une clé cryptographique **prédéfinie** qui protège le
@@ -72,7 +72,7 @@ Edit > Preferences > Protocols > Zigbee NWK > New
 
 ---
 
-## 💥 Attaque type
+## Attaque type
 
 ```mermaid
 flowchart TB
@@ -87,7 +87,7 @@ flowchart TB
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -97,7 +97,7 @@ flowchart TB
 | **Mettre à jour les firmwares** | Les vulns de type clés statiques (CVE-2020-28952) sont corrigées par patch |
 | **Surveillance radio** | Détecter les rejoin / injections inhabituelles sur les canaux 802.15.4 |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - La clé par défaut correspond au profil **Home Automation** — d'autres profils (Smart Energy…) peuvent avoir des clés différentes.
 - **Zigbee NWK** déchiffre les trames réseau ; la couche **APS** peut nécessiter la clé de lien (ou réseau) séparée.
@@ -107,9 +107,9 @@ flowchart TB
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Zigbee](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/zigbee.md)
 > - [AN1233: Zigbee Security — Silabs](https://www.silabs.com/documents/public/application-notes/an1233-zigbee-security.pdf)
 > - [Zigbee Security 101 (Payatu)](https://payatu.com/blog/zigbee-security-101/)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]] · [[Hardware - UART|🔌 UART]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Attaques WiFi (WPA2 et PMKID)| WiFi]] · [[Hardware - UART| UART]] · [[Hardware - RFID et NFC| RFID/NFC]]

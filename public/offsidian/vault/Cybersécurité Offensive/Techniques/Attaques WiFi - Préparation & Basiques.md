@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧰 Attaques WiFi — Préparation & Basiques
+# Attaques WiFi — Préparation & Basiques
 
 > [!info] **En 1 phrase**
 > Avant toute attaque WiFi : un **adaptateur compatible monitor+injection**, le **mode moniteur**, une **reconnaissance**
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,9 +34,9 @@ flowchart LR
 
 ---
 
-## 🛠️ L'adaptateur = 90% du succès
+## L'adaptateur = 90% du succès
 
-> [!warning] ⚠️ **Sans monitor + injection, rien ne marche.**
+> [!warning] **Sans monitor + injection, rien ne marche.**
 > Le chipset doit supporter le mode moniteur ET l'injection de trames.
 
 - **Chipset rtl8812au** : Alfa AWUS036ACH (dual-band, injection fiable).
@@ -59,7 +59,7 @@ iwconfig wlan0 txpower 30
 
 ---
 
-## 🖥️ Mode moniteur
+## Mode moniteur
 
 ```bash
 # Démarrer le mode moniteur
@@ -79,12 +79,12 @@ iw dev wlan0 interface del mon0
 iwconfig wlan0 mode managed
 ```
 
-> [!tip] 💡 **Problèmes fréquents**
+> [!tip] **Problèmes fréquents**
 > `airmon-ng check kill` tue les processus qui interfèrent (NetworkManager, wpa_supplicant…) — il faut ensuite relancer le réseau manuellement.
 
 ---
 
-## 🔬 Reconnaissance
+## Reconnaissance
 
 ```bash
 # Scanner les AP
@@ -114,7 +114,7 @@ DST_ADDR="192.168.1.255"
 
 ---
 
-## 🧪 Tester l'injection
+## Tester l'injection
 
 ```bash
 # Test d'injection (test d'injection vers le AP)
@@ -126,9 +126,9 @@ aireplay-ng -9 -i wlan1 mon0
 
 ---
 
-## 🎭 Fake Authentication
+## Fake Authentication
 
-> [!warning] ⚠️ **À faire avant CHAQUE attaque** (WEP surtout) : il faut être « associé » au AP pour que celui-ci accepte nos paquets injectés.
+> [!warning] **À faire avant CHAQUE attaque** (WEP surtout) : il faut être « associé » au AP pour que celui-ci accepte nos paquets injectés.
 
 ```bash
 # Fake auth simple (sans ARP)
@@ -143,7 +143,7 @@ aireplay-ng -1 6000 -o 1 -q 10 -e <ESSID> -a <AP MAC> -h <Your MAC> <interface>
 
 ---
 
-## 💥 Deauthentication
+## Deauthentication
 
 > Force un client à se reconnecter → déclenche l'émission de paquets (ARP) ou capture le handshake 4-way.
 
@@ -161,7 +161,7 @@ aireplay-ng -0 0 -a $AP_MAC mon0
 
 ---
 
-## 🏗️ ARP Replay (brique de base)
+## ARP Replay (brique de base)
 
 > Réécoute les paquets ARP et les réinjecte au AP → le AP répond avec un nouveau IV. En collectant assez d'IV, on cracke la clé WEP.
 
@@ -178,7 +178,7 @@ aircrack-ng -b $AP_MAC wep1.cap
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -187,14 +187,14 @@ aircrack-ng -b $AP_MAC wep1.cap
 | **WPA3/SAE** | Résistant au crack offline et aux downgrades (si configuré correctement) |
 | **Surveillance** | Alerter sur les deauth massives (attaque de collecte d'handshake) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Adaptateur interne** (chipset Intel, etc.) : souvent pas d'injection → pense au **reverse tethering** ou à un **dongle USB**.
 - Le **filtrage MAC** se contourne avec `macchanger` (adopter une MAC de client légitime).
 - Un **SSID caché** se révèle en déauthentifiant un client (le SSID apparaît dans les probes).
 - `airmon-ng check kill` stoppe le réseau : prévoir de restaurer (`airmon-ng check` puis redémarrer).
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-basics.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-basics.md)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - WEP|🔓 WEP]] · [[Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Attaques WiFi - PMKID|📶 PMKID]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - WEP| WEP]] · [[Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Attaques WiFi - PMKID| PMKID]] · [[Bibliothèque technique| Index]]

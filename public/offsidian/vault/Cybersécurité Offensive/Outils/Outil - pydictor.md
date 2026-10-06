@@ -1,7 +1,7 @@
 ---
 title: "Outil - pydictor"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://landgrey.github.io/pydictor
 doc: https://landgrey.github.io/pydictor/docs/doc/usage.html
 ---
 
-# 🐍 pydictor — Générateur de wordlists Python tout-en-un
+# pydictor — Générateur de wordlists Python tout-en-un
 
 > [!info] **En 1 phrase**
 > pydictor est un générateur de wordlists Python ultra-complet : jeux de caractères, social engineering (SEDB), règles d'extension, plugins (birthday, pid...) et outils de post-traitement (merge, uniq, counter) en un seul outil.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | pydictor |
 | Description | « A powerful and useful hacker dictionary builder for a brute-force attack » : générateur et atelier de post-traitement de wordlists en Python |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Génération / mutation / social engineering / post-traitement (CLI) |
 | Fonction principale | Construire des wordlists par 7 moteurs (base, char, chunk, conf, pattern, extend, sedb) et les nettoyer via 8 outils intégrés |
 | Type d'outil | CLI (Python) |
@@ -50,7 +50,7 @@ doc: https://landgrey.github.io/pydictor/docs/doc/usage.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 pydictor (LandGrey) est un couteau suisse de la génération de dictionnaires : il regroupe ce que Crunch, CUPP, Mentalist et plusieurs utilitaires de nettoyage font séparément, dans un seul script Python sans dépendance externe. Sept moteurs couvrent la production de mots : `-base` (jeux de caractères : `d` chiffres, `L` minuscules, `c` majuscules, combos `dL`, `dc`, `Lc`, `dLc`), `-char` (jeu de caractères personnalisé), `-chunk` (permutations de morceaux), `--conf` (moteur de syntaxe piloté par fichier de configuration), `--pattern` (masques positionnels type hashcat), `-extend` (extension de mots-clés via des règles configurables, niveau et leet), et `--sedb` (générateur social engineering interactif façon CUPP). Huit **outils** (`-tool`) post-traitent les listes : fusion (`combiner`), comparaison (`comparer`), comptage de fréquence (`counter`), filtrage (`handler`), suppression sécurisée (`shredder`), fusion+déduplication (`uniqbiner`), déduplication (`uniqifer`) et combinaison tête/corps/queue (`hybrider`). Des **plugins** (`-plug`) ajoutent des générateurs spécialisés : `birthday` (dates dans une plage), `pid4/6/8` (fins d'identifiants), `scratch` (mots-clés extraits d'un site), etc.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -128,12 +128,12 @@ docker run --rm -v "$PWD:/pydictor" -w /pydictor python:3 \
 
 Inutile : le script s'exécute tel quel. Les plugins, outils et encodeurs custom se déposent dans `/plugins/`, `/tools/` et `/lib/encode/` — ils sont chargés automatiquement au lancement.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Python 2.7 ou 3.x suffit, aucune dépendance pip. Les chemins des fichiers de configuration (`/funcfg/build.conf`, `extend.conf`, `leet_mode.conf`, `scratch.sites`) sont **relatifs au dossier du projet** : exécuter pydictor depuis sa racine. Sur les gros volumes, Python 3 est sensiblement plus rapide que Python 2.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 pydictor se pilote par options de ligne de commande, mais aussi par des fichiers de configuration édités à la main :
 
@@ -148,7 +148,7 @@ pydictor se pilote par options de ligne de commande, mais aussi par des fichiers
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 pydictor est une suite de scripts Python organisée en modules. `lib/data/data.py` centralise les options globales (`pyoptions`), les chemins (`paths`) et les structures de sortie ; `lib/fun/fun.py` fournit les utilitaires (parcours de fichiers, affichage coloré `cool`) et `lib/fun/decorator.py` expose le décorateur `@magic` qui connecte un plugin/outil au pipeline global. Les moteurs produisent des **générateurs Python** (`yield`) : chaque candidat est filtré à la volée par les fonctions `--len`, `--occur`, `--types`, `--repeat`, `--regex`, `--head`, `--tail`, puis éventuellement encodé (`lib/encode/`) avant écriture, ce qui évite de matérialiser des listes gigantesques en mémoire. La sortie par défaut est le dossier `results/`.
 
@@ -156,7 +156,7 @@ L'extensibilité est l'ADN du projet : un plugin est un simple script dans `/plu
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -178,7 +178,7 @@ python3 pydictor.py [moteur] [options] [-o fichier]
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -204,7 +204,7 @@ python3 pydictor.py [moteur] [options] [-o fichier]
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -247,7 +247,7 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Comprendre la cible** — politique de mot de passe, convention d'entreprise, infos OSINT (prénoms, dates, produits) :
    ```bash
@@ -278,7 +278,7 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : dates de naissance sur une plage
 
@@ -320,7 +320,7 @@ python3 pydictor.py -tool handler /tmp/freq.txt --len 6 16 -o /tmp/top.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -333,7 +333,7 @@ python3 pydictor.py -tool handler /tmp/freq.txt --len 6 16 -o /tmp/top.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -346,7 +346,7 @@ python3 pydictor.py -tool handler /tmp/freq.txt --len 6 16 -o /tmp/top.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -388,7 +388,7 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"Potential password spray - HTT
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline complet de génération → filtrage → cracking
@@ -428,7 +428,7 @@ def societe_magic(*args):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie par défaut va dans `results/` ; `-o`/`--output` la redirige dans un fichier. Les candidats peuvent être encodés (`--encode b64|md5|sha1|url`) et les outils `counter`/`handler`/`uniqifer` produisent des fichiers prêts à parser.
 
@@ -457,7 +457,7 @@ print("fins par 4 chiffres :", fin_annee, "/", len(plains))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 OSINT / CeWL / CUPP → pydictor (-extend / --sedb) → wordlist → hashcat / hydra / John
@@ -466,18 +466,18 @@ pydictor (-tool handler/uniqifer/counter) → nettoyage de n'importe quelle word
 pydictor (-plug birthday / pid4-8) → listes spécialisées (dates, identifiants)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - CUPP|CUPP]] — profil social engineering alternatif (interactif, profils OSINT)
 - [[Outil - Crunch|Crunch]] et [[Outil - kwprocessor|kwprocessor]] — génération par masques / clavier
 - [[Outil - Mentalist|Mentalist]] — GUI et export de règles hashcat/John
 - [[Outil - rsmangler|rsmangler]] — mutations de mots en CLI (alternative légère)
 - [[Outil - hashcat|hashcat]] et [[Outil - John the Ripper|John the Ripper]] — consommation des wordlists
 - [[Outil - SecLists|SecLists]] — wordlists prêtes à l'emploi, complémentaires
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -492,13 +492,13 @@ pydictor (-plug birthday / pid4-8) → listes spécialisées (dates, identifiant
 
 ---
 
-## ⚡ Performance
+## Performance
 
 pydictor est du Python pur : la génération est **flottante** via générateurs (`yield`), ce qui limite la mémoire même sur de gros volumes, mais le CPU reste le facteur limitant — Python 3 est nettement plus rapide que Python 2 (indiqué dans la doc officielle). Le coût réel est combinatoire : `-base dLc --len 8 8` représente 218 340 105 584 896 candidats (62^8), une impossibilité ; `-base d --len 8 8` (100 M) est déjà volumineux. Les filtres `--occur`/`--types`/`--repeat`/`--regex` ne réduisent pas l'énumération (ils s'appliquent après génération), contrairement à `--len` et `--head/--tail` qui bornent le travail. `--encode` ajoute un coût CPU par candidat (pertinent surtout sur des listes courtes). Pour de très gros volumes, le **masque hashcat** (`-a 3`) en C/GPU reste des ordres de grandeur plus rapide que l'énumération Python ; pydictor excelle sur les volumes « humains » (milliers à millions de candidats) et le post-traitement.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -534,13 +534,13 @@ pydictor est du Python pur : la génération est **flottante** via générateurs
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 pydictor s'exécute localement sans télémétrie ni réseau (sauf le plugin `scratch` qui **interroge les URLs** listées dans `/funcfg/scratch.sites` ou passées en argument). Le README porte un disclaimer explicite : l'utilisation sans consentement mutuel préalable est illégale ; la responsabilité incombe à l'utilisateur. Points de vigilance : les wordlists générées contiennent des données personnelles reconstruites (SEDB) ou des candidats sensibles — les protéger et les **effacer proprement** avec `-tool shredder` après usage (d'où son existence). Le plugin `scratch` génère du trafic HTTP vers la cible : prévoir un proxy et une autorisation. Enfin, en environnement professionnel, l'installation depuis le dépôt officiel est préférable à tout binaire ou copie non vérifiée (risque de supply chain). Aucune fonctionnalité de vol de données n'existe dans l'outil.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Python pur, CPU-bound** : lent sur les volumes exhaustifs — préférer les masques hashcat (`-a 3`) pour l'énumération massive.
 - **Pas de GUI** : tout se passe en CLI (contrairement à Mentalist).
@@ -552,7 +552,7 @@ pydictor s'exécute localement sans télémétrie ni réseau (sauf le plugin `sc
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Génération basique
@@ -586,7 +586,7 @@ python3 pydictor.py -tool hybrider heads.txt bodies.txt tails.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -595,11 +595,11 @@ python3 pydictor.py -tool hybrider heads.txt bodies.txt tails.txt
 | **Commande principale** | `python3 pydictor.py -base dL --len 4 8 -o dict.txt` puis `-tool handler/uniqifer` |
 | **Alternative principale** | CUPP (profil OSINT), Crunch (masques), Mentalist (GUI), rsmangler (mutations) |
 | **Concepts importants** | 7 moteurs C1-C7, 8 outils T1-T8, filtres `--occur`/`--types`/`--repeat`/`--regex`, plugins, `--encode` |
-| **Liens associés** | [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - CUPP|CUPP]] · [[Outil - hashcat|hashcat]] |
+| **Liens associés** | [[Techniques/Password Cracking| Password Cracking]] · [[Outil - CUPP|CUPP]] · [[Outil - hashcat|hashcat]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -611,17 +611,17 @@ python3 pydictor.py -tool hybrider heads.txt bodies.txt tails.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > Les codes `-base` sont sensibles à la casse : `L` = minuscules, `c` = majuscules — vérifie avec `-h`. Chaîne `-base` + `--head/--tail` + `--len` pour coller à une politique connue. Combine `-tool counter` (fréquence) puis `-tool handler` (filtre) pour affûter une liste brute. Sans `-o`, la sortie tombe dans `results/`. Termine toujours par `-tool shredder` pour effacer les listes sensibles.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > Le volume explose vite : `-base dLc --len 8 8` est irréaliste — borne `--len` et le jeu de caractères. `--sedb` et `-plug scratch` supposent des réponses interactives ou des URLs valides : prépare-les avant. `-extend` génère énormément de variantes selon `--level` — commence par `--level 2`. `--occur`/`--types` filtrent **après** génération : le coût CPU reste payé. Exécute pydictor depuis sa racine (chemins relatifs de `lib/` et `funcfg/`).
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -645,4 +645,4 @@ python3 pydictor.py -tool hybrider heads.txt bodies.txt tails.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - CUPP|CUPP]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] · [[Outil - Crunch|Crunch]] · [[Outil - Mentalist|Mentalist]] · [[Outil - hashcat|hashcat]]
+**Liens :** [[Tools| Outils]] · [[Outil - CUPP|CUPP]] · [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] · [[Outil - Crunch|Crunch]] · [[Outil - Mentalist|Mentalist]] · [[Outil - hashcat|hashcat]]

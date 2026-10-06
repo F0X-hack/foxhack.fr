@@ -1,11 +1,11 @@
 ---
 title: "Outil - Impacket"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 0.12.0
 licence: Apache-2.0 (certains scripts sous licence MIT)
@@ -16,14 +16,14 @@ site: https://www.impacket.org/
 doc: https://www.impacket.org/docs/
 ---
 
-# 👑 Impacket — Active Directory & Windows
+# Impacket — Active Directory & Windows
 
 > [!info] **En 1 phrase**
 > Impacket est un framework Python qui implémente les protocoles Windows (SMB, Kerberos, LDAP, MSRPC, MSSQL, WinRM) et fournit des scripts prêts à l'emploi pour la post-exploitation Active Directory.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,7 +40,7 @@ doc: https://www.impacket.org/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Impacket est une collection de classes Python qui implémentent **nativement les protocoles réseau Microsoft** (SMB, Kerberos, LDAP, MSRPC, MSSQL, WinRM, WMI...) sans dépendre des binaires Windows. Au-dessus de cette bibliothèque, le dossier `examples/` fournit des **scripts prêts à l'emploi** utilisés à chaque pentest AD : exécution de commandes à distance (psexec, wmiexec, smbexec, atexec), dump de secrets (secretsdump : NTDS.dit, SAM, LSA), attaques Kerberos (GetNPUsers, GetUserSPNs, ticketer, getTGT, getST), relais NTLM (ntlmrelayx) et clients divers (smbclient, mssqlclient). Dans un pentest, il s'utilise dès qu'on dispose d'un **compte, d'un hash NTLM ou d'un ticket** : c'est la boîte à outils de l'étape post-exploitation / escalade de privilèges AD.
 
@@ -55,7 +55,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans Impacket |
 |---|---|
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Pré-requis
 
@@ -104,9 +104,9 @@ docker run -it --rm --network host kalilinux/kali-rolling bash -c "apt update &&
 secretsdump.py -h
 ```
 
-> [!tip] 💡 **PATH** : sur Kali les scripts sont appelables directement (`psexec.py`, `secretsdump.py`). Sinon : `python3 /chemin/vers/impacket/examples/psexec.py ...`
+> [!tip] **PATH** : sur Kali les scripts sont appelables directement (`psexec.py`, `secretsdump.py`). Sinon : `python3 /chemin/vers/impacket/examples/psexec.py ...`
 
-## ⚙️ Configuration
+## Configuration
 
 Impacket se configure par **arguments en ligne de commande** (communs à tous les scripts) : target (`user:pass@host` ou `user@host`), `-hashes`, `-dc-ip`, `-target-ip`, `-k` (Kerberos), `-no-pass`, etc. Quelques scripts utilisent un fichier (ex. `-usersfile`, `-requests-file`) mais il n'y a pas de fichier de config global.
 
@@ -126,7 +126,7 @@ Impacket se configure par **arguments en ligne de commande** (communs à tous le
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Couche transport** : Impacket fournit des sockets chiffrés (NTLM, Kerberos, TLS) en pur Python — pas de dépendance à un client Microsoft.
 - **Protocoles** : chaque protocole est un module (`impacket.smb3`, `impacket.ntlm`, `impacket.krb5`, `impacket.dcerpc.v5.*`, `impacket.ldap`, `impacket.mssql`, `impacket.winreg`, …).
@@ -138,7 +138,7 @@ Impacket se configure par **arguments en ligne de commande** (communs à tous le
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ python3 getTGT.py -dc-ip 192.168.1.10 -hashes :64f12cdd... CORP/user
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -223,7 +223,7 @@ python3 getTGT.py -dc-ip 192.168.1.10 -hashes :64f12cdd... CORP/user
 > [!tip] Options les plus utiles au quotidien
 > `-hashes :NT` (PtH), `-dc-ip` (évite les erreurs DNS), `-just-dc-user` (dump ciblé), `-no-pass` (roasts).
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -275,7 +275,7 @@ python3 smbserver.py share /opt/share -smb2support -username user -password Pass
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : vous disposez d'un **hash NTLM** du compte `Admin` et le **DC** répond sur `192.168.1.10`.
 
@@ -303,7 +303,7 @@ Scénario : vous disposez d'un **hash NTLM** du compte `Admin` et le **DC** rép
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Golden Ticket avec ticketer.py
 
@@ -346,7 +346,7 @@ python3 wmiexec.py -k -no-pass CORP.LOCAL/Admin@app01.corp.local whoami
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -360,7 +360,7 @@ python3 wmiexec.py -k -no-pass CORP.LOCAL/Admin@app01.corp.local whoami
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -376,7 +376,7 @@ python3 wmiexec.py -k -no-pass CORP.LOCAL/Admin@app01.corp.local whoami
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > Impacket couvre une très large surface ATT&CK : ne retenir ici que les usages principaux (exécution, dump, tickets, relais).
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -392,7 +392,7 @@ python3 wmiexec.py -k -no-pass CORP.LOCAL/Admin@app01.corp.local whoami
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -405,7 +405,7 @@ python3 wmiexec.py -k -no-pass CORP.LOCAL/Admin@app01.corp.local whoami
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **secretsdump** : écrit `.ntds`, `.ntds.kerberos`, `.ntds.cleartext`, `.ntds.cached` (avec `-outputfile`) ; sans option, sortie stdout en `domaine\user:uid:LM:NT:::`.
 - **GetUserSPNs / GetNPUsers** : sortie crackable directement (`-outputfile`), format `$krb5tgs$...` / `$krb5asrep$...` pour hashcat/john.
@@ -423,7 +423,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème Impacket |
 |---|---|
@@ -439,7 +439,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -451,7 +451,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -463,7 +463,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -477,7 +477,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Credentials** : ne pas laisser les mots de passe en clair dans l'historique shell ; préférer les hashes (`-hashes`) ou les tickets.
 - **Caches** : les fichiers `.ntds`, `.ccache` et TGS contiennent des secrets → stockage chiffré, exclusion des repos git.
@@ -488,7 +488,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Python pur** : les implémentations peuvent diverger des clients natifs sur certains cas (compatibilité SMB, encodages).
 - **Bruit** : psexec (service `PSEXESVC`) et secretsdump sont des signaux forts pour les EDR.
@@ -499,7 +499,7 @@ hashcat -m 1000 hashes_nt.txt rockyou.txt --show
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Exécution
@@ -532,7 +532,7 @@ mssqlclient.py -windows-auth DOMAIN/user:pass@host
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -548,7 +548,7 @@ mssqlclient.py -windows-auth DOMAIN/user:pass@host
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -561,21 +561,21 @@ mssqlclient.py -windows-auth DOMAIN/user:pass@host
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **-just-dc-user** : dump un seul compte sans charger tout le NTDS (`-just-dc-user krbtgt`). Ajoute `-use-vss` si l'EDR bloque l'accès au fichier.
+> [!tip] **-just-dc-user** : dump un seul compte sans charger tout le NTDS (`-just-dc-user krbtgt`). Ajoute `-use-vss` si l'EDR bloque l'accès au fichier.
 
-> [!tip] 💡 **Prends le chemin le plus discret** : `wmiexec.py` (pas de fichier déposé) plutôt que `psexec.py` (service `PSEXESVC` très détecté) pour les premières commandes.
+> [!tip] **Prends le chemin le plus discret** : `wmiexec.py` (pas de fichier déposé) plutôt que `psexec.py` (service `PSEXESVC` très détecté) pour les premières commandes.
 
-> [!warning] ⚠️ **Piège** : oublier le **`:`** dans `-hashes :NTLM`. On peut mettre le LM vide : `-hashes :NT` suffit (LM `AAD3B435B51404EEAAD3B435B51404EE` inutile).
+> [!warning] **Piège** : oublier le `:`** dans `-hashes :NTLM`. On peut mettre le LM vide : `-hashes :NT` suffit (LM `AAD3B435B51404EEAAD3B435B51404EE` inutile).
 
-> [!warning] ⚠️ **Piège** : si le DNS ne résout pas la cible, passe `-target-ip <IP>` (et `-k` pour forcer Kerberos si un TGT est dans la ccache), sinon erreur d'adresse obscure.
+> [!warning] **Piège** : si le DNS ne résout pas la cible, passe `-target-ip <IP>` (et `-k` pour forcer Kerberos si un TGT est dans la ccache), sinon erreur d'adresse obscure.
 
-> [!warning] ⚠️ **Piège** : sur les gros domaines, `secretsdump.py` sans `-just-dc-ntlm` peut saturer la mémoire et le réseau : privilégier le dump ciblé.
+> [!warning] **Piège** : sur les gros domaines, `secretsdump.py` sans `-just-dc-ntlm` peut saturer la mémoire et le réseau : privilégier le dump ciblé.
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/fortra/impacket
 - Documentation : https://www.impacket.org/docs/
@@ -583,6 +583,6 @@ mssqlclient.py -windows-auth DOMAIN/user:pass@host
 - The Hacker Recipes (AD) : https://www.thehacker.recipes/ad/movement/
 - Wiki Impacket (exemples) : https://github.com/fortra/impacket/wiki
 
-➡️ **Liens :** [[Outil - Impacket]] | [[Outil - Evil-WinRM]] | [[Outil - hashcat]] | [[Outil - BloodHound]] | [[Outil - CrackMapExec]] | [[Outil - Responder]] | [[Outil - mitm6]] | [[Outil - Mimikatz]] | [[Outil - Rubeus]] | [[Outil - Nmap]]
+**Liens :** [[Outil - Impacket]] | [[Outil - Evil-WinRM]] | [[Outil - hashcat]] | [[Outil - BloodHound]] | [[Outil - CrackMapExec]] | [[Outil - Responder]] | [[Outil - mitm6]] | [[Outil - Mimikatz]] | [[Outil - Rubeus]] | [[Outil - Nmap]]
 
 

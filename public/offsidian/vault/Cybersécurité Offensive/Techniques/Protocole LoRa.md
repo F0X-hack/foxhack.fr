@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📡 Protocole LoRa / LoRaWAN
+# Protocole LoRa / LoRaWAN
 
 > [!info] **En 1 phrase**
 > **LoRa** est la liaison radio **basse consommation longue portée** (Chirp Spread Spectrum)
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Récepteur LoRa avec Arduino (868.1 MHz, SF 10)
+## Récepteur LoRa avec Arduino (868.1 MHz, SF 10)
 
 Librairie : [sandeepmistry/arduino-LoRa](https://github.com/sandeepmistry/arduino-LoRa)
 
@@ -75,7 +75,7 @@ void loop() {
 
 ---
 
-## 🔓 Bruteforce des fréquences EU et du spreading factor
+## Bruteforce des fréquences EU et du spreading factor
 
 Le code de la source balaye les fréquences EU et les SF (attention : le tableau `freq[5]`
 contient 6 valeurs — duplique ou corrige selon ta cible) :
@@ -133,7 +133,7 @@ void loop() {
 
 ---
 
-## 📶 Afficher le RSSI des paquets
+## Afficher le RSSI des paquets
 
 > Le **RSSI** (Received Signal Strength Indication) est la puissance du signal reçu en mW, mesurée en **dBm**.
 
@@ -174,7 +174,7 @@ void loop() {
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -184,7 +184,7 @@ void loop() {
 | **Clés par device** | Ne pas partager les clés réseau entre devices |
 | **Limiter l'écoute radio** | Impossible à empêcher physiquement : la protection est uniquement applicative |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Balaye fréquence + SF** : un paquet n'est reçu que si les deux matchent exactement.
 - En Europe, concentre-toi sur **863–870 MHz** (bande ISM), les plages 868.1–868.5 et 867.1–867.9 sont les plus utilisées.
@@ -195,7 +195,7 @@ void loop() {
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — LoRa](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/lora.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]] · [[Hardware - UART|🔌 UART]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Attaques WiFi (WPA2 et PMKID)| WiFi]] · [[Hardware - UART| UART]] · [[Hardware - RFID et NFC| RFID/NFC]]

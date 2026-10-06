@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏁 Race Conditions
+# Race Conditions
 
 > [!info] **En 1 phrase**
 > Race condition = envoyer **plusieurs requêtes simultanées** sur une ressource partagée pour que
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
     F --> G
 ```
 
-> [!info] 💡 **TOCTOU (Time-Of-Check To Time-Of-Use)**
+> [!info] **TOCTOU (Time-Of-Check To Time-Of-Use)**
 > La vulnérabilité vient du **décalage** entre l'instant où l'app **vérifie** une condition
 > (solde suffisant, code valide, quota pas atteint) et l'instant où elle **utilise** le résultat.
 > Si 2 requêtes passent le check **avant que la première ait écrit le résultat**, les deux gagnent.
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 🗺️ Où chercher les races
+## Où chercher les races
 
 | Surface d'attaque | Logique faillible | Impact typique |
 |---|---|---|
@@ -59,7 +59,7 @@ flowchart LR
 
 ---
 
-## 🧬 Les classes de race
+## Les classes de race
 
 > Les races se différencient par **comment** les requêtes sont envoyées, pas par la vulnérabilité.
 > Le but : maximiser la **simultanéité réelle** au niveau du serveur applicatif.
@@ -87,7 +87,7 @@ flowchart LR
 - HTTP/2 **multiplexe** plusieurs requêtes sur **une seule connexion TCP**.
 - On peut envoyer ~20-30 requêtes en un seul write → elles traversent la pile réseau ensemble.
 - Variante "smuggling-friendly" : pas de front-end qui resynchronise, pas de jitter.
-- ⚠️ Un **proxy/front-end** qui convertit HTTP/2 → HTTP/1.1 peut casser la simultanéité.
+- Un **proxy/front-end** qui convertit HTTP/2 → HTTP/1.1 peut casser la simultanéité.
 
 ### 5. Cas limites & variantes
 
@@ -97,7 +97,7 @@ flowchart LR
 
 ---
 
-## 🚀 Exploitation
+## Exploitation
 
 ### Burp Suite — HTTP/1.1 single-packet attack (Repeater)
 
@@ -140,7 +140,7 @@ def handleResponse(req, interesting):
     table.add(req)
 ```
 
-> [!warning] ⚠️ **Header requis** : Turbo Intruder exige un header injectable type
+> [!warning] **Header requis** : Turbo Intruder exige un header injectable type
 > `x-request: %s` dans l'éditeur de requête, sinon il ne peut pas numéroter les requêtes.
 
 ### Turbo Intruder — 2 requêtes différentes (multi-endpoint, fenêtre en ms)
@@ -225,13 +225,13 @@ async def race():
 asyncio.run(race())
 ```
 
-> [!tip] 💡 Pour du **HTTP/2 en Python** : `httpx` + `h2`, ou `h2spacex` (Scapy, single-packet
+> [!tip] Pour du **HTTP/2 en Python** : `httpx` + `h2`, ou `h2spacex` (Scapy, single-packet
 > attack bas niveau). La simultanéité vient de la **réutilisation de connexion** :
 > jamais une connexion par requête.
 
 ---
 
-## 💥 Cas concrets
+## Cas concrets
 
 ### Double-spend de coupon / gift card
 
@@ -319,9 +319,9 @@ Cookie: session=voter
 
 ---
 
-## 🔍 Détection d'une fenêtre de race
+## Détection d'une fenêtre de race
 
-> [!tip] 💡 **Méthodo PortSwigger (radar du bug bounty)**
+> [!tip] **Méthodo PortSwigger (radar du bug bounty)**
 > 1. **Choisis un endpoint à effet secondaire visible** (solde, compteur, email envoyé).
 > 2. Lance 2 requêtes en parallèle → si **1 seule** a l'effet attendu, pas de race. Si **2+** l'ont, bingo.
 > 3. Remonte graduellement à 10-20 requêtes pour fiabiliser et estimer la fenêtre.
@@ -342,7 +342,7 @@ Cookie: session=voter
 
 ---
 
-## 🛡️ Bypass des protections
+## Bypass des protections
 
 ### Contre les locks / sérialisation
 
@@ -364,7 +364,7 @@ Cookie: session=voter
 
 ---
 
-## 🔧 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -376,7 +376,7 @@ Cookie: session=voter
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -390,22 +390,22 @@ Cookie: session=voter
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Pourquoi HTTP/2 change tout**
+> [!tip] **Pourquoi HTTP/2 change tout**
 > En HTTP/1.1, chaque requête part sur sa connexion → le front-end peut resynchroniser et espacer.
 > En HTTP/2, 20-30 requêtes partent dans **le même write** sur une connexion partagée :
 > plus de jitter réseau, elles arrivent quasi simultanément → fenêtres de **quelques millisecondes** exploitées.
 
-> [!tip] 💡 **Mesurer la fenêtre avant d'exploiter**
+> [!tip] **Mesurer la fenêtre avant d'exploiter**
 > 1. Repère le temps de traitement serveur (statistiques de latence dans Burp).
 > 2. Fenêtre < 1 ms → single-packet HTTP/2. Fenêtre large (uploads, PDF, envois d'email) → threads classiques suffisent.
 
-> [!tip] 💡 **La simultanéité réelle est la priorité**
+> [!tip] **La simultanéité réelle est la priorité**
 > On n'attaque pas un bug "logique" mais un bug de **timing**. Le vrai levier = faire que le serveur
 > traite N requêtes en même temps : réutilisation de connexion, pas d'attente de réponse, gate groups.
 
-> [!warning] ⚠️ **Pièges courants**
+> [!warning] **Pièges courants**
 > - Ne jamais déclencher un effet irréversible sur l'état de la victime avec des tests non maîtrisés.
 > - **Faux positif cache** : des réponses identiques en rafale ≠ race (vérifier un effet d'état réel).
 > - Le nombre de requêtes importe : 2 échecs ≠ pas de vuln ; monter à 10-30 et recommencer.
@@ -414,7 +414,7 @@ Cookie: session=voter
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — Limit overrun : https://portswigger.net/web-security/race-conditions/lab-race-conditions-limit-overrun
 - PortSwigger — Multi-endpoint : https://portswigger.net/web-security/race-conditions/lab-race-conditions-multi-endpoint
@@ -425,11 +425,11 @@ Cookie: session=voter
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[IDOR|🎯 IDOR]]
-- [[Web Cache Deception|🗑️ Cache Deception]]
-- [[Business Logic|🧠 Business Logic]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Race Condition](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Race%20Condition/README.md)
-- 🎤 [Smashing the State Machine — James Kettle (DEF CON 31)](https://portswigger.net/research/smashing-the-state-machine)
+- [[IDOR| IDOR]]
+- [[Web Cache Deception| Cache Deception]]
+- [[Business Logic| Business Logic]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Race Condition](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Race%20Condition/README.md)
+- [Smashing the State Machine — James Kettle (DEF CON 31)](https://portswigger.net/research/smashing-the-state-machine)

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔐 SAML — Attaques
+# SAML — Attaques
 
 > [!info] **En 1 phrase**
 > SAML = échange d'authentification entre un **IdP** (Identity Provider) et un **SP** (Service Provider)
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept & flux SAML
+## Concept & flux SAML
 
 ```mermaid
 sequenceDiagram
@@ -38,13 +38,13 @@ sequenceDiagram
     SP->>U: Session créée (cookie...)
 ```
 
-> [!info] 💡 **Les 2 bindings principaux**
+> [!info] **Les 2 bindings principaux**
 > - **POST binding** : l'assertion est encodée en **base64** et envoyée dans un formulaire `SAMLResponse` (POST). Le plus courant pour les attaques (facile à modifier dans Burp).
 > - **Redirect binding** : l'assertion (en général juste la `AuthnRequest`) est dans l'**URL** (`SAMLRequest`/`SAMLResponse` en base64 + `RelayState`), signature **DSA/RSA sur l'URL elle-même**.
 
 ---
 
-## 🧬 Anatomie d'une assertion SAML
+## Anatomie d'une assertion SAML
 
 > La `SAMLResponse` doit contenir `<samlp:Response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol">`.
 
@@ -116,7 +116,7 @@ sequenceDiagram
 
 ---
 
-## 🗡️ Attaques
+## Attaques
 
 ### 1. Signature stripping / absence de vérification
 
@@ -154,7 +154,7 @@ Si la section `<ds:Signature>` est **omise** de la réponse, certains SP (config
 </saml2p:Response>
 ```
 
-> [!warning] ⚠️ **Signature invalide** : si le SP vérifie **qu'il y a** une signature mais pas qu'elle est **valide**,
+> [!warning] **Signature invalide** : si le SP vérifie **qu'il y a** une signature mais pas qu'elle est **valide**,
 > on peut utiliser un **certificat auto-signé** (ou cloner celui de l'IdP) à la place du vrai → le SP accepte.
 
 ### 2. XML Signature Wrapping (XSW)
@@ -180,7 +180,7 @@ selon **l'ordre** des assertions. On "enveloppe" l'assertion légitime avec une 
 </SAMLResponse>
 ```
 
-> [!danger] 💥 **Exemple réel (GitHub Enterprise)** : cette requête vérifie la signature (`LA`)
+> [!danger] **Exemple réel (GitHub Enterprise)** : cette requête vérifie la signature (`LA`)
 > mais **crée la session pour `Attacker`** (`FA`), même si `FA` n'est pas signée.
 
 | # | Cible | Principe |
@@ -274,7 +274,7 @@ SAML est du **XML** → toutes les attaques XML s'appliquent. Les entités perme
 - `&s;` → `"s"`, `&f1;` → `"f1"` (entités internes). La réponse est **acceptée par le SP** et
   l'application rapporte `"taf"` comme valeur de l'attribut `uid` : la valeur **décodée ≠ valeur signée**.
 - Variante exfiltration : entité **externe** `SYSTEM "file:///etc/passwd"` ou vers un serveur contrôlé
-  (voir [[XXE|📄 XXE]]).
+  (voir [[XXE| XXE]]).
 
 ### 5. XSLT (Extensible Stylesheet Language Transformation)
 
@@ -304,9 +304,9 @@ La validation de signature peut appliquer une **transformation XSLT** via l'él�
 
 ---
 
-## ✏️ Modification d'assertion (assertion tampering)
+## Modification d'assertion (assertion tampering)
 
-> [!tip] 💡 **Premier réflexe** : intercepter une `SAMLResponse` valide (Burp), la décoder en base64,
+> [!tip] **Premier réflexe** : intercepter une `SAMLResponse` valide (Burp), la décoder en base64,
 > modifier un champ, re-encoder, renvoyer. **Chaque modification doit être re-testée** car les SP
 > vérifient parfois des champs différents.
 
@@ -349,7 +349,7 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## 🔐 Cryptographie & faiblesses
+## Cryptographie & faiblesses
 
 | Faiblesse | Détail |
 |---|---|
@@ -363,9 +363,9 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## ⛓️ Bypass de validation — le détail qui tue
+## Bypass de validation — le détail qui tue
 
-> [!warning] ⚠️ **L'ordre de validation est critique** : un SP qui **parse l'assertion et utilise son
+> [!warning] **L'ordre de validation est critique** : un SP qui **parse l'assertion et utilise son
 > contenu AVANT de vérifier la signature** est vulnérable. La signature doit être vérifiée
 > **sur le même flux canonique** que celui consommé, **avant tout usage**.
 
@@ -390,7 +390,7 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## 🔁 Replay & session
+## Replay & session
 
 ```txt
 1. On capture une SAMLResponse légitime (on est un vrai user).
@@ -402,7 +402,7 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -414,7 +414,7 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -431,9 +431,9 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre d'essai méthodique**
+> [!tip] **Ordre d'essai méthodique**
 > 1. **Signature stripping** : retirer `<ds:Signature>` → accepté ?
 > 2. **Modifier le NameID / les attributs** sans toucher la signature → accepté ?
 > 3. **Comment injection** dans le NameID (`<!-- -->`) → signature intacte, valeur différente ?
@@ -442,7 +442,7 @@ base64 -w0 saml.xml > saml_b64.txt
 > 6. **Replay** : même assertion, après expiration, vers un autre SP.
 > Si l'étape 2 échoue, la signature est vérifiée : c'est alors le **wrapping** ou le **comment** qu'il faut.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **SAML = XML** : toutes les attaques XML (XXE, XSLT, comment wrapping, parser confusion) s'appliquent.
 > - Le **base64 n'est pas du chiffrement** : la `SAMLResponse` se décode en clair, ne jamais en dépendre.
 > - **POST binding ≠ GET** : tester les 2 (`SAMLResponse` en POST, `SAMLRequest` dans l'URL).
@@ -452,13 +452,13 @@ base64 -w0 saml.xml > saml_b64.txt
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Attaques JWT|🔏 JWT]]
-- [[OAuth|🔑 OAuth]]
-- [[XXE|📄 XXE]]
-- [[Injection SQL|💾 Injection SQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — SAML Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SAML%20Injection/README.md)
-- 📖 [OWASP SAML Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html)
-- 📖 [On Breaking SAML: Be Whoever You Want to Be (Usenix Sec 2012)](https://www.usenix.org/conference/usenixsecurity12/technical-sessions/presentation/somorovsky)
+- [[Attaques JWT| JWT]]
+- [[OAuth| OAuth]]
+- [[XXE| XXE]]
+- [[Injection SQL| Injection SQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — SAML Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SAML%20Injection/README.md)
+- [OWASP SAML Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SAML_Security_Cheat_Sheet.html)
+- [On Breaking SAML: Be Whoever You Want to Be (Usenix Sec 2012)](https://www.usenix.org/conference/usenixsecurity12/technical-sessions/presentation/somorovsky)

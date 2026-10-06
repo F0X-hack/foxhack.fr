@@ -1,11 +1,11 @@
 ---
 title: "Outil - Velociraptor"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 0.77.1 (2026)
 licence: Open source (licence permissive, similaire à Apache)
@@ -16,7 +16,7 @@ site: https://www.velociraptor.app
 doc: https://docs.velociraptor.app
 ---
 
-# 🛡️ Velociraptor — Défense & SIEM
+# Velociraptor — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Velociraptor est une plateforme **DFIR/ediscovery** qui collecte des preuves **à grande
@@ -25,13 +25,13 @@ doc: https://docs.velociraptor.app
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Velociraptor |
 | Description | Plateforme de DFIR et d'ediscovery à grande échelle : collecte de preuves sur tous les endpoints via VQL, hunts et artefacts |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | DFIR / EDR / Endpoint visibility / ediscovery |
 | Fonction principale | Collecte forensique massive (fichiers, registre, mémoire, événements), hunts parallèles, réponse à incident temps réel |
 | Type d'outil | Serveur (frontend + UI web) + agents clients (collecteurs) + CLI |
@@ -52,7 +52,7 @@ doc: https://docs.velociraptor.app
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Velociraptor fait de la **recherche de preuves** (acquisition forensique) sur des centaines ou milliers de machines en parallèle : on lance une **hunt** (collecte d'un artefact précis) sur un parc entier, et le serveur centralise les résultats. Son langage **VQL** (Velociraptor Query Language) est un SQL adapté au forensique : interroger le registre, les fichiers, la mémoire, les processus, les prefetch... La **UI web** permet la navigation temps réel sur les clients (shell, VFS, téléversement de fichiers) et la **recherche globale** des artefacts. Il couvre l'ediscovery légal et le **DFIR** (volatile analysis) là où osquery fait surtout de la supervision. Moins connu, c'est l'outil de référence du DFIR à l'échelle (Rapid7 l'a racheté en 2023).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Serveur (Linux)
 
@@ -116,7 +116,7 @@ git clone https://github.com/Velocidex/velociraptor && cd velociraptor/docker
 docker compose up -d
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - `config generate -i` demande des réponses interactives (ports, IP publique, mot de passe) : prévoir un nom DNS/HTTPS stable pour le serveur.
 > - Le frontend écoute par défaut sur le port **8000** (UI) ; ouvrir ce port uniquement vers les équipes SOC.
 > - Les binaires sont statiques : pas de dépendances runtime, mais vérifier l'architecture (amd64 / arm64).
@@ -124,7 +124,7 @@ docker compose up -d
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -143,7 +143,7 @@ docker compose up -d
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -159,7 +159,7 @@ Flux type : hunt lancée → le serveur pousse l'artefact aux clients ciblés �
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -199,7 +199,7 @@ velociraptor --config server.config.yaml client list
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -219,7 +219,7 @@ velociraptor --config server.config.yaml client list
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -260,7 +260,7 @@ SELECT FullPath, String FROM yara(rules="rule suspect { strings: $a = \"payload\
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Générer et démarrer** le serveur, puis créer un client et installer le collecteur sur une machine de test (VM Windows du lab).
 2. **Se connecter à la UI web** (`https://<serveur>:8000`) : le client apparaît avec son OS, hostname, IP.
@@ -274,7 +274,7 @@ SELECT FullPath, String FROM yara(rules="rule suspect { strings: $a = \"payload\
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Hunt de persistance sur un parc Windows
 
@@ -324,7 +324,7 @@ WHERE Mtime > now() - 86400 * 7 AND NOT IsDir
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -337,7 +337,7 @@ WHERE Mtime > now() - 86400 * 7 AND NOT IsDir
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ WHERE Mtime > now() - 86400 * 7 AND NOT IsDir
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -398,7 +398,7 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET 8000 (msg:"Potential Velociraptor C2 tr
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lister les clients connectés (via l'API gRPC)
@@ -426,7 +426,7 @@ print("Hunt envoyée sur le parc")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les résultats d'une collecte sont des **fichiers JSON** (un objet par flux/événement) stockés dans le magasin du serveur, associés à l'ID du flow. Les fichiers extraits (uploads, dumps) sont archivés par client.
 
@@ -453,7 +453,7 @@ with open("hunt_results.jsonl") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Velociraptor (hunts) → exports JSON → Elastic / Splunk / Graylog / SIEM
@@ -462,7 +462,7 @@ Velociraptor → osquery (requêtes croisées, supervision complémentaire)
 Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - osquery]] — supervision hôte continue, complément des hunts ponctuelles
 - [[Outil - Volatility]] — analyse forensique des dumps mémoire acquis par Velociraptor
 - [[Outil - Wazuh]] — XDR hôte, détection en continu vs collecte à la demande
@@ -472,7 +472,7 @@ Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Modèle pull/push** : les clients interrogent le serveur (long poll) → pas de connexions entrantes, échelle large sans reverse proxy supplémentaire.
 - **VQL exécuté côté client** : seuls les résultats remontent au serveur → le réseau ne transporte pas les données brutes (contrairement à une exfiltration complète).
@@ -501,7 +501,7 @@ Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -537,7 +537,7 @@ Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Accès UI** : l'UI contrôle la collecte de preuves sur tout le parc : protéger par MFA/SSO, restreindre les IP, auditer les connexions.
 - **Clés & certs** : les configs (surtout avec `--keepsecret`) contiennent le CA : ne jamais les committer ni les diffuser.
@@ -548,7 +548,7 @@ Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas un EDR temps réel** : la supervision est à la demande (hunts) ou intermittente, pas une détection continue auto-répondante.
 - **Latence de collecte** : les résultats dépendent du long poll des clients (les données ne sont pas streamées en temps réel strict).
@@ -559,7 +559,7 @@ Velociraptor → API gRPC → scripts SOAR / TheHive / IR automation
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrer le serveur
@@ -592,7 +592,7 @@ SELECT Hostname, Username, ClientId FROM clients() WHERE LastSeenAt > now() - 36
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -605,7 +605,7 @@ SELECT Hostname, Username, ClientId FROM clients() WHERE LastSeenAt > now() - 36
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -617,24 +617,24 @@ SELECT Hostname, Username, ClientId FROM clients() WHERE LastSeenAt > now() - 36
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Pense binaires de collecte « one-shot »**
+> [!tip] **Pense binaires de collecte « one-shot »**
 > Le **repack** du collecteur avec config intégrée permet de déployer sans pré-installation : parfait pour une **réponse à incident d'urgence** (drop un exe, il se connecte au serveur, on collecte) sans toucher au parc.
 >
 > **Artefacts utiles à connaître** : `Windows.System.Autoruns`, `Windows.Network.NetworkConnectionList`, `Windows.Forensics.Prefetch`, `Windows.EventLogs.Evtx`, `Windows.Sys.StartupItems`, `Linux.System.CronTab`.
 
-> [!warning] ⚠️ **Piège** : les requêtes sur de **grosses données** (MFT, NTFS, mémoire) peuvent saturer le client et le réseau. Toujours **limiter par deadline**, filtrer en VQL (`WHERE Size > ...`) et éviter les collections massives sans nécessité.
+> [!warning] **Piège** : les requêtes sur de **grosses données** (MFT, NTFS, mémoire) peuvent saturer le client et le réseau. Toujours **limiter par deadline**, filtrer en VQL (`WHERE Size > ...`) et éviter les collections massives sans nécessité.
 
-> [!warning] ⚠️ **Piège** : un collecteur repacké embarque des **credentials**.
+> [!warning] **Piège** : un collecteur repacké embarque des **credentials**.
 > Traite chaque binaire déployé comme un secret : sans rotation/retrait, un incident de diffusion compromet tout le parc.
 
-> [!warning] ⚠️ **Piège** : la config serveur contient la **CA**.
+> [!warning] **Piège** : la config serveur contient la **CA**.
 > `config generate` produit des certificats signés par une CA maison : ne partage jamais `server.config.yaml` (ou une config `--keepsecret`) hors de l'équipe.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -658,4 +658,4 @@ SELECT Hostname, Username, ClientId FROM clients() WHERE LastSeenAt > now() - 36
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Privilege Escalation Windows|🕹️ Privesc Windows]] · [[Techniques/Privilege Escalation Linux|🕹️ Privesc Linux]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting / Tunneling]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Privilege Escalation Windows| Privesc Windows]] · [[Techniques/Privilege Escalation Linux| Privesc Linux]] · [[Techniques/Pivoting et Tunneling| Pivoting / Tunneling]]

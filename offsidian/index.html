@@ -24,6 +24,9 @@
     <meta name="twitter:title" content="Offsidian — Le vault cybersécurité de FoXhack" />
     <meta name="twitter:description" content="344 notes de cybersécurité consultables comme dans Obsidian, directement sur foxhack.fr." />
     <meta name="twitter:image" content="https://foxhack.fr/og-image-7568422c.png" />
+    <!-- Le manifeste part en parallèle du JS : la première note s'affiche sans
+         attendre la fin du téléchargement du bundle. -->
+    <link rel="preload" as="fetch" crossorigin href="/offsidian/manifest.json" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-512.png" />
     <script type="application/ld+json">
@@ -46,6 +49,13 @@
   </head>
   <body class="offsidian-page">
     <div id="offsidian-root"></div>
+    <noscript>
+      <p style="max-width: 42rem; margin: 4rem auto; padding: 0 1.25rem; font: 1rem/1.6 system-ui, sans-serif">
+        Offsidian est un lecteur de vault : il a besoin de JavaScript pour ouvrir les
+        344 notes. Les fichiers Markdown bruts restent disponibles dans
+        <a href="/offsidian/vault/">/offsidian/vault/</a>.
+      </p>
+    </noscript>
     <script type="module" src="/src/offsidian-main.tsx"></script>
   </body>
 </html>

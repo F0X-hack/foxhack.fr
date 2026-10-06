@@ -1,7 +1,7 @@
 ---
 title: "Outil - ScoutSuite"
 type: outil
-categorie: ☁️ Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -19,20 +19,20 @@ site: https://github.com/nccgroup/ScoutSuite
 doc: https://github.com/nccgroup/ScoutSuite/wiki
 ---
 
-# 🔍 ScoutSuite — L'audit de sécurité multi-cloud
+# ScoutSuite — L'audit de sécurité multi-cloud
 
 > [!info] **En 1 phrase**
 > Suite d'audit open source (successeur de Scout2) qui génère un rapport HTML navigable des failles de configuration AWS, Azure et GCP.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | ScoutSuite |
 | Description | Suite d'audit de configuration cloud open source qui interroge les API AWS, Azure et GCP, applique des règles de durcissement (rulesets) et génère un rapport HTML statique navigable avec score de sécurité par service |
-| Catégorie | ☁️ Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Audit de configuration / Security Posture Management |
 | Type d'outil | CLI (scanner de configuration passif) |
 | Licence | Apache License 2.0 |
@@ -52,7 +52,7 @@ doc: https://github.com/nccgroup/ScoutSuite/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ScoutSuite a été développé par NCC Group comme **successeur de Scout2** (qui ne couvrait que AWS) pour offrir un audit de configuration homogène sur les trois grands clouds publics : **AWS, Azure et GCP**. L'outil est un scanner **passif** : il s'authentifie avec des credentials en lecture, interroge les API des fournisseurs pour collecter l'état réel des ressources (IAM, stockage, compute, réseau, journalisation, KMS…), puis applique des **rulesets** (jeux de règles de durcissement) pour détecter les failles de configuration connues. Le livrable est un **rapport HTML statique et autonome**, navigable par service, avec un score de sécurité calculé par service et par gravité, et filtrable par type de faille.
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ScoutSuite s'installe via `pip`. Python 3.8 est recommandé : les versions plus récentes (3.9 à 3.12 selon l'OS) peuvent provoquer des erreurs de dépendances non résolues par le projet (non maintenu).
 
@@ -124,7 +124,7 @@ docker run -it -v ~/.aws:/root/.aws:ro -v "$PWD"/out:/report \
   nccgroup/scoutsuite scout aws --profile audit --report-dir /report
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Python 3.8 conseillé** : le projet n'étant plus maintenu, les Python récents cassent des dépendances (notamment `jmespath`, `azure-cli-core`, `google-cloud-*`). Utiliser un venv dédié pour éviter de polluer le système.
 > - Pour **Azure**, `scout azure --cli` nécessite que `az` soit installé et authentifié (`az login`).
 > - Pour **GCP**, il faut créer une clé de service account JSON dans la console GCP et l'activer sur le projet à auditer.
@@ -132,7 +132,7 @@ docker run -it -v ~/.aws:/root/.aws:ro -v "$PWD"/out:/report \
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ScoutSuite se configure presque exclusivement par **ligne de commande** ; l'authentification se fait via les mécanismes standard des SDK cloud (profils AWS, variables d'environnement, CLI Azure, clés GCP).
 
@@ -153,7 +153,7 @@ ScoutSuite se configure presque exclusivement par **ligne de commande** ; l'auth
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le dépôt `nccgroup/ScoutSuite` est un package Python structuré autour de la commande `scout <provider> <options>` :
 
@@ -176,7 +176,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -207,7 +207,7 @@ scout aws --profile audit --services iam,cloudtrail,s3 \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -230,7 +230,7 @@ scout aws --profile audit --services iam,cloudtrail,s3 \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -289,7 +289,7 @@ scout aws --profile audit --ruleset ./ruleset-hardening.json \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer un accès en lecture seule** — créer un rôle `SecurityAudit` (ou utiliser `ReadOnlyAccess`) assumable par le compte auditeur. Éviter les clés d'un utilisateur humain à privilèges larges.
    ```bash
@@ -312,7 +312,7 @@ scout aws --profile audit --ruleset ./ruleset-hardening.json \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Audit d'un bucket S3 potentiellement public
 
@@ -340,7 +340,7 @@ Pratique en environnement sensible où chaque appel API est tracé : le rapport 
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -351,7 +351,7 @@ Pratique en environnement sensible où chaque appel API est tracé : le rapport 
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -366,7 +366,7 @@ Pratique en environnement sensible où chaque appel API est tracé : le rapport 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -407,7 +407,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer un audit multi-profils puis archiver les rapports
@@ -436,7 +436,7 @@ if results.exists():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ScoutSuite produit dans le dossier `--report-dir` :
 - `report.html` : le rapport visuel autonome (AngularJS + données embarquées), filtrable par service, gravité, recherche textuelle.
@@ -454,9 +454,9 @@ jq '.services.iam.users | to_entries[] | .key' ./out/scoutsuite-results.json
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Prowler|Prowler]] — complément de conformité AWS actif (CIS/NIST), maintenu
 - [[Outil - Pacu|Pacu]] — exploitation des failles de configuration détectées par ScoutSuite
 - [[Outil - cloudfox|cloudfox]] — cartographie des chemins de confiance IAM une fois les findings connus
@@ -469,7 +469,7 @@ Credentials lecture → ScoutSuite → report.html (preuve) → jq/JSON → Pacu
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -483,7 +483,7 @@ Credentials lecture → ScoutSuite → report.html (preuve) → jq/JSON → Pacu
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Latence API** : chaque service est collecté via des appels de lecture ; le temps de scan dépend du nombre de services et de ressources (comptes AWS avec de nombreuses régions = scan long).
 - **Mémoire** : l'arbre de données complet est conservé en mémoire avant sérialisation JSON ; les très grands comptes (dizaines de milliers de ressources) peuvent consommer plusieurs Go de RAM.
@@ -493,7 +493,7 @@ Credentials lecture → ScoutSuite → report.html (preuve) → jq/JSON → Pacu
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -523,7 +523,7 @@ Credentials lecture → ScoutSuite → report.html (preuve) → jq/JSON → Pacu
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Accès en lecture seule** : ScoutSuite n'exécute aucune action d'écriture ; il faut néanmoins n'utiliser que des credentials **en lecture** dédiés à l'audit, jamais un compte humain à privilèges larges.
 - **Données sensibles dans le rapport** : le JSON et le HTML contiennent la configuration complète (noms de ressources, politiques IAM, IP, ARN) → traiter le rapport comme confidentiel, le stocker chiffré et ne jamais le committer dans un repo.
@@ -533,7 +533,7 @@ Credentials lecture → ScoutSuite → report.html (preuve) → jq/JSON → Pacu
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Non maintenu** : dernier release v2.13.0 (avril 2022), pas de correctif ni de nouvelles règles depuis — obsolescence croissante face aux évolutions AWS/Azure/GCP.
 - **Pas de test d'exploitabilité** : ScoutSuite constate la configuration ; une faille signalée (bucket public) doit être confirmée manuellement.
@@ -544,7 +544,7 @@ Credentials lecture → ScoutSuite → report.html (preuve) → jq/JSON → Pacu
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -574,7 +574,7 @@ jq '.services.s3.buckets | to_entries[] | select(.value.world_readable == true) 
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -587,7 +587,7 @@ jq '.services.s3.buckets | to_entries[] | select(.value.world_readable == true) 
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -599,16 +599,16 @@ jq '.services.s3.buckets | to_entries[] | select(.value.world_readable == true) 
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Le rapport est statique et autonome : tu peux le transmettre au client tel quel, aucun serveur n'est nécessaire.
 > - Utilise `--services` pour gagner du temps : inutile de scanner tous les services si tu ne traites que S3 + IAM.
 > - `--resume` re-génère le rapport sans nouveau trafic API : idéal pour montrer l'avant/après des corrections en environnement sensible.
 > - Le JSON `scoutsuite-results.json` se parse avec `jq`/Python pour automatiser le reporting.
 > - Préfère des sessions STS avec MFA (`--mfa-serial`/`--mfa-code`) à des clés longue durée.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - ScoutSuite requiert des droits en lecture sur tous les services audités : `ReadOnlyAccess` ne couvre pas toujours tout, ce qui fausse le score (faux négatifs).
 > - Ne confonds pas « pas d'alerte » avec « sécurisé » : il ne teste pas l'exploitabilité, seulement la configuration.
 > - Sur GCP/Azure, les permissions de service account/SPN doivent être vérifiées avant le scan, sinon l'audit est incomplet.
@@ -617,7 +617,7 @@ jq '.services.s3.buckets | to_entries[] | select(.value.world_readable == true) 
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -644,4 +644,4 @@ jq '.services.s3.buckets | to_entries[] | select(.value.world_readable == true) 
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Prowler|Prowler]] · [[Outil - Pacu|Pacu]]
+**Liens :** [[Tools| Outils]] · [[Outil - Prowler|Prowler]] · [[Outil - Pacu|Pacu]]

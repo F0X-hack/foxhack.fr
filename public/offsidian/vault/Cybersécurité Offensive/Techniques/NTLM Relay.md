@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔗 NTLM Relay
+# NTLM Relay
 
 > [!info] **En 1 phrase**
 > NTLM Relay = intercepter l'authentification NTLM d'une victime et la **relayer** vers une autre
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -29,14 +29,14 @@ flowchart LR
     T -->|accepte| A
 ```
 
-> [!info] 💡 **Différence avec le cracking**
+> [!info] **Différence avec le cracking**
 > - **Cracker** : on garde le hash → on le brute-force offline.
 > - **Relay** : on **réutilise** l'authentification en cours vers une cible qui accepte ce compte.
 > Le relay marche si la cible n'exige pas **SMB Signing** (ou LDAPS avec certains protocoles).
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Capturer** une authentification NTLM (via [[LLMNR-NBT-NS Poisoning|Responder]], ou une requête malveillante, ou MITM).
 2. **Relayer** vers la cible : `SMB://`, `LDAP://`, `HTTP://`, `MSSQL://`.
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # 1. Responder SANS SMB/HTTP (sinon il "mange" le hash avant le relay)
@@ -65,7 +65,7 @@ sudo ntlmrelayx.py -t smb://192.168.1.20 -smb2support --no-http-server
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -76,20 +76,20 @@ sudo ntlmrelayx.py -t smb://192.168.1.20 -smb2support --no-http-server
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le combo ultime AD**
+> [!tip] **Le combo ultime AD**
 > Capture via Responder (LLMNR) + relay **LDAP** vers un DC → **créer un compte** dans le domaine ou
 > déléguer des accès → chemin vers DA sans aucun mot de passe.
 
-> [!warning] ⚠️ **Piège** : beaucoup de machines modernes exigent le signing → relay SMB échoue.
+> [!warning] **Piège** : beaucoup de machines modernes exigent le signing → relay SMB échoue.
 > Vérifie l'état du signing d'abord : `nxc smb IP -M smb-risky` ou scan.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[LLMNR-NBT-NS Poisoning|🎙️ LLMNR/NBT-NS Poisoning]]
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- [[ACL Abuse AD|🧩 ACL Abuse]] (délégation / création de compte)
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]]
+- [[Pass-the-Hash| Pass-the-Hash]]
+- [[ACL Abuse AD| ACL Abuse]] (délégation / création de compte)
+- → Note complète : [[05 - Active Directory| Active Directory]]

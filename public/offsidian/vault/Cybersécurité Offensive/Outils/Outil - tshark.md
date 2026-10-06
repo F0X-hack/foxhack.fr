@@ -1,7 +1,7 @@
 ---
 title: "Outil - tshark"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://www.wireshark.org/
 doc: https://www.wireshark.org/docs/man-pages/tshark.html
 ---
 
-# 🧬 tshark — L'analyse de paquets en ligne de commande
+# tshark — L'analyse de paquets en ligne de commande
 
 > [!info] **En 1 phrase**
 > tshark est la version CLI de Wireshark : le même moteur de décodage, mais scriptable, idéal pour analyser des captures massives ou du trafic live sans interface graphique.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://www.wireshark.org/docs/man-pages/tshark.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 tshark embarque **toute la puissance de décodage de Wireshark** — filtres d'affichage, dissection de plus de 3000 protocoles, exports JSON/XML/PSML, statistiques intégrées — dans un binaire scriptable, pipeable et déployable sur serveur. Il lit les `.pcap`/`.pcapng` en batch, extrait des champs précis (`-T fields -e …`), suit des flux TCP, exporte des objets HTTP/SMB/TFTP, génère des statistiques (`-z`) et capture en direct (`-i`). En cybersécurité offensive, c'est l'outil idéal pour **automatiser l'analyse de captures** : extraire des credentials HTTP, cartographier les SNI TLS, retrouver des fichiers exfiltrés ou produire un rapport forensique reproductible. En défense, il trie un gros dump réseau en quelques commandes sans lancer la GUI.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,7 +136,7 @@ cmake -B build && cmake --build build -j$(nproc)
 sudo cmake --install build
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Capture live nécessite root (ou les droits sur l'interface) ; lecture de fichier sans privilège.
 > - Sur Debian, la configuration `dumpcap` peut demander des capacités (`cap_net_raw`).
 > - Compilation lourde : préférer les paquets binaires pour un usage courant.
@@ -144,7 +144,7 @@ sudo cmake --install build
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 tshark lit les préférences de Wireshark (fichier `preferences`, répertoire indiqué par `-G folders`). Les options CLI `-o` permettent une surcharge ponctuelle, pratique pour l'automatisation.
 
@@ -159,7 +159,7 @@ tshark lit les préférences de Wireshark (fichier `preferences`, répertoire in
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 tshark partage le cœur de Wireshark : la **libwiretap** (lecture/écriture des formats de capture : pcap, pcapng, ERF, PcapNG, DCT2000…), le **moteur de dissection** (plusieurs centaines de dissecteurs C/C++ et Lua), et **epan** (champs, display filters, suivis de flux).
 
@@ -172,7 +172,7 @@ tshark partage le cœur de Wireshark : la **libwiretap** (lecture/écriture des 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -204,7 +204,7 @@ sudo tshark -i eth0 -w cap.pcap -b filesize:100000 -b files:10 -a duration:3600
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -237,7 +237,7 @@ sudo tshark -i eth0 -w cap.pcap -b filesize:100000 -b files:10 -a duration:3600
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -280,7 +280,7 @@ tshark -r cap.pcap -X lua_script:mon_analyse.lua -Y 'http'
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Aperçu du fichier** — identifier les protocoles dominants :
    ```bash
@@ -297,7 +297,7 @@ tshark -r cap.pcap -X lua_script:mon_analyse.lua -Y 'http'
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : extraction des credentials HTTP
 
@@ -336,7 +336,7 @@ tshark -r capture.pcap -Y 'dns.qry.name contains "exemple" && dns.flags.response
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -350,7 +350,7 @@ tshark -r capture.pcap -Y 'dns.qry.name contains "exemple" && dns.flags.response
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -364,7 +364,7 @@ tshark -r capture.pcap -Y 'dns.qry.name contains "exemple" && dns.flags.response
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -408,7 +408,7 @@ alert tcp any any -> any any (msg:"High volume data exfiltration signal"; conten
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — analyse quotidienne des captures et rapport des hosts
@@ -430,7 +430,7 @@ for pkt in json.loads(out):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 tshark produit des sorties très structurées, parfaites pour les pipelines : texte, champs (CSV-like), JSON, EK (JSON pour Elastic), PDML/PSML (XML).
 
@@ -445,9 +445,9 @@ tshark -r cap.pcap -Y 'dns' -T json | jq -r '.[] | ._source.layers | ."dns.qry.n
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - tcpdump]] — capture brute ; tshark analyse les fichiers produits
 - [[Outil - Wireshark]] — la GUI partage filtres, préférences et champs avec tshark
 - [[Outil - tcpreplay]] — rejoue les captures après analyse/validation
@@ -463,7 +463,7 @@ tshark -r cap.pcap → Suricata/Zeek → alertes
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -477,7 +477,7 @@ tshark -r cap.pcap → Suricata/Zeek → alertes
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Dissection coûteuse** : sur un gros pcap, `-V` ou `-T json` (arbre complet) sont lents ; privilégier `-T fields` et un `-Y` restrictif.
 - **Filtrage précoce** : un filtre de capture `-f` (BPF) évite de disséquer ce qui ne nous intéresse pas.
@@ -491,7 +491,7 @@ tshark -r cap.pcap → Suricata/Zeek → alertes
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -521,7 +521,7 @@ tshark -r cap.pcap → Suricata/Zeek → alertes
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : la capture live exige root/capabilities ; lire un fichier, non.
 - **Données sensibles** : les exports (`--export-objects`, `-T json`) matérialisent des données (fichiers, credentials, cookies) — stockage chiffré et accès restreint.
@@ -532,7 +532,7 @@ tshark -r cap.pcap → Suricata/Zeek → alertes
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de GUI : le suivi de flux visuel et l'édition de filtres interactifs sont moins confortables.
 - `-T fields` ne sort que les champs demandés ; `-T json` est verbeux et lourd sur gros fichiers.
@@ -543,7 +543,7 @@ tshark -r cap.pcap → Suricata/Zeek → alertes
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Aperçu rapide
@@ -578,7 +578,7 @@ sudo tshark -i eth0 -c 100 -n
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ sudo tshark -i eth0 -c 100 -n
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -603,15 +603,15 @@ sudo tshark -i eth0 -c 100 -n
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Vérifier les noms de champs avec `tshark -G fields | grep <proto>` avant d'écrire un pipeline.
 > - Combiner `-T fields` avec `-E header=y -E separator=,` pour un CSV directement exploitable.
 > - Utiliser `-z io,phs` pour découvrir les protocoles présents dans une capture inconnue.
 > - Sur de gros fichiers, pré-filtrer en amont (`-f` pour une capture, un `-Y` strict sinon) et utiliser `-n`.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un mauvais champ `-e` produit une sortie vide **sans erreur** : toujours vérifier avec `-G fields`.
 > - `-Y` s'applique après dissection : sur un fichier volumineux, c'est plus lent qu'un pré-filtrage `-f`.
 > - `-z follow,tcp,raw,<n>` exige le bon numéro de flux ; le retrouver avec `-z conv,tcp`.
@@ -620,7 +620,7 @@ sudo tshark -i eth0 -c 100 -n
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -644,4 +644,4 @@ sudo tshark -i eth0 -c 100 -n
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Wireshark|Wireshark]] · [[Outil - tcpdump|tcpdump]] · [[Outil - tcpreplay|tcpreplay]] · [[Outil - Zeek|Zeek]]
+**Liens :** [[Tools| Outils]] · [[Outil - Wireshark|Wireshark]] · [[Outil - tcpdump|tcpdump]] · [[Outil - tcpreplay|tcpreplay]] · [[Outil - Zeek|Zeek]]

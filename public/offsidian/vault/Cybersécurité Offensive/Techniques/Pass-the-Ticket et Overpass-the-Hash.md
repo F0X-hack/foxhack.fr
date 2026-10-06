@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎫 Pass-the-Ticket & Overpass-the-Hash
+# Pass-the-Ticket & Overpass-the-Hash
 
 > [!info] **En 1 phrase**
 > **Pass-the-Ticket (PtT)** = rejouer un ticket Kerberos volé. **Overpass-the-Hash** = transformer un
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,7 +32,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 ### Pass-the-Ticket
 1. **Voler** un ticket Kerberos depuis la mémoire d'un processus utilisateur (mimikatz/Rubeus).
@@ -44,12 +44,12 @@ flowchart LR
 2. On l'utilise pour obtenir un **TGT** (comme si on s'authentifiait).
 3. Une fois le TGT en poche → **mêmes pouvoirs qu'un ticket normal**, y compris sur les services **Kerberos-only**.
 
-> [!info] 💡 **Pourquoi l'Overpass est utile**
+> [!info] **Pourquoi l'Overpass est utile**
 > Certains protocoles (Kerberos pur) n'acceptent PAS le PtH. Convertir le hash en TGT contourne ça.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Mimikatz (Windows) - exporter les tickets
@@ -72,7 +72,7 @@ psexec.py -k -no-pass -dc-ip 192.168.1.10 'corp.local/admin@DC01.corp.local'
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -82,19 +82,19 @@ psexec.py -k -no-pass -dc-ip 192.168.1.10 'corp.local/admin@DC01.corp.local'
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **La validité d'un TGT est ~10h**
+> [!tip] **La validité d'un TGT est ~10h**
 > Voler/forger des tickets = fenêtre limitée. Agis vite après obtention.
 
-> [!warning] ⚠️ **Piège** : les tickets sont liés à l'horloge (skew < 5 min) et au **nom de l'hôte**. Synchronise l'heure et utilise les bons noms (`FQDN`).
+> [!warning] **Piège** : les tickets sont liés à l'horloge (skew < 5 min) et au **nom de l'hôte**. Synchronise l'heure et utilise les bons noms (`FQDN`).
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- [[Golden Ticket|👑 Golden Ticket]]
-- [[Silver Ticket|💠 Silver Ticket]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[Pass-the-Hash| Pass-the-Hash]]
+- [[Golden Ticket| Golden Ticket]]
+- [[Silver Ticket| Silver Ticket]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

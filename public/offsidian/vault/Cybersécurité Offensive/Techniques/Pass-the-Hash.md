@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔑 Pass-the-Hash (PtH)
+# Pass-the-Hash (PtH)
 
 > [!info] **En 1 phrase**
 > Pass-the-Hash = se connecter avec le **hash NTLM** d'un mot de passe au lieu du mot de passe en clair
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -28,13 +28,13 @@ flowchart LR
     B --> C[Accès avec l'identité de la victime]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Windows (NTLM) ne vérifie pas le "mot de passe en clair" : il compare des **hashes**.
 > Si on possède le hash NTLM (`LM hash : NTLM hash`), on peut authentifier sans cracker.
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Obtenir** le hash NTLM : `mimikatz sekurlsa::logonpasswords`, `secretsdump`, `hashdump`, NTDS.dit.
 2. **Rejouer** le hash directement dans les outils (pas de cracking nécessaire).
@@ -42,7 +42,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Forme du hash : aad3b435b51404eeaad3b435b51404ee:<NTLM>
@@ -64,7 +64,7 @@ sekurlsa::pth /user:admin /domain:corp.local /ntlm:579da618cfbfa8527ac86ce7d6f24
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -74,19 +74,19 @@ sekurlsa::pth /user:admin /domain:corp.local /ntlm:579da618cfbfa8527ac86ce7d6f24
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Avant de cracker, REJOUER**
+> [!tip] **Avant de cracker, REJOUER**
 > Si tu as le hash NTLM, teste-le **directement** sur les autres machines (`nxc --continue-on-success`). Le cracking ne sert que si on a besoin du **clair** (SSH, WinRM pur...).
 
-> [!warning] ⚠️ **Piège** : avec SMB Signing + EDR, certains vecteurs (PsExec) se font détecter. Préfère WinRM quand c'est ouvert, et garde `--smb2support`.
+> [!warning] **Piège** : avec SMB Signing + EDR, certains vecteurs (PsExec) se font détecter. Préfère WinRM quand c'est ouvert, et garde `--smb2support`.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[Pass-the-Ticket et Overpass-the-Hash|🎫 Pass-the-Ticket / Overpass-the-Hash]]
-- [[DCsync|📥 DCsync]] (source classique de hashes)
-- [[Password Cracking|🔐 Password Cracking]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[Pass-the-Ticket et Overpass-the-Hash| Pass-the-Ticket / Overpass-the-Hash]]
+- [[DCsync| DCsync]] (source classique de hashes)
+- [[Password Cracking| Password Cracking]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

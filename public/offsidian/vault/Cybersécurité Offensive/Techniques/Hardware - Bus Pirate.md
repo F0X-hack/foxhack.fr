@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🏴‍☠️ Bus Pirate
+# Bus Pirate
 
 > [!info] **En 1 phrase**
 > Le **Bus Pirate** est un petit adaptateur USB de debug hardware qui parle les protocoles
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Bus Pirate"] --> B["UART / SPI / I2C / JTAG"]
@@ -44,7 +44,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le Bus Pirate est un adaptateur USB open-source qui permet de communiquer avec les bus d'un PCB (UART, SPI, I2C, JTAG, 1-Wire, CAN) via un terminal série ou un logiciel comme flashrom. Il sert à scanner les bus, lire/écrire des flash EEPROM/SPI, capturer des signaux, et debugger des devices embarqués.
 
@@ -66,7 +66,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Protocoles de bus debug
 
@@ -100,7 +100,7 @@ Les bus I2C nécessitent des résistances pull-up sur SDA et SCL. Le Bus Pirate 
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -182,7 +182,7 @@ Vue du Bus Pirate v5/v6 :
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### SPI
 
@@ -236,7 +236,7 @@ Vue du Bus Pirate v5/v6 :
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -294,7 +294,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du Bus Pirate
 
@@ -326,7 +326,7 @@ screen /dev/ttyACM0 115200
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -403,7 +403,7 @@ sudo flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -r dump.bin
 # Lecture avec chip spécifique et vitesse réduite
 sudo flashrom -p buspirate_spi:dev=/dev/ttyUSB0,spispeed=1M -c "MX25L6406E" -r dump.bin
 
-# Écriture (⚠️ dangereux sans backup)
+# Écriture (dangereux sans backup)
 sudo flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -w new_firmware.bin
 
 # Vérification
@@ -412,9 +412,9 @@ sudo flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -v dump.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Scan I2C des adresses
+### Débutant — Scan I2C des adresses
 
 ```bash
 # 1. Connecter le Bus Pirate au PCB cible
@@ -426,7 +426,7 @@ sudo flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -v dump.bin
 # 7. Identifier les puces via les adresses (0xA0 = EEPROM, 0x68 = IMU, 0x27 = LCD)
 ```
 
-### 🟡 Intermédiaire — Dump firmware SPI avec flashrom
+### Intermédiaire — Dump firmware SPI avec flashrom
 
 ```bash
 # 1. Identifier le chip flash sur le PCB (silkscreen : W25Q32, MX25L256…)
@@ -442,7 +442,7 @@ sudo flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -r dump2.bin
 md5sum dump2.bin  # Les deux doivent être identiques
 ```
 
-### 🔴 Avancé — Lecture EEPROM I2C brute
+### Avancé — Lecture EEPROM I2C brute
 
 ```python
 #!/usr/bin/env python3
@@ -492,7 +492,7 @@ with open("eeprom_dump.bin", "wb") as f:
 print(f"[+] Dump complet : {len(data)} octets")
 ```
 
-### ⚫ Expert — Sniffing I2C en temps réel
+### Expert — Sniffing I2C en temps réel
 
 ```python
 #!/usr/bin/env python3
@@ -539,7 +539,7 @@ print(f"\n[+] {len(frames)} trames capturées")
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -584,7 +584,7 @@ Analyser le dump (binwalk, strings, reverse engineering), extraire les secrets, 
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Dump firmware complet d'un routeur IoT
 
@@ -594,7 +594,7 @@ Analyser le dump (binwalk, strings, reverse engineering), extraire les secrets, 
 | **Matériel** | Bus Pirate v5, clip SOIC-8, flashrom |
 | **Étapes** | 1. Identifier W25Q128 sur le PCB → 2. Connecter clip SOIC-8 → 3. flashrom -r dump.bin → 4. binwalk -Me dump.bin → 5. Analyser rootfs |
 | **Résultat** | Firmware complet avec credentials, certs, config |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -612,11 +612,11 @@ flowchart LR
 | **Matériel** | Bus Pirate v4, sondes Hook |
 | **Étapes** | 1. Scanner I2C → 2. Identifier EEPROM 24C256 → 3. Lire 32KB → 4. Parser les données |
 | **Résultat** | Configuration réseau, credentials, paramètres |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -636,7 +636,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -667,7 +667,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -709,7 +709,7 @@ flashrom -p ch341a_spi -p buspirate_spi:dev=/dev/ttyUSB0 --wp-enable
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -770,7 +770,7 @@ verify_dump()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -811,14 +811,14 @@ md5sum firmware_dump*.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - CH341A|💾 CH341A]] pour comparaison des programmeurs
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] pour détails des protocoles
-- [[Hardware - UART|🔌 UART]] pour la console série
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] pour le debug
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse post-dump
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - CH341A| CH341A]] pour comparaison des programmeurs
+- [[Hardware - I2C et SPI| I2C/SPI]] pour détails des protocoles
+- [[Hardware - UART| UART]] pour la console série
+- [[Hardware - JTAG et SWD| JTAG/SWD]] pour le debug
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse post-dump
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -835,7 +835,7 @@ md5sum firmware_dump*.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -855,7 +855,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -876,7 +876,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -924,7 +924,7 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -946,7 +946,7 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -967,7 +967,7 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -997,7 +997,7 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -1010,7 +1010,7 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -1030,7 +1030,7 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Attention aux tensions — le Bus Pirate parle en 3.3V, un VCC 5V direct peut griller la cible.
 - **Piège 2** : La masse commune obligatoire (GND cible ↔ GND probe) sinon aucun signal.
@@ -1046,9 +1046,9 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Bus Pirate](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/bus-pirate.md)
 > - [Bus Pirate Documentation](https://docs.buspirate.com)
 > - [flashrom — Supported Hardware](https://www.flashrom.org/supported_hw/supported_programmers.html)
@@ -1079,4 +1079,4 @@ flashrom -p buspirate_spi:dev=/dev/ttyUSB0
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - UART|🔌 UART]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - UART| UART]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]

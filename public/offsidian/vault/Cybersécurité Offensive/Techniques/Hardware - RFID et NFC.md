@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 🏷️ Hardware - RFID et NFC
+# Hardware - RFID et NFC
 
 > [!info] **En 1 phrase**
 > RFID/NFC = **badges, tickets et cartes de paiement** : souvent **clonables**, **rejouables**
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Faible (LF) → Élevée (HF avancé) |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     R["RFID / NFC"] --> HF["HF 13.56 MHz<br>MIFARE, DESFire"]
@@ -46,7 +46,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > RFID (Radio Frequency Identification) et NFC (Near Field Communication) sont des technologies de communication sans contact utilisées pour les badges d'accès, tickets de transport, cartes de paiement et tags d'identification. En pentest, elles permettent de lire, cloner ou relayer des identifiants d'accès.
 
@@ -61,7 +61,7 @@ flowchart TB
     style D fill:#c8e6c9
 ```
 
-> [!info] 💡 **Ce qu'on peut faire**
+> [!info] **Ce qu'on peut faire**
 > - **Lire** les UIDs de badges (LF et HF)
 > - **Cloner** des badges simples (LF, MIFARE Classic)
 > - **Rejouer** des transactions NFC
@@ -69,7 +69,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Les 3 mondes RFID/NFC
 
@@ -104,7 +104,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -140,7 +140,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### LF 125 kHz
 
@@ -180,7 +180,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -218,7 +218,7 @@ ls /dev/ttyACM*
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Proxmark3
 
@@ -231,7 +231,7 @@ ls /dev/ttyACM*
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Proxmark3 — LF
 
@@ -286,9 +286,9 @@ nfc-mfclassic R a dump_mifare.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lire badge LF (Flipper Zero)
+### Débutant — Lire badge LF (Flipper Zero)
 
 ```text
 1. Badges → RFID → Add
@@ -297,7 +297,7 @@ nfc-mfclassic R a dump_mifare.bin
 4. Badges → Emulate → test porte
 ```
 
-### 🟡 Intermédiaire — Cloner MIFARE Classic
+### Intermédiaire — Cloner MIFARE Classic
 
 ```bash
 # 1. Dump du badge original
@@ -313,7 +313,7 @@ hf mf cload -f original.mfd
 hf fskreader
 ```
 
-### 🔴 Avancé — Attaque Darkside (clé par défaut)
+### Avancé — Attaque Darkside (clé par défaut)
 
 ```bash
 # MIFARE Classic : attaque darkside → trouve une clé
@@ -326,7 +326,7 @@ hf mf rdbl --blk 0 -k AAAAAAAAAAAA
 # NXP par défaut : FFFFFFFFFFFFF, A0A1A2A3A4A5, D3F7D3F7D3F7
 ```
 
-### ⚫ Expert — Relay attack MIFARE
+### Expert — Relay attack MIFARE
 
 ```text
 1. Proxmark3 #1 (proximité badge) → lit UID
@@ -337,7 +337,7 @@ hf mf rdbl --blk 0 -k AAAAAAAAAAAA
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -362,7 +362,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Cloner badge accès bureau (LF)
 
@@ -372,7 +372,7 @@ flowchart TB
 | **Outil** | Proxmark3 ou Flipper Zero |
 | **Étapes** | `lf search` → `lf hid decode` → `lf hid clone` |
 | **Résultat** | Badge cloné, accès physique |
-| **Difficulté** | ⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Dump MIFARE Classic transport
 
@@ -382,7 +382,7 @@ flowchart TB
 | **Outil** | Proxmark3, pcsc-tools |
 | **Étapes** | Darkside → nested attack → dump → analyse |
 | **Résultat** | Dump complet du badge |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -402,11 +402,11 @@ flowchart LR
 | **Outil** | 2× Proxmark3 + connexion réseau |
 | **Étapes** | Prox #1 lit badge → relais → Prox #2 émule |
 | **Résultat** | Authentification réussie à distance |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -423,7 +423,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -441,7 +441,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -455,7 +455,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -487,7 +487,7 @@ if uid:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Dump MIFARE
@@ -502,12 +502,12 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - RFID et NFC]] (cette fiche)
-- [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]]
-- [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)|📡 LF]]
+- [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]]
+- [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)| LF]]
 
 | Outil | Usage |
 |---|---|
@@ -516,7 +516,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -526,7 +526,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | LF 125 kHz | HF 13.56 MHz |
 |---|---|---|
@@ -537,7 +537,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -553,7 +553,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -567,7 +567,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -577,7 +577,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -599,7 +599,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | LF | HF |
 |---|---|---|
@@ -611,7 +611,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -622,7 +622,7 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **LF = lecture en clair** : toujours clonable en secondes.
 - **MIFARE Classic = crypto1 cassée** : clé par défaut suffit.
@@ -634,9 +634,9 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — RFID/NFC](https://github.com/swisskyrepo/HardwareAllTheThings/tree/main/docs/protocols/rfid-nfc)
 > - [RFID Hacking — Kevin Chung](https://blog.kchung.co/rfid-hacking-with-the-proxmark-3/)
 
@@ -649,4 +649,4 @@ hexdump -C dump.mfd | head -1
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]] · [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)|📡 LF]] · [[Hardware - Proxmark|🛠️ Proxmark]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] · [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)| LF]] · [[Hardware - Proxmark| Proxmark]]

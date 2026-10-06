@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔓 Attaques WiFi — WEP
+# Attaques WiFi — WEP
 
 > [!info] **En 1 phrase**
 > Le WEP est **cassé structurellement** : les IVs faibles (24 bits, réutilisés) permettent de retrouver la clé
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -31,14 +31,14 @@ flowchart LR
     D --> A
 ```
 
-> [!info] 💡 **Pourquoi WEP est mort**
+> [!info] **Pourquoi WEP est mort**
 > - IV 24 bits → **même clé réutilisée** sur de nombreux paquets → attaques statistiques.
 > - Pas de protection contre le **rejeu** ni l'**injection**.
 > - Fausse intégrité : CRC32 linéaire (pas de MAC réel).
 
 ---
 
-## 🧰 Avec un client : ARP Replay
+## Avec un client : ARP Replay
 
 > Attaque le **point d'accès**. Le AP ré-émet chaque paquet ARP avec un nouvel IV → on collecte des IVs.
 
@@ -61,7 +61,7 @@ aircrack-ng arpreplay.cap
 
 ---
 
-## 🎯 Avec un client : Interactive Replay (0841)
+## Avec un client : Interactive Replay (0841)
 
 > Quand l'ARP replay n'est pas disponible : on force un **client** à générer des paquets injectables.
 > Attaque « 0841 » = injection de paquets quand ARP replay échoue.
@@ -91,12 +91,12 @@ aireplay-ng -2 -r replay.cap mon0
 
 ---
 
-## 📡 Sans client : Fragmentation
+## Sans client : Fragmentation
 
 > **Prérequis** : AP en **open system authentication** (pas de SKA).
 > Obtient un **PRGA** (xor keystream) → forge des paquets ARP → collecte d'IVs.
 
-> [!tip] 💡 **Cartes Atheros** : usurper l'adresse MAC pour générer des paquets corrects.
+> [!tip] **Cartes Atheros** : usurper l'adresse MAC pour générer des paquets corrects.
 
 ```bash
 airmon-ng start wlan0 3
@@ -126,7 +126,7 @@ aircrack-ng -0 wepcrack
 
 ---
 
-## 🪓 Sans client : KoreK Chopchop
+## Sans client : KoreK Chopchop
 
 > **Quand la fragmentation échoue.** Plus lent. Déchiffre un paquet octet par octet pour obtenir le PRGA.
 
@@ -153,7 +153,7 @@ aircrack-ng -0 wepcrack
 
 ---
 
-## 🔑 Bypass Shared Key Authentication (SKA)
+## Bypass Shared Key Authentication (SKA)
 
 > **Prérequis** : AP en **Shared Key** (le fake auth en open system est rejeté : « AP rejects open-system authentication »).
 
@@ -182,7 +182,7 @@ aircrack-ng sharedkey.cap
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -191,14 +191,14 @@ aircrack-ng sharedkey.cap
 | **EAP / 802.1X** | Authentification par utilisateur au lieu d'une clé partagée unique |
 | **Limiter la couverture** | Réduit la surface d'écoute et d'injection |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Fake auth AVANT l'attaque** est quasi obligatoire pour que le AP accepte nos paquets.
 - Cartes **Atheros** : spoof MAC requis pour la fragmentation.
 - **Chopchop** ne marche pas sur tous les AP — il sert de secours à la fragmentation.
 - Le chiffrement est **RC4 + IV** : si on a le keystream (PRGA), on peut **chiffrer n'importe quel paquet court**.
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-wep.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-wep.md) · [Aireplay 0841 – doyler.net](https://www.doyler.net/security-not-included/aireplay-0841-attack)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - Préparation & Basiques| Préparation]] · [[Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Bibliothèque technique| Index]]

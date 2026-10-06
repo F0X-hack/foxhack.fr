@@ -1,11 +1,11 @@
 ---
 title: "Outil - FTK Imager"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: 4.7.x (à vérifier sur la page officielle Exterro)
 licence: Gratuit (freeware Exterro/AccessData)
@@ -16,20 +16,20 @@ site: https://www.exterro.com/ftk-imager
 doc: https://accessdata.com/product-download/ftk-imager-version-4-7-0-0
 ---
 
-# 🔎 FTK Imager — Forensics, Threat Intel & Honeypots
+# FTK Imager — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > FTK Imager est l'outil gratuit d'AccessData (Exterro) pour créer des images forensiques de disques et capturer la mémoire vive, avec visualisation et exportation de fichiers en lecture seule.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | FTK Imager |
 | Description | Outil d'imagerie et de visualisation forensique : acquisition E01/DD, capture mémoire, exploration en lecture seule |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Digital Forensics / Acquisition & Triage |
 | Fonction principale | Créer des images forensiques de disques, capturer la RAM, monter et exporter des preuves sans écrire sur la source |
 | Type d'outil | Application Windows (GUI) + CLI limitée |
@@ -50,7 +50,7 @@ doc: https://accessdata.com/product-download/ftk-imager-version-4-7-0-0
 
 ---
 
-## 🎯 Concept
+## Concept
 
 FTK Imager est un outil d'imagerie et de visualisation : il crée des images forensiques (DD, E01) de disques, partitions ou répertoires, capture la mémoire vive (RAM dump) et permet d'explorer un disque ou une image sans écrire un octet sur la source. C'est l'outil standard en premier intervenant (premier respondant) : il est gratuit, Windows/macOS, et s'installe en quelques minutes sur une machine « forensic » configurée avec un write blocker.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Téléchargement depuis le site officiel Exterro/AccessData (gratuit, compte requis) :
 
@@ -104,14 +104,14 @@ winget install AccessData.FTKImager
 
 Alternative en ligne de commande pour l'acquisition mémoire Linux : utiliser LiME ou `fmem`, tandis que FTK Imager reste la référence sur postes Windows.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'installation se fait sur une **machine d'analyse** (jamais sur le poste compromis) ; l'acquisition se fait via write blocker.
 > - Le `Capture Memory` requiert les privilèges administrateur.
 > - La version Windows est la plus complète ; la version macOS est plus limitée (acquisition mémoire moins fiable).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre / Action | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -128,7 +128,7 @@ Alternative en ligne de commande pour l'acquisition mémoire Linux : utiliser Li
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -143,7 +143,7 @@ Flux type : support source sur write blocker → `Create Disk Image` (E01 + hash
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -178,7 +178,7 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -198,7 +198,7 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -243,7 +243,7 @@ Get-FileHash C:\Triage\memory.mem -Algorithm SHA256
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer la machine forensique** — brancher le disque suspect via un write blocker USB/SATA, lancer FTK Imager en administrateur.
    ```bash
@@ -262,7 +262,7 @@ Get-FileHash C:\Triage\memory.mem -Algorithm SHA256
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : acquisition logique d'une clé USB suspecte
 
@@ -318,7 +318,7 @@ Le dump contient fréquemment les clés de chiffrement (BitLocker), des identifi
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -331,7 +331,7 @@ Le dump contient fréquemment les clés de chiffrement (BitLocker), des identifi
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -346,7 +346,7 @@ Le dump contient fréquemment les clés de chiffrement (BitLocker), des identifi
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -395,7 +395,7 @@ rule Suspicious_Imaging_Tool {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # PowerShell — vérification de hash après acquisition (chaîne de custody)
@@ -417,7 +417,7 @@ with open("hash_list.csv") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties principales sont les **fichiers image** (E01 segmentés `*.E01`, `*.E02...`, DD `.dd`) et les **exports** (fichiers extraits, listes de hash CSV, listes d'arborescence).
 
@@ -443,7 +443,7 @@ for r in rows[:5]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 FTK Imager (acquisition) → E01/DD → Autopsy (analyse approfondie)
@@ -452,16 +452,16 @@ FTK Imager (Export File Hash List) → CSV → hashdb Autopsy / MISP / VirusTota
 FTK Imager (image) → Arsenal Image Mounter / mount -o loop,ro (exploitation)
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - Autopsy|🔎 Autopsy]] — analyse des images acquises avec FTK Imager
-- [[Outils/Outil - Volatility|🔎 Volatility]] — analyse des dumps mémoire
+- [[Tools| Outils]]
+- [[Outils/Outil - Autopsy| Autopsy]] — analyse des images acquises avec FTK Imager
+- [[Outils/Outil - Volatility| Volatility]] — analyse des dumps mémoire
 - [[Outil - Velociraptor]] — collecte de preuves à distance, complément local
 - [[Outil - MISP]] — corrélation des hash exportés avec les indicateurs
 - [[Outil - YARA]] — scan des fichiers extraits
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -476,7 +476,7 @@ FTK Imager (image) → Arsenal Image Mounter / mount -o loop,ro (exploitation)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **E01 compressé** : plus lent en écriture mais segments plus petits (2 Go) ; la vérification des hash double le temps d'acquisition.
 - **DD brut** : acquisition plus rapide, fichiers très volumineux (taille du disque).
@@ -489,7 +489,7 @@ FTK Imager (image) → Arsenal Image Mounter / mount -o loop,ro (exploitation)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -525,7 +525,7 @@ FTK Imager (image) → Arsenal Image Mounter / mount -o loop,ro (exploitation)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Write blocker obligatoire** : l'acquisition physique se fait uniquement via un bloqueur d'écriture ; ne jamais laisser FTK Imager accéder au disque source sans lui.
 - **Analyse sur copie** : ne travailler que sur l'image (E01/DD) montée en lecture seule, jamais sur l'original.
@@ -536,7 +536,7 @@ FTK Imager (image) → Arsenal Image Mounter / mount -o loop,ro (exploitation)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Windows avant tout** : la version Windows est la plus complète ; macOS plus limité, pas de support natif Linux.
 - **Pas d'analyse poussée** : FTK Imager est un outil d'acquisition/visualisation, pas un analyseur (registre, timeline, carving avancé) — pour cela, Autopsy.
@@ -547,7 +547,7 @@ FTK Imager (image) → Arsenal Image Mounter / mount -o loop,ro (exploitation)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Acquisition
@@ -576,7 +576,7 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -585,11 +585,11 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 | **Commande principale** | `File → Create Disk Image` / `File → Capture Memory` |
 | **Alternative principale** | dd/dcfldd (Linux), Guymager, LiME (RAM Linux) |
 | **Concepts importants** | E01, DD, write blocker, capture mémoire, chaîne de custody, Custom Content Image |
-| **Liens associés** | [[Outils/Outil - Autopsy|🔎 Autopsy]] · [[Outils/Outil - Volatility|🔎 Volatility]] |
+| **Liens associés** | [[Outils/Outil - Autopsy| Autopsy]] · [[Outils/Outil - Volatility| Volatility]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -601,15 +601,15 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Avant de couper une machine suspecte, capturez d'abord la mémoire (`Capture Memory`) : les données volatiles (processus, clés, clés de chiffrement en clair) ne survivent pas à l'extinction.
 > - Utilisez `Export File Hash List` pour produire un CSV des empreintes : ce fichier s'importe directement dans un hashdb (pour Autopsy) ou dans MISP.
 > - Privilégiez E01 pour les gros disques : compression et segmentation en fichiers de 2 Go facilitent stockage et échange.
 > - Pour la mémoire, vérifiez que le dump `.mem` est bien cohérent avec l'architecture du poste (x86/x64) avant de le charger dans Volatility, sinon l'analyse `imageinfo` échoue.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le `Capture Memory` de FTK Imager requiert les privilèges administrateur ; sur un poste compromis, l'acteur peut détecter ce dump. Utilisez une machine d'analyse isolée et documentez chaque étape.
 > - Ne jamais utiliser FTK Imager pour modifier un fichier sur le support source : toute écriture (y compris un double-clic qui ouvre un fichier) casse l'intégrité de la preuve. Le `Mount Image` en lecture seule est la seule voie sûre.
 > - `Mount Image` peut échouer sur certains systèmes de fichiers exotiques ou volumes chiffrés : préférez alors exporter les fichiers un par un avec `Export Files`.
@@ -617,7 +617,7 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -639,4 +639,4 @@ sudo mount -o loop,ro cle_usb.dd /mnt/analyse
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Autopsy|🔎 Autopsy]] · [[Outils/Outil - Volatility|🔎 Volatility]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Autopsy| Autopsy]] · [[Outils/Outil - Volatility| Volatility]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

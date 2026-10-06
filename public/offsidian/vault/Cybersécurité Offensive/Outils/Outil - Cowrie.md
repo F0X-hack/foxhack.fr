@@ -1,11 +1,11 @@
 ---
 title: "Outil - Cowrie"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: v3.0.5 (2026-06-29)
 licence: Open source (BSD, voir LICENSE du repo)
@@ -16,20 +16,20 @@ site: https://www.cowrie.org/
 doc: https://docs.cowrie.org/
 ---
 
-# 🔎 Cowrie — Honeypot SSH/Telnet et collecte d'IOCs
+# Cowrie — Honeypot SSH/Telnet et collecte d'IOCs
 
 > [!info] **En 1 phrase**
 > Cowrie est un honeypot SSH/Telnet qui émule un shell factice : il enregistre chaque commande, session et téléchargement de fichier de l'attaquant au format JSON, et s'intègre naturellement dans la plateforme T-Pot.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Cowrie (ex-Kippo) |
 | Description | Honeypot SSH/Telnet à interaction moyenne/haute qui enregistre commandes, sessions et téléchargements en JSON |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Honeypot / Collecte d'IOCs |
 | Fonction principale | Capturer les TTPs des attaquants qui scannent l'internet (brute force, post-exploitation) |
 | Type d'outil | Daemon Python (Twisted) ; packaging Docker |
@@ -52,7 +52,7 @@ doc: https://docs.cowrie.org/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Cowrie est un honeypot à haute interaction : il se présente comme un vrai serveur SSH/Telnet mais exécute toutes les commandes dans un shell fictif et « factice », en les enregistrant en détail. L'attaquant croit interagir avec un serveur compromis : ses commandes, ses téléchargements (files) et ses sessions sont journalisés, puis les binaires qu'il dépose sont conservés pour analyse (via l'option de téléchargement du fichier vers l'hôte). On l'utilise pour observer les TTPs des bots et acteurs qui scannent l'internet.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Deux voies : Docker (simple, recommandée pour T-Pot) ou installation Python classique :
 
@@ -102,11 +102,11 @@ pip install -r requirements.txt && bin/cowrie start
 
 Configuration : copier `cowrie.cfg.dist` vers `cowrie.cfg` pour ajuster ports, plages réseau, et la désactivation de certains services. Pour T-Pot : le docker-compose officiel embarque Cowrie préconfiguré.
 
-> [!warning] ⚠️ Exposition : Cowrie doit être exposé sur Internet (ports 2222/2223) mais jamais relié au réseau interne (voir Sécurité de l'outil).
+> [!warning] Exposition : Cowrie doit être exposé sur Internet (ports 2222/2223) mais jamais relié au réseau interne (voir Sécurité de l'outil).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Emplacement | Exemple |
 |---|---|---|---|
@@ -122,7 +122,7 @@ Configuration : copier `cowrie.cfg.dist` vers `cowrie.cfg` pour ajuster ports, p
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux :
 
@@ -139,7 +139,7 @@ Flux type : connexion sur 2222 → handshake SSH → login réussi (credentials 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -169,7 +169,7 @@ jq -r 'select(.eventid=="cowrie.command.input") | .input' var/log/cowrie/cowrie.
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -186,7 +186,7 @@ jq -r 'select(.eventid=="cowrie.command.input") | .input' var/log/cowrie/cowrie.
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -227,7 +227,7 @@ sha256sum var/log/cowrie/downloads/* | tee hashs.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Déployer Cowrie** sur un VPS isolé (ou dans T-Pot) et exposer les ports `2222` (SSH) et `2223` (Telnet) sur Internet.
 2. **Vérifier le fonctionnement** : tester une connexion factice et contrôler l'écriture des logs.
@@ -247,7 +247,7 @@ sha256sum var/log/cowrie/downloads/* | tee hashs.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : corréler un malware collecté avec ses commandes
 Reconstituer la chaîne d'infection : du brute-force initial au téléchargement du payload.
@@ -289,7 +289,7 @@ sha256sum var/log/cowrie/downloads/* | awk '{print $1}' > hashs.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -302,7 +302,7 @@ sha256sum var/log/cowrie/downloads/* | awk '{print $1}' > hashs.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -318,7 +318,7 @@ sha256sum var/log/cowrie/downloads/* | awk '{print $1}' > hashs.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -350,7 +350,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — extraire les top IP et les top commandes de la journée
@@ -384,7 +384,7 @@ for cmd, n in sorted(compteur.items(), key=lambda x: -x[1])[:20]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le journal `cowrie.json` contient des événements JSON un par ligne. Chaque événement a un `eventid` : `cowrie.login.success/failed`, `cowrie.command.input`, `cowrie.session.file_download`, `cowrie.session.connect/disconnect`. Les champs clés : `timestamp`, `src_ip`, `src_port`, `session`, `username`, `password`, `input`, `url`, `shasum`, `message`.
 
@@ -415,7 +415,7 @@ for src, n in sorted(ip.items(), key=lambda x: -x[1])[:10]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Cowrie → Elasticsearch / filebeat → Kibana (dashboards d'attaque)
@@ -426,18 +426,18 @@ Cowrie → YARA / sandbox (analyse des binaires collectés)
 Cowrie → Wazuh / Elastic (corrélation SIEM des alertes)
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - Canarytokens|🔎 Canarytokens]] — déception complémentaire (artefacts)
-- [[Outils/Outil - MISP|🔎 MISP]] — partage des IP et hashs collectés
-- [[Outils/Outil - Elastic|🛡️ Elastic]] — indexation des logs JSON (filebeat)
-- [[Outils/Outil - YARA|🔎 YARA]] — signatures des binaires capturés
-- [[Outils/Outil - Volatility|🔎 Volatility]] — analyse mémoire des artefacts (si nécessaire)
-- [[Outils/Outil - Wazuh|🛡️ Wazuh]] — corrélation des alertes honeypot
-- [[Techniques/11 - Glossaire|📖 Glossaire]]
+- [[Tools| Outils]]
+- [[Outils/Outil - Canarytokens| Canarytokens]] — déception complémentaire (artefacts)
+- [[Outils/Outil - MISP| MISP]] — partage des IP et hashs collectés
+- [[Outils/Outil - Elastic| Elastic]] — indexation des logs JSON (filebeat)
+- [[Outils/Outil - YARA| YARA]] — signatures des binaires capturés
+- [[Outils/Outil - Volatility| Volatility]] — analyse mémoire des artefacts (si nécessaire)
+- [[Outils/Outil - Wazuh| Wazuh]] — corrélation des alertes honeypot
+- [[Techniques/11 - Glossaire| Glossaire]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -452,7 +452,7 @@ Cowrie → Wazuh / Elastic (corrélation SIEM des alertes)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ressources** : faible (un process Python par daemon) ; quelques centaines de Mo RAM.
 - **Sessions** : chaque session concurrente consomme un process Twisted ; sous forte attaque, surveiller le CPU.
@@ -466,7 +466,7 @@ Cowrie → Wazuh / Elastic (corrélation SIEM des alertes)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -502,7 +502,7 @@ Cowrie → Wazuh / Elastic (corrélation SIEM des alertes)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolement** : jamais de routage du honeypot vers l'interne ; firewall qui bloque toute sortie vers les réseaux internes.
 - **Droits** : exécuter Cowrie dans un container ou un utilisateur dédié (jamais root).
@@ -514,7 +514,7 @@ Cowrie → Wazuh / Elastic (corrélation SIEM des alertes)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Interaction simulée** : tout est factice ; un attaquant expérimenté détecte l'émulation.
 - **Pas un IDS** : ne bloque rien, ne détecte pas le trafic non-SSH/Telnet.
@@ -525,7 +525,7 @@ Cowrie → Wazuh / Elastic (corrélation SIEM des alertes)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Gestion
@@ -573,7 +573,7 @@ enabled = false
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -582,11 +582,11 @@ enabled = false
 | **Commande principale** | `bin/cowrie start` + `tail -f var/log/cowrie/cowrie.json` |
 | **Alternative principale** | Kippo, Honeyd, MHN |
 | **Concepts importants** | Shell factice, eventid JSON, sessions, downloads/, T-Pot |
-| **Liens associés** | [[Outils/Outil - Canarytokens|🔎 Canarytokens]] · [[Outils/Outil - MISP|🔎 MISP]] · [[Outils/Outil - Elastic|🛡️ Elastic]] |
+| **Liens associés** | [[Outils/Outil - Canarytokens| Canarytokens]] · [[Outils/Outil - MISP| MISP]] · [[Outils/Outil - Elastic| Elastic]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -598,17 +598,17 @@ enabled = false
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > Exposez Cowrie avec des identifiants faibles connus (ex. `root:123456`) : les bots et acteurs réussissent plus vite la connexion, ce qui augmente la capture de sessions réelles. Utilisez `jq` en cascade sur les logs JSON pour bâtir vos statistiques (top commandes, top IP) : c'est l'API de votre honeypot sans interface.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > Cowrie n'est pas un IDS : tout ce que l'attaquant fait dans le shell est simulé, mais les téléchargements réels et le trafic réseau restent des risques. Placez-le derrière un firewall qui ne sort jamais vers l'interne. Les journaux JSON saturent rapidement le stockage sous forte attaque : prévoyez une rotation et un transfert automatique (rsyslog/filebeat) vers le serveur de logs central.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -630,4 +630,4 @@ enabled = false
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Canarytokens|🔎 Canarytokens]] · [[Outils/Outil - MISP|🔎 MISP]] · [[Techniques/11 - Glossaire|📖 Glossaire]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Canarytokens| Canarytokens]] · [[Outils/Outil - MISP| MISP]] · [[Techniques/11 - Glossaire| Glossaire]]

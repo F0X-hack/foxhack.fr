@@ -1,12 +1,12 @@
 ---
 title: "Outil - Hak5 Payload Studio"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: "Web (client-side) ; PayloadStudio Pro (licence perpétuelle)"
 licence: Logiciel propriétaire (éditions Community gratuite / Pro payante)
@@ -17,14 +17,14 @@ site: https://payloadstudio.hak5.org
 doc: https://docs.hak5.org/payload-studio/
 ---
 
-# 💻 Hak5 Payload Studio — L'éditeur web des payloads Duckyscript
+# Hak5 Payload Studio — L'éditeur web des payloads Duckyscript
 
 > [!info] **En 1 phrase**
 > L'IDE officiel et gratuit de Hak5 (en ligne) pour écrire, compiler et partager des payloads **Duckyscript 3.0** ciblant USB Rubber Ducky, Bash Bunny et O.MG Cable — avec wizards, templates et coloration syntaxique.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -43,7 +43,7 @@ Payload Studio industrialise la création de payloads : **un seul éditeur, tout
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Hak5 **Payload Studio** (`payloadstudio.hak5.org`) est l'éditeur web officiel de l'écosystème Hak5 : il centralise l'écriture des payloads en **Duckyscript 3.0** pour les appareils compatibles (USB Rubber Ducky, Bash Bunny, O.MG Cable, et autres devices DuckyScript). Points clés :
 - **IDE web** : coloration syntaxique, autocomplétion, validation en temps réel ;
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Notion | Détail |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Aucune installation : l'IDE est **entièrement côté client** dans le navigateur.
 
@@ -112,7 +112,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Sélection de l'appareil (Device Picker)
 
@@ -143,7 +143,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -164,7 +164,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ```bash
 # Duckyscript 3.0 — variables, fonctions et boucles
@@ -201,7 +201,7 @@ REVERSE_SHELL
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description |
 |---|---|
@@ -219,7 +219,7 @@ REVERSE_SHELL
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Basic — hello world Keystroke Injection (Windows)
 
@@ -266,7 +266,7 @@ END_IF
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Choisir le support** — nouveau payload → appareil (ex. USB Rubber Ducky).
 2. **Générer le payload** — wizard « Reverse Shell » → sélectionner OS (Windows) → copier-coller l'IP/le port du C2 → génération automatique.
@@ -283,7 +283,7 @@ DELAY 3000
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Wizard reverse shell multi-OS avec variables
 
@@ -343,7 +343,7 @@ DELAY 1500
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Description |
 |---|---|
@@ -355,7 +355,7 @@ DELAY 1500
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Exemple Payload Studio |
 |---|---|---|
@@ -370,7 +370,7 @@ DELAY 1500
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Signe | Défense |
 |---|---|
@@ -407,7 +407,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Génération de variantes par disposition clavier (CLI DuckEncoder)
@@ -432,7 +432,7 @@ build("payload.txt")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 | Sortie | Description |
 |---|---|
@@ -451,9 +451,9 @@ ls -la payload.txt inject.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - USB Rubber Ducky]] — cible principale (inject.bin)
 - [[Outil - Bash Bunny]] — cible Duckyscript 3 interprétée
 - [[Outil - O.MG Cable]] — devices licenciés DuckyScript compatibles
@@ -464,7 +464,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Type | Points forts | Points faibles |
 |---|---|---|---|
@@ -476,7 +476,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Temps de compilation** : quasi instantané (côté client) pour un payload moyen.
 - **Taille d'un payload typique** : < 5 Ko en source, ~1-3 Ko en `inject.bin`.
@@ -485,7 +485,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Problème : erreur « Unknown command »
 
@@ -513,7 +513,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : les payloads produits servent à des injections sur du matériel autorisé uniquement (accord écrit).
 - **Partage de payloads** : vérifier le contenu avant de déployer un payload communautaire (backdoor possible).
@@ -522,7 +522,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Format dépend de l'appareil** : `inject.bin` pour le Ducky (compilé) vs `payload.txt` (interprété) pour Bunny/O.MG — ne pas mélanger.
 - **Navigateur requis** : l'éditeur web fonctionne en ligne ; le travail hors-ligne impose DuckEncoder/CLI.
@@ -532,7 +532,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 | Action | Commande / menu |
 |---|---|
@@ -548,7 +548,7 @@ ls -la payload.txt inject.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 ```bash
 # Payload minimal reverse shell Windows (IP fictive)
@@ -566,7 +566,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -578,16 +578,16 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utiliser le **wizard reverse shell** comme base, puis personnaliser : c'est le plus sûr pour partir d'un payload qui marche.
 > - Tester la compilation cible par cible : un payload compilé pour le Ducky n'est pas forcément au format Bunny (`payload.txt`).
 > - Exploiter **variables + fonctions** (Duckyscript 3) pour factoriser les payloads longs et les rendre réutilisables.
 > - Versionner systématiquement : la fonction de partage/versioning permet de revenir en arrière quand une cible réelle casse un payload « parfait » sur VM.
 > - Adapter `DEFAULT_DELAY` au support cible (SSD : 10, HDD : 18, VM : 10, thin client : 18-25).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le **format d'export dépend de l'appareil** : `inject.bin` pour le Rubber Ducky, `payload.txt` pour Bash Bunny/O.MG — ne pas mélanger les deux.
 > - Le compilateur web peut différer du DuckEncoder local : vérifier la version de firmware de son matériel.
 > - Un payload « parfait » sur VM peut échouer sur la cible réelle (timing, disposition clavier, GPO) : tester systématiquement.
@@ -595,9 +595,9 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [Hak5 — Payload Studio](https://payloadstudio.hak5.org)
 > - [Hak5 — Docs Payload Studio](https://docs.hak5.org/payload-studio/)
 > - [GitHub — usbrubberducky-payloads (langues + payloads)](https://github.com/hak5/usbrubberducky-payloads)
@@ -607,4 +607,4 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - USB Rubber Ducky|🦆 USB Rubber Ducky]] · [[Outil - Bash Bunny|🐰 Bash Bunny]]
+**Liens :** [[Tools| Outils]] · [[Outil - USB Rubber Ducky| USB Rubber Ducky]] · [[Outil - Bash Bunny| Bash Bunny]]

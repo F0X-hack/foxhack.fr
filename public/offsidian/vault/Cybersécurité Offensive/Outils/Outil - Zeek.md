@@ -1,11 +1,11 @@
 ---
 title: "Outil - Zeek"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: LTS 8.0.9 / feature 8.2.1 (2026) ; 9.0 prévue pour 2026-08-31
 licence: BSD-3-Clause (moteur et scripts officiels)
@@ -16,7 +16,7 @@ site: https://zeek.org
 doc: https://docs.zeek.org
 ---
 
-# 🛡️ Zeek — Défense & SIEM
+# Zeek — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Zeek (ex-Bro) est un **NSM (Network Security Monitor)** qui, sans règles de signatures,
@@ -25,13 +25,13 @@ doc: https://docs.zeek.org
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Zeek (anciennement Bro) |
 | Description | NSM réseau : journalisation des métadonnées de connexions et protocoles, programmable par scripts événementiels |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | Network Security Monitoring (NSM) / métadonnées réseau |
 | Fonction principale | Reconstruire les sessions et journaliser qui parle à qui, quand, combien de temps et quoi (HTTP, DNS, SSL, FTP, SMTP, SSH...) |
 | Type d'outil | Daemon de capture (cluster manager/worker) + CLI (zeek, zeekctl, zeek-cut) |
@@ -52,7 +52,7 @@ doc: https://docs.zeek.org
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Zeek se concentre sur **ce qui se passe** sur le réseau plutôt que sur la recherche de signatures : il reconstruit les sessions et **journalise les métadonnées** (qui a parlé à qui, quand, combien de temps, quoi) pour HTTP, DNS, SSL, FTP, SMTP, SSH... Il complète parfaitement un IDS à signatures (Snort/Suricata) car il capture la **vérité réseau** : il n'a pas besoin de connaitre la signature pour enregistrer la connexion suspecte. Il est programmable en **scripts Zeek** (langage événementiel) pour ajouter des analyses personnalisées (détection de nouvelles connexions vers des IP internes, champs HTTP atypiques, TLS self-signed, etc.). Moins connu du grand public mais standard dans les SOC modernes : c'est le moteur de **Security Onion** et de nombreuses distributions de supervision.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu
 
@@ -116,14 +116,14 @@ git clone https://github.com/zeek/zeek.git && cd zeek
 
 Sur Windows : Zeek s'exécute nativement (installateur MSI officiel) ; les scripts et `zeekctl` restent les mêmes qu'ailleurs.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le paquet `zeek` Debian installe dans `/opt/zeek` : ajouter `/opt/zeek/bin` au `PATH` avant d'utiliser `zeek-cut`.
 > - La capture en temps réel (`-i eth0`) nécessite les privilèges root ou des capabilities `CAP_NET_RAW`.
 > - En cluster, tous les nœuds doivent partager la même config Zeek (`zeekctl deploy` synchronise les scripts).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre / Fichier | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -141,7 +141,7 @@ Sur Windows : Zeek s'exécute nativement (installateur MSI officiel) ; les scrip
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -156,7 +156,7 @@ Flux type : paquet → Event Engine (C++) → événement → scripts de politiq
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -197,7 +197,7 @@ zeek-cut -d , host uri method response_body_len < http.log \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -217,7 +217,7 @@ zeek-cut -d , host uri method response_body_len < http.log \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -258,7 +258,7 @@ event new_connection(c: connection) {
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Capturer puis analyser** un pcap malveillant :
    ```bash
@@ -279,7 +279,7 @@ event new_connection(c: connection) {
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection des certificats TLS auto-signés
 
@@ -324,7 +324,7 @@ zeek-cut -d , seen.indicator matched < intel.log
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -337,7 +337,7 @@ zeek-cut -d , seen.indicator matched < intel.log
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -353,7 +353,7 @@ zeek-cut -d , seen.indicator matched < intel.log
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -395,7 +395,7 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET 4444 (msg:"Possible reverse shell (beac
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — rotation + archivage des logs Zeek
@@ -424,7 +424,7 @@ with open("conn.log") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les `.log` sont des fichiers **tabulés (TSV)** avec des lignes d'en-tête `#separator \x09`, `#fields`, `#types`. Chaque ligne est un événement : `ts`, `uid`, `id.orig_h`, `id.orig_p`, `id.resp_h`, `id.resp_p`, plus les champs propres au protocole.
 
@@ -459,7 +459,7 @@ with open("dns.log") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Zeek (logs TSV) → Filebeat module zeek → Elasticsearch / Splunk / Graylog
@@ -468,7 +468,7 @@ Zeek (Framework Intelligence) → MISP / threat intel (feeds)
 Zeek → zeek-cut → pipelines Python/Go d'analyse
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Suricata]] — signatures complémentaires aux métadonnées Zeek
 - [[Outil - Snort]] — alternative à signatures, même complémentarité
 - [[Outil - Elastic]] — ingestion des `.log` Zeek (module Filebeat)
@@ -479,7 +479,7 @@ Zeek → zeek-cut → pipelines Python/Go d'analyse
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -494,7 +494,7 @@ Zeek → zeek-cut → pipelines Python/Go d'analyse
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Répartition par flux** : en cluster, chaque worker traite une partie des flux (hash sur le 4-tuple) → montée en charge linéaire.
 - **Côté mémoire** : la reconstruction de sessions coûte en RAM (état par connexion) : dimensionner selon le débit et le nombre de connexions simultanées.
@@ -508,7 +508,7 @@ Zeek → zeek-cut → pipelines Python/Go d'analyse
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -544,7 +544,7 @@ Zeek → zeek-cut → pipelines Python/Go d'analyse
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : la capture temps réel requiert root/CAP_NET_RAW : utiliser un utilisateur dédié et le sudo minimal.
 - **Données sensibles** : les `.log` contiennent des adresses, hostnames, user-agents, requêtes et empreintes de certs : protéger le dossier logs, chiffrer au repos, purger avec rotation.
@@ -555,7 +555,7 @@ Zeek → zeek-cut → pipelines Python/Go d'analyse
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de blocage** : Zeek est un moniteur passif — aucun drop ni réécriture (déléguer à Suricata en IPS).
 - **Pas de signatures** : sans les scripts, pas de détection « d'attaque connue » à la manière d'un IDS.
@@ -566,7 +566,7 @@ Zeek → zeek-cut → pipelines Python/Go d'analyse
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Analyser un pcap (hors-ligne)
@@ -596,7 +596,7 @@ zeek-cut query < dns.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -609,7 +609,7 @@ zeek-cut query < dns.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -621,25 +621,25 @@ zeek-cut query < dns.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Zeek ne bloque pas — et c'est voulu**
+> [!tip] **Zeek ne bloque pas — et c'est voulu**
 > C'est un **moniteur** : il ne peut ni dropper ni réécrire les paquets. Utilise-le pour la
 > **vérité de référence** des connexions, et délègue le blocage à un IPS (Suricata en inline).
 
-> [!warning] ⚠️ **Piège** : les `.log` sont des fichiers **tabulés** (`\x09`), pas du JSON.
+> [!warning] **Piège** : les `.log` sont des fichiers **tabulés** (`\x09`), pas du JSON.
 > `zeek-cut` est indispensable pour les manipuler proprement — un simple `cut -d" "` échoue
 > toujours. Vérifie aussi la clé de la sortie de DNS : `.log` ne couvre que ce que Zeek a vu.
 
-> [!warning] ⚠️ **Piège** : `-C` change les résultats.
+> [!warning] **Piège** : `-C` change les résultats.
 > Sans `-C`, Zeek écarte les paquets avec checksums invalides : sur un pcap capturé en conditions réelles, les logs peuvent être **partiels**. Utiliser `-C` par défaut lors des investigations.
 
-> [!warning] ⚠️ **Piège** : les scripts doivent être compatibles avec la version.
+> [!warning] **Piège** : les scripts doivent être compatibles avec la version.
 > Du code écrit pour Bro ou Zeek 5 peut ne pas compiler sous 8.x : tester avec `zeek -b -e '@load ...'` avant déploiement en cluster.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -663,4 +663,4 @@ zeek-cut query < dns.log | sort | uniq -c | sort -rn | head
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting / Tunneling]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS Poisoning]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting / Tunneling]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]]

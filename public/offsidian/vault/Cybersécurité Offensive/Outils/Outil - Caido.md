@@ -1,11 +1,11 @@
 ---
 title: "Outil - Caido"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 0.57.1 (juillet 2026, releases ~mensuelles)
 licence: freemium (Basic gratuit, plans payants Individual / Team / Enterprise)
@@ -16,14 +16,14 @@ site: https://caido.io
 doc: https://docs.caido.io
 ---
 
-# 🔍 Caido — Proxy d'interception web léger en Rust
+# Caido — Proxy d'interception web léger en Rust
 
 > [!info] **En 1 phrase**
 > Caido est une alternative moderne, ultra-légère et rapide à Burp Suite, écrite en Rust : proxy d'interception, replay et automatisation par Workflows, le tout dans une interface web.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.caido.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Caido se positionne comme le « nouveau Burp » : un proxy d'interception + boîte à outils pour le test d'applications web, distribué en binaire autonome (Rust) qui expose une **interface web locale**. Le backend tourne en local (ou sur un serveur auto-hébergé, consultable à distance) et l'utilisateur travaille depuis son navigateur : proxy, Replay, Automate, Workflows et Assistant dans une sidebar unifiée.
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -154,7 +154,7 @@ git clone https://github.com/caido/caido-sdk.git
 # La compilation d'un plugin se fait via le SDK (Node + TypeScript), pas du backend Rust.
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Pas de paquet Kali/Debian officiel** : toujours passer par les binaires GitHub/caido.download.
 > - **Premier lancement** : création d'un compte administrateur local (mot de passe stocké dans `~/.caido`).
 > - **HTTPS** : sans installation du certificat racine, le navigateur refuse les certificats signés par Caido → l'interception HTTPS échoue silencieusement (erreur de certificat).
@@ -162,7 +162,7 @@ git clone https://github.com/caido/caido-sdk.git
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -182,7 +182,7 @@ git clone https://github.com/caido/caido-sdk.git
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Caido est découpé entre un **backend Rust** et une **interface web** servie par ce backend :
 
@@ -198,7 +198,7 @@ Flux typique : navigateur → backend (proxy, déchiffrement) → historique HTT
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -240,7 +240,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -260,7 +260,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -323,7 +323,7 @@ curl -s http://127.0.0.1:8080/api/graphql \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer Caido et installer le certificat racine** — configurer le proxy `127.0.0.1:8080` dans le navigateur :
    ```bash
@@ -338,7 +338,7 @@ curl -s http://127.0.0.1:8080/api/graphql \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Fuzzing de paramètres avec Workflow
 
@@ -380,7 +380,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -393,7 +393,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -408,7 +408,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -464,7 +464,7 @@ rule Caido_Binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 Caido est pensé pour l'automatisation : API GraphQL complète + Client SDK (TypeScript, Python) pour brancher l'outil sur des pipelines et des agents IA.
 
@@ -510,7 +510,7 @@ for uid in range(1, 101):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Caido expose tout via l'API GraphQL en **JSON** : requêtes, réponses, sessions, résultats. On parse ensuite avec `jq` ou Python.
 
@@ -540,7 +540,7 @@ for u in urls:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Navigateur -> Caido (proxy 127.0.0.1:8080) -> cible
@@ -549,7 +549,7 @@ Workflows Caido -> wordlists (SecLists) -> fuzzing -> résultats
 Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Burp Suite]] — alternative historique plus complète (scanner profond, BApp Store, OAST)
 - [[Outil - mitmproxy]] — alternative scriptable en Python
 - [[Outil - OWASP ZAP]] — scanner open source complet
@@ -559,7 +559,7 @@ Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -573,7 +573,7 @@ Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Léger** : binaire Rust autonome, sans JVM ni runtime — démarrage quasi instantané, empreinte mémoire faible par rapport à Burp (Java).
 - **Rapide** : le fuzzing via Workflows s'exécute dans le backend natif ; penser au throttling pour ne pas écraser la cible.
@@ -586,7 +586,7 @@ Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -616,7 +616,7 @@ Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Compte administrateur local** : le premier lancement crée un compte admin — utiliser un mot de passe fort ; les projets et requêtes y sont accessibles.
 - **Exposition réseau** : par défaut Caido écoute sur `127.0.0.1`. Si on l'expose (`--listen 0.0.0.0:8080`) pour une équipe, s'assurer d'une authentification et d'un TLS (reverse proxy).
@@ -627,7 +627,7 @@ Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de package Kali/Debian officiel** : installation manuelle des binaires.
 - **Scan automatique** : limité/absent dans le plan gratuit (scanner des plans payants moins profond que Burp Pro/ZAP).
@@ -638,7 +638,7 @@ Plugins IA Caido -> LLM (Anthropic / Google / OpenAI / OpenRouter)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer le proxy + UI
@@ -668,7 +668,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -681,7 +681,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -693,16 +693,16 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Installe le certificat CA dans un **profil de navigateur dédié** pour ne pas polluer ton environnement normal.
 > - Utilise les **Workflows** pour transformer un test répétitif manuel en test rejouable (gain énorme sur les engagements de longue durée).
 > - L'API **GraphQL** permet d'intégrer Caido dans tes propres scripts de bug bounty.
 > - Maîtrise **HTTPQL** (`resp.code.gte:400`, `req.host.eq`) : c'est le moyen le plus rapide de trier un gros historique.
 > - Le **DNS override** est très pratique pour tester des vhosts ou pointer une cible vers une IP de lab sans toucher au hosts.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La version **gratuite ne contient pas le scanner actif** : les tests actifs restent manuels ou via Workflows.
 > - Écrite en Rust et jeune, Caido a moins de retours communautaires et d'extensions que Burp : certains cas exotiques (WebSockets avancés, certains formats) peuvent manquer.
 > - Pense à vérifier que le certificat racine est **correctement installé**, sinon le HTTPS sera simplement refusé par le navigateur (pas d'interception silencieuse).
@@ -711,7 +711,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -736,4 +736,4 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Burp Suite|Burp Suite]] · [[Outil - mitmproxy|mitmproxy]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[Techniques/IDOR|IDOR]]
+**Liens :** [[Tools| Outils]] · [[Outil - Burp Suite|Burp Suite]] · [[Outil - mitmproxy|mitmproxy]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[Techniques/IDOR|IDOR]]

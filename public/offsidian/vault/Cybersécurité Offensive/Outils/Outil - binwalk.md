@@ -1,7 +1,7 @@
 ---
 title: "Outil - binwalk"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/ReFirmLabs/binwalk
 doc: https://github.com/ReFirmLabs/binwalk/wiki
 ---
 
-# 🧱 Binwalk — La forensique des fichiers embarqués
+# Binwalk — La forensique des fichiers embarqués
 
 > [!info] **En 1 phrase**
 > Scannez, identifiez et extrayez les fichiers et firmwares cachés dans une image ou un binaire : le flag est souvent un système de fichiers Zip coincé dedans.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/ReFirmLabs/binwalk/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Binwalk est l'outil de référence de la **forensique de fichiers** : il analyse un fichier quelconque (image PNG/JPEG, firmware `.bin`, binaire ELF, archive, carte SD, disque…) en cherchant des **signatures connues** (magic bytes) à tous les offsets. Zlib, Gzip, Zip, tar, SquashFS, JFFS2, CramFS, LZMA, ELF, PNG, JPEG, ISO, exFAT/NTFS… la base de signatures est très large et, depuis la v3, chaque signature est validée par un **parser dédié** qui vérifie la cohérence des métadonnées avant de l'afficher — d'où la chute spectaculaire des faux positifs.
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -133,14 +133,14 @@ git clone https://github.com/ReFirmLabs/binwalk.git && cd binwalk
 sudo python3 setup.py install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'**extraction** dépend d'outils externes (`7z`, `unzip`, `unsquashfs`, `jefferson`, `ubireader`…) : sans eux, `-e` signale les signatures mais ne peut pas tout extraire.
 > - Kali installe encore la **v2** par défaut : les options `-r`, `-M`, `-A` sont v2 ; la v3 les remplace par `-Me`, `--carve`, `--log`.
 > - Windows : l'extraction des SquashFS/JFFS2 nécessite souvent un environnement Linux (WSL ou Docker).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Binwalk fonctionne essentiellement **sans fichier de configuration** : tout se passe en arguments CLI. En v2, il existait une option `--config <fichier>` pour désactiver des signatures.
 
@@ -158,7 +158,7 @@ Binwalk fonctionne essentiellement **sans fichier de configuration** : tout se p
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Depuis la v3, Binwalk est un **binaire Rust unique** dont l'analyse suit un pipeline (parsing CLI, scan, extraction, entropie) :
 
@@ -171,7 +171,7 @@ En v2 (Python), l'architecture reposait sur des **modules Python** (`binwalk/mod
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ binwalk --length=1048576 firmware.bin
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -227,7 +227,7 @@ binwalk --length=1048576 firmware.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -270,7 +270,7 @@ binwalk --log=scan.json -Me firmware.bin
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Scanner le fichier suspect** :
    ```bash
@@ -300,7 +300,7 @@ binwalk --log=scan.json -Me firmware.bin
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Firmware avec système de fichiers SquashFS
 
@@ -336,7 +336,7 @@ binwalk --entropy --block=4096 encrypted_fw.bin
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -348,7 +348,7 @@ binwalk --entropy --block=4096 encrypted_fw.bin
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -362,7 +362,7 @@ binwalk --entropy --block=4096 encrypted_fw.bin
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -402,7 +402,7 @@ level: low
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — analyser tous les fichiers d'un dossier, un rapport JSON par fichier
@@ -430,7 +430,7 @@ for path in glob.glob("_firmware.bin.extracted/**/*", recursive=True):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie standard v3 est une table colorée (`DECIMAL | HEXADECIMAL | DESCRIPTION`) ; `--log=<fichier>` produit du **JSON** structuré, idéal pour les pipelines.
 
@@ -452,14 +452,14 @@ for entry in report[0]["Analysis"]["file_map"]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Fichier suspect → Binwalk → Extraction → strings/exiftool → analyse statique
 Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploitation
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - exiftool]] — métadonnées du fichier suspect avant/après extraction
 - [[Outil - zsteg]] — stéganographie LSB dans les images extraites
 - [[Outil - stegsolve]] — analyse visuelle des images extraites
@@ -468,11 +468,11 @@ Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploi
 - [[Outil - radare2]] — analyse rapide des binaires extraits
 - [[Outil - Kali Linux]] — environnement pré-packagé avec binwalk
 - [[Outil - hashcat]] / [[Outil - John the Ripper]] — cracking des archives chiffrées extraites
-- [[09 - Reverse Engineering & Malware|🔬 Reverse & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse & Malware]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploi
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **v3 vs v2** : réécriture Rust → scan de 78 signatures sur un firmware de 15 Mo en ~90 ms (contre plusieurs secondes en v2). Les parsers qui « skippent » les données compressées accélèrent le scan des gros fichiers.
 - **Entropie** : calcul par blocs ; `--block=65536` est un bon compromis vitesse/précision ; des blocs plus fins (4096) multiplient le temps de calcul.
@@ -500,7 +500,7 @@ Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploi
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -531,7 +531,7 @@ Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploi
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Usage légal** : l'analyse de firmwares et d'images n'est licite que sur des fichiers dont vous possédez les droits (contrats, autorisations écrites, machines de lab).
 - **Malwares embarqués** : un fichier analysé peut contenir du code malveillant ; isoler l'analyse (VM/Docker) avant d'exécuter les binaires extraits.
@@ -541,7 +541,7 @@ Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploi
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Extraction dépendante d'outils externes** : sans `7z`/`unsquashfs`/`jefferson`, `-e` ne fait rien.
 - **Pas une solution de récupération universelle** : forensique de fichiers supprimés incomplète (préférer foremost/photorec).
@@ -553,7 +553,7 @@ Firmware → Binwalk → SquashFS monté → reverse (Ghidra/radare2) → exploi
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan simple
@@ -581,7 +581,7 @@ binwalk --exclude=jpeg,png,gif firmware.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -594,7 +594,7 @@ binwalk --exclude=jpeg,png,gif firmware.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -606,15 +606,15 @@ binwalk --exclude=jpeg,png,gif firmware.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `-Me` pour une analyse **récursive** : les fichiers extraits sont eux-mêmes analysés (poupées russes classiques en CTF).
 > - Croisez toujours avec `--entropy` : une zone d'entropie ~8 sans signature est de la donnée compressée ou chiffrée à investiguer.
 > - Vérifiez la version (`binwalk --version`) : les options changent entre v2 (Python) et v3 (Rust).
 > - Sortez en JSON (`--log`) dès qu'un pipeline d'analyse automatisée existe.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `binwalk` sans `-e` **ne fait que lister** : on oublie souvent d'extraire.
 > - Les fausses signatures sont courantes en v2 : vérifiez avec `file` le contenu extrait.
 > - L'extraction Zlib incomplète laisse des fichiers tronqués : découpez les offsets manuellement (`dd`) et re-scannez.
@@ -622,7 +622,7 @@ binwalk --exclude=jpeg,png,gif firmware.bin
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -646,4 +646,4 @@ binwalk --exclude=jpeg,png,gif firmware.bin
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - exiftool|🏷️ ExifTool]] · [[Outil - zsteg|📦 zsteg]] · [[Outil - stegsolve|🖼️ StegSolve]] · [[Outil - unblob|📦 unblob]] · [[Outil - Ghidra|🐉 Ghidra]] · [[Outil - radare2|🌀 radare2]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - exiftool| ExifTool]] · [[Outil - zsteg| zsteg]] · [[Outil - stegsolve| StegSolve]] · [[Outil - unblob| unblob]] · [[Outil - Ghidra| Ghidra]] · [[Outil - radare2| radare2]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

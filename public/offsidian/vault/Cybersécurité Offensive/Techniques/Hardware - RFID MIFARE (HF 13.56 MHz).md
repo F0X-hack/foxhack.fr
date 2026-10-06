@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 💳 RFID MIFARE (HF 13.56 MHz)
+# RFID MIFARE (HF 13.56 MHz)
 
 > [!info] **En 1 phrase**
 > MIFARE Classic repose sur la crypto **Crypto1 cassée** : avec une seule clé par défaut
@@ -19,7 +19,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,14 +33,14 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > MIFARE Classic est la smartcard contactless la plus déployée au monde depuis 1994.
 > Son algorithme d'authentification propriétaire **Crypto-1** a été reverse-engineered en
 > 2008 et est publiquement cassé. Le principe : exploiter le PRNG faible (nonces
 > prévisibles) pour récupérer les clés, puis dump le contenu avant de cloner.
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **Secteur / bloc** : Classic 1K = 16 secteurs × 4 blocs de 16 octets. Bloc 3 = sector trailer (clé A + droits + clé B).
 > - **Crypto-1** : stream cipher propriétaire, basé sur un LFSR 48-bit — le PRNG ne génère que 2^16 nonces.
 > - Une seule clé par secteur suffit à lire tout le contenu.
@@ -56,7 +56,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Crypto-1 stream cipher
 
@@ -82,7 +82,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -106,7 +106,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### ISO14443 Type A
 
@@ -141,7 +141,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -165,7 +165,7 @@ make clean && make all
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du client Proxmark3
 
@@ -188,7 +188,7 @@ make clean && make all
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -230,9 +230,9 @@ hf mf restore 1
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Clonage avec clés par défaut
+### Débutant — Clonage avec clés par défaut
 
 ```bash
 hf search
@@ -241,7 +241,7 @@ hf mf dump 1
 hf mf restore 1
 ```
 
-### 🟡 Intermédiaire — Darkside + Nested Attack
+### Intermédiaire — Darkside + Nested Attack
 
 ```bash
 hf mf darkside
@@ -250,7 +250,7 @@ hf mf dump 1
 hf mf rdbl 5 A ffffffffffff
 ```
 
-### 🔴 Avancé — Hardnested avec Proxmark3 512K
+### Avancé — Hardnested avec Proxmark3 512K
 
 ```python
 import subprocess, os
@@ -263,7 +263,7 @@ if os.path.exists("nonces.bin"):
     subprocess.run(["./solve_piwi", "nonces.bin"])
 ```
 
-### ⚫ Expert — Sniffing + mfkey64
+### Expert — Sniffing + mfkey64
 
 ```python
 # hf 14a snoop → hf list 14a
@@ -273,7 +273,7 @@ if os.path.exists("nonces.bin"):
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -297,7 +297,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Clonage de badge d'accès bâtiment
 
@@ -307,7 +307,7 @@ flowchart TB
 | **Matériel** | Proxmark3 RDV4 + carte magique GEN 1a |
 | **Étapes** | hf search → darkside → nested → dump → restore |
 | **Résultat** | Badge cloné, accès physique compromis |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Sniffing d'un lecteur de transport
 
@@ -317,11 +317,11 @@ flowchart TB
 | **Matériel** | Proxmark3 RDV4 (standalone HF_14ASNIFF) |
 | **Étapes** | Standalone sniff → récupérer flash → mfkey64 hors-ligne |
 | **Résultat** | Clé du lecteur extraite |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -338,7 +338,7 @@ flowchart TB
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -349,7 +349,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -375,7 +375,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -415,7 +415,7 @@ mifare_attack()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 | Format | Utilité |
 |---|---|
@@ -431,11 +431,11 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - RFID et NFC|🏷️ Hub RFID]]
-- [[Hardware - RFID LF (125 kHz)|📡 LF]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - RFID et NFC| Hub RFID]]
+- [[Hardware - RFID LF (125 kHz)| LF]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -446,7 +446,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -456,7 +456,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -468,7 +468,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -479,7 +479,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -494,7 +494,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -505,7 +505,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────────┐
@@ -535,7 +535,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -550,7 +550,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -566,7 +566,7 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Écrire le bloc 3 (`wrbl 3`) écrase les clés A/B — rend la carte inutilisable.
 - **Piège 2** : Un BCC incorrect sur GEN 1a rend la carte insélectionnable (bricked).
@@ -578,9 +578,9 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — HF MIFARE Classic](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/rfid-nfc/hf-mifare-classic.md)
 > - [Mifare HowTo — Proxmark Wiki](https://github.com/Proxmark/proxmark3/wiki/Mifare-HowTo)
 > - [RFID Hacking with Proxmark 3 — Kevin Chung](https://blog.kchung.co/rfid-hacking-with-the-proxmark-3/)
@@ -595,4 +595,4 @@ script run dumptoemul -i dumpdata.bin
 
 ---
 
-➡️ **Liens :** [[Hardware - RFID et NFC|🏷️ Hub RFID]] · [[Hardware - RFID LF (125 kHz)|📡 LF]] · [[Hardware - Amiibo et NTAG215|🎮 Amiibo]] · [[Hardware - Proxmark|📡 Proxmark]] · [[Hardware - Flipper Zero|🐬 Flipper]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Hardware - RFID et NFC| Hub RFID]] · [[Hardware - RFID LF (125 kHz)| LF]] · [[Hardware - Amiibo et NTAG215| Amiibo]] · [[Hardware - Proxmark| Proxmark]] · [[Hardware - Flipper Zero| Flipper]] · [[Bibliothèque technique| Index]]

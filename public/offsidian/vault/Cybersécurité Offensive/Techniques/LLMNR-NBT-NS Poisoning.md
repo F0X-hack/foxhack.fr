@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎙️ LLMNR / NBT-NS Poisoning
+# LLMNR / NBT-NS Poisoning
 
 > [!info] **En 1 phrase**
 > On répond à la place de la "vraie" machine pour des requêtes de résolution LLMNR/NBT-NS,
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -34,13 +34,13 @@ sequenceDiagram
     A->>A: crack (hashcat -m 5600) ou relay
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > LLMNR (mDNS) et NBT-NS sont des protocoles de résolution **non authentifiés** (broadcast).
 > Une machine qui ne trouve pas un nom par DNS **demande au réseau** → on peut **répondre en premier**.
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Écouter** les requêtes LLMNR/NBT-NS/mDNS sur le réseau local (Responder).
 2. Quand une machine demande un nom non résolu, **répondre** en se présentant comme ce nom.
@@ -49,7 +49,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # 1. Lancer Responder (sur le réseau local de la victime)
@@ -64,12 +64,12 @@ hashcat -m 5600 netntlmv2.txt rockyou.txt
 # 3bis. OU relayer (voir NTLM Relay) - désactiver SMB dans Responder.conf
 ```
 
-> [!warning] ⚠️ **Méthode classique pour déclencher une résolution**
+> [!warning] **Méthode classique pour déclencher une résolution**
 > Un partage inexistant (ex : `\\DC01\missing`), un ping vers un nom, une app qui cherche un serveur de fichiers → la victime fait une requête de résolution.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -80,18 +80,18 @@ hashcat -m 5600 netntlmv2.txt rockyou.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le pairing Responder + Relay**
+> [!tip] **Le pairing Responder + Relay**
 > Pour relayer : mets `SMB = Off` et `HTTP = Off` dans `/etc/responder/Responder.conf` sinon Responder "mange" le hash avant le relay.
 
-> [!warning] ⚠️ **Piège** : dans les réseaux modernes (LLMNR désactivé), cette attaque échoue. C'est pourquoi l'énumération du **réseau** reste essentielle avant de tenter.
+> [!warning] **Piège** : dans les réseaux modernes (LLMNR désactivé), cette attaque échoue. C'est pourquoi l'énumération du **réseau** reste essentielle avant de tenter.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[NTLM Relay|🔗 NTLM Relay]]
-- [[Password Cracking|🔐 Password Cracking]]
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]] / [[07 - Wireless, MITM & Social Engineering|📡 Wireless/MITM]]
+- [[NTLM Relay| NTLM Relay]]
+- [[Password Cracking| Password Cracking]]
+- [[Pass-the-Hash| Pass-the-Hash]]
+- → Note complète : [[05 - Active Directory| Active Directory]] / [[07 - Wireless, MITM & Social Engineering| Wireless/MITM]]

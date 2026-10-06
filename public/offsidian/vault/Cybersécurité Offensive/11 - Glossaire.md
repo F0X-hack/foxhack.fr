@@ -1,10 +1,10 @@
-# 📖 Glossaire
+# Glossaire
 
 > [!info] **Toutes les abréviations & termes** — à consulter quand tu tombes sur un terme inconnu.
 
 ---
 
-## 🔤 Abréviations & Acronymes
+## Abréviations & Acronymes
 
 | Abréviation | Signification |
 |---|---|
@@ -119,7 +119,7 @@
 
 ---
 
-## 🌐 Web Security
+## Web Security
 
 | Terme | Définition |
 |---|---|
@@ -168,7 +168,7 @@
 
 ---
 
-## 🔐 Cryptography
+## Cryptography
 
 | Terme | Définition |
 |---|---|
@@ -211,7 +211,7 @@
 
 ---
 
-## 🖥️ Windows & Active Directory
+## Windows & Active Directory
 
 | Terme | Définition |
 |---|---|
@@ -269,7 +269,7 @@
 
 ---
 
-## 🐧 Linux
+## Linux
 
 | Terme | Définition |
 |---|---|
@@ -302,7 +302,7 @@
 
 ---
 
-## 🌐 Networking
+## Networking
 
 | Terme | Définition |
 |---|---|
@@ -338,7 +338,7 @@
 
 ---
 
-## 💀 Exploitation & Privesc
+## Exploitation & Privesc
 
 | Terme | Définition |
 |---|---|
@@ -381,7 +381,7 @@
 
 ---
 
-## 🔍 Recon & OSINT
+## Recon & OSINT
 
 | Terme | Définition |
 |---|---|
@@ -409,7 +409,7 @@
 
 ---
 
-## 📱 Reverse Engineering
+## Reverse Engineering
 
 | Terme | Définition |
 |---|---|
@@ -441,7 +441,7 @@
 
 ---
 
-## 🦠 Malware
+## Malware
 
 | Terme | Définition |
 |---|---|
@@ -473,7 +473,7 @@
 
 ---
 
-## 📡 Wireless & RF
+## Wireless & RF
 
 | Terme | Définition |
 |---|---|
@@ -505,7 +505,7 @@
 
 ---
 
-## 🔧 Hardware & IoT
+## Hardware & IoT
 
 | Terme | Définition |
 |---|---|
@@ -542,7 +542,7 @@
 
 ---
 
-## 🎭 Social Engineering
+## Social Engineering
 
 | Terme | Définition |
 |---|---|
@@ -569,7 +569,7 @@
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Terme | Définition |
 |---|---|
@@ -604,7 +604,7 @@
 
 ---
 
-## 📊 Ports & Protocoles
+## Ports & Protocoles
 
 ### Ports courants
 
@@ -694,7 +694,7 @@
 
 ---
 
-## 🧰 Tools
+## Tools
 
 ### Scan & Enumeration
 | Outil | Description | Fichier |
@@ -807,7 +807,7 @@
 
 ---
 
-## 💡 Concepts Généraux
+## Concepts Généraux
 
 | Terme | Définition |
 |---|---|
@@ -850,7 +850,7 @@
 
 ---
 
-## 🔢 Numéros & Signaux
+## Numéros & Signaux
 
 ### Signaux Unix / Kill
 | Signal | Numéro | Action |
@@ -884,7 +884,7 @@
 
 ---
 
-## 🗺️ MITRE ATT&CK — Vue d'ensemble
+## MITRE ATT&CK — Vue d'ensemble
 
 ```mermaid
 graph LR
@@ -920,4 +920,4 @@ graph LR
 
 ---
 
-> 🔗 Voir aussi : [[10 - Cheatsheets|⚡ Cheatsheets]]
+> Voir aussi : [[10 - Cheatsheets| Cheatsheets]]

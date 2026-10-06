@@ -1,11 +1,11 @@
 ---
 title: "Outil - Patator"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 1.1.0 (paquet Kali / dépôt GitHub)
 licence: GPL-2.0
@@ -16,20 +16,20 @@ site: https://github.com/lanjelot/patator
 doc: https://github.com/lanjelot/patator/wiki
 ---
 
-# 💥 Patator — Multi-thread brute force & fuzzing
+# Patator — Multi-thread brute force & fuzzing
 
 > [!info] **En 1 phrase**
 > Patator = brute-force/fuzzing multi-thread **hautement customisable** : mêmes objectifs que hydra/medusa mais avec un contrôle fin des conditions de réussite et un scripting sans prompt interactif.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Patator — multi-thread brute-force & fuzzing tool |
 | Description | Brute-force et fuzzing multi-thread écrit en Python, piloté par des « positions » injectables (`FILE0`, `FILE1`...) et des conditions de filtrage (`-x`) sur le contenu des réponses |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Brute-force d'authentification / fuzzing applicatif (HTTP, SSH, SMB, DNS...) |
 | Fonction principale | Tester des valeurs injectées dans des arguments nommés et filtrer les réponses selon des critères de succès fins (code, contenu, message) |
 | Type d'outil | CLI (Python, multi-thread) |
@@ -50,7 +50,7 @@ doc: https://github.com/lanjelot/patator/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Outil multi-thread pensé pour le **fuzzing personnalisé** : au lieu de configurer des "messages d'échec", on utilise des **positions injectées** (`FILE0`, `FILE1`...) remplies par des fichiers, et des **conditions** (`-x ignore:fgrep=...`) qui filtrent les réponses. Très apprécié pour les modules HTTP (`http_fuzz`) et les logins (`ssh_login`, `ftp_login`, `smb_login`). Syntaxe différente d'hydra : `patator <module> <arguments nommés> <options>`.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -127,14 +127,14 @@ docker build -t patator patator/
 docker run -it --rm -v "$PWD/SecLists/Passwords:/mnt" patator dummy_test data=FILE0 0=/mnt/rockyou.txt
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Dépendances par module : `paramiko` (ssh_login), `impacket` (smb_login), `dnspython` (DNS), `pysnmp` (snmp_login), `pycrypto` (cryptage ZIP, SQLCipher).
 > - Patator **n'est pas « script-kiddie friendly »** : la syntaxe diffère de hydra — lire `patator -h` et le wiki avant usage.
 > - Sur Kali, préférer `sudo apt install patator` pour avoir un paquet cohérent.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Patator n'a **pas de fichier de configuration** : chaque exécution est une ligne de commande `patator <module> <clé=valeur>... <options>`. La « configuration » réside dans le choix des positions et des conditions.
 
@@ -152,7 +152,7 @@ Patator n'a **pas de fichier de configuration** : chaque exécution est une lign
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Patator est un script Python (`patator.py`) qui charge un **module** par type de test. Chaque module expose un ensemble d'arguments nommés et la logique du protocole ; le moteur central gère le threading, les conditions et les logs.
 
@@ -179,7 +179,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -215,7 +215,7 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -243,7 +243,7 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -298,7 +298,7 @@ patator --resume session.json
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Comprendre la réponse « normale »** : envoyer une requête manuelle pour identifier le message qui signale un échec.
    ```bash
@@ -329,7 +329,7 @@ patator --resume session.json
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Fuzzing de paramètres HTTP pour détecter une injection
 
@@ -366,7 +366,7 @@ patator unzip_pass zipfile=archive.zip password=FILE0 0=rockyou.txt -x ignore:co
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 Patator s'insère dans les phases **exploitation** (brute-force d'authentification) et **fuzzing applicatif** (détection de LFI, de paramètres, de chemins).
 
@@ -385,7 +385,7 @@ Patator s'insère dans les phases **exploitation** (brute-force d'authentificati
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -398,7 +398,7 @@ Patator s'insère dans les phases **exploitation** (brute-force d'authentificati
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 Patator émet des requêtes **réelles et identifiables** : fuzzing HTTP, tentatives d'authentification, requêtes DNS — autant de signaux pour les défenses.
 
@@ -439,7 +439,7 @@ alert http any any -> any any (msg:"Potential HTTP login brute force"; content:"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Lancer plusieurs modules séquentiellement et ne garder que les hits
@@ -470,7 +470,7 @@ for f in glob.glob("lfi/*.txt"):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie par défaut est **humaine**, en colonnes : `code size time | candidate | num | mesg`. La fin de run affiche le bilan `Hits/Done/Skip/Fail/Size, Avg: X r/s, Time: ...` et la ligne de reprise `--resume <indices>`.
 
@@ -500,25 +500,25 @@ for f in glob.glob("hits/*.json"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Wordlists (rockyou, SecLists) → Patator (http_fuzz / *_login) → Identifiants/hits → Exploitation (SSH/RDP/SMB)
 ```
 
-- [[Tools|🧰 Outils]] — catalogue des outils du vault
+- [[Tools| Outils]] — catalogue des outils du vault
 - [[Outils/Outil - hydra|hydra]] — brute-force multi-protocoles plus simple d'entrée
 - [[Outil - Medusa|Medusa]] — alternative parallelisée par modules
 - [[Outil - ncrack|ncrack]] — brute-force réseau haute vitesse de la suite Nmap
 - [[Outil - Burp Suite|Burp Suite]] — complément GUI pour le fuzzing HTTP manuel
 - [[Outil - Caido|Caido]] — alternative GUI de proxy applicatif
 - [[Outil - SecLists|SecLists]] — wordlists pour alimenter les positions
-- [[Techniques/Injection de commandes|🐚 Injection de commandes]] — technique à confirmer après fuzzing
-- [[Techniques/Password Spraying|🧂 Password Spraying]] — approche complémentaire à faible volume
+- [[Techniques/Injection de commandes| Injection de commandes]] — technique à confirmer après fuzzing
+- [[Techniques/Password Spraying| Password Spraying]] — approche complémentaire à faible volume
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -532,7 +532,7 @@ Wordlists (rockyou, SecLists) → Patator (http_fuzz / *_login) → Identifiants
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Multi-threading** : `-t N` lance N tentatives concurrentes ; Patator affiche le débit réel (`Avg: X r/s`) et l'ETC.
 - **Coût par tentative** : dépend du protocole — HTTP est très rapide (des centaines de r/s), SSH/FTP sont bornés par la latence réseau et la tolérance du serveur.
@@ -542,7 +542,7 @@ Wordlists (rockyou, SecLists) → Patator (http_fuzz / *_login) → Identifiants
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -578,7 +578,7 @@ Wordlists (rockyou, SecLists) → Patator (http_fuzz / *_login) → Identifiants
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Outil bruyant et détectable** : chaque tentative est une vraie requête (HTTP, SSH, DNS...) — logs, WAF, IDS enregistrent tout. Réserver aux engagements autorisés.
 - **Fuzzing = risque de dommages** : fuzzer des paramètres peut déclencher des effets de bord (écritures, injections) ; commencer en `-i` et avec des listes contrôlées.
@@ -589,7 +589,7 @@ Wordlists (rockyou, SecLists) → Patator (http_fuzz / *_login) → Identifiants
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Syntaxe non standard** : `patator <module> <arguments nommés>` — pas de passage direct de hydra vers Patator sans lire l'aide.
 - **Sans `-x`, tout est affiché** : des logs gigantesques ; il faut toujours filtrer.
@@ -601,7 +601,7 @@ Wordlists (rockyou, SecLists) → Patator (http_fuzz / *_login) → Identifiants
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Brute-force SSH (user fixe)
@@ -629,7 +629,7 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -642,7 +642,7 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -655,16 +655,16 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `-x ignore:fgrep='texte'` est LA brique du fuzzing : trouve le message de la réponse "normale", ignore-le, tout ce qui reste est intéressant. Combine `-x ignore:fgrep=` et `-x ignore:code=` pour des filtres précis.
 > - Utilise `-i` (interactif) sur une première tentative pour voir la réponse brute et calibrer tes conditions avant un gros run.
 > - Journalise systématiquement avec `-l` : le run peut être repris avec `--resume` et les hits relus hors-ligne.
 > - Utilise `-x ignore,retry:code=500` pour fiabiliser un run face aux erreurs serveur transitoires.
 > - Pense aux modules d'énumération (`smtp_vrfy`, `dns_forward`, `finger_lookup`) pour récolter des utilisateurs avant le brute-force.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Syntaxe non standard (positions `FILE0` + arguments nommés) : on ne passe pas de hydra à patator sans lire l'aide (`patator -h`).
 > - Sans `-x`, patator affiche **toutes** les tentatives → logs énormes ; filtre toujours.
 > - Un filtre trop large (`ignore:code=200`) peut masquer les vrais succès : vérifier avec `-i` ce que contient réellement une réponse.
@@ -673,7 +673,7 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -695,4 +695,4 @@ patator http_fuzz url="http://10.10.20.15/?file=FILE0" 0=paths.txt -i
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Spraying|🧂 Password Spraying]] · [[Techniques/Injection de commandes|🐚 Injection de commandes]] · [[Outils/Outil - hydra|hydra]] · [[Outil - Medusa|Medusa]] · [[Outil - ncrack|ncrack]] · [[Outil - Burp Suite|Burp Suite]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Spraying| Password Spraying]] · [[Techniques/Injection de commandes| Injection de commandes]] · [[Outils/Outil - hydra|hydra]] · [[Outil - Medusa|Medusa]] · [[Outil - ncrack|ncrack]] · [[Outil - Burp Suite|Burp Suite]]

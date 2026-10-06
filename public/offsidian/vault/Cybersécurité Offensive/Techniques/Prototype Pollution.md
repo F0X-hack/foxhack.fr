@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧬 Prototype Pollution
+# Prototype Pollution
 
 > [!info] **En 1 phrase**
 > PP = polluer `Object.prototype` en JavaScript pour que **tous les objets** de l'app (client ou serveur)
@@ -22,19 +22,19 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
     A[Entrée contrôlée<br>__proto__ dans JSON / URL] --> B[Fonction de merge récursive<br>lodash.merge, jQuery.extend...]
     B --> C[Object.prototype<br>propriété polluée]
-    C --> D[📄 XSS<br>innerHTML / sanitizer bypass]
-    C --> E[🎚️ RCE<br>gadget child_process / EJS]
-    C --> F[🔓 Auth bypass<br>isAdmin=true]
-    C --> G[🛑 DoS<br>boucles infinies / crash]
+    C --> D[XSS<br>innerHTML / sanitizer bypass]
+    C --> E[RCE<br>gadget child_process / EJS]
+    C --> F[Auth bypass<br>isAdmin=true]
+    C --> G[DoS<br>boucles infinies / crash]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Presque tous les objets JS **héritent** de `Object.prototype`. En y écrivant une propriété
 > (ex : `isAdmin`), tout objet qui lira `obj.isAdmin` sans l'avoir défini lui-même
 > trouvera **notre valeur**. Les merges récursifs non sécurisés copient aveuglément
@@ -42,7 +42,7 @@ flowchart LR
 
 ---
 
-## 🧠 Le mécanisme JavaScript
+## Le mécanisme JavaScript
 
 ```js
 var myDog = new Dog();
@@ -74,7 +74,7 @@ config.isAdmin;                // → true  → bypass admin !
 
 ---
 
-## 🖥️ Client-Side Prototype Pollution (CSPP)
+## Client-Side Prototype Pollution (CSPP)
 
 La pollution se fait **dans le navigateur de la victime**. Vecteurs :
 
@@ -106,12 +106,12 @@ https://victim.com/?__proto__.preventDefault.__proto__.handleObj.__proto__.deleg
 }
 ```
 
-> [!warning] ⚠️ **`JSON.parse` est SÛR** : il crée la clé `__proto__` comme une **propriété simple** (pas le prototype).
+> [!warning] `JSON.parse` est SÛR** : il crée la clé `__proto__` comme une **propriété simple** (pas le prototype).
 > C'est l'étape suivante (merge/assign récursif) qui va la consommer et polluer `Object.prototype`.
 
 ---
 
-## 🖥️ Server-Side Prototype Pollution (SSPP)
+## Server-Side Prototype Pollution (SSPP)
 
 La pollution se fait **sur le serveur Node.js**. Vecteurs principaux :
 
@@ -150,7 +150,7 @@ La pollution se fait **sur le serveur Node.js**. Vecteurs principaux :
 
 ---
 
-## 🎚️ RCE via Prototype Pollution
+## RCE via Prototype Pollution
 
 PP seul ne suffit pas : il faut un **gadget** qui consomme la propriété polluée pour déclencher une action dangereuse. Les chaînes suivantes sont documentées.
 
@@ -195,7 +195,7 @@ EJS lit `options.client` / `options.escapeFunction` depuis les objets → pollut
 
 ---
 
-## 🧰 Gadgets connus & CVE
+## Gadgets connus & CVE
 
 > Un **gadget** = chemin de code qui consomme une propriété polluée pour en tirer un impact
 > (XSS, RCE, DoS). On crée les siens avec `pp-finder` ou on réutilise des gadgets connus.
@@ -212,7 +212,7 @@ EJS lit `options.client` / `options.escapeFunction` depuis les objets → pollut
 | CVE-2019-1011985 | jQuery | `jQuery.extend(true, ...)` deep merge |
 | CVE-2021-28918 | `tree-kill` | payload `__proto__.pid` → DoS/RCE |
 
-> [!tip] 💡 **Vérifier la version** d'une lib = déterminer si la CVE est applicable.
+> [!tip] **Vérifier la version** d'une lib = déterminer si la CVE est applicable.
 > `package-lock.json` / `yarn.lock` exposent toutes les versions résolues → vérifier avec `npm audit`.
 
 ### Gadgets par catégorie
@@ -228,7 +228,7 @@ Auth   → propriétés de config (isAdmin, role, oidcProvider)
 
 ---
 
-## 🕵️ Détection manuelle
+## Détection manuelle
 
 ### Dans la console navigateur (client)
 
@@ -247,7 +247,7 @@ location.hash = "#__proto__[polluted]=CSPP"
 
 ### Test côté serveur
 
-> [!warning] ⚠️ **Toujours tester sur une propriété "inoffensive" d'abord**
+> [!warning] **Toujours tester sur une propriété "inoffensive" d'abord**
 > (`status`, `json spaces`, `polluted`) pour confirmer la pollution **sans crash ni effet de bord**.
 
 ```json
@@ -262,7 +262,7 @@ location.hash = "#__proto__[polluted]=CSPP"
 { "constructor": { "prototype": { "status": 510 } } }
 ```
 
-> [!tip] 💡 **Séquence de confirmation** :
+> [!tip] **Séquence de confirmation** :
 > 1. Envoyer le payload de test → observer l'effet (indentation JSON, statut, header CORS).
 > 2. Le payload passe-t-il tel quel dans la requête ? (pas d'écrasement de `__proto__` par le parseur).
 > 3. Identifier la lib de merge → chercher un gadget dans la base `yuske/...` ou `BlackFan/...`.
@@ -287,7 +287,7 @@ Object.constructor["prototype"]["evilProperty"]="evilPayload"
 
 ---
 
-## 💥 Impacts
+## Impacts
 
 | Impact | Mécanisme | Exemple |
 |---|---|---|
@@ -300,7 +300,7 @@ Object.constructor["prototype"]["evilProperty"]="evilPayload"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Couche | Action |
 |---|---|
@@ -315,7 +315,7 @@ Object.constructor["prototype"]["evilProperty"]="evilPayload"
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ```bash
 # pp-finder : trouver des gadgets PP dans un paquet / un code
@@ -340,7 +340,7 @@ pp-finder -i package.json        # analyse les dépendances d'un projet
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - YesWeHack Dojo — Prototype Pollution : https://dojo-yeswehack.com/XSS/Training/Prototype-Pollution
 - PortSwigger — labs Prototype Pollution : https://portswigger.net/web-security/all-labs#prototype-pollution
@@ -348,16 +348,16 @@ pp-finder -i package.json        # analyse les dépendances d'un projet
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'exploitation**
+> [!tip] **Ordre logique d'exploitation**
 > 1. **Distinguer CSPP / SSPP** : où se trouve le parseur vulnérable (navigateur vs serveur) ?
 > 2. Tester avec une **propriété inoffensive** (`status`, `json spaces`, `polluted`) — jamais un gadget directement.
 > 3. Identifier la **lib de merge** et sa **version** → chercher la CVE / le gadget associé.
 > 4. Trouver un **gadget** (pp-finder ou bases existantes) → exploiter (XSS, RCE, bypass).
 > 5. Confirmer l'impact réel, pas juste la pollution théorique.
 
-> [!warning] ⚠️ **Pièges fréquents**
+> [!warning] **Pièges fréquents**
 > - `JSON.parse` **n'est pas** une source de PP : le sink est le merge/assign récursif **après** le parse.
 > - `__proto__` filtré ? Essayer `constructor.prototype`, `constructor["prototype"]`, notation crochet `obj["__proto__"]`.
 > - **Version des libs = tout** : une CVE connue ne s'applique qu'à certaines versions (`npm audit`).
@@ -366,7 +366,7 @@ pp-finder -i package.json        # analyse les dépendances d'un projet
 > - Les objets `Map`, `Set`, tableau n'héritent pas toujours de `Object.prototype` → certains gadgets ne marchent pas partout.
 > - `Object.prototype` pollué = **global** : un seul point de PP suffit pour tout un écosystème de gadgets.
 
-> [!tip] 💡 **Dans la console devtools**
+> [!tip] **Dans la console devtools**
 > ```js
 > Object.prototype.testPp = 1
 > console.log({}.testPp)        // → 1 ? le monde entier est pollué
@@ -376,12 +376,12 @@ pp-finder -i package.json        # analyse les dépendances d'un projet
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[NoSQL|🍃 NoSQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Prototype Pollution](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Prototype%20Pollution/README.md)
-- 📄 Réf : [A Pentester's Guide to Prototype Pollution Attacks (Cobalt)](https://www.cobalt.io/blog/a-pentesters-guide-to-prototype-pollution-attacks)
-- 📄 Réf : [Exploiting PP — RCE in Kibana CVE-2019-7609 (Securitum)](https://research.securitum.com/prototype-pollution-rce-kibana-cve-2019-7609/)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Injection de commandes| Injection de commandes]]
+- [[NoSQL| NoSQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Prototype Pollution](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Prototype%20Pollution/README.md)
+- Réf : [A Pentester's Guide to Prototype Pollution Attacks (Cobalt)](https://www.cobalt.io/blog/a-pentesters-guide-to-prototype-pollution-attacks)
+- Réf : [Exploiting PP — RCE in Kibana CVE-2019-7609 (Securitum)](https://research.securitum.com/prototype-pollution-rce-kibana-cve-2019-7609/)

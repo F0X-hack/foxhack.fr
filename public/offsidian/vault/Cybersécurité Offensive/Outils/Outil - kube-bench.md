@@ -1,7 +1,7 @@
 ---
 title: "Outil - kube-bench"
 type: outil
-categorie: 🔒 Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://github.com/aquasecurity/kube-bench
 doc: https://github.com/aquasecurity/kube-bench/blob/main/README.md
 ---
 
-# 🎯 kube-bench - L'auditeur CIS Kubernetes
+# kube-bench - L'auditeur CIS Kubernetes
 
 > [!info] **En 1 phrase**
 > kube-bench audite un cluster Kubernetes contre le CIS Kubernetes Benchmark : côté défensif il valide la posture, côté offensif il te liste les misconfigurations exactes à exploiter.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | kube-bench |
 | Description | Auditeur automatisé qui compare la configuration d'un cluster Kubernetes (master, etcd, kubelet) aux recommandations du CIS Kubernetes Benchmark |
-| Catégorie | 🔒 Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Kubernetes / Audit de posture / Benchmark CIS |
 | Type d'outil | CLI (binaire unique ou conteneur) |
 | Licence | Apache-2.0 |
@@ -50,7 +50,7 @@ doc: https://github.com/aquasecurity/kube-bench/blob/main/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 kube-bench exécute les contrôles du **CIS Kubernetes Benchmark** (publié par le Center for Internet Security) directement sur la configuration réelle du cluster : fichiers YAML du kube-apiserver, flags des services systemd, permissions des fichiers de certs, options du kubelet. Chaque contrôle compare la valeur observée à la valeur recommandée et répond **PASS / FAIL / WARN / INFO**.
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 kube-bench se déploie en binaire, en conteneur ou via le job Kubernetes officiel (`job.yaml`) qui le lance sur chaque nœud.
 
@@ -115,14 +115,14 @@ kubectl get jobs -n kube-bench
 kubectl logs job/kube-bench -n kube-bench --tail=5
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - kube-bench doit tourner **sur le nœud** (ou avec ses dossiers montés) pour lire `/etc/kubernetes`, `/var/lib/kubelet` et les manifestes systemd.
 > - Sur un cluster managé (EKS, GKE), certains contrôles ne s'appliquent pas : utiliser `--targets=node` ou les profils `managedservices`.
 > - En pentest, un accès non-root au nœud bloque la lecture de certains fichiers de certs (contrôles en WARN).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 kube-bench se configure par flags en ligne de commande ; la logique des contrôles est pilotée par les fichiers YAML de `cfg/`.
 
@@ -140,7 +140,7 @@ kube-bench se configure par flags en ligne de commande ; la logique des contrôl
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 kube-bench est un binaire Go qui suit un pipeline de vérification :
 
@@ -163,7 +163,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -191,7 +191,7 @@ kube-bench run --config-dir=/opt/kube-bench/cfg --benchmark=cis-1.8
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -210,7 +210,7 @@ kube-bench run --config-dir=/opt/kube-bench/cfg --benchmark=cis-1.8
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -257,7 +257,7 @@ diff <(jq -r '.Controls[].Groups[].Checks[] | select(.status=="FAIL") | .id' aud
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer l'audit** - depuis un accès au nœud (shell, pod privilégié ou conteneur docker).
    ```bash
@@ -280,7 +280,7 @@ diff <(jq -r '.Controls[].Groups[].Checks[] | select(.status=="FAIL") | .id' aud
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : De l'audit au cluster-admin via un FAIL kubelet
 
@@ -314,7 +314,7 @@ kube-bench run --targets=master,node
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -327,7 +327,7 @@ kube-bench run --targets=master,node
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -342,7 +342,7 @@ kube-bench run --targets=master,node
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -378,7 +378,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash - audit de tous les nœuds via le job Kubernetes officiel
@@ -411,7 +411,7 @@ for cid, text, remed in fails:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 kube-bench produit une table console ou du JSON. Le JSON est structuré par `Controls` → `Groups` → `Checks`, chaque contrôle ayant `id`, `text`, `audit`, `status`, `remediation`.
 
@@ -426,9 +426,9 @@ kube-bench run --json | \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🛠 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - kubectl|kubectl]] - exploitation des faiblesses identifiées par l'audit
 - [[Outil - kube-hunter|kube-hunter]] - scan externe des vulnérabilités K8s (complément réseau)
 - [[Outil - peirates|peirates]] - post-exploitation quand une faille est confirmée
@@ -442,7 +442,7 @@ kube-bench (posture locale) + kube-hunter (scan réseau) -> kubectl/peirates (ex
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -454,7 +454,7 @@ kube-bench (posture locale) + kube-hunter (scan réseau) -> kubectl/peirates (ex
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide** : kube-bench lance quelques dizaines de commandes locales ; un audit complet dure de quelques secondes à ~1 minute.
 - **Sans charge réseau** : tout est local au nœud ; l'outil est discret côté réseau mais visible en processus/logs.
@@ -463,7 +463,7 @@ kube-bench (posture locale) + kube-hunter (scan réseau) -> kubectl/peirates (ex
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -487,7 +487,7 @@ kube-bench (posture locale) + kube-hunter (scan réseau) -> kubectl/peirates (ex
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : kube-bench est un outil d'audit passif (lecture seule) ; en pentest, son usage est sans risque de casse mais reste à faire dans le périmètre autorisé.
 - **Accès requis** : tourner sur le nœud nécessite un accès avec lecture des fichiers système → privilège à ne pas négliger.
@@ -497,7 +497,7 @@ kube-bench (posture locale) + kube-hunter (scan réseau) -> kubectl/peirates (ex
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Lecture seule** : kube-bench ne corrige rien et n'exploite rien ; c'est un scanner de posture.
 - **Local au nœud** : il faut un accès au nœud (ou au conteneur avec montages) ; pas de scan à distance.
@@ -507,7 +507,7 @@ kube-bench (posture locale) + kube-hunter (scan réseau) -> kubectl/peirates (ex
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Audit complet du nœud
@@ -534,7 +534,7 @@ kube-bench version
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -547,7 +547,7 @@ kube-bench version
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -559,15 +559,15 @@ kube-bench version
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Commence par `--json` : le champ `audit` de chaque FAIL te donne la commande exacte qui a échoué, donc la config fautive.
 > - Regroupe les FAIL par section : les 4.x (kubelet) sont les plus exploitables en pentest de clusters.
 > - Croise kube-bench avec kube-hunter : l'un te dit quoi (config), l'autre où ça écoute (réseau).
 > - Sur un pod privilégié, lance kube-bench en conteneur pour auditer le nœud sans toucher au pod.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - kube-bench lit le nœud où il tourne : un audit depuis ton poste ne voit rien.
 > - Des WARN en pagaille ne veulent pas dire que tout va bien : ce sont souvent des vérifications impossibles, pas des certitudes.
 > - Ne pas confondre « PASS » local et sécurité globale : un contrôle passant ne couvre pas les fuites de tokens ou le code applicatif.
@@ -575,7 +575,7 @@ kube-bench version
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -598,4 +598,4 @@ kube-bench version
 
 ---
 
-➡️ **Liens :** [[Tools|🛠 Outils]] · [[Outil - kube-hunter|kube-hunter]] · [[Outil - peirates|peirates]] · [[Outil - trivy|trivy]]
+**Liens :** [[Tools| Outils]] · [[Outil - kube-hunter|kube-hunter]] · [[Outil - peirates|peirates]] · [[Outil - trivy|trivy]]

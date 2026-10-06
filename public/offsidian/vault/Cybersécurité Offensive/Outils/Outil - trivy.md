@@ -1,7 +1,7 @@
 ---
 title: "Outil - trivy"
 type: outil
-categorie: 🔒 Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -18,20 +18,20 @@ site: https://trivy.dev/
 doc: https://trivy.dev/docs/
 ---
 
-# 🔍 trivy - Le scanner omniscient des vulnérabilités
+# trivy - Le scanner omniscient des vulnérabilités
 
 > [!info] **En 1 phrase**
 > trivy analyse images conteneurs, fichiers, dépôts et manifests Kubernetes pour lister les vulnérabilités, secrets et mauvaises configurations exploitables : un couteau suisse DevSecOps aussi utile en offense qu'en défense.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | trivy |
 | Description | Scanner de sécurité tout-en-un : vulnérabilités (CVE) des images et systèmes de fichiers, secrets exposés, misconfigurations IaC/Kubernetes, SBOM, licence et code malveillant |
-| Catégorie | 🔒 Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | DevSecOps / Scanner de vulnérabilités / Analyse d'images et IaC |
 | Type d'outil | CLI Go (binaire unique, mode client/serveur) |
 | Licence | Apache-2.0 |
@@ -51,7 +51,7 @@ doc: https://trivy.dev/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 trivy compare les **packages** (et leurs versions) contenus dans une image, un filesystem ou un dépôt à une **base de vulnérabilités** (NVD, GHSA, Red Hat, Debian, Alpine, ...) agrégée localement dans `~/.cache/trivy`. Il associe chaque CVE à sa sévérité et, quand c'est possible, à la version corrigée.
 
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -92,7 +92,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 trivy s'installe en binaire unique, via les gestionnaires de paquets, Docker ou Helm.
 
@@ -132,14 +132,14 @@ make build
 ./trivy --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le premier scan télécharge la base de vulnérabilités (`--download-db-only` pour la pré-télécharger, ou `--skip-db-update` en offline).
 > - L'analyse d'images demande un accès au registre ou à un démon Docker ; `TRIVY_USERNAME`/`TRIVY_PASSWORD` pour les registres authentifiés.
 > - Dans un réseau restreint, pointer les miroirs avec `TRIVY_DB_REPOSITORY` ou `TRIVY_JAVA_DB_REPOSITORY`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 trivy se configure par flags, variables d'environnement `TRIVY_*` ou fichier `trivy.yaml` (v0.40+).
 
@@ -157,7 +157,7 @@ trivy se configure par flags, variables d'environnement `TRIVY_*` ou fichier `tr
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 trivy est un binaire Go modulaire, structuré en **scanners** et **analyzers** :
 
@@ -181,7 +181,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ trivy config --severity HIGH,CRITICAL ./manifests-k8s
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -231,7 +231,7 @@ trivy config --severity HIGH,CRITICAL ./manifests-k8s
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -280,7 +280,7 @@ trivy image --server http://10.10.20.15:4954 nginx:latest
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Cartographier les cibles** - scanner le registre, le cluster ou le code.
    ```bash
@@ -302,7 +302,7 @@ trivy image --server http://10.10.20.15:4954 nginx:latest
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : De la CVE critique au shell dans une image applicative
 
@@ -338,7 +338,7 @@ Les secrets commités dans une image ou un dépôt sont des points de pivot imm�
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -351,7 +351,7 @@ Les secrets commités dans une image ou un dépôt sont des points de pivot imm�
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -366,7 +366,7 @@ Les secrets commités dans une image ou un dépôt sont des points de pivot imm�
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -402,7 +402,7 @@ level: low
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash - scan d'image en CI avec gate sur les critiques
@@ -431,7 +431,7 @@ for result in data.get("Results", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie JSON de trivy est structurée : `SchemaVersion`, `ArtifactName`, `Results[]` (avec `Target`, `Vulnerabilities[]`, `Secrets[]`, `Misconfigurations[]`).
 
@@ -447,9 +447,9 @@ trivy fs ./projet --scanners vuln --format json | \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🛠 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - kube-bench|kube-bench]] - audit de posture Kubernetes complémentaire
 - [[Outil - kube-hunter|kube-hunter]] - scan réseau des expositions K8s
 - [[Outil - syft|syft]] - génération de SBOM complémentaire
@@ -464,7 +464,7 @@ trivy (images + secrets + IaC) + syft (SBOM) -> kube-bench (posture) -> kubectl 
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -476,7 +476,7 @@ trivy (images + secrets + IaC) + syft (SBOM) -> kube-bench (posture) -> kubectl 
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide** : un scan d'image de petite/moyenne taille prend de quelques secondes à ~1 minute après téléchargement de la base.
 - **Statique** : pas d'exécution de conteneur nécessaire pour `image` (les métadonnées sont analysées) ; `rootfs`/`fs` lisent les fichiers directement.
@@ -486,7 +486,7 @@ trivy (images + secrets + IaC) + syft (SBOM) -> kube-bench (posture) -> kubectl 
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -510,7 +510,7 @@ trivy (images + secrets + IaC) + syft (SBOM) -> kube-bench (posture) -> kubectl 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : analyse statique de fichiers et d'images ; à faire sur des artefacts autorisés (registres du client, images du test).
 - **Données locales** : la base et les rapports peuvent contenir des noms de packages sensibles ; les protéger.
@@ -520,7 +520,7 @@ trivy (images + secrets + IaC) + syft (SBOM) -> kube-bench (posture) -> kubectl 
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Statique** : trivy ne confirme pas l'exploitabilité d'une CVE dans le contexte d'exécution réel.
 - **Base distante au premier scan** : nécessite un accès réseau au téléchargement de la base.
@@ -530,7 +530,7 @@ trivy (images + secrets + IaC) + syft (SBOM) -> kube-bench (posture) -> kubectl 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan des vulnérabilités d'une image
@@ -560,7 +560,7 @@ trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 image:tag
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -573,7 +573,7 @@ trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 image:tag
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -585,15 +585,15 @@ trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 image:tag
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lance `--severity HIGH,CRITICAL --ignore-unfixed` pour obtenir une liste actionnable en une ligne.
 > - En offense, couple `trivy secret` (tokens) avec `trivy image` (CVE) : un secret leaké donne souvent plus que la CVE.
 > - Utilise `--format sarif` pour injecter les findings dans des outils de suivi.
 > - Pour un registre privé, garde `TRIVY_USERNAME`/`TRIVY_PASSWORD` en variables sécurisées.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Une CVE critique dans une image ne signifie pas une exploitation possible : vérifie la surface d'exposition.
 > - Sans mise à jour de la base, les résultats sont obsolètes : `--skip-db-update` seulement si la base est fraîche.
 > - `trivy secret` produit du bruit : filtre par `--severity` et croise avec les faux positifs.
@@ -601,7 +601,7 @@ trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 image:tag
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -626,4 +626,4 @@ trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 image:tag
 
 ---
 
-➡️ **Liens :** [[Tools|🛠 Outils]] · [[Outil - grype|grype]] · [[Outil - syft|syft]] · [[Outil - kube-bench|kube-bench]]
+**Liens :** [[Tools| Outils]] · [[Outil - grype|grype]] · [[Outil - syft|syft]] · [[Outil - kube-bench|kube-bench]]

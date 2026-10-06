@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎲 Insecure Randomness
+# Insecure Randomness
 
 > [!info] **En 1 phrase**
 > L'aléa **prévisible** (PRNG non sécurisé, seed = temps, GUID/uniqid temporels) rend des valeurs censées être
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,14 +33,14 @@ flowchart LR
     D --> E[Rejoue les futures valeurs<br>→ hijack session / ATO]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Un PRNG classique est **déterministe** : si on connaît le seed, on peut régénérer toute la séquence.
 > Quand le seed vient de l'horloge (`time()`, `microtime()`, `uniqid`) ou d'un `random.seed()` explicite,
 > l'espace de recherche est minuscule → **bruteforce trivial**.
 
 ---
 
-## ⚠️ Ce qui est prévisible (et pourquoi c'est critique)
+## Ce qui est prévisible (et pourquoi c'est critique)
 
 | Objet | Risque si prévisible |
 |---|---|
@@ -54,7 +54,7 @@ flowchart LR
 
 ---
 
-## 🐍 Fonctions faibles par langage
+## Fonctions faibles par langage
 
 | Langage | Fonctions faibles | Notes |
 |---|---|---|
@@ -66,12 +66,12 @@ flowchart LR
 | **Bases de données** | `RAND()` (MySQL, pas `RANDOMBLOB`/crypto) | SQLi + `RAND(seed)` exploitable |
 | **Génériques** | `md5(time())`, `uniqid()`, `microtime()` concaténés | « on a hashé, donc c'est sûr » : faux |
 
-> [!warning] ⚠️ **Règle** : tout ce qui est sécurité (tokens, sessions, OTP, reset) DOIT venir d'un
+> [!warning] **Règle** : tout ce qui est sécurité (tokens, sessions, OTP, reset) DOIT venir d'un
 > **CSPRNG** (`secrets`, `random.SystemRandom`, `SecureRandom`, `crypto.getRandomValues`, `/dev/urandom`).
 
 ---
 
-## ⏱️ Attaque 1 — Seeds basés sur le temps
+## Attaque 1 — Seeds basés sur le temps
 
 Le PRNG est seedé avec l'heure courante → prédictible pour qui connaît/estime le seed.
 
@@ -114,12 +114,12 @@ for seed in range(now - 3600, now + 1):
         break
 ```
 
-> [!tip] 💡 **Estimer la fenêtre** : serveur, load balancer, timezone → resserrer le bruteforce.
+> [!tip] **Estimer la fenêtre** : serveur, load balancer, timezone → resserrer le bruteforce.
 > `time()` (secondes) → ~8 M de seeds/jour = trivial. `microtime()`/`milliseconds` → ~1000× plus large.
 
 ---
 
-## 🐘 Attaque 2 — PHP `rand` / `mt_rand` + seed
+## Attaque 2 — PHP `rand` / `mt_rand` + seed
 
 - `rand()` / `srand()` : faible (LCG), prédictible, seed 32 bits.
 - `mt_rand()` / `mt_srand()` : Mersenne Twister (MT19937), seed 32 bits → **bruteforce possible**, et même **récupération sans bruteforce**.
@@ -138,7 +138,7 @@ Avec **deux sorties** de `mt_rand()` consécutives, le seed se récupère via
 ./reverse_mt_rand.py 712530069 674417379 123 1
 ```
 
-> [!info] 💡 **Principe** : MT19937 est réversible mathématiquement (twist inverse + untemper).
+> [!info] **Principe** : MT19937 est réversible mathématiquement (twist inverse + untemper).
 > 2 outputs suffisent à reconstruire l'état interne → on ne bruteforce plus le seed : on le **résout**.
 
 ```py
@@ -151,12 +151,12 @@ def mt_rand(seed, min=1, max=100):
     pass
 ```
 
-> [!warning] ⚠️ **Piège** : la sortie de `mt_rand(min, max)` est un **intervalle**, pas la valeur brute de l'état
+> [!warning] **Piège** : la sortie de `mt_rand(min, max)` est un **intervalle**, pas la valeur brute de l'état
 > MT → il faut connaître `min`/`max` (souvent `mt_rand(10000, 99999)` pour les OTP) pour lancer le reverse.
 
 ---
 
-## ☕ Attaque 3 — Java `java.util.Random`
+## Attaque 3 — Java `java.util.Random`
 
 ```java
 import java.util.Random;
@@ -178,14 +178,14 @@ sr.nextBytes(b);
 
 ---
 
-## 🌐 Attaque 4 — JS `Math.random()`
+## Attaque 4 — JS `Math.random()`
 
 ```js
 // Weak : V8 (Chrome/Node) = xorshift128+ — seedé de façon déterministe et reconstruit
 const token = Math.random().toString(36).slice(2);   // token prévisible
 ```
 
-> [!info] 💡 Avec **624 sorties consécutives** (version V8 correspondante), on reconstruit l'état interne
+> [!info] Avec **624 sorties consécutives** (version V8 correspondante), on reconstruit l'état interne
 > de xorshift128+ et on prédit TOUT le futur (et le passé). Outils : `math-random-predict`/`mathextra`.
 > Dans les navigateurs → même principe sur SpiderMonkey/JSC.
 
@@ -196,7 +196,7 @@ const token = crypto.getRandomValues(new Uint8Array(32));
 
 ---
 
-## 🔢 Attaque 5 — GUID / UUID
+## Attaque 5 — GUID / UUID
 
 Un GUID/UUID = 128 bits, 5 groupes hexadécimaux : `550e8400-e29b-41d4-a716-446655440000`.
 Seule la **version 4** est aléatoire ; les autres sont **prévisibles**.
@@ -230,12 +230,12 @@ UUID clock sequence: 2099
 $ guidtool 1b2d78d0-47cf-11ec-8d62-0ff591f2a37c -t '2021-11-17 18:03:17' -p 10000
 ```
 
-> [!warning] ⚠️ MAC dans l'UUID v1 = fuite d'infos réseau + prédiction par incrément du timestamp
+> [!warning] MAC dans l'UUID v1 = fuite d'infos réseau + prédiction par incrément du timestamp
 > (10000 ticks/10 ms). Un GUID v1 en reset link / accès fichier = ATO direct.
 
 ---
 
-## 🍃 Attaque 6 — Mongo ObjectId
+## Attaque 6 — Mongo ObjectId
 
 Les ObjectId MongoDB (12 octets) sont **prévisibles par construction** :
 
@@ -282,12 +282,12 @@ for token in tokens:
     print(f"{token}: {timestamp} - {process} - {counter}")
 ```
 
-> [!tip] 💡 Les 2 ObjectId consécutifs donnent le **counter de départ** → on prédit tous les suivants.
+> [!tip] Les 2 ObjectId consécutifs donnent le **counter de départ** → on prédit tous les suivants.
 > Si le token sert d'ID de ressource (document partagé, invitation, ticket) → **IDOR** par prédiction.
 
 ---
 
-## 🕰️ Attaque 7 — `uniqid()` et les secrets basés sur le temps
+## Attaque 7 — `uniqid()` et les secrets basés sur le temps
 
 `uniqid()` (PHP) = `sec` (8 hex) + `usec` (5 hex) → **rétro-convertible en timestamp**.
 
@@ -315,13 +315,13 @@ for token in tokens:
     print(f"{token} - {t} => {d}")
 ```
 
-> [!info] 💡 **Même hashé** (`sha256(uniqid)`, `md5(uniqid)`) : le token reste prévisible car la source est le temps.
+> [!info] **Même hashé** (`sha256(uniqid)`, `md5(uniqid)`) : le token reste prévisible car la source est le temps.
 > Un reset token = `sha256(uniqid())` → on génère les candidats autour de l'heure de la demande → **ATO**.
 > Ref. : [python-uniqid](https://github.com/Riamse/python-uniqid), [php-src uniqid.c](https://github.com/php/php-src/blob/master/ext/standard/uniqid.c)
 
 ---
 
-## ⚙️ Attaque 8 — Algorithmes custom (générés maison)
+## Attaque 8 — Algorithmes custom (générés maison)
 
 Risqué par construction, mais répandu en prod :
 
@@ -330,7 +330,7 @@ $token = md5($emailId).rand(10,9999);
 $token = md5(time()+123456789 % rand(4000, 55000000));
 ```
 
-> [!warning] ⚠️ Concaténer `md5()`/`uniqid()`/`rand()` ne crée **pas** de l'aléa sûr : le hash n'ajoute
+> [!warning] Concaténer `md5()`/`uniqid()`/`rand()` ne crée **pas** de l'aléa sûr : le hash n'ajoute
 > que du déterministe sur une source prévisible.
 
 ### Attaque générique + « Sandwich Attack »
@@ -345,13 +345,13 @@ reset-tolkien detect 660430516ffcf -d "Wed, 27 Mar 2024 14:42:25 GMT" --prefixes
 reset-tolkien sandwich 660430516ffcf -bt 1711550546.485597 -et 1711550546.505134 -o output.txt --token-format="uniqid"
 ```
 
-> [!info] 💡 **Sandwich Attack** : envoyer une requête (ex. reset) juste **avant** et **juste après** l'instant
+> [!info] **Sandwich Attack** : envoyer une requête (ex. reset) juste **avant** et **juste après** l'instant
 > du token victime → les 2 bornes encadrent le timestamp réel → bruteforce ciblé entre `-bt` et `-et`.
 > Variante **multi-sandwich** avec Mongo ObjectId pour du monitoring temps réel d'invitations.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -367,14 +367,14 @@ reset-tolkien sandwich 660430516ffcf -bt 1711550546.485597 -et 1711550546.505134
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. **Identifier** la source de l'aléa (fingersprint du format : hex hex, `sec+usec`, UUID v1, 24 hex ObjectId…)
 > 2. **Collecter** plusieurs valeurs (demandes de reset, sessions, invitations, enregistrements)
 > 3. **Prédire** : estimer le seed (temps/fenêtre) → régénérer → **rejouer** la valeur sur la victime.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Version/langage** : `mt_rand` PHP 7.1+ a changé (plages uniformes) ; la reconstruction MT dépend de la version et des `min`/`max`. Tester sur une instance locale identique.
 > - **Le seed peut être global** : `srand()` appelé ailleurs dans le code réinitialise la séquence → les valeurs ne sont pas consécutives.
 > - **Horloges différentes** : `time()` serveur ≠ heure locale → prendre les headers `Date`/`Server` et l'heure GMT.
@@ -385,12 +385,12 @@ reset-tolkien sandwich 660430516ffcf -bt 1711550546.485597 -et 1711550546.505134
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Type Juggling|🔢 Type Juggling]]
-- [[Attaques JWT|🔏 JWT]]
-- [[Business Logic|🧠 Business Logic]]
-- [[Injection SQL|💾 Injection SQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Insecure Randomness](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Randomness/README.md)
-- 📖 Ref. : [Breaking PHP's mt_rand() with 2 values — Charles Fol](https://www.ambionics.io/blog/php-mt-rand-prediction) · [In GUID We Trust — Intruder](https://www.intruder.io/research/in-guid-we-trust) · [Unsecure time-based secret & Sandwich Attack — AethliosIK](https://www.aeth.cc/public/Article-Reset-Tolkien/secret-time-based-article-en.html)
+- [[Type Juggling| Type Juggling]]
+- [[Attaques JWT| JWT]]
+- [[Business Logic| Business Logic]]
+- [[Injection SQL| Injection SQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Insecure Randomness](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Randomness/README.md)
+- Ref. : [Breaking PHP's mt_rand() with 2 values — Charles Fol](https://www.ambionics.io/blog/php-mt-rand-prediction) · [In GUID We Trust — Intruder](https://www.intruder.io/research/in-guid-we-trust) · [Unsecure time-based secret & Sandwich Attack — AethliosIK](https://www.aeth.cc/public/Article-Reset-Tolkien/secret-time-based-article-en.html)

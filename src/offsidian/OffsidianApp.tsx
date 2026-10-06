@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   BookOpen,
   Check,
@@ -21,13 +21,36 @@ import {
 import BrandMark from '../components/icons/BrandMark'
 import MarkdownNote from './MarkdownNote'
 import NoteInspector from './NoteInspector'
-import SearchPalette from './SearchPalette'
-import VaultGraph from './VaultGraph'
 import VaultSidebar from './VaultSidebar'
-import type { OpenNote, VaultManifest, VaultNote } from './types'
-import { createVaultResolver, formatDate, shortTitle, vaultFileUrl } from './utils'
+import type { OpenNote, VaultManifest, VaultNote, VaultOutline } from './types'
+import { createVaultResolver, expandHeadings, formatDate, shortTitle, vaultFileUrl } from './utils'
+import { warmSearchIndex } from './searchIndex'
+
+/* Le graphe et la palette de recherche ne servent pas à l'ouverture d'une note :
+   leurs chunks sont chargés à la demande pour alléger le premier rendu. */
+const SearchPalette = lazy(() => import('./SearchPalette'))
+const VaultGraph = lazy(() => import('./VaultGraph'))
 
 const sourceCache = new Map<string, string>()
+
+/** Précharge le Markdown d'une note sans attendre le clic. */
+function prefetchNote(path: string) {
+  if (sourceCache.has(path)) return
+  fetch(vaultFileUrl(path))
+    .then((response) => (response.ok ? response.text() : ''))
+    .then((value) => {
+      if (value) sourceCache.set(path, value)
+    })
+    .catch(() => undefined)
+}
+
+/** `requestIdleCallback` n'existe pas partout : on retombe sur un timeout. */
+function whenIdle(callback: () => void) {
+  const schedule = window.requestIdleCallback ?? ((task: () => void) => window.setTimeout(task, 350))
+  const cancel = window.cancelIdleCallback ?? window.clearTimeout
+  const handle = schedule(callback)
+  return () => cancel(handle)
+}
 const FAVORITES_KEY = 'offsidian:favorites'
 const RECENT_KEY = 'offsidian:recent'
 
@@ -43,7 +66,6 @@ function readStoredList(key: string) {
 function VaultLoading({ error, onRetry }: { error?: string; onRetry?: () => void }) {
   return (
     <main className="offsidian-loading">
-      <div className="offsidian-loading-mark" aria-hidden="true"><span>◇</span></div>
       <p className="offsidian-loading-kicker">FOXHACK / KNOWLEDGE BASE</p>
       <h1>OFF<span>SIDIAN</span></h1>
       {error ? (
@@ -52,7 +74,7 @@ function VaultLoading({ error, onRetry }: { error?: string; onRetry?: () => void
           <button type="button" onClick={onRetry}>Réessayer</button>
         </>
       ) : (
-        <div className="offsidian-loading-line"><i /><span>montage du vault…</span></div>
+        <div className="offsidian-loading-line"><i /><span>Chargement du vault…</span></div>
       )}
     </main>
   )
@@ -71,6 +93,7 @@ function setMeta(note: VaultNote) {
 export default function OffsidianApp() {
   const [manifest, setManifest] = useState<VaultManifest | null>(null)
   const [manifestError, setManifestError] = useState('')
+  const [outline, setOutline] = useState<VaultOutline | null>(null)
   const [manifestAttempt, setManifestAttempt] = useState(0)
   const [selectedId, setSelectedId] = useState('')
   const [source, setSource] = useState('')
@@ -87,9 +110,12 @@ export default function OffsidianApp() {
   const [rawMode, setRawMode] = useState(false)
   const [focusMode, setFocusMode] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
-  const [readingProgress, setReadingProgress] = useState(0)
   const [activeHeading, setActiveHeading] = useState('')
   const documentRef = useRef<HTMLElement>(null)
+  const progressRef = useRef<HTMLDivElement>(null)
+  /* Positions des titres, mesurées une fois par note : le gestionnaire de
+     défilement ne relit plus la mise en page à chaque frame. */
+  const headingOffsets = useRef<{ id: string; top: number }[]>([])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -111,6 +137,26 @@ export default function OffsidianApp() {
       })
     return () => controller.abort()
   }, [manifestAttempt])
+
+  /* Le plan des notes (titres + propriétés) arrive en second : l'interface est
+     déjà utilisable, le panneau latéral se complète tout seul. */
+  useEffect(() => {
+    if (!manifest || outline) return
+    const controller = new AbortController()
+    const stopIdle = whenIdle(() => {
+      fetch('/offsidian/outline.json', { signal: controller.signal })
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`)
+          return response.json() as Promise<VaultOutline>
+        })
+        .then(setOutline)
+        .catch(() => undefined)
+    })
+    return () => {
+      stopIdle()
+      controller.abort()
+    }
+  }, [manifest, outline])
 
   const resolver = useMemo(() => (manifest ? createVaultResolver(manifest) : null), [manifest])
   const selected = useMemo(
@@ -157,8 +203,9 @@ export default function OffsidianApp() {
     setSourceError('')
     setSource('')
     setSourceLoading(true)
-    setReadingProgress(0)
-    setActiveHeading(selected.headings.find((heading) => heading.depth >= 2)?.slug ?? '')
+    setActiveHeading('')
+    headingOffsets.current = []
+    if (progressRef.current) progressRef.current.style.width = '0%'
     documentRef.current?.scrollTo({ top: 0 })
 
     setRecent((current) => {
@@ -192,6 +239,90 @@ export default function OffsidianApp() {
       })
     return () => controller.abort()
   }, [selected, sourceAttempt])
+
+  /* Voisins de la note courante : servis pour la pagination, et préchargés
+     pendant les temps morts pour que le clic suivant soit instantané. */
+  const neighbours = useMemo(() => {
+    if (!manifest || !selected) return { previous: null, next: null }
+    const groupNotes = manifest.notes.filter((note) => note.group === selected.group)
+    const index = groupNotes.findIndex((note) => note.id === selected.id)
+    return {
+      previous: index > 0 ? groupNotes[index - 1] : null,
+      next: index >= 0 && index < groupNotes.length - 1 ? groupNotes[index + 1] : null,
+    }
+  }, [manifest, selected])
+
+  useEffect(() => {
+    if (!neighbours.previous && !neighbours.next) return
+    return whenIdle(() => {
+      if (neighbours.previous) prefetchNote(neighbours.previous.path)
+      if (neighbours.next) prefetchNote(neighbours.next.path)
+    })
+  }, [neighbours])
+
+  /* Barre de progression + titre actif. Un scroll déclenche des dizaines
+     d'événements par seconde : une seule mesure par frame, et la barre est
+     écrite directement dans le DOM pour ne re-rendre aucun composant. */
+  const scrollFrame = useRef(0)
+
+  const measureHeadings = useCallback(() => {
+    const container = documentRef.current
+    if (!container) return
+    headingOffsets.current = [
+      ...container.querySelectorAll<HTMLElement>('.offsidian-markdown h2[id], .offsidian-markdown h3[id]'),
+    ].map((heading) => ({ id: heading.id, top: heading.offsetTop }))
+  }, [])
+
+  const updateScrollState = useCallback(() => {
+    const container = documentRef.current
+    if (!container) return
+    const available = container.scrollHeight - container.clientHeight
+    const ratio = available > 0 ? Math.min(100, (container.scrollTop / available) * 100) : 0
+    if (progressRef.current) progressRef.current.style.width = `${ratio.toFixed(2)}%`
+
+    const position = container.scrollTop
+    let current = headingOffsets.current[0]?.id ?? ''
+    for (const heading of headingOffsets.current) {
+      if (heading.top - position <= 150) current = heading.id
+      else break
+    }
+    setActiveHeading(current)
+  }, [])
+
+  const onDocumentScroll = useCallback(() => {
+    if (scrollFrame.current) return
+    scrollFrame.current = requestAnimationFrame(() => {
+      scrollFrame.current = 0
+      updateScrollState()
+    })
+  }, [updateScrollState])
+
+  useEffect(() => () => cancelAnimationFrame(scrollFrame.current), [])
+
+  /* Le plan n'est pas dans le manifeste : on relève le titre actif directement
+     dans le DOM une fois la note rendue. */
+  useEffect(() => {
+    if (!source) return
+    const frame = requestAnimationFrame(() => {
+      measureHeadings()
+      updateScrollState()
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [measureHeadings, source, selectedId, updateScrollState])
+
+  /* Les images et les diagrammes arrivent après coup et décalent les titres :
+     on remesure au redimensionnement et à chaque média chargé dans la note. */
+  useEffect(() => {
+    const container = documentRef.current
+    if (!container) return
+    const remeasure = () => measureHeadings()
+    window.addEventListener('resize', remeasure)
+    container.addEventListener('load', remeasure, true)
+    return () => {
+      window.removeEventListener('resize', remeasure)
+      container.removeEventListener('load', remeasure, true)
+    }
+  }, [measureHeadings, selectedId])
 
   useEffect(() => {
     if (!source || !pendingHash) return
@@ -228,13 +359,25 @@ export default function OffsidianApp() {
     }
   }, [graphOpen, leftMobileOpen, rightMobileOpen, searchOpen])
 
+  const jumpToHeading = useCallback((slug: string) => {
+    const target = document.getElementById(slug)
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const url = new URL(window.location.href)
+    url.hash = slug
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
+  }, [])
+
+  const openSearch = useCallback(() => setSearchOpen(true), [])
+  const closeSearch = useCallback(() => setSearchOpen(false), [])
+  const openGraph = useCallback(() => setGraphOpen(true), [])
+  const closeGraph = useCallback(() => setGraphOpen(false), [])
+  const closeLeftMobile = useCallback(() => setLeftMobileOpen(false), [])
+  const closeRightMobile = useCallback(() => setRightMobileOpen(false), [])
+
   if (manifestError) return <VaultLoading error={manifestError} onRetry={() => setManifestAttempt((value) => value + 1)} />
   if (!manifest || !resolver || !selected) return <VaultLoading />
 
-  const groupNotes = manifest.notes.filter((note) => note.group === selected.group)
-  const currentIndex = groupNotes.findIndex((note) => note.id === selected.id)
-  const previous = currentIndex > 0 ? groupNotes[currentIndex - 1] : null
-  const next = currentIndex >= 0 && currentIndex < groupNotes.length - 1 ? groupNotes[currentIndex + 1] : null
+  const { previous, next } = neighbours
   const isFavorite = favorites.includes(selected.id)
 
   const toggleFavorite = () => {
@@ -245,29 +388,6 @@ export default function OffsidianApp() {
       localStorage.setItem(FAVORITES_KEY, JSON.stringify(nextFavorites))
       return nextFavorites
     })
-  }
-
-  const updateScrollState = () => {
-    const container = documentRef.current
-    if (!container) return
-    const available = container.scrollHeight - container.clientHeight
-    setReadingProgress(available > 0 ? Math.min(100, (container.scrollTop / available) * 100) : 0)
-
-    const headings = [...container.querySelectorAll<HTMLElement>('.offsidian-markdown h2[id], .offsidian-markdown h3[id]')]
-    let current = headings[0]?.id ?? ''
-    for (const heading of headings) {
-      if (heading.offsetTop - container.scrollTop <= 150) current = heading.id
-      else break
-    }
-    setActiveHeading(current)
-  }
-
-  const jumpToHeading = (slug: string) => {
-    const target = document.getElementById(slug)
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    const url = new URL(window.location.href)
-    url.hash = slug
-    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
   }
 
   const copyCurrentLink = async () => {
@@ -297,7 +417,13 @@ export default function OffsidianApp() {
           </a>
         </div>
 
-        <button type="button" className="offsidian-command-search" onClick={() => setSearchOpen(true)}>
+        <button
+          type="button"
+          className="offsidian-command-search"
+          onClick={() => setSearchOpen(true)}
+          onMouseEnter={warmSearchIndex}
+          onFocus={warmSearchIndex}
+        >
           <Search aria-hidden="true" />
           <span>Rechercher dans le vault</span>
           <kbd>⌘ K</kbd>
@@ -315,7 +441,7 @@ export default function OffsidianApp() {
             <Home aria-hidden="true" />
           </a>
         </div>
-        <div className="offsidian-progress" style={{ width: `${readingProgress}%` }} />
+        <div className="offsidian-progress" ref={progressRef} style={{ width: '0%' }} />
       </header>
 
       <div className="offsidian-workspace">
@@ -325,9 +451,9 @@ export default function OffsidianApp() {
           favorites={favorites}
           recent={recent}
           mobileOpen={leftMobileOpen}
-          onCloseMobile={() => setLeftMobileOpen(false)}
+          onCloseMobile={closeLeftMobile}
           onOpenNote={openNote}
-          onOpenSearch={() => setSearchOpen(true)}
+          onOpenSearch={openSearch}
         />
 
         <main className="offsidian-document-column">
@@ -345,7 +471,7 @@ export default function OffsidianApp() {
           <section
             ref={documentRef}
             className="offsidian-document-scroll"
-            onScroll={updateScrollState}
+            onScroll={onDocumentScroll}
             aria-label={`Note : ${selected.title}`}
           >
             <div className="offsidian-document-shell">
@@ -425,37 +551,47 @@ export default function OffsidianApp() {
         <NoteInspector
           manifest={manifest}
           note={selected}
+          outline={outline}
           activeHeading={activeHeading}
           mobileOpen={rightMobileOpen}
-          onCloseMobile={() => setRightMobileOpen(false)}
+          onCloseMobile={closeRightMobile}
           onOpenNote={openNote}
-          onOpenGraph={() => setGraphOpen(true)}
+          onOpenGraph={openGraph}
           onJumpToHeading={jumpToHeading}
         />
       </div>
 
       <nav className="offsidian-mobile-nav" aria-label="Navigation du vault">
         <button type="button" onClick={() => setLeftMobileOpen(true)}><Menu aria-hidden="true" /><span>Fichiers</span></button>
-        <button type="button" onClick={() => setSearchOpen(true)}><Search aria-hidden="true" /><span>Recherche</span></button>
+        <button type="button" onClick={() => setSearchOpen(true)} onMouseEnter={warmSearchIndex} onFocus={warmSearchIndex}><Search aria-hidden="true" /><span>Recherche</span></button>
         <button type="button" onClick={() => setGraphOpen(true)}><Network aria-hidden="true" /><span>Graphe</span></button>
         <button type="button" onClick={() => setRightMobileOpen(true)}><PanelRight aria-hidden="true" /><span>Plan</span></button>
       </nav>
 
-      <SearchPalette
-        open={searchOpen}
-        manifest={manifest}
-        recent={recent}
-        favorites={favorites}
-        onClose={() => setSearchOpen(false)}
-        onOpenNote={openNote}
-      />
-      <VaultGraph
-        open={graphOpen}
-        manifest={manifest}
-        selected={selected}
-        onClose={() => setGraphOpen(false)}
-        onOpenNote={openNote}
-      />
+      {searchOpen ? (
+        <Suspense fallback={null}>
+          <SearchPalette
+            open
+            manifest={manifest}
+            outline={outline}
+            recent={recent}
+            favorites={favorites}
+            onClose={closeSearch}
+            onOpenNote={openNote}
+          />
+        </Suspense>
+      ) : null}
+      {graphOpen ? (
+        <Suspense fallback={null}>
+          <VaultGraph
+            open
+            manifest={manifest}
+            selected={selected}
+            onClose={closeGraph}
+            onOpenNote={openNote}
+          />
+        </Suspense>
+      ) : null}
     </div>
   )
 }

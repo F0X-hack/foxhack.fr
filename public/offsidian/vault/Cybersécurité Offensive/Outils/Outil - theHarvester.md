@@ -1,11 +1,11 @@
 ---
 title: "Outil - theHarvester"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 4.11.1
 licence: GPL-2.0
@@ -16,14 +16,14 @@ site: https://github.com/laramies/theHarvester
 doc: https://github.com/laramies/theHarvester/wiki
 ---
 
-# 🕵️ theHarvester — Collecte d'emails, hôtes et sous-domaines en OSINT
+# theHarvester — Collecte d'emails, hôtes et sous-domaines en OSINT
 
 > [!info] **En 1 phrase**
 > theHarvester est un outil OSINT qui collecte emails, noms d'utilisateurs, hôtes et sous-domaines d'un domaine à partir de moteurs de recherche et de sources publiques.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/laramies/theHarvester/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 theHarvester interroge des dizaines de sources (Google, Bing, Baidu, DuckDuckGo, Shodan, crt.sh, VirusTotal, AlienVault OTX, GitHub, etc.) pour reconstruire l'empreinte publique d'une organisation : **adresses email** (utiles pour phishing ciblé / password spraying), **hôtes et sous-domaines** (surface d'attaque), **noms d'utilisateurs**. Utilisé en début de pentest pour construire la liste des cibles humaines et techniques. Certaines sources nécessitent une clé API (à placer dans `api-keys.yaml`).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Kali / Debian
 
@@ -118,7 +118,7 @@ theHarvester -d example.com -b crtsh -l 50
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Clés API : `api-keys.yaml`
 
@@ -164,7 +164,7 @@ https: "http://127.0.0.1:8080"
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -189,7 +189,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -223,7 +223,7 @@ theHarvester -d example.com -b crtsh -t
 
 ---
 
-## 🚩 Options et flags (détail)
+## Options et flags (détail)
 
 | Flag | Défaut | Description |
 |---|---|---|
@@ -244,7 +244,7 @@ theHarvester -d example.com -b crtsh -t
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Recherche simple via crtsh
 
@@ -279,7 +279,7 @@ theHarvester -d example.com -c -e 8.8.8.8
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Recherche initiale** — collecter emails et hôtes depuis plusieurs moteurs.
    ```bash
@@ -302,7 +302,7 @@ theHarvester -d example.com -c -e 8.8.8.8
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Chasse aux takeovers de sous-domaines
 
@@ -343,7 +343,7 @@ jq -r '.emails[]?.email' emails.json | sort -u > targets.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -356,7 +356,7 @@ jq -r '.emails[]?.email' emails.json | sort -u > targets.txt
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec theHarvester |
 |---|---|---|
@@ -369,7 +369,7 @@ jq -r '.emails[]?.email' emails.json | sort -u > targets.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -383,7 +383,7 @@ jq -r '.emails[]?.email' emails.json | sort -u > targets.txt
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Script multi-sources
 
@@ -414,7 +414,7 @@ jq -r '.emails[]?.email' harvest.json | sort -u | sponge emails.txt
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Sortie console
 
@@ -453,7 +453,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -469,7 +469,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -481,7 +481,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -494,7 +494,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -507,7 +507,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -519,7 +519,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -532,7 +532,7 @@ grep -oP '(?<=<email>)[^<]+' results.xml | sort -u
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Émails + hôtes via moteurs
@@ -557,7 +557,7 @@ jq -r '.hosts[]?.host' results.json | sort -u
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -572,7 +572,7 @@ jq -r '.hosts[]?.host' results.json | sort -u
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -584,29 +584,29 @@ jq -r '.hosts[]?.host' results.json | sort -u
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Toujours croiser plusieurs sources**
+> [!tip] **Toujours croiser plusieurs sources**
 > Chaque moteur renvoie des résultats différents : une bonne liste (`google,bing,crtsh,baidu`) donne l'image la plus complète.
 
-> [!tip] 💡 **Exporter systématiquement**
+> [!tip] **Exporter systématiquement**
 > Utilisez `-f` dès le premier scan : les fichiers XML/JSON conservent l'historique et alimentent le rapport final sans relancer les moteurs (rate-limit).
 
-> [!warning] ⚠️ **Google rate-limite très vite**
+> [!warning] **Google rate-limite très vite**
 > Sans API key, 5-10 requêtes suffisent pour être bloqué. Privilégier crtsh / bing / baidu ou une clé de recherche.
 
-> [!warning] ⚠️ **Emails scrapés ≠ autorisation de phishing**
+> [!warning] **Emails scrapés ≠ autorisation de phishing**
 > En engagement légal, vérifier le scope : certains emails sont des alias techniques, d'autres de vraies cibles humaines.
 
-> [!warning] ⚠️ **Sources obsolètes**
+> [!warning] **Sources obsolètes**
 > Des hôtes / emails vieux de plusieurs années peuvent apparaître : vérifier l'actualité avant de les ajouter au scope.
 
-> [!danger] 🚫 **Pas de source active sans autorisation**
+> [!danger] **Pas de source active sans autorisation**
 > `-c` (bruteforce) et les requêtes DNS directes sont visibles côté cible.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [GitHub officiel — theHarvester](https://github.com/laramies/theHarvester)
@@ -621,4 +621,4 @@ jq -r '.hosts[]?.host' results.json | sort -u
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - Amass|🌐 Amass]] · [[Techniques/Password Spraying|🔐 Password Spraying]] · [[Outil - subfinder|🔭 subfinder]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - Amass| Amass]] · [[Techniques/Password Spraying| Password Spraying]] · [[Outil - subfinder| subfinder]]

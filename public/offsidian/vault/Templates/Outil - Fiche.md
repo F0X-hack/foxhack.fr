@@ -23,7 +23,7 @@ doc: <URL documentation officielle>
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: <URL documentation officielle>
 
 ---
 
-## 🎯 Concept
+## Concept
 
 <Pourquoi cet outil existe, à quoi il sert, où il se place dans un pentest, historique, écosystème. 3-8 phrases approfondies.>
 
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 <Les concepts techniques nécessaires pour comprendre l'outil : protocoles, architecture client/serveur, formats, authentification, etc. Expliqués sans présumer que le lecteur les connaît. 5-15 lignes structurées.>
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -119,12 +119,12 @@ git clone <repo> && cd <repo>
 # ./configure && make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > <Dépendances, permissions, versions requises.>
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 <Fichiers de config, emplacements, variables d'environnement, paramètres. Pour chaque paramètre important :>
 
@@ -134,13 +134,13 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 <Composants, modules, processus, bibliothèques, flux de données, protocoles utilisés, formats de fichiers, API, système d'extension. Ce qui se passe réellement à l'exécution.>
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -162,7 +162,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -176,7 +176,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -201,7 +201,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape** — explication
    ```bash
@@ -211,7 +211,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : <contexte>
 
@@ -221,7 +221,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 <Dans quelle phase d'une opération intervient l'outil : reconnaissance, énumération, vulnérabilité, exploitation, post-exploitation, etc.>
 
@@ -231,7 +231,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -241,7 +241,7 @@ git clone <repo> && cd <repo>
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 <Comment détecter l'utilisation de l'outil, logs, indicateurs, traces réseau/système, processus, fichiers, événements Windows, logs Linux, SIEM, EDR, IDS/IPS.>
 
@@ -264,7 +264,7 @@ alert tcp any any -> any any (msg:"..."; ...)
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 <Bash, Python, PowerShell, API REST, JSON, pipelines, CI/CD, Docker, orchestration.>
 
@@ -278,7 +278,7 @@ alert tcp any any -> any any (msg:"..."; ...)
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 <Formats de sortie : stdout, stderr, JSON, XML, CSV, HTML, logs. Comment parser et exploiter la sortie.>
 
@@ -292,7 +292,7 @@ alert tcp any any -> any any (msg:"..."; ...)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 <Outils avec lesquels cet outil est couramment utilisé. Workflows. Créer des liens Obsidian vers les outils du vault lorsqu'ils existent.>
 
@@ -300,11 +300,11 @@ alert tcp any any -> any any (msg:"..."; ...)
 Tool A → <Outil> → Tool C → SIEM
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -314,13 +314,13 @@ Tool A → <Outil> → Tool C → SIEM
 
 ---
 
-## ⚡ Performance
+## Performance
 
 <Consommation CPU/mémoire/réseau/disque, parallélisation, threading, vitesse, limites, scalabilité, optimisation. Chiffres uniquement si sourcés.>
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -332,19 +332,19 @@ Tool A → <Outil> → Tool C → SIEM
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 <Risques d'utilisation, permissions, root/admin, secrets, télémétrie, plugins, mauvaises configurations, recommandations de sécurisation.>
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 <Ce que l'outil ne sait pas faire, faux positifs/négatifs, protocoles non supportés, environnements problématiques, dépendances.>
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Commande 1 — objectif
@@ -356,7 +356,7 @@ Tool A → <Outil> → Tool C → SIEM
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -369,7 +369,7 @@ Tool A → <Outil> → Tool C → SIEM
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -377,17 +377,17 @@ Tool A → <Outil> → Tool C → SIEM
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > <3-5 conseils concrets.>
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > <3-5 erreurs fréquentes à éviter.>
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -407,4 +407,4 @@ Tool A → <Outil> → Tool C → SIEM
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · <liens vers les fiches techniques liées du vault>
+**Liens :** [[Tools| Outils]] · <liens vers les fiches techniques liées du vault>

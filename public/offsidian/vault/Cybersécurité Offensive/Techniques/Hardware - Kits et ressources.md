@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🧰 Kits et ressources
+# Kits et ressources
 
 > [!info] **En 1 phrase**
 > Une liste des **kits hardware, challenges CTF, chaînes, livres et ressources** pour
@@ -19,7 +19,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -31,7 +31,7 @@ statut: publie
 | **Complexité** | Faible (début) → Élevée (expert) |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Apprendre le hardware hacking"] --> B["CTF & challenges"]
@@ -49,7 +49,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le hardware hacking nécessite un apprentissage pratique. Les ressources listées ici permettent de progresser de débutant à expert grâce à des challenges CTF dédiés, du matériel d'entraînement, des livres de référence, et une communauté active de streamers et de chercheurs.
 
@@ -71,12 +71,12 @@ flowchart TB
     style I fill:#ffcdd2
 ```
 
-> [!info] 💡 **Le combo gagnant**
+> [!info] **Le combo gagnant**
 > Un **kit de debug** (adaptateur USB-TTL, programmateur, sondes) + un **device d'entraînement** (DVID, camera, routeur) + les **writeups** de la communauté = progression rapide.
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Progression d'apprentissage
 
@@ -101,7 +101,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Kit hardware de base
 
@@ -139,7 +139,7 @@ Un kit hardware de base contient :
 
 ---
 
-## ⚡ CTF & Challenges
+## CTF & Challenges
 
 ### BLE CTF
 
@@ -196,7 +196,7 @@ Un kit hardware de base contient :
 
 ---
 
-## 📺 Twitch & Streaming
+## Twitch & Streaming
 
 | Chaîne | Plateforme | Spécialité |
 |---|---|---|
@@ -204,11 +204,11 @@ Un kit hardware de base contient :
 | VirtuVOD | YouTube | VOD de virtualabs |
 | WHID "We Hack In Disguise" | YouTube | Hardware hacking, USB attacks |
 
-> [!info] 💡 **virtualabs** est LA référence francophone du hacking hardware en direct. Ses streams combinent UART, JTAG, firmware analysis et exploitation sur du vrai matériel.
+> [!info] **virtualabs** est LA référence francophone du hacking hardware en direct. Ses streams combinent UART, JTAG, firmware analysis et exploitation sur du vrai matériel.
 
 ---
 
-## 📚 Livres
+## Livres
 
 | Titre | Auteur | Année | Niveau |
 |---|---|---|---|
@@ -221,7 +221,7 @@ Un kit hardware de base contient :
 
 ---
 
-## 🧰 Hardware Kits
+## Hardware Kits
 
 ### Images de référence
 
@@ -263,7 +263,7 @@ Kit hardware avancé :
 
 ---
 
-## ⚡ Ressources en ligne
+## Ressources en ligne
 
 ### Sites de référence
 
@@ -294,7 +294,7 @@ Kit hardware avancé :
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -304,7 +304,7 @@ Kit hardware avancé :
 | **S'entraîner en lab RF** | SDR/BTS à tester dans une cage de Faraday |
 | **Sécuriser le workspace** | Équipement ESD, ventilation pour soudure, organisation |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : **Commence par des devices faciles** (flash SPI, UART exposé) avant de t'attaquer aux TPM/secure boot.
 - **Piège 2** : Les **kits CTF Riscure** (RHme) sont réutilisables en lab mais s'abîment avec le temps (flash).
@@ -321,7 +321,7 @@ Kit hardware avancé :
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -339,7 +339,7 @@ Kit hardware avancé :
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -368,7 +368,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -404,7 +404,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -465,7 +465,7 @@ print(f"Budget: {kit['prix']}")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -499,18 +499,18 @@ EOF
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - CH341A|💾 CH341A]] pour les dumps SPI
-- [[Hardware - Bus Pirate|🏴‍☠️ Bus Pirate]] pour les dumps multi-protocole
-- [[Hardware - Memory Programmer|🗄️ Memory Programmer]] pour eMMC/NAND
-- [[Hardware - Logic Analyzer|📈 Logic Analyzer]] pour le sniffing
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse
-- [[Hardware - Composants électroniques|🧩 Composants]] pour l'identification
-- [[Hardware - Arduino|🔌 Arduino]] pour l'entraînement
-- [[Hardware - ESP32|🔌 ESP32]] pour l'IoT
-- [[Hardware - Raspberry Pi|🍓 Raspberry Pi]] pour le développement
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - CH341A| CH341A]] pour les dumps SPI
+- [[Hardware - Bus Pirate| Bus Pirate]] pour les dumps multi-protocole
+- [[Hardware - Memory Programmer| Memory Programmer]] pour eMMC/NAND
+- [[Hardware - Logic Analyzer| Logic Analyzer]] pour le sniffing
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse
+- [[Hardware - Composants électroniques| Composants]] pour l'identification
+- [[Hardware - Arduino| Arduino]] pour l'entraînement
+- [[Hardware - ESP32| ESP32]] pour l'IoT
+- [[Hardware - Raspberry Pi| Raspberry Pi]] pour le développement
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -527,7 +527,7 @@ EOF
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -544,7 +544,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -564,7 +564,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -596,7 +596,7 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -616,7 +616,7 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -635,7 +635,7 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -665,7 +665,7 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -679,7 +679,7 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -696,7 +696,7 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : **Commence par des devices faciles** (flash SPI, UART exposé) avant de t'attaquer aux TPM/secure boot.
 - **Piège 2** : Les **kits CTF Riscure** (RHme) sont réutilisables en lab mais s'abîment avec le temps (flash).
@@ -714,9 +714,9 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Links & Hardware Kits](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/other/links-and-hardware-kits.md)
 > - [DVID — Vulcainreo](https://github.com/Vulcainreo/DVID)
 > - [BLE CTF — hackgnar](https://github.com/hackgnar/ble_ctf)
@@ -756,4 +756,4 @@ Solution : Suivre le parcours : CH341A → DVID → Bus Pirate → RHme
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - RFID et NFC| RFID/NFC]]

@@ -1,11 +1,11 @@
 ---
 title: "Outil - John the Ripper"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 1.9.0-jumbo-1 (rolling jumbo)
 licence: GPLv2+ (core Openwall)
@@ -16,14 +16,14 @@ site: https://www.openwall.com/john/
 doc: https://openwall.info/wiki/john
 ---
 
-# 💥 John the Ripper — Cracking CPU & audit de mots de passe
+# John the Ripper — Cracking CPU & audit de mots de passe
 
 > [!info] **En 1 phrase**
 > John the Ripper = cracker **CPU** historique, réputé pour la détection **automatique du format** et l'audit des fichiers `/etc/shadow` via `unshadow`, avec une version **jumbo** qui supporte des centaines de formats.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 John the Ripper (JtR) est le cracker de mots de passe **orienté CPU** de référence, développé à l'origine par Solar Designer (Openwall). La version **jumbo** — paquet `john` par défaut sur Kali — étend le noyau avec **plus de 470 formats** : Unix, Windows NT, Kerberos, clés SSH, archives ZIP/RAR/7z, documents PDF/Office, etc.
 
@@ -41,7 +41,7 @@ Le projet vit sur `openwall/john` (branche `bleeding-jumbo`, ~13 500 étoiles). 
 
 ---
 
-## 🎯 Concept
+## Concept
 John the Ripper (JtR) est le cracker de mots de passe **orienté CPU** de référence, alternative à hashcat (GPU). Sa force : la **détection automatique du format** du hash (on lui donne un hash, il devine `sha512crypt`, `NT`, `krb5tgs`...) et l'application de **règles de mutation** (`--rules`) qui transforment chaque mot du dictionnaire en variantes (leet speak, suffixes, casse...). Avec la version **jumbo** (paquet par défaut sur Kali), il supporte des centaines de formats : Unix, Windows NT, Kerberos, clés SSH, PDF, ZIP, RAR... L'utilitaire `unshadow` fusionne `/etc/passwd` et `/etc/shadow` pour l'audit des comptes Unix. Les résultats sont stockés dans le potfile `john.pot` et relus avec `--show`. Dans un pentest, il s'utilise dès qu'un hash est récupéré (dump NTDS, Kerberoast, AS-REP, fichier chiffré).
 
 ```mermaid
@@ -57,7 +57,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### CPU vs GPU : la place de John dans le workflow
 
@@ -84,7 +84,7 @@ Les mots de passe trouvés sont enregistrés dans `~/.john/john.pot`. `john --sh
 
 ---
 
-## 🛠️ Installation
+## Installation
 ```bash
 # Linux (Kali / Debian / Ubuntu) — paquet jumbo
 sudo apt update && sudo apt install -y john
@@ -115,7 +115,7 @@ cd john/src
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 - **`john.conf`** (dans le répertoire `run/`) : règles de mangling, modes incrémentaux, paramètres. Personnalisable : `[List.Rules:MyRules]` permet d'ajouter ses propres règles de mutation.
 - **Potfile** : par défaut `~/.john/john.pot` ; déplaçable avec `--pot=<fichier>` (utile pour isoler des sessions).
@@ -132,7 +132,7 @@ cd john/src
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 JtR est organisé autour d'un noyau (moteur de cracking, ordonnancement des modes, potfile) et d'une **bibliothèque de formats** (`--list=formats`), chacun implémentant le calcul du hash (ou une accélération OpenCL/CUDA).
 
@@ -151,7 +151,7 @@ Les **scripts `*2john`** convertissent des fichiers chiffrés (ZIP, PDF, RAR, Of
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 ```bash
 # Dictionnaire simple (format auto-détecté)
 john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
@@ -170,7 +170,7 @@ john --list=formats | grep -i nt
 john --test
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Effet |
 |---|---|
@@ -206,7 +206,7 @@ john --show combined.txt
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Cracker un hash NT (dump Windows)
 ```bash
@@ -235,7 +235,7 @@ john --test  # tous les formats (long)
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 1. **Étape 1 — Récupérer les hashes** : depuis une session root compromise, extraire les comptes Unix.
    ```bash
    unshadow /etc/passwd /etc/shadow > combined.txt
@@ -256,7 +256,7 @@ john --test  # tous les formats (long)
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 ### Scénario 1 : Cracking d'un TGS Kerberoast
 Un TGS récupéré avec `GetUserSPNs.py` (Impacket) est cracké avec le format `krb5tgs`.
 ```bash
@@ -287,7 +287,7 @@ john --show ssh.hash
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 ### Pentest / Red team
 - **Kerberoasting / AS-REP Roasting** : cracker les TGS/AS-REP extraits d'Active Directory.
@@ -304,7 +304,7 @@ john --show ssh.hash
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rôle de John |
 |---|---|---|
@@ -319,7 +319,7 @@ john --show ssh.hash
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Signe | Défense |
 |---|---|
@@ -332,7 +332,7 @@ john --show ssh.hash
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Session nommée et reprise
 ```bash
@@ -355,7 +355,7 @@ done
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Écran** : affiche les mots de passe trouvés au fil de l'eau.
 - **Potfile** `~/.john/john.pot` : stocke `hash:motsdepasse` en clair — à protéger.
@@ -369,7 +369,7 @@ john --show combined.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -382,7 +382,7 @@ john --show combined.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence avec John |
 |---|---|
@@ -394,7 +394,7 @@ john --show combined.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **CPU** : parallélisable avec `--fork=<N>` (N cœurs) ; `john --test` benchmarke chaque format.
 - **GPU** : certains formats jumbo ont des accélérations OpenCL/CUDA, mais hashcat reste supérieur en vitesse brute.
@@ -406,7 +406,7 @@ john --show combined.txt
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -419,7 +419,7 @@ john --show combined.txt
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Licence** : GPLv2+ (core Openwall) ; jumbo libre et open source. Édition **Pro** commerciale (optimisations, wordlists).
 - **Potfile** : `john.pot` contient les mots de passe **en clair** — ne jamais le laisser sur une machine compromise, le protéger (chmod 600).
@@ -428,7 +428,7 @@ john --show combined.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Vitesse CPU** : sans GPU, les gros volumes de hashes rapides sont lents vs hashcat.
 - **Formats « exotiques »** : certains formats binaires (NTDS.dit) nécessitent un script `*2john` spécifique.
@@ -437,7 +437,7 @@ john --show combined.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Dictionnaire
@@ -468,7 +468,7 @@ john --test
 john --list=formats
 ```
 
-## ⚡ Quick reference
+## Quick reference
 
 | Hash | Format john | Extraction |
 |---|---|---|
@@ -489,7 +489,7 @@ john --list=formats
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 | Signe | Défense |
 |---|---|
 | Utilisation CPU soutenue sur un poste d'analyse (multi-cœurs) | Détection d'outils de cracking (signatures, listes de processus), EDR |
@@ -500,36 +500,36 @@ john --list=formats
 
 ---
 
-## ⚠️ Tips & Pièges
-> [!tip] 💡 **Tips**
+## Tips & Pièges
+> [!tip] **Tips**
 > - `--show` doit être appelé avec **le même `--format`** que le crack, sinon il ne renvoie rien.
 > - Commence par `--rules=Single` (rapide) avant `--rules=all` (lent).
 > - Si un GPU est dispo, préfère hashcat ; John excelle en audit CPU et en auto-détection.
 > - Utilise `--session` dès le début : tu pourras reprendre avec `--restore` sans perdre la progression.
 > - Pour les fichiers chiffrés, laisse les `*2john` extraire le hash : donner le fichier brut à john ne marche pas.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans la version **jumbo**, les formats modernes (NT, Kerberos, ZIP) manquent : vérifie avec `john --list=formats | grep -i nt`.
 > - Le potfile `~/.john/john.pot` contient les mots de passe **en clair** : protège-le et ne le laisse jamais sur une machine compromise.
 > - L'auto-détection peut confondre MD5 et NTLM (même longueur) : croise avec le contexte et `hashid`.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [openwall/john (GitHub)](https://github.com/openwall/john)
 > - [Openwall — John the Ripper](https://www.openwall.com/john/)
 > - [john-packages (binaires Windows/macOS/flatpak)](https://github.com/openwall/john-packages/releases)
 > - [Wiki John (openwall.info)](https://openwall.info/wiki/john)
 
 ### Security & Community
-> [!info] 📚 **Ressources complémentaires**
+> [!info] **Ressources complémentaires**
 > - [openwall/john-samples (exemples de hashes)](https://github.com/openwall/john-samples)
 > - [MITRE ATT&CK — Kerberoasting T1558.003](https://attack.mitre.org/techniques/T1558/003/)
 > - [MITRE ATT&CK — Password Cracking T1110.002](https://attack.mitre.org/techniques/T1110/002/)
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Kerberoasting|🧀 Kerberoasting]] · [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - hash-identifier|hash-identifier]] · [[Outils/Outil - hashid|hashid]] · [[Outils/Outil - Name-That-Hash|Name-That-Hash]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Kerberoasting| Kerberoasting]] · [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - hash-identifier|hash-identifier]] · [[Outils/Outil - hashid|hashid]] · [[Outils/Outil - Name-That-Hash|Name-That-Hash]]

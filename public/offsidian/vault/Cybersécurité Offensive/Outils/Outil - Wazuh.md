@@ -1,11 +1,11 @@
 ---
 title: "Outil - Wazuh"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: Wazuh 4.14.7 (2026) ; Wazuh 5.0.0 Beta
 licence: GPL-2.0
@@ -16,7 +16,7 @@ site: https://wazuh.com
 doc: https://documentation.wazuh.com/current/
 ---
 
-# 🛡️ Wazuh — Défense & SIEM
+# Wazuh — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Wazuh est une plateforme **XDR/SIEM open source** (agent + manager) qui collecte logs,
@@ -25,13 +25,13 @@ doc: https://documentation.wazuh.com/current/
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Wazuh Platform |
 | Description | Plateforme XDR/SIEM open source : collecte de logs, FIM, détection de vulnérabilités, active response |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | SIEM / EDR / XDR |
 | Fonction principale | Centraliser et corréler les événements de sécurité des endpoints (agent + manager) |
 | Type d'outil | Serveur (manager) + agents + dashboard Kibana (WUI) |
@@ -53,7 +53,7 @@ doc: https://documentation.wazuh.com/current/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Wazuh = fork de **OSSEC** modernisé : un **manager** centralise les événements des **agents** installés sur les endpoints (Linux, Windows, macOS). Il combine : collecte de **logs** (`/var/log/auth.log`, Sysmon, Windows EventLog...), **FIM** (surveillance des fichiers sensibles : `/etc/passwd`, binaires, registre), détection de **vulnérabilités** (via les CVEs), **collecte de commandes** (règles qui exécutent des commandes et parsent la sortie) et **active response** (réaction automatique : bloquer une IP, tuer un processus). L'ensemble est visualisé dans un **tableau de bord Kibana** (dashboards SOC, décodage des événements). C'est la plateforme SIEM self-hosted la plus déployée du monde opensource.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Manager (VM dédiée, Ubuntu/Debian — 8 Go RAM minimum)
 
@@ -115,11 +115,11 @@ sudo systemctl enable --now wazuh-agent
 # Agent macOS : .pkg via https://packages.wazuh.com/4.x/macos/
 ```
 
-> [!warning] ⚠️ L'installeur officiel est **tout-en-un** (manager + indexeur + dashboard) : prévoir une VM dédiée (8 Go RAM minimum), sinon Elasticsearch sature et tout tombe.
+> [!warning] L'installeur officiel est **tout-en-un** (manager + indexeur + dashboard) : prévoir une VM dédiée (8 Go RAM minimum), sinon Elasticsearch sature et tout tombe.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Fichier | Rôle | Emplacement | Exemple clé |
 |---|---|---|---|
@@ -141,7 +141,7 @@ sudo systemctl enable --now wazuh-agent
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux :
 
@@ -156,7 +156,7 @@ Flux type : agent → remoted → analysisd (décodage + règles) → alerte JSO
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales (manager)
 
@@ -188,7 +188,7 @@ sudo tail -f /var/ossec/logs/ossec.log
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -206,7 +206,7 @@ sudo tail -f /var/ossec/logs/ossec.log
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -247,7 +247,7 @@ sudo /var/ossec/bin/manage_agents -r 003
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Déployer le manager** (installeur officiel) puis **un agent** sur un poste.
 2. **Activer le FIM** dans `/var/ossec/etc/ossec.conf` de l'agent :
@@ -267,7 +267,7 @@ sudo /var/ossec/bin/manage_agents -r 003
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection de persistance via FIM ciblé
 Surveiller les chemins où un post-exploit laisse des traces, et déclencher une alerte de niveau élevé.
@@ -314,7 +314,7 @@ sudo /var/ossec/bin/agent_groups -l -g DMZ           # lister les agents du grou
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -327,7 +327,7 @@ sudo /var/ossec/bin/agent_groups -l -g DMZ           # lister les agents du grou
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -343,7 +343,7 @@ sudo /var/ossec/bin/agent_groups -l -g DMZ           # lister les agents du grou
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -378,7 +378,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — relancer tous les agents et extraire le parc
@@ -413,7 +413,7 @@ with open("alerts.json") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les alertes sont écrites en **JSON** dans `/var/ossec/logs/alerts/alerts.json` (chaque ligne = une alerte) et indexées dans Elasticsearch. Chaque alerte contient : `timestamp`, `rule` (id, level, description), `agent` (name, id, ip), `data` (champs décodés), `location`.
 
@@ -437,7 +437,7 @@ with open("alerts.json") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Wazuh agent → manager (1514/tcp) → Filebeat → Elasticsearch (indexeur) → Kibana
@@ -449,18 +449,18 @@ Wazuh → Suricata (intégration des alertes IDS réseau)
 Wazuh → API REST (agents, règles, recherche) → automatisation
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Elastic]] — indexation et recherche des alertes
 - [[Outil - Suricata]] — alertes réseau intégrées dans le dashboard
 - [[Outil - YARA]] — module de scan de fichiers sur les agents
 - [[Outil - MISP]] — échange d'IOCs
 - [[Outil - Sigma]] — règles génériques transposables dans Wazuh
 - [[Outil - osquery]] — inventaire et interrogation des endpoints
-- [[Techniques/Privilege Escalation Windows|🕹️ Privesc Windows]] · [[Techniques/Privilege Escalation Linux|🕹️ Privesc Linux]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]]
+- [[Techniques/Privilege Escalation Windows| Privesc Windows]] · [[Techniques/Privilege Escalation Linux| Privesc Linux]] · [[Techniques/Reverse Shells| Reverse Shells]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -474,7 +474,7 @@ Wazuh → API REST (agents, règles, recherche) → automatisation
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ressources manager** : 8 Go RAM minimum recommandés (indexeur + dashboard + manager).
 - **Agents** : légers en collecte ; le FIM sur de gros répertoires consomme du CPU/IO (intervalle de scan à régler).
@@ -488,7 +488,7 @@ Wazuh → API REST (agents, règles, recherche) → automatisation
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -524,7 +524,7 @@ Wazuh → API REST (agents, règles, recherche) → automatisation
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Réseau** : le port 1514 (agents→manager) doit être restreint aux IP des agents.
 - **Certificats** : l'installeur génère des certificats ; surveiller leur expiration.
@@ -536,7 +536,7 @@ Wazuh → API REST (agents, règles, recherche) → automatisation
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Ressources** : l'indexeur Elasticsearch exige une VM dédiée et dimensionnée.
 - **FIM sur gros volumes** : scan coûteux si les chemins surveillés sont trop larges.
@@ -548,7 +548,7 @@ Wazuh → API REST (agents, règles, recherche) → automatisation
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # État et parc
@@ -578,7 +578,7 @@ sudo tail -f /var/ossec/logs/ossec.log
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ sudo tail -f /var/ossec/logs/ossec.log
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -603,18 +603,18 @@ sudo tail -f /var/ossec/logs/ossec.log
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **FIM = détecter la persistance**
+> [!tip] **FIM = détecter la persistance**
 > Surveille les fichiers de **persistance** (`/etc/systemd/system`, `HKCU\...\Run`, crontab) : c'est là qu'un post-exploit laisse ses traces. Ajoute-les à `<directories>` dès le premier jour.
 >
 > **Débugguer une règle** : `sudo /var/ossec/bin/ossec-logtest` permet de coller un log et de voir quelle règle il déclenche — indispensable avant d'écrire un décodeur maison.
 
-> [!warning] ⚠️ **Piège** : l'installeur officiel est **tout-en-un** (manager + Elasticsearch + Kibana). Ne pas le lancer sur une VM de prod partagée : la charge Elasticsearch + indexeur exige une VM dédiée (8 Go RAM minimum), sinon tout tombe.
+> [!warning] **Piège** : l'installeur officiel est **tout-en-un** (manager + Elasticsearch + Kibana). Ne pas le lancer sur une VM de prod partagée : la charge Elasticsearch + indexeur exige une VM dédiée (8 Go RAM minimum), sinon tout tombe.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -636,4 +636,4 @@ sudo tail -f /var/ossec/logs/ossec.log
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Privilege Escalation Windows|🕹️ Privesc Windows]] · [[Techniques/Privilege Escalation Linux|🕹️ Privesc Linux]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Privilege Escalation Windows| Privesc Windows]] · [[Techniques/Privilege Escalation Linux| Privesc Linux]] · [[Techniques/Reverse Shells| Reverse Shells]]

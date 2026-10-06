@@ -1,7 +1,7 @@
 ---
 title: "Outil - FakeNet-NG"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: (dépôt GitHub uniquement)
 doc: https://github.com/mandiant/flare-fakenet-ng/blob/master/README.md
 ---
 
-# 🧬 FakeNet-NG — Simulation de services réseau pour piéger les malwares
+# FakeNet-NG — Simulation de services réseau pour piéger les malwares
 
 > [!info] **En 1 phrase**
 > FakeNet-NG (FireEye/Mandiant) redirige tout le trafic réseau d'un malware vers de faux services locaux (HTTP, DNS, SMTP, IRC, TLS…) pour capturer ses communications C2 et ses payloads sans jamais laisser le moindre octet sortir du labo.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | FakeNet-NG (Next Generation) |
 | Description | Intercepteur/simulateur de services réseau : toute requête sortante d'un échantillon est répondue par un faux service local (HTTP/S, DNS, SMTP, POP3, IMAP, IRC, TLS…) qui journalise la requête et capture les payloads |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse dynamique — réseau (network simulation) |
 | Fonction principale | Capturer les communications C2 et les payloads d'un malware sans aucun accès Internet réel |
 | Type d'outil | Framework réseau en ligne de commande (Windows et Linux) |
@@ -50,7 +50,7 @@ doc: https://github.com/mandiant/flare-fakenet-ng/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 FakeNet-NG est un outil d'analyse réseau dynamique : sur une machine isolée (ou via redirection `hosts`/iptables), il intercepte l'ensemble des requêtes sortantes du malware et répond à la place des vrais serveurs. Chaque protocole simulé (HTTP/S, DNS, SMTP, POP3, IMAP, IRC, TLS…) journalise les requêtes : domaines résolus, User-Agent, corps HTTP, paramètres exfiltrés. Le malware « croit » parler à son C2, mais tout est consigné et les payloads téléchargés sont récupérés dans un dossier de réception.
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation depuis le dépôt (Linux ou Windows) :
 
@@ -102,7 +102,7 @@ pip install flare-fakenet-ng
 
 Sur la VM d'analyse, il faut lancer en administrateur (Windows) ou root (Linux), avec l'interface réseau correcte. Sur Windows, désactiver le pare-feu sur l'interface d'analyse et vérifier que le service DNS ne capture pas les requêtes avant FakeNet. Sur Linux, désactiver le DNS système (systemd-resolved) pour que les requêtes tombent bien sur le faux serveur.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Réseau** : la machine d'analyse doit être sur un réseau host-only **sans accès Internet réel**.
 > - **Privilèges** : Windows (administrateur) ou Linux (root) sont requis pour écouter sur les ports < 1024 et intercepter.
 > - **DNS système** : sur Linux, `systemd-resolved` peut répondre avant FakeNet — le désactiver sur l'interface d'analyse.
@@ -110,7 +110,7 @@ Sur la VM d'analyse, il faut lancer en administrateur (Windows) ou root (Linux),
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Le fichier `config.txt` (au format ini) contrôle les services simulés :
 
@@ -129,7 +129,7 @@ Le fichier `config.txt` (au format ini) contrôle les services simulés :
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Serveurs simulés** : un module Python par protocole (HTTP/S, DNS, SMTP, POP3, IMAP, IRC, TLS, générique). Chaque module écoute sur ses ports et répond avec des réponses génériques.
 - **Interception Windows** : modifie le fichier `hosts` et utilise les API réseau pour capturer le trafic (mode administrateur).
@@ -155,7 +155,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -186,7 +186,7 @@ fakenetng.exe -i "Ethernet" -l C:\analysis\fakenet.log -r C:\analysis\report.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -204,7 +204,7 @@ fakenetng.exe -i "Ethernet" -l C:\analysis\fakenet.log -r C:\analysis\report.txt
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -244,7 +244,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Isoler le réseau** — mettre la VM d'analyse sur un réseau host-only sans accès Internet réel.
 
@@ -274,7 +274,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Capturer un C2 HTTP et son payload
 
@@ -323,7 +323,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -336,7 +336,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -389,7 +389,7 @@ alert tcp any any -> any any (msg:"Suspicious downloader UA observed"; content:"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer FakeNet, détonner un corpus, puis collecter les IOCs
@@ -426,7 +426,7 @@ for line in sorted(iocs):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Log complet** (`-l`) : tous les paquets et réponses, horodatés.
 - **Rapport résumé** (`-r`) : structure DOM lisible par machine — domaines, requêtes HTTP (méthode, chemin, headers, corps), sessions TLS, données SMTP/IRC.
@@ -454,9 +454,9 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Cuckoo Sandbox]] — module `auxiliary`/`routing` pour simuler le réseau en sandbox
 - [[Outil - CAPE]] — idem sur le fork maintenu (routage InetSim/FakeNet)
 - [[Outil - Wireshark]] — analyse du PCAP brut en complément du rapport
@@ -465,7 +465,7 @@ for tag, value in PATTERN.findall(data):
 - [[Outil - YARA]] — signatures sur les payloads capturés
 - [[Outil - MISP]] — publication des IOCs réseau collectés
 - [[Outil - REMnux]] — distribution contenant FakeNet-NG et les outils d'analyse
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Échantillon → FakeNet-NG (interception) → payloads + IOCs réseau → YARA + MISP → SOC
@@ -473,7 +473,7 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Surcharge CPU très faible : chaque listener répond avec des payloads courts.
 - Le rapport DOM grossit avec le trafic : pour les campagnes massives, le filtrer par domaine/protocole.
@@ -497,7 +497,7 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -533,7 +533,7 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation stricte** : FakeNet ne doit JAMAIS être connecté à un réseau réel : un malware pourrait atteindre son vrai C2.
 - **Détonation** : exécuter uniquement dans une VM jetable, jamais sur un poste de production.
@@ -543,7 +543,7 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - FakeNet répond à toutes les requêtes : des malwares avancés détectent les réponses « trop propres » et changent de comportement.
 - Les protocoles complexes (TLS, SMTP avancé, protocoles propriétaires) nécessitent une personnalisation fine de la config.
@@ -553,7 +553,7 @@ for tag, value in PATTERN.findall(data):
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer l'interception (Linux, root)
@@ -583,7 +583,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -596,7 +596,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -609,16 +609,16 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lancez toujours FakeNet-NG sur un réseau strictement isolé (host-only) : il ne doit jamais voir de trafic réel, sinon les logs se polluent.
 > - Personnalisez `config.txt` pour ne garder que les services utiles (désactivez ceux qui font crasher le malware).
 > - Couplez-le systématiquement avec Wireshark/tshark pour garder la capture brute des paquets en complément du log applicatif.
 > - Rejouez plusieurs fois l'échantillon : un malware peut contacter plusieurs C2 successifs, chacun à révéler.
 > - Utilisez le mode no-TLS (`--no-tls`) pour les échantillons qui refusent les certificats auto-signés.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - FakeNet répond à TOUTES les requêtes : des malwares avancés détectent les réponses trop « propres » et changent de comportement.
 > - Sur Windows, vérifiez que l'interface sélectionnée est la bonne (loopback vs ethernet) et que le processus tourne en administrateur.
 > - Ne connectez JAMAIS l'interface d'écoute à un réseau réel : le trafic simulé pourrait s'échapper vers les vrais serveurs.
@@ -626,7 +626,7 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ sudo tshark -i eth0 -Y "tcp.port == 8088" -T fields -e tcp.payload -x | head -40
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Cuckoo Sandbox|🧬 Cuckoo Sandbox]] · [[Outils/Outil - CAPE|🧬 CAPE]] · [[Outils/Outil - Wireshark|Wireshark]] · [[Outils/Outil - tshark|tshark]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Cuckoo Sandbox| Cuckoo Sandbox]] · [[Outils/Outil - CAPE| CAPE]] · [[Outils/Outil - Wireshark|Wireshark]] · [[Outils/Outil - tshark|tshark]] · [[Outils/Outil - YARA| YARA]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

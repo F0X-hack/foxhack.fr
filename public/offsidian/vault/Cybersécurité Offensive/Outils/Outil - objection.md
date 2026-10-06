@@ -1,11 +1,11 @@
 ---
 title: "Outil - objection"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 1.12.5
 licence: GNU GPL v3 (GPL-3.0-or-later)
@@ -16,7 +16,7 @@ site: https://github.com/sensepost/objection
 doc: https://github.com/sensepost/objection/wiki
 ---
 
-# 📱 objection — Mobile & Reverse Engineering
+# objection — Mobile & Reverse Engineering
 
 > [!info] **En 1 phrase**
 > **objection** est une surcouche interactive sur Frida qui automatise le hacking runtime mobile :
@@ -25,13 +25,13 @@ doc: https://github.com/sensepost/objection/wiki
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | objection (from SensePost) |
 | Description | Shell interactif (basé sur Frida) pour le hacking runtime d'apps mobiles : bypass SSL pinning/root, dump mémoire/keystore, exploration des classes |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Instrumentation runtime Android / iOS (surcouche Frida) |
 | Fonction principale | `objection -g com.example.app explore` → shell de commandes « métier » |
 | Type d'outil | CLI interactive (shell IPython) + patcher APK/IPA |
@@ -49,7 +49,7 @@ doc: https://github.com/sensepost/objection/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 objection embarque un **runtime Frida** dans un shell interactif (`objection -g pkg explore`). Il fournit
 des commandes "métier" (`android sslpinning disable`, `android root disable`, `android heap search
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Host (machine d'analyse)
 
@@ -117,14 +117,14 @@ adb install app-patched.apk
 objection --gadget com.example.app explore
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **frida-tools et frida-server doivent être synchronisés** : une erreur de handshake au lancement trahit des versions différentes.
 > - `patchapk` requiert apktool + une keystore pour la re-signature (objection peut générer une clé automatiquement).
 > - iOS : l'instrumentation d'une IPA signée nécessite macOS et une gestion de la signature (voir le wiki).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 objection se configure principalement par **flags de ligne de commande** et par un **fichier de config** (chemin passé avec `-c`).
 
@@ -141,7 +141,7 @@ objection se configure principalement par **flags de ligne de commande** et par 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **CLI Python** : parsing des arguments (argparse), dispatch des commandes, gestion de l'attachement (USB via ADB, réseau via frida-server, gadget).
 - **Shell interactif** : basé sur **IPython** — l'utilisateur tape des commandes « métier » qui sont traduites en scripts **Frida JS**.
@@ -153,7 +153,7 @@ objection se configure principalement par **flags de ligne de commande** et par 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -196,7 +196,7 @@ ios jailbreak disable                   # bypass jailbreak detection
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Connexion
 
@@ -226,7 +226,7 @@ ios jailbreak disable                   # bypass jailbreak detection
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -271,7 +271,7 @@ objection --gadget com.example.app explore
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : récupérer des identifiants stockés dans le keystore d'une app protégée par SSL pinning.
 
@@ -293,7 +293,7 @@ adb forward tcp:8080 tcp:8080
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Contourner SSL pinning puis capturer le trafic dans Burp
 
@@ -322,7 +322,7 @@ android intent launch_activity com.example.app/.LoginActivity
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -334,7 +334,7 @@ android intent launch_activity com.example.app/.LoginActivity
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -349,7 +349,7 @@ android intent launch_activity com.example.app/.LoginActivity
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -399,7 +399,7 @@ rule Android_Frida_Gadget {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — dérouler un script de commandes sur plusieurs apps
@@ -439,7 +439,7 @@ for alias in re.findall(r"Alias: (\S+)", out):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les commandes objecté rendent du **texte de shell** (pas de JSON structuré) : parsing via `grep`/`rg`/regex sur les sorties, et les dumps (heap, fichiers) sont analysés hors-ligne.
 
@@ -456,24 +456,24 @@ objection -g com.example.app explore -c run.obj 2>&1 | grep -E "activity" | head
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 objection (bypass pinning) → Burp (MITM) → jadx/APKTool (corrélation statique) → Frida (hooks avancés)
 MobSF (findings statiques) → objection (confirmation runtime des protections)
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - Frida|📱 Frida]] — le moteur sous objection (scripts avancés si besoin)
-- [[Outil - MobSF|📱 MobSF]] — scan statique pour cibler les tests runtime
-- [[Outil - APKTool|📱 APKTool]] — patching smali manuel quand le gadget est détecté
-- [[Outil - jadx|📱 jadx]] — localiser les classes/méthodes à hooker
-- [[Outil - Burp Suite|🕸️ Burp Suite]] — interception après `android sslpinning disable`
-- [[Techniques/Password Cracking|🔐 Cracking]] · [[Techniques/Insecure Deserialization|🧬 Désérialisation]]
+- [[Tools| Outils]] global
+- [[Outil - Frida| Frida]] — le moteur sous objection (scripts avancés si besoin)
+- [[Outil - MobSF| MobSF]] — scan statique pour cibler les tests runtime
+- [[Outil - APKTool| APKTool]] — patching smali manuel quand le gadget est détecté
+- [[Outil - jadx| jadx]] — localiser les classes/méthodes à hooker
+- [[Outil - Burp Suite| Burp Suite]] — interception après `android sslpinning disable`
+- [[Techniques/Password Cracking| Cracking]] · [[Techniques/Insecure Deserialization| Désérialisation]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -487,7 +487,7 @@ MobSF (findings statiques) → objection (confirmation runtime des protections)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Le shell démarre en **quelques secondes** (attachement Frida + compilation des hooks génériques).
 - `android hooking list classes` est quasi instantané ; `search methods` peut être plus lent sur les grosses apps.
@@ -497,7 +497,7 @@ MobSF (findings statiques) → objection (confirmation runtime des protections)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -521,7 +521,7 @@ MobSF (findings statiques) → objection (confirmation runtime des protections)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Autorisation** : l'instrumentation d'une app sans consentement est intrusive : réserver aux apps auditées dans un cadre autorisé (pentest, lab, CTF).
 - **Malware** : analyser un échantillon malveillant dans une VM isolée ; les dumps et fichiers extraits peuvent contenir des secrets.
@@ -531,7 +531,7 @@ MobSF (findings statiques) → objection (confirmation runtime des protections)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Non furtif** : `frida-agent`/`gadget` dans les maps est détectable par les protections anti-Frida.
 - **Signature cassée** : `patchapk` re-signé → l'app peut refuser de démarrer (anti-tamper) ou la signature ne correspond plus au store.
@@ -542,7 +542,7 @@ MobSF (findings statiques) → objection (confirmation runtime des protections)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installer
@@ -574,7 +574,7 @@ ios keychain dump
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -587,7 +587,7 @@ ios keychain dump
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -599,31 +599,31 @@ ios keychain dump
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Cartographie instantanée**
+> [!tip] **Cartographie instantanée**
 > `android hooking list classes` + `android hooking list activities` donne la structure de l'app en
 > quelques secondes → repérer les classes "security", "auth", "db".
 
-> [!tip] 💡 **APK sans root**
+> [!tip] **APK sans root**
 > `objection patchapk` injecte le gadget dans l'APK : ça marche sur device non rooté, mais **casse la
 > signature** → l'app peut détecter le tampering et refuser de se lancer.
 
-> [!warning] ⚠️ **Dump heap ≠ dump réseau**
+> [!warning] **Dump heap ≠ dump réseau**
 > `android dump heap` capture le **tas mémoire** (objets, chaînes), pas le trafic. Pour le réseau, coupler
 > objection + Burp après `android sslpinning disable`.
 
-> [!warning] ⚠️ **Gadget détectable**
+> [!warning] **Gadget détectable**
 > La présence de `frida-agent` dans les maps est un marqueur classique : sur une app durcie, préférer un
 > `frida-server` système et renommer les artefacts.
 
-> [!warning] ⚠️ **Versions Frida incompatibles**
+> [!warning] **Versions Frida incompatibles**
 > objection exige une version de frida-server cohérente avec le client : une erreur de handshake au
 > lancement trahit une version différente — synchroniser `pip3 install frida-tools` et le binaire du device.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ ios keychain dump
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Frida|📱 Frida]] · [[Outil - MobSF|📱 MobSF]] · [[Outil - APKTool|📱 APKTool]] · [[Outil - jadx|📱 jadx]] · [[Outil - Burp Suite|🕸️ Burp Suite]] · [[Techniques/Password Cracking|🔐 Cracking]] · [[Techniques/Insecure Deserialization|🧬 Désérialisation]]
+**Liens :** [[Tools| Outils]] · [[Outil - Frida| Frida]] · [[Outil - MobSF| MobSF]] · [[Outil - APKTool| APKTool]] · [[Outil - jadx| jadx]] · [[Outil - Burp Suite| Burp Suite]] · [[Techniques/Password Cracking| Cracking]] · [[Techniques/Insecure Deserialization| Désérialisation]]

@@ -1,4 +1,4 @@
-# 🕵️ Reconnaissance
+# Reconnaissance
 
 > [!info] **C'est quoi ?**
 > La phase où l'on **collecte un maximum d'informations** sur la cible **avant** de la toucher.
@@ -6,8 +6,8 @@
 
 ```mermaid
 flowchart LR
-    R[Reconnaissance] --> Pass[👻 Passive<br>On n'y touche pas]
-    R --> Act[⚡ Active<br>On interroge la cible]
+    R[Reconnaissance] --> Pass[Passive<br>On n'y touche pas]
+    R --> Act[Active<br>On interroge la cible]
     Pass --> T[OSINT, moteurs,<br>certificats, breachs]
     Act --> D[DNS, whois,<br>banners, techniques]
 ```
@@ -26,7 +26,7 @@ flowchart TD
     B --> C["3. Collecte active<br>DNS interrogation, fingerprinting web"]
     C --> D["4. Cartographie de la surface d'attaque<br>Corrélation et tri"]
     D --> E["5. Livrable<br>Liste structurée pour le scan"]
-    E --> F["→ Phase suivante : [[02 - Scan & Énumération|🔍 Scan & Énumération]]"]
+    E --> F["→ Phase suivante : [[02 - Scan & Énumération| Scan & Énumération]]"]
 ```
 
 ### Passive vs Active — Arbre de décision
@@ -58,24 +58,24 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A["🔍 Reconnaissance"] --> B["🔍 Scan & Énumération"]
-    B --> C["🌍 Exploitation Web"]
-    B --> D["💥 Exploitation Réseau"]
-    D --> E["🕹️ Post-Exploitation"]
+    A["Reconnaissance"] --> B["Scan & Énumération"]
+    B --> C["Exploitation Web"]
+    B --> D["Exploitation Réseau"]
+    D --> E["Post-Exploitation"]
     A -.->|"alimenter"| C
     A -.->|"alimenter"| D
 ```
 
-> [!tip] 📖 **Compléments de lecture**
-> - [[11 - Glossaire|📖 Glossaire]] pour les termes techniques
-> - [[10 - Cheatsheets|📋 Cheatsheets]] pour les commandes rapides
-> - [[Tools|🧰 Bibliothèque d'Outils]] pour la liste complète des outils
+> [!tip] **Compléments de lecture**
+> - [[11 - Glossaire| Glossaire]] pour les termes techniques
+> - [[10 - Cheatsheets| Cheatsheets]] pour les commandes rapides
+> - [[Tools| Bibliothèque d'Outils]] pour la liste complète des outils
 
 ---
 
 ## Reconnaissance Passive — Domaines
 
-> [!warning] 🧊 **Le principe**
+> [!warning] **Le principe**
 > On n'envoie **aucun paquet** à la cible. On exploite ce qui est **déjà public**.
 
 ### WhoIs — Deep dive
@@ -586,7 +586,7 @@ theHarvester -d example.com -b google,linkedin,bing
 
 ## Reconnaissance Passive — Shodan & Censys
 
-> [!tip] 🛰️ **Shodan = "Google de l'Internet des objets"**
+> [!tip] **Shodan = "Google de l'Internet des objets"**
 > Shodan scanne en permanence **tout l'Internet** et indexe les bannières.
 
 ### Shodan — Syntaxe et CLI
@@ -630,7 +630,7 @@ domain="example.com" && port="443"
 port:22 && has_screenshot:true
 ```
 
-> [!tip] 🔔 **Monitoring Shodan/Censys**
+> [!tip] **Monitoring Shodan/Censys**
 > Configure des alertes sur les IP de l'entreprise pour détecter les changements d'infrastructure, les nouveaux services exposés, et les CVE récentes.
 
 ---
@@ -720,7 +720,7 @@ cat leaked_data.txt | cut -d: -f1,2 | sort -u > credentials_raw.txt
 # Puis mapper vers les formats d'email de l'entreprise
 ```
 
-> [!warning] ⚖️ **Cadre légal**
+> [!warning] **Cadre légal**
 > L'utilisation de bases de données de fuites est **légale pour vérifier ses propres comptes** ou avec l'autorisation écrite du client. L'objectif est de démontrer le risque de réutilisation de mots de passe.
 
 ---
@@ -782,7 +782,7 @@ Avant toute activité de [[07 - Wireless, MITM & Social Engineering]], la recon 
 
 ## Reconnaissance Active — Vue d'ensemble
 
-> [!danger] ⚡ **Attention**
+> [!danger] **Attention**
 > Là, on **contacte** la cible. Ça peut laisser des traces dans les logs.
 
 ### Quand passer en mode actif ?
@@ -1148,7 +1148,7 @@ swaks --to admin@example.com --from test@example.com --server 192.168.1.10 --tls
 | **RCPT TO** | Teste si une adresse est acceptée | Validation d'adresses |
 | **MAIL FROM** | Définit l'expéditeur | Spoofing potentiels |
 
-> [!warning] ⚠️ **Limites**
+> [!warning] **Limites**
 > La plupart des serveurs SMTP modernes désactivent VRFY et EXPN. Le test RCPT est plus fiable mais peut être limité par le rate limiting.
 
 ---
@@ -1349,7 +1349,7 @@ flowchart TD
     E --> F["Résultats → Scan & Enum"]
 ```
 
-> [!tip] 💡 **Ordre recommandé**
+> [!tip] **Ordre recommandé**
 > 1. **Masscan** d'abord sur les /24 → trouver les ports ouverts rapidement
 > 2. **Nmap** ensuite sur les ports trouvés → obtenir les versions et bannières
 > 3. **Scripts Nmap** sur les services intéressants → premiers indices de vulnérabilités
@@ -1358,7 +1358,7 @@ flowchart TD
 
 ## Cartographie de la surface d'attaque
 
-> [!success] 🏆 **Livrable de la phase**
+> [!success] **Livrable de la phase**
 > Une **liste organisée** :
 > - IP/hôtes + services + versions
 > - Sous-domaines + sous-réseaux
@@ -1397,21 +1397,21 @@ cat subdomains_all.txt | httpx -title -status-code -tech-detect -follow-redirect
 
 ```mermaid
 flowchart LR
-    subgraph RECON["🔍 Reconnaissance"]
+    subgraph RECON["Reconnaissance"]
         R1["Domaines + IPs"]
         R2["Sous-domaines"]
         R3["Services exposés"]
         R4["Stack technique"]
         R5["Secrets"]
     end
-    subgraph SURFACE["🎯 Surface d'attaque"]
+    subgraph SURFACE["Surface d'attaque"]
         S1["Web apps"]
         S2["Mail servers"]
         S3["VPN"]
         S4["API"]
         S5["Cloud"]
     end
-    subgraph EXPLOIT["💥 Exploitation"]
+    subgraph EXPLOIT["Exploitation"]
         E1["[[03 - Exploitation Web|Web]]"]
         E2["[[04 - Exploitation Réseau|Réseau]]"]
         E3["[[05 - Active Directory|AD]]"]
@@ -1487,12 +1487,12 @@ example.com
 
 ### Wikilinks utiles
 
-- [[02 - Scan & Énumération|🔍 Scan & Énumération]] — étape suivante
-- [[03 - Exploitation Web|🌍 Exploitation Web]] — [[04 - Exploitation Réseau|💥 Exploitation Réseau]]
-- [[05 - Active Directory|👑 Active Directory]] — [[06 - Post-Exploitation|🕹️ Post-Exploitation]]
-- [[07 - Wireless, MITM & Social Engineering]] — [[08 - Password Cracking|🔐 Password Cracking]]
-- [[10 - Cheatsheets|📋 Cheatsheets]] — [[11 - Glossaire|📖 Glossaire]]
-- [[13 - Hardware & IoT|🔧 Hardware & IoT]] — [[Tools|🧰 Bibliothèque d'Outils]]
+- [[02 - Scan & Énumération| Scan & Énumération]] — étape suivante
+- [[03 - Exploitation Web| Exploitation Web]] — [[04 - Exploitation Réseau| Exploitation Réseau]]
+- [[05 - Active Directory| Active Directory]] — [[06 - Post-Exploitation| Post-Exploitation]]
+- [[07 - Wireless, MITM & Social Engineering]] — [[08 - Password Cracking| Password Cracking]]
+- [[10 - Cheatsheets| Cheatsheets]] — [[11 - Glossaire| Glossaire]]
+- [[13 - Hardware & IoT| Hardware & IoT]] — [[Tools| Bibliothèque d'Outils]]
 
 ### Choix de l'outil selon le contexte
 
@@ -1524,7 +1524,7 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 
 ### Consentement écrit — indispensable
 
-> [!danger] ⚠️ **Sans consentement écrit, c'est illégal**
+> [!danger] **Sans consentement écrit, c'est illégal**
 > Le consentement doit préciser : périmètre exact, méthodes autorisées, durée, contacts d'urgence, couverture légale (RC pro).
 
 ---
@@ -1589,9 +1589,9 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 
 ---
 
-## 🧠 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 🔄 **Pipeline de recon automatisé (le standard pro)**
+> [!tip] **Pipeline de recon automatisé (le standard pro)**
 > ```bash
 > subfinder -d example.com -all -silent | tee subs.txt
 > # Résoudre + filtrer les hôtes vivants
@@ -1603,7 +1603,7 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > ```
 > C'est **exactement** le flux que font les outils modernes (ProjectDiscovery).
 
-> [!tip] 📍 **Énumération par ASN / plage IP (au-delà du nom de domaine)**
+> [!tip] **Énumération par ASN / plage IP (au-delà du nom de domaine)**
 > ```bash
 > # Qui est l'ASN ? amass intel :
 > amass intel -org "NomEntreprise"
@@ -1613,7 +1613,7 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > ```
 > Le domaine n'est qu'une partie de la surface. Les **plages IP** en contiennent souvent plus.
 
-> [!tip] 🖼️ **Shodan : chercher par favicon**
+> [!tip] **Shodan : chercher par favicon**
 > Les favicons sont uniques par stack. On calcule un hash et on cherche **toutes les apps identiques** :
 > ```
 > # 1. Télécharger le favicon.ico de la cible
@@ -1622,7 +1622,7 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > ```
 > → toutes les instances du même produit/service sur Internet, y compris les autres domaines de l'entreprise !
 
-> [!tip] 🕰️ **Wayback = mine d'or d'endpoints oubliés**
+> [!tip] **Wayback = mine d'or d'endpoints oubliés**
 > ```bash
 > echo example.com | gau --subs | sort -u | tee urls.txt
 > # Extraire les paramètres / fichiers intéressants
@@ -1631,19 +1631,19 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > # Vieilles versions de configs : souvent encore en ligne !
 > ```
 
-> [!warning] ⚠️ **Piège n°1 : les alertes**
+> [!warning] **Piège n°1 : les alertes**
 > La **recon passive** ne laisse presque aucune trace. Mais dès le **1er paquet envoyé** (dig, curl, nmap),
 > tu es dans les logs du DNS/serveur/pare-feu. **Fais toute la passive AVANT toute active.**
 
-> [!warning] ⚠️ **Piège n°2 : bruiter la cible**
+> [!warning] **Piège n°2 : bruiter la cible**
 > Un `amass enum -active` ou un bruteforce DNS mal throttlé peut **charger/déclencher les WAF**.
 > Toujours : wordlists propres, délais, et pas de scans massifs sur une cible de prod sans accord.
 
-> [!success] 🏆 **Le bon réflexe "surface d'attaque"**
+> [!success] **Le bon réflexe "surface d'attaque"**
 > Avant d'exploiter : avoir une **carte claire** = domaines + sous-domaines + IP + services + technologies.
 > Cette carte, tu la construis 90% en passive. Elle guide toute la suite.
 
-> [!tip] 🔍 **ASN Discovery — au-delà du domaine**
+> [!tip] **ASN Discovery — au-delà du domaine**
 > ```bash
 > # Trouver l'ASN de l'entreprise
 > whois example.com | grep -i "originas\|org-name\|netname"
@@ -1652,7 +1652,7 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > ```
 > L'ASN révèle souvent des sous-réseaux oubliés, des services internes exposés, et des acquisitions récentes.
 
-> [!tip] 🖼️ **Favicon hash hunting — technique avancée**
+> [!tip] **Favicon hash hunting — technique avancée**
 > ```bash
 > # Calculer le hash d'un favicon
 > # Python :
@@ -1665,7 +1665,7 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > ```
 > Cette technique trouve des instances identiques sur des IP et domaines complètement différents.
 
-> [!tip] 🕰️ **Wayback mining — extraire les données structurées**
+> [!tip] **Wayback mining — extraire les données structurées**
 > ```bash
 > # Au-delà des URLs, extraire les données archivées
 > echo example.com | gau --subs --threads 5 | sort -u | tee urls_full.txt
@@ -1676,12 +1676,12 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 > ```
 > Les archives web sont souvent sous-estimées. Des endpoints de debug et de test y traînent pendant des années.
 
-> [!tip] 📌 **Règle d'or : passive first, toujours**
+> [!tip] **Règle d'or : passive first, toujours**
 > **Avant d'envoyer le moindre paquet**, épuise TOUTES les sources passives.
 > Un pentester qui commence par un scan actif est un pentester qui déclenche des alertes pour rien.
 > La passive te donne 80% des infos pour 0% du bruit.
 
-> [!warning] ⚠️ **Piège n°3 : rate limiting et throttling**
+> [!warning] **Piège n°3 : rate limiting et throttling**
 > Même en mode actif, respecte les limites :
 > - DNS bruteforce : max 50 requêtes/seconde
 > - HTTP probing : max 25 requêtes/seconde
@@ -1690,6 +1690,6 @@ Avant de lancer la moindre phase de reconnaissance, il est **impératif** de for
 
 ---
 
-> [!warning] ⚖️ **Souviens-toi** : tout ça **reste illégal sans autorisation**. Reste sur les lab ! 🔒
+> [!warning] **Souviens-toi** : tout ça **reste illégal sans autorisation**. Reste sur les lab !
 
-➡️ Suite logique : [[02 - Scan & Énumération|🔍 Scan & Énumération]]
+Suite logique : [[02 - Scan & Énumération| Scan & Énumération]]

@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🎮 Amiibo et NTAG215
+# Amiibo et NTAG215
 
 > [!info] **En 1 phrase**
 > Un Amiibo est une puce **NTAG215** (NFC 13.56 MHz) dont les données sont **chiffrées et
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -34,14 +34,14 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Un Amiibo est une figurine ou carte contenant un tag **NTAG215** standard (NFC Forum
 > Type 2 Tag, 13.56 MHz). Nintendo ajoute une **couche de chiffrement propriétaire**
 > et une **signature numérique liée au UID**. Le tag fait 540 octets EEPROM organisés
 > en 135 pages de 4 octets, soit **504 octets utilisateur**.
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **NTAG215** : 540 octets EEPROM, 135 pages, mot de passe 32 bits, UID 7 octets
 > - Nintendo ajoute **chiffrement + signature** : copier les octets bruts ne suffit pas
 > - La signature dépend du **UID** → chaque tag nécessite un recalcul unique
@@ -58,7 +58,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Architecture mémoire NTAG215
 
@@ -92,7 +92,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -115,7 +115,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### NFC Forum Type 2 Tag
 
@@ -137,7 +137,7 @@ flowchart TB
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -167,7 +167,7 @@ make
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres amiitool
 
@@ -181,7 +181,7 @@ make
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 | Commande | Description |
 |---|---|
@@ -205,9 +205,9 @@ hf mfu setpwd aabbccdd --pack 8080
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lecture d'un Amiibo avec Flipper Zero
+### Débutant — Lecture d'un Amiibo avec Flipper Zero
 
 ```text
 1. Allumer le Flipper Zero
@@ -217,7 +217,7 @@ hf mfu setpwd aabbccdd --pack 8080
 5. Sauvegarder le fichier .nfc
 ```
 
-### 🟡 Intermédiaire — Dump et reécriture
+### Intermédiaire — Dump et reécriture
 
 ```bash
 # Dump de l'original
@@ -235,7 +235,7 @@ hf mfu restore
 hf mfu setpwd aabbccdd --pack 8080
 ```
 
-### 🔴 Avancé — Déchiffrer et modifier un Amiibo
+### Avancé — Déchiffrer et modifier un Amiibo
 
 ```bash
 # Déchiffrement
@@ -248,7 +248,7 @@ hexedit amiibo_decrypted.bin
 ./amiitool -e -k amiibo_keys.bin -i amiibo_decrypted.bin -o amiibo_new.bin
 ```
 
-### ⚫ Expert — Création automatique d'Amiibo
+### Expert — Création automatique d'Amiibo
 
 ```python
 #!/usr/bin/env python3
@@ -274,7 +274,7 @@ create_amiibo("template.bin", "amiibo_keys.bin", "custom_amiibo.bin")
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -290,7 +290,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Création d'un Amiibo complet
 
@@ -299,7 +299,7 @@ flowchart TB
 | **Objectif** | Créer un Amiibo personnalisé |
 | **Matériel** | PC + amiitool + Proxmark3 + NTAG215 vierge |
 | **Étapes** | Déchiffrer → Modifier → Rechiffrer → Écrire → Tester |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Émulation d'Amiibo avec Flipper Zero
 
@@ -308,11 +308,11 @@ flowchart TB
 | **Objectif** | Émuler un Amiibo sans physique |
 | **Matériel** | Flipper Zero + fichier .nfc |
 | **Étapes** | Dump original → Charger sur Flipper → NFC → Amiibo → Select |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -328,7 +328,7 @@ flowchart TB
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -338,7 +338,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -366,7 +366,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -392,7 +392,7 @@ dump_ntag215()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 | Format | Utilité |
 |---|---|
@@ -407,11 +407,11 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - RFID et NFC|🏷️ Hub RFID]]
-- [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - RFID et NFC| Hub RFID]]
+- [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]]
 
 | Outils associés | Usage |
 |---|---|
@@ -421,7 +421,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -431,7 +431,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -442,7 +442,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -454,7 +454,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -468,7 +468,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -479,7 +479,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────────┐
@@ -508,7 +508,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -524,7 +524,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -540,7 +540,7 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Le mot de passe dépend du UID — changer de tag = recalculer le PWD.
 - **Piège 2** : Sans `amiibo_keys.bin`, déchiffrement/rechiffrement impossible.
@@ -552,9 +552,9 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Amiibo / NTAG215](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/rfid-nfc/ntag215-amiibo.md)
 > - [Reverse Engineering Amiibo — Kevin Brewster](https://kevinbrewster.github.io/Amiibo-Reverse-Engineering/)
 > - [NXP NTAG213/215/216 Datasheet](https://www.nxp.com/docs/en/data-sheet/NTAG213_215_216.pdf)
@@ -568,4 +568,4 @@ hexdump -s 0x208 -n 32 -C amiibo_decrypted.bin  # signature
 
 ---
 
-➡️ **Liens :** [[Hardware - RFID et NFC|🏷️ Hub RFID]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]] · [[Hardware - Flipper Zero|🐬 Flipper]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Hardware - RFID et NFC| Hub RFID]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] · [[Hardware - Flipper Zero| Flipper]] · [[Bibliothèque technique| Index]]

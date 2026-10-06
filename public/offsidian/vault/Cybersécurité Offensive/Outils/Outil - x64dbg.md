@@ -1,7 +1,7 @@
 ---
 title: "Outil - x64dbg"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://x64dbg.com/
 doc: https://github.com/x64dbg/x64dbg/wiki
 ---
 
-# 🧬 x64dbg — Débogueur assembleur Windows pour malwares
+# x64dbg — Débogueur assembleur Windows pour malwares
 
 > [!info] **En 1 phrase**
 > x64dbg (et son jumeau 32 bits x32dbg) est le débogueur moderne de référence pour dépaqueter les malwares Windows, tracer les appels API et patcher les protections ligne par ligne.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | x64dbg (débogueur x64) / x32dbg (débogueur x86) |
 | Description | Débogueur open-source pour code natif Windows x64 et x86 : désassemblage, breakpoints API, trace, gestion mémoire, patching, dump + reconstruction d'imports via plugins (Scylla, ScyllaHide, xAnalyzer) |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Reverse engineering — débogage natif |
 | Fonction principale | Dépaqueter les malwares, tracer les appels API et patcher les protections sous Windows |
 | Type d'outil | Application desktop (GUI) + CLI (`x64dbg.exe -c`) |
@@ -50,7 +50,7 @@ doc: https://github.com/x64dbg/x64dbg/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 x64dbg est un débogueur de code natif **x64 et x86** (x32dbg pour le 32 bits), successeur open-source d'OllyDbg, entièrement pensé pour l'analyse de binaires sous Windows. L'analyste charge l'échantillon, pose des points d'arrêt sur les API sensibles (`VirtualAlloc`, `CreateProcessW`, `WriteProcessMemory`), exécute pas à pas et observe registres, pile, mémoire et structure du programme. L'interface est divisée en vues synchronisées : la vue **CPU** (désassemblage avec curseur d'exécution), les **registres**, la **pile**, le **dump mémoire** et le **log** — chaque vue suit l'exécution en direct. Ses points forts : un moteur de trace fiable, la détection des sections et du point d'entrée, un gestionnaire de mémoire efficace, et une forte communauté de plugins (ScyllaHide contre les anti-debug, xAnalyzer pour la résolution des arguments, Scylla pour le dump des imports et la reconstruction de l'IAT).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation portable (pas de setup, pas d'admin requis pour lancer) :
 
@@ -99,7 +99,7 @@ x32dbg.exe   # débogueur 32 bits (pour les anciens malwares x86)
 
 Plugins utiles : **ScyllaHide** (anti-anti-debug), **Scylla** (dump + reconstruction IAT), **xAnalyzer** (analyse des arguments de fonctions), **yara64** (scan YARA en mémoire). Sur **REMnux / Flare VM**, x64dbg est pré-installé ; sous Linux/Kali on peut le faire tourner via Wine mais l'analyse d'échantillons Windows se fait idéalement dans une VM Windows dédiée.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Architecture** : charger un échantillon 32 bits dans x32dbg (et non x64dbg), sinon adresses et registres sont faussés.
 > - **Droits** : l'attachement à un processus existant (`-p`) requiert des droits administrateur.
 > - **Antivirus** : certains EDR signalent x64dbg ; l'utiliser dans la VM d'analyse.
@@ -107,7 +107,7 @@ Plugins utiles : **ScyllaHide** (anti-anti-debug), **Scylla** (dump + reconstruc
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 x64dbg se configure via `Options → Preferences` et par commandes :
 
@@ -125,7 +125,7 @@ x64dbg se configure via `Options → Preferences` et par commandes :
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Moteur de débogage** : s'appuie sur l'API Debug de Windows (x64/x86) — chargement du processus, breakpoints, pas-à-pas.
 - **Vues synchronisées** : CPU (désassemblage), registres, pile, dump mémoire, log — toutes suivent l'EIP/RIP en direct.
@@ -146,7 +146,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -186,7 +186,7 @@ trace over
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -207,7 +207,7 @@ trace over
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -251,7 +251,7 @@ yara64 -s /opt/rules/malware.yar
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Charger l'échantillon** — ouvrir le binaire avec la bonne archi (64 bits dans x64dbg, 32 bits dans x32dbg), dans une VM isolée.
 
@@ -277,7 +277,7 @@ yara64 -s /opt/rules/malware.yar
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Dépaquetage d'un UPX / crypter maison
 
@@ -329,7 +329,7 @@ yara64 -s /opt/rules/malware.yar
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -342,7 +342,7 @@ yara64 -s /opt/rules/malware.yar
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -359,7 +359,7 @@ yara64 -s /opt/rules/malware.yar
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -403,7 +403,7 @@ rule Packed_PE_Heuristic
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```powershell
 # PowerShell — lancer x64dbg avec une commande automatique au chargement
@@ -425,7 +425,7 @@ Start-Process x64dbg.exe -ArgumentList '"C:\malware\sample.exe" -c "bpx VirtualA
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Dump Scylla** : binaire nu reconstruit (fichier `.exe`/`.dll`) re-analysable (Ghidra, YARA, sandbox).
 - **Log** : traces des commandes et des événements, exportable.
@@ -452,9 +452,9 @@ with open("x64dbg.log") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Ghidra]] — analyse statique du binaire nu dumpé (parfaitement complémentaire)
 - [[Outil - Cutter]] — alternative GUI (radare2) pour l'analyse statique
 - [[Outil - CAPE]] — la sandbox confirme la malveillance avant le débogage manuel
@@ -463,7 +463,7 @@ with open("x64dbg.log") as f:
 - [[Outil - YARA]] — signatures sur le dump et la mémoire du processus
 - [[Outil - Sysinternals Suite]] — supervision des processus autour du débogage
 - [[Outil - Flare VM]] — VM Windows d'analyse avec x64dbg préinstallé
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOCs
@@ -471,7 +471,7 @@ Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOC
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -485,7 +485,7 @@ Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOC
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - x64dbg est léger et réactif ; le pas-à-pas manuel est la limite principale (vitesse humaine).
 - La trace automatique (`trace into`) est plus rapide que le clic répété mais ralentit sur les boucles longues.
@@ -495,7 +495,7 @@ Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOC
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -531,7 +531,7 @@ Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOC
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Détonation réelle** : appuyer sur F9 exécute le malware — uniquement dans une VM isolée jetable.
 - **Attachement** : l'attachement (`-p`) est détectable par les anti-debug ; préférer le chargement dès le départ.
@@ -542,7 +542,7 @@ Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOC
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Windows uniquement (Linux via Wine, sans garantie de stabilité).
 - Le débogage d'un malware réel demande une VM et de la prudence (détonation).
@@ -553,7 +553,7 @@ Sandbox (triage) → x64dbg (dépaquetage) → dump nu → Ghidra + YARA → IOC
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Ouvrir un binaire
@@ -595,7 +595,7 @@ patch eip "90 90"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -608,7 +608,7 @@ patch eip "90 90"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -620,16 +620,16 @@ patch eip "90 90"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Choisissez toujours la bonne archi : un échantillon 32 bits doit être chargé dans x32dbg, sinon les adresses et registres sont faussés.
 > - Utilisez `bpx` sur les API plutôt que des breakpoints au hasard : les appels API sont les points de passage obligés du malware.
 > - Dumper avec Scylla (et non les dumpers basiques) : il reconstruit l'IAT et produit un binaire exploitable par Ghidra.
 > - Posez un breakpoint sur la fin de la boucle de décryptage : le payload attend en clair dans le buffer.
 > - Utilisez les breakpoints matériels (`bph`) contre les anti-debug qui vérifient les breakpoints logiciels.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne lancez JAMAIS un vrai malware dans x64dbg sur une machine de prod : à partir du moment où l'on appuie sur F9, il s'exécute.
 > - L'attachement (`-p`) est détectable par les protections anti-debug ; préférez charger le binaire dès le départ dans une VM jetable.
 > - Un dump avec imports cassés fait planter le binaire extrait : vérifiez toujours la reconstruction Scylla avant de le soumettre à YARA/sandbox.
@@ -637,7 +637,7 @@ patch eip "90 90"
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -660,4 +660,4 @@ patch eip "90 90"
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Ghidra|🔬 Ghidra]] · [[Outils/Outil - CAPE|🧬 CAPE]] · [[Outils/Outil - Cuckoo Sandbox|🧬 Cuckoo Sandbox]] · [[Outils/Outil - dnSpy|🧬 dnSpy]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Ghidra| Ghidra]] · [[Outils/Outil - CAPE| CAPE]] · [[Outils/Outil - Cuckoo Sandbox| Cuckoo Sandbox]] · [[Outils/Outil - dnSpy| dnSpy]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

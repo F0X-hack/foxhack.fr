@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🍃 NoSQL Injection
+# NoSQL Injection
 
 > [!info] **En 1 phrase**
 > NoSQLi = injecter des **opérateurs NoSQL** (`$ne`, `$gt`, `$regex`, `$where`…) dans une requête **JSON** construite dynamiquement, pour bypasser l'auth, filtrer sur d'autres données ou extraire la base en aveugle.
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,7 +33,7 @@ flowchart LR
     C --> F[Exécution JS serveur<br>via $where]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Quand l'app injecte l'entrée brute dans un filtre `find({ "username": userInput })`, on remplace la **valeur** attendue par un **objet opérateur** :
 > `{ "username": "toto" }` devient `{ "username": { "$ne": "toto" } }` → **"tout sauf toto"**.
 > La sémantique de la requête change complètement sans casser la syntaxe.
@@ -57,7 +57,7 @@ flowchart LR
 
 ---
 
-## 🕵️ Points d'injection : JSON vs query string
+## Points d'injection : JSON vs query string
 
 Le même payload change de forme selon la façon dont l'app reçoit la donnée. **Toujours tester les deux.**
 
@@ -77,7 +77,7 @@ login[$gt]=admin&login[$lt]=test&pass[$ne]=1
 login[$nin][]=admin&login[$nin][]=test&pass[$ne]=toto
 ```
 
-> [!tip] 💡 La syntaxe `champ[opérateur]=valeur` est **parsée en tableau imbriqué** par PHP, Rails et Express.
+> [!tip] La syntaxe `champ[opérateur]=valeur` est **parsée en tableau imbriqué** par PHP, Rails et Express.
 > Le driver la convertit alors en objet `{ champ: { opérateur: valeur } }` → **l'injection marche sans body JSON**.
 
 ### GET (query string)
@@ -91,18 +91,18 @@ http://target/search?price[$gt]=0
 
 | Côté serveur | Body JSON | Query string `x[$ne]=1` |
 |---|---|---|
-| **Node/Express** (`express.json()`) | objet → driver Mongo | ⚠️ pas toujours parsé en objet |
-| **PHP** (`json_decode`) | tableau associatif → driver | ✅ parsé en tableau si pas de `(string)` |
-| **Rails** | ✅ objet via params | ✅ tableau |
-| **Python/Flask** (`request.json`) | dict → pymongo | ⚠️ selon la lib |
+| **Node/Express** (`express.json()`) | objet → driver Mongo | pas toujours parsé en objet |
+| **PHP** (`json_decode`) | tableau associatif → driver | parsé en tableau si pas de `(string)` |
+| **Rails** | objet via params | tableau |
+| **Python/Flask** (`request.json`) | dict → pymongo | selon la lib |
 
-> [!warning] ⚠️ **PHP : le casting tue l'injection**
+> [!warning] **PHP : le casting tue l'injection**
 > Si l'app force le type avec `(string) $_POST['username']`, un tableau PHP devient `"Array"` et l'injection d'opérateurs par query string échoue.
 > → Repasser par un **body JSON** (`json_decode` → tableau associatif) ou par un champ non typé.
 
 ---
 
-## 🚪 Authentication Bypass
+## Authentication Bypass
 
 C'est l'usage le plus simple et le plus rentable : **annuler la condition mot de passe**.
 
@@ -144,11 +144,11 @@ password = ' || '1'=='1
 db.users.find({ $where: "this.username == '' || '1'=='1' && this.password == '' || '1'=='1'" })
 ```
 
-> [!warning] ⚠️ `$where` exécute du **JavaScript côté serveur** (SpiderMonkey) : payload boolean de type SQLi, mais aussi **vecteur de DoS/timing** et, sur Mongo vulnérable, de commandes serveur.
+> [!warning] `$where` exécute du **JavaScript côté serveur** (SpiderMonkey) : payload boolean de type SQLi, mais aussi **vecteur de DoS/timing** et, sur Mongo vulnérable, de commandes serveur.
 
 ---
 
-## 🧩 Injection d'opérateurs
+## Injection d'opérateurs
 
 ### Table des opérateurs MongoDB
 
@@ -194,7 +194,7 @@ MongoDB ne garde que la **dernière occurrence** d'une clé dupliquée → perme
 
 ---
 
-## 🙈 Blind NoSQL (boolean + regex)
+## Blind NoSQL (boolean + regex)
 
 ### Méthodo
 
@@ -229,7 +229,7 @@ username[$ne]=toto&password[$regex]=md.*
 {"username": {"$eq": "admin"}, "password": {"$regex": "^mdp" }}
 ```
 
-> [!tip] 💡 Raisonnement : `^m` matche → le premier caractère est `m`. On allonge le préfixe `^md` → matche → etc.
+> [!tip] Raisonnement : `^m` matche → le premier caractère est `m`. On allonge le préfixe `^md` → matche → etc.
 > Chaque caractère gagné = **une requête** (ou une binaire `>`, `<` pour aller plus vite).
 
 ### Force brute avec `$in` (liste de valeurs connues)
@@ -246,7 +246,7 @@ username[$ne]=toto&password[$regex]=md.*
 
 ---
 
-## 📤 Extraction de données (scripts)
+## Extraction de données (scripts)
 
 ### POST JSON — Python
 
@@ -335,12 +335,12 @@ while true
 end
 ```
 
-> [!tip] 💡 **Adapte le marqueur de succès** (`'OK'`, `302` + `Location`, `'Yeah'`) à l'app cible :
+> [!tip] **Adapte le marqueur de succès** (`'OK'`, `302` + `Location`, `'Yeah'`) à l'app cible :
 > c'est lui qui fait office de **canal booléen**.
 
 ---
 
-## 🌐 Selon le langage serveur
+## Selon le langage serveur
 
 | Langage/Stack | Comment l'injection arrive | Piège typique |
 |---|---|---|
@@ -379,7 +379,7 @@ app.post('/login', (req, res) => {
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Rôle |
 |---|---|
@@ -396,7 +396,7 @@ nosqlmap --target http://target --method POST --data 'username=admin&password=te
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -411,23 +411,23 @@ nosqlmap --target http://target --method POST --data 'username=admin&password=te
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Tester **JSON body ET query string** (le parsing diffère par framework)
 > 2. Confirmer avec `{"$ne": null}` (toujours vrai) vs `{"$eq": "valeur_inexistante"}` (toujours faux)
 > 3. Bypass auth (`$ne`, `$gt: ""`, `$nin`)
 > 4. Extraction blind par `$regex` (`.{N}` puis `^prefixe`)
 > 5. Passer aux outils (NoSQLMap, Burp-NoSQLiScanner) pour valider en masse
 
-> [!tip] 💡 **Détails qui font gagner du temps**
+> [!tip] **Détails qui font gagner du temps**
 > - L'**ordre des opérateurs** dans un objet compte : `{"price": {"$gt": 0, "$lt": 100}}` définit une plage → penser aux **bornes** (`$gt`/`$lt` combinés).
 > - L'**équivalent du `ORDER BY`** : le paramètre `sort` (`?sort=price:1`) est aussi injectable si construit dynamiquement.
 > - Comment le **driver parse** : en PHP, `login[$nin][]=admin` → `["$nin" => ["admin"]]` ; en JSON, `{"login": {"$nin": ["admin"]}}`.
 > - Les **erreurs révélatrices** : `$where` avec un mauvais payload JS → erreur "ReferenceError" qui confirme Mongo + un champ `$where`.
 > - **`{"$gt": undefined}`** peut être envoyé comme `null` dans certains clients → tester `{"$gt": ""}` et `{"$gt": null}`.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Pas de `UNION`** en NoSQL : ne perds pas de temps sur les payloads SQLi classiques.
 > - Le **casting PHP** (`(string)`, `(int)`) casse l'injection par query string → repasser en body JSON.
 > - `$where` = **JS serveur** : un payload malveillant peut faire **planter/ralentir la BDD** (DoS). Teste avec prudence.
@@ -438,7 +438,7 @@ nosqlmap --target http://target --method POST --data 'username=admin&password=te
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - Root-Me — NoSQL injection Authentication : https://www.root-me.org/en/Challenges/Web-Server/NoSQL-injection-Authentication
 - Root-Me — NoSQL injection Blind : https://www.root-me.org/en/Challenges/Web-Server/NoSQL-injection-Blind
@@ -446,11 +446,11 @@ nosqlmap --target http://target --method POST --data 'username=admin&password=te
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[GraphQL|🌀 GraphQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — NoSQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/NoSQL%20Injection/README.md)
-- 📚 Ref : [OWASP — Testing for NoSQL injection](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection)
+- [[Injection SQL| SQLi]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[GraphQL| GraphQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — NoSQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/NoSQL%20Injection/README.md)
+- Ref : [OWASP — Testing for NoSQL injection](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection)

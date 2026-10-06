@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔤 Regular Expression (ReDoS)
+# Regular Expression (ReDoS)
 
 > [!info] **En 1 phrase**
 > ReDoS (Regular Expression Denial of Service) = une **regex catastrophique** combinée à une entrée hostile provoque une **explosion de backtracking** → CPU saturé, service bloqué ou crash, DoS.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,12 +32,12 @@ flowchart LR
     E --> F[Bug logique<br>check bypassé → RCE]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Avec des patterns du type **groupement + répétition imbriquée** (`(a+)+`, `(a|aa)+`, `(.*a){x}`), un input qui **échoue à la fin** (ex : 20 × `a` + `!`) force le moteur à re-tester toutes les manières de découper la chaîne avant de conclure — complexité exponentielle.
 
 ---
 
-## 😈 Evil Regex
+## Evil Regex
 
 > Une regex vulnérable contient :
 > - un **groupement avec répétition** (`(...)+`),
@@ -61,7 +61,7 @@ aaaaaaaaaaaaaaaaaaaa!
 
 ---
 
-## ⏱️ Backtrack Limit (PHP/PCRE)
+## Backtrack Limit (PHP/PCRE)
 
 | Paramètre | Défaut | Note |
 |---|---|---|
@@ -81,12 +81,12 @@ if (preg_match($pattern, $subject)) {
 }
 ```
 
-> [!warning] ⚠️ **Le bug logique**
+> [!warning] **Le bug logique**
 > `preg_match()` retourne `false` (erreur) OU `0` (aucun match). Une app qui traite `0` et `false` **de la même façon** permet de **neutraliser un contrôle regex** en provoquant l'épuisement — le check devient une simple formalité.
 
 ---
 
-## 🎯 Cas réel : Adminer SQLite RCE
+## Cas réel : Adminer SQLite RCE
 
 > Adminer filtrait les requêtes SQLite commençant par `ATTACH` :
 
@@ -112,7 +112,7 @@ echo str_repeat("--\n", 350000) . $payload;
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ```bash
 # redos-detector (CLI + lib JS/Node/Deno) — teste la sûreté d'une regex avec certitude
@@ -126,7 +126,7 @@ regexploit "pattern"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -139,12 +139,12 @@ regexploit "pattern"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Payload de test universel**
+> [!tip] **Payload de test universel**
 > `aaaa...a!` (beaucoup de `a` + un caractère final qui force l'échec) — si la réponse est anormalement lente, la regex est suspecte.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La **même regex** peut être sûre sur un moteur (RE2) et explosive sur un autre (PCRE, Java, JS, Python `re`) — toujours tester sur la **stack cible**.
 > - Les commentaires SQL imbriqués (`/*...*/`) et les commentaires de ligne répétés sont d'excellents déclencheurs de backtracking.
 > - L'impact n'est pas que le **DoS** : le retour `false` peut **désactiver une protection** (validation, WAF applicatif) → chain jusqu'au RCE.
@@ -152,10 +152,10 @@ regexploit "pattern"
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Denial of Service|💥 DoS]]
-- [[Injection SQL|💾 SQLi]]
-- [[CVE Exploits|📦 CVE Exploits]]
-- → [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Regular Expression](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Regular%20Expression/README.md)
+- [[Denial of Service| DoS]]
+- [[Injection SQL| SQLi]]
+- [[CVE Exploits| CVE Exploits]]
+- → [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Regular Expression](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Regular%20Expression/README.md)

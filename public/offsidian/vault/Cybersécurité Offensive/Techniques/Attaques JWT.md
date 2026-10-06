@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔏 Attaques JWT
+# Attaques JWT
 
 > [!info] **En 1 phrase**
 > JWT = jeton d'authentification **signé** (`header.payload.signature`). Attaques = forger un token
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -37,25 +37,25 @@ sequenceDiagram
 
     Att->>App: header {"alg":"none"} + payload admin (signature vide)
     App->>Srv: Vérification
-    Srv-->>App: ⚠️ ACCEPTÉ si alg none autorisé (CVE-2015-9235)
+    Srv-->>App: ACCEPTÉ si alg none autorisé (CVE-2015-9235)
 
     Att->>App: HS256 signé avec la CLÉ PUBLIQUE du serveur
     App->>Srv: Vérification HMAC
-    Srv-->>App: ⚠️ ACCEPTÉ si confusion RS256→HS256 (CVE-2016-5431)
+    Srv-->>App: ACCEPTÉ si confusion RS256→HS256 (CVE-2016-5431)
 
     Att->>App: kid="/dev/null" ou jku=http://attacker/jwks.json
     App->>Srv: Récupère la clé pointée par kid/jku
-    Srv-->>App: ⚠️ ACCEPTÉ (clé contrôlée par l'attaquant)
+    Srv-->>App: ACCEPTÉ (clé contrôlée par l'attaquant)
 ```
 
-> [!info] 💡 **Rappel structure**
+> [!info] **Rappel structure**
 > `Base64URL(Header) . Base64URL(Payload) . Base64URL(Signature)` — 3 segments séparés par des points.
 > Le **header** indique l'algorithme (`alg`) et l'identifiant de clé (`kid`) ; le **payload** porte les claims
 > (user, `role`, `exp`, `admin`...) ; la **signature** prouve que le token n'a pas été modifié.
 
 ---
 
-## 🧬 Format & Claims
+## Format & Claims
 
 ### Format du token
 
@@ -91,7 +91,7 @@ UL9Pz5HbaMdZCV9cS9OcpccjrlkcmLovL2A2aiKiAOY # signature HMAC/privée
 | `RS256` / `RS384` / `RS512` | RSA PKCS#1 v1.5 (clé **asymétrique**) | recommandé |
 | `ES256` / `ES384` / `ES512` | ECDSA P-256/P-384/P-521 | recommandé |
 | `PS256` / `PS384` / `PS512` | RSA-PSS | optionnel |
-| `none` | Aucune signature | ⚠️ critique |
+| `none` | Aucune signature | critique |
 
 ### Claims du payload (RFC 7519)
 
@@ -105,7 +105,7 @@ UL9Pz5HbaMdZCV9cS9OcpccjrlkcmLovL2A2aiKiAOY # signature HMAC/privée
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -144,12 +144,12 @@ python3 jwt_tool.py JWT_HERE -I -pc payload1 -pv testval3                       
 
 ---
 
-## 🚫 Attaque "alg: none" (CVE-2015-9235)
+## Attaque "alg: none" (CVE-2015-9235)
 
 L'algorithme `none` existe pour le **debug**. Si le serveur accepte un token sans signature, on modifie
 le header et on **supprime la signature** → token admin instantané.
 
-> [!warning] ⚠️ Condition : il faut **obligatoirement retirer la signature** (3e segment vide),
+> [!warning] Condition : il faut **obligatoirement retirer la signature** (3e segment vide),
 > sinon l'attaque échoue. Attention aussi à l'expiration (`exp`) du token original.
 
 Variantes de casse acceptées : `none`, `None`, `NONE`, `nOnE`.
@@ -175,13 +175,13 @@ noneEncoded = jwt.encode(decodedToken, key='', algorithm=None)
 print(noneEncoded.decode())
 ```
 
-> [!info] 💡 **Quand ça marche** : implémentations qui laissent le champ `alg` contrôlable par le client,
+> [!info] **Quand ça marche** : implémentations qui laissent le champ `alg` contrôlable par le client,
 > whitelist d'algorithmes absente ou contenant `none`, libs mal configurées (par ex. `verify=True` sans
 > `algorithms=[...]` explicite). Vérifie aussi les variantes `"alg":"None"` avec majuscules.
 
 ---
 
-## 🔀 Confusion d'algorithme RS256 → HS256 (CVE-2016-5431)
+## Confusion d'algorithme RS256 → HS256 (CVE-2016-5431)
 
 Le serveur attend un token **RS256** (RSA asymétrique) mais le bibliothèque choisit l'algorithme depuis
 le **header du token**. Si on envoie `"alg":"HS256"`, il valide avec la **clé publique RSA** comme secret
@@ -205,7 +205,7 @@ public = open('public.pem', 'r').read()
 print jwt.encode({"data":"test"}, key=public, algorithm='HS256')
 ```
 
-> [!warning] ⚠️ Ce comportement est corrigé dans pyjwt (erreur `InvalidKeyError: The specified key is
+> [!warning] Ce comportement est corrigé dans pyjwt (erreur `InvalidKeyError: The specified key is
 > an asymmetric key or x509 certificate...`). Il faut une version vulnérable :
 > `pip install pyjwt==0.4.3`.
 
@@ -244,12 +244,12 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzIiwidXNlcm5hbWUiOiJ2aXNpdG9yIiw
 
 ---
 
-## 🔓 Clé faible / brute force du secret
+## Clé faible / brute force du secret
 
 Le secret HMAC est parfois court/dictionnaire (`secret`, `your_jwt_secret`, `change_this_super_secret_random_string`...).
 Une fois le secret trouvé, on signe n'importe quel payload.
 
-> [!tip] 💡 Liste de **3502 secrets publics** à tester en priorité :
+> [!tip] Liste de **3502 secrets publics** à tester en priorité :
 > [wallarm/jwt-secrets/jwt.secrets.list](https://github.com/wallarm/jwt-secrets/blob/master/jwt.secrets.list)
 
 ### Hashcat (mode 16500 = JWT HS256)
@@ -311,7 +311,7 @@ jwt-cracker <TOKEN> --max-length 8
 
 ---
 
-## 🗝️ Injection `kid` / `jku` / `jwk` — Key Injection
+## Injection `kid` / `jku` / `jwk` — Key Injection
 
 Le claim `kid` (header) dit au serveur **quelle clé aller chercher** pour vérifier la signature.
 Si on contrôle `kid`, on contrôle la clé → on signe notre token.
@@ -406,7 +406,7 @@ python3 jwt_tool.py JWT_HERE -X i
 
 ---
 
-## ⚔️ Autres attaques
+## Autres attaques
 
 ### Signature nulle (CVE-2020-28042)
 
@@ -464,7 +464,7 @@ récupérée par jws2pubkey, `/jwks.json` ou le certificat TLS) → même exploi
 
 ---
 
-## 🔐 JWE (JSON Web Encryption) — note
+## JWE (JSON Web Encryption) — note
 
 - **JWS** (signé) = l'objet de la majorité des attaques ci-dessus (intégrité + authentification).
 - **JWE** (chiffré) = chiffre le contenu ; on ne peut pas lire les claims mais le **header est en clair**
@@ -474,7 +474,7 @@ récupérée par jws2pubkey, `/jwks.json` ou le certificat TLS) → même exploi
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -489,47 +489,47 @@ récupérée par jws2pubkey, `/jwks.json` ou le certificat TLS) → même exploi
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Identifier un JWT dans une app**
+> [!tip] **Identifier un JWT dans une app**
 > Chercher dans les headers `Authorization: Bearer <token>`, cookies, `localStorage`, requêtes.
 > Un JWT = 3 segments base64url : `eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}`
 > (le header décode en `{"alg":...,"typ":"JWT"}`). Penser aussi aux tokens dans l'historique Burp.
 
-> [!tip] 💡 **Ordre d'attaque**
+> [!tip] **Ordre d'attaque**
 > 1. Décoder (`jwt.io`, `jwt_tool -T`) → regarder `alg`, `kid`, `jku`, claims (`role`, `exp`, `sub`).
 > 2. Tester `alg=none` puis signature vide/null (instantané, zéro coût).
 > 3. Regarder si une **clé publique** est dispo (TLS, `/jwks.json`) → confusion RS256→HS256.
 > 4. Tester `kid`/`jku`/`jwk` injection (path traversal, URL, SQLi).
 > 5. Cracker le secret (hashcat 16500 / john) si HS256 → resigner les claims.
 
-> [!warning] ⚠️ **Piège confusion RS/HS**
+> [!warning] **Piège confusion RS/HS**
 > Beaucoup de serveurs utilisent la **même paire RSA** que leur certificat TLS : `openssl s_client |
 > openssl x509 -pubkey -noout` suffit. Mais pyjwt ≥ 0.4.3 **bloque** l'usage d'une clé asymétrique en
 > HMAC (`InvalidKeyError`) → utiliser `pyjwt==0.4.3`, jwt_tool, ou la méthode openssl manuelle.
 
-> [!warning] ⚠️ **Le `kid` est injectable** (path traversal, URL distante, SQLi)
+> [!warning] **Le `kid` est injectable** (path traversal, URL distante, SQLi)
 > Toujours tester `../../dev/null` (secret vide), `/proc/sys/kernel/randomize_va_space` (secret `"2"`),
 > une URL contrôlée, et des vecteurs SQL (`kid` passé dans une requête SQL). Un `kid` "propre" ne protège
 > pas forcément : vérifie aussi `jku` (JWKS distants) et `jwk` (clé embarquée).
 
-> [!warning] ⚠️ **Recherche de secret par git dorking**
+> [!warning] **Recherche de secret par git dorking**
 > Les secrets HMAC finissent souvent dans les repos publics. Dorks GitHub :
 > `"jwt_secret"`, `"JWT_SECRET"`, `"secret_key" extension:env`, `"your-256-bit-secret"`,
 > `"super_secret_key"`, `jwt secret site:gist.github.com`, `filename:jwt`... Outils : trufflehog,
 > gitleaks, gitrob. Même chose côté fichiers de config exposés (`config.js`, `.env`, `docker-compose.yml`).
 
-> [!warning] ⚠️ **Stockage du token = vecteur XSS**
+> [!warning] **Stockage du token = vecteur XSS**
 > JWT en `localStorage` (pas `HttpOnly`) = exfiltration via XSS. JWT dans un cookie = attention CSRF.
-> Voir [[XSS (Cross-Site Scripting)|🖼️ XSS]].
+> Voir [[XSS (Cross-Site Scripting)| XSS]].
 
-> [!tip] 💡 **Replay & expiration**
+> [!tip] **Replay & expiration**
 > Un token avec `jti` absent et `exp` lointain est rejouable. Tester le replay (même token 2×), et
 > modifier `exp` dans le futur + remettre `nbf` dans le passé quand les claims ne sont pas vérifiés.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — JWT : authentication bypass via **unverified signature**, **flawed signature verification**,
   **weak signing key**, **jwk header injection**, **jku header injection**, **kid header path traversal** :
@@ -539,12 +539,12 @@ récupérée par jws2pubkey, `/jwks.json` ou le certificat TLS) → même exploi
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]] (SQLi dans le claim `kid`)
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]] (vol de token)
-- [[SSRF|🌐 SSRF]] (`jku`/`x5u` → fetch de URL contrôlées)
-- [[LFI et RFI|📂 LFI / RFI]] (path traversal dans `kid`)
-- [[OAuth|🔑 OAuth]] (JWKS, OpenID Connect, `iss`/`aud`)
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — JSON Web Token](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/JSON%20Web%20Token/README.md)
+- [[Injection SQL| SQLi]] (SQLi dans le claim `kid`)
+- [[XSS (Cross-Site Scripting)| XSS]] (vol de token)
+- [[SSRF| SSRF]] (`jku`/`x5u` → fetch de URL contrôlées)
+- [[LFI et RFI| LFI / RFI]] (path traversal dans `kid`)
+- [[OAuth| OAuth]] (JWKS, OpenID Connect, `iss`/`aud`)
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — JSON Web Token](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/JSON%20Web%20Token/README.md)

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔌 Protocole USB
+# Protocole USB
 
 > [!info] **En 1 phrase**
 > L'**USB** est le bus série universel des périphériques : chaque device expose des **descriptors**
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -38,7 +38,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Outils d'interaction
+## Outils d'interaction
 
 - `lsusb -v` : afficher les descriptors USB sous Linux.
 - Wireshark + `usbmon` : capturer le trafic USB.
@@ -46,7 +46,7 @@ flowchart LR
 
 ---
 
-## 💥 Fuzzing USB
+## Fuzzing USB
 
 > Fuzzer les **drivers USB du host** en émulant un device malveillant qui envoie des
 > descriptors / transactions anormales.
@@ -62,7 +62,7 @@ flowchart TB
 
 ---
 
-## ⚠️ Attaques USB courantes
+## Attaques USB courantes
 
 - **BadUSB / Rubber Ducky** : clavier HID rogue → frappe de commandes en tant que périphérique de confiance.
 - **HID injection** : exploiter la classe HID (clavier) pour exécuter du code sur le host.
@@ -72,7 +72,7 @@ flowchart TB
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -82,7 +82,7 @@ flowchart TB
 | **Désactiver l'autorun / HID non sollicité** | Empêcher l'exécution automatique depuis un device branché |
 | **Test des drivers** | Fuzzing + hardening des pilotes USB (patches vendors) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le **Device Descriptor** ment souvent : un device se déclare clavier alors qu'il exfiltre des données.
 - `lsusb -v` est ton premier outil pour identifier une classe (HID = 0x03, Storage = 0x08…).
@@ -92,10 +92,10 @@ flowchart TB
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — USB](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/usb.md)
 > - [HydraUSB3 v1.0 Specifications](https://hydrabus.com/hydrausb3-v1-0-specifications)
 > - [Cracking With Automated USB Fuzz (Nullcon Goa 2023)](https://youtu.be/4uHg6toV69k)
 > - [Hands On with Chip Off Non-Volatile Memory (TrustedSec)](https://trustedsec.com/blog/hands-on-with-chip-off-non-volatile-memory)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Injection de commandes|💻 Injection de commandes]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Injection de commandes| Injection de commandes]] · [[Hardware - I2C et SPI| I2C/SPI]]

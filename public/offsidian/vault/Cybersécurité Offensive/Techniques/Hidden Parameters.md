@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🕵️ Hidden Parameters
+# Hidden Parameters
 
 > [!info] **En 1 phrase**
 > Hidden Parameters = des **paramètres non documentés** (`debug`, `admin`, `test`, `dev`…) que l'app accepte en plus de ceux exposés dans l'UI
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,16 +34,16 @@ flowchart LR
     E --> G[Exploitation<br>debug=1 / admin=1 / test=1]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Les devs laissent des **paramètres de debug/test/désactivation** en production (`debug=1`, `admin=true`,
 > `test=1`, `dev=1`). Ils ne figurent ni dans l'UI ni dans le HTML, mais le backend **les lit quand même** :
 > l'app traite **tout paramètre reçu** sans allowlist → on peut activer des comportements cachés.
 
 ---
 
-## 📋 Paramètres connus à tester
+## Paramètres connus à tester
 
-> [!tip] 💡 Commencer par une **petite wordlist ciblée** (rapide), ne passer à la grande que si rien n'est trouvé.
+> [!tip] Commencer par une **petite wordlist ciblée** (rapide), ne passer à la grande que si rien n'est trouvé.
 
 ### Wordlists exactes du README (source)
 
@@ -68,7 +68,7 @@ cmd  command  exec  run  shell  eval  phpinfo
 
 ---
 
-## 🔥 Fuzzing de paramètres
+## Fuzzing de paramètres
 
 ### Arjun (s0md3v) — découverte HTTP
 
@@ -135,7 +135,7 @@ paramspider -d example.com
 
 ---
 
-## 🔎 Détection d'un paramètre trouvé
+## Détection d'un paramètre trouvé
 
 Comparer la réponse **avec** le paramètre injecté contre la réponse **de référence** (sans) :
 
@@ -153,12 +153,12 @@ Avec ?zzz_random=1     → si la réponse diffère aussi → faux positif (le si
 | **Code HTTP / headers** | 200 ↔ 302, `Set-Cookie`, changement de taille du body |
 | **Timing** | Réponse plus lente = le paramètre déclenche un traitement supplémentaire |
 
-> [!warning] ⚠️ Toujours tester un **paramètre aléatoire témoin** (`zzz_123`) en parallèle :
+> [!warning] Toujours tester un **paramètre aléatoire témoin** (`zzz_123`) en parallèle :
 > si la réponse varie pareil, la variation n'a rien à voir avec le paramètre testé.
 
 ---
 
-## 💥 Exploitation
+## Exploitation
 
 ### Paramètres de debug / bypass classiques
 
@@ -200,7 +200,7 @@ id=1&role=admin&test=1
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage | Lien |
 |---|---|---|
@@ -214,7 +214,7 @@ id=1&role=admin&test=1
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -227,15 +227,15 @@ id=1&role=admin&test=1
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. **Identifier la fonctionnalité** : endpoint, paramètres visibles, méthode HTTP, type de contenu.
 > 2. **Fuzzer** les paramètres avec une wordlist adaptée à la fonctionnalité.
 > 3. **Confirmer** que le paramètre change vraiment le comportement (avec témoin).
 > 4. **Exploiter** : `debug` → divulgation, `admin` → bypass, `test` → fonctionnalité cachée.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Paramètre réfléchi ≠ vulnérable** : si la valeur est simplement reflétée dans le body (echo), c'est un faux positif — seul un changement de **comportement côté serveur** compte.
 > - **Fausses pistes de timing** : une réponse lente peut venir d'un traitement normal, pas d'un paramètre trouvé → re-tester plusieurs fois.
 > - **Vitesse d'exécution** : x8 est très rapide mais moins "fin" que Arjun ; les grosses wordlists (`large.txt`) prennent du temps → commencer par `small.txt`.
@@ -245,10 +245,10 @@ id=1&role=admin&test=1
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Virtual Hosts|🏠 Virtual Hosts]]
-- [[API Key Leaks|🔑 API Key Leaks]]
-- [[IDOR|🎯 IDOR]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — HTTP Hidden Parameters](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/HTTP%20Hidden%20Parameters/README.md)
+- [[Virtual Hosts| Virtual Hosts]]
+- [[API Key Leaks| API Key Leaks]]
+- [[IDOR| IDOR]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — HTTP Hidden Parameters](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/HTTP%20Hidden%20Parameters/README.md)

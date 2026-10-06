@@ -1,7 +1,7 @@
 ---
 title: "Outil - BruteDum"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://githacktools.blogspot.com/
 doc: https://github.com/R0ckNRolla/BruteDum
 ---
 
-# 🦖 BruteDum — Bruteforce réseau tout-en-un en Python
+# BruteDum — Bruteforce réseau tout-en-un en Python
 
 > [!info] **En 1 phrase**
 > BruteDum est un script Python interactif qui orchestre Hydra, Medusa et Ncrack pour bruteforcer SSH, FTP, Telnet, PostgreSQL, RDP et VNC, avec un scan Nmap intégré — sans écrire une seule ligne de commande.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | BruteDum |
 | Description | Menu interactif Python qui orchestre Hydra, Medusa et Ncrack contre SSH, FTP, Telnet, PostgreSQL, RDP et VNC, avec un scan Nmap intégré des ports de la cible |
-| Catégorie | 🔑 Wordlists & Générateurs (consommateur de wordlists) |
+| Catégorie | Wordlists & Générateurs (consommateur de wordlists) |
 | Sous-catégorie | Brute-force en ligne (online password attack) |
 | Fonction principale | Automatiser le bruteforce réseau via un menu numéroté, sans syntaxe d'outils sous-jacents |
 | Type d'outil | Script CLI interactif (menu texte) |
@@ -50,7 +50,7 @@ doc: https://github.com/R0ckNRolla/BruteDum
 
 ---
 
-## 🎯 Concept
+## Concept
 
 BruteDum (GitHackTools) est un **menu interactif** numéroté qui enveloppe les outils de bruteforce réseau classiques : choix du moteur (Hydra recommandé, Medusa, Ncrack), du protocole (SSH, FTP, Telnet, PostgreSQL, RDP, VNC), de la cible, des listes d'usernames et de mots de passe, du nombre de threads — puis BruteDum construit et lance la commande correspondante en arrière-plan. Il intègre aussi un **scan Nmap** des ports de la cible avant l'attaque, ce qui évite de perdre du temps sur un service fermé.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -145,7 +145,7 @@ git clone https://github.com/R0ckNRolla/BruteDum.git && cd BruteDum
 chmod +x brutedum.py
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Les binaires `hydra`, `medusa`, `ncrack` et `nmap` **doivent être dans le PATH** : BruteDum les invoque par leur nom.
 > - Le README du dépôt d'origine contenait une faute de frappe dans la procédure d'installation (chemin de script erroné) — les tests montrent que l'échec venait souvent de là.
 > - Le script lit les fichiers de wordlists relativement au dossier courant : placer `users.txt`/`pass.txt` dans le même répertoire ou fournir des chemins absolus.
@@ -153,7 +153,7 @@ chmod +x brutedum.py
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 BruteDum n'a pas de fichier de configuration : toute la configuration est **interactive**, posée question par question dans le menu. Les valeurs saisies sont ensuite injectées dans la commande de l'outil choisi.
 
@@ -172,7 +172,7 @@ BruteDum n'a pas de fichier de configuration : toute la configuration est **inte
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le script `brutedum.py` est un **frontal CLI** de quelques centaines de lignes, organisé ainsi :
 
@@ -188,7 +188,7 @@ Limites architecturales : pas de retry, pas de gestion de verrouillage, pas de l
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -220,7 +220,7 @@ medusa -h 10.10.20.15 -U users.txt -P pass.txt -M postgres -t 2
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 BruteDum n'expose **aucun flag en ligne de commande** : il n'accepte pas d'arguments autres que l'exécution du script. Les "options" sont les entrées du menu.
 
@@ -245,7 +245,7 @@ BruteDum n'expose **aucun flag en ligne de commande** : il n'accepte pas d'argum
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -295,7 +295,7 @@ nxc smb 10.10.20.15 -u users_valides.txt -p pass_valides.txt --continue-on-succe
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer les wordlists** (voir [[Outil - SecLists|SecLists]], [[Outil - CeWL|CeWL]], [[Outil - CUPP|CUPP]]) :
    ```bash
@@ -319,7 +319,7 @@ nxc smb 10.10.20.15 -u users_valides.txt -p pass_valides.txt --continue-on-succe
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : SSH avec liste personnalisée
 
@@ -356,7 +356,7 @@ hydra -L users.txt -P /tmp/spray.txt -t 1 -f ssh://10.10.20.15
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -369,7 +369,7 @@ hydra -L users.txt -P /tmp/spray.txt -t 1 -f ssh://10.10.20.15
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -384,7 +384,7 @@ hydra -L users.txt -P /tmp/spray.txt -t 1 -f ssh://10.10.20.15
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 BruteDum en lui-même n'ajoute rien de nouveau côté défensif : il exécute hydra/medusa/ncrack. Les signes observables sont donc ceux de ces outils, déclenchés depuis un menu.
 
@@ -429,7 +429,7 @@ alert tcp any any -> any 22 (msg:"SSH brute force attempt"; flow:to_server,estab
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — envelopper le menu : non automatisable directement (interactif).
@@ -454,7 +454,7 @@ for svc, cmd in MOTEURS.items():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 BruteDum ne structure aucune sortie : il relaie stdout/stderr de l'outil sous-jacent. C'est donc la sortie de hydra/medusa/ncrack qu'il faut parser.
 
@@ -477,23 +477,23 @@ with open("resultats.txt", encoding="utf-8", errors="ignore") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 SecLists/CeWL/CUPP/rsmangler → BruteDum → hydra/medusa/ncrack → comptes valides → nxc/hashcat
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - hydra|hydra]] — moteur principal orchestré par le menu
 - [[Outil - Medusa|Medusa]] — moteur alternatif parallèle
 - [[Outil - ncrack|ncrack]] — moteur pour RDP/VNC
 - [[Outil - Nmap|Nmap]] — scan intégré des ports
 - [[Outil - SecLists|SecLists]] · [[Outil - CeWL|CeWL]] · [[Outil - CUPP|CUPP]] · [[Outil - Crunch|Crunch]] · [[Outil - rsmangler|rsmangler]] — fournisseurs de wordlists
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] — fiches techniques liées
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] — fiches techniques liées
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -507,7 +507,7 @@ SecLists/CeWL/CUPP/rsmangler → BruteDum → hydra/medusa/ncrack → comptes va
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Le coût est entièrement celui des moteurs sous-jacents : hydra/medusa/ncrack font des milliers de tentatives/minute selon le protocole et le réseau.
 - Les threads du menu sont passés tels quels à l'outil : `-t 4` sur hydra ≈ 4 connexions parallèles. Sur SSH (handshake coûteux), les débits sont bien inférieurs à RDP.
@@ -519,7 +519,7 @@ SecLists/CeWL/CUPP/rsmangler → BruteDum → hydra/medusa/ncrack → comptes va
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -545,7 +545,7 @@ SecLists/CeWL/CUPP/rsmangler → BruteDum → hydra/medusa/ncrack → comptes va
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Légalité** : le bruteforce en ligne est une activité sensible — usage strictement limité aux périmètres autorisés (lab, audit avec mandat écrit).
 - **Aucune gestion des secrets** : les wordlists circulent en clair dans le script et la sortie ; ne pas y mettre de données réelles hors lab.
@@ -555,7 +555,7 @@ SecLists/CeWL/CUPP/rsmangler → BruteDum → hydra/medusa/ncrack → comptes va
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Ne génère pas de wordlists** : la génération figure dans sa to-do list (jamais implémentée).
 - **Pas de parsing des résultats** : sortie brute, comptes à relire à la main.
@@ -567,7 +567,7 @@ SecLists/CeWL/CUPP/rsmangler → BruteDum → hydra/medusa/ncrack → comptes va
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation complète (Debian/Kali)
@@ -590,7 +590,7 @@ rsmangler --file mots_site.txt --output pass.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -603,7 +603,7 @@ rsmangler --file mots_site.txt --output pass.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -616,16 +616,16 @@ rsmangler --file mots_site.txt --output pass.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Commencer par un petit volume (`head -n 100`) et étudier les messages d'erreur du protocole : l'énumération d'usernames (réponses différenciées) réduit la liste avant l'attaque.
 > - Préférer Hydra pour SSH/FTP/Telnet/PostgreSQL ; Ncrack est plus fiable sur RDP/VNC.
 > - Utiliser le scan Nmap intégré pour ne jamais attaquer un service fermé.
 > - Nourrir le menu avec des listes mutées ([[Outil - rsmangler|rsmangler]], [[Outil - CeWL|CeWL]]) : la qualité des listes fait 90 % du résultat.
 > - Vérifier les comptes trouvés sur d'autres services (reuse d'identifiants) avant de conclure.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - BruteDum **ne génère pas** de wordlists : tout doit être préparé avant.
 > - Un bruteforce en ligne bruyant (threads élevés) déclenche les protections et peut verrouiller les comptes testés.
 > - Le dépôt d'origine est supprimé et le script non maintenu : tester les commandes hydra/medusa/ncrack manuellement si le menu échoue.
@@ -633,7 +633,7 @@ rsmangler --file mots_site.txt --output pass.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -655,4 +655,4 @@ rsmangler --file mots_site.txt --output pass.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hydra|hydra]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] · [[Outil - SecLists|SecLists]] · [[Outil - Medusa|Medusa]] · [[Outil - ncrack|ncrack]] · [[Outil - Nmap|Nmap]] · [[Techniques/Password Cracking|🔐 Password Cracking]]
+**Liens :** [[Tools| Outils]] · [[Outil - hydra|hydra]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] · [[Outil - SecLists|SecLists]] · [[Outil - Medusa|Medusa]] · [[Outil - ncrack|ncrack]] · [[Outil - Nmap|Nmap]] · [[Techniques/Password Cracking| Password Cracking]]

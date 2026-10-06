@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔐 ADCS & Certificats (ESC 1-8)
+# ADCS & Certificats (ESC 1-8)
 
 > [!info] **En 1 phrase**
 > ADCS (Active Directory Certificate Services) délivre des **certificats** utilisés pour
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -30,14 +30,14 @@ flowchart LR
     C --> D[Accès comme<br>le compte cible]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > ADCS lie un **certificat** à un **compte**. Si le template permet de choisir le compte
 > (SAN controllable, extension Client Auth...), on peut demander un cert **au nom d'un DA**,
 > puis s'authentifier via PKINIT → mêmes pouvoirs.
 
 ---
 
-## ⚙️ Les ESC (vulnérabilités principales)
+## Les ESC (vulnérabilités principales)
 
 | ESC | Principe |
 |---|---|
@@ -48,12 +48,12 @@ flowchart LR
 | **ESC6** | `EDITF_ATTRIBUTESUBJECTALTNAME2` activé sur la CA → SAN contrôlable partout |
 | **ESC8** | **NTLM relay** vers l'API HTTP de l'ADCS (sans cert) |
 
-> [!warning] 🚨 **ESC8 est le plus courant en réel** : relay vers `http://CA/certsrv/certfnsh.asp`
+> [!warning] **ESC8 est le plus courant en réel** : relay vers `http://CA/certsrv/certfnsh.asp`
 > permet d'obtenir un certificat d'une **machine** → accès.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # 1. Trouver les templates vulnérables
@@ -74,7 +74,7 @@ ntlmrelayx.py -t http://CA01/certsrv/certfnsh.asp -smb2support --adcs --template
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -85,18 +85,18 @@ ntlmrelayx.py -t http://CA01/certsrv/certfnsh.asp -smb2support --adcs --template
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **L'outil certipy est LE standard Linux**
+> [!tip] **L'outil certipy est LE standard Linux**
 > Il fait find / req / auth / shadow. Découvre aussi `certipy shadow` (ajout de clés, lien avec [[ACL Abuse AD|Shadow Credentials]]).
 
-> [!warning] ⚠️ **Piège** : le certificat a une durée de vie (souvent 1 an). Il est **récupérable** pour se ré-authentifier même si le mdp change. Pense à la rotation/CRL.
+> [!warning] **Piège** : le certificat a une durée de vie (souvent 1 an). Il est **récupérable** pour se ré-authentifier même si le mdp change. Pense à la rotation/CRL.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]] (PKINIT)
-- [[NTLM Relay|🔗 NTLM Relay]] (ESC8)
-- [[ACL Abuse AD|🧩 ACL Abuse]] (ESC4)
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]] (PKINIT)
+- [[NTLM Relay| NTLM Relay]] (ESC8)
+- [[ACL Abuse AD| ACL Abuse]] (ESC4)
+- → Note complète : [[05 - Active Directory| Active Directory]]
