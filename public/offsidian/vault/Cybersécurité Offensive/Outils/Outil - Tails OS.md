@@ -1,7 +1,7 @@
 ---
 title: "Outil - Tails OS"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -18,20 +18,20 @@ site: https://tails.net/
 doc: https://tails.net/doc/
 ---
 
-# 🕵️ Tails OS — L'anonymat total sur clé USB (Tor + amnésie)
+# Tails OS — L'anonymat total sur clé USB (Tor + amnésie)
 
 > [!info] **En 1 phrase**
 > Tails OS est un système d'exploitation live USB amnésique basé sur Debian qui achemine tout le trafic via le réseau Tor et ne laisse aucune trace sur la machine hôte : anonymat maximal pour les journalistes, activistes et analystes.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Tails (The Amnesic Incognito Live System) |
 | Description | Distribution live USB amnésique : tout le trafic passe par Tor, aucune trace persistée |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution d'anonymat / protection de la vie privée |
 | Fonction principale | Anonymat et non-traçabilité via Tor pour l'utilisateur |
 | Type d'outil | ISO live USB (clé USB amorçable), système Debian complet |
@@ -52,7 +52,7 @@ doc: https://tails.net/doc/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Tails est un **système d'exploitation live amnésique** : il s'exécute depuis une clé USB sans rien écrire sur le disque de la machine hôte, et **efface la mémoire RAM** à l'arrêt. Tout le trafic réseau passe obligatoirement par **Tor** (le pare-feu bloque tout ce qui ne passe pas par le circuit Tor). Il embarque un **navigateur Tor**, le gestionnaire de clés **KeePassXC**, l'outil de partage sécurisé **OnionShare**, le client Bitcoin **Electrum** et **VeraCrypt**. Un **stockage persistant chiffré** (LUKS) permet de conserver des documents, mais il reste optionnel.
 
@@ -74,7 +74,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Téléchargement et vérification
 
@@ -121,7 +121,7 @@ dd if=tails-amd64-7.10.1.img of=/dev/sdX bs=4M status=progress
 # 4. Vérifier l'heure et la connexion Tor (Assistance de connexion)
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Clé USB 8 Go minimum** et machine compatible x86_64 avec au moins 4 Go de RAM.
 > - La machine hôte peut avoir un firmware (UEFI Secure Boot) bloquant le démarrage : désactiver le Secure Boot si besoin.
 > - Vérifier toujours la **signature** de l'ISO avant de créer la clé.
@@ -129,7 +129,7 @@ dd if=tails-amd64-7.10.1.img of=/dev/sdX bs=4M status=progress
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -142,7 +142,7 @@ dd if=tails-amd64-7.10.1.img of=/dev/sdX bs=4M status=progress
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Tails est un **Debian live** dont le boot est piloté par un script init (`tails-unlock` pour le stockage persistant, `tails-autostart`). Le **pare-feu nftables/iptables** ne laisse sortir que les flux Tor (socks 9050, contrôle), et `tor` est configuré pour **forcer l'IsolatedSOCKSAuth** : chaque application utilise un circuit Tor distinct. Le **stockage persistant** est une partition LUKS chiffrée contenant les documents, la configuration de Tor (ponts), les mots de passe KeePassXC, et les « logiciels additionnels » éventuels (APT).
 
@@ -150,7 +150,7 @@ Au runtime, l'utilisateur navigue dans le **Tor Browser**, partage des fichiers 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -189,7 +189,7 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -205,7 +205,7 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -240,7 +240,7 @@ onionshare /tmp/rapport.pdf
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Démarrer en amnésie** — brancher la clé USB et démarrer Tails (sans stockage persistant au premier lancement).
    ```bash
@@ -259,7 +259,7 @@ onionshare /tmp/rapport.pdf
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Recherche OSINT anonyme
 
@@ -288,7 +288,7 @@ curl --socks5-hostname 127.0.0.1:9050 -O https://cdimage.kali.org/...iso
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -302,7 +302,7 @@ curl --socks5-hostname 127.0.0.1:9050 -O https://cdimage.kali.org/...iso
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -315,7 +315,7 @@ curl --socks5-hostname 127.0.0.1:9050 -O https://cdimage.kali.org/...iso
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -358,7 +358,7 @@ alert tcp any any -> any [9001,9002,9100,9201] \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script — vérification de l'état Tor au démarrage
@@ -378,7 +378,7 @@ print(urllib.request.urlopen("https://check.torproject.org/api/ip").read())
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties principales sont l'état de Tor et les réponses HTTP des requêtes anonymisées.
 
@@ -403,9 +403,9 @@ print("IP Tor :", data.get("IP"))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - **OnionShare** — partage anonyme intégré
 - **KeePassXC** — gestionnaire de mots de passe intégré
 - **VeraCrypt** — conteneurs chiffrés
@@ -415,12 +415,12 @@ print("IP Tor :", data.get("IP"))
 - [[Outil - Metasploit]] / [[Outil - Nmap]] — à utiliser dans les VMs du lab, PAS depuis Tails
 - [[Outil - Flare VM]] / [[Outil - REMnux]] — lab d'analyse séparé, isolé du réseau
 
-> [!warning] ⚠️ Bonne pratique lab
+> [!warning] Bonne pratique lab
 > Tails et les outils de pentest ne se mélangent pas : les VMs offensives tournent en **Host-Only** sans Tor ; Tails sert de poste de travail anonyme **pour l'opérateur**, jamais pour scanner.
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -433,7 +433,7 @@ print("IP Tor :", data.get("IP"))
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Démarrage** : 1-3 minutes selon la clé USB (USB 3.0 recommandé).
 - **Navigation** : Tor ralentit le trafic (latence des 3 nœuds) — normal, prévoir de la patience.
@@ -446,7 +446,7 @@ print("IP Tor :", data.get("IP"))
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -476,7 +476,7 @@ print("IP Tor :", data.get("IP"))
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Anonymat ≠ invulnérabilité** : respecter les bonnes pratiques (pas de mots de passe personnels, pas de téléchargement sans signature, pas de dévoilement de l'identité).
 - **Amnésie** : ne pas ajouter de stockage persistant si le besoin ne l'exige pas ; il est chiffré mais il EXISTE (traçabilité).
@@ -487,7 +487,7 @@ print("IP Tor :", data.get("IP"))
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Trafic lent** : Tor impose une latence élevée (navigation et transferts).
 - **Pas d'installation classique** : Tails ne s'installe pas sur un disque dur comme un OS normal.
@@ -498,7 +498,7 @@ print("IP Tor :", data.get("IP"))
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Vérifier Tor
@@ -520,7 +520,7 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -533,7 +533,7 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -545,15 +545,15 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise le **niveau « Safest »** du Tor Browser pour limiter l'exécution de JavaScript (première défense).
 > - Change de **circuit Tor** régulièrement (nouvel identité dans le navigateur) pour réduire la corrélation.
 > - Transmets les **liens OnionShare** par un canal séparé et chiffré : le partage n'est anonyme que si le canal l'est.
 > - Garde un **snapshot/stockage persistant minimal** : plus il y a de données persistées, plus la non-traçabilité diminue.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne **jamais désactiver Tor** « pour aller plus vite » : Tails ne protège alors plus rien.
 > - Ne pas connecter de **comptes personnels** (email, réseaux sociaux) depuis Tails : cela lie l'anonymat à votre identité.
 > - Les **téléchargements** doivent être **signés et vérifiés** (GPG) : un .exe « sourcé de Tor » reste un malware.
@@ -561,7 +561,7 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -584,8 +584,8 @@ sudo veracrypt -t --non-interactive /media/cont.vc /mnt/secret
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://tails.net/
 > - https://tails.net/download/ (annonce 7.10.1 du 2026-08-05)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · **OnionShare** · **KeePassXC** · **VeraCrypt** · **Whonix** · [[Outil - Kali Linux|💻 Kali Linux]]
+**Liens :** [[Tools| Outils]] · **OnionShare** · **KeePassXC** · **VeraCrypt** · **Whonix** · [[Outil - Kali Linux| Kali Linux]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌀 GraphQL — Attaques
+# GraphQL — Attaques
 
 > [!info] **En 1 phrase**
 > GraphQL = un langage de requête d'API où le client **choisit lui-même les champs** à retourner — l'attaquant peut **introspecter le schéma complet**, injecter du SQL/NoSQL dans les arguments, **bruteforcer** en masse via le batching/les alias et saturer le serveur avec des **requêtes imbriquées** (DoS).
@@ -21,22 +21,22 @@ statut: publie
 
 ---
 
-## 🎯 Rappel GraphQL
+## Rappel GraphQL
 
 ```mermaid
 flowchart LR
     A["Requête GraphQL<br>query { user(id: 1) }"] --> B[Endpoint<br>/graphql]
-    B --> C[🔭 Introspection<br>dump du schéma]
-    B --> D[💥 Injections<br>SQLi / NoSQLi args]
-    B --> E[📦 Batching / Alias<br>bruteforce + DoS]
-    B --> F[🚪 IDOR / auth bypass]
+    B --> C[Introspection<br>dump du schéma]
+    B --> D[Injections<br>SQLi / NoSQLi args]
+    B --> E[Batching / Alias<br>bruteforce + DoS]
+    B --> F[IDOR / auth bypass]
     C --> G[Champs cachés exposés]
     D --> H[Données BDD]
     E --> I[Rate-limit bypass]
     F --> J[Accès non autorisé]
 ```
 
-> [!info] 💡 **Fonctionnement**
+> [!info] **Fonctionnement**
 > Le schéma définit des **types** et des **champs** ; chaque champ est implémenté par un **résolveur** qui va chercher les données (BDD, API interne…). Le client ne reçoit **que** ce qu'il demande. Le serveur doit accepter POST, **peut** accepter GET.
 
 ### Types & opérations
@@ -68,11 +68,11 @@ mutation {
 }
 ```
 
-> [!warning] ⚠️ **Mutations & GET** : les mutations ne fonctionnent **généralement pas en GET** — à tester quand même (une API qui l'accepte = grosse porte pour du CSRF).
+> [!warning] **Mutations & GET** : les mutations ne fonctionnent **généralement pas en GET** — à tester quand même (une API qui l'accepte = grosse porte pour du CSRF).
 
 ---
 
-## 🕵️ Détection d'un endpoint GraphQL
+## Détection d'un endpoint GraphQL
 
 ### Endpoints classiques
 
@@ -93,7 +93,7 @@ mutation {
 ```bash
 # GET (si supporté) — probe __typename, le plus léger possible
 curl -s "https://target/graphql?query={__typename}"
-# → {"data":{"__typename":"Query"}}   = endpoint GraphQL confirmé ✅
+# → {"data":{"__typename":"Query"}}   = endpoint GraphQL confirmé
 # GET avec requête complète URL-encodée :
 # query=query%20%7B%20user(id%3A%221%22)%20%7B%20id%20name%20%7D%20%7D
 
@@ -118,11 +118,11 @@ curl -s -X POST https://target/graphql \
 { "errors": [{ "message": "Cannot query field \"thisdefinitelydoesnotexist\" on type \"Query\"." }] }
 ```
 
-> [!tip] 💡 **`__typename` = le test le plus rapide** : réponse `{"data":{"__typename":"Query"}}` = point GraphQL confirmé, sans besoin d'introspection ni de connaissance du schéma.
+> [!tip] `__typename` = le test le plus rapide** : réponse `{"data":{"__typename":"Query"}}` = point GraphQL confirmé, sans besoin d'introspection ni de connaissance du schéma.
 
 ---
 
-## 🔭 Introspection — dump complet du schéma
+## Introspection — dump complet du schéma
 
 > L'introspection (`__schema`, `__type`) est **prévue par la spec** : tout serveur GraphQL sait répondre "quels types, quels champs, quels arguments". GraphiQL/Playground l'utilisent pour l'autocomplétion. Si elle est activée en prod = schéma complet exfiltré.
 
@@ -205,7 +205,7 @@ __schema{queryType{name},mutationType{name},types{kind,name,description,fields(i
 
 ---
 
-## 📤 Information Disclosure (fuite d'erreurs)
+## Information Disclosure (fuite d'erreurs)
 
 > Les réponses d'erreur GraphQL sont structurées (`errors[]`) et remontent **beaucoup** d'informations si le serveur n'est pas configuré en prod.
 
@@ -219,7 +219,7 @@ __schema{queryType{name},mutationType{name},types{kind,name,description,fields(i
 
 ---
 
-## 🚪 IDOR / accès non autorisés
+## IDOR / accès non autorisés
 
 > GraphQL ne remplace **jamais** le contrôle d'accès : un champ présent dans le schéma est **potentiellement requêtable**, même s'il n'est pas exposé dans l'UI. De nombreux bugs : un champ `isAdmin`, une mutation `deleteUser` sans vérification d'identité, des IDs devinables.
 
@@ -245,13 +245,13 @@ query {
 }
 ```
 
-> [!warning] ⚠️ **Points de contrôle à tester** : chaque **résolveur** doit vérifier l'auth **et** l'autorisation (propriété de l'objet). Un champ de root exposé (`user(id:)`) peut court-circuiter la logique « ne voir que son propre profil ».
+> [!warning] **Points de contrôle à tester** : chaque **résolveur** doit vérifier l'auth **et** l'autorisation (propriété de l'objet). Un champ de root exposé (`user(id:)`) peut court-circuiter la logique « ne voir que son propre profil ».
 >
-> 💡 **`graphql-path-enum`** (dee-see) : à partir du dump d'introspection, liste **tous les chemins** permettant d'atteindre un type cible (`User`, `Payment`, `Admin`) — même enfoui derrière plusieurs relations. Ex : `Query (me) → User → PentesterProfile → skills → Skill`.
+> `graphql-path-enum`** (dee-see) : à partir du dump d'introspection, liste **tous les chemins** permettant d'atteindre un type cible (`User`, `Payment`, `Admin`) — même enfoui derrière plusieurs relations. Ex : `Query (me) → User → PentesterProfile → skills → Skill`.
 
 ---
 
-## 💥 Injections (SQLi / NoSQLi) dans les arguments
+## Injections (SQLi / NoSQLi) dans les arguments
 
 > GraphQL n'est qu'**une couche** entre le client et la base : les arguments finissent dans les requêtes BDD des résolveurs. Une injection SQL/NoSQL classique se transmet telle quelle dans un argument.
 
@@ -297,11 +297,11 @@ query {
 # $regex ".*" + lastName:Admin → contourne le filtre, dump des SSN
 ```
 
-> [!tip] 💡 **Quand GraphQL ne reçoit pas un argument mais un JSON brut** (paramètre `options`/`search` de type String), on peut y injecter des opérateurs MongoDB (`$regex`, `$where`, `$ne`). Voir note [[NoSQL|🍃 NoSQL]].
+> [!tip] **Quand GraphQL ne reçoit pas un argument mais un JSON brut** (paramètre `options`/`search` de type String), on peut y injecter des opérateurs MongoDB (`$regex`, `$where`, `$ne`). Voir note [[NoSQL| NoSQL]].
 
 ---
 
-## 📦 Batching & Resource Exhaustion
+## Batching & Resource Exhaustion
 
 > Le batching permet d'envoyer **plusieurs opérations en une seule requête HTTP**. Les rate-limiters comptent souvent les **requêtes HTTP** (pas les opérations) → contournement massif.
 
@@ -325,7 +325,7 @@ mutation {
 }
 ```
 
-> [!warning] ⚠️ **Scénarios gagnants** :
+> [!warning] **Scénarios gagnants** :
 > - **Bruteforce de mot de passe** amplifié : 1000 tentatives en 1 HTTP request.
 > - **Bypass de rate-limit** (le limiteur voit 1 requête) **et de 2FA** : tester des centaines de codes à la fois.
 > - **DoS** : des milliers d'alias sur le même champ (`a0: field, a1: field...`) → coût serveur explosé, parfois ignoré par le cost analysis.
@@ -336,11 +336,11 @@ mutation {
 { a: user(id: "1") { friends { friends { friends { friends { friends { id } } } } } } }
 ```
 
-> [!tip] 💡 **Limites fréquentes** : un `depth limit` (par ex. max 10 niveaux) et un **cost analysis** (chaque champ a un poids). Le cost analysis est souvent **bypassable** via les alias (non comptabilisés) et le batching (non comptabilisé) — toujours retester les deux.
+> [!tip] **Limites fréquentes** : un `depth limit` (par ex. max 10 niveaux) et un **cost analysis** (chaque champ a un poids). Le cost analysis est souvent **bypassable** via les alias (non comptabilisés) et le batching (non comptabilisé) — toujours retester les deux.
 
 ---
 
-## 🍪 CSRF sur GraphQL
+## CSRF sur GraphQL
 
 > Si l'API accepte les **mutations en GET**, ou les **POST cross-origin sans préflight**, un site malveillant peut déclencher des actions avec les cookies/session de la victime (SameSite permissif). Exemple de GET : `https://target/graphql?query=mutation%20%7B%20changeEmail(newEmail%3A%22attacker%40evil.com%22)%20%7B%20id%20%7D%20%7D`
 
@@ -353,13 +353,13 @@ mutation {
 <script>document.forms[0].submit();</script>
 ```
 
-> [!warning] ⚠️ **Pourquoi ça marche** : un POST cross-origin avec `Content-Type: text/plain` ne déclenche **pas** de preflight OPTIONS → le navigateur l'envoie quand même. Si le serveur accepte `text/plain` (ou ne vérifie pas le Content-Type), la mutation s'exécute **avec les cookies de la victime**.
+> [!warning] **Pourquoi ça marche** : un POST cross-origin avec `Content-Type: text/plain` ne déclenche **pas** de preflight OPTIONS → le navigateur l'envoie quand même. Si le serveur accepte `text/plain` (ou ne vérifie pas le Content-Type), la mutation s'exécute **avec les cookies de la victime**.
 >
-> 💡 Tester les Content-Types : `application/json` (préflight) vs `text/plain` / `application/x-www-form-urlencoded` (pas de préflight).
+> Tester les Content-Types : `application/json` (préflight) vs `text/plain` / `application/x-www-form-urlencoded` (pas de préflight).
 
 ---
 
-## 🔑 Bypass d'authentification
+## Bypass d'authentification
 
 ```graphql
 # Brute-force du login via alias (1 seule requête HTTP)
@@ -376,11 +376,11 @@ mutation {
 - **Contournement de résolveurs** : un champ `user(id:)` non protégé permet de lire n'importe quel compte ; un champ `me` protégé mais un champ `user` pas protégé → fuite de données.
 - **Validation absente / paramètre smuggling** : mutations qui n'identifient pas le propriétaire (`deletePost(id:)` accepte n'importe quel id) ; envoyer deux valeurs pour le même argument (via alias/batch) → le serveur en utilise une pour l'auth et une pour l'action.
 
-> [!tip] 💡 Un bruteforce de login classique = **1 000 requêtes** → flag. En GraphQL avec alias/batching = **1 requête**. Toujours tester la mutation d'auth en premier quand elle existe dans le schéma.
+> [!tip] Un bruteforce de login classique = **1 000 requêtes** → flag. En GraphQL avec alias/batching = **1 requête**. Toujours tester la mutation d'auth en premier quand elle existe dans le schéma.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -412,7 +412,7 @@ for t in schema["types"]:
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Menace | Défense |
 |---|---|
@@ -428,35 +428,35 @@ for t in schema["types"]:
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre d'attaque**
+> [!tip] **Ordre d'attaque**
 > 1. **Détecter** l'endpoint (`/graphql`, `/api/graphql`, `/graphiql`).
 > 2. **Confirmer** avec `query={__typename}`.
 > 3. **Introspecter** le schéma complet.
 > 4. Repérer `queryType`/`mutationType` → champs racines → arguments → types.
 > 5. Tester IDOR, injections dans les arguments, batching/bruteforce, CSRF.
 
-> [!tip] 💡 **Les 3 endpoints classiques** : `/graphql`, `/graphiql` (IDE, introspection souvent ON), `/api/graphql` (variante commune). Toujours tester GET **et** POST.
+> [!tip] **Les 3 endpoints classiques** : `/graphql`, `/graphiql` (IDE, introspection souvent ON), `/api/graphql` (variante commune). Toujours tester GET **et** POST.
 
-> [!tip] 💡 **Comment lire un schéma** : le `queryType` liste les champs de lecture (`user`, `post`, `me`…), le `mutationType` les actions (`login`, `createUser`, `deletePost`…). Les arguments entre parenthèses = la surface d'attaque (id, search, filter). Les types non exposés en UI (`isAdmin`, `password`) = fuite probable.
+> [!tip] **Comment lire un schéma** : le `queryType` liste les champs de lecture (`user`, `post`, `me`…), le `mutationType` les actions (`login`, `createUser`, `deletePost`…). Les arguments entre parenthèses = la surface d'attaque (id, search, filter). Les types non exposés en UI (`isAdmin`, `password`) = fuite probable.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Introspection désactivée ≠ blind** : les **suggestions** (`Did you mean "node"?`) et le fuzzing de noms de champs reconstruisent le schéma.
 > - Les **mutations** marchent rarement en GET — si elles marchent, exploiter le CSRF.
 > - Le **cost analysis** est contourné par les **alias** et le **batching** non comptabilisés.
-> - Une erreur SQL dans un résolveur GraphQL révèle le SGBD → adapter les payloads (voir [[Injection SQL|💾 SQLi]]).
+> - Une erreur SQL dans un résolveur GraphQL révèle le SGBD → adapter les payloads (voir [[Injection SQL| SQLi]]).
 > - Les tests sur des mutations **destructives** (`delete*`, `drop*`) peuvent casser l'environnement — rester sur des comptes de test.
 > - Un champ présent dans le schéma n'est **pas** forcément utilisé par l'app → les champs "cachés" sont souvent les plus intéressants.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[NoSQL|🍃 NoSQL]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[SSRF|🌐 SSRF]]
-- [[Attaques JWT|🔐 JWT]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — GraphQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/GraphQL%20Injection/README.md)
+- [[Injection SQL| SQLi]]
+- [[NoSQL| NoSQL]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[SSRF| SSRF]]
+- [[Attaques JWT| JWT]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — GraphQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/GraphQL%20Injection/README.md)

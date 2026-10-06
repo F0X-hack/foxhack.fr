@@ -1,11 +1,11 @@
 ---
 title: "Outil - Elastic"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 9.5.1 (Elastic Stack, 2026-08-11)
 licence: Elastic License 2.0 (moteur) / AGPLv3 (parties open source)
@@ -16,7 +16,7 @@ site: https://www.elastic.co
 doc: https://www.elastic.co/guide/index.html
 ---
 
-# 🛡️ Elastic — Défense & SIEM
+# Elastic — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Elastic Stack (ELK) — **Elasticsearch, Logstash, Kibana, Filebeat** — est la plateforme
@@ -25,13 +25,13 @@ doc: https://www.elastic.co/guide/index.html
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Elastic Stack (anciennement ELK Stack : Elasticsearch, Logstash, Kibana + Beats) |
 | Description | Plateforme de recherche, indexation et analyse de logs avec détection SIEM (Elastic Security) |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | SIEM / Log management / Endpoint Detection & Response |
 | Fonction principale | Collecter, normaliser (ECS), indexer, corréler et alerter sur des événements de sécurité |
 | Type d'outil | Suite de services serveur + agents (framework) |
@@ -52,7 +52,7 @@ doc: https://www.elastic.co/guide/index.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le **Elastic Stack** centralise les logs : **Filebeat** (ou **Elastic Agent**) collecte et pousse, **Logstash** transforme et enrichit, **Elasticsearch** indexe et stocke (full-text Lucene), **Kibana** visualise (Discover, dashboards, **Detections Engine**). La Detections Engine (module Elastic Security, ex-SIEM) exécute des **règles de corrélation** (KQL, EQL, ESQL, règles importées au format Sigma) sur les événements indexés pour générer des **alertes** et des **cases d'investigation**. Alternative self-hosted à Splunk, la pile intègre la normalisation **ECS** (Event Common Schema), la gestion à distance des collecteurs via **Fleet** et la détection d'endpoints via l'intégration **EDR** (Elastic Defend).
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -127,14 +127,14 @@ curl -fsSL https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-ag
 # Puis : sudo ./elastic-agent install --url=https://fleet-server.example.com:8220 --enrollment-token=<TOKEN>
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Elasticsearch consomme ~50 % de la RAM disponible dans son heap Java par défaut (`ES_JAVA_OPTS=-Xms4g -Xmx4g` en lab).
 > - `vm.max_map_count` doit être ≥ 262144 sous Linux (`sudo sysctl -w vm.max_map_count=262144`).
 > - La sécurité (TLS + mots de passe) est activée par défaut depuis la 8.x : noter le mot de passe `elastic` et le fingerprint HTTP CA générés à l'installation.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -152,7 +152,7 @@ curl -fsSL https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-ag
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux de données à l'exécution :
 
@@ -166,7 +166,7 @@ Flux type : événement réseau (Suricata) → Filebeat `eve.json` → index `lo
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ curl -k -u elastic:CHANGEME -X POST "https://localhost:5601/api/detection_engine
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -223,7 +223,7 @@ curl -k -u elastic:CHANGEME -X POST "https://localhost:5601/api/detection_engine
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -263,7 +263,7 @@ sequence with maxspan=5m
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Installer et démarrer** Elasticsearch + Kibana, noter le mot de passe `elastic` et le **fingerprint** TLS générés à l'installation.
 2. **Configurer Filebeat** : `sudo filebeat modules enable system`, renseigner `output.elasticsearch` et `setup.kibana.host` dans `/etc/filebeat/filebeat.yml`, puis `sudo filebeat setup` et `sudo systemctl start filebeat`.
@@ -278,7 +278,7 @@ sequence with maxspan=5m
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection de bruteforce RDP avec une règle EQL
 
@@ -321,7 +321,7 @@ and not process.executable : ("*.dll", "C:\\Windows\\*")
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -334,7 +334,7 @@ and not process.executable : ("*.dll", "C:\\Windows\\*")
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -349,7 +349,7 @@ and not process.executable : ("*.dll", "C:\\Windows\\*")
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -391,7 +391,7 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (msg:"ET POLICY Possible RDP brute
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — vérification de santé du cluster en boucle
@@ -433,7 +433,7 @@ print(r.status_code, r.json().get("name"))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Elasticsearch renvoie du **JSON** sur toutes ses API (`_search`, `_bulk`, `_cat`). Les logs Filebeat sont des documents JSON indexés ; le fichier `eve.json` de Suricata est ingéré tel quel et normalisé en ECS.
 
@@ -457,7 +457,7 @@ for hit in alerts.get("hits", {}).get("hits", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Suricata / Zeek → Filebeat → Elasticsearch → Detections Engine → Cases
@@ -465,7 +465,7 @@ Wazuh → (webhook/connector) → Kibana Alerts
 Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Suricata]] — logs `eve.json` ingérés par Filebeat, corrélation SIEM
 - [[Outil - Zeek]] — journaux `*.log` ingérés (module Zeek de Filebeat)
 - [[Outil - Wazuh]] — alertes envoyées vers Elastic via connector ou API
@@ -478,7 +478,7 @@ Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -493,7 +493,7 @@ Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - 1 shard primaire conseillé par 30-50 Go de données pour un volume raisonnable de requêtes.
 - Heap Java : ~50 % de la RAM du serveur par défaut, à borner avec `ES_JAVA_OPTS` (4-8 Go en lab, 50 % max en prod).
@@ -506,7 +506,7 @@ Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -536,7 +536,7 @@ Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **TLS partout** : activer `xpack.security.enabled` et certifier les transports (9200, 5601, Fleet 8220) — jamais de connexion HTTP nu depuis la 8.x.
 - **Moindre privilège** : rôles Kibana (analyste, admin, ingest), API keys dédiées par service au lieu du compte `elastic`.
@@ -546,7 +546,7 @@ Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Elasticsearch est **source-available** (Elastic License 2.0) : certaines fonctions avancées (SIEM, ML) sont payantes — pas une licence OSI.
 - La Detections Engine ne remplace pas un EDR : la couverture endpoint dépend de l'intégration Elastic Defend.
@@ -557,7 +557,7 @@ Velociraptor (collecte) → téléversement → analyse croisée dans Discover
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Santé du cluster et liste des index
@@ -586,7 +586,7 @@ sequence with maxspan=5m [any where event.outcome=="failure"] [any where event.o
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -599,7 +599,7 @@ sequence with maxspan=5m [any where event.outcome=="failure"] [any where event.o
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -611,21 +611,21 @@ sequence with maxspan=5m [any where event.outcome=="failure"] [any where event.o
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Pense « données d'abord »**
+> [!tip] **Pense « données d'abord »**
 > Le succès du Detections Engine dépend des **champs normalisés ECS** : vérifie qu'un événement arrive bien avec `event.category`, `process.executable`, `user.name` avant d'écrire une règle. Une règle parfaite sur un champ vide ne détectera jamais rien.
 
-> [!tip] 💡 **Testing des règles**
+> [!tip] **Testing des règles**
 > Avant de publier une règle, créez un événement de test (ex. `Winlogbeat` sur un poste de lab) qui correspond à votre signature : la détection doit déclencher dans les 1-2 minutes. Utilisez le bouton *Preview* de la règle pour valider sur l'historique avant activation.
 
-> [!warning] ⚠️ **Piège** : ELK consomme beaucoup. Par défaut Elasticsearch alloue la moitié de la RAM du serveur à son heap Java. Sans `-Xmx` ni sharding adapté, les recherches deviennent lentes et l'index tombe en `red`. Un lab = 4-8 Go dédiés, sinon Kibana semble « vide ».
+> [!warning] **Piège** : ELK consomme beaucoup. Par défaut Elasticsearch alloue la moitié de la RAM du serveur à son heap Java. Sans `-Xmx` ni sharding adapté, les recherches deviennent lentes et l'index tombe en `red`. Un lab = 4-8 Go dédiés, sinon Kibana semble « vide ».
 
-> [!warning] ⚠️ **Piège** : ne pas confondre les branches 8.x et 9.x pour les paquets APT (`/packages/8.x/apt` vs `/packages/9.x/apt`) et les images Docker : mélanger les versions ES/Kibana provoque des incompatibilités de mapping.
+> [!warning] **Piège** : ne pas confondre les branches 8.x et 9.x pour les paquets APT (`/packages/8.x/apt` vs `/packages/9.x/apt`) et les images Docker : mélanger les versions ES/Kibana provoque des incompatibilités de mapping.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -649,4 +649,4 @@ sequence with maxspan=5m [any where event.outcome=="failure"] [any where event.o
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Techniques/Injection de commandes|🐚 Injection de commandes]] · [[Techniques/Privilege Escalation Windows|🕹️ Privesc Windows]] · [[Outil - Splunk]] · [[Outil - Wazuh]] · [[Outil - Suricata]] · [[Outil - osquery]] · [[Outil - Sigma]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Injection de commandes| Injection de commandes]] · [[Techniques/Privilege Escalation Windows| Privesc Windows]] · [[Outil - Splunk]] · [[Outil - Wazuh]] · [[Outil - Suricata]] · [[Outil - osquery]] · [[Outil - Sigma]]

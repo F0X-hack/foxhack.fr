@@ -1,11 +1,11 @@
 ---
 title: "Outil - Graylog"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 7.1.7 (Graylog Open, 2026-08-05)
 licence: SSPL 1.0 (Server Side Public License)
@@ -16,7 +16,7 @@ site: https://www.graylog.org
 doc: https://go2docs.graylog.org
 ---
 
-# 🛡️ Graylog — Défense & SIEM
+# Graylog — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Graylog est un **remplaçant open source de Splunk** : il ingère les logs (GELF, Syslog...),
@@ -25,13 +25,13 @@ doc: https://go2docs.graylog.org
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Graylog (plateforme de log management centralisée) |
 | Description | Plateforme open source de centralisation, normalisation, recherche et alerte sur les logs (SIEM léger) |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | Log management / SIEM / Corrélation d'événements |
 | Fonction principale | Ingérer les logs (GELF, Syslog, Beats...), les transformer (extractors, pipeline rules), les router (streams), les rechercher et alerter |
 | Type d'outil | Service serveur (backend + web UI + API REST) |
@@ -52,7 +52,7 @@ doc: https://go2docs.graylog.org
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Graylog centralise les logs avec une architecture **messages → extraction → streams** : les messages entrent par des **inputs** (GELF, Syslog, Beats, HTTP...), les **extractors** et **pipeline rules** transforment et enrichissent les champs, puis les **streams** routent les messages vers l'indexation, les alertes et les notifications. C'est le concurrent direct de Splunk en open source : mêmes concepts (recherche plein texte, dashboards, alertes, pipeline de traitement) mais **gratuit, self-hosted et sans licence par volume**. Moins médiatisé que l'ELK Stack, il est populaire dans les PME/ESN pour la gestion centralisée des logs avec un effort d'administration réduit.
 
@@ -75,7 +75,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -97,7 +97,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -152,7 +152,7 @@ sudo dpkg -i graylog-sidecar_1.5.0-1_all.deb
 sudo graylog-sidecar service install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **OpenSearch 3.0+ n'est PAS supporté** : rester en 2.19.5 maximum (ou utiliser le Data Node).
 > - MongoDB 7.x–8.2.x requis pour Graylog 7.1.x ; les versions plus anciennes ne sont pas acceptées.
 > - `password_secret` doit faire **au moins 64 caractères**, sinon le serveur ne démarre pas.
@@ -161,7 +161,7 @@ sudo graylog-sidecar service install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -181,7 +181,7 @@ sudo graylog-sidecar service install
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux de données à l'exécution :
 
@@ -195,7 +195,7 @@ Flux type : événement SSH → rsyslog → input Syslog UDP 514 → extractor `
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -239,7 +239,7 @@ sudo graylog-sidecar -c /etc/graylog/sidecar.yml -t
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -260,7 +260,7 @@ sudo graylog-sidecar -c /etc/graylog/sidecar.yml -t
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -307,7 +307,7 @@ Les alertes d'agrégation (`count > X` en 5 min) se créent dans System → Aler
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Installer** le serveur, le Data Node et MongoDB ; définir `password_secret` et `root_password_sha2`, démarrer `graylog-datanode` puis `graylog-server`.
 2. **Créer un input** *System → Inputs* : `Syslog UDP` port **514** pour centraliser les logs Linux ; noter l'ID généré (nécessaire pour les streams et l'API).
@@ -319,7 +319,7 @@ Les alertes d'agrégation (`count > X` en 5 min) se créent dans System → Aler
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : corrélation de bruteforce SSH en pipeline rule
 
@@ -357,7 +357,7 @@ curl -u admin:CHANGEME http://10.10.20.15:9000/api/cluster   # 2 nœuds visibles
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -370,7 +370,7 @@ curl -u admin:CHANGEME http://10.10.20.15:9000/api/cluster   # 2 nœuds visibles
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -385,7 +385,7 @@ curl -u admin:CHANGEME http://10.10.20.15:9000/api/cluster   # 2 nœuds visibles
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -420,7 +420,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — surveillance de santé + envoi GELF si problème
@@ -451,7 +451,7 @@ for m in data["messages"][:5]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 L'API REST renvoie du **JSON** (recherche, streams, événements, index sets). La sortie de recherche expose `total_results`, `messages[]` (chacun avec `message`, `index`, `decoration_stats`) et `fields`. Les messages sont des objets plats avec champs normalisés (`timestamp`, `source`, `level`, plus champs custom `_*` ou extractés).
 
@@ -464,7 +464,7 @@ curl -s -u admin:CHANGEME -X GET \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 rsyslog / Syslog-ng → Graylog (input Syslog UDP 514)
@@ -474,7 +474,7 @@ Graylog → webhook HTTP → Slack / PagerDuty / Teams
 Graylog API → scripts d'orchestration (playbooks d'investigation)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Splunk]] — SIEM concurrent commercial, migration possible des recherches
 - [[Outil - Elastic]] — stack alternative : même concept de centralisation, plus SIEM/EDR
 - [[Outil - Wazuh]] — XDR open source : aliments en parallèle pour la couverture endpoint
@@ -485,7 +485,7 @@ Graylog API → scripts d'orchestration (playbooks d'investigation)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -499,7 +499,7 @@ Graylog API → scripts d'orchestration (playbooks d'investigation)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Architecture à 3 rôles : Graylog Server (Java, CPU/IO), MongoDB (métadonnées légères), OpenSearch (indexation) — dimensionner OpenSearch sur le volume de messages.
 - Le **message journal** (Linux) garantit la durabilité mais consomme du disque : borner avec `message_journal_max_size` (5-10 Go par nœud en lab).
@@ -509,7 +509,7 @@ Graylog API → scripts d'orchestration (playbooks d'investigation)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -539,7 +539,7 @@ Graylog API → scripts d'orchestration (playbooks d'investigation)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Accès UI/API** : ne jamais exposer le port 9000 sur Internet ; derrière un reverse-proxy (NGINX) avec TLS et SSO si possible ; paramétrer `trusted_proxies`.
 - **Mots de passe** : `root_password_sha2` défini avant le premier démarrage, rotation périodique ; utilisateurs à rôles minimaux (Admin/Manager/Reader).
@@ -550,7 +550,7 @@ Graylog API → scripts d'orchestration (playbooks d'investigation)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas d'EDR : la détection endpoint relève des agents externes (Wazuh, Elastic Defend, AV).
 - OpenSearch 3.0+ non supporté : la mise à niveau du backend de recherche est un point de blocage à anticiper.
@@ -561,7 +561,7 @@ Graylog API → scripts d'orchestration (playbooks d'investigation)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Santé et statut
@@ -589,7 +589,7 @@ curl -s -u admin:CHANGEME "http://10.10.20.15:9000/api/search/relative?query=mes
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -602,7 +602,7 @@ curl -s -u admin:CHANGEME "http://10.10.20.15:9000/api/search/relative?query=mes
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -614,29 +614,29 @@ curl -s -u admin:CHANGEME "http://10.10.20.15:9000/api/search/relative?query=mes
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Teste chaque input avant déploiement**
+> [!tip] **Teste chaque input avant déploiement**
 > Un input qui reçoit mal les logs = silencieux et inutile. Envoie un message GELF de test (`sendgelf`), vérifie qu'il apparaît dans *Search* puis dans le bon **stream**. Chaque silence sur un flux critique doit être considéré comme une alerte.
 
-> [!tip] 💡 **Pipeline rules avant extractors**
+> [!tip] **Pipeline rules avant extractors**
 > Pour la production, écrire des **pipeline rules** (versionnables, testables en simulation) plutôt que des extractors un à un par input : la maintenance est nettement plus simple à grande échelle.
 
-> [!tip] 💡 **Un dashboard = un état du SIEM**
+> [!tip] **Un dashboard = un état du SIEM**
 > Créer un dashboard « SOC » de référence (top sources, top événements, volume par source, alertes actives) : c'est la première chose à regarder lors d'un incident.
 
-> [!warning] ⚠️ **Piège** : les **extractors** sont appliqués à la volée et non rétroactifs.
+> [!warning] **Piège** : les **extractors** sont appliqués à la volée et non rétroactifs.
 > Un extractor créé après ingestion ne corrige pas les messages déjà indexés : pense la modélisation (champs, streams) **avant** de brancher les flux, sinon les recherches historiques seront incohérentes.
 
-> [!warning] ⚠️ **Piège** : OpenSearch 3.0+ n'est pas supporté.
+> [!warning] **Piège** : OpenSearch 3.0+ n'est pas supporté.
 > Lors d'une mise à jour du backend, bloquer la version (apt hold / verrou de paquet) pour rester ≤ 2.19.5, sinon l'instance casse.
 
-> [!warning] ⚠️ **Piège** : ne pas confondre message, stream et index set.
+> [!warning] **Piège** : ne pas confondre message, stream et index set.
 > Le stream route (filtre), l'index set stocke (rotation/rétention). Deux streams peuvent partager un index set ; un stream sans index set défini peut ne pas être indexé correctement.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -660,4 +660,4 @@ curl -s -u admin:CHANGEME "http://10.10.20.15:9000/api/search/relative?query=mes
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting / Tunneling]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS Poisoning]] · [[Outil - Splunk]] · [[Outil - Elastic]] · [[Outil - Wazuh]] · [[Outil - osquery]] · [[Outil - Sigma]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting / Tunneling]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]] · [[Outil - Splunk]] · [[Outil - Elastic]] · [[Outil - Wazuh]] · [[Outil - osquery]] · [[Outil - Sigma]]

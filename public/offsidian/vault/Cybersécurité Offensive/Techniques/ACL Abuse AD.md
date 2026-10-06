@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧩 ACL Abuse (AD)
+# ACL Abuse (AD)
 
 > [!info] **En 1 phrase**
 > ACL Abuse = exploiter des **permissions mal configurées** (ACL) sur les objets AD : un compte
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -29,14 +29,14 @@ flowchart LR
     C --> D[Accès privilégié]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Les droits sur les objets AD ne se limitent pas à "admin du domaine" : un simple utilisateur
 > peut avoir des droits spécifiques (réinitialiser le mdp de X, écrire l'ACL de Y...). L'abuser,
 > c'est exploiter la **délégation de droits**.
 
 ---
 
-## ⚙️ Les droits dangereux
+## Les droits dangereux
 
 | Droit | Effet |
 |---|---|
@@ -49,7 +49,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # 1. Détection : BloodHound (ACL analysées) - chercher les arêtes vers DA
@@ -68,7 +68,7 @@ GetUserSPNs.py -dc-ip 192.168.1.10 'corp.local/user:pass' -request
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -78,20 +78,20 @@ GetUserSPNs.py -dc-ip 192.168.1.10 'corp.local/user:pass' -request
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le "qu'est-ce qu'on peut faire avec X ?"**
+> [!tip] **Le "qu'est-ce qu'on peut faire avec X ?"**
 > BloodHound : clique sur ton utilisateur → onglet "Outbound Object Control" → tous les chemins
 > exploitables. C'est **la source n°1 des chemins d'élévation** dans AD.
 
-> [!warning] ⚠️ **Piège** : un reset de mot de passe **force le logout** de la victime → bruyant.
+> [!warning] **Piège** : un reset de mot de passe **force le logout** de la victime → bruyant.
 > Préfère les attaques "sans impact" (SPN add, delegation) quand c'est possible.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberoasting|🧀 Kerberoasting]] (résultat possible via GenericWrite)
-- [[NTLM Relay|🔗 NTLM Relay]] (delegation via LDAP)
-- [[ADCS et Certificats (ESC)|🔐 ADCS/ESC]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberoasting| Kerberoasting]] (résultat possible via GenericWrite)
+- [[NTLM Relay| NTLM Relay]] (delegation via LDAP)
+- [[ADCS et Certificats (ESC)| ADCS/ESC]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

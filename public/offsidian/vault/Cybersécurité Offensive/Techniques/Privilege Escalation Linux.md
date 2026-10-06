@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🐧 Privilege Escalation Linux
+# Privilege Escalation Linux
 
 > [!info] **En 1 phrase**
 > Passer d'un utilisateur limité à **root** en exploitant une mauvaise configuration du système
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Automatisation d'abord
@@ -62,7 +62,7 @@ echo 'cp /bin/bash /tmp/root; chmod 4755 /tmp/root' > /tmp/tar; chmod +x /tmp/ta
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -74,17 +74,17 @@ echo 'cp /bin/bash /tmp/root; chmod 4755 /tmp/root' > /tmp/tar; chmod +x /tmp/ta
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **GTFOBins est ton meilleur ami**
+> [!tip] **GTFOBins est ton meilleur ami**
 > Chaque binaire sudo/SUID → `gtfobins.github.io` pour la technique d'évasion exacte.
 
-> [!warning] ⚠️ **Piège** : **pas d'exploit kernel en premier** — crash possible. Les misconfigs sont stables et non destructrices. Kernel = dernier recours.
+> [!warning] **Piège** : **pas d'exploit kernel en premier** — crash possible. Les misconfigs sont stables et non destructrices. Kernel = dernier recours.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Reverse Shells|🕸️ Reverse Shells]]
-- [[Privilege Escalation Windows|🪟 Privesc Windows]]
-- → Note complète : [[06 - Post-Exploitation|🕹️ Post-Exploitation]]
+- [[Reverse Shells| Reverse Shells]]
+- [[Privilege Escalation Windows| Privesc Windows]]
+- → Note complète : [[06 - Post-Exploitation| Post-Exploitation]]

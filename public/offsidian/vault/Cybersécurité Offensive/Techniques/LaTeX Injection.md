@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📐 LaTeX Injection
+# LaTeX Injection
 
 > [!info] **En 1 phrase**
 > LaTeX Injection = injecter des **commandes TeX** dans un document compilé par un moteur LaTeX
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
     E --> H[Webshell / fichiers<br>déposés]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > LaTeX est un **langage de scripting** complet : `\input{...}`, `\read`, `\write18` (avec
 > `shell-escape`) permettent d'interagir avec le système de fichiers et l'OS. Souvent utilisé
 > dans des apps de génération de PDF/rapports (factures, CV, math) qui compilent du contenu
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 📂 Lecture de fichiers
+## Lecture de fichiers
 
 ### Interprétation du contenu (lire + compiler le code qu'il contient)
 
@@ -84,7 +84,7 @@ flowchart LR
 \verbatiminput{/etc/passwd}
 ```
 
-> [!tip] 💡 `\verbatiminput` évite les erreurs de compilation si le fichier contient des
+> [!tip] `\verbatiminput` évite les erreurs de compilation si le fichier contient des
 > caractères spéciaux (`$`, `#`, `_`, `&`, octets nuls...).
 
 ### Point d'injection après le préambule (`\usepackage` indisponible)
@@ -101,7 +101,7 @@ Désactiver le catcode des caractères spéciaux pour pouvoir `\input` un fichie
 
 ---
 
-## ✍️ Écriture de fichiers
+## Écriture de fichiers
 
 ```tex
 \newwrite\outfile
@@ -112,13 +112,13 @@ Désactiver le catcode des caractères spéciaux pour pouvoir `\input` un fichie
 \closeout\outfile
 ```
 
-> 💡 Combinable avec `\write18` pour déposer un script/webshell puis l'exécuter.
+> Combinable avec `\write18` pour déposer un script/webshell puis l'exécuter.
 
 ---
 
-## 🚀 Exécution de commandes (`\write18`)
+## Exécution de commandes (`\write18`)
 
-> ⚠️ Nécessite le flag **`shell-escape`** (aka `--enable-write18`) au moment de la compilation.
+> Nécessite le flag `shell-escape`** (aka `--enable-write18`) au moment de la compilation.
 > Sans lui, `\write18` est ignoré (mais il vaut toujours le tester !).
 
 La sortie part sur **stdout** (pas dans le PDF) → rediriger vers un fichier temporaire puis le lire :
@@ -144,7 +144,7 @@ Variantes via pipe avec `\input` :
 
 ---
 
-## 🧩 Variantes et contournements
+## Variantes et contournements
 
 ### Contourner une blacklist de commandes
 
@@ -179,7 +179,7 @@ Variantes via pipe avec `\input` :
 
 ---
 
-## 🖼️ XSS via LaTeX (rendu HTML / MathJax)
+## XSS via LaTeX (rendu HTML / MathJax)
 
 Quand le document est rendu en HTML (MathJax, retex, éditeurs en ligne) :
 
@@ -196,7 +196,7 @@ Dans MathJax (extension unicode) :
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -209,13 +209,13 @@ Dans MathJax (extension unicode) :
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Tester `\input{/etc/passwd}` (fichier lisible ?) → 2. Tester `\immediate\write18{id}`
 > (shell-escape actif ?) → 3. Exfiltrer via base64 + `\input` ou un reverse shell.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `shell-escape`, `\write18` ne fait **rien** → vérifier d'abord avec un `\input` de fichier.
 > - `\input` **interprète** le contenu : un fichier avec `$`, `#`, `_`, `&` casse la compilation →
 >   utiliser `\verbatiminput` ou `\catcode` avant.
@@ -226,9 +226,9 @@ Dans MathJax (extension unicode) :
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — LaTeX Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LaTeX%20Injection/README.md)
+- [[LFI et RFI| LFI / RFI]]
+- [[Injection de commandes| Injection de commandes]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — LaTeX Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LaTeX%20Injection/README.md)

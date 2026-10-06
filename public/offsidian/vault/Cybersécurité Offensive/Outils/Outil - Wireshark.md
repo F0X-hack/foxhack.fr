@@ -1,7 +1,7 @@
 ---
 title: "Outil - Wireshark"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -15,19 +15,19 @@ repo: https://gitlab.com/wireshark/wireshark
 site: https://www.wireshark.org
 doc: https://www.wireshark.org/docs/
 ---
-# 🦈 Wireshark — Analyseur de paquets réseau
+# Wireshark — Analyseur de paquets réseau
 
 > [!info] **En 1 phrase**
 > Wireshark est l'analyseur de protocoles de référence pour inspecter en profondeur chaque paquet capturé sur le réseau.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Description | Analyseur de protocoles : capture en direct (libpcap/Npcap) ou lecture de fichiers (pcap/pcapng), décodage de centaines de protocoles, filtres d'affichage, suivi de flux, export d'objets |
-| Catégorie | 🌐 Réseau & Capture |
+| Catégorie | Réseau & Capture |
 | Sous-catégorie | Analyse de trafic / Forensic réseau |
 | Type d'outil | GUI (Wireshark) + CLI (tshark) |
 | Licence | GPLv2 (open source) |
@@ -45,7 +45,7 @@ doc: https://www.wireshark.org/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Wireshark capture le trafic en direct (libpcap/Npcap) ou lit des fichiers `.pcap`/`.pcapng` et décode **plus de 2000 protocoles** champ par champ (IP, ports, flags TCP, HTTP, TLS…). Les **filtres d'affichage** isolent finement les paquets, le **suivi de flux** reconstruit un échange complet, et l'**export d'objets** réassemble les fichiers transférés. En offensive, il sert à extraire des credentials HTTP, valider un callback de payload ou inspecter un canal C2 ; en défensif, à analyser des captures malwares (DNS exfil, SMB). Sa version CLI, tshark, permet l'analyse en script. Le modèle d'analyse est tri-panneau (liste de paquets, arborescence des champs décodés, hexadécimal) ; chaque champ est filtrable par clic droit → « Apply as filter ». Les profils sauvegardent colonnes, filtres et coloration par usage. Historique : Ethereal (Gerald Combs, 1998) renommé Wireshark en 2006 ; hébergé par la Wireshark Foundation. La version 4.6 (octobre 2025) apporte installeurs macOS universels, Qt 6.9, « Plots » et décryptage NTP via NTS.
 
@@ -58,7 +58,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian / Ubuntu / Kali
@@ -95,14 +95,14 @@ cd wireshark
 cmake -B build && cmake --build build && sudo cmake --install build
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Windows : **Npcap** doit être installé (fourni avec l'installeur officiel), sinon aucune capture possible.
 > - Linux : la capture sans root nécessite le groupe `wireshark` (`sudo usermod -aG wireshark $USER`) ou `sudo` ; la lecture de `.pcap` ne nécessite aucun privilège.
 > - macOS : privilèges d'accès aux interfaces à valider dans les réglages.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Préférences dans `$XDG_CONFIG_HOME/wireshark` (Linux), `%APPDATA%\Wireshark` (Windows), `~/Library/Preferences/Wireshark` (macOS).
 
@@ -117,7 +117,7 @@ Préférences dans `$XDG_CONFIG_HOME/wireshark` (Linux), `%APPDATA%\Wireshark` (
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Capture** : `dumpcap` effectue la capture réelle (libpcap/Npcap), Wireshark/tshark s'y connectent pour l'analyse en temps réel. Les filtres de capture sont compilés en **BPF**.
 - **Dissection** : chaque protocole a un dissector (C ou Lua) qui enregistre des champs (FT_*) dans un arbre, accessibles par nom filtre (`ip.src`, `http.file_data`).
@@ -130,7 +130,7 @@ tshark partage 100 % des dissectors et filtres avec la GUI : c'est le même mote
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### GUI (raccourcis clés)
 
@@ -181,7 +181,7 @@ tshark -r cap.pcapng --export-objects http,./objets/
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### GUI
 
@@ -214,7 +214,7 @@ tshark -r cap.pcapng --export-objects http,./objets/
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -252,7 +252,7 @@ tshark -r sample.pcapng -Y 'dns.qry.name contains "pastebin" || smb2.cmd == 4' -
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer la capture** — ouvrir Wireshark, double-cliquer sur l'interface, capturer pendant une action ciblée. CLI : `tshark -i eth0 -w action.pcapng`.
 2. **Filtrer** — `http` puis `http.request.method == "POST"` pour isoler les soumissions de formulaires.
@@ -268,7 +268,7 @@ tshark -r sample.pcapng -Y 'dns.qry.name contains "pastebin" || smb2.cmd == 4' -
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : extraction de fichiers via HTTP
 
@@ -286,7 +286,7 @@ tshark -r sample.pcapng -Y 'dns.qry.name contains "pastebin" || smb2.cmd == 4' -
 # Suivre le flux et identifier les données exfiltrées via des requêtes DNS
 ```
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -300,7 +300,7 @@ tshark -r sample.pcapng -Y 'dns.qry.name contains "pastebin" || smb2.cmd == 4' -
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -315,7 +315,7 @@ tshark -r sample.pcapng -Y 'dns.qry.name contains "pastebin" || smb2.cmd == 4' -
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -377,7 +377,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle de capture par tranche de 5 minutes (rotation)
@@ -390,7 +390,7 @@ tshark -r capture.pcapng -Y 'dns.qry.name' -T fields -e dns.qry.name | sort -u |
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 tshark produit des sorties texte, détaillées (`-V`), champs (`-T fields`), JSON (`-T json`), EK (Elastic), PDML et CSV. Les statistiques (`-z`) sortent en tableau.
 
@@ -409,9 +409,9 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - tshark]] — version CLI du même moteur (analyse en script)
 - [[Outil - tcpdump]] — capture légère sur machine cible, analysée ensuite dans Wireshark
 - [[Outil - Scapy]] — crafting de paquets et capture en Python
@@ -419,11 +419,11 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 - [[Outil - tcpreplay]] — rejouer des captures pour tester l'IDS
 - [[Outil - aircrack-ng]] / [[Outil - hcxdumptool]] — handshakes Wi-Fi issus des captures
 - [[Outil - CyberChef]] — transformation des payloads extraits
-- [[Techniques/ARP Spoofing et MITM|🕸️ ARP Spoofing & MITM]]
+- [[Techniques/ARP Spoofing et MITM| ARP Spoofing & MITM]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -436,7 +436,7 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - La capture repose sur **dumpcap** (léger, privilèges minimaux) ; le décodage est déporté vers Wireshark/tshark, ce qui limite la perte de paquets.
 - Les **filtres de capture** (BPF) s'exécutent dans le kernel/driver (peu de CPU, syntaxe limitée) ; les **filtres d'affichage** sont évalués en userland (plus riches, plus coûteux).
@@ -448,7 +448,7 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 #### Problème : « No interfaces found » au lancement (Windows)
 
@@ -477,7 +477,7 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permissions** : la capture nécessite des privilèges étendus (root, groupe `wireshark`, driver Npcap). Limiter l'installation aux postes autorisés.
 - **Sensibilité des données** : les captures contiennent passwords, cookies, contenus — chiffrer les fichiers pcap, ne pas les partager hors cadre (DLP).
@@ -488,7 +488,7 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Wireshark est **passif** : il ne génère pas de trafic (pas de scan, pas d'exploitation).
 - La **capture est détectable** (promiscuous mode, driver Npcap, processus).
@@ -499,7 +499,7 @@ tshark -r cap.pcapng -Y 'dns' -T json | jq '.[] | ._source.layers.dns.dns.qry_na
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Filtres d'affichage courants
@@ -530,7 +530,7 @@ editcap -c 1000 big.pcapng part.pcapng
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -543,7 +543,7 @@ editcap -c 1000 big.pcapng part.pcapng
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -557,22 +557,22 @@ editcap -c 1000 big.pcapng part.pcapng
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Sur de gros fichiers, préférer un **filtre de capture** (en amont) plutôt que d'affichage : moins de paquets perdus.
 > - `Suivre le flux TCP` (Ctrl+Shift+E) est le moyen le plus rapide de lire un échange HTTP/SMB.
 > - `frame contains` et les colonnes personnalisées accélèrent la recherche de chaînes dans les payloads.
 > - `tshark -G fields | grep <proto>` donne le nom exact d'un champ pour un filtre.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un filtre d'affichage ne supprime pas les paquets de la capture : la volumétrie globale reste faussée.
 > - Ne pas confondre **filtre de capture** (BPF, `-f`) et **filtre d'affichage** (`-Y`) : syntaxe et comportement diffèrent.
 > - Ouvrir un pcap est passif, mais **exporter puis exécuter** un objet extrait peut infecter : analyser dans une sandbox.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ editcap -c 1000 big.pcapng part.pcapng
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - tshark|tshark]] · [[Outil - tcpdump|tcpdump]]
+**Liens :** [[Tools| Outils]] · [[Outil - tshark|tshark]] · [[Outil - tcpdump|tcpdump]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔑 API Key Leaks
+# API Key Leaks
 
 > [!info] **En 1 phrase**
 > API Key Leaks = retrouver des **clés d'API / tokens** (déjà exposés ou mal configurés) dans
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,19 +35,19 @@ flowchart LR
     D --> G[Clé invalide<br>poursuivre la recherche]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Les devs **hardcodent** leurs clés dans le code, commitent des `.env` par accident ou poussent
 > des secrets dans des repos **publics / historiques**. GitHub indexe tout → une simple recherche
 > par pattern suffit à retrouver des clés **valides et exploitables**.
 
 ---
 
-## 📦 Définition & causes de fuite
+## Définition & causes de fuite
 
 - **API Key** : identifiant unique qui authentifie les requêtes d'une application (Google, AWS, Stripe...).
 - **Token** : jeton d'accès (OAuth, Bearer, JWT) qui donne accès à des ressources protégées.
 
-> [!warning] ⚠️ **Ne pas confondre** : une clé dans un **repo public** n'est pas toujours
+> [!warning] **Ne pas confondre** : une clé dans un **repo public** n'est pas toujours
 > exploitable (clé révoquée, sandbox, IP whitelistée). **Toujours valider avant de rapporter.**
 
 ### Où les clés fuient
@@ -80,11 +80,11 @@ SLACK_BOT_TOKEN=xoxb-<TEAM_ID>-<BOT_ID>-<REDACTED_TOKEN>
 
 ---
 
-## 🔍 Regex / patterns de détection
+## Regex / patterns de détection
 
 ### Patterns officiels de la source
 
-> [!tip] 💡 Pour identifier le service d'origine d'un token, consulte
+> [!tip] Pour identifier le service d'origine d'un token, consulte
 > **[mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db)** —
 > la plus grande base open-source de patterns de secrets (clés, mots de passe, tokens).
 
@@ -148,7 +148,7 @@ sk-ant-api03-[0-9A-Za-z_-]{50,}              # Anthropic
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Rôle | Lien |
 |---|---|---|
@@ -200,12 +200,12 @@ gitleaks detect --report-format sarif
 nuclei -t token-spray/ -var token=token_list.txt
 ```
 
-> [!tip] 💡 Les templates `token-spray` de nuclei-templates testent un token fourni
+> [!tip] Les templates `token-spray` de nuclei-templates testent un token fourni
 > contre des dizaines de services (Slack, GitHub, AWS, Stripe, Twilio...) en une passe.
 
 ---
 
-## 🕵️ Techniques de recherche
+## Techniques de recherche
 
 ### GitHub dorking (queries exactes)
 
@@ -289,9 +289,9 @@ filename:.npmrc filename:.pypirc filename:.netrc
 
 ---
 
-## 💥 Exploitation
+## Exploitation
 
-> [!warning] ⚠️ **Valider AVANT d'exploiter** : tester la clé sur l'endpoint officiel,
+> [!warning] **Valider AVANT d'exploiter** : tester la clé sur l'endpoint officiel,
 > sans effectuer d'action destructive. Une clé invalide = mauvais rapport.
 
 ```bash
@@ -325,13 +325,13 @@ aws s3 ls --profile pwn
 | **Stripe** | `sk_live_...` | `GET /v1/customers` | Lecture des cartes (si scope), remboursements frauduleux |
 | **OpenAI / Anthropic** | `sk-...` | `GET /v1/models` | Consommation du quota ($$) au détriment du propriétaire |
 
-> [!tip] 💡 **Keyhacks** ([streaak/keyhacks](https://github.com/streaak/keyhacks)) fournit la
+> [!tip] **Keyhacks** ([streaak/keyhacks](https://github.com/streaak/keyhacks)) fournit la
 > méthode de validation rapide pour chaque service — à utiliser en bug bounty pour prouver
 > l'impact sans nuire.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -357,14 +357,14 @@ aws s3 ls --profile pwn
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre d'investigation optimal**
+> [!tip] **Ordre d'investigation optimal**
 > 1. **Repo public** (dorking GitHub + clone) → 2. **Historique Git** (commits supprimés !)
 > → 3. **JS / bundles front** → 4. **Wayback machine & anciennes versions** → 5. Logs & backups.
 > L'historique Git est LA source la plus rentable : une clé "supprimée" y reste toujours.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - Une clé dans un repo public ≠ **exploitable** : révoquée, sandbox, IP restreinte → **valider**.
 > - Les clés **publishable** (Stripe `pk_`, Google Maps `AIza` public) sont faites pour être
 >   publiques : les lister comme "fuite" sans impact = **faux positif**.
@@ -380,10 +380,10 @@ aws s3 ls --profile pwn
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Password Cracking|🔐 Password Cracking]]
-- [[Hidden Parameters|🕵️ Hidden Parameters]]
-- [[Virtual Hosts|🏠 Virtual Hosts]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — API Key Leaks](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/API%20Key%20Leaks/README.md)
+- [[Password Cracking| Password Cracking]]
+- [[Hidden Parameters| Hidden Parameters]]
+- [[Virtual Hosts| Virtual Hosts]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — API Key Leaks](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/API%20Key%20Leaks/README.md)

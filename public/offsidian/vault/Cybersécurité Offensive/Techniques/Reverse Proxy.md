@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔀 Reverse Proxy Misconfigurations
+# Reverse Proxy Misconfigurations
 
 > [!info] **En 1 phrase**
 > Un reverse proxy **fait confiance à des headers envoyés par le client** (`X-Forwarded-For`,
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,14 +34,14 @@ flowchart LR
     P -.->|"path non normalisé"| T[Traversal<br>/styles../etc/passwd]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Les headers `X-*` ne sont **pas des mécanismes de confiance** : ce sont de simples champs HTTP.
 > Le proxy doit les **réécrire** avec la vraie source (`$remote_addr`, `$host`). S'il les
 > relaie tels quels (ou si l'app les lit directement), **l'attaquant les contrôle à 100 %**.
 
 ---
 
-## 🏗️ Le reverse proxy et la confiance dans les headers
+## Le reverse proxy et la confiance dans les headers
 
 ### Rôle du proxy
 
@@ -63,14 +63,14 @@ flowchart LR
    sans validation → SSRF / traversal / open proxy.
 ```
 
-> [!warning] ⚠️ **Le piège de l'empilement**
+> [!warning] **Le piège de l'empilement**
 > Le client doit contrôler le header **jusqu'à la couche qui le lit**. Un proxy correctement
 > configuré écrase `X-Forwarded-For`. Mais si le client parle DIRECTEMENT au backend
 > (port exposé, mauvaise ACL), ou si un 2e proxy intermédiaire relaie, le header est falsifiable.
 
 ---
 
-## ⚠️ Les headers dangereux
+## Les headers dangereux
 
 | Header | Contenu | Ce qu'il permet |
 |---|---|---|
@@ -93,16 +93,16 @@ X-Forwarded-For: 2.21.213.225, 104.16.148.244, 184.25.37.3
 Forwarded: for=203.0.113.7;host=evil.com;proto=http
 ```
 
-> [!info] 💡 **Qui ajoute quoi**
+> [!info] **Qui ajoute quoi**
 > - `X-Real-IP` et `True-Client-IP` ne portent qu'**une** IP (le client du 1er proxy).
 > - `X-Forwarded-For` **accumule** la chaîne : chaque saut ajoute l'adresse de celui dont il a reçu la requête.
 > - nginx peut écraser XFF avec la vraie IP : `proxy_set_header X-Forwarded-For $remote_addr;`
 
 ---
 
-## 💣 Attaques
+## Attaques
 
-### 1️⃣ Bypass IP / rate-limit / allowlist (X-Forwarded-For)
+### 1Bypass IP / rate-limit / allowlist (X-Forwarded-For)
 
 > L'app bloque `1.2.3.4` (trop de requêtes) mais lit `X-Forwarded-For` pour prendre l'IP réelle.
 
@@ -127,13 +127,13 @@ Cas d'usage réel :
 - WAF / CDN qui punit l'IP : le header peut court-circuiter la détection.
 - Geo-blocking (accès limité à un pays) : XFF = IP du pays autorisé.
 
-⚠️ Le first vs last problème :
+Le first vs last problème :
 - Si le proxy AJOUTE l'IP réelle à la fin : "client, proxy" → l'app qui lit le PREMIER
   élément est vulnérable ; celle qui lit le DERNIER est safe.
 - Si le proxy ÉCRASE le header ($remote_addr) : rien à faire sur ce header.
 ```
 
-### 2️⃣ SSRF via X-Forwarded-Host / Host / absolut URI
+### 2SSRF via X-Forwarded-Host / Host / absolut URI
 
 > Le backend (ou le `proxy_pass` lui-même) construit une URL avec le Host contrôlé.
 
@@ -169,7 +169,7 @@ Comment vérifier que le header est respecté :
    pointé vers attacker.com = vol de token.
 ```
 
-### 3️⃣ Path traversal vers l'interne & bypass `/admin`
+### 3Path traversal vers l'interne & bypass `/admin`
 
 #### Off-by-slash (alias nginx)
 
@@ -223,7 +223,7 @@ curl -s http://target/ -H "X-Original-URL: /admin"
 curl -s http://target/ -H "X-Rewrite-URL: /admin"
 ```
 
-### 4️⃣ Open proxy & HTTP Request Smuggling
+### 4Open proxy & HTTP Request Smuggling
 
 > Si le `proxy_pass` accepte un hôte/URL arbitraire, **le serveur devient un forward proxy** :
 > on s'en sert comme relais vers l'interne (SSRF massif) ou on abrite nos scans.
@@ -240,10 +240,10 @@ HTTP Request Smuggling (CL.TE / TE.CL) :
 Le proxy et le backend ne découpent pas la requête de la même façon.
 → on empoisonne le tunnel vers le backend pour atteindre des endpoints internes,
   bypass des ACL du proxy, ou on empoisonne les réponses (cache).
-Voir la note [[HTTP Request Smuggling|🚂 Smuggling]] pour la méthodo complète.
+Voir la note [[HTTP Request Smuggling| Smuggling]] pour la méthodo complète.
 ```
 
-### 5️⃣ Host header injection & cache poisoning
+### 5Host header injection & cache poisoning
 
 ```bash
 # vhost routing : le proxy choisi le backend selon Host → se faire router ailleurs
@@ -253,14 +253,14 @@ curl -s http://target/ -H "Host: staging.target.com"
 # Cache poisoning : la clé de cache ne prend pas X-Forwarded-Host → réponse empoisonnée pour tous
 curl -s http://target/?x=1 -H "X-Forwarded-Host: attacker.com"
 #   → si la page (récupérée depuis le cache) contient des liens/ressources vers attacker.com
-#   → steal de sessions JS, redirections. Combiner avec la note [[Web Cache Deception|🗑️ Cache Deception]].
+#   → steal de sessions JS, redirections. Combiner avec la note [[Web Cache Deception| Cache Deception]].
 ```
 
 ---
 
-## 🧪 Payloads — tests header par header
+## Payloads — tests header par header
 
-> [!tip] 💡 **Méthode de vérification universelle**
+> [!tip] **Méthode de vérification universelle**
 > Envoyer une **valeur unique identifiable** (ex : `X-Forwarded-For: 87.65.43.21` ou
 > `X-Forwarded-Host: uniquetest<rand>.example.com`) puis chercher :
 > 1. une **réflexion** dans la réponse (body, headers, cookies, redirects) ;
@@ -316,7 +316,7 @@ curl -s --path-as-is "http://target/http://169.254.169.254/"    # forme tordue
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -370,7 +370,7 @@ EOF
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -388,28 +388,28 @@ EOF
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique des tests**
+> [!tip] **Ordre logique des tests**
 > 1. **Fingerprinter le proxy** : header `Server`, pages d'erreur, `Via:` → on sait quoi viser.
 > 2. **Test de relais** : envoyer une valeur unique dans chaque header, chercher la **réflexion**.
 > 3. **Par header**, appliquer l'attaque : XFF→bypass IP, XFH→SSRF/poisoning, X-Original-URL→traversal.
 > 4. **Fuzzer les chemins** (off-by-slash, slash, encodages) pour les 40X.
 > 5. **Smuggling** en dernier si le proxy et le backend ont des parsers différents.
 
-> [!warning] ⚠️ **Proxy qui réécrit ≠ proxy qui relaie**
+> [!warning] **Proxy qui réécrit ≠ proxy qui relaie**
 > - Si nginx fait `proxy_set_header X-Forwarded-For $remote_addr;` → il **écrase**, le header est inutile.
 > - S'il fait `proxy_pass` + app lit XFF **sans** qu'il soit posé → l'attaquant le pose lui-même.
 > - Un proxy qui **append** (`option forwardfor` + header déjà présent) peut laisser passer
 >   `XFF: 127.0.0.1, <vraie IP>` → lire le **premier** élément = vulnérable.
 > → Tester : `X-Forwarded-For: AAAA` puis `X-Forwarded-For: AAAA, BBBB`, observer ce qui est loggé/utilisé.
 
-> [!warning] ⚠️ **Distinguer ce qui est contrôlable**
+> [!warning] **Distinguer ce qui est contrôlable**
 > Le client contrôle **tout le trafic avant le 1er proxy de confiance**. Il ne contrôle **rien**
 > après un proxy qui réécrit. Si le backend est directement joignable (port 80/443 exposé,
 > mauvaise ACL interne), tout ce qui suit est faux → vérifier les ports exposés en premier.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - `curl` "répare" les chemins : toujours `--path-as-is` pour les tests traversal.
 > - Off-by-slash = **alias**, pas `proxy_pass` : `location /x { alias /dir/; }` → `GET /x../secret`.
 > - `root /etc/nginx;` sans `location /` → n'importe quel fichier de conf est lisible.
@@ -418,7 +418,7 @@ EOF
 > - **Ne pas brûler la cible** : un rate-limit bypass pour du brute force OTP = risque de lockout + logs.
 > - **OPSEC open proxy** : une fois proxy ouvert, notre IP est celle de la victime dans les logs des cibles internes.
 
-> [!tip] 💡 **Bonus — Caddy `templates` (SSTI)**
+> [!tip] **Bonus — Caddy `templates` (SSTI)**
 > `templates` directive + `respond "You came from {http.request.header.Referer}"`
 > → les accolades sont évaluées comme un template Go :
 > ```bash
@@ -429,12 +429,12 @@ EOF
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[SSRF|🌐 SSRF]]
-- [[HTTP Request Smuggling|🚂 Smuggling]]
-- [[Web Cache Deception|🗑️ Cache Deception]]
-- [[Injection SQL|💾 Injection SQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Reverse Proxy](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Reverse%20Proxy/README.md)
-- 🧪 Labs : [Root-Me — Nginx misconfigurations](https://www.root-me.org/) · [Detectify — vulnerable-nginx](https://github.com/detectify/vulnerable-nginx)
+- [[SSRF| SSRF]]
+- [[HTTP Request Smuggling| Smuggling]]
+- [[Web Cache Deception| Cache Deception]]
+- [[Injection SQL| Injection SQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Reverse Proxy](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Reverse%20Proxy/README.md)
+- Labs : [Root-Me — Nginx misconfigurations](https://www.root-me.org/) · [Detectify — vulnerable-nginx](https://github.com/detectify/vulnerable-nginx)

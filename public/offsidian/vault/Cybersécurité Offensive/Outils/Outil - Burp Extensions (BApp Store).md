@@ -1,11 +1,11 @@
 ---
 title: "Outil - Burp Extensions (BApp Store)"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: catalogue lié aux versions 2026.x de Burp Suite
 licence: mixte (extensions gratuites / commerciales, API Burp propriétaire)
@@ -16,14 +16,14 @@ site: https://portswigger.net/bappstore
 doc: https://portswigger.net/burp/documentation/extensions
 ---
 
-# 🔍 Burp Extensions (BApp Store) — Scan Web & Fuzzing
+# Burp Extensions (BApp Store) — Scan Web & Fuzzing
 
 > [!info] **En 1 phrase**
 > Le BApp Store est la boutique d'extensions officielle de Burp Suite : une galerie d'extensions Java/Python prêtes à l'emploi qui étendent les tests automatiques, le fuzzing et l'analyse (Turbo Intruder, Autorize, Collaborator Everywhere...).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://portswigger.net/burp/documentation/extensions
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Burp Suite expose une API d'extensions riche et stable, que la communauté exploite pour combler les angles morts du scanner par défaut. Le **BApp Store** est la galerie intégrée à l'outil : chaque extension s'installe en quelques clics (ou hors ligne via le portail `portswigger.net/bappstore`), puis ajoute des capacités ciblées — tests de bris d'autorisation (**Autorize**, **Auth Analyzer**), fuzzing haute performance (**Turbo Intruder**), détection d'interactions hors bande (**Collaborator Everywhere**), **HTTP Request Smuggler**, scan actif/passif enrichi (**ActiveScan++**, **HUNT**, **Burp Bounty**, **Backslash Powered Scanner**), parsing et helpers (**Copy as Python Requests**, **Logger++**, **Retire.js**).
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Pas d'installation CLI : tout se fait dans l'interface Burp
@@ -103,14 +103,14 @@ wget https://github.com/PortSwigger/turbo-intruder/releases/latest/download/turb
 # Burp > Extensions > Add > Type Java > sélectionner turbo-intruder-all.jar
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Burp Community : le BApp Store est accessible, mais certaines extensions exigent une édition Pro (Collaborator client, scanner checks).
 > - Compatibilité : une extension conçue pour une API ancienne peut échouer au chargement sur les versions récentes de Burp (erreur Java au démarrage).
 > - Les extensions Python nécessitent Jython (embarqué) ; l'API Python peut être en retard sur la Montoya API Java.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Il n'existe pas de fichier de configuration global pour le BApp Store : chaque extension gère ses propres réglages via un **onglet dédié** ou le menu contextuel.
 
@@ -129,7 +129,7 @@ Il n'existe pas de fichier de configuration global pour le BApp Store : chaque e
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le BApp Store repose sur l'API d'extensibilité de Burp Suite, organisée autour de la **Montoya API** (interface `BurpExtender`, depuis Burp 2023) :
 
@@ -141,7 +141,7 @@ Le BApp Store repose sur l'API d'extensibilité de Burp Suite, organisée autour
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 L'outil étant intégré à la GUI Burp, les « commandes » sont des raccourcis et des exemples d'usage des extensions.
 
@@ -182,7 +182,7 @@ curl -X POST 'https://cible.example.com/login' \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -202,7 +202,7 @@ curl -X POST 'https://cible.example.com/login' \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -269,7 +269,7 @@ public class BurpExtender implements BurpExtension {
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Installer les extensions** — Extensions → BApp Store → Installer Autorize, Turbo Intruder, Collaborator Everywhere, ActiveScan++.
 2. **Définir la portée** — Target → Scope : ajouter `*.example.com` ; tout ce qui est hors scope est ignoré par les extensions passives.
@@ -281,7 +281,7 @@ public class BurpExtender implements BurpExtension {
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Broken access control sur une API (Autorize + Auth Analyzer)
 
@@ -311,7 +311,7 @@ Injecter un payload Collaborator dans les champs `url`, `redirect`, `callback`, 
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -325,7 +325,7 @@ Injecter un payload Collaborator dans les champs `url`, `redirect`, `callback`, 
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -340,7 +340,7 @@ Injecter un payload Collaborator dans les champs `url`, `redirect`, `callback`, 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -396,7 +396,7 @@ rule Burp_Extension_Autorize {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 Les extensions enrichissent les pipelines automatisés de Burp (Intruder, Scanner) et s'intègrent aux scripts externes.
 
@@ -426,7 +426,7 @@ print(cb["server"], cb["collaborator_id"])  # domaine oast à injecter dans les 
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les extensions produisent principalement des **onglets** et des **exports**. Les formats exploitables : CSV/JSON de Logger++, JSON des BChecks/Scanner, requêtes exportées.
 
@@ -452,7 +452,7 @@ with open("logger_export.csv", newline="", encoding="utf-8") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Navigateur -> Burp Suite (proxy 127.0.0.1:8080) -> Extensions (Autorize, Turbo Intruder, Collaborator) -> cible
@@ -460,7 +460,7 @@ Burp Suite -> Logger++ (export) -> SIEM / rapport
 Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Burp Suite]] — outil hôte des extensions
 - [[Outil - ffuf]] — fuzzing CLI complémentaire à Turbo Intruder
 - [[Outil - gobuster]] / [[Outil - Feroxbuster]] — découverte de contenu en amont
@@ -472,7 +472,7 @@ Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -485,7 +485,7 @@ Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Turbo Intruder** : conçu pour dépasser plusieurs milliers de requêtes/s sur une seule connexion (pipelining, multiplexage HTTP/1.1), contre quelques centaines pour Intruder standard en Community (throttlé).
 - **Mémoire** : chaque extension chargée consomme de la RAM dans la JVM Burp ; l'accumulation de nombreuses extensions est une cause classique d'**OutOfMemoryError**.
@@ -497,7 +497,7 @@ Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -523,7 +523,7 @@ Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Confiance dans les extensions** : une extension charge du code dans la même JVM que Burp → n'installer que des extensions reconnues (PortSwigger, éditeurs référencés) et auditer le `.jar` si besoin.
 - **Data exfiltrée** : certaines extensions (loggers, télémétrie) peuvent capturer les requêtes de la cible, y compris les tokens. Vérifier ce que fait l'extension avant de l'utiliser sur des engagements sensibles.
@@ -532,7 +532,7 @@ Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Catalogue **verrouillé à Burp** : le BApp Store ne fonctionne pas hors de l'outil.
 - **Community** : pas d'accès au scanner actif pour les extensions qui en dépendent ; Intruder est throttlé.
@@ -542,7 +542,7 @@ Turbo Intruder -> wordlist SecLists -> découverte de paramètres
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installer depuis le BApp Store
@@ -566,7 +566,7 @@ curl -x http://127.0.0.1:8080 -k https://cible.example.com/robots.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -579,7 +579,7 @@ curl -x http://127.0.0.1:8080 -k https://cible.example.com/robots.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -592,15 +592,15 @@ curl -x http://127.0.0.1:8080 -k https://cible.example.com/robots.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Installe en premier le trio **Autorize + ActiveScan++ + Collaborator Everywhere** : le meilleur rapport valeur/effort pour un pentest web classique.
 > - Lis toujours le README de chaque extension : plusieurs (Autorize, Turbo Intruder) ont une configuration précise (scope, marqueurs) sans laquelle elles ne font rien.
 > - Vérifie la **compatibilité avec ta version de Burp** (2023+ a changé la gestion des extensions : onglet Extensions vs Extender).
 > - Pense aux **BChecks** pour du scan custom simple et partageable sans compilation.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Trop d'extensions actives = **ralentissement et OOM** de Burp : n'active que ce dont tu as besoin sur l'engagement courant.
 > - **Turbo Intruder sans throttle peut DoS la cible** : configure un délai (`time.sleep`) ou `pause` pour les engagements en production.
 > - Certaines extensions sont **obsolètes** et ne fonctionnent plus sur les dernières versions de Burp (erreurs Java/API) : teste-les en lab avant l'engagement.
@@ -608,7 +608,7 @@ curl -x http://127.0.0.1:8080 -k https://cible.example.com/robots.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -632,4 +632,4 @@ curl -x http://127.0.0.1:8080 -k https://cible.example.com/robots.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Burp Suite|Burp Suite]] · [[Techniques/HTTP Request Smuggling|HTTP Request Smuggling]] · [[Techniques/IDOR|IDOR]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Burp Suite|Burp Suite]] · [[Techniques/HTTP Request Smuggling|HTTP Request Smuggling]] · [[Techniques/IDOR|IDOR]]

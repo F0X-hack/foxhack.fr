@@ -1,7 +1,7 @@
 ---
 title: "Outil - Modlishka"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://drk1wi.github.io/Modlishka/
 doc: https://drk1wi.github.io/Modlishka/
 ---
 
-# 🌐 Modlishka — Reverse proxy de phishing avec MFA bypass à grande échelle
+# Modlishka — Reverse proxy de phishing avec MFA bypass à grande échelle
 
 > [!info] **En 1 phrase**
 > Modlishka est un reverse proxy de phishing avancé qui réplique des sites entiers en temps réel (domaine, sous-domaines et API) pour voler identifiants et cookies de session, y compris face au 2FA.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Modlishka |
 | Description | Reverse proxy de phishing : réplication en temps réel d'un site (domaine, sous-domaines, API), capture de credentials, cookies et jetons 2FA, rejeu de sessions |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing Proxy / AiTM (adversary-in-the-middle) |
 | Type d'outil | Reverse proxy (binaire Go autonome) |
 | Licence | GPLv3 |
@@ -46,7 +46,7 @@ doc: https://drk1wi.github.io/Modlishka/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Modlishka, développé par Piotr Duszyński, est un **reverse proxy dynamique** écrit en Go. À la différence des clones statiques, il **réécrit en vol** les URLs, les formulaires, les liens et les appels AJAX du site cible : chaque sous-domaine et chaque requête API du site légitime est reflétée sous le domaine contrôlé par l'attaquant. La victime voit une copie pixel-perfect du site réel et sa session entière est relayée, ce qui permet de capturer **identifiants, cookies de session et jetons 2FA** (SMS, TOTP, push) en temps réel.
 
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -81,7 +81,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Depuis les sources (Go)
 
@@ -111,14 +111,14 @@ go version
 # Requis : Go 1.24+ pour la compilation depuis les sources
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Un **domaine dédié** et un certificat TLS valide (Let's Encrypt) sont indispensables — sans HTTPS, alerte navigateur et échec immédiat.
 > - Les ports 443 (et 80 pour la redirection ACME) doivent être libres ; `sudo` pour les ports < 1024.
 > - Sur des sites dynamiques volumineux, le proxy consomme beaucoup de ressources : prévoir un VPS dimensionné.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait entièrement dans un **fichier JSON** passé avec `-config`.
 
@@ -154,7 +154,7 @@ La configuration se fait entièrement dans un **fichier JSON** passé avec `-con
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Modlishka est un **binaire Go unique** qui agit comme reverse proxy HTTP(S) :
 
@@ -169,7 +169,7 @@ Flux d'exécution : la victime résout le domaine contrôlé → TCP/TLS vers Mo
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -196,7 +196,7 @@ ss -tlnp | grep ':443'
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -212,7 +212,7 @@ ss -tlnp | grep ':443'
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -250,7 +250,7 @@ curl -skI https://phishing.example.com/
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Préparer le domaine** — créer un domaine contrôlé (ex : `phishing.example.com`) dont le DNS pointe vers l'IP du VPS.
 2. **Étape 2 — Obtenir un certificat TLS** — `sudo certbot certonly --standalone -d phishing.example.com` ; activer `force_ssl: true`.
@@ -274,7 +274,7 @@ curl -skI https://phishing.example.com/
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : MFA bypass sur un portail d'entreprise
 
@@ -329,7 +329,7 @@ tail -f /var/log/modlishka.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -342,7 +342,7 @@ tail -f /var/log/modlishka.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -354,7 +354,7 @@ tail -f /var/log/modlishka.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -396,7 +396,7 @@ alert tcp any any -> any 443 (msg:"ET PHISHING Modlishka proxy behavior"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — surveiller les captures en temps réel
@@ -432,7 +432,7 @@ with open(LOG, "r") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Modlishka sort ses captures sur **stdout** (JSON) ou dans le fichier passé avec `-o`. Chaque événement contient le type (credentials, cookie, token), l'horodatage, l'IP et les données capturées.
 
@@ -453,9 +453,9 @@ with open("/tmp/log.json", "r") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Evilginx2]] — alternative spécialisée dans le bypass 2FA (sessions réelles)
 - [[Outil - GoPhish]] — envoi du leurre pointant vers le proxy Modlishka
 - [[Outil - SET]] — vecteurs d'email alternatifs
@@ -469,7 +469,7 @@ Victime → Modlishka (443) → cible réelle → logs JSON → rejeu de session
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -481,7 +481,7 @@ Victime → Modlishka (443) → cible réelle → logs JSON → rejeu de session
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Binaire Go unique, très performant pour le relais HTTP(S) ; les coûts montent avec la taille du site répliqué (assets, API).
 - Sur les gros portails dynamiques, prévoir un VPS dimensionné (CPU/RAM/bande passante) et des `rules` ciblées.
@@ -490,7 +490,7 @@ Victime → Modlishka (443) → cible réelle → logs JSON → rejeu de session
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -520,7 +520,7 @@ Victime → Modlishka (443) → cible réelle → logs JSON → rejeu de session
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Certificat TLS** : indispensable et valide — une erreur de certificat révèle la fraude.
 - **Domaine dédié** : ne pas réutiliser un domaine légitime d'engagement ; purger le domaine après la campagne.
@@ -531,7 +531,7 @@ Victime → Modlishka (443) → cible réelle → logs JSON → rejeu de session
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de release versionnée : la version dépend du commit `master`, compilation et tests requis.
 - Très gourmand en ressources sur les portails dynamiques volumineux.
@@ -542,7 +542,7 @@ Victime → Modlishka (443) → cible réelle → logs JSON → rejeu de session
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Compilation
@@ -579,7 +579,7 @@ tail -f /tmp/log.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -592,7 +592,7 @@ tail -f /tmp/log.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -605,15 +605,15 @@ tail -f /tmp/log.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `tracking_parameter` pour suivre précisément chaque victime et relier ses requêtes : indispensable pour analyser une campagne.
 > - Configurez `ip_blacklist` et `user_agent_blacklist` pour exclure les scanners (Googlebot, Shodan) et éviter la détection précoce.
 > - Testez la réécriture avec `curl -I https://phishing.example.com/` : vérifiez que la page cible s'affiche correctement avant la campagne.
 > - Activez `terminate_redirects` pour que la victime reste sur le proxy pendant toute la session.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un **certificat SSL valide** est indispensable, sinon alerte navigateur et échec immédiat.
 > - La réécriture des assets (CSS/JS/images) dépend des `rules` : une règle trop restrictive casse la mise en page et trahit la fraude.
 > - Les **jetons de session expirent** : rejouez la session capturée dans la foulée.
@@ -621,7 +621,7 @@ tail -f /tmp/log.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -643,4 +643,4 @@ tail -f /tmp/log.json | jq -c 'select(.type == "credentials")'
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SET|SET]] · [[Outil - CredSniper|CredSniper]]
+**Liens :** [[Tools| Outils]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SET|SET]] · [[Outil - CredSniper|CredSniper]]

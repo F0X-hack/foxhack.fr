@@ -1,11 +1,11 @@
 ---
 title: "Outil - Feroxbuster"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 2.13.1 (2026)
 licence: MIT
@@ -16,14 +16,14 @@ site: https://github.com/epi052/feroxbuster
 doc: https://epi052.github.io/feroxbuster-docs/
 ---
 
-# 🔍 Feroxbuster — Brute-forcer de répertoires web en Rust
+# Feroxbuster — Brute-forcer de répertoires web en Rust
 
 > [!info] **En 1 phrase**
 > Feroxbuster est un brute-forcer de répertoires écrit en Rust, très rapide, avec récursion automatique et filtrage fin des statuts.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -46,11 +46,11 @@ doc: https://epi052.github.io/feroxbuster-docs/
 | Systèmes compatibles | Linux / Windows / macOS (x86_64 + ARM ; Docker ; Android via Termux) |
 
 > [!note] Pour vérifier / compléter
-> ⚠️ **Alerte d'usurpation** : le domaine **feroxbuster.com n'est PAS affilié** au projet. Les téléchargements officiels ne passent que par GitHub releases, feroxbuster.pro (édition commerciale) et les dépôts de paquets listés dans la documentation. Ne jamais installer un binaire provenant d'une autre source.
+> **Alerte d'usurpation** : le domaine **feroxbuster.com n'est PAS affilié** au projet. Les téléchargements officiels ne passent que par GitHub releases, feroxbuster.pro (édition commerciale) et les dépôts de paquets listés dans la documentation. Ne jamais installer un binaire provenant d'une autre source.
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Feroxbuster (ferox = féroce) est un scanner de répertoires et fichiers en Rust pensé pour la vitesse : il gère le multiplexage HTTP et continue automatiquement dans les répertoires trouvés (**récursion**). Sa syntaxe proche de gobuster le rend facile à prendre en main.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -167,7 +167,7 @@ cargo build --release
 ./feroxbuster --update
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Sources officielles uniquement** : GitHub releases, feroxbuster.pro (Pro), dépôts de paquets listés dans la doc. Méfiance vis-à-vis de `feroxbuster.com` (non affilié).
 > - **Docker** : pas d'image officielle pré-construite, il faut construire l'image soi-même.
 > - **Erreur « No file descriptors available »** : limite de descripteurs de fichiers du système atteinte (threads + connexions) — réduire `-t` ou augmenter `ulimit -n`.
@@ -175,7 +175,7 @@ cargo build --release
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -198,7 +198,7 @@ cargo build --release
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Cœur Rust asynchrone** : feroxbuster repose sur l'écosystème async Rust (tokio/reqwest) pour le multiplexage des requêtes HTTP — d'où sa vitesse par rapport aux scanners threadés simples.
 - **Scan management** : plusieurs scans peuvent tourner en parallèle (récursion) ; `--scan-limit` borne le nombre de scans concurrents ; le menu interactif permet pause (touche ENTER), reprise et re-filtrage à chaud.
@@ -212,7 +212,7 @@ Flux type : wordlist → threads async → requêtes → filtres → affichage/J
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -263,7 +263,7 @@ feroxbuster --request-file request.txt -w wordlist.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -296,7 +296,7 @@ feroxbuster --request-file request.txt -w wordlist.txt
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -357,7 +357,7 @@ jq -r '.[] | select(.status == 200) | .url' ferox.json > urls_200.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer un premier scan large** :
    ```bash
@@ -382,7 +382,7 @@ jq -r '.[] | select(.status == 200) | .url' ferox.json > urls_200.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : scan ciblé WordPress avec extensions pertinentes
 
@@ -426,7 +426,7 @@ feroxbuster -u https://10.10.10.10 -w wordlist.txt -k -x http://127.0.0.1:8080 \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -439,7 +439,7 @@ feroxbuster -u https://10.10.10.10 -w wordlist.txt -k -x http://127.0.0.1:8080 \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -453,7 +453,7 @@ feroxbuster -u https://10.10.10.10 -w wordlist.txt -k -x http://127.0.0.1:8080 \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -509,7 +509,7 @@ rule Feroxbuster_Binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Scan en pipeline de toute une liste de sous-domaines, sortie JSON agrégée
@@ -558,7 +558,7 @@ for e in data:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Feroxbuster affiche les résultats en temps réel et peut exporter en **JSON** (`--json`) ou en rapport. `--quiet` ne montre que les URLs.
 
@@ -589,7 +589,7 @@ for e in data:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 feroxbuster -> wordlist SecLists -> cible web -> résultats JSON
@@ -597,7 +597,7 @@ feroxbuster -> proxy Burp (--proxy 127.0.0.1:8080) -> inspection des réponses
 feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - dirsearch]] — alternative Python (plus lente mais API importable, exports variés)
 - [[Outil - gobuster]] / [[Outil - ffuf]] — alternatives Go (fuzzing universel, vhosts)
 - [[Outil - Burp Suite]] — relaye/inspecte les requêtes via `--proxy`
@@ -607,7 +607,7 @@ feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -621,7 +621,7 @@ feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse** : l'un des scanners les plus rapides grâce au runtime Rust async ; il dépasse typiquement dirsearch et gobuster sur les grandes wordlists.
 - **Multiplexage** : threads (`-t`, défaut 50) + connexions HTTP parallèles ; le **rate-limit** permet de calibrer la discrétion.
@@ -635,7 +635,7 @@ feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -671,7 +671,7 @@ feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Fausses sources** : **feroxbuster.com n'est pas affilié** au projet — télécharger uniquement depuis GitHub releases, feroxbuster.pro (Pro) ou les dépôts listés dans la doc. Un binaire compromis pourrait exfiltrer ou implanter du code.
 - **Volumétrie** : un scan sans rate-limit est un **mini-DoS** — adapter `--rate-limit` et `-t` à la cible autorisée.
@@ -681,7 +681,7 @@ feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Fuzz de chemins uniquement** : pour le fuzzing de paramètres/vhosts/POST, utiliser ffuf.
 - **Faux positifs** : les réponses uniformes (pages d'erreur custom, SPA) nécessitent l'auto-filter ou une calibration manuelle.
@@ -691,7 +691,7 @@ feroxbuster -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan de base
@@ -719,7 +719,7 @@ feroxbuster -u http://10.10.10.10 -w wordlist.txt -x php -e
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -732,7 +732,7 @@ feroxbuster -u http://10.10.10.10 -w wordlist.txt -x php -e
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -746,16 +746,16 @@ feroxbuster -u http://10.10.10.10 -w wordlist.txt -x php -e
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `--rate-limit` est ton meilleur allié en test autorisé discret : 10 à 20 requêtes/seconde suffisent souvent pour passer sous les radars tout en scannant vite.
 > - Combinez `--quiet` + `--json -o result.json` pour un scan propre avec une trace exploitable.
 > - Utilise `-e` (extraction de liens) pour découvrir des endpoints jamais wordlistés.
 > - Calibre les filtres sur un **petit scan** avant le scan complet (statuts, tailles, wildcard).
 > - Toujours télécharger depuis **GitHub releases** — jamais depuis des sites tiers non affiliés.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Avec la récursion auto, un seul faux répertoire 301 peut déclencher des milliers de requêtes supplémentaires ; borne toujours `-d` et filtre `-C 403,404`.
 > - Un `-t` élevé sans rate-limit peut **saturer une cible fragile** et fausser les résultats (mini-DoS).
 > - L'auto-filter wildcard peut masquer de vraies réponses : vérifie avec `-D` si des résultats manquent.
@@ -763,7 +763,7 @@ feroxbuster -u http://10.10.10.10 -w wordlist.txt -x php -e
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -785,4 +785,4 @@ feroxbuster -u http://10.10.10.10 -w wordlist.txt -x php -e
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - dirsearch|dirsearch]] · [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Techniques/03 - Exploitation Web|Exploitation Web]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]
+**Liens :** [[Tools| Outils]] · [[Outil - dirsearch|dirsearch]] · [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Techniques/03 - Exploitation Web|Exploitation Web]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]

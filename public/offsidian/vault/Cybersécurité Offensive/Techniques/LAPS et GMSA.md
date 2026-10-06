@@ -12,19 +12,19 @@ statut: publie
 
 
 
-# 🗝️ LAPS et GMSA
+# LAPS et GMSA
 
 > [!info] **En 1 phrase**
 > LAPS et GMSA stockent des mots de passe **dans Active Directory** — si on peut les **lire**,
 > on obtient les credentials **admin local de toutes les machines** (LAPS) ou d'un **compte de service** (GMSA).
 
-> [!info] 💡 **Deux bêtes différentes**
+> [!info] **Deux bêtes différentes**
 > - **LAPS** (Local Administrator Password Solution) : mdp admin local, unique par machine, stocké **en clair** dans l'attribut `ms-mcs-AdmPwd`.
 > - **GMSA** (Group Managed Service Account) : compte de service dont le mdp est **auto-géré** et dérivé de la **KDS root key**.
 
 ---
 
-## 🎯 Pourquoi c'est un jackpot
+## Pourquoi c'est un jackpot
 
 ```mermaid
 flowchart TB
@@ -39,7 +39,7 @@ flowchart TB
 
 ---
 
-## 🗝️ LAPS
+## LAPS
 
 ### Lire le mot de passe
 
@@ -80,12 +80,12 @@ nxc smb 10.10.10.20 -u Administrator -p 'mdp-LAPS-lu' --shares
 evil-winrm -i 10.10.10.20 -u Administrator -p 'mdp-LAPS-lu'
 ```
 
-> [!warning] 🚩 **Escalade classique** : `Account Operators` peut ajouter un utilisateur dans les
+> [!warning] **Escalade classique** : `Account Operators` peut ajouter un utilisateur dans les
 > groupes `LAPS ADM` / `LAPS READ` (considérés non-admin) → puis lire tous les mdp LAPS.
 
 ---
 
-## 🧮 GMSA
+## GMSA
 
 ### Lire le mot de passe (hash NT)
 
@@ -126,7 +126,7 @@ GoldenGMSA.exe compute --sid <gmsa-sid> --kdskey <b64> --pwdid <b64>
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -136,7 +136,7 @@ GoldenGMSA.exe compute --sid <gmsa-sid> --kdskey <b64> --pwdid <b64>
 | **GMSA : rotation automatique** | Confiée à AD (30 jours), ne pas forcer en clair |
 | **Protéger la KDS root key** | Comme un secret domaine (au même niveau que krbtgt) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - LAPS s'utilise **sans cracker** : le mdp est en clair, connexion directe en admin local.
 - Le mdp LAPS lu est **daté** : vérifie l'expiration (`ms-mcs-AdmPwdExpirationTime`), il peut tourner toutes les X heures.
@@ -146,9 +146,9 @@ GoldenGMSA.exe compute --sid <gmsa-sid> --kdskey <b64> --pwdid <b64>
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [InternalAllTheThings — LAPS](https://github.com/swisskyrepo/InternalAllTheThings/blob/main/docs/active-directory/pwd-read-laps.md)
 > - [InternalAllTheThings — GMSA](https://github.com/swisskyrepo/InternalAllTheThings/blob/main/docs/active-directory/pwd-read-gmsa.md)
 > - [Golden GMSA — Semperis](https://www.semperis.com/blog/golden-gmsa-attack/)
 
-➡️ Liens : [[Pass-the-Hash|🔑 Pass-the-Hash]] · [[05 - Active Directory|👑 Active Directory]] · [[Shadow Credentials|🌑 Shadow Credentials]]
+Liens : [[Pass-the-Hash| Pass-the-Hash]] · [[05 - Active Directory| Active Directory]] · [[Shadow Credentials| Shadow Credentials]]

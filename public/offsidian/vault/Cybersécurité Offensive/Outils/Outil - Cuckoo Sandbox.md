@@ -1,7 +1,7 @@
 ---
 title: "Outil - Cuckoo Sandbox"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://cuckoosandbox.org/
 doc: https://cuckoo.readthedocs.io/en/latest/
 ---
 
-# 🧬 Cuckoo Sandbox — Analyse dynamique automatisée de malwares
+# Cuckoo Sandbox — Analyse dynamique automatisée de malwares
 
 > [!info] **En 1 phrase**
 > Cuckoo Sandbox est le framework open-source de référence pour exécuter un malware dans un environnement isolé et produire automatiquement un rapport complet de son comportement (processus, fichiers, registre, réseau, mémoire).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Cuckoo Sandbox |
 | Description | Framework open-source d'analyse dynamique automatisée : un échantillon (exe, doc, pdf, url, dll) est exécuté dans une VM jetable pendant qu'un ensemble de capteurs observe le comportement (appels API, fichiers, registre, réseau, mémoire) puis produit un rapport JSON/HTML |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse dynamique automatisée — sandbox |
 | Fonction principale | Exécuter un malware dans une VM isolée et générer automatiquement un rapport comportemental exploitable pour le triage |
 | Type d'outil | Framework / serveur (CLI + Web UI + API REST) |
@@ -50,7 +50,7 @@ doc: https://cuckoo.readthedocs.io/en/latest/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Cuckoo Sandbox automatise l'analyse dynamique : un échantillon (exécutable, document, script, URL) est lancé dans une machine virtuelle Windows/Linux jetable, pendant qu'une série de capteurs observe tout ce qu'il fait — appels API, création de fichiers et de clés de registre, connexions réseau, processus enfant, dumps mémoire. À la fin, il génère un rapport JSON/HTML qui sert de triage : on décide en quelques minutes si le binaire mérite une analyse manuelle approfondie.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation sur une machine Linux dédiée (Debian/Ubuntu), jamais sur un poste de production. Le framework nécessite un hyperviseur et un réseau host-only configuré.
 
@@ -108,7 +108,7 @@ cuckoo machine --add win10 192.168.56.101 --platform windows --tags analysis
 
 Ensuite, il faut configurer `conf/cuckoo.conf` (dossier de stockage, réseau host-only), `conf/virtualbox.conf` (ou `vmware.conf` / `kvm.conf`) avec le nom exact de la VM et de son snapshot, puis installer `agent.py` dans la VM Windows, la démarrer et prendre un snapshot propre (`clean`).
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Hyperviseur** : Cuckoo ne fonctionne qu'avec VirtualBox, VMware ou KVM ; il ne supporte pas Hyper-V ni QEMU nu.
 > - **Python** : la branche 2.x officielle est en Python 2/3 mixte ; les scripts d'installation gèrent les deux, mais l'écosystème Python 2 est obsolète — d'où la recommandation de passer à CAPE.
 > - **Snapshot** : le nom du snapshot doit être exactement celui déclaré dans la config, sinon l'analyse échoue au démarrage (« Timeout hit for machine to change status »).
@@ -116,7 +116,7 @@ Ensuite, il faut configurer `conf/cuckoo.conf` (dossier de stockage, réseau hos
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Toute la configuration se trouve dans le dossier `conf/` (format legacy INI, hérité dans CAPE) :
 
@@ -135,7 +135,7 @@ Toute la configuration se trouve dans le dossier `conf/` (format legacy INI, hé
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **`cuckoo.py`** : démon principal (orchestrateur). Il démarre le scheduler, les modules de traitement, la web UI (port 8000) et l'API REST.
 - **`modules/processing/`** : analyse post-exécution des artefacts — `network`, `behavior`, `static`, `virustotal`, `memory`, `dropped`.
@@ -165,7 +165,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ cuckoo submit -d payload.dll
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -225,7 +225,7 @@ cuckoo submit -d payload.dll
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -268,7 +268,7 @@ find storage/analyses/$(ls -t storage/analyses | head -1)/files/ -type f -exec s
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer l'environnement** — VM Windows sur un réseau host-only isolé, sans accès Internet réel ; les paquets sont capturés par `tcpdump` depuis l'hôte Cuckoo.
 
@@ -296,7 +296,7 @@ find storage/analyses/$(ls -t storage/analyses | head -1)/files/ -type f -exec s
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Document Office malveillant avec dropper
 
@@ -336,7 +336,7 @@ done
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -349,7 +349,7 @@ done
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -367,7 +367,7 @@ done
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -404,7 +404,7 @@ alert tcp any any -> any any (msg:"Potential malware downloader from sandbox"; c
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle de soumission d'un dossier d'échantillons
@@ -437,7 +437,7 @@ while True:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Cuckoo produit un rapport **JSON** (`report.json`), une version **HTML** (lisible dans la web UI) et des artefacts bruts dans `storage/analyses/<id>/` :
 
@@ -472,9 +472,9 @@ for sig in report.get("signatures", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - CAPE]] — le fork maintenu qui prolonge Cuckoo (extraction de configs)
 - [[Outil - Volatility]] — analyse des dumps mémoire produits par Cuckoo
 - [[Outil - YARA]] — signatures de classification des échantillons et payloads
@@ -483,7 +483,7 @@ for sig in report.get("signatures", []):
 - [[Outil - REMnux]] — distribution complémentaire pour l'analyse d'échantillons
 - [[Outil - Wireshark]] / [[Outil - tshark]] / [[Outil - tcpdump]] — analyse du PCAP capturé
 - [[Outil - Ghidra]] — analyse statique du payload extrait
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Échantillon → Cuckoo (sandbox) → rapport JSON → IOCs (YARA / VirusTotal / MISP) → SOC
@@ -491,7 +491,7 @@ for sig in report.get("signatures", []):
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -506,7 +506,7 @@ for sig in report.get("signatures", []):
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Débit limité par le nombre de VMs et les ressources de l'hyperviseur : chaque analyse consomme une VM (2-4 Go de RAM conseillés par invité Windows).
 - Parallélisation : `cuckoo submit --max N` (ou le paramètre du scheduler) lance plusieurs analyses simultanées.
@@ -519,7 +519,7 @@ for sig in report.get("signatures", []):
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -555,7 +555,7 @@ for sig in report.get("signatures", []):
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation** : Cuckoo exécute du code malveillant. Ne jamais installer le démon sur une machine de production ; utiliser un réseau host-only sans Internet réel.
 - **Privilèges** : seul le rooter doit tourner en root ; le reste sous un utilisateur dédié.
@@ -567,7 +567,7 @@ for sig in report.get("signatures", []):
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Non maintenu depuis 2021** : aucune mise à jour des signatures, monitors ou packages ; les familles récentes ne sont plus bien couvertes.
 - Pas d'extraction de configuration : contrairement à CAPE, Cuckoo décrit le comportement mais ne dépaquette pas les payloads.
@@ -579,7 +579,7 @@ for sig in report.get("signatures", []):
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrer le démon
@@ -619,7 +619,7 @@ jq '.' storage/analyses/$ID/reports/report.json
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -632,7 +632,7 @@ jq '.' storage/analyses/$ID/reports/report.json
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -644,16 +644,16 @@ jq '.' storage/analyses/$ID/reports/report.json
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez des VM Windows avec un snapshot propre et remettez-le systématiquement entre chaque analyse, sinon les résultats se contaminent.
 > - Remplacez les artefacts VM par défaut (MAC `08:00:27:...`, BIOS VirtualBox/QEMU, nom de machine générique) : la plupart des malwares récents testent ces marqueurs.
 > - Pour les URL, soumettez directement une `url` avec le package dédié : Cuckoo capture le trafic de navigation et les redirections.
 > - Couplez Cuckoo avec [[Outil - FakeNet-NG]] pour simuler les services réseau et observer les C2 sans Internet réel.
 > - Utilisez `jq` sur `report.json` dès la sortie de l'analyse : la web UI est confortable, mais le JSON est exploitable par script.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Cuckoo n'est plus maintenu depuis 2021 : pour les familles récentes et l'extraction de configurations, préférez son fork **CAPE**.
 > - `tcpdump` doit avoir les droits suffisants sur le réseau host-only, sinon le rapport réseau sera vide sans message d'erreur.
 > - Un rapport propre ≠ malware innocent : les échantillons qui détectent l'environnement sandbox produisent des analyses vides. Vérifiez toujours la section « anti-analysis ».
@@ -661,7 +661,7 @@ jq '.' storage/analyses/$ID/reports/report.json
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -685,4 +685,4 @@ jq '.' storage/analyses/$ID/reports/report.json
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - CAPE|🧬 CAPE]] · [[Outils/Outil - Volatility|🔎 Volatility]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Outils/Outil - FakeNet-NG|🌐 FakeNet-NG]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]] · [[Outil - MISP]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - CAPE| CAPE]] · [[Outils/Outil - Volatility| Volatility]] · [[Outils/Outil - YARA| YARA]] · [[Outils/Outil - FakeNet-NG| FakeNet-NG]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]] · [[Outil - MISP]]

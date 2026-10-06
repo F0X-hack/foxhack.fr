@@ -1,7 +1,7 @@
 ---
 title: "Outil - CUPP"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.remote-exploit.org
 doc: https://github.com/Mebus/cupp#readme
 ---
 
-# 👤 CUPP — Profiling de mots de passe personnalisés
+# CUPP — Profiling de mots de passe personnalisés
 
 > [!info] **En 1 phrase**
 > CUPP interroge une série de questions sur la cible (nom, naissance, enfants, animaux, ville...) et génère des milliers de mots de passe probables, personnalisés pour une victime précise.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | CUPP — Common User Passwords Profiler |
 | Description | Générateur de wordlists personnalisées à partir du profil d'une victime (OSINT) ou d'un dictionnaire existant |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Profiling / social engineering d'authentification |
 | Fonction principale | Combiner des informations personnelles en candidats de mots de passe probables |
 | Type d'outil | CLI (script Python) |
@@ -50,7 +50,7 @@ doc: https://github.com/Mebus/cupp#readme
 
 ---
 
-## 🎯 Concept
+## Concept
 
 CUPP exploite un biais humain documenté depuis les années 2000 : la majorité des mots de passe sont construits à partir d'informations personnelles faciles à mémoriser — prénom, nom, surnom, date de naissance, conjoint, enfants, animal, entreprise, mot-clé. Là où une wordlist générique (rockyou, SecLists) suppose que la victime a utilisé un mot commun, CUPP suppose qu'elle a utilisé **ses propres données**. Cette hypothèse, associée à l'OSINT public (LinkedIn, réseaux sociaux, sites d'entreprise), donne un taux de succès élevé sur un petit nombre de candidats, ce qui la rend idéale pour le password spraying discret plutôt que pour du bruteforce massif.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -142,12 +142,12 @@ git clone https://github.com/Mebus/cupp.git && cd cupp
 python3 cupp.py --help
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Python 3 requis (le code est écrit pour Python 3, incompatible avec Python 2). Le script doit être lancé depuis le dossier du dépôt (il charge `cupp.cfg` situé à côté de `cupp.py`) — sinon erreur « Configuration file cupp.cfg not found ».
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Fichier `cupp.cfg` (dans le dépôt). CUPP le lit mais ne le modifie jamais. Tous les réglages conditionnent le volume et la forme des candidats générés.
 
@@ -164,7 +164,7 @@ Fichier `cupp.cfg` (dans le dépôt). CUPP le lit mais ne le modifie jamais. Tou
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 CUPP est un script Python unique (`cupp.py`) de moins de mille lignes, sans dépendance externe (stdlib uniquement : `argparse`, `configparser`, `csv`, `gzip`, `urllib`). Au démarrage, `read_config()` charge `cupp.cfg` dans le dictionnaire global `CONFIG`, puis `main()` affiche la bannière ASCII (la vache `cupp.py!`) sauf en mode `-q`.
 
@@ -177,7 +177,7 @@ Dans les deux cas : tri, déduplication via `dict.fromkeys()` (préserve l'ordre
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ sort -u alectodb-passwords.txt | awk 'length($0)>=6 && length($0)<=12' > defauts
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -228,7 +228,7 @@ sort -u alectodb-passwords.txt | awk 'length($0)>=6 && length($0)<=12' > defauts
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -273,7 +273,7 @@ hashcat -m 1000 ntlm.txt jean.txt -r /usr/share/hashcat/rules/best64.rule
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Collecter l'OSINT** — LinkedIn, réseaux sociaux, site perso, annuaires : prénom, nom, surnom, date de naissance, conjoint, enfants, animal, entreprise, sport, marques.
    ```bash
@@ -300,7 +300,7 @@ hashcat -m 1000 ntlm.txt jean.txt -r /usr/share/hashcat/rules/best64.rule
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : fusionner CUPP et CeWL (cible entreprise)
 
@@ -335,7 +335,7 @@ done < /tmp/final.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -347,7 +347,7 @@ done < /tmp/final.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -360,7 +360,7 @@ done < /tmp/final.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -403,7 +403,7 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Potential password spraying -
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — générer pour chaque employé collecté, en non interactif via -w
@@ -432,7 +432,7 @@ with open("/tmp/cupp_all.txt", "w") as out:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Formats : fichiers texte brut, une ligne par candidat, triés et dédupliqués.
 
@@ -461,7 +461,7 @@ print(f"{len(mots)} candidats avec chiffre")
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 OSINT (LinkedIn, web) → CUPP → wordlist personnalisée → hashcat / John → hydra / nxc
@@ -469,17 +469,17 @@ OSINT (LinkedIn, web) → CUPP → wordlist personnalisée → hashcat / John �
                         CeWL / SecLists / rsmangler (-w)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - CeWL|CeWL]] — scraping des mots du site cible avant `-w`
 - [[Outil - hashcat|hashcat]] et [[Outil - John the Ripper|John the Ripper]] — cracking hors-ligne des candidates
 - [[Outil - hydra|hydra]] et [[Outil - Medusa|Medusa]] — tentatives en ligne ciblées
 - [[Outil - SecLists|SecLists]] et [[Outil - rsmangler|rsmangler]] — dictionnaires de base à améliorer avec `-w`
 - [[Outil - Mentalist|Mentalist]] et [[Outil - pydictor|pydictor]] — alternatives GUI/automatisées du même profil
-- [[Techniques/Password Cracking|🔐 Password Cracking]] et [[Techniques/Password Spraying|Password Spraying]]
+- [[Techniques/Password Cracking| Password Cracking]] et [[Techniques/Password Spraying|Password Spraying]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -494,13 +494,13 @@ OSINT (LinkedIn, web) → CUPP → wordlist personnalisée → hashcat / John �
 
 ---
 
-## ⚡ Performance
+## Performance
 
 CUPP est un script Python monothread : pour des profils typiques (une vingtaine de champs), la génération prend quelques secondes et produit quelques dizaines de milliers de candidats. Le point critique est l'explosion combinatoire de `-w` : la concaténation croise chaque mot avec tous les autres (N²). Le seuil `threshold` (200 par défaut) bloque ce croisement au-delà — le README du config indique que 200 mots donnent 200×200 = 40 000 nouveaux mots. Augmenter `threshold` accroît fortement la RAM (tout est maintenu en mémoire avant déduplication). Les listes géantes (`-l`) et le CSV Alecto (`-a`) téléchargent des volumes variables (le `-l` peut tirer plusieurs dizaines de Mo depuis le dépôt ftp.funet.fi). Recommandation : filtrer tôt (`wcfrom`/`wcto`) pour ne pas saturer le disque.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -536,13 +536,13 @@ CUPP est un script Python monothread : pour des profils typiques (une vingtaine 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 CUPP s'exécute localement, sans télémétrie ni appel réseau au démarrage (les seuls accès réseau sont volontaires : `-l` et `-a`). Deux points d'attention : la wordlist contient des données personnelles de la victime — la conserver hors du partage d'équipe, l'effacer après usage ; et le script fait confiance à l'entrée interactive — dans une utilisation automatisée par pipe, les réponses sont injectées telles quelles. Ne pas exécuter de wordlists CUPP en ligne sans connaître la politique de verrouillage : le risque de bloquer des comptes légitimes et d'alerter le SOC est réel. C'est un outil offensif : usage réservé aux périmètres autorisés (audit avec mandat, lab, CTF).
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de cracking intégré** : CUPP ne fait que générer des fichiers texte ; hashcat/John/hydra restent nécessaires.
 - **Sortie texte brut uniquement** : pas de JSON/CSV ; parsing à faire manuellement.
@@ -555,7 +555,7 @@ CUPP s'exécute localement, sans télémétrie ni appel réseau au démarrage (l
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Aide et version
@@ -586,7 +586,7 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt -r /usr/share/hashcat/rules/best64.rule
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -595,11 +595,11 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt -r /usr/share/hashcat/rules/best64.rule
 | **Commande principale** | `python3 cupp.py -i` |
 | **Alternative principale** | Mentalist, pydictor (profilage) / Crunch (génération exhaustive) |
 | **Concepts importants** | Profil OSINT, concaténation, années/nombres/symboles, leet, mots inversés, filtrage de longueur |
-| **Liens associés** | [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - CeWL|CeWL]] · [[Outil - hashcat|hashcat]] |
+| **Liens associés** | [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Password Cracking| Password Cracking]] · [[Outil - CeWL|CeWL]] · [[Outil - hashcat|hashcat]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -611,17 +611,17 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt -r /usr/share/hashcat/rules/best64.rule
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > La qualité de l'OSINT conditionne tout : LinkedIn, réseaux sociaux et site de l'entreprise avant de lancer `-i`. Filtre la sortie par longueur (`awk`) : CUPP garde par défaut 5-12 caractères, mais les politiques d'entreprise exigent souvent 8+. Associe CUPP à CeWL et rsmangler pour une wordlist « humaine » complète. Utilise `-q` dans les scripts pour rester discret. Teste d'abord hors-ligne (hashcat) avant toute tentative en ligne.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > `-w` attend un SEUL argument (le fichier) — les anciens articles qui montrent `-w fichier min max` sont obsolètes. Ne pas confondre les options : il n'existe pas de `-k`, `-b` ou `-s` (les mots-clés s'ajoutent à la volée, les mots inversés sont toujours générés, le mode silencieux est `-q`). Le fichier de sortie s'appelle `<prénom>.txt` (minuscules), pas `cupp.txt`. En ligne, ne jamais lancer une liste CUPP entière sans connaître le lockout — tu risques de verrouiller les comptes testés.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -644,4 +644,4 @@ hashcat -m 1000 ntlm.txt /tmp/final.txt -r /usr/share/hashcat/rules/best64.rule
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - CeWL|CeWL]] · [[Outil - hashcat|hashcat]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Password Cracking|🔐 Password Cracking]]
+**Liens :** [[Tools| Outils]] · [[Outil - CeWL|CeWL]] · [[Outil - hashcat|hashcat]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Password Cracking| Password Cracking]]

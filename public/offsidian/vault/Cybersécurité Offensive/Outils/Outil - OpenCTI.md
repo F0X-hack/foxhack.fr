@@ -1,11 +1,11 @@
 ---
 title: "Outil - OpenCTI"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: 7.260803.0 (2026)
 licence: Apache-2.0
@@ -16,20 +16,20 @@ site: https://www.opencti.io
 doc: https://docs.opencti.io/latest/
 ---
 
-# 🔎 OpenCTI — Forensics, Threat Intel & Honeypots
+# OpenCTI — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > OpenCTI (Open Cyber Threat Intelligence) est une plateforme open source de CTI qui modélise la connaissance menaçante en graphe de connaissances STIX 2.1, connectée à des dizaines de sources et basée sur MITRE ATT&CK.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | OpenCTI — Open Cyber Threat Intelligence |
 | Description | Plateforme de CTI en graphe de connaissances STIX 2.1 : entités, relations, connecteurs d'ingestion/export, intégration MITRE ATT&CK |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Cyber Threat Intelligence (CTI) |
 | Fonction principale | Ingérer, enrichir, interconnecter et visualiser la menace (acteurs, malwares, infrastructures, indicateurs) |
 | Type d'outil | Plateforme web (React) + API (Python) + connecteurs |
@@ -50,7 +50,7 @@ doc: https://docs.opencti.io/latest/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 OpenCTI structure la threat intelligence comme un **graphe de connaissances** : entités (acteurs, malwares, outils, infrastructures) reliées par des relations (utilise, communique, cible), le tout au format standard **STIX 2.1**. C'est une « base de données vivante » où chaque objet est enrichi, noté et interconnecté, plutôt qu'une simple liste d'IoC. On l'utilise en SOC/CTI pour ingérer des rapports, cartographier des campagnes et relier des indicateurs à des techniques MITRE ATT&CK.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Déploiement officiel via Docker Compose (recommandé) ; l'installation classique (Redis, Elasticsearch, PostgreSQL, MinIO) est lourde à gérer manuellement :
 
@@ -103,14 +103,14 @@ helm install opencti opencti/opencti
 
 Première connexion : `http://localhost:8080` avec les identifiants par défaut (configurés dans le compose) ; activer l'authentification et changer le token admin immédiatement.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - OpenCTI dépend de PostgreSQL, Elasticsearch/OpenSearch, Redis, RabbitMQ et MinIO (S3) : tous fournis par le compose, mais gourmands en ressources pour un lab.
 > - Le token admin par défaut doit être changé immédiatement.
 > - Les connecteurs doivent être déployés avec une version alignée sur le serveur (matrice de compatibilité).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -128,7 +128,7 @@ Première connexion : `http://localhost:8080` avec les identifiants par défaut 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -144,7 +144,7 @@ Flux type : connecteur de pull (ex. MITRE ATT&CK) → ingestion dans le graphe �
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -184,7 +184,7 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Paramètre | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -203,7 +203,7 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -252,7 +252,7 @@ print(r.json())
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Activer un connecteur** : `Connectors` → activer le connecteur MITRE ATT&CK pour importer la matrice et la galaxie de techniques.
 2. **Ajouter une source** : configurer le connecteur VirusTotal avec une clé API → pull régulier des rapports liés à vos indicateurs.
@@ -264,7 +264,7 @@ print(r.json())
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Chasse en graphe pour étendre une liste de blocage
 
@@ -309,7 +309,7 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -322,7 +322,7 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -338,7 +338,7 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -378,7 +378,7 @@ alert dns any any -> any any (msg:"OpenCTI - Infrastructure acteur";
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — exporter les nouveaux indicateurs (cron quotidien)
@@ -413,7 +413,7 @@ for ip in ["203.0.113.66", "198.51.100.9"]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 L'API REST/GraphQL renvoie du **JSON** : les objets STIX (indicator, malware, threat-actor) avec `id`, `name`, `pattern`, `created`, `score`, `confidence`. Les connecteurs d'export produisent CSV, STIX 2.1, OpenIOC, ou poussent vers MISP/TheHive/Splunk.
 
@@ -443,7 +443,7 @@ for ind in data.get("data", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 OpenCTI ← connecteurs : VirusTotal, MITRE ATT&CK, MISP, Abuse.ch, CIRCL, Shodan, OTX
@@ -453,9 +453,9 @@ OpenCTI ← analyse YARA / sandbox / honeypots (artefacts et indicateurs)
 OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - MISP|🔎 MISP]] — partage opérationnel d'IoC, OpenCTI pour le graphe de connaissance
-- [[Outils/Outil - Sigma|🔎 Sigma]] — règles de détection corrélées aux techniques ATT&CK
+- [[Tools| Outils]]
+- [[Outils/Outil - MISP| MISP]] — partage opérationnel d'IoC, OpenCTI pour le graphe de connaissance
+- [[Outils/Outil - Sigma| Sigma]] — règles de détection corrélées aux techniques ATT&CK
 - [[Outil - Cowrie]] — honeypot alimentant les indicateurs d'OpenCTI
 - [[Outil - Canarytokens]] — triggers d'incident reliés aux campagnes
 - [[Outil - YARA]] — signatures issues de l'analyse, modélisées en indicateurs
@@ -463,7 +463,7 @@ OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -477,7 +477,7 @@ OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Multi-composants** : OpenCTI exige PostgreSQL, Elasticsearch, Redis, RabbitMQ, MinIO : dimensionner selon le volume de données.
 - **Recherche** : l'index Elasticsearch/OpenSearch porte les recherches plein texte et les requêtes du graphe ; surveiller sa charge.
@@ -490,7 +490,7 @@ OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -526,7 +526,7 @@ OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Authentification** : changer le token admin, activer les rôles/groupes d'analystes, MFA si possible.
 - **Accès API** : les tokens sont sensibles : coffre, rotation, permissions minimales par service.
@@ -537,7 +537,7 @@ OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Lourdeur opérationnelle** : cinq composants à maintenir (PostgreSQL, Elasticsearch, Redis, RabbitMQ, MinIO).
 - **Pas un SIEM** : OpenCTI ne fait pas de corrélation temps réel sur les logs — exporter vers le SIEM.
@@ -548,7 +548,7 @@ OpenCTI → SIEM (Elastic/Splunk) via API ou connecteurs
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Liste des indicateurs
@@ -575,7 +575,7 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -584,11 +584,11 @@ curl -H "Authorization: Bearer <token>" \
 | **Commande principale** | API `GET /api/v1/indicators` / `POST /api/v1/import/bundle` |
 | **Alternative principale** | MISP (partage), ThreatConnect (commercial) |
 | **Concepts importants** | STIX 2.1, graphe, entités/relations, connecteurs, kill chain, GraphQL |
-| **Liens associés** | [[Outils/Outil - MISP|🔎 MISP]] · [[Outils/Outil - Sigma|🔎 Sigma]] |
+| **Liens associés** | [[Outils/Outil - MISP| MISP]] · [[Outils/Outil - Sigma| Sigma]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -600,22 +600,22 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 Utilisez l'onglet `Analyses` avec l'extraction automatique : copiez un rapport texte et OpenCTI propose les entités à créer, un gain de temps énorme en veille quotidienne.
+> [!tip] Utilisez l'onglet `Analyses` avec l'extraction automatique : copiez un rapport texte et OpenCTI propose les entités à créer, un gain de temps énorme en veille quotidienne.
 
-> [!warning] ⚠️ Ouvrir OpenCTI sans configurer les connecteurs en limite sérieusement l'intérêt : c'est un système d'ingestion, pas une base vide à remplir à la main.
+> [!warning] Ouvrir OpenCTI sans configurer les connecteurs en limite sérieusement l'intérêt : c'est un système d'ingestion, pas une base vide à remplir à la main.
 
-> [!tip] 💡 Reliez toujours un indicateur à son contexte (malware + technique ATT&CK) : un indicateur orphelin dans le graphe ne sert ni à la chasse ni à la prise de décision.
+> [!tip] Reliez toujours un indicateur à son contexte (malware + technique ATT&CK) : un indicateur orphelin dans le graphe ne sert ni à la chasse ni à la prise de décision.
 
-> [!warning] ⚠️ Ne faites pas d'OpenCTI un SIEM : les requêtes lourdes sur le graphe (millions de relations) ralentissent la plateforme ; prévoyez l'export des indicateurs vers le SIEM et gardez l'analyse CTI dans OpenCTI.
+> [!warning] Ne faites pas d'OpenCTI un SIEM : les requêtes lourdes sur le graphe (millions de relations) ralentissent la plateforme ; prévoyez l'export des indicateurs vers le SIEM et gardez l'analyse CTI dans OpenCTI.
 
-> [!warning] ⚠️ **Piège** : le token admin est réutilisé par tous les connecteurs par défaut.
+> [!warning] **Piège** : le token admin est réutilisé par tous les connecteurs par défaut.
 > Créez des tokens par connecteur (rôles restreints) et gardez-les dans un coffre : un connecteur compromis ne doit pas exposer l'administration.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -639,4 +639,4 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - MISP|🔎 MISP]] · [[Outils/Outil - Sigma|🔎 Sigma]] · [[Techniques/11 - Glossaire|📖 Glossaire]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - MISP| MISP]] · [[Outils/Outil - Sigma| Sigma]] · [[Techniques/11 - Glossaire| Glossaire]]

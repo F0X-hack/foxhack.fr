@@ -1,11 +1,11 @@
 ---
 title: "Outil - Reaver"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: v1.6.6 (reaver-wps-fork-t6x)
 licence: GPL-2.0 (pixiewps : GPL-3.0)
@@ -16,20 +16,20 @@ site: https://github.com/t6x/reaver-wps-fork-t6x
 doc: https://github.com/t6x/reaver-wps-fork-t6x
 ---
 
-# 📡 Reaver — Wireless & Réseau
+# Reaver — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Outil d'attaque **WPS (Wi-Fi Protected Setup)** par brute force du PIN de 8 chiffres, couplé à **pixiewps** pour l'attaque offline « pixie dust » — il délivre la clé WPA/WPA2 **en clair** sans la cracker.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | reaver (reaver-wps-fork-t6x) |
 | Description | Brute force du PIN WPS (en ligne) + intégration pixiewps (attaque offline « pixie dust ») pour retrouver la passphrase WPA/WPA2 d'un AP |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque & Cracking WiFi (WPS / Pixie dust) |
 | Fonction principale | Tester les PIN WPS 8 chiffres contre l'AP et en extraire la passphrase en clair |
 | Type d'outil | CLI (attaque active en ligne) |
@@ -50,7 +50,7 @@ doc: https://github.com/t6x/reaver-wps-fork-t6x
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le WPS réduit la sécurité du WiFi à un **PIN de 8 chiffres**, validé en deux moitiés (11000 combinaisons efficaces seulement). `reaver` teste ces combinaisons **en ligne** contre le point d'accès, en gérant les timeouts et les réessais, puis livre la **passphrase WPA en clair**. `pixiewps` exploite un défaut de génération du nonce (`PKE`/`PKR`) sur certaines puces (Realtek, Ralink…) pour retrouver le PIN **hors-ligne en quelques secondes**. Les deux sont complémentaires : pixiewps d'abord (rapide), reaver en repli (lent mais universel sur WPS actif).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -135,7 +135,7 @@ git clone https://github.com/wiire/pixiewps.git && cd pixiewps
 make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Carte Wi-Fi en **mode moniteur avec injection** (testée via `aireplay-ng -9`).
 > - `libpcap` et le compilateur C requis pour le build.
 > - Le fork t6x est nécessaire pour `-K 1` (pixie dust) : l'original ne l'inclut pas.
@@ -143,7 +143,7 @@ make && sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 reaver se configure **uniquement en ligne de commande**. Les paramètres clés contrôlent le canal, la verbosité, la gestion du lock, les délais et la sauvegarde de session.
 
@@ -163,7 +163,7 @@ reaver se configure **uniquement en ligne de commande**. Les paramètres clés c
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 reaver est un **client WPS complet** qui parle le protocole d'échange EAP au-dessus de trames 802.11 injectées :
 
@@ -178,7 +178,7 @@ reaver est un **client WPS complet** qui parle le protocole d'échange EAP au-de
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -208,7 +208,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -L -N -T 3 -d 60 -vv -s lock_p
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -L -N -T 3 -d 60 -vv -s lock_p
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -277,7 +277,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -s session_target -vv
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : box "BBox-5678" (canal 11) avec WPS actif.**
 
@@ -299,7 +299,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -s session_target -vv
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Attaque sur WPS verrouillé (rate-limit contourné)
 
@@ -335,7 +335,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -vv -s session_target
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -346,7 +346,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -vv -s session_target
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -360,7 +360,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -vv -s session_target
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -400,7 +400,7 @@ alert wlan any any -> any any (msg:"WPS EAP exchange flood - possible reaver"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Exemple : script de test WPS d'un lot de cibles (audit autorisé)
@@ -434,7 +434,7 @@ for bssid, channel in get_wps_targets():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 reaver affiche en sortie console le détail de chaque tentative (`-vv`) et, en cas de succès :
 
@@ -466,7 +466,7 @@ with open("reaver.log") as fh:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 wash (détection WPS) → reaver / pixiewps → clé WPA2 → connexion réseau
@@ -474,7 +474,7 @@ reaver (pixie dust) ← captures EAP ← aircrack-ng / Scapy (analyse)
 reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - aircrack-ng]] — capture/analyse WiFi complémentaire (mode moniteur, handshake)
 - [[Outil - Wifite]] — automatise reaver/bully pour les WPS
 - [[Outil - hcxdumptool]] — alternative de collecte (handshake/PMKID) quand le WPS échoue
@@ -482,7 +482,7 @@ reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -495,7 +495,7 @@ reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Pixie dust** : quelques **secondes** à quelques minutes (offline, aucun taux de requête réseau).
 - **Brute force en ligne** : dépend du rate limiting. Sans lock : ~1 PIN toutes les 1-2 s → 11000 combinaisons ≈ **3-8 heures** au pire. Avec lock (verrouillage après 5 échecs + délais) : peut prendre **des jours**.
@@ -505,7 +505,7 @@ reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -541,7 +541,7 @@ reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - Root requis pour l'accès raw à la carte (injection).
 - Attaque **active** et potentiellement **gênante** pour les clients (associations répétées) : uniquement sur périmètre autorisé.
@@ -552,7 +552,7 @@ reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Ne fonctionne que si le **WPS PIN est actif** : désactivé ou PBC → attaque impossible.
 - Le **lock** peut rendre le brute force en ligne impraticable (des jours).
@@ -563,7 +563,7 @@ reaver → rapport d'audit (PIN + PSK) → SIEM / documentation
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Détection des AP avec WPS
@@ -590,7 +590,7 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -p 12345670 -vv
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -599,11 +599,11 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -p 12345670 -vv
 | **Commande principale** | `sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -K 1 -vv` |
 | **Alternative principale** | bully (WPS verrouillé) / wifite (automatisation) |
 | **Concepts importants** | WPS, PIN 8 chiffres en deux moitiés, lock, pixie dust (PKE/PKR), wash |
-| **Liens associés** | [[Techniques/Attaques WiFi - WPS\|🔢 WPS]] · [[Outil - Wifite]] · [[Outil - aircrack-ng]] |
+| **Liens associés** | [[Techniques/Attaques WiFi - WPS\| WPS]] · [[Outil - Wifite]] · [[Outil - aircrack-ng]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -616,15 +616,15 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -p 12345670 -vv
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 Toujours essayer **pixiewps (`-K 1`) d'abord** : offline, quelques secondes, sans toucher au rate-limit. Reaver seul est un investissement en temps : plusieurs heures à plusieurs jours selon le PIN de départ. Surveille `wash` en parallèle pour vérifier si la cible change d'état (LOCKED ⇄ active) pendant la tentative.
+> [!tip] Toujours essayer **pixiewps (`-K 1`) d'abord** : offline, quelques secondes, sans toucher au rate-limit. Reaver seul est un investissement en temps : plusieurs heures à plusieurs jours selon le PIN de départ. Surveille `wash` en parallèle pour vérifier si la cible change d'état (LOCKED ⇄ active) pendant la tentative.
 
-> [!warning] ⚠️ Un WPS **locked** (état « LOCKED » dans wash) bloque l'attaque après ~5 échecs. Les options `-L -N` peuvent repartir du PIN courant mais déclenchent des lockouts et font durer l'attaque… Surveiller `wash` en parallèle. Le `-p 12345670` (PIN par défaut fréquent) vaut le coup avant le brute force complet.
+> [!warning] Un WPS **locked** (état « LOCKED » dans wash) bloque l'attaque après ~5 échecs. Les options `-L -N` peuvent repartir du PIN courant mais déclenchent des lockouts et font durer l'attaque… Surveiller `wash` en parallèle. Le `-p 12345670` (PIN par défaut fréquent) vaut le coup avant le brute force complet.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,9 +647,9 @@ sudo reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -c 6 -p 12345670 -vv
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel reaver-wps-fork-t6x](https://github.com/t6x/reaver-wps-fork-t6x)
 > - [GitHub officiel pixiewps](https://github.com/wiire/pixiewps)
 > - [Repology — reaver-wps-fork-t6x (v1.6.6)](https://repology.org/project/reaver-wps-fork-t6x/packages)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi - WPS|🔢 WPS]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Techniques/Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Outil - Wifite]] · [[Outil - aircrack-ng]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi - WPS| WPS]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Techniques/Attaques WiFi - Préparation & Basiques| Préparation]] · [[Outil - Wifite]] · [[Outil - aircrack-ng]]

@@ -1,7 +1,7 @@
 ---
 title: "Outil - OneRuleToRuleThemAll"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.notsosecure.com/one-rule-to-rule-them-all/
 doc: https://github.com/NotSoSecure/password_cracking_rules/blob/master/README.md
 ---
 
-# 🏛️ OneRuleToRuleThemAll — La règle hashcat ultime
+# OneRuleToRuleThemAll — La règle hashcat ultime
 
 > [!info] **En 1 phrase**
 > OneRuleToRuleThemAll est un fichier de règles hashcat (`.rule`) qui regroupe des milliers de mutations optimisées pour cracker un maximum de mots de passe avec un minimum d'essais.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | OneRuleToRuleThemAll |
 | Description | Super-ensemble de règles hashcat (51 998 règles) obtenu en sélectionnant les 25 % de règles les plus performantes de chaque jeu de règles connu, dédupliquées et concaténées |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Règles de mutation (rule-based attack) |
 | Fonction principale | Transformer un dictionnaire en millions de candidats réalistes via `hashcat -r` ou `john --rules` |
 | Type d'outil | Fichier de règles (ressource), consommé par hashcat / John the Ripper |
@@ -50,7 +50,7 @@ doc: https://github.com/NotSoSecure/password_cracking_rules/blob/master/README.m
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le cracking par dictionnaire échoue dès que le mot de passe n'est pas présent tel quel dans la wordlist. L'attaque par règles (« rule-based attack ») comble ce manque : chaque mot du dictionnaire passe dans un moteur de réécriture qui applique des mutations élémentaires — capitalisation, ajout de préfixes/suffixes, remplacement de caractères (leet), répétitions, inversion... — et génère des dizaines de variantes par mot source. Un bon jeu de règles est le levier le plus rentable du cracking hors-ligne : il coûte une seule passe sur le GPU et multiplie considérablement les candidats.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -81,7 +81,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Il n'y a pas de paquet à compiler : OneRuleToRuleThemAll est un fichier texte à placer dans le dossier de règles de hashcat.
 
@@ -142,12 +142,12 @@ docker run --rm -v "$PWD/OneRuleToRuleThemAll.rule:/rules/OneRuleToRuleThemAll.r
 
 Inutile : le fichier se télécharge tel quel. Pour rester à jour, suivre la branche `master` du dépôt ou utiliser le fork optimisé `stealthsploit/OneRuleToRuleThemStill` (réécrit en 2023).
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > hashcat doit être installé (l'emplacement par défaut des règles diffère selon la distribution : `/usr/share/hashcat/rules/` sur Kali/Debian, `rules\` à côté de l'exécutable sous Windows). Certaines distributions livrent une version embarquée du fichier dans le paquet `hashcat-utils` ou `hashcat-data` — vérifier `hashcat --help` pour lister les chemins de règles résolus.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de configuration propre : le fichier s'utilise tel quel. On peut toutefois créer des variantes tronquées pour ajuster le volume de candidats.
 
@@ -161,7 +161,7 @@ Pas de configuration propre : le fichier s'utilise tel quel. On peut toutefois c
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le fichier est un **fichier texte brut, une règle par ligne**, chaque règle étant une séquence de commandes hashcat sans séparateur. Exemples extraits des jeux sources : `c` (capitaliser la première lettre, minuscules pour le reste), `sa4` (remplacer `a` par `4`), `$2 $0 $2 $5` (ajouter la chaîne « 2025 » en fin de mot), `^A` (préfixer un `A`), `r` (inverser), `T0` (toggle du premier caractère). Le moteur de hashcat applique la séquence commande par commande sur chaque mot de la wordlist : le nombre total de candidats d'une passe vaut donc `nb_mots × nb_règles` (moins les éventuelles rejets, ex. règles interdisant les mots trop courts via les fonctions de rejet `>N`/`<N`).
 
@@ -169,7 +169,7 @@ Le contenu reflète sa construction : on y retrouve la philosophie de chaque sou
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ wc -l /tmp/prepared_unique.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 Les options concernent hashcat (le consommateur de la règle) :
 
@@ -223,7 +223,7 @@ Les options concernent hashcat (le consommateur de la règle) :
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -269,7 +269,7 @@ hashcat -m 5600 netntlmv2.txt /tmp/mots_cewl.txt -r OneRuleToRuleThemAll.rule -O
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Compiler les hashes** — dump NTDS.dit, tickets Kerberoast, NetNTLMv2 capturés par Responder, handshakes WPA :
    ```bash
@@ -295,7 +295,7 @@ hashcat -m 5600 netntlmv2.txt /tmp/mots_cewl.txt -r OneRuleToRuleThemAll.rule -O
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Kerberoast à la chaîne
 
@@ -338,7 +338,7 @@ hashcat -m 1000 ntlm.txt --show | awk -F: '{print $NF}' | \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -350,7 +350,7 @@ hashcat -m 1000 ntlm.txt --show | awk -F: '{print $NF}' | \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -363,7 +363,7 @@ hashcat -m 1000 ntlm.txt --show | awk -F: '{print $NF}' | \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -406,7 +406,7 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"Potential password spray - HTT
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle multi-formats avec la règle, potfile par projet
@@ -429,7 +429,7 @@ print(f"candidats attendus : {nb_mots * nb_regles:,}")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La « sortie » de la règle n'existe que via hashcat : soit les hashes crackés (potfile + `--show`), soit les candidats générés (`--stdout`).
 
@@ -461,7 +461,7 @@ print("fins par 4 chiffres :", fin_annee, "/", len(mots))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Wordlist (rockyou / SecLists / CeWL / CUPP) → hashcat -r OneRuleToRuleThemAll.rule → potfile
@@ -470,17 +470,17 @@ John the Ripper --rules=OneRule → mêmes mutations pour les formats hashcat-no
 Dérivé : OneRuleToRuleThemStill (stealthsploit, 2023) → remplacement moderne
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - hashcat|hashcat]] — moteur principal de consommation de la règle
 - [[Outil - John the Ripper|John the Ripper]] — consommation via `--rules=OneRule`
 - [[Outil - CeWL|CeWL]] et [[Outil - CUPP|CUPP]] — production des wordlists contextuelles
 - [[Outil - Mentalist|Mentalist]] — exporte aussi des règles hashcat/John, complément graphique
 - [[Outil - kwprocessor|kwprocessor]] et [[Outil - Crunch|Crunch]] — autres vecteurs de candidats (clavier, masques)
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -495,13 +495,13 @@ Dérivé : OneRuleToRuleThemStill (stealthsploit, 2023) → remplacement moderne
 
 ---
 
-## ⚡ Performance
+## Performance
 
 Le coût est celui du moteur de règles de hashcat : chaque règle est une suite d'opérations sur des chaînes courtes, exécutée massivement en parallèle sur GPU. Avec rockyou (14 344 391 mots) et la règle complète (51 998), une passe génère ~745 milliards de candidats : sur NTLM à ~200 GH/s, cela représente environ une heure — le ratio candidats par crack mesuré (251 902) justifie le coût. Les formats lents changent la donne : bcrypt (~40 kH/s sur GPU), sha512crypt, scrypt ou NetNTLMv2 salé font exploser le temps réel — il faut alors **tronquer la règle** (premières lignes du fichier, triées par efficacité décroissante à la construction), réduire le dictionnaire ou utiliser `best64`. L'option `-O` (kernels optimisés) et `-w 3` (workload maximal) sont les leviers de vitesse GPU standard ; `-D 1` force le CPU quand les drivers OpenCL font défaut.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -537,13 +537,13 @@ Le coût est celui du moteur de règles de hashcat : chaque règle est une suite
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 OneRuleToRuleThemAll est un **fichier texte passif** : aucune exécution, aucun réseau, aucune télémétrie. Les risques se situent dans son usage : le cracking de hashes sans autorisation est illégal — la règle s'utilise exclusivement sur des périmètres autorisés (audit mandaté, lab, CTF). Elle révèle des mots de passe en clair ; les potfiles, wordlists et sorties `--stdout` doivent être traités comme des données sensibles (chiffrement au repos, purge après engagement). Attention aussi aux canaux de distribution : récupérer le fichier depuis le dépôt officiel ou une copie vérifiée, jamais depuis un lien non fiable (compromission de supply chain). Enfin, la licence MIT s'applique aux règles ajoutées par NotSoSecure ; les règles héritées de d3ad0ne, KoreLogic, NSAKEY et Hob0Rules conservent leurs licences d'origine — à conserver lors d'une redistribution.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Ne crée rien à partir de rien** : sans wordlist de départ correcte, la règle ne cracke rien (pas de génération de candidats depuis le vide).
 - **Volume colossal** : 51 998 règles ≈ 745 milliards de candidats sur rockyou — inutilisable tel quel sur les formats lents (bcrypt, sha512crypt, scrypt, NetNTLMv2 salé).
@@ -554,7 +554,7 @@ OneRuleToRuleThemAll est un **fichier texte passif** : aucune exécution, aucun 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -586,7 +586,7 @@ hashcat -m 3200 hashes.txt rockyou.txt -r /tmp/onrule_light.rule
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -595,11 +595,11 @@ hashcat -m 3200 hashes.txt rockyou.txt -r /tmp/onrule_light.rule
 | **Commande principale** | `hashcat -m <mode> hashes.txt wordlist.txt -r OneRuleToRuleThemAll.rule -O -w 3` |
 | **Alternative principale** | `dive` / `best64` (hashcat), OneRuleToRuleThemStill (fork optimisé) |
 | **Concepts importants** | Règle = séquence de commandes, candidates = mots × règles, debug-mode pour auditer, efficacité = guesses/crack |
-| **Liens associés** | [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - hashcat|hashcat]] · [[Outil - John the Ripper|John the Ripper]] |
+| **Liens associés** | [[Techniques/Password Cracking| Password Cracking]] · [[Outil - hashcat|hashcat]] · [[Outil - John the Ripper|John the Ripper]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -611,17 +611,17 @@ hashcat -m 3200 hashes.txt rockyou.txt -r /tmp/onrule_light.rule
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > Lance toujours la passe **sans règle** d'abord (coût minimal), puis la passe avec règle. Combine la règle avec une **wordlist contextuelle** (CeWL, CUPP) plutôt que rockyou pur : les mots du contexte multiplient fortement le taux de crack. Utilise `--stdout` pour auditer la qualité des mutations avant de lancer des heures de GPU. Sur les formats rapides (NTLM, WPA, Kerberoast RC4), la règle complète est rentable ; sur les formats lents, tronque-la (`head -5000`). Utilise `--potfile-path` par projet pour ne pas mélanger les résultats.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > La règle **ne crée rien à partir de rien** : un petit dictionnaire médiocre donne un petit résultat — l'ordre des passes (brut → règle → masque) compte. Sur les formats lents, l'explosion du nombre de candidats peut rendre la passe irréaliste : mesure le hashrate (`hashcat -b`) avant de lancer. Le fichier est daté de 2017 : les tendances 2020+ sont mieux couvertes par OneRuleToRuleThemStill. Vérifie le chemin de la règle selon ta distribution (`/usr/share/hashcat/rules/` vs `rules\` sous Windows). Enfin, la sortie `--stdout` d'une règle complète génère des **gigaoctets** : attention au disque.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -646,4 +646,4 @@ hashcat -m 3200 hashes.txt rockyou.txt -r /tmp/onrule_light.rule
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hashcat|hashcat]] · [[Techniques/Kerberoasting|🧀 Kerberoasting]] · [[Techniques/Dump NTDS.dit|Dump NTDS.dit]] · [[Outil - John the Ripper|John the Ripper]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - Mentalist|Mentalist]]
+**Liens :** [[Tools| Outils]] · [[Outil - hashcat|hashcat]] · [[Techniques/Kerberoasting| Kerberoasting]] · [[Techniques/Dump NTDS.dit|Dump NTDS.dit]] · [[Outil - John the Ripper|John the Ripper]] · [[Techniques/Password Cracking| Password Cracking]] · [[Outil - Mentalist|Mentalist]]

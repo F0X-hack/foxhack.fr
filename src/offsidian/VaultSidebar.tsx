@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { memo, useDeferredValue, useEffect, useMemo, useState } from 'react'
 import {
   BookOpen,
   ChevronDown,
@@ -64,7 +64,7 @@ type VaultSidebarProps = {
   onOpenSearch: () => void
 }
 
-export default function VaultSidebar({
+function VaultSidebar({
   manifest,
   selected,
   favorites,
@@ -75,12 +75,23 @@ export default function VaultSidebar({
   onOpenSearch,
 }: VaultSidebarProps) {
   const [filter, setFilter] = useState('')
+  /* La saisie reste prioritaire sur le filtrage des 344 fichiers. */
+  const deferredFilter = useDeferredValue(filter)
   const [openGroups, setOpenGroups] = useState<Set<VaultGroup>>(
     () => new Set<VaultGroup>(['Guides', selected.group]),
   )
 
   const noteById = useMemo(() => new Map(manifest.notes.map((note) => [note.id, note])), [manifest.notes])
-  const normalizedFilter = normalizeSearch(filter)
+  /* Normaliser 344 titres à chaque frappe coûte plus cher que le filtrage
+     lui-même : on le fait une fois par manifeste. */
+  const haystackById = useMemo(
+    () =>
+      new Map(
+        manifest.notes.map((note) => [note.id, normalizeSearch(`${note.title} ${note.category} ${note.tags.join(' ')}`)]),
+      ),
+    [manifest.notes],
+  )
+  const normalizedFilter = normalizeSearch(deferredFilter)
 
   useEffect(() => {
     setOpenGroups((current) => new Set([...current, selected.group]))
@@ -92,13 +103,12 @@ export default function VaultSidebar({
       const notes = manifest.notes.filter((note) => {
         if (note.group !== group) return false
         if (!normalizedFilter) return true
-        const haystack = normalizeSearch(`${note.title} ${note.category} ${note.tags.join(' ')}`)
-        return haystack.includes(normalizedFilter)
+        return (haystackById.get(note.id) ?? '').includes(normalizedFilter)
       })
       result.set(group, notes)
     }
     return result
-  }, [manifest.notes, normalizedFilter])
+  }, [haystackById, manifest.notes, normalizedFilter])
 
   const favoriteNotes = favorites.flatMap((id) => (noteById.has(id) ? [noteById.get(id)!] : []))
   const recentNotes = recent
@@ -261,3 +271,7 @@ export default function VaultSidebar({
     </>
   )
 }
+
+/* L'explorateur liste 344 fichiers : il ne doit pas être re-rendu quand la
+   barre de progression ou le titre actif changent. */
+export default memo(VaultSidebar)

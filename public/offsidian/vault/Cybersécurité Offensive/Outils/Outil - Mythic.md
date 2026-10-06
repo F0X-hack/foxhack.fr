@@ -1,11 +1,11 @@
 ---
 title: "Outil - Mythic"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: v3.4.0.5 (stable, 2025-10)
 licence: Autre (fichier LICENSE personnalisé dans le dépôt, variantes BSD-3-Clause/MIT)
@@ -16,20 +16,20 @@ site: https://mythic-c2.net/
 doc: https://docs.mythic-c2.net/
 ---
 
-# 🕹️ Mythic — Framework C2 web, modulaire et cross-platform
+# Mythic — Framework C2 web, modulaire et cross-platform
 
 > [!info] **En 1 phrase**
 > Mythic est un framework C2 open-source cross-platform basé sur une UI web, qui exécute des agents (« payload types ») comme Apollo, avec des profiles de transport HTTP/SMB et une orchestration par tâches.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Mythic |
 | Description | Framework C2 collaboratif, web et modulaire : serveur Docker Compose, UI React, API REST, agents « payload types » installables |
-| Catégorie | 🕹️ C2 & Post-Exploitation |
+| Catégorie | C2 & Post-Exploitation |
 | Sous-catégorie | Command & Control (C2), post-exploitation |
 | Fonction principale | Orchestrer des agents sur des cibles via des profiles C2 et des tâches |
 | Type d'outil | Framework (serveur Docker + UI web + CLI + agents) |
@@ -50,7 +50,7 @@ doc: https://docs.mythic-c2.net/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Mythic se distingue par son architecture : un serveur central (Docker Compose) avec une base PostgreSQL, une UI web (React), une API REST et un gestionnaire de tâches asynchrones. Les agents sont de vrais programmes qui se connectent via des **profiles C2** (HTTP, HTTPS, SMB, etc.) et reçoivent des commandes (`tasks`) dont on suit l'exécution en temps réel. L'agent le plus utilisé, **Apollo**, est écrit en Go et cross-platform (Windows, Linux, macOS). C'est le C2 de référence pour les opérations qui demandent de la modularité : on ajoute des agents, des profiles et des modules sans réécrire le framework.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -115,14 +115,14 @@ sudo ./mythic-cli install github https://github.com/MythicC2Profiles/http
 sudo ./mythic-cli update
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Docker Compose lourd : plusieurs conteneurs (server, PostgreSQL, RabbitMQ, UI, agents) consomment 2-4 Go de RAM.
 > - Les agents et profiles ne sont **pas** inclus par défaut : penser à les installer (`install github`).
 > - Le premier build peut être long et le port 7443 doit être libre pour l'UI.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait via `./mythic-cli` (configuration, installation, démarrage) et dans la UI (opérations, profiles C2, agents). Le fichier `config.json` centralise les paramètres du serveur.
 
@@ -139,7 +139,7 @@ La configuration se fait via `./mythic-cli` (configuration, installation, démar
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Mythic est déployé en Docker Compose : un conteneur **mythic_server** (Go) connecté à **PostgreSQL** et **RabbitMQ**, une UI **mythic_react** (React, port 7443), et un conteneur par **payload type** / **C2 profile** installé. Le `mythic-cli` orchestre les conteneurs et la configuration.
 
@@ -163,7 +163,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -193,7 +193,7 @@ curl -k https://localhost:7443/...
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -211,7 +211,7 @@ curl -k https://localhost:7443/...
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -260,7 +260,7 @@ cat /etc/passwd
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer Mythic** : `./mythic-cli start` puis attendre que tous les conteneurs soient `running` (`status`).
 2. **Récupérer les identifiants** : `sudo docker logs mythic_mythic_1 | grep -i "user\|pass"` → se connecter sur `https://localhost:7443`.
@@ -280,7 +280,7 @@ Pour une opération multi-machines, l'onglet **Graph** de l'UI affiche les relat
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Double profile C2 HTTP + SMB (pivot)
 
@@ -309,7 +309,7 @@ les opérateurs : chaque équipe ne voit que ses callbacks et fichiers.
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -322,7 +322,7 @@ les opérateurs : chaque équipe ne voit que ses callbacks et fichiers.
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -338,7 +338,7 @@ les opérateurs : chaque équipe ne voit que ses callbacks et fichiers.
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -386,7 +386,7 @@ rule Mythic_Apollo_example {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 Mythic est conçu pour l'automatisation : API REST, librairie Python, et reporting automatique via les artifact instances.
 
@@ -408,7 +408,7 @@ curl -k -X POST https://localhost:7443/... -H "Content-Type: application/json" -
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties de Mythic sont centralisées : état des tâches, résultats de commandes, fichiers et artifacts, consultables dans la UI et récupérables via l'API.
 
@@ -426,28 +426,28 @@ sudo docker logs mythic_mythic_1
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Compromission initiale → agent Apollo (Mythic) → tâches → exfil/report
 Mythic ↔ Sliver/Covenant/Chisel : plusieurs C2 cohabitent, tunnels pour le réseau interne
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]]
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]]
-- [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]]
-- [[Techniques/Kerberoasting|🔑 Kerberoasting]]
-- [[Techniques/Pass-the-Hash|🔓 Pass-the-Hash]]
-- [[Outil - Sliver|🐺 Sliver]]
-- [[Outil - Covenant|🐉 Covenant]]
-- [[Outil - Havoc|💥 Havoc]]
-- [[Outil - PowerShell Empire|👑 PowerShell Empire]]
-- [[Outil - Chisel|🧵 Chisel]]
+- [[Tools| Outils]]
+- [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]]
+- [[Techniques/Reverse Shells| Reverse Shells]]
+- [[Techniques/Privilege Escalation Windows| PrivEsc Windows]]
+- [[Techniques/Kerberoasting| Kerberoasting]]
+- [[Techniques/Pass-the-Hash| Pass-the-Hash]]
+- [[Outil - Sliver| Sliver]]
+- [[Outil - Covenant| Covenant]]
+- [[Outil - Havoc| Havoc]]
+- [[Outil - PowerShell Empire| PowerShell Empire]]
+- [[Outil - Chisel| Chisel]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -461,7 +461,7 @@ Mythic ↔ Sliver/Covenant/Chisel : plusieurs C2 cohabitent, tunnels pour le ré
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Stack Docker lourde : server + PostgreSQL + RabbitMQ + UI + agents → 2-4 Go de RAM.
 - Premier démarrage long (pull/build des images) ; un serveur gère de multiples opérations et callbacks.
@@ -469,7 +469,7 @@ Mythic ↔ Sliver/Covenant/Chisel : plusieurs C2 cohabitent, tunnels pour le ré
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -493,7 +493,7 @@ Mythic ↔ Sliver/Covenant/Chisel : plusieurs C2 cohabitent, tunnels pour le ré
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Ne pas exposer l'UI publiquement** : port 7443 derrière un VPN/tunnel, comptes par opérateur avec rôles.
 - **Identifiants admin** : générés au premier démarrage et affichés en clair dans les logs : les changer et les garder secrets.
@@ -504,7 +504,7 @@ Mythic ↔ Sliver/Covenant/Chisel : plusieurs C2 cohabitent, tunnels pour le ré
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Infra Docker lourde (RAM/CPU) ; pas adapté aux petits VPS sans Docker.
 - Agents et profiles non inclus par défaut : installation manuelle nécessaire.
@@ -513,7 +513,7 @@ Mythic ↔ Sliver/Covenant/Chisel : plusieurs C2 cohabitent, tunnels pour le ré
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrage
@@ -534,7 +534,7 @@ sudo ./mythic-cli update
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -543,11 +543,11 @@ sudo ./mythic-cli update
 | **Commande principale** | `sudo ./mythic-cli start` puis UI `https://localhost:7443` |
 | **Alternative principale** | Sliver (léger, Go) ou Covenant (web, .NET) |
 | **Concepts importants** | Payload types, C2 profiles, callbacks, tasks, opérations, mythic-cli |
-| **Liens associés** | [[Outil - Sliver\|🐺 Sliver]] · [[Outil - Covenant\|🐉 Covenant]] · [[Outil - Havoc\|💥 Havoc]] |
+| **Liens associés** | [[Outil - Sliver\| Sliver]] · [[Outil - Covenant\| Covenant]] · [[Outil - Havoc\| Havoc]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -560,15 +560,15 @@ sudo ./mythic-cli update
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Explorez l'**API** de Mythic : automatiser la génération de payloads et le reporting des tâches fait gagner énormément de temps en opération longue.
 > - **Profile SMB pour les accès internes** : quand un réseau externe est déjà compromis, un profile SMB évite les nouveaux flux sortants.
 > - Utilisez les **artifact instances** et l'onglet **Graph** pour produire le rapport de red team quasi automatiquement.
 > - Validez chaque payload en lab (VM Windows à jour) avant engagement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Mythic est **lourd** : 2-4 Go de RAM avec plusieurs conteneurs ; prévoir un hôte adapté et le port 7443 libre.
 > - Ne partagez jamais les identifiants admin en dehors de l'équipe — ils donnent accès à toute l'opération.
 > - Les agents ne sont pas inclus par défaut : oublier `install github` = aucun callback possible.
@@ -576,7 +576,7 @@ sudo ./mythic-cli update
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ sudo ./mythic-cli update
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Privilege Escalation Linux|⬆️ PrivEsc Linux]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Pivoting et Tunneling| Pivoting]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Privilege Escalation Linux| PrivEsc Linux]]

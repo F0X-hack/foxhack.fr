@@ -1,11 +1,11 @@
 ---
 title: "Outil - aircrack-ng"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: 1.7
 licence: GPL-2.0-or-later
@@ -16,20 +16,20 @@ site: https://www.aircrack-ng.org
 doc: https://www.aircrack-ng.org/doku.php?id=aircrack-ng
 ---
 
-# 📡 aircrack-ng — Wireless & Réseau
+# aircrack-ng — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Suite de référence pour le **pentest WiFi** : capture des handshakes WPA/WPA2, attaques WEP, **crack de passphrases hors-ligne** et injection de trames — le socle de 90% des attaques WiFi.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | aircrack-ng (« aire-crack-next-generation ») |
 | Description | Suite complète d'audit WiFi : mode moniteur, capture/injection, attaques WEP, crack WPA/WPA2-PSK |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque & Cracking WiFi (WEP / WPA / WPA2-PSK) |
 | Fonction principale | Capturer les handshakes 4-way et PMKID, déauthentifier des clients, injecter des trames, cracker des clés hors-ligne |
 | Type d'outil | Suite CLI (plusieurs binaires distincts) |
@@ -50,7 +50,7 @@ doc: https://www.aircrack-ng.org/doku.php?id=aircrack-ng
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `aircrack-ng` est le socle de la quasi-totalité des tests d'intrusion WiFi. La suite couvre toute la chaîne d'une attaque : **préparation de l'interface** (`airmon-ng` passe la carte en mode moniteur), **reconnaissance** (`airodump-ng` liste les AP, canaux, clients et chiffrements), **injection** (`aireplay-ng` déauthentifie, forge des trames, replay ARP), **capture** du handshake 4-way ou du PMKID, puis **crack hors-ligne** de la passphrase (`aircrack-ng` seul, ou via `hcxpcapngtool` + hashcat pour exploiter le GPU). Historiquement né en 2004 pour casser le WEP (PTW, KoreK, chopchop), il s'est imposé pour le WPA/WPA2-PSK : la robustesse de WPA2 ne réside plus dans le protocole mais dans la force de la passphrase, que la suite permet d'attaquer par dictionnaire, par règle ou par masque.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -137,7 +137,7 @@ autoreconf -i
 make -j$(nproc) && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Carte compatible monitor + injection** : chipset Atheros (ath9k), Ralink (rt2800usb), Realtek (RTL8812AU) recommandés ; les chipsets Intel et Broadcom posent des problèmes en injection.
 > - Dépendances de compilation : `libpcap-dev`, `libnl-3-dev`, `libnl-genl-3-dev`, `libssl-dev`, `libgcrypt20-dev`, `autoconf`, `automake`, `pkg-config`, `ethtool`.
 > - `airmon-ng check kill` coupe NetworkManager et wpa_supplicant → prévoir un accès filaire.
@@ -145,7 +145,7 @@ make -j$(nproc) && sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La suite aircrack-ng fonctionne **sans fichier de configuration utilisateur central** : tout se passe par options CLI. Quelques fichiers de données sont utilisés automatiquement.
 
@@ -165,7 +165,7 @@ La suite aircrack-ng fonctionne **sans fichier de configuration utilisateur cent
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 La suite est un ensemble de **binaires C indépendants** partageant la bibliothèque `osdep` (OS-dependent layer) qui abstrait la capture/injection selon le système (Linux nl80211/libpcap, Windows AirPcap/Npcap…).
 
@@ -181,7 +181,7 @@ Flux de données : carte radio → driver → osdep → airodump-ng → fichier 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -226,7 +226,7 @@ sudo airodump-ng -r cap-01.cap
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -256,7 +256,7 @@ sudo airodump-ng -r cap-01.cap
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -301,7 +301,7 @@ hashcat -m 22000 hash.22000 /usr/share/wordlists/rockyou.txt -w 3
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : cracker le WPA2-PSK d'une box « Freebox-ABC » (canal 6).
 
@@ -330,7 +330,7 @@ Scénario : cracker le WPA2-PSK d'une box « Freebox-ABC » (canal 6).
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Crack WPA2 accéléré avec hashcat (format 22000)
 
@@ -365,7 +365,7 @@ sudo airodump-ng -c 6 --bssid <MAC_du_faux_AP> -w evil wlan0mon
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -379,7 +379,7 @@ sudo airodump-ng -c 6 --bssid <MAC_du_faux_AP> -w evil wlan0mon
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -395,7 +395,7 @@ sudo airodump-ng -c 6 --bssid <MAC_du_faux_AP> -w evil wlan0mon
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -443,7 +443,7 @@ alert wlan any any -> any any (msg:"Potential Wifi deauth flood"; wlan.fc.type_s
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — capture séquentielle sur plusieurs canaux, un fichier par cible
@@ -464,7 +464,7 @@ print("Handshake capturé : wpa.cap")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les captures `-w <prefix>` produisent plusieurs fichiers : `<prefix>-01.cap`, `-01.csv`, `-01.kismet.netxml`, `-01.log.csv`.
 
@@ -488,9 +488,9 @@ for w in tree.getroot().findall("wireless-network"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - hcxdumptool]] / [[Outil - hcxdumptool]] — capture PMKID/handshake complémentaire
 - [[Outil - hashcat]] — crack GPU via le format 22000
 - [[Outil - John the Ripper]] — crack alternatif (`--format=wpapsk`)
@@ -499,7 +499,7 @@ for w in tree.getroot().findall("wireless-network"):
 - [[Outil - Reaver]] — attaque WPS (PIN/pixiewps) en parallèle du WPA2-PSK
 - [[Outil - Wifite]] — orchestration automatisée de toute la suite
 - [[Outil - Kismet]] — recon passive en amont
-- [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Techniques/Attaques WiFi - WEP|🔒 WEP]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP]] · [[Techniques/Password Cracking|🔐 Cracking]]
+- [[Techniques/Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Techniques/Attaques WiFi - WEP| WEP]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP]] · [[Techniques/Password Cracking| Cracking]]
 
 ```text
 Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (crack GPU)
@@ -509,7 +509,7 @@ Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (cra
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -524,7 +524,7 @@ Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (cra
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Cracking WEP** : l'attaque PTW cracke une clé WEP 64 bits en quelques secondes avec ~20 000 IV ; la méthode KoreK (statistique) fonctionne avec moins de données mais plus lentement.
 - **Cracking WPA/WPA2** : `aircrack-ng` réalise quelques centaines de milliers de tentatives/s en multi-cœur ; **hashcat** (mode 22000) atteint des centaines de millions de tentatives/s sur GPU. Ordre de grandeur : une passphrase 8 caractères minuscules = quelques heures de GPU.
@@ -537,7 +537,7 @@ Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (cra
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -567,7 +567,7 @@ Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (cra
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permissions** : la capture/injection nécessite **root** (sockets raw / nl80211). À n'utiliser que sur des réseaux **autorisés** (test d'intrusion, lab).
 - **Bruit** : deauth, fake auth et AP rogue sont immédiatement visibles par un WIDS ; en engagement réel, limiter la durée et préférer la capture passive.
@@ -578,7 +578,7 @@ Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (cra
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **WPA3/SAE** : pas de handshake 4-way WPA2 ni PMKID exploitable → la suite est inefficace contre un réseau WPA3-only.
 - **Windows** : l'injection est quasi inexistante (nécessite des DLL maison), réservé au crack hors-ligne de captures externes.
@@ -589,7 +589,7 @@ Kismet (recon) → aircrack-ng (capture+injection) → hcxtools → hashcat (cra
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Préparation de la carte
@@ -622,7 +622,7 @@ sudo aireplay-ng -9 wlan0mon
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -635,7 +635,7 @@ sudo aireplay-ng -9 wlan0mon
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -648,15 +648,15 @@ sudo aireplay-ng -9 wlan0mon
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours vérifier l'**injection** avant l'attaque (`aireplay-ng -9`). Une carte sans injection = capture inutile.
 > - Utilisez `hcxpcapngtool` pour exporter le handshake en hashcat **22000** et gagner du temps avec les GPUs.
 > - Gardez plusieurs wordlists spécialisées (rockyou, passwords métier) : le cracking vaut ce que vaut la liste.
 > - En multi-captures, vérifier la validité d'un handshake avec `aircrack-ng cap-01.cap` avant de lancer un crack long.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `airmon-ng check kill` coupe le réseau (WiFi/Ethernet). Prévoir un accès filaire ou restaurer après.
 > - Sans client connecté, pas de handshake : il faut attendre une reconnexion (ou un AP qui émet le PMKID → scénario 2).
 > - En Europe, les canaux 12-14 et les puissances maximales sont réglementés : restez dans un lab autorisé.
@@ -664,7 +664,7 @@ sudo aireplay-ng -9 wlan0mon
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -688,9 +688,9 @@ sudo aireplay-ng -9 wlan0mon
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel aircrack-ng](https://github.com/aircrack-ng/aircrack-ng)
 > - [Documentation aircrack-ng](https://www.aircrack-ng.org/)
 > - [Reproductible builds Debian (version 1.7+git… en 2026)](https://tests.reproducible-builds.org/)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Techniques/Password Cracking|🔐 Cracking]] · [[Techniques/Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Outil - hcxdumptool]] · [[Outil - hashcat]] · [[Outil - Wifite]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Techniques/Password Cracking| Cracking]] · [[Techniques/Attaques WiFi - Préparation & Basiques| Préparation]] · [[Outil - hcxdumptool]] · [[Outil - hashcat]] · [[Outil - Wifite]]

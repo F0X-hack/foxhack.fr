@@ -1,12 +1,12 @@
 ---
 title: "Outil - USB Host Shield"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: 2.0 (bibliothèque), shield rev. 2.0
 licence: GPLv2 (bibliothèque), open hardware (shield)
@@ -17,20 +17,20 @@ site: https://chome.nerpa.tech/arduino_usb_host_shield_projects/
 doc: https://felis.github.io/USB_Host_Shield_2.0
 ---
 
-# 🛡️ USB Host Shield — L'Arduino en hôte USB (sniffing clavier)
+# USB Host Shield — L'Arduino en hôte USB (sniffing clavier)
 
 > [!info] **En 1 phrase**
 > Un shield Arduino (MAX3421E) qui transforme l'Arduino en **hôte USB** : intercalé entre un PC et son clavier, il **sniffe**, **enregistre** ou **réinjecte** les frappes — l'arme du **keystroke logging matériel** et du MITM USB.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | USB Host Shield for Arduino (rev. 2.0) |
 | Description | Shield empilable sur Arduino basé sur le contrôleur MAX3421E qui donne à la carte la capacité d'être **hôte USB** (énumérer et piloter des périphériques), utilisé en keystroke logging matériel, MITM USB et analyse de périphériques HID |
-| Catégorie | 🔌 USB / HID & Gadgets |
+| Catégorie | USB / HID & Gadgets |
 | Sous-catégorie | Hardware — interception USB |
 | Fonction principale | Sniffing, journalisation et réinjection de frappes clavier (et de toute interaction HID) via l'émulation d'un hôte USB |
 | Type d'outil | Hardware + bibliothèque logicielle (C++) |
@@ -51,7 +51,7 @@ doc: https://felis.github.io/USB_Host_Shield_2.0
 
 ---
 
-## 🎯 Concept
+## Concept
 
 L'USB Host Shield transforme un Arduino en **hôte USB** grâce au contrôleur **MAX3421E** (Maxim Integrated). Un Arduino nu est presque toujours un *device* USB (il se fait énumérer par un PC via le port série du bootloader) ; avec le shield, il devient l'équipement qui **initie** la communication, énumère le périphérique, lit ses descripteurs et échange des rapports. C'est cette capacité qui rend possible le **keystroke logger matériel** : on intercale le montage entre le clavier de la cible et son PC, le shield énumère le clavier comme périphérique HID et lit chaque rapport de frappe envoyé par celui-ci.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Matériel requis
 
@@ -128,7 +128,7 @@ void setup() {
 void loop() { Usb.Task(); }   // polling obligatoire du bus USB hôte
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Alimentation** : le MAX3421E tire du courant du bus. Toujours alimenter en **5 V externe** (adaptateur secteur) quand un clavier est connecté au port hôte.
 > - **Pins SPI** : sur UNO/Mega, les pins 11/12/13 sont réservées au SPI et ne peuvent servir à rien d'autre. SS (10) et INT (9) sont modifiables (jumper à couper + `UsbCore.h`).
 > - **Cartes 3.3 V** (Teensy) : utiliser la variante Mini du shield ou un niveau de tension adapté ; ne pas brancher 5 V sur une carte 3.3 V.
@@ -137,7 +137,7 @@ void loop() { Usb.Task(); }   // polling obligatoire du bus USB hôte
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration passe par des **macros de compilation** dans la bibliothèque (`settings.h`, `UsbCore.h`) et par les **paramètres du sketch** Arduino. Il n'y a pas de fichier de configuration externe.
 
@@ -152,7 +152,7 @@ La configuration passe par des **macros de compilation** dans la bibliothèque (
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le cœur matériel est le **MAX3421E** : un contrôleur USB host à registres, piloté en SPI. L'Arduino écrit/ lit des registres (ex. `rPERADDR` pour l'adresse du périphérique, `rHCTL` pour le contrôle host, `rRCVFIFO` pour le FIFO de réception). La bibliothèque **USB Host Shield 2.0** est structurée en couches :
 
@@ -169,7 +169,7 @@ Flux de données du keylogger : le clavier émet un rapport sur son endpoint int
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales (API C++)
 
@@ -224,7 +224,7 @@ void loop() { Usb.Task(); }          // polling du bus USB hôte
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option (macro / paramètre) | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -246,7 +246,7 @@ void loop() { Usb.Task(); }          // polling du bus USB hôte
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -299,7 +299,7 @@ logFile.print(c);
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Flashage** — compiler le sketch keylogger et l'uploader sur l'Arduino (shield empilé, SD insérée).
    ```bash
@@ -313,7 +313,7 @@ logFile.print(c);
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Sniffer de clavier MITM avec enregistrement SD
 
@@ -360,7 +360,7 @@ void KbdParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -373,7 +373,7 @@ void KbdParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -388,7 +388,7 @@ void KbdParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -439,7 +439,7 @@ rule Arduino_USBHost_Keylogger {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — surveillance du port série de l'Arduino et horodatage des frappes
@@ -462,7 +462,7 @@ for line in ser:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le shield produit plusieurs types de sortie :
 
@@ -483,9 +483,9 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - USB Rubber Ducky]] — injection HID active (complémentaire de l'interception)
 - [[Outil - Bash Bunny]] — plateforme de payloads USB multi-vecteurs (équivalent commercial)
 - [[Outil - Flipper Zero (USB & radio)]] — badge HID/USB multi-usages
@@ -496,7 +496,7 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -511,7 +511,7 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Débit USB** : full-speed **12 Mbps** (USB 2.0), largement suffisant pour le HID (polling 125 Hz, rapports de 8 octets).
 - **SPI** : typiquement 8-12 MHz sur Arduino UNO ; la bibliothèque supporte jusqu'à ~20 MHz sur certaines cartes (chipKIT) mais le gain est marginal pour du HID.
@@ -520,7 +520,7 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -541,7 +541,7 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Légalité** : le keystroke logging matériel est une attaque par interception — réservé aux tests d'intrusion **autorisés** et à votre propre matériel. L'installation sur un poste tiers sans mandat est illégale.
 - **Détection physique** : le montage (shield + carte + câbles) est visible ; prévoir un boîtier discret et une fausse apparence en engagement autorisé.
@@ -550,7 +550,7 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Hôte uniquement sur UNO** : impossible de réémettre les frappes vers le PC (le PC ne voit pas l'UNO comme clavier) — logger passif, pas un relais actif. Il faut une carte 32u4 (Leonardo/Micro) pour le double rôle.
 - **Protocole boot HID limité** : 6 touches simultanées + modificateurs ; pas de touches multimédia ou de remapping avancé sans parser personnalisé (`HIDUniversal`).
@@ -561,7 +561,7 @@ awk '{print $2}' keys.log | sort | uniq -c | sort -rn | head
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```cpp
 // 1. Squelette minimal : init + polling
@@ -580,7 +580,7 @@ void loop()   { Usb.Task(); }
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,7 +593,7 @@ void loop()   { Usb.Task(); }
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -606,15 +606,15 @@ void loop()   { Usb.Task(); }
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Alimenter le shield en **5 V externe** : le MAX3421E provoque des coupures (sous-tension) sur certains Arduino alimentés par USB.
 > - Formater la SD en **FAT16/FAT32** et tester l'écriture (`logFile.sync()`) avant le déploiement.
 > - Pour un vrai MITM bidirectionnel (relayer les frappes vers le PC ET journaliser), utiliser une carte **32u4 double rôle** plutôt qu'un UNO.
 > - Enregistrer les modificateurs ET les codes de touches : les raccourcis (Ctrl+C, Win+L) sont les plus intéressants.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Avec un **UNO seul**, le shield est hôte uniquement : impossible de réémettre les frappes vers le PC — c'est un logger passif, pas un relais.
 > - Le **protocole boot HID** (8 octets) est limité aux touches de base : pas de touches multimédia ou de remapping avancé sans parser personnalisé.
 > - Le montage reste **visible** (câbles, boîtier) : en test autorisé, prévoir un boîtier discret et une fausse apparence.
@@ -622,7 +622,7 @@ void loop()   { Usb.Task(); }
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ void loop()   { Usb.Task(); }
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Protocole USB|🔌 Protocole USB]] · [[Techniques/Hardware - Arduino|🎛️ Arduino]] · [[Outil - USB Rubber Ducky|🦆 USB Rubber Ducky]] · [[Outil - Duckuino|🐤 Duckuino]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Protocole USB| Protocole USB]] · [[Techniques/Hardware - Arduino| Arduino]] · [[Outil - USB Rubber Ducky| USB Rubber Ducky]] · [[Outil - Duckuino| Duckuino]]

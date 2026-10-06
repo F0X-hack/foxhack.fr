@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📑 Tabnabbing
+# Tabnabbing
 
 > [!info] **En 1 phrase**
 > Tabnabbing (reverse tabnabbing) = une page **liée en `target="_blank"`** réécrit la page d'origine
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ flowchart LR
     F --> G[Credentials envoyées<br>à l'attaquant]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Quand un lien ouvre `target="_blank"`, l'objet **`window.opener`** de la nouvelle page pointe vers la
 > page d'origine **si `rel="noopener"` est absent**. La nouvelle page peut donc **rediriger la page
 > d'origine** silencieusement. Comme l'utilisateur a déjà l'onglet ouvert, il ne regarde pas la barre
@@ -42,7 +42,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Le mécanisme
+## Le mécanisme
 
 1. L'attaquant trouve un point où il peut **publier des liens** contrôlés (forum, commentaires,
    profil, champ de description…).
@@ -54,13 +54,13 @@ flowchart LR
 4. L'utilisateur revient sur son onglet "original" → la page légitime a été remplacée par le phishing.
 5. Il se reconnecte → les credentials partent chez l'attaquant.
 
-> [!warning] ⚠️ **Conditions à vérifier**
+> [!warning] **Conditions à vérifier**
 > `target` contient `_blank` **ET** `rel` ne contient ni `noopener` ni `noreferrer`.
 > Sans ces deux conditions, l'attaque échoue (l'opener n'est pas accessible).
 
 ---
 
-## 🚀 Payloads
+## Payloads
 
 ### HTML côté victime (la faille)
 
@@ -115,7 +115,7 @@ flowchart LR
 
 ---
 
-## 🧩 Variantes
+## Variantes
 
 | Variante | Détail |
 |---|---|
@@ -128,7 +128,7 @@ flowchart LR
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -142,16 +142,16 @@ flowchart LR
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Méthodo de test**
+> [!tip] **Méthodo de test**
 > - Chercher tous les `target="_blank"` publiables : forums, commentaires, profiles, avatars, liens
 >   générés à partir d'entrées utilisateur.
 > - Vérifier le contenu de l'attribut `rel` : absence de `noopener` **et** de `noreferrer`.
 > - Hoster la page attaquante et tester `window.opener` dans la console avant de conclure.
 > - Confirmer par un **callback** (requête au collaborator) quand la victime se reconnecte.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les navigateurs récents (`noopener` par défaut) **bloquent** l'attaque — la vuln dépend du navigateur de la victime.
 > - `rel="noreferrer"` seul est **suffisant** pour bloquer (il implique noopener).
 > - Le vol de **session** (cookie) est rare : c'est surtout un **phishing des credentials**.
@@ -160,11 +160,11 @@ flowchart LR
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Open Redirect|↩️ Open Redirect]]
-- [[Clickjacking|🖱️ Clickjacking]]
-- [[CSS Injection|🎨 CSS Injection]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Tabnabbing](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Tabnabbing/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Open Redirect|↩Open Redirect]]
+- [[Clickjacking| Clickjacking]]
+- [[CSS Injection| CSS Injection]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Tabnabbing](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Tabnabbing/README.md)

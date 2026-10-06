@@ -69,8 +69,8 @@ export const socialAccounts: SocialAccount[] = [
     cta: 'OPEN PROFILE →',
     icon: 'tiktok',
     bio: [
-      'Ici on parle de : Cybersécurité 😎',
-      'My website 🌐 : guns.lol/foxhack',
+      'Ici on parle de : Cybersécurité',
+      'My website : guns.lol/foxhack',
       'Insta : instagram.com/foxhxck',
     ],
     figures: [

@@ -1,4 +1,4 @@
-import type { VaultManifest, VaultNote } from './types'
+import type { VaultHeading, VaultManifest, VaultNote } from './types'
 
 export const normalizeSearch = (value: string) =>
   value
@@ -17,6 +17,17 @@ export const headingSlug = (value: string) =>
     .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
+
+/** Reconstruit les ancres d'un plan avec exactement la règle du générateur. */
+export function expandHeadings(entries: [number, string][] = []): VaultHeading[] {
+  const seen = new Map<string, number>()
+  return entries.map(([depth, text]) => {
+    const base = headingSlug(text) || 'section'
+    const occurrence = seen.get(base) ?? 0
+    seen.set(base, occurrence + 1)
+    return { depth, text, slug: occurrence ? `${base}-${occurrence}` : base }
+  })
+}
 
 export const encodeVaultPath = (value: string) =>
   value

@@ -1,7 +1,7 @@
 ---
 title: "Outil - dnsx"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/dnsx/usage
 ---
 
-# 🧭 dnsx — Probe DNS massif de l'écosystème projectdiscovery
+# dnsx — Probe DNS massif de l'écosystème projectdiscovery
 
 > [!info] **En 1 phrase**
 > dnsx interroge en masse tous les types d'enregistrements DNS et valide les sous-domaines avant de les envoyer vers httpx et naabu.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.projectdiscovery.io/tools/dnsx/usage
 
 ---
 
-## 🎯 Concept
+## Concept
 
 dnsx est le probeur DNS de projectdiscovery, l'équivalent DNS de httpx. Il prend une liste de noms de domaine et exécute des requêtes DNS pour valider leur existence et collecter les enregistrements : A, AAAA, CNAME, MX, NS, TXT, SOA, PTR. En mode bruteforce, il teste une wordlist de sous-domaines. Ses usages : valider les sorties de subfinder/chaos, détecter les CNAME orphelins (candidats au subdomain takeover), cartographier l'infrastructure e-mail (MX, SPF via TXT), et servir de passerelle vers naabu/httpx.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -139,14 +139,14 @@ go build -o dnsx cmd/dnsx/main.go
 sudo mv dnsx /usr/local/bin/
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Go 1.21+ (v1.3.0 : Go 1.25 pour le build) pour la compilation.
 > - Les requêtes DNS sortantes vers les résolveurs publics sont soumises à leurs quotas : utiliser `-rl` et plusieurs résolveurs.
 > - En entreprise, le trafic DNS sortant peut être bloqué par un DNS proxy : configurer `-r` avec les résolveurs autorisés.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout passe par les options CLI. Les valeurs les plus importantes :
 
@@ -164,7 +164,7 @@ Pas de fichier de configuration : tout passe par les options CLI. Les valeurs le
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Moteur de requêtes** : dnsx utilise la bibliothèque `gologger` (logs), `retryablehttp` et un pool de résolveurs (via `dnsclient`, basé sur `miekg/dns` en mode UDP/TCP). Chaque hôte est interrogé en parallèle avec un nombre de threads contrôlé.
 - **Bruteforce** : en mode `-d DOMAIN -w wordlist`, le client génère les paires nom+domaine et les résout via le même pool.
@@ -174,7 +174,7 @@ Pas de fichier de configuration : tout passe par les options CLI. Les valeurs le
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -207,7 +207,7 @@ dnsx -d example.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -237,7 +237,7 @@ dnsx -d example.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -282,7 +282,7 @@ dnsx -l hosts.txt -a -dumpr raw.log -retry 3 -rl 100
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Valider les sous-domaines énumérés**.
    ```bash
@@ -307,7 +307,7 @@ dnsx -l hosts.txt -a -dumpr raw.log -retry 3 -rl 100
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : chasse aux CNAME orphelins (takeover DNS)
 
@@ -340,7 +340,7 @@ dnsx -d example.com -w subnames.txt -a -resp -silent | grep -v "wildcard-test"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -352,7 +352,7 @@ dnsx -d example.com -w subnames.txt -a -resp -silent | grep -v "wildcard-test"
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -366,7 +366,7 @@ dnsx -d example.com -w subnames.txt -a -resp -silent | grep -v "wildcard-test"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -429,7 +429,7 @@ rule Dnsx_Binary_Detection {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline complet subfinder → dnsx → httpx
@@ -461,7 +461,7 @@ print("Hôtes valides :", live)
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte (nom, ou nom+réponse selon `-resp`/`-resp-only`) ou JSON (`-json`).
 
@@ -490,16 +490,16 @@ for line in out.splitlines():
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - subfinder|subfinder]] — source amont des sous-domaines
 - [[Outil - chaos|chaos]] — dataset historique à valider
 - [[Outil - httpx|httpx]] — probing HTTP des hôtes validés
 - [[Outil - naabu|naabu]] — scan de ports des hôtes vivants
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités
 - [[Outil - Amass|Amass]] — corrélation et base de données
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 subfinder / chaos → dnsx → httpx / naabu → nuclei
@@ -507,7 +507,7 @@ subfinder / chaos → dnsx → httpx / naabu → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -521,7 +521,7 @@ subfinder / chaos → dnsx → httpx / naabu → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Écrit en Go : pool de threads et sockets concurrentes → milliers de requêtes/seconde selon le réseau.
 - `-rl` (rate limit) et `-t` (threads) permettent de doser la charge et de respecter les quotas des résolveurs.
@@ -533,7 +533,7 @@ subfinder / chaos → dnsx → httpx / naabu → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -563,7 +563,7 @@ subfinder / chaos → dnsx → httpx / naabu → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Volumétrie** : un bruteforce agressif peut faire bannir l'IP source chez les résolveurs publics et générer des alertes chez le SOC de la cible.
 - **Données passives vs actives** : la validation DNS est active (visible par le résolveur) mais ne contacte pas directement les serveurs de la cible.
@@ -572,7 +572,7 @@ subfinder / chaos → dnsx → httpx / naabu → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Sans `-resp`, dnsx ne renvoie que les noms qui répondent : le mode par défaut doit être compris avant tout usage.
 - Les **wildcards** génèrent des faux positifs en bruteforce : à filtrer systématiquement.
@@ -582,7 +582,7 @@ subfinder / chaos → dnsx → httpx / naabu → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Valider et résoudre en IPv4
@@ -607,7 +607,7 @@ dnsx -l hosts.txt -a -cname -json -o dns.json
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -620,7 +620,7 @@ dnsx -l hosts.txt -a -cname -json -o dns.json
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -631,16 +631,16 @@ dnsx -l hosts.txt -a -cname -json -o dns.json
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `-resp-only` donne des sorties propres et directement exploitables en pipeline.
 > - Utilise `-rl` et `-t` pour respecter les quotas des résolveurs publics.
 > - `-cname -resp` est l'étape clé avant toute vérification de subdomain takeover.
 > - Utilise `-retry 2` et un timeout raisonnable sur les réseaux instables pour éviter les faux négatifs.
 > - Prépare toujours une liste de résolveurs (`-rL`) pour les gros volumes.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `-resp`, dnsx ne renvoie que les noms qui répondent : vérifie le mode voulu.
 > - Les wildcards (`*.example.com`) génèrent des faux positifs en bruteforce : filtre.
 > - Le bruteforce sans rate limit peut faire bannir ton IP chez les gros résolveurs.
@@ -648,7 +648,7 @@ dnsx -l hosts.txt -a -cname -json -o dns.json
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -669,4 +669,4 @@ dnsx -l hosts.txt -a -cname -json -o dns.json
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - subfinder|subfinder]] · [[Outil - naabu|naabu]] · [[Outil - httpx|httpx]]
+**Liens :** [[Tools| Outils]] · [[Outil - subfinder|subfinder]] · [[Outil - naabu|naabu]] · [[Outil - httpx|httpx]]

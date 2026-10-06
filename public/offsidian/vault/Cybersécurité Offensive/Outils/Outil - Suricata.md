@@ -1,11 +1,11 @@
 ---
 title: "Outil - Suricata"
 type: outil
-categorie: 🛡️ IDS / SIEM / EDR
+categorie: IDS / SIEM / EDR
 tags:
   - cyber
   - outil
-  - 🛡️ IDS / SIEM / EDR
+  - IDS / SIEM / EDR
 statut: publie
 version: 8.0.6 (2026) — série 7.x en fin de vie ; suricata-update 1.3.8
 licence: GPLv2 (moteur et règles ET Open)
@@ -16,7 +16,7 @@ site: https://suricata.io
 doc: https://docs.suricata.io
 ---
 
-# 🛡️ Suricata — Défense & SIEM
+# Suricata — Défense & SIEM
 
 > [!info] **En 1 phrase**
 > Suricata est l'IDS/IPS **multi-thread** qui remplace Snort : mêmes règles (compatibles),
@@ -25,13 +25,13 @@ doc: https://docs.suricata.io
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Suricata |
 | Description | Moteur IDS/IPS réseau multi-thread, compatible règles Snort, avec inspection de protocoles et sortie JSON (eve.json) |
-| Catégorie | 🛡️ IDS / SIEM / EDR |
+| Catégorie | IDS / SIEM / EDR |
 | Sous-catégorie | NIDS / NIPS / Signature-based detection + protocol inspection |
 | Fonction principale | Détecter (alert), bloquer (drop) et journaliser le trafic réseau avec des règles et une analyse applicative |
 | Type d'outil | Daemon réseau + CLI (suricata, suricata-update) |
@@ -52,7 +52,7 @@ doc: https://docs.suricata.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Suricata est un moteur IDS/IPS **multi-threadé** (contrairement à Snort, historiquement mono-thread) qui exploite tous les cœurs CPU : il tient plus de trafic sur le même matériel. Il accepte les règles **au format Snort** mais apporte en plus une inspection de protocoles (HTTP, TLS, DNS, SMB, SSH...) et une sortie **JSON structurée** (`eve.json`) consommable par les SIEM (Elastic, Splunk, Graylog). En mode **IPS**, il s'interface au kernel via **AF_PACKET** (inline) ou **NFQUEUE** (iptables) pour réellement bloquer. Moins médiatisé que Snort, il est pourtant devenu le standard des appliances modernes (Security Onion, pfSense, Wazuh, distributions de détection).
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -131,7 +131,7 @@ git clone https://github.com/OISF/suricata.git && cd suricata
 ./autogen.sh && ./configure --enable-af-packet --enable-nfqueue && make -j$(nproc) && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le paquet Debian officiel peut être plus ancien que la 8.x : utiliser le PPA OISF pour les dernières versions.
 > - La capture AF_PACKET nécessite des privilèges root ; en IPS, `iptables`/`nfqueue` ou interfaces en inline.
 > - `suricata-update` doit être exécuté après l'installation pour avoir des règles : sans règles, aucun alert.
@@ -139,7 +139,7 @@ git clone https://github.com/OISF/suricata.git && cd suricata
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -160,7 +160,7 @@ git clone https://github.com/OISF/suricata.git && cd suricata
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -176,7 +176,7 @@ Flux type : paquet entrant → capture AF_PACKET → décodeurs → parsers appl
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -213,7 +213,7 @@ tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="stats") | .stats'
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ tail -f /var/log/suricata/eve.json | jq 'select(.event_type=="stats") | .stats'
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -258,7 +258,7 @@ jq 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.json 
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Configurer** `/etc/suricata/suricata.yaml` : définir `HOME_NET` (`10.10.20.0/24`) et vérifier la sortie `eve-log` (activée par défaut sur `/var/log/suricata/eve.json`).
 2. **Mettre à jour les règles** : `sudo suricata-update` puis `sudo systemctl restart suricata`.
@@ -272,7 +272,7 @@ jq 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.json 
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : détection d'exfiltration DNS avec règle maison
 
@@ -325,7 +325,7 @@ jq 'select(.event_type=="fileinfo") | {sha256:.fileinfo.sha256, size:.fileinfo.s
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -338,7 +338,7 @@ jq 'select(.event_type=="fileinfo") | {sha256:.fileinfo.sha256, size:.fileinfo.s
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -354,7 +354,7 @@ jq 'select(.event_type=="fileinfo") | {sha256:.fileinfo.sha256, size:.fileinfo.s
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -393,7 +393,7 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET 4444 (msg:"Possible reverse shell"; flo
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — surveillance des drops de paquets (santé du capteur)
@@ -422,7 +422,7 @@ logrotate -f /etc/logrotate.d/suricata
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 `eve.json` est un fichier NDJSON (Newline-Delimited JSON) : **une ligne = un événement** avec `timestamp`, `event_type`, `src_ip`, `dst_ip`, `src_port`, `dst_port`, `proto`, plus le contenu propre au type (`alert`, `dns`, `http`, `tls`, `flow`, `fileinfo`, `stats`).
 
@@ -451,7 +451,7 @@ print(c.most_common(10))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Suricata → eve.json → Filebeat → Elastic (logs-suricata.eve-*) / Graylog / Splunk
@@ -460,7 +460,7 @@ Suricata + Zeek → métadonnées et alertes complémentaires
 Suricata → suricata-update (ET Open) + règles maison
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Snort]] — moteur historique, mêmes règles, mono-thread
 - [[Outil - Zeek]] — métadonnées réseau complémentaires aux alertes
 - [[Outil - Elastic]] — eve.json ingéré et corrélé (module Suricata de Filebeat)
@@ -472,7 +472,7 @@ Suricata → suricata-update (ET Open) + règles maison
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -486,7 +486,7 @@ Suricata → suricata-update (ET Open) + règles maison
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Multi-threading natif** : un worker par cœur ; aligner `cpu-affinity` et le nombre de workers sur la charge (RSS/`auto`).
 - AF_PACKET avec **ring-size** adapté (2048-4096) réduit les drops de paquets sous charge.
@@ -500,7 +500,7 @@ Suricata → suricata-update (ET Open) + règles maison
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -536,7 +536,7 @@ Suricata → suricata-update (ET Open) + règles maison
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : Suricata tourne en root pour la capture, puis peut drop vers un utilisateur dédié (`--user`). Ne pas exposer les logs sans contrôle.
 - **Config réseau** : en IPS, une règle `drop` mal ciblée coupe la production : déployer en `alert` d'abord, passer en `drop` progressivement, exclure le trafic d'administration.
@@ -547,7 +547,7 @@ Suricata → suricata-update (ET Open) + règles maison
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Signature-based** : détecte ce que les règles décrivent, pas les 0-day ni les évassions de signatures.
 - **Trafic chiffré** : le TLS légitime n'est pas inspecté sans interception : une partie du C2 passe inaperçue.
@@ -558,7 +558,7 @@ Suricata → suricata-update (ET Open) + règles maison
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Test config + règles
@@ -590,7 +590,7 @@ jq -r 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.js
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -603,7 +603,7 @@ jq -r 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.js
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -616,29 +616,29 @@ jq -r 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.js
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **eve.json = langage SIEM universel**
+> [!tip] **eve.json = langage SIEM universel**
 > Écris les alertes en **JSON** (et non en syslog texte) : `jq`, `logstash`, `filebeat` et `splunk` les ingèrent tels quels. Un vrai pipeline de détection exploite la structure, pas des lignes de texte.
 
-> [!tip] 💡 **Teste chaque règle sur un pcap**
+> [!tip] **Teste chaque règle sur un pcap**
 > `suricata -r <pcap>` avec des captures d'attaque connues : valide la règle hors-ligne avant production, mesure les faux positifs.
 
-> [!tip] 💡 **Exclut le trafic d'administration en IPS**
+> [!tip] **Exclut le trafic d'administration en IPS**
 > NFQUEUE ne doit jamais inspecter le trafic qui te permet de t'administrer : règle ACCEPT en tête de FORWARD, sinon tu te coupes l'accès.
 
-> [!warning] ⚠️ **Piège** : compatibilité ≠ identité.
+> [!warning] **Piège** : compatibilité ≠ identité.
 > Une règle Snort s'exécute presque toujours sous Suricata, mais les **options avancées** (`flowbits`, `content` spécifiques) peuvent avoir des différences. Valide avec `suricata -T` et des pcaps de test avant migration.
 
-> [!warning] ⚠️ **Piège** : sans règles à jour, aucun alert.
+> [!warning] **Piège** : sans règles à jour, aucun alert.
 > `suricata-update` doit être lancé régulièrement : des règles obsolètes = faux négatifs massifs (nouveaux exploits).
 
-> [!warning] ⚠️ **Piège** : eve.json est volumineux.
+> [!warning] **Piège** : eve.json est volumineux.
 > Tous les types d'événements sont journalisés par défaut : désactive les types inutiles (`eve-log.types`) pour limiter le stockage et l'ingestion SIEM.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -662,4 +662,4 @@ jq -r 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.js
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🕸️ Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting / Tunneling]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS Poisoning]] · [[Outil - Snort]] · [[Outil - Zeek]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Splunk]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting / Tunneling]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]] · [[Outil - Snort]] · [[Outil - Zeek]] · [[Outil - Elastic]] · [[Outil - Graylog]] · [[Outil - Splunk]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏠 Virtual Hosts — énumération & exploitation
+# Virtual Hosts — énumération & exploitation
 
 > [!info] **En 1 phrase**
 > Un **vhost** = plusieurs sites hébergés sur une **même IP**, différenciés uniquement par le **header HTTP `Host`**
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -39,7 +39,7 @@ flowchart LR
     F --> H[200 OK<br>sans auth !]
 ```
 
-> [!info] 💡 **Pourquoi c'est important**
+> [!info] **Pourquoi c'est important**
 > Apache/Nginx/IIS servent le **vhost par défaut** quand aucun `Host` ne correspond ou si le header est absent.
 > Tout ce qui n'est pas déclaré comme vhost principal est invisible pour un scanner classique : apps de dev,
 > staging, sous-domaines internes, admin panels. En bug bounty, ce sont souvent des **endpoints hors-scope**
@@ -50,12 +50,12 @@ GET / HTTP/1.1
 Host: site-b.com
 ```
 
-> [!tip] 💡 Si le serveur ne connaît pas le `Host`, il retombe souvent sur le premier vhost configuré
+> [!tip] Si le serveur ne connaît pas le `Host`, il retombe souvent sur le premier vhost configuré
 > (site par défaut) : comparer systématiquement avec cette **réponse de référence**.
 
 ---
 
-## 🕵️ Énumération
+## Énumération
 
 ### ffuf (le standard)
 
@@ -64,7 +64,7 @@ Host: site-b.com
 ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt \
      -u http://10.10.10.10/ \
      -H "Host: FUZZ.target.com" \
-     -fs 12345                      # 🔥 filtre la TAILLE de la réponse par défaut
+     -fs 12345                      # filtre la TAILLE de la réponse par défaut
 
 # Match par statut / filtre par statut
 ffuf -w list.txt -u http://IP/ -H "Host: FUZZ.target.com" -mc 200,301,302
@@ -77,7 +77,7 @@ ffuf -w vhosts.txt -u http://IP/ -H "Host: FUZZ" -fs 12345
 ffuf -w list.txt -u https://IP/ -H "Host: FUZZ.target.com" -fs 12345,678 -t 20 -p 0.1
 ```
 
-> [!warning] ⚠️ **`-fs` est la clé** : sans filtre, tous les vhosts inexistants matchent la page par défaut.
+> [!warning] `-fs` est la clé** : sans filtre, tous les vhosts inexistants matchent la page par défaut.
 > On filtre d'abord la taille de la réponse de référence (`curl -s http://IP/ | wc -c`) puis on la met dans `-fs`.
 
 ### wfuzz
@@ -114,7 +114,7 @@ curl -s http://10.10.10.10/ | wc -c
 curl -s -H "Host: admin.target.com" http://10.10.10.10/ | wc -c
 ```
 
-### 🔎 Sources de candidats
+### Sources de candidats
 
 | Source | Commande / Exemple |
 |---|---|
@@ -125,11 +125,11 @@ curl -s -H "Host: admin.target.com" http://10.10.10.10/ | wc -c
 | Historique DNS (SecurityTrails, viewdns.info) | chercher les **anciennes IP** d'un domaine → vhosts cachés |
 | Googlé / Github (code search) | `site:target.com intranet`, dumps de configs |
 
-> [!tip] 💡 **DNS history** : si un domaine pointait vers une IP donnée dans le passé et que l'IP héberge
+> [!tip] **DNS history** : si un domaine pointait vers une IP donnée dans le passé et que l'IP héberge
 > aujourd'hui d'autres vhosts, "spray" le nom de domaine contre ces IP → révèle parfois le **vhost d'origine**
 > (bypass Cloudflare/WAF en touchant l'origin server directement).
 
-### 📏 Comparaison des réponses
+### Comparaison des réponses
 
 ```bash
 # Taille de chaque réponse (le signal n°1)
@@ -146,7 +146,7 @@ curl -sI -H "Host: admin.target.com" http://IP/
 
 ---
 
-## 🖐️ Fingerprinting
+## Fingerprinting
 
 > Un vhost trouvé doit être **confirmé** : les réponses différentes ne viennent pas d'une coïncidence.
 
@@ -166,13 +166,13 @@ curl -s -H "Host: gjhkqw9zq.target.com" http://IP/ | wc -c
 curl -s -H "Host: admin.target.com"      http://IP/ | wc -c
 ```
 
-> [!warning] ⚠️ **Piège du catch-all** : certains serveurs servent le même contenu pour TOUT hostname
+> [!warning] **Piège du catch-all** : certains serveurs servent le même contenu pour TOUT hostname
 > (vhost wildcard `*`). Un vhost "trouvé" doit se démarquer **clairement** de la réponse au hostname aléatoire.
 > Compare toujours avec un **canary** (nom aléatoire), pas seulement avec la réponse par défaut.
 
 ---
 
-## 💥 Exploitation
+## Exploitation
 
 Une fois un vhost confirmé, tout le contenu devient accessible :
 
@@ -209,12 +209,12 @@ ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories.txt \
 curl -H "Host: internal.target.com" http://IP/api/v1/users
 ```
 
-> [!warning] ⚠️ Toujours vérifier la **scope** du bug bounty avant d'exploiter un vhost : un vhost caché
+> [!warning] Toujours vérifier la **scope** du bug bounty avant d'exploiter un vhost : un vhost caché
 > peut correspondre à un domaine **hors-scope** même s'il est servi par la même IP.
 
 ---
 
-## 🌐 DNS vs VHOST — ne pas confondre
+## DNS vs VHOST — ne pas confondre
 
 | | Sous-domaine (DNS) | Virtual Host (vhost) |
 |---|---|---|
@@ -227,13 +227,13 @@ curl -H "Host: internal.target.com" http://IP/api/v1/users
 # Vérifier la résolution DNS réelle
 dig A target.com +short          # → 1.2.3.4
 dig A admin.target.com +short    # → 1.2.3.4  (même IP → candidat vhost)
-dig A inexistant.target.com +short  # → 1.2.3.4  ⚠️ WILDCARD !
+dig A inexistant.target.com +short  # → 1.2.3.4  WILDCARD !
 
 # Le wildcard DNS résout TOUT sous-domaine vers la même IP
 # → l'énumération DNS classique devient inutile, il faut le fuzzing de vhosts
 ```
 
-> [!tip] 💡 **Wildcard DNS** : si `*.target.com` → `1.2.3.4`, tous les sous-domaines "existent" côté DNS.
+> [!tip] **Wildcard DNS** : si `*.target.com` → `1.2.3.4`, tous les sous-domaines "existent" côté DNS.
 > On ne peut plus différencier par résolution : la seule façon de trouver les vhosts = fuzzer le header `Host`.
 
 ```txt
@@ -245,7 +245,7 @@ Résolution pour tester un vhost qui n'a pas de DNS public :
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage | Exemple |
 |---|---|---|
@@ -266,7 +266,7 @@ nmap -p 80,443 --script http-vhosts \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Contre-mesure | Détail |
 |---|---|
@@ -280,18 +280,18 @@ nmap -p 80,443 --script http-vhosts \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Subdomain ≠ vhost**
+> [!tip] **Subdomain ≠ vhost**
 > Un sous-domaine est un enregistrement **DNS** ; un vhost est une règle **serveur web**. Les deux peuvent
 > coexister sans se recouper : un sous-domaine peut pointer ailleurs, un vhost peut ne jamais exister dans le DNS.
 > Toujours tester les **deux** (recon DNS + fuzzing Host).
 
-> [!tip] 💡 **Statut + taille = le signal**
+> [!tip] **Statut + taille = le signal**
 > Comparer **code statut ET Content-Length** entre la réponse par défaut et chaque candidat.
 > Une longueur identique au défaut = mauvais match. Une différence + un 200 = probablement bon.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Wildcard DNS** : si tous les hostnames résolvent, l'énumération DNS ne sert à rien → fuzzer le Host.
 > - **Catch-all serveur** : vhost `*` qui sert le même contenu partout → comparer avec un **canary aléatoire**.
 > - **www** : tester `www.target.com` et `target.com` séparément, ce sont parfois **deux vhosts différents**.
@@ -302,11 +302,11 @@ nmap -p 80,443 --script http-vhosts \
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[01 - Reconnaissance|🔎 Reconnaissance]]
-- [[Open Redirect|↩️ Open Redirect]]
-- [[IDOR|🎯 IDOR]]
-- [[SSRF|🌐 SSRF]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Virtual Hosts](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Virtual%20Hosts/README.md)
+- [[01 - Reconnaissance| Reconnaissance]]
+- [[Open Redirect|↩Open Redirect]]
+- [[IDOR| IDOR]]
+- [[SSRF| SSRF]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Virtual Hosts](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Virtual%20Hosts/README.md)

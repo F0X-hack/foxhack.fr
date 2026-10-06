@@ -1,7 +1,7 @@
 ---
 title: "Outil - grype"
 type: outil
-categorie: 🔒 Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://github.com/anchore/grype
 doc: https://grype.anchore.io/
 ---
 
-# 🐛 grype - Le scanner de vulnérabilités d'images (Anchore)
+# grype - Le scanner de vulnérabilités d'images (Anchore)
 
 > [!info] **En 1 phrase**
 > grype analyse une image conteneur ou un filesystem pour lister les CVE des packages, couplé à syft pour la génération de SBOM : la réponse rapide et légère à trivy.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | grype |
 | Description | Scanner de vulnérabilités pour images conteneurs et filesystems : détecte les packages, croise avec une base de CVE (NVD, GitHub, distros) et restitue sévérités et correctifs |
-| Catégorie | 🔒 Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | DevSecOps / Scanner de vulnérabilités / Analyse d'images |
 | Type d'outil | CLI Go (binaire unique) |
 | Licence | Apache-2.0 |
@@ -50,7 +50,7 @@ doc: https://grype.anchore.io/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 grype utilise **syft** (intégré ou en commande externe) pour générer un SBOM du contenu d'une image ou d'un filesystem, puis croise chaque package (nom + version + écosystème) avec sa **base de vulnérabilités** locale (`~/.cache/grype`). Le résultat : une liste de CVE avec sévérité (CRITICAL/HIGH/MEDIUM/LOW), version installée, version corrigée et écosystème concerné.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 grype s'installe en binaire unique, via curl, Homebrew, Docker ou les sources.
 
@@ -124,14 +124,14 @@ go build .
 ./grype version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le premier scan télécharge la base de vulnérabilités ; `--offline` exige une base déjà présente.
 > - Pour les images dans un registre privé, utiliser `registry:user:pass@image` ou la config.
 > - `--only-fixed` / `--only-notfixed` pour filtrer selon la présence d'un correctif.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 grype se configure par flags, par variables d'environnement `GRYPE_*` ou par le fichier `~/.grype.yaml`.
 
@@ -149,7 +149,7 @@ grype se configure par flags, par variables d'environnement `GRYPE_*` ou par le 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 grype est un binaire Go organisé en pipeline :
 
@@ -171,7 +171,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -199,7 +199,7 @@ grype sbom:./sbom.cdx.json --output sarif
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -219,7 +219,7 @@ grype sbom:./sbom.cdx.json --output sarif
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -264,7 +264,7 @@ grype registry.example/example-api:1.2.3 --template '{{range .Matches}}{{.Vulner
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer l'image cible** - depuis le registre, le cache local ou un export en post-exploitation.
    ```bash
@@ -286,7 +286,7 @@ grype registry.example/example-api:1.2.3 --template '{{range .Matches}}{{.Vulner
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : CVE critique dans un conteneur récupéré en post-exploitation
 
@@ -318,7 +318,7 @@ grype registry.example/example-api:1.2.3 --output cyclonedx -f sbom.cdx.json
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -331,7 +331,7 @@ grype registry.example/example-api:1.2.3 --output cyclonedx -f sbom.cdx.json
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -345,7 +345,7 @@ grype registry.example/example-api:1.2.3 --output cyclonedx -f sbom.cdx.json
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -381,7 +381,7 @@ level: low
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash - scan de toutes les images d'un registre avec gate
@@ -409,7 +409,7 @@ for match in data.get("matches", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le JSON grype contient `matches[]` avec `vulnerability` (id, severity, fix, namespace) et `artifact` (name, version, type, locations).
 
@@ -425,9 +425,9 @@ grype nginx:latest --output json | \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🛠 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - syft|syft]] - génération de SBOM (couple officiel Anchore)
 - [[Outil - trivy|trivy]] - alternative tout-en-un (vulns + secrets + config)
 - [[Outil - kube-bench|kube-bench]] - audit de posture Kubernetes
@@ -441,7 +441,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -453,7 +453,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Très rapide** : scan d'une image moyenne en quelques secondes après téléchargement de la base.
 - **Base locale** : téléchargée une fois puis mise en cache ; `--offline` pour les environnements isolés.
@@ -462,7 +462,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -486,7 +486,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : analyse statique de conteneurs ; sur des artefacts autorisés.
 - **Données** : les rapports listent packages et CVE ; contiennent des infos d'infrastructure.
@@ -496,7 +496,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Vulnérabilités uniquement** : pas de scan de secrets ni de misconfigs intégré (contrairement à trivy).
 - **Statique** : ne confirme pas l'exploitabilité dans le contexte d'exécution.
@@ -506,7 +506,7 @@ syft (SBOM) -> grype (CVE) -> kube-bench (posture) -> kubectl (exploitation)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan d'une image
@@ -538,7 +538,7 @@ grype version
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -551,7 +551,7 @@ grype version
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -563,15 +563,15 @@ grype version
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Combine `--only-fixed --fail-on high` pour une liste d'actions immédiates.
 > - Utilise syft pour générer le SBOM et grype pour le rescan : rapide et cohérent.
 > - Sur un conteneur récupéré, scanne d'abord `--output json` pour garder la preuve structurée.
 > - Filtre les findings par écosystème (`jq`) pour isoler les composants du runtime.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans base à jour, les CVE récentes manquent : synchroniser régulièrement.
 > - Une CVE listée n'implique pas une exploitation possible : corréler avec l'exposition réelle.
 > - `--scope squashed` peut masquer des vulnérabilités présentes dans une couche intermédiaire.
@@ -579,7 +579,7 @@ grype version
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -602,4 +602,4 @@ grype version
 
 ---
 
-➡️ **Liens :** [[Tools|🛠 Outils]] · [[Outil - syft|syft]] · [[Outil - trivy|trivy]] · [[Outil - kube-bench|kube-bench]]
+**Liens :** [[Tools| Outils]] · [[Outil - syft|syft]] · [[Outil - trivy|trivy]] · [[Outil - kube-bench|kube-bench]]

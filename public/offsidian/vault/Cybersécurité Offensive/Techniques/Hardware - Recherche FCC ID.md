@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🛰️ Recherche FCC ID
+# Recherche FCC ID
 
 > [!info] **En 1 phrase**
 > Le **FCC ID** gravé sur tout device sans fil vendu aux USA est la **clé d'accès gratuite
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Device sans fil"] --> B["Étiquette FCC ID"]
@@ -47,7 +47,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le **Federal Communications Commission (FCC)** impose à tout fabricant vendant des dispositifs sans fil aux États-Unis de soumettre des documents détaillés : photos internes du PCB, manuels utilisateur, rapports de test RF, et schémas d'application. Ces documents sont **publics** et indexés par FCC ID. Un pentester peut les exploiter pour identifier les puces, repérer les interfaces de debug (UART, JTAG, SPI), trouver les mots de passe par défaut, et planifier une attaque — **sans jamais toucher au device**.
 
@@ -65,7 +65,7 @@ flowchart TB
     style G fill:#ffcdd2
 ```
 
-> [!info] 💡 **Ce qu'on peut obtenir sans rien démonter**
+> [!info] **Ce qu'on peut obtenir sans rien démonter**
 > - Les **photos internes** du PCB → identifier les puces, repérer l'UART/JTAG/SPI avant achat.
 > - Le **user manual** → mots de passe par défaut, interface de debug, API cachées.
 > - Les **rapports de test** → fréquences, puissance, certifications, parfois des infos hardware.
@@ -73,7 +73,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Qu'est-ce qu'un FCC ID
 
@@ -125,7 +125,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -151,7 +151,7 @@ flowchart LR
 
 ---
 
-## 📝 Formats et structure du FCC ID
+## Formats et structure du FCC ID
 
 ### Grantee Code
 
@@ -178,7 +178,7 @@ Certains devices (smartphones, tablets) n'ont pas d'étiquette physique : le FCC
 
 ---
 
-## 🌐 Recherche dans la base FCC ID
+## Recherche dans la base FCC ID
 
 ### fccid.io — Outil principal
 
@@ -231,7 +231,7 @@ Résultats :
 
 ---
 
-## 🔍 Techniques de recherche avancées
+## Techniques de recherche avancées
 
 ### Recherche par grantee code
 
@@ -332,7 +332,7 @@ if __name__ == "__main__":
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Outils de recherche
 
@@ -357,9 +357,9 @@ if __name__ == "__main__":
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Trouver le FCC ID d'un device
+### Débutant — Trouver le FCC ID d'un device
 
 ```bash
 # Méthode 1 : Étiquette physique
@@ -377,7 +377,7 @@ if __name__ == "__main__":
 # https://fccid.io/search?q=<MODELE>
 ```
 
-### 🟡 Intermédiaire — Analyse complète d'un device via FCC
+### Intermédiaire — Analyse complète d'un device via FCC
 
 ```bash
 # Étape 1 : Trouver le FCC ID (sur l'étiquette ou via recherche)
@@ -398,7 +398,7 @@ curl -s "https://fccid.io/$FCC_ID" | grep -i "internal\|manual\|test"
 # → Chercher les mots de passe par défaut, les modes de debug
 ```
 
-### 🔴 Avancé — Script d'exploration automatique
+### Avancé — Script d'exploration automatique
 
 ```python
 #!/usr/bin/env python3
@@ -458,7 +458,7 @@ if __name__ == "__main__":
         batch_analysis(ids)
 ```
 
-### ⚫ Expert — Cross-référencement avec d'autres bases
+### Expert — Cross-référencement avec d'autres bases
 
 ```python
 #!/usr/bin/env python3
@@ -509,7 +509,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -560,7 +560,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Audit d'un routeur via FCC ID (sans le posséder)
 
@@ -570,7 +570,7 @@ flowchart TB
 | **Matériel** | PC, accès Internet |
 | **Étapes** | 1. Trouver FCC ID 2. Photos internes → identifier SoC 3. Manual → creds par défaut 4. Test Report → fréquences 5. Plan d'attaque |
 | **Résultat** | Liste de vulnérabilités potentielles sans toucher au device |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -588,11 +588,11 @@ flowchart LR
 | **Matériel** | PC, accès Internet |
 | **Étapes** | 1. Trouver grantee code 2. Lister tous les FCC IDs du fabricant 3. Comparer les SoC 4. Identifier les plateformes communes |
 | **Résultat** | Liste de devices avec la même vulnérabilité |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -610,7 +610,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -642,7 +642,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -677,7 +677,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -741,7 +741,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -775,12 +775,12 @@ curl -s "https://fccid.io/<FCC_ID>" | grep -i "test report" | head -5
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Identification de puces|🔬 Identification de puces]] — Identifier les composants sur les photos
-- [[Hardware - Mots de passe par défaut IoT|🔑 Creds par défaut]] — Utiliser les creds trouvés dans le manual
-- [[Hardware - SDR|📡 SDR]] — Analyser les fréquences du device
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Identification de puces| Identification de puces]] — Identifier les composants sur les photos
+- [[Hardware - Mots de passe par défaut IoT| Creds par défaut]] — Utiliser les creds trouvés dans le manual
+- [[Hardware - SDR| SDR]] — Analyser les fréquences du device
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -797,7 +797,7 @@ curl -s "https://fccid.io/<FCC_ID>" | grep -i "test report" | head -5
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -817,7 +817,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -837,7 +837,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -878,7 +878,7 @@ ping -c 3 fccid.io
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -900,7 +900,7 @@ ping -c 3 fccid.io
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -922,7 +922,7 @@ ping -c 3 fccid.io
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -952,7 +952,7 @@ ping -c 3 fccid.io
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -966,7 +966,7 @@ ping -c 3 fccid.io
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -986,7 +986,7 @@ ping -c 3 fccid.io
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le **Grantee Code** permet de lister **tous les produits** d'un fabricant → repérer la même plateforme réutilisée sur plusieurs devices (une vuln = N devices).
 - Vérifie la **date** des photos/test report : un vieux rapport peut ne pas refléter le hardware final.
@@ -1005,9 +1005,9 @@ ping -c 3 fccid.io
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — FCC ID](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/enumeration/fcc-id.md)
 > - [FCC OET Equipment Authorization](https://www.fcc.gov/oet/ea/fccid)
 > - [fccid.io — FCC ID Search](https://fccid.io)
@@ -1037,4 +1037,4 @@ ping -c 3 fccid.io
 | The Hardware Hacking Handbook | Jasper van Woudenberg | 2021 |
 | Practical IoT Hacking | Fotios Chantzis | 2021 |
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Identification de puces|🔬 Identification de puces]] · [[Hardware - Mots de passe par défaut IoT|🔑 Creds par défaut]] · [[Hardware - SDR|📡 SDR]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Identification de puces| Identification de puces]] · [[Hardware - Mots de passe par défaut IoT| Creds par défaut]] · [[Hardware - SDR| SDR]]

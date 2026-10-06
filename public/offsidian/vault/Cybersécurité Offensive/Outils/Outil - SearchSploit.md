@@ -1,11 +1,11 @@
 ---
 title: "Outil - SearchSploit"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: "— (dépôt continu, manuel v4) — À vérifier"
 licence: GPLv2+ pour le script (exploits sous licences variées) — À vérifier
@@ -16,7 +16,7 @@ site: https://www.exploit-db.com/
 doc: https://www.exploit-db.com/searchsploit
 ---
 
-# 💥 SearchSploit — Exploit-DB en ligne de commande
+# SearchSploit — Exploit-DB en ligne de commande
 
 > [!info] **En 1 phrase**
 > SearchSploit = la base **Exploit-DB en local** : chercher, copier et exploiter des exploits en CLI, sans connexion, avec des opérateurs de recherche type Google.
@@ -27,13 +27,13 @@ doc: https://www.exploit-db.com/searchsploit
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | SearchSploit — Exploit Database Search (CLI officielle d'Exploit-DB) |
 | Description | Recherche locale et hors-ligne dans l'archive Exploit-DB : titres, chemins, CVE, avec copie et lecture des exploits |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Recherche d'exploits / bibliothèque de PoC |
 | Fonction principale | Fouiller la base Exploit-DB en local pour retrouver l'exploit correspondant à une version de logiciel détectée |
 | Type d'outil | CLI (script bash) |
@@ -54,7 +54,7 @@ doc: https://www.exploit-db.com/searchsploit
 
 ---
 
-## 🎯 Concept
+## Concept
 
 SearchSploit est l'outil de recherche officiel de la base **Exploit-DB**, fourni par le paquet `exploitdb` qui embarque tous les exploits dans `/usr/share/exploitdb/exploits/`. Il permet de fouiller cette base **entièrement en local, sans connexion**, grâce à des opérateurs de recherche type Google (`intitle:`, exclusions, recherche sur le titre ou les chemins).
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -128,14 +128,14 @@ git clone https://github.com/exploit-db/exploitdb.git
 docker run -it --rm kalilinux/kali-rolling bash -c "apt update && apt install -y exploitdb && searchsploit apache"
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Dépendances : `bash`, `grep`, `awk`, `sed` (coreutils) ; `git` pour `-u` ; `xmllint` (paquet `libxml2-utils`) pour `--nmap`.
 > - La base est volumineuse : le premier `apt install` télécharge des milliers d'exploits dans `/usr/share/exploitdb/`.
 > - Ne pas oublier `sudo searchsploit -u` après installation pour avoir les CVE récentes.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 SearchSploit n'a pas de fichier de configuration : tout passe par des options. Le paramètre essentiel est la **localisation de la base**, gérée par le paquet (path par défaut `/usr/share/exploitdb/exploits/`).
 
@@ -154,7 +154,7 @@ SearchSploit n'a pas de fichier de configuration : tout passe par des options. L
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 SearchSploit est un **script bash unique** qui enveloppe des commandes Unix (`grep`, `awk`, `sed`, `xmllint`) sur les fichiers du dépôt `exploitdb`. La base n'est pas une base SQL : c'est une **arborescence de fichiers** dont les titres figurent dans les noms et chemins des fichiers.
 
@@ -179,7 +179,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -219,7 +219,7 @@ searchsploit --nmap scan.xml -v
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -251,7 +251,7 @@ searchsploit --nmap scan.xml -v
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -310,7 +310,7 @@ done
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Synchroniser la base** : garantir que les CVE récentes sont présentes.
    ```bash
@@ -338,7 +338,7 @@ done
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Exploitation d'une CVE récente (Apache 2.4.49 — Path Traversal → RCE)
 
@@ -371,7 +371,7 @@ searchsploit -w 50383
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 SearchSploit se place entre la **reconnaissance technique** (version détectée) et l'**exploitation** (sélection du PoC) — un outil de soutien, pas un outil d'exploitation en soi.
 
@@ -390,7 +390,7 @@ Nmap -sV → searchsploit (CVE/version) → PoC adapté (-m) → Exploitation �
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -403,7 +403,7 @@ Nmap -sV → searchsploit (CVE/version) → PoC adapté (-m) → Exploitation �
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 SearchSploit est **invisible sur le réseau** (aucune connexion). La défense doit se concentrer sur les **conséquences** : les requêtes d'exploitation issues des PoC copiés, et le patch management qui les rend inutiles.
 
@@ -446,7 +446,7 @@ alert http any any -> any any (msg:"HTTP Directory Traversal - encoded"; flow:to
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Pipeline Nmap → searchsploit → copie automatique
@@ -474,7 +474,7 @@ for row in json.loads(out):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie par défaut est **humaine** : tableau `Exploit Title | Path` en colonnes, coloré par défaut (`--colour` désactive la couleur). Les formats exploitables : **JSON** (`-j`), **URLs** (`-w`), **EDB-ID** (`--id`), **chemins** (`-p`).
 
@@ -503,25 +503,25 @@ for row in json.loads(out):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Nmap -sV (-oX) → searchsploit --nmap → PoC (-m) → Metasploit / script adapté → Exploitation
 ```
 
-- [[Tools|🧰 Outils]] — catalogue des outils du vault
+- [[Tools| Outils]] — catalogue des outils du vault
 - [[Outil - Nmap|Nmap]] — découvreur de services dont la sortie `-oX` alimente `--nmap`
 - [[Outil - Metasploit|Metasploit]] — exploitation avec les modules issus d'Exploit-DB (`msfconsole`)
 - [[Outil - nuclei|nuclei]] — templates de vulnérabilités à croiser avec les résultats
 - [[Outil - SearchSploit|SearchSploit]] — recherche locale d'exploits (complément : [[Outil - RustScan|RustScan]])
 - [[Techniques/Path Traversal|Path Traversal]] — classe de vulnérabilité de nombreux PoC webapps
 - [[Techniques/LFI et RFI|LFI / RFI]] — exploitation liée aux PoC `webapps/`
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]] — payload à injecter après adaptation du PoC
-- [[Techniques/Privilege Escalation Linux|🐧 PrivEsc Linux]] — exploits `linux/local/` pour l'escalade
+- [[Techniques/Reverse Shells| Reverse Shells]] — payload à injecter après adaptation du PoC
+- [[Techniques/Privilege Escalation Linux| PrivEsc Linux]] — exploits `linux/local/` pour l'escalade
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -535,7 +535,7 @@ Nmap -sV (-oX) → searchsploit --nmap → PoC (-m) → Metasploit / script adap
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Recherche locale instantanée** : grep sur des fichiers texte, sans index — réponse en une fraction de seconde même sur des milliers d'exploits.
 - **Aucune consommation réseau** : usage 100 % local, idéal en air-gap.
@@ -545,7 +545,7 @@ Nmap -sV (-oX) → searchsploit --nmap → PoC (-m) → Metasploit / script adap
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -581,7 +581,7 @@ Nmap -sV (-oX) → searchsploit --nmap → PoC (-m) → Metasploit / script adap
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Aucun trafic émis** : SearchSploit est 100 % local — il ne télécharge que lors de `-u`.
 - **Exploits non fiables par défaut** : un PoC d'Exploit-DB n'est pas un logiciel audité ; il peut être buggé, malveillant ou destructeur. Toujours **lire le code** (`-x`) et tester en lab avant usage.
@@ -592,7 +592,7 @@ Nmap -sV (-oX) → searchsploit --nmap → PoC (-m) → Metasploit / script adap
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de mise à jour automatique** : il faut lancer `-u` (ou l'apt) régulièrement pour avoir les CVE récentes.
 - **Recherche textuelle uniquement** : grep sur titres/chemins — pas de recherche sémantique, ni par CWE, ni par métadonnées d'auteur.
@@ -604,7 +604,7 @@ Nmap -sV (-oX) → searchsploit --nmap → PoC (-m) → Metasploit / script adap
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Recherche simple et par titre
@@ -636,7 +636,7 @@ sudo searchsploit -u
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -649,7 +649,7 @@ sudo searchsploit -u
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -661,16 +661,16 @@ sudo searchsploit -u
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Croise avec `nmap --script vulners` ou un scanner de vulnérabilités pour confirmer qu'une version est affectée avant d'utiliser l'exploit.
 > - `-w` donne l'URL web : utile pour lire les commentaires et les variantes récentes de l'exploit.
 > - Les exploits `webapps/` sont souvent des PoC à adapter ; vérifie la fiabilité (votes, commentaires) avant de lancer.
 > - `-j` (JSON) permet d'automatiser la sélection du bon EDB-ID dans un pipeline.
 > - Pense à `sudo searchsploit -u` en début d'engagement : une base à jour change tout sur les CVE récentes.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `searchsploit -m` copie l'exploit **tel quel** : adapte toujours IP/port et vérifie qu'il ne détruit pas la cible.
 > - Une base **non synchronisée** (`-u`) donne des faux négatifs : les CVE récentes manquent.
 > - Un exploit trouvé ne correspond pas toujours à la configuration exacte de la cible : vérifie la version avant de lancer.
@@ -679,7 +679,7 @@ sudo searchsploit -u
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -703,4 +703,4 @@ sudo searchsploit -u
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Privilege Escalation Linux|🐧 PrivEsc Linux]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]] · [[Outil - nuclei|nuclei]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/LFI et RFI|LFI / RFI]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Privilege Escalation Linux| PrivEsc Linux]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]] · [[Outil - nuclei|nuclei]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/LFI et RFI|LFI / RFI]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔡 Encoding Transformations
+# Encoding Transformations
 
 > [!info] **En 1 phrase**
 > Les transformations d'encodage changent la **représentation** d'une donnée sans changer son sens — l'attaquant les utilise comme **gadgets** pour bypasser filtres d'input, WAF et routines de sanitization.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -31,12 +31,12 @@ flowchart LR
     D --> E[Payload exécuté<br>' / ../../ / <script>]
 ```
 
-> [!info] 💡 **Principe**
+> [!info] **Principe**
 > Le WAF ou le filtre voit une forme (encodée, inoffensive) et l'application transforme l'input **avant** de l'utiliser → le payload d'origine ressort. L'efficacité dépend de la **différence de normalisation** entre le filtre et l'app.
 
 ---
 
-## 🔗 URL Encoding
+## URL Encoding
 
 ```text
 # Encode tout caractère spécial
@@ -54,7 +54,7 @@ flowchart LR
 
 ---
 
-## 🔤 Unicode & Normalisation
+## Unicode & Normalisation
 
 > Unicode associe à chaque caractère un **code point** (ex : `U+0041` = "A"). Les formats UTF-8/UTF-16 stockent ces code points en octets. La **normalisation** convertit des textes équivalents vers une forme standard :
 
@@ -104,7 +104,7 @@ SELECT 'a' = 'ᵃ';
 
 ---
 
-## 🔢 Base64
+## Base64
 
 > 3 octets d'entrée → 4 caractères ASCII (`A-Z a-z 0-9 + /`), padding `=` si nécessaire. Utile pour exfiltrer, masquer et encoder des payloads binaires.
 
@@ -115,7 +115,7 @@ echo -n YWRtaW4= | base64 -d      # admin
 
 ---
 
-## 🧮 Autres encodages utiles
+## Autres encodages utiles
 
 | Encodage | Exemple | Usage |
 |---|---|---|
@@ -127,7 +127,7 @@ echo -n YWRtaW4= | base64 -d      # admin
 
 ---
 
-## 🛠️ Bypass WAF via encodage
+## Bypass WAF via encodage
 
 ```text
 # Exemples concrets
@@ -137,12 +137,12 @@ echo -n YWRtaW4= | base64 -d      # admin
 <script>                →  %3cscript%3e / <scr<script>ipt> (split)
 ```
 
-> [!tip] 💡 **Table de normalisation**
+> [!tip] **Table de normalisation**
 > [Unicode Normalization reference table — AppCheck](https://appcheck-ng.com/wp-content/uploads/unicode_normalization.html) : à garder sous la main pour trouver les caractères qui se normalisent vers `/`, `'`, `<`, `&&`, `--`, `{{ }}`, `[[ ]]`, `.php`...
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -155,12 +155,12 @@ echo -n YWRtaW4= | base64 -d      # admin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le double décodage**
+> [!tip] **Le double décodage**
 > Si l'app décode deux fois (reverse proxy + app), un **double encodage** (`%2527`) passe le filtre au niveau 1 puis devient `'` au niveau 2.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La normalisation Unicode se fait **selon la forme** : NFKC combine `ｐ` + `ʰ` → `p` + `h`... testez les 4 formes (NFC/NFD/NFKC/NFKD).
 > - Un même payload peut être **inoffensif pour une app** (qui normalise pas) et **critique pour une autre**.
 > - Les **homoglyphes** (раypal vs paypal) servent au phishing mais aussi aux bypass de vérification de domaine.
@@ -168,11 +168,11 @@ echo -n YWRtaW4= | base64 -d      # admin
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[Path Traversal|🗂️ Path Traversal]]
-- [[Client Side Path Traversal|🧭 Client Side Path Traversal]]
-- [[Injection SQL|💾 SQLi]]
-- → [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Encoding Transformations](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Encoding%20Transformations/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[Path Traversal| Path Traversal]]
+- [[Client Side Path Traversal| Client Side Path Traversal]]
+- [[Injection SQL| SQLi]]
+- → [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Encoding Transformations](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Encoding%20Transformations/README.md)

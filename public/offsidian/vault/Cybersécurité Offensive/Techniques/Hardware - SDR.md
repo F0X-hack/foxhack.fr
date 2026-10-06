@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 📡 SDR (Radio Logicielle)
+# SDR (Radio Logicielle)
 
 > [!info] **En 1 phrase**
 > La **Software Defined Radio** transforme un PC en récepteur/émetteur radio complet
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Faible (écoute) → Élevée (reverse protocol RF) |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     ANT["Antenne + SDR"] -->|"USB"| PC["PC"]
@@ -51,7 +51,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > La SDR remplace le traitement hardware du signal par du logiciel. Cela permet d'écouter n'importe quelle fréquence (dans la plage de l'hardware) et de décoder n'importe quel protocole RF : key fobs, capteurs, radios, GSM, ADS-B...
 
@@ -69,7 +69,7 @@ flowchart TB
     style J fill:#ffcdd2
 ```
 
-> [!info] 💡 **Ce qu'on peut écouter/attaquer**
+> [!info] **Ce qu'on peut écouter/attaquer**
 > - **Key fobs** (voiture, garage) → replay/hijack 433/868 MHz
 > - **Pagers POCSAG**, radios PMR, talkies-walkies
 > - **GSM/2G** (LimeSDR), ADS-B (avions), GPS, LoRa, Zigbee
@@ -77,7 +77,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Fréquences RF courantes
 
@@ -115,7 +115,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### SDR hardware
 
@@ -130,7 +130,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles RF
+## Protocoles RF
 
 ### Protocoles ISM courants
 
@@ -159,7 +159,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -198,7 +198,7 @@ sudo modprobe dvb_usb_rtl28xxu  # Recharger
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### RTL-SDR
 
@@ -220,7 +220,7 @@ sudo modprobe dvb_usb_rtl28xxu  # Recharger
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Écoute basique
 
@@ -263,9 +263,9 @@ fissure
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Écouter capteurs 433 MHz
+### Débutant — Écouter capteurs 433 MHz
 
 ```bash
 # rtl_433 écoute les capteurs en direct
@@ -276,7 +276,7 @@ rtl_433 -f 433920000
 # protocol: Acurite-606TX, device: 0xC4F2
 ```
 
-### 🟡 Intermédiaire — Analyser un key fob
+### Intermédiaire — Analyser un key fob
 
 ```bash
 # 1. Capturer le signal
@@ -290,7 +290,7 @@ urh  # Charger le fichier IQ capturé
 # Pattern : preamble + sync + data + checksum
 ```
 
-### 🔴 Avancé — Replay attack
+### Avancé — Replay attack
 
 ```python
 #!/usr/bin/env python3
@@ -316,7 +316,7 @@ subprocess.run([
 ])
 ```
 
-### ⚫ Expert — Reverse protocol avec GNU Radio
+### Expert — Reverse protocol avec GNU Radio
 
 ```text
 1. Capturer IQ avec HackRF/RTL-SDR
@@ -329,7 +329,7 @@ subprocess.run([
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -338,8 +338,8 @@ flowchart TB
     C --> D["4. Démoduler (ASK/FSK)"]
     D --> E["5. Décoder bits / protocole"]
     E --> F{"Protocole ?"}
-    F -->|"simple (fixed code)"| G["🟢 Replay direct"]
-    F -->|"rolling code"| H["⚠️ Replay impossible"]
+    F -->|"simple (fixed code)"| G["Replay direct"]
+    F -->|"rolling code"| H["Replay impossible"]
     F -->|"non chiffré"| G
     style G fill:#c8e6c9
     style H fill:#ffcdd2
@@ -356,7 +356,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Replay key fob garage
 
@@ -366,7 +366,7 @@ flowchart TB
 | **Fréquence** | 433.92 MHz |
 | **Modulation** | ASK/OOK, fixed code |
 | **Matériel** | RTL-SDR (capture) + HackRF (replay) |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Analyse protocole LoRa
 
@@ -376,7 +376,7 @@ flowchart TB
 | **Fréquence** | 868 MHz |
 | **Modulation** | CSS (LoRa) |
 | **Matériel** | HackRF + GNU Radio |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -395,11 +395,11 @@ flowchart LR
 | **Fréquence** | 1090 MHz |
 | **Protocole** | ADS-B (Mode S) |
 | **Matériel** | RTL-SDR + antenne 1090 MHz |
-| **Difficulté** | ⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -417,7 +417,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -437,7 +437,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -454,7 +454,7 @@ Rolling code : chaque transaction utilise un code unique
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -489,7 +489,7 @@ scan_ism_band()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Analyse capture IQ
@@ -507,11 +507,11 @@ print(f'Duration: {len(data)/2048000:.2f}s')
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - SDR]] (cette fiche)
-- [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+- [[Hardware - RFID et NFC| RFID/NFC]]
 
 | Outil | Usage |
 |---|---|
@@ -521,7 +521,7 @@ print(f'Duration: {len(data)/2048000:.2f}s')
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -531,7 +531,7 @@ print(f'Duration: {len(data)/2048000:.2f}s')
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | RTL-SDR | HackRF |
 |---|---|---|
@@ -543,7 +543,7 @@ print(f'Duration: {len(data)/2048000:.2f}s')
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -561,7 +561,7 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -575,7 +575,7 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -586,7 +586,7 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -605,7 +605,7 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -618,7 +618,7 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -629,7 +629,7 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **RTL-SDR est RX seul** : pour émettre → HackRF/LimeSDR.
 - **Écouter est légal, émettre rarement** : utilise atténuateur.
@@ -641,9 +641,9 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — SDR](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/radio-frequency/sdr.md)
 > - [RTL-SDR.com](https://www.rtl-sdr.com/)
 > - [HackRF One](https://greatscottgadgets.com/hackrf/)
@@ -657,4 +657,4 @@ lsusb | grep -i "rtl\|hackrf"
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]] · [[Hardware - Flipper Zero|🎮 Flipper Zero]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - RFID et NFC| RFID/NFC]] · [[Hardware - Flipper Zero| Flipper Zero]]

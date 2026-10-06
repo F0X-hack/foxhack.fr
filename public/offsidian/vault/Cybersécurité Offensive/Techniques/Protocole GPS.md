@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🛰️ Protocole GPS
+# Protocole GPS
 
 > [!info] **En 1 phrase**
 > Le **GPS** fournit la position via des signaux satellite en **clair** et non authentifiés
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart TB
@@ -35,7 +35,7 @@ flowchart TB
 
 ---
 
-## 📜 NMEA 0183
+## NMEA 0183
 
 Le protocole le plus répandu côté récepteur : des **phrases ASCII** `$<type>,<données>*<checksum>`.
 
@@ -50,7 +50,7 @@ $GPRMC,123519,A,4807.038,N,01131.000,E,022.4,084.4,230394,003.1,W*6A
 
 ---
 
-## 💥 Attaques GPS
+## Attaques GPS
 
 ### Brouillage (Jamming)
 
@@ -72,7 +72,7 @@ $GPRMC,123519,A,4807.038,N,01131.000,E,022.4,084.4,230394,003.1,W*6A
 
 ---
 
-## 🛠️ Outils & hardware
+## Outils & hardware
 
 - [osqzss/gps-sdr-sim](https://github.com/osqzss/gps-sdr-sim) — générer des signaux GPS (IQ bruts) pour le spoofing.
 - **HackRF One / bladeRF** — SDR pour émettre le signal généré sur L1.
@@ -82,7 +82,7 @@ $GPRMC,123519,A,4807.038,N,01131.000,E,022.4,084.4,230394,003.1,W*6A
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -92,7 +92,7 @@ $GPRMC,123519,A,4807.038,N,01131.000,E,022.4,084.4,230394,003.1,W*6A
 | **Détection de brouillage** | Surveiller le C/N0 (rapport signal/bruit) des satellites |
 | **Surveiller le NMEA** | Valider checksums et cohérence temporelle sur la liaison série |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le **GPS civil est en clair** : impossible à brouiller sans le savoir, donc tout le monde peut le spoof avec un SDR.
 - **Jamming ≠ spoofing** : le bruit bloque, le spoofing *trompe*. Le spoofing est plus dangereux car silencieux.
@@ -103,7 +103,7 @@ $GPRMC,123519,A,4807.038,N,01131.000,E,022.4,084.4,230394,003.1,W*6A
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — GPS](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/gps.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Protocole SS7|☎️ SS7]] · [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Protocole SS7| SS7]] · [[Attaques WiFi (WPA2 et PMKID)| WiFi]]

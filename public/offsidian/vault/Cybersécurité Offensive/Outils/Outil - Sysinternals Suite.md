@@ -1,7 +1,7 @@
 ---
 title: "Outil - Sysinternals Suite"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://learn.microsoft.com/en-us/sysinternals/
 doc: https://learn.microsoft.com/en-us/sysinternals/
 ---
 
-# 🧬 Sysinternals Suite — Boîte à outils d'analyse système Windows
+# Sysinternals Suite — Boîte à outils d'analyse système Windows
 
 > [!info] **En 1 phrase**
 > Sysinternals Suite regroupe les utilitaires Microsoft (Process Explorer, Procmon, Autoruns, strings, procdump, sigcheck…) qui permettent d'observer en temps réel processus, fichiers, registre et persistance sur Windows — l'équipement de base de toute analyse de malware.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Sysinternals Suite |
 | Description | Collection d'utilitaires système Windows signés Microsoft : observation en temps réel (Procmon, Process Explorer), persistance (Autoruns), mémoire (procdump), chaînes (strings), signatures (sigcheck), connexions (tcpview) et exécution distante (psexec) |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse dynamique — boîte à outils système Windows |
 | Fonction principale | Observer, journaliser et contrôler le système Windows pendant l'analyse de malware ou une réponse à incident |
 | Type d'outil | Suite de binaires portables (GUI + CLI) |
@@ -50,7 +50,7 @@ doc: https://learn.microsoft.com/en-us/sysinternals/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 La suite Sysinternals est un ensemble d'outils signés Microsoft, gratuits, qui donnent une visibilité kernel sur un système Windows : **Process Explorer** remplace le gestionnaire de tâches (arbres de processus, DLL, handles), **Process Monitor (Procmon)** journalise chaque accès fichier/registre/réseau/processus avec pile d'appels, **Autoruns** liste toutes les persistances (Run, services, planificateur, drivers), et des utilitaires CLI comme `strings`, `sigcheck`, `procdump`, `handle`, `pslist`, `pskill`, `psexec` ou `tcpview` couvrent le triage rapide.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Téléchargement portable (aucune installation) :
 
@@ -99,7 +99,7 @@ Expand-Archive -Path SysinternalsSuite.zip -DestinationPath C:\Tools\Sysinternal
 
 Certains outils (Autoruns, Procmon) nécessitent des droits administrateur.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Administrateur** : Autoruns, Procmon, procdump `-ma` et la plupart des outils kernel exigent des droits admin.
 > - **Signature** : vérifier que les binaires sont bien signés Microsoft (sigcheck) après téléchargement.
 > - **winget** : la suite s'installe aussi via `winget install Microsoft.Sysinternals.Suite`.
@@ -107,7 +107,7 @@ Certains outils (Autoruns, Procmon) nécessitent des droits administrateur.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La suite est utilisable sans configuration globale ; chaque outil prend ses options en arguments :
 
@@ -127,7 +127,7 @@ La suite est utilisable sans configuration globale ; chaque outil prend ses opti
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Drivers kernel** : certains outils (Procmon, Autoruns) installent temporairement des drivers pour observer les appels système en profondeur.
 - **Process Explorer** : exploite l'API Windows et les informations kernel pour l'arbre de processus et les handles.
@@ -150,7 +150,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -196,7 +196,7 @@ sigcheck64.exe -accepteula -v -u "C:\ProgramData\svchost.exe"
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Outil | Option | Description | Exemple | Niveau |
 |---|---|---|---|---|
@@ -218,7 +218,7 @@ sigcheck64.exe -accepteula -v -u "C:\ProgramData\svchost.exe"
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -263,7 +263,7 @@ psexec64.exe -accepteula -s \\10.10.20.15 cmd.exe
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Accepter la licence** — lancer un outil une fois avec l'invite, ou ajouter `-accepteula` systématiquement en script.
 
@@ -287,7 +287,7 @@ psexec64.exe -accepteula -s \\10.10.20.15 cmd.exe
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Dump mémoire au crash d'un malware instable
 
@@ -340,7 +340,7 @@ pslist64.exe -accepteula -x > C:\ir\processus.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -353,7 +353,7 @@ pslist64.exe -accepteula -x > C:\ir\processus.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -370,7 +370,7 @@ pslist64.exe -accepteula -x > C:\ir\processus.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -408,7 +408,7 @@ Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4688} |
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```powershell
 # PowerShell — collecte des artefacts IR en une passe
@@ -434,7 +434,7 @@ done
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Procmon** : fichiers PML (binaires) exportables en CSV (`File → Save As → CSV`) pour les pipelines.
 - **Autoruns** : sortie CSV (`-c`) avec en-têtes — filtrable sur les colonnes.
@@ -461,16 +461,16 @@ with open("connexions.csv") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Volatility]] — analyse des dumps procdump et de la mémoire
 - [[Outil - Process Hacker]] — complément avec contrôle de processus
 - [[Outil - Flare VM]] — VM d'analyse avec Sysinternals préinstallé
 - [[Outil - YARA]] — signatures sur les binaires collectés
 - [[Outil - x64dbg]] — poursuite en débogage du processus d'intérêt
 - [[Outil - CAPE]] / [[Outil - Cuckoo Sandbox]] — la sandbox capture les artefacts que Sysinternals aide à trier
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) → Volatility + YARA → IR
@@ -478,7 +478,7 @@ Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) �
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -492,7 +492,7 @@ Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) �
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Outils CLI très légers (strings, sigcheck, tcpvcon) : utilisables en masse.
 - Procmon journalise massivement (millions d'événements) : filtrer AVANT de lancer l'échantillon, sinon log illisible et disque saturé.
@@ -502,7 +502,7 @@ Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) �
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -538,7 +538,7 @@ Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) �
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Origine** : télécharger uniquement depuis `download.sysinternals.com` ou Microsoft Learn ; vérifier la signature des binaires (sigcheck).
 - **psexec** : puissant et souvent abusé — journaliser son usage (Sysmon EventID 1) et le restreindre.
@@ -548,7 +548,7 @@ Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) �
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Binaires propriétaires : pas de code source public.
 - La plupart des outils exigent des droits administrateur.
@@ -559,7 +559,7 @@ Poste d'analyse → Sysinternals (observation) → artefacts (dumps, CSV, PML) �
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```powershell
 # Capturer le comportement d'un processus
@@ -598,7 +598,7 @@ accesschk64.exe -accepteula -uwcqv "Authenticated Users" C:\Windows\System32
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -611,7 +611,7 @@ accesschk64.exe -accepteula -uwcqv "Authenticated Users" C:\Windows\System32
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -623,15 +623,15 @@ accesschk64.exe -accepteula -uwcqv "Authenticated Users" C:\Windows\System32
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Ajoutez systématiquement `-accepteula` dans vos scripts pour éviter l'invite de licence qui bloque l'automatisation.
 > - Filtrez Procmon par processus ET par intervalle de temps, sinon le log devient illisible en quelques secondes.
 > - `procdump -ma -e -w` est votre meilleur ami sur un malware qui crashe : le dump complet permet l'analyse mémoire.
 > - Gardez Procmon, Autoruns et les outils CLI dans un même dossier portable : toute la suite se déplace en un zip.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La plupart des outils Sysinternals exigent des droits admin : sans élévation, Autoruns et Procmon voient très peu de choses.
 > - Procmon journalise massivement (des millions d'événements) : définissez vos filtres avant de lancer l'échantillon.
 > - Ces binaires étant légitimes et signés Microsoft, ils sont souvent ignorés par les EDR : restreignez leur usage sur les postes de production.
@@ -639,7 +639,7 @@ accesschk64.exe -accepteula -uwcqv "Authenticated Users" C:\Windows\System32
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -661,4 +661,4 @@ accesschk64.exe -accepteula -uwcqv "Authenticated Users" C:\Windows\System32
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Volatility|🔎 Volatility]] · [[Outils/Outil - Process Hacker|🧬 Process Hacker]] · [[Outils/Outil - Flare VM|🔬 Flare VM]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Volatility| Volatility]] · [[Outils/Outil - Process Hacker| Process Hacker]] · [[Outils/Outil - Flare VM| Flare VM]] · [[Outils/Outil - YARA| YARA]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

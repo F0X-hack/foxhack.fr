@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📥 DCsync
+# DCsync
 
 > [!info] **En 1 phrase**
 > DCsync = imiter le **processus de réplication AD** : on demande au Domain Controller les hashes
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -28,14 +28,14 @@ flowchart LR
     B -->|Hashs NTDS.dit<br>NTLM + AES de tous les comptes| A
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > AD réplique la base NTDS.dit entre DC via le protocole **DRSUAPI**. Un compte avec
 > `Replicating Directory Changes` (et `Replicating Directory Changes All`) peut demander
 > **n'importe quelle donnée**, y compris les hashes. C'est souvent le cas de **Domain Admins**.
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. Obtenir un accès avec les droits de réplication (souvent : compte **Domain Admin** ou compte de service avec ACL étendue).
 2. Utiliser un outil (mimikatz ou impacket) pour émettre une **GetNCChanges**.
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Impacket (Linux) - dump de TOUS les hashes du domaine
@@ -59,7 +59,7 @@ lsadump::dcsync /domain:corp.local /all /csv     # tous les comptes
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -73,20 +73,20 @@ lsadump::dcsync /domain:corp.local /all /csv     # tous les comptes
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **DCSync = le "game over" du domaine**
+> [!tip] **DCSync = le "game over" du domaine**
 > Avec le hash **krbtgt** → [[Golden Ticket|Golden Ticket]]. Avec le hash de l'**admin** → accès partout.
 > C'est généralement le **point final** d'un engagement AD réussi.
 
-> [!warning] ⚠️ **Piège** : `secretsdump` depuis un compte SANS les droits de réplication échouera silencieusement. Vérifie les droits avec BloodHound avant.
+> [!warning] **Piège** : `secretsdump` depuis un compte SANS les droits de réplication échouera silencieusement. Vérifie les droits avec BloodHound avant.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[Golden Ticket|👑 Golden Ticket]]
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- [[ACL Abuse AD|🧩 ACL Abuse]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[Golden Ticket| Golden Ticket]]
+- [[Pass-the-Hash| Pass-the-Hash]]
+- [[ACL Abuse AD| ACL Abuse]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

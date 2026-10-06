@@ -1,7 +1,7 @@
 ---
 title: "Outil - SET"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,17 +16,17 @@ site: https://trustedsec.com
 doc: https://github.com/trustedsec/social-engineer-toolkit#readme
 ---
 
-# 🎯 SET (Social-Engineer Toolkit) — Le couteau suisse de l'ingénierie sociale
+# SET (Social-Engineer Toolkit) — Le couteau suisse de l'ingénierie sociale
 > [!info] **En 1 phrase**
 > Le Social-Engineer Toolkit (SET) est la boîte à outils open source de référence pour automatiser les attaques de phishing, les vecteurs d'attaque par media et les scénarios d'ingénierie sociale à grande échelle.
 ---
 
-## 🧾 Overview
+## Overview
 | Champ | Valeur |
 |---|---|
 | Nom complet | Social-Engineer Toolkit (SET) |
 | Description | Framework Python d'ingénierie sociale : spear-phishing par email, clonage de sites web, credential harvesting, génération de payloads, mass mailer, vecteurs USB/QRCode/PowerShell/HTA |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing, Credential Harvesting, Payload Generation |
 | Fonction principale | Automatiser les scénarios d'ingénierie sociale (phishing, clonage, payloads) |
 | Type d'outil | Framework interactif CLI (menu textuel) |
@@ -46,7 +46,7 @@ doc: https://github.com/trustedsec/social-engineer-toolkit#readme
 > La version est confirmée par le README officiel (« SET 8.1.3 targets Python 3.11 through Python 3.13 »). La baseline de configuration reste marquée `CONFIG_VERSION=7.7.9` : c'est la version du schéma de config, pas la version du framework.
 ---
 
-## 🎯 Concept
+## Concept
 SET est le framework d'ingénierie sociale le plus utilisé en pentest : développé par Dave Kennedy (TrustedSec), il regroupe dans un **menu interactif** une cinquantaine de scénarios prêts à l'emploi — clonage de sites web pour du **credential harvesting**, **emails de spear-phishing** (pièce jointe ou lien), **payloads de reverse shell** via Metasploit, **médias infectés** (fichiers, PDF, ISO), vecteurs **PowerShell/HTA**, **QRCode, Arduino, point d'accès Wi-Fi**, et campagnes de **mass mailer** via SMTP ou Sendmail.
 
 Dans un engagement, SET se place en phase **Initial Access / Social Engineering** : il cible le maillon humain, pas la machine. Son point fort est la rapidité (un site cloné est en ligne en moins d'une minute) et l'intégration native à Metasploit pour la génération de payloads et le listener. Son point faible : c'est un outil très connu, massivement signé par les antivirus, et entièrement piloté par menu (difficile à automatiser proprement). Né en 2010, SET a été la première boîte à outils grand public à rendre l'ingénierie sociale accessible ; les versions 7.x puis 8.x ont modernisé le code (Python 3, venv, suppression des vecteurs Java Applet obsolètes), mais la logique des menus « 1 → 2 → 3 » est restée stable.
@@ -67,7 +67,7 @@ flowchart LR
 ```
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 | Concept | Explication |
 |---|---|
 | Ingénierie sociale | Manipulation psychologique pour obtenir une information ou un accès : prétexte, appât (baiting), usurpation, urgence, autorité |
@@ -82,7 +82,7 @@ flowchart LR
 | Menus numérotés | SET est piloté par des menus ; les numéros changent entre versions — toujours lire l'écran avant de valider |
 ---
 
-## 🛠️ Installation
+## Installation
 ### Debian / Ubuntu / Kali Linux / WSL
 ```bash
 sudo apt update && sudo apt install -y set
@@ -122,14 +122,14 @@ docker build -t setoolkit .
 docker run -it --rm -p 8080:8080 setoolkit
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - SET 8.1.3 cible **Python 3.11 à 3.13** ; une version plus récente ou plus ancienne peut casser la compilation.
 > - La plupart des vecteurs (payloads, harvester, clonage) nécessitent **root** : lancer avec `sudo`.
 > - La génération de payloads dépend de **Metasploit** installé (`msfconsole`) ; configurer `METASPLOIT_PATH`.
 > - Sur Kali, `sudo apt install set` installe un paquet parfois en retard sur le GitHub officiel.
 ---
 
-## ⚙️ Configuration
+## Configuration
 SET se configure via `/etc/setoolkit/set.config` (copié depuis `src/core/config.baseline` au premier lancement). L'utilitaire vérifie `CONFIG_VERSION` au démarrage et régénère le fichier avec un backup `.bak` si nécessaire. Les données capturées (logs harvester, templates) sont stockées dans le répertoire utilisateur (`~/.set/`).
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
@@ -147,7 +147,7 @@ SET se configure via `/etc/setoolkit/set.config` (copié depuis `src/core/config
 > Les noms de clés du `set.config` varient légèrement entre les versions et les distributions. Confirmer avec `grep -iE "apache|harvester|metasploit" /etc/setoolkit/set.config`.
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 SET est un paquet Python organisé autour d'un **launcher** et d'un **noyau** de modules :
 
 - **`setoolkit`** : script d'entrée (affiché par `sudo setoolkit`) ; vérifie root, `CONFIG_VERSION`, lance le menu principal.
@@ -170,7 +170,7 @@ flowchart LR
 ```
 ---
 
-## ⌨️ Commandes
+## Commandes
 ### Commandes principales
 ```bash
 sudo setoolkit
@@ -199,7 +199,7 @@ sudo setoolkit
 > La numérotation des sous-menus (harvester, payloads) évolue entre les versions : lire les options affichées avant de valider.
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 SET étant un menu textuel, il n'expose pas d'options CLI standard. Les « options » sont des choix de navigation dans les menus.
 
 | Option / menu | Description | Exemple | Niveau |
@@ -218,7 +218,7 @@ SET étant un menu textuel, il n'expose pas d'options CLI standard. Les « optio
 > `2 → 3 → 2` (Site Cloner) pour un credential harvester en 30 secondes ; `4` (Create a Payload and Listener) pour un reverse shell en 1 minute ; `1 → 1 → 2` (email single address) pour un spear-phishing rapide. Toujours vérifier les numéros affichés à l'écran.
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 ### Beginner
 ```bash
 # Credential harvesting en clonant un site
@@ -261,7 +261,7 @@ sudo setoolkit
 ```
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 1. **Préparer l'infrastructure** — machine d'écoute avec IP publique/NAT redirigée vers `10.10.20.15`, port 80/443 ouvert, Metasploit installé.
    ```bash
    sudo setoolkit
@@ -282,7 +282,7 @@ sudo setoolkit
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 ### Scénario 1 : campagne de spear-phishing complète
 Planification d'une campagne avec phases et livrables :
 
@@ -336,7 +336,7 @@ Le QR code pointe vers le harvester (vecteur 2). L'utilisateur scanne avec son m
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 | Phase | Utilisation |
 |---|---|
 | Reconnaissance | Identifier les cibles humaines et leurs emails (via theHarvester/OSINT) avant de préparer le prétexte |
@@ -347,7 +347,7 @@ Le QR code pointe vers le harvester (vecteur 2). L'utilisateur scanne avec son m
 | Red team / purple team | Validation des contrôles humains, tests de détection SOC/EDR |
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
 | Initial Access | Phishing: Spearphishing Attachment | T1566.001 | Emails avec pièce jointe (PDF/EXE/HTA) générés par SET | Analyse sandbox pièces jointes, AV/EDR, règles mail | Filtrage antispam, sandboxing, awareness |
@@ -363,7 +363,7 @@ Le QR code pointe vers le harvester (vecteur 2). L'utilisateur scanne avec son m
 > SET couvre principalement l'Initial Access par phishing (T1566.*) et l'Execution côté utilisateur (T1204.*).
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 ### Signes observables
 | Indicateur | Détail |
 |---|---|
@@ -400,7 +400,7 @@ alert http any any -> any any (msg:"SET harvester POST suspected"; flow:to_serve
 ```
 ---
 
-## 🤖 Automatisation
+## Automatisation
 SET étant interactif, l'automatisation passe par le **pipe de menus** (fragile) ou un **driver expect/pexpect** :
 
 ```bash
@@ -425,7 +425,7 @@ Pour les campagnes sérieuses, préférer des outils non interactifs : [[Outil -
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 Les sorties principales de SET : **terminal interactif** (logs en temps réel), **fichiers de log** dans `~/.set/`, **sortie Metasploit** (lors de la génération de payloads) et **logs serveur web** (requêtes HTTP de la page clonée).
 
 ```bash
@@ -449,12 +449,12 @@ for m in re.findall(r'(?:email|user(?:name)?):\s*(\S+)\s+pass(?:word)?:\s*(\S+)'
 > Le nom exact des fichiers de log (`harvester.log`, `harvester_<date>.txt`…) varie selon la version et le vecteur. Vérifier avec `ls -la ~/.set/` après une capture.
 ---
 
-## 🔗 Intégrations
+## Intégrations
 ```text
 Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (listener) → post-exploitation (Evil-WinRM) → SIEM
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Metasploit]] — génération de payloads et listener natif (vecteurs 1, 3, 4, 9)
 - [[Outil - GoPhish]] — alternative/compagnon pour les campagnes de phishing structurées
 - [[Outil - Evilginx2]] — phishing de 2FA en temps réel (reverse proxy) ; SET sert la première page
@@ -464,11 +464,11 @@ Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (liste
 - [[Outil - USB Rubber Ducky]] · [[Outil - Bash Bunny]] · [[Outil - WiFi Pineapple]] — vecteurs physiques
 - [[Outil - Evil-WinRM]] — post-exploitation des sessions Windows obtenues
 - [[Outil - Nmap]] · [[Outil - theHarvester]] — reconnaissance avant prétexte
-- [[07 - Wireless, MITM & Social Engineering|🎭 Wireless, MITM & Social Engineering]]
+- [[07 - Wireless, MITM & Social Engineering| Wireless, MITM & Social Engineering]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
 | [[Outil - GoPhish]] | Campagnes structurées, tracking, templates, multi-envoi | Pas de génération de payloads | Programmes de sensibilisation |
@@ -482,7 +482,7 @@ Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (liste
 > **Quand utiliser GoPhish plutôt que SET ?** Dès qu'il faut une campagne mesurable (taux d'ouverture, de clic, de saisie) avec des rapports exploitables par le client. SET excelle pour la démonstration technique rapide et la génération de payloads, pas pour la gestion de campagnes.
 ---
 
-## ⚡ Performance
+## Performance
 - **Lancement** : quasi instantané (menu Python) ; la génération d'un clone prend quelques secondes à une minute selon la taille du site cible.
 - **Serveur web** : serveur HTTP Python intégré, limité à quelques centaines de connexions simultanées ; Apache (`APACHE_SERVER=ON`) meilleur pour les gros volumes.
 - **Mass mailer** : débit limité par le relais SMTP et les limites anti-spam (rate limiting). Comptez en minutes pour des centaines d'emails, avec un risque élevé de blacklist.
@@ -493,7 +493,7 @@ Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (liste
 > Chiffres donnés à titre indicatif d'après les usages en lab ; aucune benchmark officielle n'est publiée par TrustedSec.
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 ### Common problems
 #### Problème : « SET is not running as root » / « must be run as root »
 - **Cause** : les vecteurs (payloads, harvester, clonage) nécessitent des droits élevés.
@@ -522,7 +522,7 @@ Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (liste
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 - **Root requis** : SET doit tourner en root ; ne jamais l'exécuter depuis un compte de service ni sur une machine de production.
 - **Données sensibles** : les identifiants capturés sont stockés **en clair** dans `~/.set/` et affichés dans le terminal — nettoyer après usage.
 - **Écoute réseau** : le harvester expose un serveur HTTP ; le protéger par firewall et ne l'exposer qu'au réseau d'engagement.
@@ -532,7 +532,7 @@ Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (liste
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 - **Menu interactif uniquement** : aucune API officielle, difficile à automatiser ; les numéros de menu changent entre versions.
 - **Détection AV/EDR** : les payloads par défaut (Meterpreter, HTA, PowerShell) sont massivement signés.
 - **Délivrabilité email** : sans SPF/DKIM/DMARC, les emails de phishing finissent en spam ; SET ne fait pas de l'email spoofing fiable moderne.
@@ -543,7 +543,7 @@ Recon (Nmap / theHarvester) → SET (phishing / harvester) → Metasploit (liste
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 ```bash
 # Démarrer SET
 sudo setoolkit
@@ -578,7 +578,7 @@ rm -rf ~/.set
 ```
 ---
 
-## ⚡ Quick reference
+## Quick reference
 | | |
 |---|---|
 | **À quoi sert-il ?** | Automatiser l'ingénierie sociale : phishing, clonage de sites, credential harvesting, génération de payloads |
@@ -589,7 +589,7 @@ rm -rf ~/.set
 | **Liens associés** | [[Outil - Metasploit]] · [[Outil - GoPhish]] · [[Outil - Evilginx2]] · [[Outil - SocialFish]] |
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 | Signe | Défense |
 |---|---|
 | Email réclamant urgence + pièce jointe ou lien | **SPF/DKIM/DMARC** : rejeter les emails non authentifiés ; sandboxing des pièces jointes |
@@ -600,15 +600,15 @@ rm -rf ~/.set
 | Connexions sortantes vers IP/port inhabituels | **EDR** + inspection réseau : reverse shell |
 ---
 
-## ⚠️ Tips & Pièges
-> [!tip] 💡 **Tips**
+## Tips & Pièges
+> [!tip] **Tips**
 > - Utilisez le **Template Custom** (menu 6) pour des pages 100 % originales qui n'ont pas la signature d'un clone exact : plus dur à détecter qu'un Site Cloner.
 > - Mappez le domaine cloné vers votre IP (fichier `hosts` ou DNS local) : `192.168.1.10 login.example.com` — la victime voit l'URL légitime, pas votre IP.
 > - Redirigez la victime vers le vrai site après la capture (action_url relay) pour ne pas éveiller les soupçons.
 > - En lab, lancez `sudo setoolkit` avec un fichier `hosts` propre et un port dédié pour éviter les conflits Apache.
 > - Gardez un listener **Metasploit multi/handler** ouvert (`exploit/multi/handler`) pour rattacher les sessions après coup.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - SET est extrêmement connu : les AV/EDR signent ses payloads de base. Compilez vos propres payloads ou utilisez des encodages personnalisés.
 > - Ne cliquez pas trop vite dans les menus : la numérotation **varie selon les versions** — lisez les options affichées avant de valider.
 > - L'IP/port d'écoute doit être correct dès le départ : une erreur rend le payload muet (listener sur le mauvais port).
@@ -616,7 +616,7 @@ rm -rf ~/.set
 > - Ne stockez jamais les credentials capturés plus longtemps que nécessaire et nettoyez `~/.set/` après l'engagement.
 ---
 
-## 📚 References
+## References
 ### Official
 - Documentation officielle (README) : https://github.com/trustedsec/social-engineer-toolkit#readme
 - GitHub officiel : https://github.com/trustedsec/social-engineer-toolkit
@@ -637,4 +637,4 @@ rm -rf ~/.set
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - BeEF|BeEF]] · [[Outil - GoPhish|GoPhish]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - SocialFish|SocialFish]] · [[Outil - Weeman|Weeman]] · [[Outil - Modlishka|Modlishka]] · [[Outil - Metasploit|Metasploit]] · [[Outil - Evil-WinRM|Evil-WinRM]]
+**Liens :** [[Tools| Outils]] · [[Outil - BeEF|BeEF]] · [[Outil - GoPhish|GoPhish]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - SocialFish|SocialFish]] · [[Outil - Weeman|Weeman]] · [[Outil - Modlishka|Modlishka]] · [[Outil - Metasploit|Metasploit]] · [[Outil - Evil-WinRM|Evil-WinRM]]

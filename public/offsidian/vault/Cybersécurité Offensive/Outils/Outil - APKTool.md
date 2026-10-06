@@ -1,11 +1,11 @@
 ---
 title: "Outil - APKTool"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 3.0.3
 licence: Apache License 2.0
@@ -16,7 +16,7 @@ site: https://apktool.org
 doc: https://apktool.org/docs
 ---
 
-# 📱 APKTool — Mobile & Reverse Engineering
+# APKTool — Mobile & Reverse Engineering
 
 > [!info] **En 1 phrase**
 > **apktool** décompile puis recompile un APK Android pour **lire le code smali, décoder les ressources
@@ -24,13 +24,13 @@ doc: https://apktool.org/docs
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Apktool (anciennement brut.apktool, fork de iBotPeaches) |
 | Description | Outil de désassemblage/reassemblage des APK Android : decode/encode du bytecode smali et des ressources binaires (XML, arsc) |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Reverse statique d'applications Android (modification de binaires) |
 | Fonction principale | `apktool d` (decoder) et `apktool b` (build/reassembler) un APK |
 | Type d'outil | CLI (jar Java exécutable) |
@@ -48,7 +48,7 @@ doc: https://apktool.org/docs
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Un APK Android est une archive ZIP qui contient : `classes.dex` (le bytecode Dalvik/ART), les ressources **compilées en format binaire** (`resources.arsc`, `res/*.xml` encodés en AXML binaire), les bibliothèques natives (`lib/*.so`), les assets et le manifeste (`AndroidManifest.xml`). Apktool **inverse cette compilation** : le DEX est traduit en un dossier `smali/` (bytecode assembleur lisible) via baksmali, et les ressources XML binaires sont **décodées en XML texte clair** via aapt2. On peut alors lire la logique, **patcher le smali à la main**, modifier le manifeste ou les ressources, puis **reconstruire** l'APK (`apktool b`) et le re-signer pour l'installer.
 
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -106,7 +106,7 @@ sudo apt update && sudo apt install -y apktool
 docker run --rm -v "$PWD":/work -w /work thibaultlaurens/apktool apktool d app.apk
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Java 17+** requis (OpenJDK 17/21 recommandé). Sans Java, `java -jar apktool.jar` échoue.
 > - **64-bit uniquement** depuis la v3.0 : plus aucun support 32-bit.
 > - Sous Windows, ajouter `apktool.bat` au PATH ou lancer via `java -jar`.
@@ -114,7 +114,7 @@ docker run --rm -v "$PWD":/work -w /work thibaultlaurens/apktool apktool d app.a
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Apktool n'utilise pas de fichier de configuration utilisateur : tout se passe en **ligne de commande** et dans des dossiers standardisés.
 
@@ -130,7 +130,7 @@ Apktool n'utilise pas de fichier de configuration utilisateur : tout se passe en
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **CLI** (`brut.apktool.Main`) : parsing des arguments (commons-cli), dispatch entre les commandes `d` (decode), `b` (build), `if` (install framework), `cf` (clean frameworks).
 - **ApkDecoder** : décompresse l'APK (ZIP), invoque **baksmali** pour DEX→smali, appelle **aapt2** (dans sa version `d` pour dump des ressources) ou son parser interne `BinaryResourceParser` pour décoder AXML/arsc en XML texte.
@@ -141,7 +141,7 @@ Apktool n'utilise pas de fichier de configuration utilisateur : tout se passe en
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -176,7 +176,7 @@ apktool d --frame-tag samsung app_samsung.apk -o app_src
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -203,7 +203,7 @@ apktool d --frame-tag samsung app_samsung.apk -o app_src
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -251,7 +251,7 @@ done
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : retirer une vérification de licence pour analyser le flux (test / CTF).**
 
@@ -281,7 +281,7 @@ done
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Suppression du SSL pinning par patch smali
 
@@ -320,7 +320,7 @@ grep -rn "DexClassLoader\|InMemoryDexClassLoader" app_full/smali/ | head
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -332,7 +332,7 @@ grep -rn "DexClassLoader\|InMemoryDexClassLoader" app_full/smali/ | head
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -344,7 +344,7 @@ grep -rn "DexClassLoader\|InMemoryDexClassLoader" app_full/smali/ | head
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -379,7 +379,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — decode, patch récursif d'un string, build, signer
@@ -412,7 +412,7 @@ for hit in decode_and_grep("app.apk", "src", "checkServerTrusted"):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie principale d'apktool est un **dossier de fichiers** : pas de JSON/XML de rapport. Le parsing passe par `grep`/`rg` sur les fichiers smali et ressources.
 
@@ -445,25 +445,25 @@ print(smali_methods("app_src/smali/com/example/app/MainActivity.smali"))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 jadx (lecture Java) → APKTool (patch smali) → apksigner → adb install → Frida (vérif runtime)
 MobSF (scan SAST) → APKTool (verdict sur les findings) → Burp (MITM après bypass pinning)
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - jadx|📱 jadx]] — lecture Java lisible (complément du smali)
-- [[Outil - Frida|📱 Frida]] — hook runtime quand le patch statique casse l'anti-tamper
-- [[Outil - objection|📱 objection]] — `patchapk` injecte un gadget Frida (alternative au patch smali)
-- [[Outil - MobSF|📱 MobSF]] — rapport SAST pour confirmer les findings à patcher
-- [[Outil - Burp Suite|🕸️ Burp Suite]] — interception après désactivation du pinning
-- [[Techniques/Insecure Deserialization|🧬 Désérialisation]] · [[Techniques/Insecure Source Code Management|🔗 SCM]]
-- [[09 - Reverse Engineering & Malware|🧬 Reverse & Malware]] · [[13 - Hardware & IoT|💾 Hardware & IoT]]
+- [[Tools| Outils]] global
+- [[Outil - jadx| jadx]] — lecture Java lisible (complément du smali)
+- [[Outil - Frida| Frida]] — hook runtime quand le patch statique casse l'anti-tamper
+- [[Outil - objection| objection]] — `patchapk` injecte un gadget Frida (alternative au patch smali)
+- [[Outil - MobSF| MobSF]] — rapport SAST pour confirmer les findings à patcher
+- [[Outil - Burp Suite| Burp Suite]] — interception après désactivation du pinning
+- [[Techniques/Insecure Deserialization| Désérialisation]] · [[Techniques/Insecure Source Code Management| SCM]]
+- [[09 - Reverse Engineering & Malware| Reverse & Malware]] · [[13 - Hardware & IoT| Hardware & IoT]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -477,7 +477,7 @@ MobSF (scan SAST) → APKTool (verdict sur les findings) → Burp (MITM après b
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Le decode d'un APK standard (10–50 Mo) prend **de quelques secondes à ~1 minute** selon le nombre de classes DEX et de ressources.
 - `--no-res` accélère nettement le decode (pas d'appel à aapt2 sur les ressources) : à privilégier pour l'analyse de code pur.
@@ -487,7 +487,7 @@ MobSF (scan SAST) → APKTool (verdict sur les findings) → Burp (MITM après b
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -517,7 +517,7 @@ MobSF (scan SAST) → APKTool (verdict sur les findings) → Burp (MITM après b
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permission** : apktool n'exige pas root, mais **installer** un APK modifié sur un device non contrôlé peut violer les conditions d'usage de l'app : à réserver aux labs, devices d'analyse et engagements autorisés.
 - **Secrets** : le dump d'un APK peut révéler des clés/endpoints sensibles — ne pas stocker les APK audités dans des dépôts partagés.
@@ -527,7 +527,7 @@ MobSF (scan SAST) → APKTool (verdict sur les findings) → Burp (MITM après b
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Smali ≠ Java** : apktool produit du bytecode assembleur, pas du code source lisible — utiliser jadx pour la lecture rapide.
 - **Pas de décompilation C** : le code natif (`lib/*.so`) est simplement copié dans `lib/`, jamais analysé.
@@ -539,7 +539,7 @@ MobSF (scan SAST) → APKTool (verdict sur les findings) → Burp (MITM après b
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Décompiler (réflexe de base)
@@ -576,7 +576,7 @@ apktool --version
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -589,7 +589,7 @@ apktool --version
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -602,15 +602,15 @@ apktool --version
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours re-signer après `apktool b` : un APK recompilé a perdu sa signature, `apksigner sign` est obligatoire, sinon `adb install` échoue avec `INSTALL_PARSE_FAILED_NO_CERTIFICATES`.
 > - Générer une keystore dédiée au test : `keytool -genkey -v -keystore key.jks -alias test -keyalg RSA -keysize 2048 -validity 10000`.
 > - Décompiler d'abord avec jadx pour **comprendre** la logique en Java, puis localiser la classe correspondante dans `smali/` pour la **modifier** : deux fois plus rapide.
 > - Garder une trace du `apktool.yml` d'origine (version, sdk) pour reconstruire un APK cohérent.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Smali ≠ Java lisible : apktool produit du **bytecode assembleur**, pas du Java. Pour comprendre vite, décompile d'abord avec jadx.
 > - Sur une app avec anti-tamper natif, la modification smali peut casser l'intégrité → préférer Frida/objection pour le runtime, apktool pour l'analyse statique.
 > - Depuis v3.0 : plus d'option `-api/--api-level`, plus d'aapt1, plateformes 32-bit non supportées — les anciens scripts avec flags courts (`-c`, `-d`, `-n`, `-na`, `-nc`) doivent passer en flags longs.
@@ -618,7 +618,7 @@ apktool --version
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -642,4 +642,4 @@ apktool --version
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - jadx|📱 jadx]] · [[Outil - MobSF|📱 MobSF]] · [[Outil - Frida|📱 Frida]] · [[Outil - objection|📱 objection]] · [[Techniques/Insecure Source Code Management|🔗 SCM]] · [[Techniques/Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[Tools| Outils]] · [[Outil - jadx| jadx]] · [[Outil - MobSF| MobSF]] · [[Outil - Frida| Frida]] · [[Outil - objection| objection]] · [[Techniques/Insecure Source Code Management| SCM]] · [[Techniques/Hardware - Dump et Analyse de Firmware| Dump de firmware]]

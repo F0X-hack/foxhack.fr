@@ -9,7 +9,7 @@ statut: publie
 ---
 
 
-# 🗂️ Bibliothèque de Techniques
+# Bibliothèque de Techniques
 
 > [!info] **C'est quoi ?**
 > Chaque note ici décrit **une attaque/concept en détail** : définition, diagramme, étapes,
@@ -17,25 +17,25 @@ statut: publie
 
 ```mermaid
 flowchart LR
-    T[Techniques] --> AD[👑 Active Directory]
-    T --> W[🌍 Web]
-    T --> N[💥 Réseau / Post-Exploit]
-    T --> M[📡 Wireless / MITM]
-    T --> H[🔐 Cracking]
+    T[Techniques] --> AD[Active Directory]
+    T --> W[Web]
+    T --> N[Réseau / Post-Exploit]
+    T --> M[Wireless / MITM]
+    T --> H[Cracking]
 ```
 
 ---
 
-## 📊 Vue dynamique par catégorie (Dataview)
+## Vue dynamique par catégorie (Dataview)
 
 > [!info] Tableau auto-généré : chaque nouvelle fiche créée apparaît ici sans toucher à ce fichier.
 
 ```dataview
 TABLE WITHOUT ID
-  length(rows) AS "📄 Fiches"
+  length(rows) AS "Fiches"
 FROM "Cybersécurité Offensive/Techniques"
 WHERE type = "technique"
-GROUP BY categorie AS "📂 Catégorie"
+GROUP BY categorie AS "Catégorie"
 SORT length(rows) DESC
 ```
 
@@ -49,7 +49,7 @@ SORT categorie ASC, file.name ASC
 
 ---
 
-## 👑 Active Directory
+## Active Directory
 
 | Technique | Note | Clé du mécanisme |
 |---|---|---|
@@ -76,9 +76,9 @@ SORT categorie ASC, file.name ASC
 | Certs | [[ADCS et Certificats (ESC)\|ADCS/ESC]] | Abuser des templates de certificats |
 | Mdp | [[Password Spraying\|Password Spraying]] | 1 mdp / beaucoup de comptes |
 
-## 🌍 Web
+## Web
 
-### 🗃️ Injections (server-side)
+### Injections (server-side)
 
 | Technique | Note |
 |---|---|
@@ -103,7 +103,7 @@ SORT categorie ASC, file.name ASC
 | [[Regular Expression\|Regular Expression]] | ReDoS & bypass de filtres regex |
 | [[ORM Leak\|ORM Leak]] | Fingerprinter / fuiter via ORM |
 
-### 🎭 Client-side
+### Client-side
 
 | Technique | Note |
 |---|---|
@@ -118,7 +118,7 @@ SORT categorie ASC, file.name ASC
 | [[CSRF\|CSRF]] | Actions à la place de la victime |
 | [[HTTP Parameter Pollution\|HPP]] | Confusion proxy / backend |
 
-### 🔑 Auth, API & logique
+### Auth, API & logique
 
 | Technique | Note |
 |---|---|
@@ -133,7 +133,7 @@ SORT categorie ASC, file.name ASC
 | [[Hidden Parameters\|Hidden Parameters]] | Débusquer des paramètres cachés |
 | [[Brute Force Rate Limit\|Brute Force / Rate Limit]] | Contourner les protections |
 
-### 📁 Fichiers & upload
+### Fichiers & upload
 
 | Technique | Note |
 |---|---|
@@ -142,7 +142,7 @@ SORT categorie ASC, file.name ASC
 | [[Client Side Path Traversal\|Client Side Path Traversal]] | Traversée côté navigateur |
 | [[Zip Slip\|Zip Slip]] | Écrire des fichiers via un zip |
 
-### 🏗️ Archi, cache & protocoles
+### Archi, cache & protocoles
 
 | Technique | Note |
 |---|---|
@@ -155,7 +155,7 @@ SORT categorie ASC, file.name ASC
 | [[Reverse Proxy\|Reverse Proxy]] | Contourner via le proxy |
 | [[Prompt Injection\|Prompt Injection]] | Manipuler les IA / LLM |
 
-### 🧬 Désérialisation & runtime
+### Désérialisation & runtime
 
 | Technique | Note |
 |---|---|
@@ -164,7 +164,7 @@ SORT categorie ASC, file.name ASC
 | [[Java RMI\|Java RMI]] | Exploiter le port 1099 |
 | [[Insecure Randomness\|Insecure Randomness]] | Prédire les PRNG |
 
-### 🔗 Supply chain & secrets
+### Supply chain & secrets
 
 | Technique | Note |
 |---|---|
@@ -176,14 +176,14 @@ SORT categorie ASC, file.name ASC
 | [[Encoding Transformations\|Encoding Transformations]] | Détecter des encodages |
 | [[External Variable Modification\|External Variable Modification]] | Modifier des variables externes |
 
-### 💣 Divers / DoS
+### Divers / DoS
 
 | Technique | Note |
 |---|---|
 | [[Denial of Service\|Denial of Service]] | Épuiser les ressources |
 | [[CVE Exploits\|CVE Exploits]] | Patterns d'exploitation publics |
 
-## 💥 Réseau / Post-Exploit
+## Réseau / Post-Exploit
 
 | Technique | Note |
 |---|---|
@@ -194,7 +194,7 @@ SORT categorie ASC, file.name ASC
 | [[DLL Hijacking\|DLL Hijacking]] | Charger notre DLL via un service |
 | [[Buffer Overflow\|Buffer Overflow]] | Écraser EIP → shellcode |
 
-## 📡 Wireless / MITM
+## Wireless / MITM
 
 | Technique | Note |
 |---|---|
@@ -209,9 +209,9 @@ SORT categorie ASC, file.name ASC
 | [[Attaques WiFi - Outils & Recon\|WiFi - Outils & Recon]] | airdecap, Kismet, giskismet, tshark |
 | [[ARP Spoofing et MITM\|ARP Spoofing / MITM]] | S'intercaler dans le trafic |
 
-## ⚙️ Hardware & IoT
+## Hardware & IoT
 
-### 🕹️ Interfaces de debug & dump
+### Interfaces de debug & dump
 
 | Technique | Note |
 |---|---|
@@ -222,7 +222,7 @@ SORT categorie ASC, file.name ASC
 | [[Hardware - Fault Injection\|Fault Injection]] | Glitch voltage/clock/EM |
 | [[Hardware - Secure Boot\|Secure Boot]] | Chaîne de confiance & bypass |
 
-### 🛠️ Gadgets & outils
+### Gadgets & outils
 
 | Technique | Note |
 |---|---|
@@ -246,7 +246,7 @@ SORT categorie ASC, file.name ASC
 | [[Hardware - M5Stack\|M5Stack]] | Evil-M5Core2 (WiFi pentest) |
 | [[Hardware - microbit\|micro:bit]] | Extraction de firmware + SWD |
 
-### 📡 Protocoles & radios
+### Protocoles & radios
 
 | Technique | Note |
 |---|---|
@@ -268,7 +268,7 @@ SORT categorie ASC, file.name ASC
 | [[Protocole HTTP (IoT)\|HTTP (IoT)]] | APIs embarquées, OTA |
 | [[Protocole GPS\|GPS]] | Spoofing, jamming, NMEA |
 
-### 🧭 Recon & ressources
+### Recon & ressources
 
 | Technique | Note |
 |---|---|
@@ -280,7 +280,7 @@ SORT categorie ASC, file.name ASC
 | [[Hardware - Mots de passe par défaut IoT\|Mots de passe par défaut IoT]] | Wordlist Mirai & co |
 | [[Hardware - Kits et ressources\|Kits & ressources]] | CTF hardware, livres, kits |
 
-## 🔐 Cracking
+## Cracking
 
 | Technique | Note |
 |---|---|
@@ -288,5 +288,5 @@ SORT categorie ASC, file.name ASC
 
 ---
 
-> [!tip] 💡 **Navigation**
-> Reviens au centre : [[Bibliothèque technique|🗺️ Index de la base de connaissances]]
+> [!tip] **Navigation**
+> Reviens au centre : [[Bibliothèque technique| Index de la base de connaissances]]

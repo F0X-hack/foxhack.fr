@@ -1,11 +1,11 @@
 ---
 title: "Outil - hash-identifier"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 1.2+git20180314-0kali3 (paquet Kali)
 licence: GPLv3
@@ -16,20 +16,20 @@ site: https://www.kali.org/tools/hash-identifier/
 doc: https://gitlab.com/kalilinux/packages/hash-identifier
 ---
 
-# 💥 hash-identifier — Exploitation & Cracking
+# hash-identifier — Exploitation & Cracking
 
 > [!info] **En 1 phrase**
 > hash-identifier est le petit script interactif préinstallé sur Kali qui, en collant un hash, renvoie la liste des algorithmes probables — parfait pour un tri rapide avant de cracker.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | hash-identifier |
 | Description | Identifieur de hash interactif : coller un hash, obtenir la liste des algorithmes probables (MD5, SHA, crypt() Unix, WordPress, NTLM...) |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Identification de hash (pré-cracking) |
 | Type d'outil | CLI (100 % interactif) |
 | Licence | GPLv3 |
@@ -49,7 +49,7 @@ doc: https://gitlab.com/kalilinux/packages/hash-identifier
 
 ---
 
-## 🎯 Concept
+## Concept
 
 hash-identifier (par Zion3R, packagé dans Kali) est l'identifieur de hash le plus simple du paysage : un outil **100 % interactif** qui attend que tu colles un hash puis te liste les formats possibles en se basant sur sa base de signatures (longueur, caractères, préfixes).
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,14 +136,14 @@ git clone https://github.com/blackploit/hash-identifier.git
 cd hash-identifier && python3 hash-id.py
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Nécessite simplement **Python 3** ; aucun paquet supplémentaire.
 > - L'outil attend une saisie **interactive** : sans stdin (tty), prévoir `echo <hash> | hash-identifier`.
 > - Sur certains terminaux, le prompt affiche mal les accents : c'est purement cosmétique.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 hash-identifier n'a **aucune configuration** : ni fichier de config, ni variable d'environnement, ni option de réglage. Tout le comportement est codé en dur dans `hash-id.py`.
 
@@ -158,7 +158,7 @@ hash-identifier n'a **aucune configuration** : ni fichier de config, ni variable
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Un seul fichier** : `hash-id.py`, script Python sans dépendance externe (stdlib uniquement : `hashlib`, `re`, `sys`).
 - **Base de signatures** : une table statique associant chaque format à une **regex** (longueur + jeu de caractères + préfixes optionnels). Le script teste le hash saisi contre chaque règle et collecte les correspondances.
@@ -169,7 +169,7 @@ hash-identifier n'a **aucune configuration** : ni fichier de config, ni variable
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -202,7 +202,7 @@ for h in $(cat fuite.txt); do echo "$h" | hash-identifier | grep -oP '(?<=\[ ).*
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -215,7 +215,7 @@ for h in $(cat fuite.txt); do echo "$h" | hash-identifier | grep -oP '(?<=\[ ).*
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -252,7 +252,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt  # crack ciblé
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer le hash** — ex. un hash depuis `/etc/passwd`, un champ `password` d'une fuite SQL, un hash de session.
 2. **Lancer hash-identifier et coller le hash** :
@@ -278,7 +278,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt  # crack ciblé
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Tri rapide en cours d'engagement
 
@@ -307,7 +307,7 @@ for h in $(cat fuite.txt); do echo "$h" | hash-identifier | grep -oP '(?<=\[ ).*
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -319,7 +319,7 @@ for h in $(cat fuite.txt); do echo "$h" | hash-identifier | grep -oP '(?<=\[ ).*
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -333,7 +333,7 @@ for h in $(cat fuite.txt); do echo "$h" | hash-identifier | grep -oP '(?<=\[ ).*
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -370,7 +370,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — trier un fichier de hashes et garder la première réponse
@@ -388,7 +388,7 @@ for h in open("hashes.txt").read().split():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sortie **texte brut** : un en-tête `Possible Hashs:` suivi des formats probables sur une ligne chacun.
 
@@ -413,7 +413,7 @@ print(formats)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat / John → réutilisation
@@ -424,12 +424,12 @@ Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat 
 - [[Outil - hashcat]] — cracking GPU : `hashcat -m <mode> -a 0 hashes.txt wordlist.txt`
 - [[Outil - John the Ripper]] — cracking CPU, formats d'audit
 - [[Outil - SecLists]] — wordlists pour l'attaque de dictionnaire
-- [[Tools|🧰 Outils]] global
-- [[Techniques/Password Cracking|🔓 Password Cracking]] · [[Techniques/Dump NTDS.dit|🗄️ Dump NTDS.dit]] · [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]]
+- [[Tools| Outils]] global
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Dump NTDS.dit| Dump NTDS.dit]] · [[Techniques/Pass-the-Hash| Pass-the-Hash]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -443,7 +443,7 @@ Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat 
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Quasi instantané** : une simple recherche en table de signatures, aucune dépendance lourde ; le tri d'un hash prend < 1 s.
 - **Par batch** : via le pipe stdin, un fichier de quelques centaines de hashes se traite en quelques secondes (coût = démarrage du processus Python par hash dans une boucle).
@@ -454,7 +454,7 @@ Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat 
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -480,7 +480,7 @@ Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Aucun privilège requis** : script Python simple, pas de root, pas de télémétrie, pas de téléchargement réseau au runtime.
 - **Confidentialité** : l'outil est **local** — aucun hash n'est envoyé à l'extérieur (contrairement aux services en ligne) ; à privilégier pour des données sensibles.
@@ -489,7 +489,7 @@ Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat 
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Base de signatures très ancienne** : les formats récents (KDF applicatifs, crypt() de certaines distributions) peuvent manquer.
 - **Pas de modes hashcat/John** en sortie : contrairement à hashid/Name-That-Hash, il ne prépare pas directement le crack.
@@ -500,7 +500,7 @@ Dump (SAM/NTDS/BDD) → hash-identifier → hashid / Name-That-Hash → hashcat 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer (interactif), puis coller le hash
@@ -521,7 +521,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -534,7 +534,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -547,9 +547,9 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise-le comme **première passe** de tri, puis confirme avec `hashid -m` (modes hashcat) avant de lancer le crack.
 > - Dans un script, le mode `echo ... | hash-identifier` permet d'automatiser le tri d'un fichier de hashes.
 > - Note le contexte (source du hash, sel visible, encodage) : ça vaut mieux qu'une identification purement algorithmique.
@@ -557,7 +557,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 > - Le prompt affiche un récapitulatif des premiers formats probables : s'il hésite entre plusieurs (ex. MD5/NTLM), copie le hash dans `hashid -m -j` pour trancher.
 > - Vérifie avec un hash dont tu connais la claire (ex. `echo -n "azerty" | md5sum`) : si l'outil renvoie la bonne famille, ta base d'identification est fiable.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La base de signatures est **très ancienne** : les formats récents (KDF modernes, crypt() de certaines distributions) peuvent manquer.
 > - Il n'affiche **pas de modes hashcat/John** : c'est un outil de tri, pas un outil de préparation de crack (contrairement à hashid/Name-That-Hash).
 > - Rien ne distingue un **MD5 d'un NTLM** (32 hex) à l'œil : sans recoupement, tu peux lancer le mauvais mode et « ne rien trouver » sur un hash pourtant simple.
@@ -566,7 +566,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -587,4 +587,4 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - hashid|hashid]] · [[Outils/Outil - Name-That-Hash|Name-That-Hash]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - hashid|hashid]] · [[Outils/Outil - Name-That-Hash|Name-That-Hash]]

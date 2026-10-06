@@ -1,11 +1,11 @@
 ---
 title: "Outil - nikto"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 2.6.1 (juillet 2026)
 licence: GPL-3.0 (code) / base de données séparée
@@ -16,20 +16,20 @@ site: https://cirt.net/Nikto2
 doc: https://github.com/sullo/nikto/wiki
 ---
 
-# 🔍 nikto — Scanner de serveurs web (Perl)
+# nikto — Scanner de serveurs web (Perl)
 
 > [!info] **En 1 phrase**
 > nikto est un scanner de serveurs web ancien mais efficace pour détecter fichiers dangereux, versions obsolètes et misconfigurations.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | nikto |
 | Description | Scanner de serveurs web qui teste fichiers dangereux, CGIs, versions obsolètes, mauvaises configurations SSL et méthodes HTTP — via une base de signatures (8000+ checks) |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Scanner de serveurs web / énumération de fichiers |
 | Fonction principale | Détecter les problèmes de configuration et les fichiers exposés d'un serveur web |
 | Type d'outil | CLI (Perl) |
@@ -48,7 +48,7 @@ doc: https://github.com/sullo/nikto/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 nikto existe depuis le début des années 2000 et reste utile pour son approche large : il teste le serveur web, les logiciels identifiés, les fichiers par défaut et les chemins dangereux (backups, fichiers d'installation, CGIs). Sa base de tests `program/databases/db_tests` recense des milliers de checks. Il est écrit en Perl et fonctionne sans dépendance lourde, ce qui le rend simple à déployer sur n'importe quel poste.
 
@@ -64,7 +64,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 - **Scanning de signatures** : nikto envoie des milliers de requêtes HTTP et compare les réponses à sa base de tests (chemins, en-têtes, versions, messages d'erreur).
 - **Détection de la page 404** : pour éviter les faux positifs, nikto identifie d'abord la « vraie » page d'erreur 404 du serveur et ignore les réponses qui lui ressemblent.
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian / Ubuntu / Kali
@@ -111,7 +111,7 @@ docker run --rm -v $(pwd):/tmp ghcr.io/sullo/nikto:latest \
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Variables de configuration (`program/nikto.conf`)
 
@@ -144,7 +144,7 @@ nikto -nocheck -h http://10.10.10.10
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 nikto est un programme Perl structuré autour de plugins et d'un moteur de tests :
 
@@ -171,7 +171,7 @@ nikto/
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes de base
 
@@ -221,7 +221,7 @@ nikto -h liste_hotes.txt -p 80,443 -o rapport.json -Format json
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Options générales
 
@@ -303,7 +303,7 @@ nikto -h liste_hotes.txt -p 80,443 -o rapport.json -Format json
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -363,7 +363,7 @@ nikto -h hotes.txt -p 80,443 -Pause 2 -evasion 7 -o rapport.json -Format json
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer la base** — s'assurer que la base de tests est à jour et saine :
    ```bash
@@ -395,7 +395,7 @@ nikto -h hotes.txt -p 80,443 -Pause 2 -evasion 7 -o rapport.json -Format json
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Scan derrière un vhost avec authentification
 
@@ -447,7 +447,7 @@ nikto -h hotes.txt -p 80,443 -Format json -o inventaire.json
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -460,7 +460,7 @@ nikto -h hotes.txt -p 80,443 -Format json -o inventaire.json
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -473,7 +473,7 @@ nikto -h hotes.txt -p 80,443 -Format json -o inventaire.json
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -533,7 +533,7 @@ rule Nikto_Installed {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Scan périodique avec rapport daté (cron / planificateur)
@@ -582,7 +582,7 @@ jobs:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 nikto supporte 7 formats de rapport : **csv, json, htm, sql, sqld, txt, xml** (spécifiables en plusieurs avec `-Format htm,json,txt`).
 
@@ -600,7 +600,7 @@ jq -r '.[] | select(.status == "200") | .url' scan.json
 grep -oE 'name="[^"]+"' scan.xml | sort -u
 ```
 
-> [!warning] ⚠️ Changements de format en 2.6.0
+> [!warning] Changements de format en 2.6.0
 > Les formats **JSON et XML** ont été réécrits : les parsers et intégrations existants peuvent être impactés. Vérifier ses scripts après migration.
 
 > [!note] À vérifier
@@ -608,7 +608,7 @@ grep -oE 'name="[^"]+"' scan.xml | sort -u
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 nikto -> proxy (Burp/ZAP) -> trafic contrôlé et rejouable
@@ -618,7 +618,7 @@ nikto -> rapports JSON/XML -> SIEM / pipeline d'automatisation
 nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - nuclei]] — scanner de vulnérabilités à templates, complément de validation
 - [[Outil - gobuster]] / [[Outil - ffuf]] — énumération de répertoires en profondeur après les pistes de nikto
 - [[Outil - Nmap]] — découverte des ports web et des versions serveur
@@ -626,7 +626,7 @@ nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -640,7 +640,7 @@ nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Mono-threadé par hôte** : nikto envoie les requêtes séquentiellement sur une cible ; les scans massifs se parallélisent en lançant plusieurs instances sur des listes d'hôtes distinctes.
 - **Optimisations 2.6.0** : environ **10 % de scans plus rapides** grâce à des optimisations du moteur central.
@@ -654,7 +654,7 @@ nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -690,7 +690,7 @@ nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Base de tests non GPL** : les fichiers de `databases/` ont une licence séparée — ne pas redistribuer hors du package officiel.
 - **Credentials visibles** : l'option `-id` expose le mot de passe dans l'historique du shell et la ligne de commande (`ps`) — utiliser un fichier de config ou des variables d'env en contexte sensible.
@@ -701,7 +701,7 @@ nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de crawl** : nikto ne parcourt pas les applications, n'exécute pas de JavaScript et ne soumet pas de formulaires.
 - **Pas d'authentification applicative** : seuls les tokens HTTP (Basic, cookies) sont supportés, pas les logins d'application.
@@ -713,7 +713,7 @@ nikto -> SQL (sqld) -> insertion directe en base de gestion de vulnérabilités
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan de base
@@ -753,7 +753,7 @@ docker run --rm ghcr.io/sullo/nikto:latest -h http://10.10.10.10
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -766,7 +766,7 @@ docker run --rm ghcr.io/sullo/nikto:latest -h http://10.10.10.10
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -779,9 +779,9 @@ docker run --rm ghcr.io/sullo/nikto:latest -h http://10.10.10.10
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lance `nikto -dbcheck` et `nikto -Version` avant chaque engagement pour valider la base et les versions.
 > - Utilise `-Tuning` pour réduire le bruit : par défaut nikto teste un maximum de catégories.
 > - Passe par un proxy (`-useproxy`) pour contrôler et rejouer tout le trafic émis.
@@ -789,7 +789,7 @@ docker run --rm ghcr.io/sullo/nikto:latest -h http://10.10.10.10
 > - Croise systématiquement les résultats avec [[Outil - nuclei]] : nikto donne l'inventaire, nuclei valide.
 > - Les matchers DSL (`BODY:`, `HEADER:`, `COOKIE:`, `CODE:`) permettent d'écrire des tests très précis pour des environnements particuliers.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - nikto est bruyant et basé sur des signatures anciennes : ne t'y fie pas seul. Traite-le comme un complément de nuclei, pas comme une source de vérité.
 > - Les résultats hors `-Tuning` peuvent être trompeurs (faux positifs massifs sur les serveurs durcis).
 > - Sans `-vhost`, nikto scan l'IP : sur un serveur multi-sites, il peut rater tout le contenu servi selon le Host.
@@ -798,7 +798,7 @@ docker run --rm ghcr.io/sullo/nikto:latest -h http://10.10.10.10
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -820,4 +820,4 @@ docker run --rm ghcr.io/sullo/nikto:latest -h http://10.10.10.10
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - nuclei|Nuclei]] · [[Outil - gobuster|Gobuster]] · [[Outil - Nmap|Nmap]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/Virtual Hosts|Virtual Hosts]]
+**Liens :** [[Tools| Outils]] · [[Outil - nuclei|Nuclei]] · [[Outil - gobuster|Gobuster]] · [[Outil - Nmap|Nmap]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/Virtual Hosts|Virtual Hosts]]

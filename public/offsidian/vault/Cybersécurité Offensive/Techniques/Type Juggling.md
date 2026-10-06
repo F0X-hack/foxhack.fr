@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔢 Type Juggling (PHP)
+# Type Juggling (PHP)
 
 > [!info] **En 1 phrase**
 > Le Type Juggling = PHP **convertit automatiquement les types** lors d'une comparaison **lâche** (`==`)
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -38,7 +38,7 @@ flowchart LR
     G --> H
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > PHP est un langage **à types faibles** : avec `==` il « devine l'intention du programmeur » et
 > **convertis** les opérandes avant de comparer. Si l'attaquant contrôle une des deux variables
 > (POST, GET, cookie, JSON), il peut forcer une valeur qui **s'égalise** avec une autre (ex : un hash
@@ -46,7 +46,7 @@ flowchart LR
 
 ---
 
-## ⚖️ `==` vs `===`
+## `==` vs `===`
 
 ```php
 <?php
@@ -61,12 +61,12 @@ var_dump(0 === 'admin');   // bool(false) — toujours
 - **Lâche** : `==` / `!=` → même **valeur** (avec conversion de type).
 - **Strict** : `===` / `!==` → même **valeur ET même type**.
 
-> ⚠️ Les règles de conversion s'appliquent **aussi** à `switch()`, `in_array()`, `array_search()`,
+> Les règles de conversion s'appliquent **aussi** à `switch()`, `in_array()`, `array_search()`,
 > `sort()`… toute comparaison interne utilisant `==`.
 
 ---
 
-## 🧮 Tableau des comparaisons lâches (par version)
+## Tableau des comparaisons lâches (par version)
 
 ```txt
 +--------------------------------------------+----------+----------+----------+
@@ -90,7 +90,7 @@ var_dump(0 === 'admin');   // bool(false) — toujours
 +--------------------------------------------+----------+----------+----------+
 ```
 
-> [!warning] ⚠️ **Piège n°1 (souvent mal documenté)**
+> [!warning] **Piège n°1 (souvent mal documenté)**
 > Beaucoup d'articles (PATT inclus) affirment que PHP 8 « tue » les magic hashes.
 > **FAUX** : `md5('240610708') == md5('QNKCDZO')` retourne **toujours `true`** en PHP 8.x
 > (vérifié 3v4l de 5.3 → 8.5), car **deux numeric-strings** sont toujours comparées numériquement.
@@ -98,7 +98,7 @@ var_dump(0 === 'admin');   // bool(false) — toujours
 
 ---
 
-## 🔢 Strings → nombres : comment PHP convertit
+## Strings → nombres : comment PHP convertit
 
 ```txt
 String NUMÉRIQUE (reconnue par PHP) :
@@ -134,7 +134,7 @@ Hexadécimal (0x…) :
 
 ---
 
-## ✨ Magic Hashes
+## Magic Hashes
 
 > Si un hash (hexadécimal, en minuscules) commence par **`0e`** suivi **uniquement de chiffres**
 > (regex `^0+e[0-9]+$`), PHP l'interprète en **notation scientifique** → valeur `0.0`.
@@ -186,13 +186,13 @@ var_dump('0e123' == '0e456');                    // bool(true)  (toutes versions
 | MD4 | `gH0nAdHk` | `0e096229559581069251163783434175` |
 | MD4 | `IiF+hTai` | `00e90130237707355082822449868597` |
 
-> [!tip] 💡 **Forme générale** : `0e…`, mais aussi `00e…`, `000e…` (mantisse = plusieurs zéros) et
+> [!tip] **Forme générale** : `0e…`, mais aussi `00e…`, `000e…` (mantisse = plusieurs zéros) et
 > `0e-…` / `0e+…` (signe d'exposant) valent tous **0**. Regex complète : `^0+[eE][+-]?[0-9]+$`.
 > Pour un **digest hexadécimal** (md5/sha1), seules les formes `0e<chiffres>` / `00e<chiffres>` existent.
 
 ---
 
-## 🚪 Bypass d'authentification
+## Bypass d'authentification
 
 ### `md5(...) == 0`
 
@@ -265,7 +265,7 @@ $cookie = ['username' => 'admin', 'expiration' => 1539805986, 'hmac' => '0'];
 
 ---
 
-## 🧨 Magic hashes « des autres fonctions » & vraies collisions
+## Magic hashes « des autres fonctions » & vraies collisions
 
 ### Hashs qui s'égalisent entre eux (≠ même digest)
 
@@ -290,20 +290,20 @@ d131dd02c5e6eec4693d9a0698aff95c2fcab58712467eab4004583eb8fb7f8955ad340609f4b302
 d131dd02c5e6eec4693d9a0698aff95c2fcab50712467eab4004583eb8fb7f8955ad340609f4b30283e4888325f1415a085125e8f7cdc99fd91dbd7280373c5bd8823e3156348f5bae6dacd436c919c6dd53e23487da03fd02396306d248cda0e99f33420f577ee8ce54b67080280d1ec69821bcb6a8839396f965ab6ff72a70
 ```
 
-> [!warning] ⚠️ SHA-1 est aussi cassé (SHAttered, 2017) mais les collisions pratiques
+> [!warning] SHA-1 est aussi cassé (SHAttered, 2017) mais les collisions pratiques
 > (chosen-prefix, formats PDF/X.509) restent lourdes à produire. SHA-2/SHA-3 : pas de collision connue.
 
 ### Utilité par version PHP (résumé)
 
 | Version | Magic hashes `0e…` | `0 == "abc"` | `md5([])/strcmp([])` | `0x…` hex | bcrypt `== 0` |
 |---|---|---|---|---|---|
-| PHP 5.x | ✅ | ✅ | ✅ (NULL) | ✅ | ✅ |
-| PHP 7.x | ✅ | ✅ | ✅ (NULL) | ❌ | ✅ |
-| PHP 8+ | ✅ (hash vs hash ET vs 0) | ❌ | ❌ (TypeError) | ❌ | ❌ |
+| PHP 5.x | | | (NULL) | | |
+| PHP 7.x | | | (NULL) | | |
+| PHP 8+ | (hash vs hash ET vs 0) | | (TypeError) | | |
 
 ---
 
-## 🐛 Comparison bugs (fonctions & structures)
+## Comparison bugs (fonctions & structures)
 
 ### `strcmp()` → NULL (PHP ≤ 7.4)
 
@@ -367,7 +367,7 @@ if ($arr == 'admin') { … }    // jamais true — PAS le bon vecteur ici
 
 ---
 
-## 🚀 PHP 8 — changements (RFC « Saner string to number comparison » + « Consistent type errors »)
+## PHP 8 — changements (RFC « Saner string to number comparison » + « Consistent type errors »)
 
 | Comparaison | PHP 7 | PHP 8 |
 |---|---|---|
@@ -383,13 +383,13 @@ if ($arr == 'admin') { … }    // jamais true — PAS le bon vecteur ici
 | `switch(0) { case "admin": }` | match | **pas de match** |
 | `password_hash(...) == 0` | true | **false** |
 
-> [!tip] 💡 **Ce qui reste exploitable en PHP 8** : magic hashes (`hash == 0`, `hash == hash`),
+> [!tip] **Ce qui reste exploitable en PHP 8** : magic hashes (`hash == 0`, `hash == hash`),
 > `'1e3' == 1000`, `'0e1' == 0`, `true == "n'importe quoi"`, `null == ''`, et les collisions
 > MD5 réelles. Toujours **fingerprinter la version** (`X-Powered-By`, erreurs, `/phpinfo`).
 
 ---
 
-## 🛠️ Outils & scripts
+## Outils & scripts
 
 ### Générer un magic hash (brute force `0e…`)
 
@@ -442,7 +442,7 @@ python main.py -l 8 -s "SALT" -a md5 -m append
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -458,9 +458,9 @@ python main.py -l 8 -s "SALT" -a md5 -m append
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Comment tester si un hash est « magique »**
+> [!tip] **Comment tester si un hash est « magique »**
 > ```php
 > var_dump($hash == 0);                     // true → magic
 > preg_match('/^0+e[0-9]+$/i', $hash);      // true → magic (digest hex)
@@ -469,14 +469,14 @@ python main.py -l 8 -s "SALT" -a md5 -m append
 > [[ "$h" =~ ^0+e[0-9]+$ ]] && echo MAGIC
 > ```
 
-> [!tip] 💡 **Ordre d'attaque**
+> [!tip] **Ordre d'attaque**
 > 1. Fingerprinter la version PHP (headers, erreurs) — un payload PHP 7 peut casser sur PHP 8.
 > 2. Repérer les `==`/`!=` dans le code source (grep) : sur hash, password, token, hmac.
 > 3. Tester dans l'ordre : `0e`-hash (240610708, QNKCDZO…), `0`/`true` via JSON,
 >    `password[]=x` (strcmp/md5 array), `'1e3'`, `0x…` (PHP 5).
 > 4. Vérifier chaque hypothèse localement (`php -r`) dans la bonne version.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **PHP 8 ≠ safe pour les magic hashes** : `$hash_0e == 0` et `hash == hash` fonctionnent
 >   toujours (numeric-strings). PATT se trompe sur ce point.
 > - `'0e123' == '0e456'` → **true** ; mais `'0e123' === '0e456'` → false. Le strict change tout.
@@ -489,7 +489,7 @@ python main.py -l 8 -s "SALT" -a md5 -m append
 > - La brute force HMAC/timestamp dépend de la **clé** et de l'**algo** : re-bruteforcer à chaque
 >   cible (le `1539805986` de PATT marche pour clé vide + `admin|`).
 
-> [!tip] 💡 **Comparaisons à connaître par cœur**
+> [!tip] **Comparaisons à connaître par cœur**
 > ```
 > '' == 0 == false == NULL    → true        'abc' == 0      → true (PHP ≤ 7)
 > '0' == false                → true        '123a' == 123   → true (PHP ≤ 7)
@@ -500,18 +500,18 @@ python main.py -l 8 -s "SALT" -a md5 -m append
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - Root-Me — PHP — Type Juggling : https://www.root-me.org/en/Challenges/Web-Server/PHP-type-juggling
 - Root-Me — PHP — Loose Comparison : https://www.root-me.org/en/Challenges/Web-Server/PHP-Loose-Comparison
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[NoSQL|🍃 NoSQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Type Juggling](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Type%20Juggling/README.md)
-- 📚 Réfs : [Magic Hashes (WhiteHatSec)](https://www.whitehatsec.com/blog/magic-hashes/) · [spaze/hashes](https://github.com/spaze/hashes) · [(Super) Magic Hashes (Almond)](https://offsec.almond.consulting/super-magic-hash.html) · [PHP 8.0 — incompatible changes](https://www.php.net/manual/en/migration80.incompatible.php)
+- [[Injection SQL| SQLi]]
+- [[Injection de commandes| Injection de commandes]]
+- [[NoSQL| NoSQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Type Juggling](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Type%20Juggling/README.md)
+- Réfs : [Magic Hashes (WhiteHatSec)](https://www.whitehatsec.com/blog/magic-hashes/) · [spaze/hashes](https://github.com/spaze/hashes) · [(Super) Magic Hashes (Almond)](https://offsec.almond.consulting/super-magic-hash.html) · [PHP 8.0 — incompatible changes](https://www.php.net/manual/en/migration80.incompatible.php)

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ☎️ SS7 (Signaling System No. 7)
+# SS7 (Signaling System No. 7)
 
 > [!info] **En 1 phrase**
 > **SS7** est le réseau de signalisation **télécom** qui relie les opérateurs (pour les SMS,
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 - [P1sec/SigFW](https://github.com/P1sec/SigFW) — firewall de signalisation open source (filtrage SS7/Diameter, antispoof, antisniff).
 - [0xc0decafe/ss7MAPer](https://github.com/0xc0decafe/ss7MAPer) — toolkit de (pen-)test des messages **SS7 MAP**.
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 📱 Interception des SMS 2FA
+## Interception des SMS 2FA
 
 SS7 transporte les **SMS**. Un attaquant peut **enregistrer le MSISDN** (numéro) d'une victime
 sur un **MSC** factice. Le **HLR** de l'opérateur de la victime — sorte d'annuaire téléphonique
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🕵️ SMS Spoofing
+## SMS Spoofing
 
 Une des attaques les plus simples et accessibles : **aucun accès au réseau SS7 n'est requis**.
 
@@ -76,7 +76,7 @@ Une des attaques les plus simples et accessibles : **aucun accès au réseau SS7
 
 ---
 
-## 📍 Localisation d'un abonné
+## Localisation d'un abonné
 
 Dans le réseau SS7 d'un opérateur, on peut interroger le **LAC** (Location Area Code) et le
 **Cell ID** d'un abonné — et en déduire une **localisation relativement précise**.
@@ -93,7 +93,7 @@ flowchart TB
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -103,7 +103,7 @@ flowchart TB
 | **Vérifier l'itinérance** | Alertes sur les changements de localisation brutaux |
 | **Chiffrement / authentification** | Migrer vers **Diameter** et SIGTRAN sécurisés, M3UA sécurisé |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - L'interception 2FA nécessite un **accès SS7** (nœud compromis, courtier d'accès) : le spoofing SMS, lui, est accessible à tous.
 - Le champ **"from"** peut contenir n'importe quel texte alphanumérique → parfait pour du phishing hyper crédible.
@@ -113,9 +113,9 @@ flowchart TB
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — SS7](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/signaling-system-7.md)
 > - [ss7MAPer — un toolkit de pentest SS7 (Daniel Mende)](https://insinuator.net/2016/02/ss7maper-a-ss7-pen-testing-toolkit/)
 > - [Exposing The Flaw In Our Phone System (Veritasium)](https://youtu.be/wVyu7NB7W6Y)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Protocole GPS|🛰️ GPS]] · [[Account Takeover|🔓 Account Takeover]] · [[SSRF|🌐 SSRF]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Protocole GPS| GPS]] · [[Account Takeover| Account Takeover]] · [[SSRF| SSRF]]

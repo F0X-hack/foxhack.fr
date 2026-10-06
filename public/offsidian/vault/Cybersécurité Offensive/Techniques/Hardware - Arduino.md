@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🔌 Arduino
+# Arduino
 
 > [!info] **En 1 phrase**
 > L'**Arduino** est la plateforme de prototypage la plus répandue : en hardware
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Arduino / Teensy / STM32"] --> B["GPIO / UART / SPI / I2C"]
@@ -44,7 +44,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Arduino est une plateforme open-source de microcontrôleurs utilisée comme **outil de pentest hardware** : analyseur logique artisanal, scanneur de broches JTAG, pont série UART, émulateur de devices USB. C'est aussi une **cible** : les IoT utilisent des cartes Arduino compatibles (ATmega328P, ESP32, SAMD21) dont le firmware est facilement modifiable et dumpable.
 
@@ -60,7 +60,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Plateformes Arduino
 
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Tableau comparatif des cartes
 
@@ -133,7 +133,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Protocoles supportés par Arduino
 
@@ -154,7 +154,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -200,7 +200,7 @@ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno sketch.ino
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Arduino IDE 2.x — Options clés
 
@@ -223,7 +223,7 @@ board_manager:
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -257,9 +257,9 @@ arduino-cli monitor -p /dev/ttyACM0 -c baudrate=115200
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Analyseur logique artisanal
+### Débutant — Analyseur logique artisanal
 
 ```text
 1. Flasher le firmware logic-analyzer (aster94/logic-analyzer) sur Arduino
@@ -268,7 +268,7 @@ arduino-cli monitor -p /dev/ttyACM0 -c baudrate=115200
 4. Acquérir et décoder UART/SPI/I2C
 ```
 
-### 🟡 Intermédiaire — Scan JTAG avec JTAGenum
+### Intermédiaire — Scan JTAG avec JTAGenum
 
 ```text
 1. Compiler JTAGenum pour Arduino Uno
@@ -283,7 +283,7 @@ arduino-cli compile --fqbn arduino:avr:uno JTAGenum/
 arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno JTAGenum/
 ```
 
-### 🔴 Avancé — Pont USB-UART pour sniffing
+### Avancé — Pont USB-UART pour sniffing
 
 ```python
 #!/usr/bin/env python3
@@ -303,7 +303,7 @@ except KeyboardInterrupt:
     ser.close()
 ```
 
-### ⚫ Expert — Power glitching artisanal
+### Expert — Power glitching artisanal
 
 ```text
 Utilisation d'un Arduino Mega pour du voltage glitching :
@@ -317,7 +317,7 @@ Utilisation d'un Arduino Mega pour du voltage glitching :
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -369,7 +369,7 @@ Avec UART sniff → Extraire credentials, commands
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Scan JTAG complet avec JTAGenum
 
@@ -379,7 +379,7 @@ Avec UART sniff → Extraire credentials, commands
 | **Matériel** | Arduino Uno, résistances 1KΩ, fils, PCB cible |
 | **Étapes** | Flash JTAGenum → Connecter broches suspectes → Lancer scan → Analyser résultats |
 | **Résultat** | Pinout JTAG identifié (TCK/TMS/TDI/TDO) |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -396,11 +396,11 @@ flowchart LR
 | **Matériel** | Arduino Uno, fils, PCB cible |
 | **Étapes** | Connecter Arduino en parallèle sur bus SPI → Logger trafic → Extraire firmware |
 | **Résultat** | Dump de la flash SPI |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -419,7 +419,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -437,7 +437,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -465,7 +465,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -499,7 +499,7 @@ for p in ports:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -521,13 +521,13 @@ pulseview -d arduino:avr:uno -O capture.sr
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - UART|🔌 UART]] — Console série
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] — Bus communication
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] — Debug
-- [[Hardware - Logic Analyzer|📊 Logic Analyzer]] — Analyse signaux
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - UART| UART]] — Console série
+- [[Hardware - I2C et SPI| I2C/SPI]] — Bus communication
+- [[Hardware - JTAG et SWD| JTAG/SWD]] — Debug
+- [[Hardware - Logic Analyzer| Logic Analyzer]] — Analyse signaux
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -537,7 +537,7 @@ pulseview -d arduino:avr:uno -O capture.sr
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -556,7 +556,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -567,7 +567,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -594,7 +594,7 @@ ls /dev/ttyACM*
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -614,7 +614,7 @@ ls /dev/ttyACM*
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -633,7 +633,7 @@ ls /dev/ttyACM*
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -660,7 +660,7 @@ ls /dev/ttyACM*
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -673,7 +673,7 @@ ls /dev/ttyACM*
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -692,7 +692,7 @@ ls /dev/ttyACM*
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Arduino Uno = 5V : ne jamais connecter directement à une cible 3.3V.
 - **Piège 2** : Les clones CH340 nécessitent un pilote spécifique sous Windows.
@@ -709,9 +709,9 @@ ls /dev/ttyACM*
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Arduino](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/arduino.md)
 > - [Arduino — Site officiel](https://www.arduino.cc/)
 > - [Arduino CLI — Documentation](https://arduino.github.io/arduino-cli/)
@@ -740,4 +740,4 @@ ls /dev/ttyACM*
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Logic Analyzer|📊 Logic Analyzer]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Logic Analyzer| Logic Analyzer]]

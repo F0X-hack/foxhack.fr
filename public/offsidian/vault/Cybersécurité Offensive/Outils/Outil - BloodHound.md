@@ -1,11 +1,11 @@
 ---
 title: "Outil - BloodHound"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: CE v9.5.1
 licence: Apache-2.0
@@ -16,20 +16,20 @@ site: https://bloodhound.specterops.io
 doc: https://bloodhound.specterops.io/docs/
 ---
 
-# 👑 BloodHound — Active Directory & Windows
+# BloodHound — Active Directory & Windows
 
 > [!info] **En 1 phrase**
 > BloodHound est un outil de **cartographie graphique d'Active Directory** : il collecte les relations entre utilisateurs, groupes, machines et GPO, puis **calcule les chemins d'attaque** vers le contrôle de domaine.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | BloodHound Community Edition (CE) |
 | Description | Analyse graphique d'Active Directory et d'Azure AD : collecte des relations (membres de groupes, sessions, admins locaux, GPO, ACL) et calcul des chemins d'attaque vers le contrôle du domaine |
-| Catégorie | 👑 Active Directory & Windows |
+| Catégorie | Active Directory & Windows |
 | Sous-catégorie | Post-exploitation / Énumération AD |
 | Type d'outil | Framework (serveur web + API REST + base de graphe) + collecteurs (SharpHound, bloodhound-python, AzureHound) |
 | Licence | Apache-2.0 (BloodHound CE) ; SharpHound : Apache-2.0 ; bloodhound-python : MIT |
@@ -50,7 +50,7 @@ doc: https://bloodhound.specterops.io/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 BloodHound se compose d'un **collecteur** (SharpHound sur Windows, `bloodhound-python` sur Linux, AzureHound pour Azure) et d'un **serveur web** (BloodHound CE) qui stocke les résultats dans une base de graphe **Neo4j** interrogée en **Cypher**. Le collecteur interroge l'annuaire (LDAP), SMB, le registre et WinRM pour extraire : groupes et appartenances (y compris imbrications), sessions actives, administrateurs locaux, GPO, contraintes de délégation, SPN, ACL. On marque ensuite les comptes déjà compromis (`owned`) et on affiche le **plus court chemin** vers `Domain Admins` via des recherches prédéfinies (« Shortest Path from Owned Principals », « Kerberoastable Users »…) ou des requêtes Cypher libres.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -159,13 +159,13 @@ git clone https://github.com/SpecterOps/bloodhound.git && cd bloodhound
 # Voir le Wiki : https://github.com/SpecterOps/BloodHound/wiki/Development
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - BloodHound CE a besoin de **Docker** et de deux services backend : **Neo4j** (graphe) et **PostgreSQL** (métadonnées). Le `docker compose` du repo gère tout.
 > - Le collecteur Python legacy (`bloodhound-python`) dépend d'**Impacket** ; en cas de conflit avec une version système, utiliser un venv ou pipx.
 > - SharpHound a besoin d'un **compte du domaine** et, pour la collecte complète (sessions, admins locaux), de droits **d'administrateur local** sur les cibles.
 > - Ports : UI CE 8080 (http) / 8443 (https optionnel) ; Neo4j interne sur 7474/7687 (conteneur uniquement).
 
-## ⚙️ Configuration
+## Configuration
 
 BloodHound CE n'utilise pas de fichier de configuration unique : la configuration se fait via la **CLI du serveur** (`bloodhound-ce`), le **fichier d'environnement** du docker-compose et l'**UI**. Le collecteur se configure par **flags en ligne de commande** (SharpHound) ou par arguments (bloodhound-python).
 
@@ -183,7 +183,7 @@ BloodHound CE n'utilise pas de fichier de configuration unique : la configuratio
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Collecteurs** : SharpHound (C#, .NET, exécuté sur un poste du domaine) utilise LDAP pour les objets/ACL, SMB pour les admins locaux, NetLogon pour les sessions, et produit un **zip** (JSON + binaires). `bloodhound-python` (Python/Impacket) fait de même depuis Linux via LDAP/SMB/Kerberos. AzureHound (Go) collecte Azure AD.
 - **Serveur BloodHound CE** : monolithe web — backend **Go** exposant une API REST, frontend **React** (rendu de graphe **Sigma.js**), base applicative **PostgreSQL** (métadonnées, tâches, données d'ingestion) et base de graphe **Neo4j** (nœuds/arêtes).
@@ -194,7 +194,7 @@ BloodHound CE n'utilise pas de fichier de configuration unique : la configuratio
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -249,7 +249,7 @@ bloodhound-python -d CORP.LOCAL -u user -k -ns 10.10.10.5 -c All
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -272,7 +272,7 @@ bloodhound-python -d CORP.LOCAL -u user -k -ns 10.10.10.5 -c All
 > [!tip] Options les plus utiles au quotidien
 > `-c All` (collecte complète), `--zipfilename` (nommer le zip), `-ns` (bloodhound-python : DNS du domaine), `-c Session` quand le bruit est un problème.
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -319,7 +319,7 @@ bloodhound-python -d CORP.LOCAL -u svc_backup -H 7a3f5c... -ns 10.10.10.5 -c All
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : vous avez un compte `HANS.DOE` sans privilège dans le domaine `CORP.LOCAL`.**
 
@@ -333,7 +333,7 @@ bloodhound-python -d CORP.LOCAL -u svc_backup -H 7a3f5c... -ns 10.10.10.5 -c All
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Kerberoasting ciblé depuis BloodHound
 
@@ -374,7 +374,7 @@ net user svc_sql N0uv3auMdp /domain
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -387,7 +387,7 @@ net user svc_sql N0uv3auMdp /domain
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -401,7 +401,7 @@ net user svc_sql N0uv3auMdp /domain
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > BloodHound est un outil de **Discovery** (T1087, T1069, T1018, T1482) : il ne réalise pas lui-même l'attaque mais cartographie les cibles des attaques de la phase suivante.
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -417,7 +417,7 @@ net user svc_sql N0uv3auMdp /domain
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -432,7 +432,7 @@ net user svc_sql N0uv3auMdp /domain
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **SharpHound** : génère un zip (`data_YYYYMMDD_HHMMSS.zip`) contenant des fichiers JSON (un par type de collecte : `computers.json`, `users.json`, `sessions.json`, `acls.json`, `groups.json`, …). Le zip peut être déverrouillé par mot de passe (`--zipfilepassword`).
 - **bloodhound-python** : produit un dossier de fichiers JSON (`.json`) à importer, ou un zip selon la version.
@@ -449,7 +449,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème BloodHound |
 |---|---|
@@ -465,7 +465,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -477,7 +477,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -489,7 +489,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -502,7 +502,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Authentification** : les credentials LDAP peuvent être passés en clair en argument → utiliser des variables d'environnement / processus en mémoire, jamais dans les logs.
 - **Stockage** : les zip SharpHound contiennent des données AD sensibles (noms, ACL, sessions) → chiffrer le fichier de sortie (`--zipfilepassword`) et l'effacer après import.
@@ -513,7 +513,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Instantané (snapshot)** : la collecte est un point dans le temps ; les sessions changent, la vue peut être obsolète.
 - **Données manquantes sans privilèges** : les ACL partielles ou l'absence de droits de lecture dégradent la qualité du graphe.
@@ -524,7 +524,7 @@ jq -r '.[] | select(.hasspn==true) | .name' users.json
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Collecte
@@ -554,7 +554,7 @@ RETURN p
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -568,7 +568,7 @@ RETURN p
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Technique de détection | Indicateurs | Remédiation |
 |---|---|---|
@@ -580,7 +580,7 @@ RETURN p
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 > [!warning] Attention
 > - Ne jamais laisser traîner des zip SharpHound en clair : ils contiennent l'intégralité des données AD énumérées (chiffrer la sortie).
@@ -594,7 +594,7 @@ RETURN p
 
 ---
 
-## 📚 References
+## References
 
 - Documentation officielle : https://support.bloodhoundenterprise.io/
 - Blog SpecterOps : https://specterops.io/blog/ (séries *BloodHound Ops* et *BloodHound CE*)
@@ -605,6 +605,6 @@ RETURN p
 - Cours et articles : https://www.thehacker.recipes/ad/movement/domain-persistence/dcsync (et la catégorie AD de The Hacker Recipes)
 - Portail Obsidian `Techniques` : [[DCSync]], [[Golden Ticket]], [[ACL Abuse AD]], [[ADCS et Certificats (ESC)]]
 
-➡️ **Liens :** [[Outil - BloodHound]] | [[Outil - CrackMapExec]] | [[Outil - Impacket]] | [[Outil - Mimikatz]] | [[Outil - Rubeus]] | [[Outil - Evil-WinRM]] | [[Outil - Nmap]]
+**Liens :** [[Outil - BloodHound]] | [[Outil - CrackMapExec]] | [[Outil - Impacket]] | [[Outil - Mimikatz]] | [[Outil - Rubeus]] | [[Outil - Evil-WinRM]] | [[Outil - Nmap]]
 
 

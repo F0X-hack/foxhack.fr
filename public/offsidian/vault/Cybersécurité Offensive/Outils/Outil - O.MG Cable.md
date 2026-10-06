@@ -1,12 +1,12 @@
 ---
 title: "Outil - O.MG Cable"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: "Firmware stable (branche stable du dépôt O.MG-Firmware) ; tiers Basic (Gen 1) et Elite (Gen 3)"
 licence: Logiciel propriétaire (firmware O.MG/Hak5) ; scripts et C2 sous licence libre (repo O-MG)
@@ -17,14 +17,14 @@ site: https://o.mg.lol/
 doc: https://docs.hak5.org/omg-cable/
 ---
 
-# 🔌 O.MG Cable — Le câble espion discret (WiFi + HID)
+# O.MG Cable — Le câble espion discret (WiFi + HID)
 
 > [!info] **En 1 phrase**
 > Un câble de charge USB-C/Lightning parfaitement innocent… mais qui embarque un **implant WiFi** : injection clavier (Duckyscript), **keystroke logging**, exfiltration HTTP et console d'administration accessible sans fil.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -44,7 +44,7 @@ L'O.MG Cable est l'arme du **déguisement physique** : fonctionnel pour charger 
 
 ---
 
-## 🎯 Concept
+## Concept
 
 L'O.MG Cable (Hak5) est un **câble de chargement classique** dans lequel est dissimulé un module sans-fil complet (réseau WiFi configurable, console web, moteur Duckyscript). Il ressemble, se branche et fonctionne comme un câble normal — la cible n'a aucune raison de s'en méfier. Lorsqu'il est alimenté (sur un PC, une borne de charge, un téléphone), l'implant s'active : il crée un **réseau WiFi furtif** (SSID caché, chiffrement), sur lequel l'attaquant se connecte pour ouvrir la **console d'administration** (`http://cable.hid` ou l'app mobile). Depuis cette console, l'attaquant peut :
 - déclencher une **injection de frappes** (Duckyscript 3.0) sur l'appareil branché → shell, malware, exfil ;
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Notion | Détail |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # 1. Activer le câble (livré désactivé par réglementation) :
@@ -117,7 +117,7 @@ python3 c2server.py --help
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres de la console (`http://cable.hid`)
 
@@ -143,7 +143,7 @@ python3 c2server.py --help
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -164,7 +164,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ```bash
 # Payload Duckyscript stocké dans le câble : reverse shell Windows
@@ -189,7 +189,7 @@ ENTER
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description |
 |---|---|
@@ -206,7 +206,7 @@ ENTER
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Basic — reconnaissance rapide du poste
 
@@ -241,7 +241,7 @@ ENTER
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Configuration du câble** — brancher l'O.MG sur une alimentation, rejoindre son AP, ouvrir `http://cable.hid` et régler SSID, exfil HTTP et payloads (Duckyscript).
 2. **Déploiement** — remplacer le câble de charge de la cible ; le câble reste fonctionnel (charge + data) pour ne rien éveiller.
@@ -251,7 +251,7 @@ ENTER
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Injection HID à distance sur un poste branché
 
@@ -302,7 +302,7 @@ Permet de couvrir un open space entier avec un seul point de contrôle.
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Description |
 |---|---|
@@ -314,7 +314,7 @@ Permet de couvrir un open space entier avec un seul point de contrôle.
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Exemple O.MG Cable |
 |---|---|---|
@@ -329,7 +329,7 @@ Permet de couvrir un open space entier avec un seul point de contrôle.
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Signe | Défense |
 |---|---|
@@ -367,7 +367,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script — lister et contrôler les implants depuis le C2 (exemple)
@@ -388,7 +388,7 @@ print("O.MG" in networks and "réseau furtif détecté" or "rien d'anormal")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les résultats d'un O.MG sont les **logs de frappe**, les **screenshots/payloads** et les **réponses du C2**.
 
@@ -405,9 +405,9 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Bash Bunny]] / [[Outil - USB Rubber Ducky]] — écosystème Duckyscript
 - [[Outil - Flipper Zero (USB & radio)]] — BadUSB poche (complément)
 - [[Outil - WiFi Pineapple]] — scan de la zone et rogue AP
@@ -419,7 +419,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Type | Points forts | Points faibles |
 |---|---|---|---|
@@ -432,7 +432,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse d'injection** : jusqu'à **890 touches/s** (Elite) vs 120 touches/s (Basic).
 - **Capacité payload** : 4 000 frappes (Basic) à 1 500 000 (Elite, 300 slots).
@@ -442,7 +442,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Problème : l'implant ne démarre pas
 
@@ -470,7 +470,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : l'implémentation d'un câble espion sur un poste tiers est intrusive — autorisation écrite impérative.
 - **Réglementation** : les appareils sont livrés désactivés ; l'activation est un acte à documenter.
@@ -479,7 +479,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Alimentation obligatoire** : sans USB alimenté (PC éteint, borne morte), l'implant est inerte.
 - **Coût** : plus élevé qu'un BadUSB ; l'O.MG Programmer est requis pour l'activation.
@@ -490,7 +490,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 | Action | Comment |
 |---|---|
@@ -506,7 +506,7 @@ grep -E "(user|login|password|token)" /var/exfil/keys-*.log | sort -u
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 ```bash
 # Exemple : exfil rapide des identifiants Wi-Fi
@@ -524,7 +524,7 @@ python3 -m http.server 8080
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -536,16 +536,16 @@ python3 -m http.server 8080
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Le câble doit être **alimenté** pour que l'implant fonctionne : un PC éteint ou une borne morte neutralise l'attaque — vérifier l'état via la LED.
 > - Utiliser le **SSID caché + chiffrement** et la console sur `http://cable.hid` pour rester discret dans la zone.
 > - Varier les payloads et les fréquences d'exfil : un flux HTTP régulier et prévisible éveille les SOC.
 > - Tester le timing HID sur chaque OS cible avant déploiement (vitesse d'énumération USB variable).
 > - Le modèle Elite apporte le keylogger matériel et le C2 chiffré : choisir le tiers selon l'objectif.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne PAS utiliser le câble comme câble « principal » de sa propre machine en mode logger : les logs concernent l'appareil branché, mais le réseau du câble reste visible (une victime curieuse peut rejoindre `cable.hid`).
 > - Le keystroke logging enregistre **tout** (y compris les saisies d'auto-complétion et les mots de passe) : gérer les données collectées avec précaution (RGPD / périmètre autorisé).
 > - Si le SSID « O.MG » est par défaut, une simple promenade en scan WiFi le révèle : le changer systématiquement avant déploiement.
@@ -554,9 +554,9 @@ python3 -m http.server 8080
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [Hak5 — O.MG Cable (docs)](https://docs.hak5.org/omg-cable/)
 > - [Hak5 — O.MG Cable (boutique)](https://shop.hak5.org/products/omg-cable)
 > - [GitHub — O-MG/O.MG-Firmware](https://github.com/O-MG/O.MG-Firmware)
@@ -565,4 +565,4 @@ python3 -m http.server 8080
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Protocole USB|🔌 Protocole USB]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP & MITM]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Protocole USB| Protocole USB]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP & MITM]]

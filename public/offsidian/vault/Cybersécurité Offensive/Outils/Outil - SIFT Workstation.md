@@ -1,7 +1,7 @@
 ---
 title: "Outil - SIFT Workstation"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -18,20 +18,20 @@ site: https://www.sans.org/tools/sift-workstation/
 doc: https://github.com/teamdfir/sift/blob/main/README.md
 ---
 
-# 🔬 SIFT Workstation — L'investigation numérique avec les outils SANS (DFIR)
+# SIFT Workstation — L'investigation numérique avec les outils SANS (DFIR)
 
 > [!info] **En 1 phrase**
 > SIFT Workstation est une distribution Linux (Ubuntu, SANS) spécialisée dans l'investigation numérique (forensics disque, mémoire et fichiers supprimés), préinstallée avec Autopsy, The Sleuth Kit, Volatility et log2timeline/plaso.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | SIFT Workstation (SANS Investigative Forensic Toolkit) |
 | Description | Distribution Linux d'investigation numérique : forensics disque, mémoire, registre, timeline |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution DFIR / incident response |
 | Fonction principale | Analyser des artefacts forensics (images disque, RAM, registre) après un incident |
 | Type d'outil | Machine virtuelle/ISO préinstallée + installateur Cast |
@@ -52,7 +52,7 @@ doc: https://github.com/teamdfir/sift/blob/main/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 SIFT Workstation est la **boîte à outils DFIR de référence du SANS** : une distribution Ubuntu préinstallée avec les outils majeurs de l'investigation numérique — **Autopsy** (interface graphique), **The Sleuth Kit** (analyse du système de fichiers), **Volatility 3** (mémoire), **plaso/log2timeline** (timeline), **RegRipper** (registre Windows), **bulk_extractor**, **ewfacquire** (acquisition EWF), **Guymager** (imagerie disque). Créée par **Rob Lee** en 2009, elle est maintenue par l'équipe **teamdfir** et s'installe aujourd'hui via **Cast** sur Ubuntu 24.04 LTS.
 
@@ -75,7 +75,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -92,7 +92,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Options d'installation
 
@@ -117,14 +117,14 @@ sansforensics@sift:~$ which autopsy vol3 psort  # etc.
 sansforensics@sift:~$ sudo cast show teamdfir/sift
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'installation Cast nécessite Ubuntu 24.04 et ~30 Go d'espace libre.
 > - L'OVA est mise à jour périodiquement (image du 2026-04-24) : préférer la réinstallation à une mise à jour manuelle complète.
 > - Toujours **monter les images en lecture seule** (`ro`) pour ne pas corrompre l'evidence.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -136,7 +136,7 @@ sansforensics@sift:~$ sudo cast show teamdfir/sift
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 SIFT est un **Ubuntu 24.04 LTS préconfiguré** : les outils sont installés dans le système (via Cast) avec des raccourcis dans le menu « SIFT Workstation ». Autopsy est lancé graphiquement, TSK expose des binaires CLI (`fls`, `istat`, `icat`, `mmls`…), Volatility 3 s'appelle `vol3`, plaso fournit `log2timeline`/`psort`, et RegRipper s'utilise en Perl ou via `rip.pl`.
 
@@ -144,7 +144,7 @@ Au runtime, l'investigateur orchestre ces binaires depuis un terminal : montage 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ vol3 -f mem.dmp windows.netstat
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -219,7 +219,7 @@ vol3 -f mem.dmp windows.netstat
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -257,7 +257,7 @@ psort.py case001.plaso "file_name contains 'exemple'"
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer le lab** — SIFT isolé, dossier de cas.
    ```bash
@@ -287,7 +287,7 @@ psort.py case001.plaso "file_name contains 'exemple'"
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Reconstituer une infection (timeline + artefacts)
 
@@ -319,7 +319,7 @@ strings mem.dmp | grep -i "exemple.com" | sort -u
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -334,7 +334,7 @@ strings mem.dmp | grep -i "exemple.com" | sort -u
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -349,7 +349,7 @@ strings mem.dmp | grep -i "exemple.com" | sort -u
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -395,7 +395,7 @@ rule Suspicious_PE_RunKey {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script — analyse statique en lot d'un dossier d'images
@@ -417,7 +417,7 @@ with open("timeline.csv") as fh:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les outils de SIFT produisent des sorties texte, CSV et fichiers binaires à analyser.
 
@@ -442,9 +442,9 @@ for line in open("hashes.txt"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Autopsy]] — interface graphique sur TSK
 - [[Outil - Volatility]] — analyse de la mémoire
 - [[Outil - Flare VM]] — analyse approfondie des échantillons Windows
@@ -462,7 +462,7 @@ Image → mmls/fls → timeline (plaso) → mémoire (vol3) → registre (rip) �
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -475,7 +475,7 @@ Image → mmls/fls → timeline (plaso) → mémoire (vol3) → registre (rip) �
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ressources** : 4 Go de RAM minimum (8 Go conseillés avec Autopsy + Volatility), 60+ Go de disque (les images forensics sont volumineuses).
 - **Autopsy** est l'outil le plus lourd : indexation longue sur les grosses images.
@@ -488,7 +488,7 @@ Image → mmls/fls → timeline (plaso) → mémoire (vol3) → registre (rip) �
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -518,7 +518,7 @@ Image → mmls/fls → timeline (plaso) → mémoire (vol3) → registre (rip) �
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation** : lab isolé (Host-Only) ; les images peuvent contenir du code malveillant actif.
 - **Lecture seule** : ne jamais analyser un disque d'origine en écriture ; toujours une image ou un montage `ro`.
@@ -529,7 +529,7 @@ Image → mmls/fls → timeline (plaso) → mémoire (vol3) → registre (rip) �
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Analyse des systèmes Windows limitée aux artefacts** : pas de débogage/RE complet (Flare VM est requise).
 - **Images très volumineuses** : espace disque et temps d'indexation importants.
@@ -540,7 +540,7 @@ Image → mmls/fls → timeline (plaso) → mémoire (vol3) → registre (rip) �
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Acquisition
@@ -569,7 +569,7 @@ bulk_extractor -a case001.E01 -o bulk_out/
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -582,7 +582,7 @@ bulk_extractor -a case001.E01 -o bulk_out/
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -594,15 +594,15 @@ bulk_extractor -a case001.E01 -o bulk_out/
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise `mmls` pour trouver le bon offset AVANT `fls` : le plus courant est 2048, mais il varie.
 > - Construis la timeline avec **plaso** pour corréler fichiers, registre et événements : c'est la force de SIFT.
 > - Couple SIFT avec **Flare VM** : SIFT pour l'investigation globale, Flare pour l'analyse fine du binaire.
 > - Prends un **snapshot propre** avant chaque acquisition : l'analyse peut modifier l'environnement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne jamais **monter l'image en écriture** : utilise `mount -o ro,loop` ou travaille sur une copie.
 > - Ne pas analyser sur le **disque d'origine** : l'acquisition doit toujours être une copie légale.
 > - Volatility 3 est **lent** sur les grosses captures : ne lance pas tous les plugins inutilement.
@@ -610,7 +610,7 @@ bulk_extractor -a case001.E01 -o bulk_out/
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -634,8 +634,8 @@ bulk_extractor -a case001.E01 -o bulk_out/
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://github.com/teamdfir/sift
 > - https://www.sans.org/tools/sift-workstation/
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Autopsy|🔍 Autopsy]] · [[Outil - Volatility|🧠 Volatility]] · [[Outil - Flare VM|🔥 Flare VM]] · [[Outil - REMnux|🧫 REMnux]] · [[Outil - Ghidra|🔧 Ghidra]] · [[Outil - Wireshark|📡 Wireshark]] · [[Outil - FTK Imager|🛠️ FTK Imager]]
+**Liens :** [[Tools| Outils]] · [[Outil - Autopsy| Autopsy]] · [[Outil - Volatility| Volatility]] · [[Outil - Flare VM| Flare VM]] · [[Outil - REMnux| REMnux]] · [[Outil - Ghidra| Ghidra]] · [[Outil - Wireshark| Wireshark]] · [[Outil - FTK Imager| FTK Imager]]

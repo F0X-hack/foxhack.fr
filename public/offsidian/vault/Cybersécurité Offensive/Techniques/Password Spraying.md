@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌧️ Password Spraying
+# Password Spraying
 
 > [!info] **En 1 phrase**
 > Password Spraying = tester **1 mot de passe** contre **beaucoup de comptes** (au lieu de beaucoup
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -29,13 +29,13 @@ flowchart LR
     C --> D[Accès domaine]
 ```
 
-> [!info] 💡 **Pourquoi le "spray" et pas le brute-force**
+> [!info] **Pourquoi le "spray" et pas le brute-force**
 > AD verrouille un compte après ~5 échecs. Brute-forcer UN compte = lockout (bruyant, détecté).
 > Tester un mdp commun sur TOUS les comptes = 1 essai par compte = rarement lockout.
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Récupérer une liste d'utilisateurs** : RID brute, LDAP, BloodHound, emails OSINT.
 2. **Choisir un mot de passe** réaliste pour la politique (ex : `Automne2026!`).
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # NetExec - spray sur une liste d'utilisateurs
@@ -59,7 +59,7 @@ kerbrute passwordspray -d corp.local users.txt 'Automne2026!'
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -70,18 +70,18 @@ kerbrute passwordspray -d corp.local users.txt 'Automne2026!'
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **La temporalité**
+> [!tip] **La temporalité**
 > Espace de 15-30 min entre chaque mot de passe. 2-3 mots de passe max : au-delà, tu ressembles à un brute-forceur.
 
-> [!warning] ⚠️ **Piège** : si tu trouves un compte, **arrête le spray** sur les autres (plus le droit) et connecte-toi directement.
+> [!warning] **Piège** : si tu trouves un compte, **arrête le spray** sur les autres (plus le droit) et connecte-toi directement.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[LLMNR-NBT-NS Poisoning|🎙️ LLMNR/NBT-NS Poisoning]]
-- [[Pass-the-Hash|🔑 Pass-the-Hash]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]]
+- [[Pass-the-Hash| Pass-the-Hash]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

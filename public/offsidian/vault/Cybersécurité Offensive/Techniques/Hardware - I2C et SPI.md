@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 🔗 I2C et SPI
+# I2C et SPI
 
 > [!info] **En 1 phrase**
 > **I2C** et **SPI** sont les bus internes qui relient le microcontrôleur à ses périphériques
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -34,7 +34,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     MCU["Microcontrôleur"] -->|"I2C: SDA/SCL"| EEPROM["EEPROM"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > I2C et SPI sont les bus internes des SoC pour communiquer avec EEPROMs, capteurs et flash. En pentest : lire/modifier config, extraire secrets, dumper firmware depuis la flash SPI.
 
@@ -58,7 +58,7 @@ flowchart TB
     style C fill:#c8e6c9
 ```
 
-> [!info] 💡 **Ce qu'on peut faire**
+> [!info] **Ce qu'on peut faire**
 > - **Scanner** le bus → périphériques (adresses I2C).
 > - **Lire** EEPROMs → secrets, MAC, config.
 > - **Écrire** EEPROM → modifier config, bypass checks.
@@ -66,7 +66,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### I2C
 
@@ -101,7 +101,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -136,7 +136,7 @@ EEPROM I2C (SOIC-8) :        Flash SPI (SOIC-8) :
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### I2C
 
@@ -171,7 +171,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ```bash
 # Raspberry Pi : activer I2C/SPI
@@ -189,7 +189,7 @@ flashrom -p ch341a_spi -r dump.bin -c "W25Q64.V"
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | I2C | SPI |
 |---|---|---|
@@ -199,7 +199,7 @@ flashrom -p ch341a_spi -r dump.bin -c "W25Q64.V"
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ```bash
 # I2C : scan + dump
@@ -218,9 +218,9 @@ spi1> read_id
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Scan I2C
+### Débutant — Scan I2C
 
 ```bash
 sudo i2cdetect -y 1
@@ -228,7 +228,7 @@ sudo i2cdetect -y 1
 sudo i2cdump -y 1 0x50 b
 ```
 
-### 🟡 Intermédiaire — Dump SPI
+### Intermédiaire — Dump SPI
 
 ```bash
 flashrom -p ch341a_spi -r flash_dump.bin -c "W25Q64.V"
@@ -236,7 +236,7 @@ binwalk flash_dump.bin
 strings flash_dump.bin | grep -i password
 ```
 
-### 🔴 Avancé — Script Python I2C
+### Avancé — Script Python I2C
 
 ```python
 import smbus2
@@ -251,7 +251,7 @@ with open("eeprom.bin", "wb") as f:
 bus.close()
 ```
 
-### ⚫ Expert — Capture sigrok
+### Expert — Capture sigrok
 
 ```bash
 sigrok-cli -d fx2lafw --config samplerate=1000000 --samples 5000000 \
@@ -260,7 +260,7 @@ sigrok-cli -d fx2lafw --config samplerate=1000000 --samples 5000000 \
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -282,7 +282,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Cloner EEPROM routeur
 
@@ -291,7 +291,7 @@ flowchart TB
 | **Objectif** | Copier config d'un routeur sur un autre |
 | **Matériel** | CH341A, pinces |
 | **Étapes** | Dump EEPROM A → analyser → écrire sur B |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Bypass vérification via EEPROM
 
@@ -300,7 +300,7 @@ flowchart TB
 | **Objectif** | Modifier flag de check dans EEPROM |
 | **Matériel** | Bus Pirate, pinces |
 | **Étapes** | Dump → identifier byte check → modifier → reflash |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -313,7 +313,7 @@ flowchart LR
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -329,7 +329,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -339,7 +339,7 @@ flowchart LR
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -350,7 +350,7 @@ flowchart LR
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 import smbus2
@@ -378,7 +378,7 @@ bus.close()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 binwalk dump.bin
@@ -389,11 +389,11 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - I2C et SPI]] (cette fiche)
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
 
 | Outil | Usage |
 |---|---|
@@ -404,7 +404,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -414,7 +414,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | I2C | SPI |
 |---|---|---|
@@ -424,7 +424,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -434,7 +434,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -448,7 +448,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -458,7 +458,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -474,7 +474,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | I2C | SPI |
 |---|---|---|
@@ -485,7 +485,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -495,7 +495,7 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **I2C open-drain** : sans pull-up, rien ne marche.
 - **EEPROM à 0x50** = réflexe sur tout device.
@@ -506,9 +506,9 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — I2C](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/i2c.md)
 > - [HardwareAllTheThings — SPI](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/spi.md)
 
@@ -519,4 +519,4 @@ diff <(xxd dump1.bin) <(xxd dump2.bin)
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - UART|🔌 UART]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - UART| UART]] · [[Hardware - JTAG et SWD| JTAG/SWD]]

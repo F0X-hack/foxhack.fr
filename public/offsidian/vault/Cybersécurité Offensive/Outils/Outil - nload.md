@@ -1,7 +1,7 @@
 ---
 title: "Outil - nload"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -17,14 +17,14 @@ site: http://www.roland-riegel.de/nload/
 doc: http://www.roland-riegel.de/nload/readme.html
 ---
 
-# 📊 nload — Le compteur de trafic en temps réel
+# nload — Le compteur de trafic en temps réel
 
 > [!info] **En 1 phrase**
 > nload est un moniteur console en temps réel du trafic réseau, qui affiche sous forme de graphiques ASCII les flux entrant et sortant de chaque interface.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: http://www.roland-riegel.de/nload/readme.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 nload lit les compteurs de paquets/octets exposés par le noyau (`/proc/net/dev` sur Linux) et les affiche en **temps réel** dans le terminal : deux graphiques ASCII évolutifs (entrant et sortant), plus des statistiques cumulées — débit actuel, moyenne, minimum et maximum — sur la période d'affichage.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -109,14 +109,14 @@ git clone https://github.com/rolandriegel/nload.git && cd nload
 sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Dépendance `libncurses` pour l'affichage.
 > - Sur certains systèmes, l'auto-tooling (`run_autotools`) nécessite automake/autoconf.
 > - Pas de mode graphique : console uniquement (SSH/terminal).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 nload se configure par **options de ligne de commande** ; il n'y a pas de fichier de configuration standard (les arguments peuvent être mis dans un alias shell).
 
@@ -133,7 +133,7 @@ nload se configure par **options de ligne de commande** ; il n'y a pas de fichie
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 nload est un programme **curses** simple : il lit périodiquement les compteurs réseau exposés par le système, calcule les débits sur l'intervalle demandé, et redessine l'écran avec les graphiques.
 
@@ -153,7 +153,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -179,7 +179,7 @@ flowchart LR
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Élément | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -197,7 +197,7 @@ flowchart LR
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -237,7 +237,7 @@ timeout 5 nload -u M eth0
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Identifier l'interface** :
    ```bash
@@ -254,7 +254,7 @@ timeout 5 nload -u M eth0
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : surveiller une exfiltration (vue ops)
 
@@ -285,7 +285,7 @@ nload -u M eth0
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -301,7 +301,7 @@ nload -u M eth0
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -313,7 +313,7 @@ nload -u M eth0
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -354,7 +354,7 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:"Large egress volume"; flow:to
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script — capturer le Max sortant sur 10 s et le journaliser
@@ -372,7 +372,7 @@ alias traf="nload -m"
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 nload est un programme **interactif curses** : sa sortie n'est pas conçue pour être analysée par des scripts. Les données (Current, Average, Min, Max) sont visuelles. Pour du monitoring scriptable, préférer `tshark -q -z io,stat`, `nethogs`, `iftop` ou des compteurs `/proc/net/dev` lus directement.
 
@@ -390,9 +390,9 @@ Device eth0 (10.10.20.15/24):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - tcpdump]] / [[Outil - tshark]] — complément : nload mesure le volume, tshark le contenu
 - [[Outil - Wireshark]] — analyse approfondie des captures quand un pic est repéré
 - [[Outil - Hping3]] / [[Outil - Scapy]] — générer du trafic pendant que nload mesure
@@ -406,7 +406,7 @@ tcpreplay (rejeu) → nload (évalue la charge)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -421,7 +421,7 @@ tcpreplay (rejeu) → nload (évalue la charge)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Coût** : très faible — lecture de compteurs + affichage curses ; idéal sur des petits postes.
 - **Intervalle** : `-t`/`-i`/`-o` plus grands = moins de CPU ; `-t 2000` pour du monitoring passif.
@@ -433,7 +433,7 @@ tcpreplay (rejeu) → nload (évalue la charge)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -463,7 +463,7 @@ tcpreplay (rejeu) → nload (évalue la charge)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : nload lit des compteurs système — pas besoin de root sur la plupart des systèmes.
 - **Données** : il n'enregistre pas le contenu ; les statistiques affichées restent à l'écran.
@@ -473,7 +473,7 @@ tcpreplay (rejeu) → nload (évalue la charge)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Monitoring **volume uniquement** : aucun détail sur le contenu ou les flux par connexion.
 - Pas de mode batch/parsing fiable pour les scripts.
@@ -483,7 +483,7 @@ tcpreplay (rejeu) → nload (évalue la charge)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 nload                 # toutes les interfaces
@@ -499,7 +499,7 @@ nload --help          # aide
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -512,7 +512,7 @@ nload --help          # aide
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -522,14 +522,14 @@ nload --help          # aide
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utiliser `-m` pour lire des débits « parlants » en Mbit/s.
 > - Lancer `nload` dans un terminal séparé pendant les tests (Hping3/Scapy).
 > - Coupler avec tshark dès qu'un pic est repéré pour identifier le flux.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - nload ne montre pas *qui* consomme : pour ça, nethogs/iftop.
 > - L'échelle graphique suit le Max : un pic écrasé peut masquer le débit moyen.
 > - La sortie curses n'est pas scriptable : ne pas l'utiliser pour de l'alerting.
@@ -537,7 +537,7 @@ nload --help          # aide
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -557,4 +557,4 @@ nload --help          # aide
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - tcpdump|tcpdump]] · [[Outil - tshark|tshark]] · [[Outil - tcpreplay|tcpreplay]] · [[Outil - Nmap|Nmap]]
+**Liens :** [[Tools| Outils]] · [[Outil - tcpdump|tcpdump]] · [[Outil - tshark|tshark]] · [[Outil - tcpreplay|tcpreplay]] · [[Outil - Nmap|Nmap]]

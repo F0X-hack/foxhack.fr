@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📦 Dependency Confusion
+# Dependency Confusion
 
 > [!info] **En 1 phrase**
 > Dependency confusion = piéger un installateur de dépendances (npm, pip, gem, maven…) pour qu'il
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
     E --> H[RCE dans l'environnement]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Quand un registre **public** et un registre **privé** hébergent le même nom de package,
 > la plupart des gestionnaires choisissent la **version la plus élevée** — souvent celle du registre
 > public. Publier `nom-inconnu` en version `99.0.0` sur npm/PyPI suffit pour être installé à la place
@@ -44,7 +44,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Le principe
+## Le principe
 
 - Une entreprise utilise des packages **privés** (npm, PyPI, RubyGems, Maven…) référencés dans
   `package.json`, `requirements.txt`, `Gemfile`, `pom.xml`, `composer.json`, `go.mod`…
@@ -53,13 +53,13 @@ flowchart LR
 - Au prochain `npm install` / `pip install` / `mvn install`, l'outil peut résoudre vers le **package
   public malveillant** → exécution de code lors de l'installation (scripts `install`, `postinstall`).
 
-> [!info] 💡 **Impact typique**
+> [!info] **Impact typique**
 > RCE **dans le build CI/CD** ou sur les postes des développeurs → vol de secrets
 > (tokens, clés de déploiement), exfiltration de sources, compromission en chaîne (supply chain).
 
 ---
 
-## 📦 Registres concernés
+## Registres concernés
 
 | Écosystème | Fichier de déclaration | Registre public |
 |---|---|---|
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🎒 Setup du package malveillant
+## Setup du package malveillant
 
 ### 1. npm (exemple complet)
 
@@ -149,7 +149,7 @@ gem build malicious.gemspec && gem push malicious-99.0.0.gem
 
 ---
 
-## 🧪 Le PoC
+## Le PoC
 
 ```text
 1. Enumérer les dépendances privées (fichiers de déclaration, repos internes).
@@ -167,7 +167,7 @@ gem build malicious.gemspec && gem push malicious-99.0.0.gem
 
 ---
 
-## 🔎 Recherche de noms (recon)
+## Recherche de noms (recon)
 
 ### Sources de noms de packages privés
 
@@ -196,7 +196,7 @@ curl -s https://repo1.maven.org/maven2/...   # Maven Central
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -211,15 +211,15 @@ curl -s https://repo1.maven.org/maven2/...   # Maven Central
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Méthodo d'attaque**
+> [!tip] **Méthodo d'attaque**
 > 1. Lister **toutes** les dépendances (dont transitives et scripts de build).
 > 2. Trouver les noms **absents du registre public** → ce sont les cibles.
 > 3. Publier la version la plus élevée possible (`99.0.0`), les gestionnaires préfèrent les versions max.
 > 4. Utiliser un **callback DNS/HTTP** pour confirmer l'exécution sans casser le build de la victime.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Version minimale dans le fichier (`>=1.0.0`) : publier **99.0.0** écrase presque toujours.
 > - Ne **jamais** faire de "cleanup" visible : retirer le package déclenche la suspicion.
 > - L'exécution se produit lors de l'**installation**, pas au runtime — penser aux scripts `install`/`postinstall`.
@@ -229,10 +229,10 @@ curl -s https://repo1.maven.org/maven2/...   # Maven Central
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Insecure Source Code Management|🗄️ SCM]]
-- [[API Key Leaks|🔑 API Key Leaks]]
-- [[Privilege Escalation Linux|🐧 Privesc Linux]] (chaîne après RCE build)
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Supply Chain Attacks](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Supply%20Chain%20Attacks/Dependency%20Confusion.md)
+- [[Insecure Source Code Management| SCM]]
+- [[API Key Leaks| API Key Leaks]]
+- [[Privilege Escalation Linux| Privesc Linux]] (chaîne après RCE build)
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Supply Chain Attacks](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Supply%20Chain%20Attacks/Dependency%20Confusion.md)

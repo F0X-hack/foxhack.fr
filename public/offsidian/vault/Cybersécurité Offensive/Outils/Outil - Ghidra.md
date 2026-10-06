@@ -1,11 +1,11 @@
 ---
 title: "Outil - Ghidra"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 12.1.2
 licence: Apache License 2.0
@@ -16,7 +16,7 @@ site: https://ghidra-sre.org
 doc: https://github.com/NationalSecurityAgency/ghidra/wiki
 ---
 
-# 🧬 Ghidra — Mobile & Reverse Engineering
+# Ghidra — Mobile & Reverse Engineering
 
 > [!info] **En 1 phrase**
 > **Ghidra** est le framework de **reverse engineering** open-source de la NSA : analyseur de binaires,
@@ -24,13 +24,13 @@ doc: https://github.com/NationalSecurityAgency/ghidra/wiki
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Ghidra (Software Reverse Engineering framework) |
 | Description | Suite complète de reverse : import de binaires (ELF, PE, Mach-O, DEX, firmware), désassemblage, décompilation C, debugger, scripting, version tracking |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Reverse engineering statique + dynamique (debugger) |
 | Fonction principale | Analyse de binaires avec décompilation C (moteur P-code/SLEIGH) |
 | Type d'outil | GUI desktop (Java/Swing) + CLI headless (`analyzeHeadless`) |
@@ -48,7 +48,7 @@ doc: https://github.com/NationalSecurityAgency/ghidra/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Ghidra importe presque tout (PE, ELF, Mach-O, dex, java class, firmware brut, microcontrôleurs) et reconstruit automatiquement les fonctions, les structures et le **pseudo-code C**. Contrairement à IDA, il est gratuit, multi-plateforme et **scriptable en Python (Jython)** et Java. On l'utilise pour comprendre un binaire, retrouver un algorithme, décoder un protocole ou préparer un exploit. Le travail se fait dans un **projet** : on importe des fichiers, on lance l'analyse, on annote et on exporte.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -122,7 +122,7 @@ gradle buildGhidra
 # gradle.buildGhidra.sh (Linux/macOS) ou gradle.bat (Windows)
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **JDK 21** obligatoire (les anciens JDK 11/17 font échouer le lancement).
 > - L'archive zip doit être extraite avec un outil qui préserve les permissions (Linux/macOS : `unzip`).
 > - RAM : compter **4 Go minimum**, 16+ Go recommandés pour les gros firmwares.
@@ -130,7 +130,7 @@ gradle buildGhidra
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -143,7 +143,7 @@ gradle buildGhidra
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Fondations** : `GhidraFramework` (Java), `db` (base de données de programme), `util` (modèle de données), `project` (gestion de projets).
 - **Décompilateur** : processus séparé en C++ (`decompile`) qui lit le P-code et produit le pseudo-C ; interface JNI avec la GUI.
@@ -156,7 +156,7 @@ gradle buildGhidra
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -187,7 +187,7 @@ gradle buildGhidra
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -210,7 +210,7 @@ gradle buildGhidra
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -259,7 +259,7 @@ with pyghidra.open_program('/tmp/app.bin') as flat:
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : comprendre la fonction `main` d'un ELF et extraire son pseudo-code.**
 
@@ -280,7 +280,7 @@ with pyghidra.open_program('/tmp/app.bin') as flat:
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : décompilation en masse d'un échantillon de malwares
 
@@ -310,7 +310,7 @@ Résultat : un `.c` par binaire, puis `grep` sur les appels API (CreateRemoteThr
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -323,7 +323,7 @@ Résultat : un `.c` par binaire, puis `grep` sur les appels API (CreateRemoteThr
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -335,7 +335,7 @@ Résultat : un `.c` par binaire, puis `grep` sur les appels API (CreateRemoteThr
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -371,7 +371,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle d'analyse headless sur plusieurs binaires avec exports
@@ -400,7 +400,7 @@ with pyghidra.open_program("/tmp/app.bin") as flat:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Ghidra exporte en C/C++, texte, XML (program files) et binaire (projets). En headless, les scripts produisent des fichiers texte/JSON parsables.
 
@@ -428,26 +428,26 @@ for name, n in sorted(calls.items(), key=lambda x: -x[1])[:20]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Ghidra (analyse) → Python/PyGhidra (automation) → BSim (similarité) → rapports
 Ghidra (décompilateur) → Cutter/radare2 (plugin r2ghidra) → exploitation (pwntools)
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - radare2|🧬 radare2]] — alternative CLI ; `pdd` utilise le même décompilateur (r2ghidra)
-- [[Outil - Cutter|🧬 Cutter]] — GUI légère embarquant r2ghidra
-- [[Outil - jadx|📱 jadx]] — meilleur pour le Java décompilé (dex) ; Ghidra pour le natif
-- [[Outil - pwntools|🧩 pwntools]] — exploitation après la compréhension du binaire
-- [[Outil - ROPgadget|🧱 ROPgadget]] — gadgets pour chaînes ROP
-- [[Outil - x64dbg|🖥️ x64dbg]] — debug Windows complémentaire
-- [[Techniques/Buffer Overflow|📚 Buffer Overflow]] · [[Techniques/Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
-- [[09 - Reverse Engineering & Malware|🧬 Reverse & Malware]] · [[13 - Hardware & IoT|💾 Hardware & IoT]]
+- [[Tools| Outils]] global
+- [[Outil - radare2| radare2]] — alternative CLI ; `pdd` utilise le même décompilateur (r2ghidra)
+- [[Outil - Cutter| Cutter]] — GUI légère embarquant r2ghidra
+- [[Outil - jadx| jadx]] — meilleur pour le Java décompilé (dex) ; Ghidra pour le natif
+- [[Outil - pwntools| pwntools]] — exploitation après la compréhension du binaire
+- [[Outil - ROPgadget| ROPgadget]] — gadgets pour chaînes ROP
+- [[Outil - x64dbg| x64dbg]] — debug Windows complémentaire
+- [[Techniques/Buffer Overflow| Buffer Overflow]] · [[Techniques/Hardware - Dump et Analyse de Firmware| Dump de firmware]]
+- [[09 - Reverse Engineering & Malware| Reverse & Malware]] · [[13 - Hardware & IoT| Hardware & IoT]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -462,7 +462,7 @@ Ghidra (décompilateur) → Cutter/radare2 (plugin r2ghidra) → exploitation (p
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - L'analyse d'un ELF standard (1–5 Mo) prend de **quelques secondes à ~1 minute** ; un gros firmware peut prendre des heures.
 - `analyzeHeadless -analysisTimeoutPerFile` limite le temps par fichier (utile en batch).
@@ -473,7 +473,7 @@ Ghidra (décompilateur) → Cutter/radare2 (plugin r2ghidra) → exploitation (p
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -503,7 +503,7 @@ Ghidra (décompilateur) → Cutter/radare2 (plugin r2ghidra) → exploitation (p
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permission** : analyser des binaires tiers (malware) dans un environnement isolé — les parseurs de format peuvent contenir des bugs.
 - **Debug** : lancer un malware sous le debugger Ghidra peut déclencher du code : utiliser une VM sans réseau.
@@ -513,7 +513,7 @@ Ghidra (décompilateur) → Cutter/radare2 (plugin r2ghidra) → exploitation (p
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de décompilateur aussi fiable que Hex-Rays sur du code optimisé agressif.
 - Le code très obfusqué/virtualisé (VMProtect, Themida) dégrade fortement la décompilation.
@@ -524,7 +524,7 @@ Ghidra (décompilateur) → Cutter/radare2 (plugin r2ghidra) → exploitation (p
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancement
@@ -555,7 +555,7 @@ Ctrl+L         # fonctions appelées
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -568,7 +568,7 @@ Ctrl+L         # fonctions appelées
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -581,29 +581,29 @@ Ctrl+L         # fonctions appelées
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le P-code, langue universelle**
+> [!tip] **Le P-code, langue universelle**
 > Le **P-code** de Ghidra est indépendant de l'architecture : écris tes plugins/analyses dessus plutôt que sur le listing brut.
 
-> [!tip] 💡 **Scripts en Jython / PyGhidra**
+> [!tip] **Scripts en Jython / PyGhidra**
 > Ghidra embarque Jython : parcourir les fonctions et dumper les strings est trivial (`listing.getFunctionManager().getFunctions(true)`). Pour le Python 3, installer **PyGhidra**.
 
-> [!tip] 💡 **Raccourcis utiles**
+> [!tip] **Raccourcis utiles**
 > `Ctrl+Maj+F` : recherche de strings ; `X` sur un symbole : affiche les xrefs ; `Ctrl+L` sur une fonction : liste les fonctions qui l'appellent. C'est le trio gagnant pour remonter d'une string sensible jusqu'à l'algorithme qui l'utilise.
 
-> [!warning] ⚠️ **Analyse longue = temps CPU**
+> [!warning] **Analyse longue = temps CPU**
 > Sur un gros firmware, l'analyse peut prendre des heures : utilise `analyzeHeadless` avec `-analysisTimeoutPerFile` et lance-le la nuit.
 
-> [!warning] ⚠️ **JDK 21 obligatoire**
+> [!warning] **JDK 21 obligatoire**
 > Les versions 12.x exigent JDK 21 (64-bit) : une Java 11/17 fait échouer le lancement.
 
-> [!warning] ⚠️ **Decompiler vs smali**
+> [!warning] **Decompiler vs smali**
 > Sur un dex, Ghidra gère les classes mais jadx reste plus confortable pour le Java. Ghidra excelle sur les binaires natifs (ELF / PE / firmware).
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -626,4 +626,4 @@ Ctrl+L         # fonctions appelées
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - radare2|🧬 radare2]] · [[Outil - Cutter|🧬 Cutter]] · [[Outil - jadx|📱 jadx]] · [[Techniques/Buffer Overflow|📚 Buffer Overflow]] · [[Techniques/Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[Tools| Outils]] · [[Outil - radare2| radare2]] · [[Outil - Cutter| Cutter]] · [[Outil - jadx| jadx]] · [[Techniques/Buffer Overflow| Buffer Overflow]] · [[Techniques/Hardware - Dump et Analyse de Firmware| Dump de firmware]]

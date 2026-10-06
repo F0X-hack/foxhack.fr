@@ -1,7 +1,7 @@
 ---
 title: "Outil - Process Hacker"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://processhacker.sourceforge.io/
 doc: https://processhacker.sourceforge.io/docs/
 ---
 
-# 🧬 Process Hacker — Supervision avancée des processus Windows
+# Process Hacker — Supervision avancée des processus Windows
 
 > [!info] **En 1 phrase**
 > Process Hacker est un gestionnaire de tâches open-source détaillé qui révèle processus, threads, handles, DLL chargées, connexions réseau et chaînes mémoire — l'outil de triage parfait sur un poste suspect.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Process Hacker |
 | Description | Gestionnaire de processus avancé pour Windows : arbre des processus, services, threads, handles, DLL chargées, connexions réseau, recherche de chaînes en mémoire, dump de processus |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse dynamique — supervision de processus Windows |
 | Fonction principale | Observer, inspecter et contrôler les processus d'un poste Windows (diagnostic de compromission) |
 | Type d'outil | Application desktop Windows (portable) |
@@ -50,7 +50,7 @@ doc: https://processhacker.sourceforge.io/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Process Hacker est un remplaçant avancé du gestionnaire de tâches de Windows : il affiche l'arbre complet des processus avec leurs services, threads, handles, DLL chargées et connexions réseau en temps réel. Son intérêt pour l'analyste malware : vérifier le chemin réel d'un processus, détecter des DLL injectées depuis des répertoires temporaires, voir les sockets sortantes (C2), chercher des chaînes ASCII/Unicode directement dans la mémoire d'un processus, suspendre/terminer un processus, ou inspecter les threads et leur stack.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation portable (archive zip) ou via l'installeur officiel :
 
@@ -94,14 +94,14 @@ Installation portable (archive zip) ou via l'installeur officiel :
 
 Sur une VM d'analyse (Flare VM), il est souvent pré-installé.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Administrateur** : les privilèges système (`-s`) exigent un lancement en administrateur, sinon les processus protégés restent invisibles.
 > - **Antivirus** : certains EDR signalent Process Hacker (capacités d'édition mémoire) — autoriser sur le poste d'analyse.
 > - **Drivers** : le chargement du pilote kernel peut être bloqué par la protection de mémoire (HVCI) sur les systèmes récents.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Process Hacker est configurable via le menu `Options` et les colonnes du tableau des processus :
 
@@ -119,7 +119,7 @@ Process Hacker est configurable via le menu `Options` et les colonnes du tableau
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **UI** : interface native Windows (Win32), liste des processus rafraîchie en temps réel.
 - **Pilote kernel** : fournit l'accès aux processus protégés et aux informations privilégiées (chargé avec `-s`).
@@ -142,7 +142,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -174,7 +174,7 @@ ProcessHacker.exe -connect <hôte>   # connexion à une instance distante
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -192,7 +192,7 @@ ProcessHacker.exe -connect <hôte>   # connexion à une instance distante
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -234,7 +234,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer en admin** — démarrer avec les privilèges système pour voir tous les processus.
 
@@ -258,7 +258,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection d'une injection de DLL
 
@@ -311,7 +311,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -324,7 +324,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -340,7 +340,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -381,7 +381,7 @@ Get-NetTCPConnection -State Established |
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```powershell
 # PowerShell — lister les processus dont le chemin pointe vers AppData
@@ -402,7 +402,7 @@ Get-CimInstance Win32_Service |
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Copie des colonnes** : la liste des processus peut être copiée en texte (Ctrl+C) pour l'export vers un rapport.
 - **Dump de processus** : fichier `.dmp` analysable par Volatility, strings, procdump.
@@ -429,16 +429,16 @@ for m in re.finditer(rb"https?://[^\x00\x20]+", data):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Sysinternals Suite]] — complément : Process Explorer observe, Process Hacker contrôle
 - [[Outil - Volatility]] — analyse des dumps de processus
 - [[Outil - x64dbg]] — poursuite en débogage du processus suspendu
 - [[Outil - dnSpy]] — analyse des processus/assemblys .NET observés
 - [[Outil - Flare VM]] — distribution où Process Hacker est préinstallé
 - [[Outil - YARA]] — signatures sur les binaires collectés
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + YARA + MISP → IR
@@ -446,7 +446,7 @@ Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + Y
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -460,7 +460,7 @@ Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + Y
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Interface légère : la liste des processus se rafraîchit sans charge notable.
 - La recherche de strings dans la mémoire d'un gros processus peut prendre quelques secondes à minutes selon la RAM.
@@ -470,7 +470,7 @@ Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + Y
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -506,7 +506,7 @@ Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + Y
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : lancer avec `-s` uniquement sur le poste d'analyse ou de réponse à incident.
 - **Artefacts** : les dumps de processus contiennent la mémoire complète (secrets, données) — les protéger.
@@ -517,7 +517,7 @@ Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + Y
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Projet peu actif (dernière release 2.39 en 2018) ; le fork **System Informer** prend le relais.
 - Process Hacker reste un outil d'observation : il ne remplace pas un EDR pour la détection.
@@ -528,7 +528,7 @@ Poste suspect → Process Hacker (triage) → dump + C2 + DLL → Volatility + Y
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```powershell
 # Lancer avec privilèges système
@@ -565,7 +565,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -578,7 +578,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -590,15 +590,15 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lancez toujours Process Hacker avec `-s` sur une machine d'analyse : sans privilèges système, les processus protégés restent invisibles.
 > - L'onglet Network est votre accès direct au C2 : notez IP/port et User-Agent avant de terminer le processus.
 > - La recherche de strings en mémoire remplace souvent `strings` sur le binaire : beaucoup de malwares ne chargent leurs chaînes qu'à l'exécution.
 > - Gardez la colonne `Path` visible : un nom légitime avec un chemin AppData est un indicateur fort.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Process Hacker reste un outil d'observation : il ne remplace pas un antivirus/EDR pour la détection.
 > - Certains rootkits protègent leurs processus : s'ils n'apparaissent pas dans la liste, passez à une analyse mémoire (Volatility) ou kernel.
 > - Ne terminez pas un processus avant d'avoir noté ses artefacts (chemin, C2, DLL) : c'est la preuve de l'intrusion.
@@ -606,7 +606,7 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -628,4 +628,4 @@ reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Sysinternals Suite|🧬 Sysinternals Suite]] · [[Outils/Outil - Volatility|🔎 Volatility]] · [[Outils/Outil - x64dbg|🧬 x64dbg]] · [[Outils/Outil - dnSpy|🧬 dnSpy]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Sysinternals Suite| Sysinternals Suite]] · [[Outils/Outil - Volatility| Volatility]] · [[Outils/Outil - x64dbg| x64dbg]] · [[Outils/Outil - dnSpy| dnSpy]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

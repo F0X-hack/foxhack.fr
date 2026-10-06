@@ -1,7 +1,7 @@
 ---
 title: "Outil - unblob"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://unblob.org/
 doc: https://unblob.org/ (guide utilisateur et développeur)
 ---
 
-# 🧬 unblob — Extraction automatique de firmware
+# unblob — Extraction automatique de firmware
 
 > [!info] **En 1 phrase**
 > unblob est l'outil le plus précis pour identifier et extraire les systèmes de fichiers et archives embarqués dans une image de firmware, étape indispensable avant l'analyse de tout binaire IoT.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | unblob |
 | Description | Extracteur de firmware open-source : recherche de signatures, identification des formats (squashfs, UBI/UBIFS, cramfs, JFFS2, ext, btrfs, archives), extraction récursive de toutes les couches d'une image |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse de firmware IoT — extraction de systèmes de fichiers |
 | Fonction principale | Extraire automatiquement toutes les couches et systèmes de fichiers d'une image de firmware |
 | Type d'outil | CLI (Python + cœur Rust) + rapport JSON |
@@ -50,7 +50,7 @@ doc: https://unblob.org/ (guide utilisateur et développeur)
 
 ---
 
-## 🎯 Concept
+## Concept
 
 unblob est un extracteur de firmware open-source (OneKey) : il analyse une image binaire (routeur, caméra, box, capteur), identifie les formats par signatures — squashfs, UBI/UBIFS, cramfs, JFFS2, ext, btrfs, archives ZIP/tar, blobs de bootloader — et extrait chaque couche récursivement dans une arborescence complète. Son moteur de recherche de signatures est plus robuste que binwalk : il gère les offsets non alignés, les entêtes obfusqués et les versions récentes de squashfs, ce qui en fait l'outil de premier choix du reverse engineer IoT.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation via pip (Linux recommandé) ou via Docker :
 
@@ -102,7 +102,7 @@ docker run --rm -it -v "$(pwd):/data" unblob/unblob:latest /data/firmware.bin
 
 Il s'appuie sur des outils externes (sasquatch, jefferson, binwalk) que le paquet installe ou qui sont pré-packagés dans l'image Docker ; sur Debian/Ubuntu, `apt install binwalk` complète certaines signatures.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Dépendances compilées** : l'installation pip requiert des outils de compilation (`python3-dev`, `build-essential`, libmagic).
 > - **Outils externes** : sasquatch, jefferson et binwalk sont requis pour certains formats ; l'image Docker les inclut.
 > - **Espace disque** : l'extraction de gros firmwares peut produire des arborescences très volumineuses.
@@ -110,7 +110,7 @@ Il s'appuie sur des outils externes (sasquatch, jefferson, binwalk) que le paque
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 unblob se configure principalement via les options CLI ; un fichier de config YAML est possible pour les réglages avancés :
 
@@ -129,7 +129,7 @@ unblob se configure principalement via les options CLI ; un fichier de config YA
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Moteur de recherche de signatures (Rust)** : scan rapide du binaire pour localiser les candidats (superblocks, magic bytes) — le point fort face à binwalk.
 - **Extracteurs (Python)** : un module par format (squashfs, ubi, cramfs, jffs2, ext, btrfs, archives…) qui valide le candidat et extrait la couche.
@@ -150,7 +150,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -183,7 +183,7 @@ jq -r '.files[] | select(.format=="squashfs") | .path' artifacts.json
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -201,7 +201,7 @@ jq -r '.files[] | select(.format=="squashfs") | .path' artifacts.json
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -246,7 +246,7 @@ strings ./fw_extracted/*/u-boot.bin | grep -i ubifs
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Identifier grossièrement l'image** — confirmer que c'est bien un firmware et repérer la taille.
 
@@ -282,7 +282,7 @@ strings ./fw_extracted/*/u-boot.bin | grep -i ubifs
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Recherche de backdoors et de mots de passe par défaut
 
@@ -335,7 +335,7 @@ sha256sum $(find ./dropper -type f -name "*.exe")
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -348,7 +348,7 @@ sha256sum $(find ./dropper -type f -name "*.exe")
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -364,7 +364,7 @@ sha256sum $(find ./dropper -type f -name "*.exe")
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -399,7 +399,7 @@ alert tcp any any -> any 23 (msg:"Potential IoT telnet access"; sid:9500004; rev
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — extraction en lot et collecte des artefacts
@@ -429,7 +429,7 @@ for report in result.reports:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Arborescence extraite** : les fichiers et systèmes de fichiers dans `-e <dir>` (souvent `unblob_<nom>_extract`).
 - **Rapport JSON** (`--report`) : formats détectés, offsets, chemins — pour les pipelines.
@@ -455,15 +455,15 @@ for f in data.get("files", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - binwalk]] — complément pour les signatures que l'un ou l'autre manque
 - [[Outil - Ghidra]] — analyse statique des binaires extraits
 - [[Outil - Cutter]] — alternative GUI (radare2) pour l'analyse des binaires
 - [[Outil - YARA]] — signatures sur les fichiers et systèmes de fichiers extraits
 - [[Outil - Flare VM]] — environnement Windows complémentaire (si besoin d'analyser des payloads Windows extraits)
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Firmware → unblob (extraction) → système de fichiers → strings + YARA + Ghidra + QEMU → IOCs
@@ -471,7 +471,7 @@ Firmware → unblob (extraction) → système de fichiers → strings + YARA + G
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -485,7 +485,7 @@ Firmware → unblob (extraction) → système de fichiers → strings + YARA + G
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Le scan de signatures (Rust) est très rapide : de l'ordre de la seconde par Go de firmware.
 - L'extraction parallèle (`-p N`) accélère les gros lots sur les machines multi-cœurs.
@@ -495,7 +495,7 @@ Firmware → unblob (extraction) → système de fichiers → strings + YARA + G
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -531,7 +531,7 @@ Firmware → unblob (extraction) → système de fichiers → strings + YARA + G
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation** : les firmwares peuvent contenir du code malveillant — travailler dans un conteneur Docker ou une VM.
 - **Ne pas exécuter** : ne pas exécuter les binaires extraits sur la machine hôte ; utiliser QEMU/sandbox.
@@ -541,7 +541,7 @@ Firmware → unblob (extraction) → système de fichiers → strings + YARA + G
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Les partitions chiffrées ou encodées ne s'extraient pas sans la clé (à chercher dans le bootloader).
 - Certains formats propriétaires ou custom (squashfs étendus) nécessitent sasquatch ou du travail manuel.
@@ -552,7 +552,7 @@ Firmware → unblob (extraction) → système de fichiers → strings + YARA + G
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Extraction simple
@@ -588,7 +588,7 @@ diff -rq ./ofw ./sfw | head -50
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -601,7 +601,7 @@ diff -rq ./ofw ./sfw | head -50
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -614,15 +614,15 @@ diff -rq ./ofw ./sfw | head -50
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Préférez unblob à binwalk pour les firmware récents : il gère les squashfs 4.x et UBI avec bien moins de faux positifs.
 > - Utilisez `--report` pour générer un JSON qui alimente vos pipelines d'analyse automatique.
 > - Chaînez toujours unblob → binwalk → analyse statique : les couches peuvent contenir des archives imbriquées que seul un des deux détecte.
 > - Travaillez dans un conteneur Docker pour isoler les artefacts malveillants de votre machine.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les partitions chiffrées ou encodées ne s'extraient pas sans la clé : cherchez-la dans le bootloader avant de conclure.
 > - Les répertoires système (dev, proc) restent vides par conception, ce n'est pas un échec d'extraction.
 > - Une image avec récursion infinie (liens circulaires) peut boucler : limitez `-d` pour éviter de saturer le disque.
@@ -631,7 +631,7 @@ diff -rq ./ofw ./sfw | head -50
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -653,4 +653,4 @@ diff -rq ./ofw ./sfw | head -50
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - binwalk|🔎 binwalk]] · [[Outils/Outil - Ghidra|🔬 Ghidra]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - binwalk| binwalk]] · [[Outils/Outil - Ghidra| Ghidra]] · [[Outils/Outil - YARA| YARA]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

@@ -1,11 +1,11 @@
 ---
 title: "Outil - OWASP ZAP"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 2.17.0 (stable) + builds hebdomadaires
 licence: Apache-2.0
@@ -16,20 +16,20 @@ site: https://www.zaproxy.org
 doc: https://www.zaproxy.org/docs/
 ---
 
-# 🔍 OWASP ZAP — Proxy d'interception et scanner web (Java)
+# OWASP ZAP — Proxy d'interception et scanner web (Java)
 
 > [!info] **En 1 phrase**
 > OWASP ZAP (Zed Attack Proxy) est le scanner de sécurité web open source de référence : proxy d'interception, spider, scan passif/actif et fuzzing dans un seul outil, utilisable en GUI ou en headless/CI.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | OWASP ZAP (Zed Attack Proxy, « ZAP by Checkmarx ») |
 | Description | Proxy d'interception et scanner DAST complet : spider (classique + AJAX), scan passif/actif, fuzzing, support WebSockets, API REST et scripts pour la CI |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Proxy d'interception / scanner de vulnérabilités web (DAST) |
 | Fonction principale | Intercepter le trafic web et détecter automatiquement les vulnérabilités des applications |
 | Type d'outil | GUI (desktop) + CLI headless + API REST + Docker |
@@ -46,7 +46,7 @@ doc: https://www.zaproxy.org/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 OWASP ZAP est un proxy d'interception et un scanner de vulnérabilités web développé par la fondation OWASP. Il s'intercale entre le navigateur et l'application cible : chaque requête passe par lui et peut être vue, modifiée, rejouée ou fuzzée. Il embarque un **spider** (classique et AJAX pour le contenu rendu par JavaScript), un **scan passif** (analyse les réponses sans les modifier, très silencieux) et un **scan actif** (injecte des payloads, plus bruyant), ainsi qu'un moteur de fuzzing et un support des WebSockets.
 
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 - **Proxy d'interception** : ZAP se positionne entre le client et le serveur, décrypte le TLS via son **certificat CA** et permet de visualiser/modifier/rejouer les requêtes.
 - **Contexte et portée (scope)** : délimitent le périmètre autorisé — tout ce qui est hors portée n'est pas scanné (évite les débordements légaux).
@@ -80,7 +80,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Kali / Debian
@@ -112,7 +112,7 @@ java -version
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Configuration de base
 
@@ -143,12 +143,12 @@ zap.sh -daemon -config api.addrs.addr.name=localhost \
 2. Importer le certificat `.cer` dans les autorités racines de confiance du navigateur.
 3. Configurer le proxy du navigateur sur `127.0.0.1:8080`.
 
-> [!warning] ⚠️ Clé API par défaut
+> [!warning] Clé API par défaut
 > En daemon, l'API est protégée par une clé par défaut : la définir explicitement avec `-config api.key=...` dès le premier lancement.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```text
 ZAP (Java, GUI Swing + moteur)
@@ -170,7 +170,7 @@ ZAP (Java, GUI Swing + moteur)
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes de base
 
@@ -209,7 +209,7 @@ docker run -t ghcr.io/zaproxy/zaproxy zap-baseline.py \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Options CLI principales
 
@@ -253,7 +253,7 @@ docker run -t ghcr.io/zaproxy/zaproxy zap-baseline.py \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -312,7 +312,7 @@ zap.sh -daemon -config script.name=ma_regle.py -config script.type=active
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer ZAP et configurer le proxy** — démarrer ZAP (GUI ou daemon), pointer le navigateur sur `127.0.0.1:8080` :
    ```bash
@@ -327,7 +327,7 @@ zap.sh -daemon -config script.name=ma_regle.py -config script.type=active
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Audit authentifié (formulaire + session)
 
@@ -373,7 +373,7 @@ Add-ons notables :
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -386,7 +386,7 @@ Add-ons notables :
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -400,7 +400,7 @@ Add-ons notables :
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -460,7 +460,7 @@ rule OWASP_ZAP_Install {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Gate CI/CD avec Docker (baseline scan)
@@ -519,7 +519,7 @@ jobs:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ZAP génère des **rapports** dans plusieurs formats (HTML, JSON, XML, Markdown, PDF) via l'add-on Reporting, et expose toutes les données via son **API REST** (JSON).
 
@@ -541,7 +541,7 @@ curl -s "http://127.0.0.1:8080/JSON/core/view/alerts/?apikey=monsupersecret" | \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 ZAP <- navigateur (proxy) <- application cible
@@ -551,7 +551,7 @@ ZAP -> add-ons (OpenAPI, GraphQL, OWASP PTK, Foxhound) -> extensions
 ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Burp Suite]] — alternative GUI équivalente (extensions, Intruder)
 - [[Outil - nuclei]] — complément pour la validation de CVEs à grande échelle
 - [[Outil - nikto]] — balayage serveur avant le scan applicatif
@@ -560,7 +560,7 @@ ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -574,7 +574,7 @@ ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Dé-duplication des alertes (2.17)** : les alertes similaires sont consolidées — moins de bruit, rapport plus lisible.
 - **Optimisations headless/CI** : la 2.17 réduit la persistance inutile et améliore la gestion mémoire/disque.
@@ -588,7 +588,7 @@ ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -624,7 +624,7 @@ ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Clé API** : l'API REST est protégée par une clé — ne pas la laisser par défaut, surtout si le daemon est exposé (`-host 0.0.0.0`).
 - **CA racine** : le certificat privé de ZAP permet de décrypter le trafic qui lui fait confiance — le protéger et ne l'installer que sur les postes autorisés.
@@ -635,7 +635,7 @@ ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de logique métier** : ZAP ne comprend pas la business logic — le test manuel reste indispensable.
 - **Faux positifs** : un scan actif sans bonne authentification génère beaucoup d'alertes non exploitables.
@@ -646,7 +646,7 @@ ZAP -> rapports HTML/JSON -> SIEM / gestion de vulnérabilités
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # GUI
@@ -677,7 +677,7 @@ zap.sh -cmd -autorun plan.yaml
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -690,7 +690,7 @@ zap.sh -cmd -autorun plan.yaml
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -703,9 +703,9 @@ zap.sh -cmd -autorun plan.yaml
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Définis toujours un **contexte + portée** pour éviter de scanner des hôtes hors périmètre (risque légal et faux positifs).
 > - Utilise le **spider AJAX** ou un navigateur automatisé pour les applications SPA : le spider classique ne voit pas le contenu rendu en JS.
 > - En CLI, utilise `-config api.key=...` et `-l FAIL` pour des gates CI fiables et reproductibles.
@@ -713,7 +713,7 @@ zap.sh -cmd -autorun plan.yaml
 > - Configure l'authentification avant le scan actif pour éviter les faux positifs massifs de session.
 > - Utilise l'Automation Framework (plans YAML) pour des scans reproductibles entre engagements.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le **scan actif est très bruyant** et peut faire tomber l'application ou déclencher une réponse 429 : commence toujours par le scan passif.
 > - Par défaut ZAP utilise l'API avec une clé par défaut, dangereux si le daemon est exposé sur le réseau : la changer au premier lancement.
 > - ZAP ne détecte pas tout seul les vulnérabilités de logique métier : le fuzzing et les tests manuels restent indispensables.
@@ -722,7 +722,7 @@ zap.sh -cmd -autorun plan.yaml
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -746,4 +746,4 @@ zap.sh -cmd -autorun plan.yaml
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Burp Suite|Burp Suite]] · [[Outil - Caido|Caido]] · [[Outil - nuclei|Nuclei]] · [[Techniques/Injection SQL|Injection SQL]] · [[Techniques/XSS (Cross-Site Scripting)|XSS]] · [[Techniques/SSRF|SSRF]]
+**Liens :** [[Tools| Outils]] · [[Outil - Burp Suite|Burp Suite]] · [[Outil - Caido|Caido]] · [[Outil - nuclei|Nuclei]] · [[Techniques/Injection SQL|Injection SQL]] · [[Techniques/XSS (Cross-Site Scripting)|XSS]] · [[Techniques/SSRF|SSRF]]

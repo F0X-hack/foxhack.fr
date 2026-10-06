@@ -1,7 +1,7 @@
 ---
 title: "Outil - httpx"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/httpx/usage
 ---
 
-# 🚀 httpx — Probe HTTP massif de la surface d'attaque
+# httpx — Probe HTTP massif de la surface d'attaque
 
 > [!info] **En 1 phrase**
 > httpx transforme une liste de domaines et d'IPs en inventaire des services web vivants, avec titre, statut et technologies.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.projectdiscovery.io/tools/httpx/usage
 
 ---
 
-## 🎯 Concept
+## Concept
 
 httpx est le probeur HTTP de l'écosystème projectdiscovery. En position de carrefour dans la phase de recon, il reçoit les sous-domaines énumérés par subfinder, les hôtes validés par dnsx ou les ports ouverts découverts par naabu, et teste pour chaque hôte la présence d'un service web (HTTP et/ou HTTPS). Pour chaque cible vivante, il collecte les métadonnées exploitables : code de statut, titre de page, en-têtes, technologies détectées, TLS, redirections, longueur de réponse, résolution IP, CNAME, CDN, ASN. Sortie texte ou JSON, il alimente directement nuclei pour le scan de vulnérabilités, ou n'importe quelle étape suivante du pipeline de recon.
 
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -78,7 +78,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -132,14 +132,14 @@ go build -o httpx cmd/httpx/main.go
 sudo mv httpx /usr/local/bin/
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Go 1.21+ pour la compilation.
 > - Les ports testés par défaut sont 80/443 : les services web sur d'autres ports nécessitent `-ports`.
 > - Un gros volume de probes peut déclencher les WAF/rate limiters de la cible : ajuster `-threads` et `-rate-limit`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout passe par les options CLI.
 
@@ -159,7 +159,7 @@ Pas de fichier de configuration : tout passe par les options CLI.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Moteur HTTP** : basé sur `retryablehttp` et `fastdialer` (pools de connexions, résolution DNS interne, IPv4/IPv6, redirections). Chaque cible est sondée en HTTP puis HTTPS selon les options.
 - **Détection de technologies** : moteur de signatures (headers, HTML, cookies, CDN) pour identifier frameworks/CMS/serveurs (`-td`).
@@ -170,7 +170,7 @@ Pas de fichier de configuration : tout passe par les options CLI.
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -202,7 +202,7 @@ httpx -l subs.txt -sc -title -td -cl -json -o live.json
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ httpx -l subs.txt -sc -title -td -cl -json -o live.json
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -280,7 +280,7 @@ httpx -l subs.txt -favicon -silent
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Énumérer les sous-domaines** — collecter toutes les cibles potentielles avant le probe.
    ```bash
@@ -302,7 +302,7 @@ httpx -l subs.txt -favicon -silent
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : pipeline recon complet
 
@@ -327,7 +327,7 @@ httpx -l subs.txt -tls-probe -td -cname -asn -ip -silent
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -339,7 +339,7 @@ httpx -l subs.txt -tls-probe -td -cname -asn -ip -silent
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ httpx -l subs.txt -tls-probe -td -cname -asn -ip -silent
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -416,7 +416,7 @@ rule Httpx_Binary_Detection {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle sur plusieurs domaines
@@ -449,7 +449,7 @@ for hit in probe(["https://example.com", "https://sub.example.com"], ["-ports", 
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte formaté (ligne par ligne) ou JSON (`-json`, un objet par ligne).
 
@@ -475,16 +475,16 @@ with open("live.json") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - subfinder|subfinder]] — source amont (sous-domaines)
 - [[Outil - dnsx|dnsx]] — validation DNS avant probing
 - [[Outil - naabu|naabu]] — scan de ports pour trouver les services web
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités sur les hôtes vivants
 - [[Outil - gau|gau]] / [[Outil - waybackurls|waybackurls]] — URLs historiques à valider
 - [[Outil - katana|katana]] — crawl approfondi des hôtes confirmés
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 subfinder → dnsx → httpx → nuclei
@@ -493,7 +493,7 @@ subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -507,7 +507,7 @@ subfinder → dnsx → httpx → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Concurrence Go élevée (`-threads`), connexions persistantes, résolution DNS intégrée : milliers de probes possibles.
 - `-rate-limit` permet de doser pour ne pas déclencher les protections de la cible.
@@ -519,7 +519,7 @@ subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -549,7 +549,7 @@ subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Volumétrie** : un probing agressif est détectable (logs WAF, taux de requêtes anormal) — à doser selon l'engagement.
 - **User-Agent** : par défaut reconnaissable ; `-random-agent` ou `-ua` pour le personnaliser (mais pas une garantie d'anonymat).
@@ -558,7 +558,7 @@ subfinder → dnsx → httpx → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Par défaut, seuls les ports 80/443 sont testés : les services web sur d'autres ports nécessitent `-ports`.
 - Un faux 200 (WAF) peut polluer les résultats : toujours croiser `-cl`/`-title`.
@@ -568,7 +568,7 @@ subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # L'essentiel
@@ -595,7 +595,7 @@ httpx -l subs.txt -sc -title -td -json -o live.json
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -608,7 +608,7 @@ httpx -l subs.txt -sc -title -td -json -o live.json
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -618,15 +618,15 @@ httpx -l subs.txt -sc -title -td -json -o live.json
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Active `-random-agent` pour passer les filtres d'User-Agent simples.
 > - En bug bounty, trie d'abord avec `-mc 200,301,302 -fr` pour ne suivre que l'essentiel.
 > - `-json` est la sortie reine pour le pipeline : parse-la avec `jq -r '.url + " " + .status_code'`.
 > - Pense à `-ports` pour les services web hors 80/443 (Très fréquents sur Docker/K8s).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `-fr`, httpx n'affiche pas le résultat final des redirections : tu rates les services derrière les 3xx.
 > - Seuls les ports par défaut (80/443) sont testés : ajoute `-ports 8080,8443` si besoin.
 > - Un faux 200 (page d'erreur WAF) pollue les résultats : croise `-cl` et `-title` pour repérer les réponses identiques.
@@ -634,7 +634,7 @@ httpx -l subs.txt -sc -title -td -json -o live.json
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -655,4 +655,4 @@ httpx -l subs.txt -sc -title -td -json -o live.json
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - subfinder|subfinder]] · [[Outil - nuclei|nuclei]] · [[01 - Reconnaissance|🔎 Reconnaissance]]
+**Liens :** [[Tools| Outils]] · [[Outil - subfinder|subfinder]] · [[Outil - nuclei|nuclei]] · [[01 - Reconnaissance| Reconnaissance]]

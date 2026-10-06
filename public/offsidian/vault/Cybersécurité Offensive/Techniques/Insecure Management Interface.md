@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🛠️ Insecure Management Interface
+# Insecure Management Interface
 
 > [!info] **En 1 phrase**
 > Insecure Management Interface = une **interface d'administration** (web, SSH, DB, cloud) exposée et mal sécurisée — absence d'auth, credentials par défaut, HTTP en clair, accès public → prise de contrôle du système.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,12 +33,12 @@ flowchart LR
     C --> F["Modif configs, exécution, pivot"]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Ces interfaces contrôlent des réglages sensibles et ont un accès puissant aux configs. Souvent exposées sur Internet par erreur, avec auth absente/faible, **sans TLS**, ou avec des **vulns non patchées** → surface idéale pour un attaquant.
 
 ---
 
-## 🧭 Typologie des interfaces
+## Typologie des interfaces
 
 | Type | Exemples | Ports/paths typiques |
 |---|---|---|
@@ -50,12 +50,12 @@ flowchart LR
 
 ---
 
-## 🧪 Méthodologie
+## Méthodologie
 
 1. **Détection** : scan de ports + fuzzing de paths d'admin.
 2. **Vérifier l'auth** : accessible sans identifiants ? identifiants par défaut ? brute-force ?
 3. **Transport** : HTTPS ? (sinon interception des credentials).
-4. **Patch level** : versions → recherche CVE (cf. [[CVE Exploits|📦 CVE Exploits]]).
+4. **Patch level** : versions → recherche CVE (cf. [[CVE Exploits| CVE Exploits]]).
 
 ```bash
 # Détection de default logins et panneaux exposés (nuclei)
@@ -79,7 +79,7 @@ redis (no auth)    docker (no auth)  mongodb (no auth)
 
 ---
 
-## 💥 Exploits classiques
+## Exploits classiques
 
 | Cible | Exploit |
 |---|---|
@@ -89,12 +89,12 @@ redis (no auth)    docker (no auth)  mongodb (no auth)
 | **Redis** | Sans auth → webshell/cron via `CONFIG SET dir`, écriture clé SSH |
 | **DB exposées** | MySQL/MSSQL accessibles depuis Internet → brute-force, dump complet |
 
-> [!warning] ⚠️ **CAPEC-121**
+> [!warning] **CAPEC-121**
 > Les **interfaces non-production** (staging, dev, consoles de maintenance) sont souvent laissées accessibles : mêmes droits élevés, sécurité moindre → excellent point d'entrée pour un test.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -108,12 +108,12 @@ redis (no auth)    docker (no auth)  mongodb (no auth)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Prioriser par criticité**
+> [!tip] **Prioriser par criticité**
 > Une interface DB ou orchestrateur exposée = **mise en danger quasi immédiate** (dump complet, RCE). Tester les interfaces sans auth d'abord, puis default creds, puis CVE.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le **403** sur `/admin` n'est pas une protection : les assets statiques/JS de l'admin restent souvent lisibles → fuite de fonctionnalités et d'endpoints.
 > - **HTTP clair** : un login HTTPS après une redirection HTTP peut fuiter le token dans l'historique/référents.
 > - Les **services non-web** (`:22`, `:3306`, `:6379`, `:2375`) se détectent au **scan de ports**, pas au fuzzing web — ne pas oublier cette étape.
@@ -121,11 +121,11 @@ redis (no auth)    docker (no auth)  mongodb (no auth)
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[02 - Scan & Énumération|🔎 Scan]]
-- [[CVE Exploits|📦 CVE Exploits]]
-- [[Password Cracking|🔑 Bruteforce]]
-- [[Insecure Source Code Management|🗄️ Insecure Source Code Management]]
-- → [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Insecure Management Interface](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Management%20Interface/README.md)
+- [[02 - Scan & Énumération| Scan]]
+- [[CVE Exploits| CVE Exploits]]
+- [[Password Cracking| Bruteforce]]
+- [[Insecure Source Code Management| Insecure Source Code Management]]
+- → [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Insecure Management Interface](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Management%20Interface/README.md)

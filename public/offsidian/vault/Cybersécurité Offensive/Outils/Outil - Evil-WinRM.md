@@ -1,11 +1,11 @@
 ---
 title: "Outil - Evil-WinRM"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 3.5
 licence: LGPL-3.0
@@ -16,14 +16,14 @@ site: https://hackplayers.com/
 doc: https://github.com/Hackplayers/evil-winrm/blob/master/README.md
 ---
 
-# 👑 Evil-WinRM — Active Directory & Windows
+# Evil-WinRM — Active Directory & Windows
 
 > [!info] **En 1 phrase**
 > Evil-WinRM est un **shell WinRM en Ruby** : il se connecte aux machines Windows via le **port 5985 (HTTP) / 5986 (HTTPS)** avec un utilisateur ou un **hash NTLM**, et fournit des fonctions de post-exploitation.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,7 +40,7 @@ doc: https://github.com/Hackplayers/evil-winrm/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 WinRM est activé par défaut sur les serveurs Windows (2012+) et sur les postes joints au domaine : dès qu'un compte appartient aux **Administrateurs locaux** ou au groupe **Remote Management Users**, on obtient un shell **PowerShell** à distance. Evil-WinRM ajoute la post-exploitation : chargement de scripts, exécution d'exe **en mémoire**, upload/download, gestion des services.
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans Evil-WinRM |
 |---|---|
@@ -75,7 +75,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Pré-requis
 
@@ -106,7 +106,7 @@ evil-winrm -h
 > [!note] À vérifier
 > La version installée par `apt` peut être plus ancienne que celle du gem : préférer `gem install` pour disposer des dernières fonctions (`-a`, `set AMSI`, etc.).
 
-## ⚙️ Configuration
+## Configuration
 
 Evil-WinRM n'a pas de fichier de configuration : tout se passe par **options en ligne de commande**. Les chemins de scripts/exécutables peuvent être centralisés dans des dossiers dédiés (`-s`, `-e`) pour faciliter le replay sur plusieurs hôtes. Les variables d'environnement (`KRB5CCNAME`) et un fichier `~/.ssh/config` n'ont pas d'effet direct ici : la configuration repose sur les flags.
 
@@ -131,7 +131,7 @@ Evil-WinRM n'a pas de fichier de configuration : tout se passe par **options en 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Composants** : Evil-WinRM est une classe Ruby unique (`EvilWinRM`) qui encapsule la gem `winrm` (transport WS-Management, authentification NTLM/Kerberos) et la gem `winrm-fs` (transferts de fichiers).
 - **Canal d'exécution** : chaque commande est envoyée via un shell WinRM (`WinRM::Shell::Shell`) — Evil-WinRM établit une PSSession PowerShell à distance et envoie les commandes en base64/XML SOAP.
@@ -143,7 +143,7 @@ Evil-WinRM n'a pas de fichier de configuration : tout se passe par **options en 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -200,7 +200,7 @@ net group "Domain Admins" /domain
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -222,7 +222,7 @@ net group "Domain Admins" /domain
 > [!tip] Options les plus utiles au quotidien
 > `-H` (Pass-the-Hash) pour éviter le mot de passe, `-s` + `-e` pour organiser scripts et binaires, `-S` pour les cibles HTTPS.
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -267,7 +267,7 @@ set AMSI false
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : vous avez récupéré le **hash NTLM** de `Admin` via `secretsdump.py`.
 
@@ -280,7 +280,7 @@ Scénario : vous avez récupéré le **hash NTLM** de `Admin` via `secretsdump.p
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Pass-the-Hash sur plusieurs machines du domaine
 
@@ -331,7 +331,7 @@ schtasks /Create /TN "Updater" /TR "powershell -nop -w hidden -c \"IEX(...)\"" /
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -345,7 +345,7 @@ schtasks /Create /TN "Updater" /TR "powershell -nop -w hidden -c \"IEX(...)\"" /
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -359,7 +359,7 @@ schtasks /Create /TN "Updater" /TR "powershell -nop -w hidden -c \"IEX(...)\"" /
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -373,7 +373,7 @@ schtasks /Create /TN "Updater" /TR "powershell -nop -w hidden -c \"IEX(...)\"" /
 > [!tip] Bien comprendre ce que Evil-WinRM exploite
 > Evil-WinRM exploite le service WinRM légitime de Windows : en durcissant WinRM et en surveillant ses événements, on réduit fortement la surface sans casser la gestion à distance légitime.
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -388,7 +388,7 @@ schtasks /Create /TN "Updater" /TR "powershell -nop -w hidden -c \"IEX(...)\"" /
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Sortie console** : Evil-WinRM affiche les résultats des commandes dans la console (couleurs désactivables avec `-n`).
 - **Fichiers** : l'essentiel de la production est côté cible (fichiers créés par les commandes) et localement via `download`.
@@ -405,7 +405,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème Evil-WinRM |
 |---|---|
@@ -420,7 +420,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -432,7 +432,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -444,7 +444,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -458,7 +458,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Credentials** : le hash NTLM ou le mot de passe sont passés en ligne de commande → visibles dans `ps`/historique shell. Préférer `read -s` ou un gestionnaire de secrets, éviter l'historique.
 - **Chiffrement** : sans `-S`, WinRM est en HTTP en clair → un intercepteur peut lire les commandes ; utiliser `-S` sur les réseaux sensibles.
@@ -468,7 +468,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas d'agent** : nécessite WinRM actif et accessible (5985/5986), ce qui n'est pas toujours le cas.
 - **Windows uniquement** : ne fonctionne que vers des hôtes Windows avec PowerShell.
@@ -479,7 +479,7 @@ grep -i 'S-1-5-32-544' session.log   # Administrateurs locaux
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Connexions
@@ -504,7 +504,7 @@ set AMSI false
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -518,7 +518,7 @@ set AMSI false
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -531,19 +531,19 @@ set AMSI false
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Discrétion** : Evil-WinRM n'écrit **rien sur le disque** (scripts chargés en mémoire). Charge Mimikatz / SharpHound via `load` / `Invoke-Binary` plutôt que de les uploader. Combinez avec `-s` pour garder tous les scripts dans un dossier unique et faciliter le replay sur plusieurs hôtes.
+> [!tip] **Discrétion** : Evil-WinRM n'écrit **rien sur le disque** (scripts chargés en mémoire). Charge Mimikatz / SharpHound via `load` / `Invoke-Binary` plutôt que de les uploader. Combinez avec `-s` pour garder tous les scripts dans un dossier unique et faciliter le replay sur plusieurs hôtes.
 
-> [!warning] ⚠️ **Piège** : `-p` = **mot de passe**, `-P` = **port**. Inverser les deux (très courant) donne une erreur de connexion. Le port par défaut sans `-S` est **5985**.
+> [!warning] **Piège** : `-p` = **mot de passe**, `-P` = **port**. Inverser les deux (très courant) donne une erreur de connexion. Le port par défaut sans `-S` est **5985**.
 
-> [!warning] ⚠️ **Piège** : certains scripts nécessitent une politique d'exécution autorisée. Si `load` échoue, vérifiez la version de PowerShell de la cible et la présence d'AMSI bloquant (script block logging).
+> [!warning] **Piège** : certains scripts nécessitent une politique d'exécution autorisée. Si `load` échoue, vérifiez la version de PowerShell de la cible et la présence d'AMSI bloquant (script block logging).
 
-> [!warning] ⚠️ **Piège** : l'auth par hash repose sur **NTLM**. Sur une machine configurée en **Kerberos uniquement**, Evil-WinRM échoue : passe par un ticket (`-r <REALM>` + ccache) ou un autre canal (RDP, service).
+> [!warning] **Piège** : l'auth par hash repose sur **NTLM**. Sur une machine configurée en **Kerberos uniquement**, Evil-WinRM échoue : passe par un ticket (`-r <REALM>` + ccache) ou un autre canal (RDP, service).
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/Hackplayers/evil-winrm
 - README (documentation) : https://github.com/Hackplayers/evil-winrm/blob/master/README.md
@@ -551,6 +551,6 @@ set AMSI false
 - The Hacker Recipes — WinRM : https://www.thehacker.recipes/ad/movement/winrm
 - Groupe Remote Management Users : https://learn.microsoft.com/en-us/windows-server/security/group-policy/
 
-➡️ **Liens :** [[Outil - Evil-WinRM]] | [[Outil - Impacket]] | [[Outil - Mimikatz]] | [[Outil - BloodHound]] | [[Outil - Rubeus]] | [[Outil - CrackMapExec]] | [[Outil - Nmap]]
+**Liens :** [[Outil - Evil-WinRM]] | [[Outil - Impacket]] | [[Outil - Mimikatz]] | [[Outil - BloodHound]] | [[Outil - Rubeus]] | [[Outil - CrackMapExec]] | [[Outil - Nmap]]
 
 

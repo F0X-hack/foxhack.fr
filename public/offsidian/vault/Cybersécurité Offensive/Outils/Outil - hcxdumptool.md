@@ -1,11 +1,11 @@
 ---
 title: "Outil - hcxdumptool"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: v7.1.2 (8 février 2026)
 licence: MIT
@@ -16,20 +16,20 @@ site: https://github.com/ZerBea/hcxdumptool
 doc: https://github.com/ZerBea/hcxdumptool/blob/master/docs/
 ---
 
-# 📡 hcxdumptool — Wireless & Réseau
+# hcxdumptool — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Outil de **capture PMKID/handshake** en mode moniteur, conçu pour produire des captures compatibles **hashcat 22000** via `hcxpcapngtool` — l'alternative moderne et efficace à airodump-ng.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | hcxdumptool |
 | Description | Capteur WiFi en mode moniteur qui injecte des trames (probe, association, deauth) pour forcer les AP et clients à émettre PMKID et handshakes EAPOL, dans un fichier `.pcapng` |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque & Cracking WiFi (capture PMKID / handshake) |
 | Fonction principale | Capture d'empreintes PMKID et de handshakes WPA/WPA2/WPA2-PMKID au format pcapng, destinées au crack hors-ligne |
 | Type d'outil | CLI (daemonisable) |
@@ -52,7 +52,7 @@ doc: https://github.com/ZerBea/hcxdumptool/blob/master/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `hcxdumptool` (développé par ZeroBeat, auteur aussi de la suite **hcxtools**) est l'outil d'acquisition du workflow « **capture → hashcat** » du WiFi moderne. Là où `airodump-ng` attend passivement un client qui s'associe pour capter un handshake 4-way, hcxdumptool **injecte activement** des trames (probe request, association, désauthentification) pour déclencher l'émission de PMKID et de handshakes par les AP et les clients — le tout dans un unique fichier `.pcapng`. Le format de sortie est pensé dès la conception pour la conversion par `hcxpcapngtool` vers le format hashcat **22000** (WPA-PBKDF2-PMKID+EAPOL) ou **16800** (PMKID seul), exploitable directement par [[Outil - hashcat]] et [[Outil - John the Ripper]].
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -138,7 +138,7 @@ make && sudo make install
 # Vérifier : hcxdumptool -v
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Linux uniquement**, noyau ≥ 5.15 (longterm/stable) recommandé ; `gcc >= 16` recommandé pour compiler.
 > - Chipset obligatoirement capable de **monitor mode + full frame injection** (Realtek rtl8xxxu/rtw88, MediaTek mt76, Atheros ath9k_htc, Ralink rt2800usb). Intel, Broadcom, Qualcomm : déconseillés.
 > - Installer `libpcap` et `libpcap-dev` si le compilateur BPF interne est activé.
@@ -147,7 +147,7 @@ make && sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 hcxdumptool se configure **uniquement en ligne de commande** : pas de fichier de configuration persistant. La politique de capture (canaux, filtres, taux d'injection, discrétion) s'exprime par options à chaque lancement. L'utilisateur fournit les listes de cibles (BSSID) en fichiers texte.
 
@@ -167,7 +167,7 @@ hcxdumptool se configure **uniquement en ligne de commande** : pas de fichier de
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 hcxdumptool est un **binaire C monolithique** tournant exclusivement sur Linux, branché sur la pile **nl80211/cfg80211** du noyau. Son fonctionnement interne :
 
@@ -182,7 +182,7 @@ Le résultat est consommé hors-ligne : `hcxpcapngtool` lit le pcapng, dédupliq
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -214,7 +214,7 @@ hcxpcapngtool -o hash.22000 cap.pcapng
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -241,7 +241,7 @@ hcxpcapngtool -o hash.22000 cap.pcapng
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -287,7 +287,7 @@ hcxpcapngtool -E essidlist -o pmkid.16800 cap.pcapng
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : récupérer les hash d'une box "Livebox-1234" sur le canal 3.**
 
@@ -312,7 +312,7 @@ hcxpcapngtool -E essidlist -o pmkid.16800 cap.pcapng
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : collecte longue sans surveillance (daemon sur Raspberry Pi)
 
@@ -350,7 +350,7 @@ hashcat -m 22000 hash.22000 /usr/share/wordlists/rockyou.txt -w 3
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -362,7 +362,7 @@ hashcat -m 22000 hash.22000 /usr/share/wordlists/rockyou.txt -w 3
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -377,7 +377,7 @@ hashcat -m 22000 hash.22000 /usr/share/wordlists/rockyou.txt -w 3
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -422,7 +422,7 @@ alert wlan any any -> any any (msg:"WiFi probe flood - possible hcxdumptool"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Cron : rotation quotidienne de la collecte et conversion automatique
@@ -454,7 +454,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie brute est un **pcapng binaire** (analysable dans [[Outil - tshark]] / [[Outil - Wireshark]]) et des **logs texte** (`--logfile`). L'analyse utile passe par les outils de la suite hcxtools :
 
@@ -485,7 +485,7 @@ with open("hash.22000") as fh:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 hcxdumptool → pcapng → hcxpcapngtool → hash.22000 → hashcat / John the Ripper
@@ -493,7 +493,7 @@ hcxdumptool → pcapng → tshark / Wireshark → analyse forensique
 hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - hashcat]] — crack `-m 22000` / `-m 16800`
 - [[Outil - John the Ripper]] — crack alternatif (hashcat `--format` équivalent)
 - [[Outil - aircrack-ng]] — alternative (suite classique, `aircrack-ng`)
@@ -502,7 +502,7 @@ hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -515,7 +515,7 @@ hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Capture **quasi en temps réel** : l'injection est limitée par le driver et le spectre, pas par le CPU (binaire C optimisé, epoll/timerfd depuis v6.3).
 - Le **pcapng** supporte de très longues collectes (heures/jours) sans rotation manuelle nécessaire (bien qu'elle reste conseillée).
@@ -526,7 +526,7 @@ hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -562,7 +562,7 @@ hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - Exécution **root obligatoire** : vérifier qu'aucun autre processus ne partage la carte (conflit d'injection).
 - hcxdumptool **injecte** des trames : c'est une attaque active, pas un sniffer passif — l'usage doit être réservé à un périmètre autorisé.
@@ -573,7 +573,7 @@ hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Linux uniquement** : pas de capture/injection sous Windows/macOS natifs.
 - Inefficace contre **WPA3/SAE pur** : ni PMKID, ni handshake WPA2 exploitable (les AP en « transition mode » restent attaquables via WPA2).
@@ -585,7 +585,7 @@ hcxdumptool (daemon) → cron / systemd → rotation + conversion automatique
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Mise en mode moniteur
@@ -616,7 +616,7 @@ hcxpcapngtool --nonce-error-corrections=2 -o hash.22000 capture.pcapng
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -625,11 +625,11 @@ hcxpcapngtool --nonce-error-corrections=2 -o hash.22000 capture.pcapng
 | **Commande principale** | `sudo hcxdumptool -i wlan0mon -o capture.pcapng` |
 | **Alternative principale** | airodump-ng (passif, workflow classique) |
 | **Concepts importants** | PMKID, handshake 4-way, mode moniteur, format pcapng, hashcat 22000 |
-| **Liens associés** | [[Techniques/Attaques WiFi - PMKID\|📶 PMKID]] · [[Outil - hashcat]] · [[Outil - aircrack-ng]] |
+| **Liens associés** | [[Techniques/Attaques WiFi - PMKID\| PMKID]] · [[Outil - hashcat]] · [[Outil - aircrack-ng]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -642,16 +642,16 @@ hcxpcapngtool --nonce-error-corrections=2 -o hash.22000 capture.pcapng
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **PMKID = zéro client nécessaire**
+> [!tip] **PMKID = zéro client nécessaire**
 > Si l'AP envoie le PMKID, pas besoin de déauthentifier qui que ce soit → collecte bien plus discrète. `hcxpcapngtool` extrait aussi les handshakes (EAPOL) du même fichier.
 
-> [!tip] 💡 **Bien paramétrer hcxpcapngtool**
+> [!tip] **Bien paramétrer hcxpcapngtool**
 > `hcxpcapngtool -o hash.22000 capture.pcapng` déduplique et ne conserve que les empreintes valides ;
 > ajoutez `--nonce-error-corrections=2` sur les captures brutes pour réparer les handshakes partiellement capturés avant de lancer hashcat.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La carte doit être en mode moniteur **sans wpa_supplicant actif** (tue NetworkManager) et accepter le **RX/TX simultané**.
 > - Ne pas confondre : hcxdumptool **injecte**, ce n'est pas un simple sniffer passif.
 > - Les anciennes versions sortaient du `16800` ; viser `-m 22000` (compatible hashcat ≥ 6.2).
@@ -661,7 +661,7 @@ hcxpcapngtool --nonce-error-corrections=2 -o hash.22000 capture.pcapng
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -685,9 +685,9 @@ hcxpcapngtool --nonce-error-corrections=2 -o hash.22000 capture.pcapng
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel hcxdumptool](https://github.com/ZerBea/hcxdumptool)
 > - [GitHub officiel hcxtools (hcxpcapngtool)](https://github.com/ZerBea/hcxtools)
 > - [Releases (v7.1.2, 8 février 2026)](https://github.com/ZerBea/hcxdumptool/releases)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi - PMKID|📶 PMKID]] · [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Techniques/Password Cracking|🔐 Cracking]] · [[Outil - hashcat]] · [[Outil - aircrack-ng]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi - PMKID| PMKID]] · [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Techniques/Password Cracking| Cracking]] · [[Outil - hashcat]] · [[Outil - aircrack-ng]]

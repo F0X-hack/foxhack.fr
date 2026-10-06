@@ -1,11 +1,11 @@
 ---
 title: "Outil - wfuzz"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 3.1.1 (projet en maintenance)
 licence: GPL-2.0
@@ -16,20 +16,20 @@ site: https://wfuzz.org
 doc: https://wfuzz.readthedocs.io
 ---
 
-# 🔍 wfuzz — Fuzzer web Python (mot-clé FUZZ)
+# wfuzz — Fuzzer web Python (mot-clé FUZZ)
 
 > [!info] **En 1 phrase**
 > wfuzz est un fuzzer web en Python qui remplace le mot-clé `FUZZ` dans les URL, headers, cookies ou corps de requête pour tester paramètres et valeurs.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Wfuzz — The Web Fuzzer |
 | Description | Framework de fuzzing web : injecte des payloads dans n'importe quel champ d'une requête HTTP (URL, paramètres, headers, cookies, corps) |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Fuzzing web / découverte de paramètres / brute force HTTP |
 | Fonction principale | Remplacer le mot-clé `FUZZ` par chaque valeur d'un payload dans une requête |
 | Type d'outil | CLI + bibliothèque Python (API `wfuzz`) |
@@ -46,7 +46,7 @@ doc: https://wfuzz.readthedocs.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 wfuzz est un framework de fuzzing web complet, écrit en Python. Contrairement aux scanners de répertoires, il est pensé pour fuzzer n'importe quel champ de la requête : paramètres GET/POST, en-têtes, cookies, chemins, corps JSON. Le mot-clé `FUZZ` est remplacé par chaque mot d'un payload défini avec `-z`.
 
@@ -62,7 +62,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 - **Mot-clé `FUZZ`** : tout emplacement contenant `FUZZ` dans la requête (URL, headers, cookies, corps) est remplacé par chaque valeur du payload.
 - **Payloads (`-z`)** : sources de données — fichiers (`file,chemin`), listes (`list,a,b,c`), plages (`range,1-100`), stdin, `hexrand`, `iprange`, sessions Burp (`burplog`/`burpstate`), etc.
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian / Ubuntu / Kali
@@ -103,12 +103,12 @@ git clone https://github.com/xmendez/wfuzz
 cd wfuzz && pip install -e .
 ```
 
-> [!warning] ⚠️ Dépendance pycurl
+> [!warning] Dépendance pycurl
 > wfuzz repose sur **pycurl** (libcurl) pour les connexions : sous Windows ou certaines distros, l'installation de `pycurl` peut nécessiter `libcurl` (ex : `sudo apt install libcurl4-openssl-dev`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Configuration via CLI
 
@@ -145,7 +145,7 @@ delay = 0.0
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```text
 wfuzz (Python)
@@ -170,7 +170,7 @@ wfuzz (Python)
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes de base
 
@@ -210,7 +210,7 @@ wfuzz -z file,dirlist.txt -u http://10.10.10.10/FUZZ -o resultats.txt -s ma_sess
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Options principales
 
@@ -270,7 +270,7 @@ wfuzz -z file,dirlist.txt -u http://10.10.10.10/FUZZ -o resultats.txt -s ma_sess
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -334,7 +334,7 @@ wfuzz -z burplog,cap.xml -u http://10.10.10.10/FUZZ
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Découvrir un paramètre caché** : fuzzer les noms de paramètres sur un endpoint.
    ```bash
@@ -362,7 +362,7 @@ wfuzz -z burplog,cap.xml -u http://10.10.10.10/FUZZ
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Découverte de paramètres cachés avec filtre sur la baseline
 
@@ -419,7 +419,7 @@ wfuzz -z file,users.txt -z file,pass.txt -z list,true,false \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -432,7 +432,7 @@ wfuzz -z file,users.txt -z file,pass.txt -z list,true,false \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -446,7 +446,7 @@ wfuzz -z file,users.txt -z file,pass.txt -z list,true,false \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -505,7 +505,7 @@ rule Wfuzz_Installed {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Fuzzing en boucle sur plusieurs endpoints
@@ -558,7 +558,7 @@ jobs:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 wfuzz affiche une sortie tabulaire : le numéro de ligne, le code HTTP, la taille en mots/lignes, la requête (URL avec la valeur injectée) et les payloads. Il peut écrire les résultats dans un fichier (`-o`) et sauvegarder des sessions (`-s`).
 
@@ -582,7 +582,7 @@ wfuzz -z file,dirlist.txt -u http://10.10.10.10/FUZZ --hc 404 | grep -cE "200|30
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 wfuzz -> proxy (Burp/ZAP) -> trafic contrôlé et rejouable
@@ -592,7 +592,7 @@ wfuzz -> seclists/wordlists -> payloads standard
 wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - ffuf]] — alternative Go plus rapide (même concept FUZZ)
 - [[Outil - gobuster]] / [[Outil - Feroxbuster]] — directory busting spécialisé
 - [[Outil - Burp Suite]] — Intruder pour le même type de fuzzing en GUI
@@ -600,7 +600,7 @@ wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -614,7 +614,7 @@ wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **pycurl multi** : wfuzz utilise libcurl en mode multi pour paralléliser les requêtes (`-t`, défaut 10 connexions).
 - **Moins rapide que ffuf** : l'overhead Python et l'ancienneté du code le rendent plus lent pour de très grosses wordlists.
@@ -628,7 +628,7 @@ wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -664,7 +664,7 @@ wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Projet en maintenance** : dernière release 3.1.1 — pas de correctifs actifs ; à utiliser avec prudence et conscience des limites.
 - **Volume de requêtes** : un fuzzing non calibré peut saturer une cible ou verrouiller des comptes (login).
@@ -675,7 +675,7 @@ wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Vitesse** : moins rapide que ffuf/feroxbuster sur de grosses wordlists (overhead Python).
 - **Développement arrêté** : plus de maintenance active, dépendances anciennes, bugs non corrigés.
@@ -686,7 +686,7 @@ wfuzz -> outils d'échange (grep, jq) -> parsing des résultats
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Directory busting
@@ -723,7 +723,7 @@ wfuzz -p http://127.0.0.1:8080 -z file,dirlist.txt -u http://10.10.10.10/FUZZ
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -736,7 +736,7 @@ wfuzz -p http://127.0.0.1:8080 -z file,dirlist.txt -u http://10.10.10.10/FUZZ
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -748,16 +748,16 @@ wfuzz -p http://127.0.0.1:8080 -z file,dirlist.txt -u http://10.10.10.10/FUZZ
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Commence par fuzzer un seul paramètre connu avec une petite payload, note la baseline (`--hh`/`--hc`), puis extrapole proprement vers des listes plus grosses.
 > - La sortie de wfuzz affiche la **baseline** (`Base` line) : note-la avant de lancer la campagne, c'est elle qui permet de calibrer `--hh`/`--hc`.
 > - Utilise les **encoders** (`-e`) pour les contextes spéciaux (JSON, base64, hash) et `FUZZ2`/`FUZZ3` pour les combinaisons.
 > - Passe par un proxy (`-p`) pour contrôler, modifier et rejouer le trafic pendant l'engagement.
 > - Pour les grosses wordlists, préfère ffuf — mais garde wfuzz pour sa flexibilité (payloads exotiques, API Python).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sur une application de production, le fuzzing massif de login ou d'API peut verrouiller des comptes ou dégrader les performances. Vérifie le scope et garde `-t` modéré.
 > - Le User-Agent par défaut « Wfuzz » est bloqué par beaucoup de WAF : personnalise-le (`-H "User-Agent: Mozilla/5.0..."`).
 > - Les pages 404 custom (SPA) faussent les résultats sans un bon calibrage de baseline.
@@ -765,7 +765,7 @@ wfuzz -p http://127.0.0.1:8080 -z file,dirlist.txt -u http://10.10.10.10/FUZZ
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -787,4 +787,4 @@ wfuzz -p http://127.0.0.1:8080 -z file,dirlist.txt -u http://10.10.10.10/FUZZ
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - ffuf|Ffuf]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Outil - Burp Suite|Burp Suite]] · [[Techniques/Hidden Parameters|Hidden Parameters]] · [[Techniques/IDOR|IDOR]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]
+**Liens :** [[Tools| Outils]] · [[Outil - ffuf|Ffuf]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Outil - Burp Suite|Burp Suite]] · [[Techniques/Hidden Parameters|Hidden Parameters]] · [[Techniques/IDOR|IDOR]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]

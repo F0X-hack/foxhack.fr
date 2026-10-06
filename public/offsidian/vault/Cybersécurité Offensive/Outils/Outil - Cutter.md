@@ -1,11 +1,11 @@
 ---
 title: "Outil - Cutter"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 2.5.0
 licence: GPL-3.0
@@ -16,7 +16,7 @@ site: https://cutter.re
 doc: https://cutter.re/docs/
 ---
 
-# 🧬 Cutter — Reverse engineering GUI basé sur radare2
+# Cutter — Reverse engineering GUI basé sur radare2
 
 > [!info] **En 1 phrase**
 > **Cutter** est l'**interface graphique** de radare2 : désassemblage, **vue graphe**, décompilateur
@@ -25,13 +25,13 @@ doc: https://cutter.re/docs/
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Cutter |
 | Description | Plateforme de reverse engineering graphique : désassemblage, graphe de contrôle, décompilation C, debugger, hexdump — propulsée par Rizin |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Reverse engineering interactif (GUI) |
 | Fonction principale | Analyse statique et dynamique de binaires (ELF, PE, Mach-O, DEX, firmware) |
 | Type d'outil | GUI desktop (Qt), avec console CLI intégrée (commandes Rizin) |
@@ -49,7 +49,7 @@ doc: https://cutter.re/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Cutter est le **frontend graphique** du framework Rizin : il expose sous une interface Qt toutes les capacités du moteur (analyse, désassemblage, décompilation, debug, édition). On ouvre un binaire, l'analyse automatique (`aaa` lancé en arrière-plan ou via le bouton *Analyze*) reconstruit les fonctions, les xrefs et les strings ; on navigue dans le **graph view** (bascule `Space`), on lit le **pseudo-code C** grâce au décompilateur r2ghidra intégré, et on peut **déboguer** localement ou à distance (breakpoints, step, registres, mémoire).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -120,7 +120,7 @@ ninja
 # Les plugins r2ghidra sont inclus dans le build officiel
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Cutter embarque Rizin : **pas besoin d'installer radare2/rizin séparément** pour l'usage GUI.
 > - Le décompilateur r2ghidra est **intégré dans les releases officielles** (pas de Java requis).
 > - Windows : la version zip nécessite les libs MSVC redistribuables à jour.
@@ -128,7 +128,7 @@ ninja
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Cutter stocke la configuration par projet et globalement dans les fichiers de Rizin (`.rz/` ou `~/.config/rizin`).
 
@@ -143,7 +143,7 @@ Cutter stocke la configuration par projet et globalement dans les fichiers de Ri
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **GUI Qt** (C++17, Qt 6) : widgets Désassemblage, Decompiler, Graph, Hexdump, Strings, Imports/Exports, Functions, Types, Debugger, Console.
 - **Moteur Rizin** (`librz`) : modules `core` (navigation, commandes), `bin` (parseurs de formats : ELF, PE, Mach-O, DEX…), `analysis` (architectures via plugins), `asm`, `debug` (ptrace/WinDbg, gdb remote), `search`, `esil`.
@@ -154,7 +154,7 @@ Cutter stocke la configuration par projet et globalement dans les fichiers de Ri
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -191,7 +191,7 @@ cutter -A -i script.rz binary
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -209,7 +209,7 @@ cutter -A -i script.rz binary
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -254,7 +254,7 @@ cutter -w challenge.elf
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : débugger une fonction de vérification de mot de passe dans un ELF.**
 
@@ -275,7 +275,7 @@ cutter -w challenge.elf
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : patch du binaire en direct
 
@@ -308,7 +308,7 @@ cutter challenge_unpacked
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -320,7 +320,7 @@ cutter challenge_unpacked
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -332,7 +332,7 @@ cutter challenge_unpacked
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -368,7 +368,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — décompiler toutes les fonctions d'un binaire via la CLI
@@ -400,7 +400,7 @@ rz.quit()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties de Rizin sont textuelles, et la plupart des commandes acceptent un suffixe **`j` pour le JSON** (facilement parsable).
 
@@ -428,26 +428,26 @@ rz.quit()
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Cutter (GUI) → Rizin (moteur) → rz-bin (métadonnées) → r2ghidra (décompilateur) → scripts Python/rzpipe
 Cutter → gdb remote (debug à distance) → QEMU user mode
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - radare2|🧬 radare2]] — la CLI du même moteur (Cutter utilise Rizin, mais la syntaxe est identique)
-- [[Outil - Ghidra|🧬 Ghidra]] — décompilateur comparable, analyse en profondeur, mode headless
-- [[Outil - gdb-peda|🐛 gdb-peda]] — debugger ligne de commande pour la phase d'exploitation
-- [[Outil - pwntools|🧩 pwntools]] — exploitation automatisée après la compréhension du binaire
-- [[Outil - ROPgadget|🧱 ROPgadget]] — construction des chaînes ROP après identification des gadgets
-- [[Outil - x64dbg|🖥️ x64dbg]] — équivalent Windows pour l'analyse dynamique native
-- [[Techniques/Buffer Overflow|📚 Buffer Overflow]] · [[Techniques/Hardware - Logic Analyzer|📐 Logic Analyzer]]
-- [[09 - Reverse Engineering & Malware|🧬 Reverse & Malware]]
+- [[Tools| Outils]] global
+- [[Outil - radare2| radare2]] — la CLI du même moteur (Cutter utilise Rizin, mais la syntaxe est identique)
+- [[Outil - Ghidra| Ghidra]] — décompilateur comparable, analyse en profondeur, mode headless
+- [[Outil - gdb-peda| gdb-peda]] — debugger ligne de commande pour la phase d'exploitation
+- [[Outil - pwntools| pwntools]] — exploitation automatisée après la compréhension du binaire
+- [[Outil - ROPgadget| ROPgadget]] — construction des chaînes ROP après identification des gadgets
+- [[Outil - x64dbg| x64dbg]] — équivalent Windows pour l'analyse dynamique native
+- [[Techniques/Buffer Overflow| Buffer Overflow]] · [[Techniques/Hardware - Logic Analyzer| Logic Analyzer]]
+- [[09 - Reverse Engineering & Malware| Reverse & Malware]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -461,7 +461,7 @@ Cutter → gdb remote (debug à distance) → QEMU user mode
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Démarrage rapide : Cutter ouvre un binaire et lance `aaa` en **quelques secondes** (contre des dizaines pour Ghidra).
 - L'analyse `aaa` est dominée par la phase de reconstruction des fonctions : sur des binaires de plusieurs dizaines de Mo, préférer une analyse ciblée (`aa`, `aafl` sur les zones utiles).
@@ -471,7 +471,7 @@ Cutter → gdb remote (debug à distance) → QEMU user mode
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -501,7 +501,7 @@ Cutter → gdb remote (debug à distance) → QEMU user mode
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permission** : analyser des binaires tiers (malware) dans un environnement isolé — Cutter exécute des parseurs de format potentiellement buggés.
 - **Debug** : lancer un malware sous le debugger Rizin peut déclencher du code malveillant : utiliser une VM et désactiver le réseau.
@@ -511,7 +511,7 @@ Cutter → gdb remote (debug à distance) → QEMU user mode
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Pas de décompilateur aussi complet que celui de Ghidra pour les architectures exotiques (il s'en approche néanmoins via r2ghidra).
 - Le debugger natif ne couvre que l'hôte : pour émuler une autre architecture, passer par gdb remote/QEMU.
@@ -521,7 +521,7 @@ Cutter → gdb remote (debug à distance) → QEMU user mode
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Ouverture avec analyse
@@ -554,7 +554,7 @@ File → Save            # écrire le fichier modifié
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -567,7 +567,7 @@ File → Save            # écrire le fichier modifié
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -579,29 +579,29 @@ File → Save            # écrire le fichier modifié
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le graphe est le plus rapide**
+> [!tip] **Le graphe est le plus rapide**
 > Bascule avec `Space` en suivant un `strcmp` : voir les deux branches dans le graph est bien plus rapide que de lire du listing.
 
-> [!tip] 💡 **La console Rizin est toujours là**
+> [!tip] **La console Rizin est toujours là**
 > Les commandes Rizin (`afl`, `px`, `s`, `pdd`) fonctionnent dans l'onglet Console (préfixe `:>`) : combine GUI et CLI pour aller vite.
 
-> [!tip] 💡 **Les suffixes `j` = JSON**
+> [!tip] **Les suffixes `j` = JSON**
 > `aflj`, `pxj`, `izj` produisent du JSON : idéal pour exporter les résultats d'analyse vers un script Python.
 
-> [!warning] ⚠️ **Le plugin r2ghidra doit être activé**
+> [!warning] **Le plugin r2ghidra doit être activé**
 > Sans le plugin, pas de décompilateur C : vérifie dans Settings → Plugins que r2ghidra est cochée, sinon le panneau "Decompiler" reste vide.
 
-> [!warning] ⚠️ **Debugger natif uniquement**
+> [!warning] **Debugger natif uniquement**
 > Cutter débogue **via Rizin** (pas de QEMU complet) : sur une archi non-native ou un firmware, préfère Ghidra pour l'analyse statique pure.
 
-> [!warning] ⚠️ **`-A` OU `aaa`, pas les deux**
+> [!warning] `-A` OU `aaa`, pas les deux**
 > `cutter -A` lance déjà l'analyse : lancer `aaa` en console derrière est inutile et ralentit.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -625,4 +625,4 @@ File → Save            # écrire le fichier modifié
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - radare2|🧬 radare2]] · [[Outil - Ghidra|🧬 Ghidra]] · [[Outil - x64dbg|🖥️ x64dbg]] · [[Techniques/Buffer Overflow|📚 Buffer Overflow]] · [[Techniques/Hardware - Logic Analyzer|📐 Logic Analyzer]]
+**Liens :** [[Tools| Outils]] · [[Outil - radare2| radare2]] · [[Outil - Ghidra| Ghidra]] · [[Outil - x64dbg| x64dbg]] · [[Techniques/Buffer Overflow| Buffer Overflow]] · [[Techniques/Hardware - Logic Analyzer| Logic Analyzer]]

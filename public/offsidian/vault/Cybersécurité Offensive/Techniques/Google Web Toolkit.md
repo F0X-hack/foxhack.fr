@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ⚙️ Google Web Toolkit (GWT)
+# Google Web Toolkit (GWT)
 
 > [!info] **En 1 phrase**
 > Google Web Toolkit (GWT) compile du **Java en JavaScript frontend** avec un protocole RPC de **sérialisation maison** — mal audité, il expose méthodes serveur, permet l'injection dans les payloads sérialisés et mène à de l'exécution de code.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,12 +32,12 @@ flowchart LR
     E --> F[Injection / désérialisation]
 ```
 
-> [!info] 💡 **Pourquoi c'est intéressant**
+> [!info] **Pourquoi c'est intéressant**
 > Le JS généré par GWT est **obfusqué et volumineux**, mais il encode le **nom des services et méthodes serveur** dans les permutations. Une fois ces noms extraits, on peut appeler les RPC directement — souvent avec des entrées non validées par le frontend.
 
 ---
 
-## 🧭 Anatomie d'une app GWT
+## Anatomie d'une app GWT
 
 | Élément | Rôle |
 |---|---|
@@ -46,14 +46,14 @@ flowchart LR
 | RPC service | Endpoint POST qui reçoit la **sérialisation GWT** des arguments Java |
 | Format RPC | Binaire : magic `|J|`, classe de la requête, champs sérialisés avec leurs **types** |
 
-> [!warning] ⚠️ **Sérialisation maison**
+> [!warning] **Sérialisation maison**
 > Le protocole RPC GWT définit ses **propres règles de sérialisation** (en-tête `|J|...`), souvent oublié par les scanners génériques → surface mal couverte, idéale pour un audit manuel/outillé.
 
 ---
 
-## 🧪 Énumération des endpoints RPC
+## Énumération des endpoints RPC
 
-> [!tip] 💡 **Bootstrap vs permutation**
+> [!tip] **Bootstrap vs permutation**
 > Le `.nocache.js` ne contient que l'orchestration ; pour extraire les **noms de services/méthodes**, il faut analyser une permutation `.cache.js` concrète.
 
 ```bash
@@ -75,7 +75,7 @@ flowchart LR
 
 ---
 
-## 🧪 Génération & test de payloads RPC
+## Génération & test de payloads RPC
 
 ```bash
 # Générer les payloads RPC de toutes les méthodes d'un service filtré
@@ -88,13 +88,13 @@ flowchart LR
 
 ---
 
-## 💥 Exploitation
+## Exploitation
 
 | Vecteur | Description |
 |---|---|
 | **Injection dans les args RPC** | Les arguments sérialisés sont injectés dans le code serveur (SQLi, EL, commandes...) — le frontend ne valide pas |
 | **EL Injection** | "From Serialized to Shell" : injection d'expressions EL dans les champs d'une requête GWT (audit SRC Incite) |
-| **Désérialisation** | Mauvais use/overrides des sérialiseurs → cf. [[Insecure Deserialization|🧟 Deserialization]] |
+| **Désérialisation** | Mauvais use/overrides des sérialiseurs → cf. [[Insecure Deserialization| Deserialization]] |
 | **Méthodes non exposées au frontend** | L'énumération révèle des méthodes jamais appelées par le JS → souvent moins protégées |
 | **Auth zippée** | Les services RPC peuvent oublier de re-vérifier les autorisations (fiable uniquement côté UI) |
 
@@ -105,7 +105,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ```bash
 # GWTMap (FSecureLABS) — mapping de la surface d'attaque GWT
@@ -117,7 +117,7 @@ https://github.com/GDSSecurity/GWT-Penetration-Testing-Toolset
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -130,12 +130,12 @@ https://github.com/GDSSecurity/GWT-Penetration-Testing-Toolset
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Audit manuel sur les permutations**
+> [!tip] **Audit manuel sur les permutations**
 > Les permutes sont volumineuses : chercher les **string pools** pour extraire les noms de méthodes, puis croiser avec l'interface utilisateur pour mapper chaque fonctionnalité à son service.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le `.nocache.js` seul ne suffit pas pour énumérer les méthodes → il faut une **permutation réelle**.
 > - Le format RPC a plusieurs versions : la **requête brute** construite par GWTMap doit matcher la version du serveur.
 > - Les erreurs GWT sont **opaques** (`Exception`, status) → souvent en **blind**, prévoir des payloads génériques.
@@ -143,10 +143,10 @@ https://github.com/GDSSecurity/GWT-Penetration-Testing-Toolset
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Insecure Deserialization|🧟 Deserialization]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[API Key Leaks|🔑 API Key Leaks]]
-- → [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Google Web Toolkit](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Google%20Web%20Toolkit/README.md)
+- [[Insecure Deserialization| Deserialization]]
+- [[Injection de commandes| Injection de commandes]]
+- [[API Key Leaks| API Key Leaks]]
+- → [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Google Web Toolkit](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Google%20Web%20Toolkit/README.md)

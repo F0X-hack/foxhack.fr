@@ -1,13 +1,14 @@
-import { useMemo, useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import { ChevronRight, Clock3, ExternalLink, FileText, Link2, Network, Tag, X } from 'lucide-react'
-import type { OpenNote, VaultManifest, VaultNote } from './types'
-import { formatDate, shortTitle } from './utils'
+import type { OpenNote, VaultManifest, VaultNote, VaultOutline } from './types'
+import { expandHeadings, formatDate, shortTitle } from './utils'
 
 type InspectorTab = 'outline' | 'links'
 
 type NoteInspectorProps = {
   manifest: VaultManifest
   note: VaultNote
+  outline: VaultOutline | null
   activeHeading: string
   mobileOpen: boolean
   onCloseMobile: () => void
@@ -16,9 +17,10 @@ type NoteInspectorProps = {
   onJumpToHeading: (slug: string) => void
 }
 
-export default function NoteInspector({
+function NoteInspector({
   manifest,
   note,
+  outline,
   activeHeading,
   mobileOpen,
   onCloseMobile,
@@ -28,12 +30,13 @@ export default function NoteInspector({
 }: NoteInspectorProps) {
   const [tab, setTab] = useState<InspectorTab>('outline')
   const noteById = useMemo(() => new Map(manifest.notes.map((item) => [item.id, item])), [manifest.notes])
-  const outline = note.headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3)
+  const outlineHeadings = useMemo(() => expandHeadings(outline?.[note.id]?.headings), [note.id, outline])
+  const plan = outlineHeadings.filter((heading) => heading.depth >= 2 && heading.depth <= 3)
   const backlinks = note.backlinks.flatMap((id) => (noteById.has(id) ? [noteById.get(id)!] : []))
   const outgoing = [...new Set(note.links.map((link) => link.id))].flatMap((id) =>
     noteById.has(id) ? [noteById.get(id)!] : [],
   )
-  const extraProperties = Object.entries(note.properties).filter(
+  const extraProperties = Object.entries(outline?.[note.id]?.properties ?? {}).filter(
     ([key, value]) => !['type', 'statut'].includes(key) && value,
   )
 
@@ -92,9 +95,11 @@ export default function NoteInspector({
 
               <section className="offsidian-outline">
                 <p className="offsidian-inspector-title">Sur cette page</p>
-                {outline.length ? (
+                {!outline ? (
+                  <p className="offsidian-inspector-empty">Chargement du plan…</p>
+                ) : plan.length ? (
                   <nav aria-label="Plan de la note">
-                    {outline.map((heading) => (
+                    {plan.map((heading) => (
                       <button
                         type="button"
                         key={`${heading.slug}-${heading.depth}`}
@@ -140,3 +145,5 @@ export default function NoteInspector({
     </>
   )
 }
+
+export default memo(NoteInspector)

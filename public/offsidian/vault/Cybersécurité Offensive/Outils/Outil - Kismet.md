@@ -1,11 +1,11 @@
 ---
 title: "Outil - Kismet"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: "2025-09-R1 (4 septembre 2025)"
 licence: GPL-2.0
@@ -16,20 +16,20 @@ site: https://www.kismetwireless.net/
 doc: https://www.kismetwireless.net/docs/
 ---
 
-# 📡 Kismet — Wireless & Réseau
+# Kismet — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Détecteur **passif** de signaux **WiFi, Bluetooth et SDR**, avec interface web, logging **pcap** et cartographie des appareils — autant un outil de surveillance RF défensif qu'une base de renseignement pour l'offensif.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Kismet |
 | Description | Récepteur/analyseur de spectre passif multi-protocoles : WiFi (802.11 a/b/g/n/ac/ax), Bluetooth/BLE, ADS-B, SDR, RF météo… avec UI web, alertes, GPS et logging |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Reconnaissance & surveillance RF (WIDS / OSINT radio) |
 | Fonction principale | Découverte passive d'AP, clients, réseaux cachés et appareils radio ; enregistrement pcapng ; cartographie géolocalisée |
 | Type d'outil | Framework (daemon + UI web + clients) |
@@ -50,7 +50,7 @@ doc: https://www.kismetwireless.net/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `kismet` écoute **sans émettre** (mode passif, très discret) : il identifie les points d'accès, les clients, les réseaux cachés (SSID révélé par les probes), les appareils Bluetooth/BLE et les signaux SDR (via `rtl433`, `rtlamr`, `rtsdr`), avec un **GPS** pour la cartographie géolocalisée. Il écrit des **captures pcapng** réutilisables par Wireshark/tshark et expose une **UI web** riche (cartes, graphes, alertes) sur le port 2501. Côté offensif, les données Kismet permettent de préparer des attaques ciblées (canaux, BSSID/MAC, périphériques connectés) ; côté défensif, il détecte les AP rogue, les attaques par probe et les signaux anormaux.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -138,7 +138,7 @@ git clone https://github.com/kismetwireless/kismet.git
 cd kismet && ./configure && make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Groupes `kismet` et `dialout` requis pour fonctionner **sans root** (accès USB/série).
 > - La carte WiFi doit supporter le **mode moniteur** (la plupart des cartes, mais les pilotes propriétaires peuvent bloquer).
 > - Les datasources Bluetooth nécessitent une interface HCI accessible ; SDR nécessite les libs `rtl-sdr`/`airspy`.
@@ -146,7 +146,7 @@ cd kismet && ./configure && make && sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration principale vit dans `/etc/kismet/kismet.conf` (ou `kismet_site.conf` pour les overrides). On y déclare les **sources de données** (`source=`), les **fichiers de log**, le port HTTP, les alertes et le comportement du channel hopping.
 
@@ -163,7 +163,7 @@ La configuration principale vit dans `/etc/kismet/kismet.conf` (ou `kismet_site.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Kismet moderne (gamme 2019+) est un **démon C++** multi-thread qui ingère des paquets de plusieurs sources et les normalise dans un modèle de données unifié (devices, phy, sub-phy) :
 
@@ -178,7 +178,7 @@ L'ensemble fonctionne en **pur passif** : aucune trame émise par Kismet lui-mê
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -209,7 +209,7 @@ curl -s http://localhost:2501/devices/views/physical/all_devices.json | jq '.'
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -231,7 +231,7 @@ curl -s http://localhost:2501/devices/views/physical/all_devices.json | jq '.'
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -275,7 +275,7 @@ curl -s http://localhost:2501/devices/views/physical/all_devices.json \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Passer la carte en mode moniteur** et lancer Kismet avec des logs dédiés.
    ```bash
@@ -296,7 +296,7 @@ curl -s http://localhost:2501/devices/views/physical/all_devices.json \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection d'un AP rogue avec un WIDS maison
 
@@ -352,7 +352,7 @@ sudo kismet --no-root --config /etc/kismet/kismet.conf
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -365,7 +365,7 @@ sudo kismet --no-root --config /etc/kismet/kismet.conf
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -379,7 +379,7 @@ sudo kismet --no-root --config /etc/kismet/kismet.conf
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -418,7 +418,7 @@ alert tcp any any -> any 2501 (msg:"Potential Kismet web UI access"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Export périodique des devices vers un SIEM via l'API JSON
@@ -453,7 +453,7 @@ while True:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Kismet produit **pcapng** (trames brutes), **netxml** (devices), **gpsxml** (positions), **alert** (événements), plus une **API JSON** temps réel. Le XML et le JSON se parsent facilement ; le pcapng est analysable dans [[Outil - Wireshark]] / [[Outil - tshark]].
 
@@ -484,7 +484,7 @@ for f in glob.glob("Kismet-*.netxml"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Kismet (passif) → pcapng → Wireshark / tshark → analyse forensique
@@ -493,14 +493,14 @@ Kismet → BSSID/canal → airodump-ng / hcxdumptool → capture active → crac
 Kismet → GPS → cartes (OpenStreetMap, Google Earth via KML)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - tshark]] · [[Outil - Wireshark]] — analyse des captures pcapng
 - [[Outil - aircrack-ng]] · [[Outil - hcxdumptool]] — phase active post-recon
 - [[Outil - Wifite]] · [[Outil - Reaver]] — exploitation des cibles découvertes
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -513,7 +513,7 @@ Kismet → GPS → cartes (OpenStreetMap, Google Earth via KML)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Kismet est conçu pour tourner **en continu** : charge CPU faible en WiFi pur (décodage C++ optimisé) ; les datasources SDR et Bluetooth ajoutent du coût.
 - Le **channel hopping** est la principale limite : plus le spectre est large, plus chaque canal est peu écouté — l'intervalle se règle (`wifictl_hopper_interval`).
@@ -523,7 +523,7 @@ Kismet → GPS → cartes (OpenStreetMap, Google Earth via KML)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -553,7 +553,7 @@ Kismet → GPS → cartes (OpenStreetMap, Google Earth via KML)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - Kismet est **pur passif** : il n'émet aucune trame — parfait pour une usage légal de surveillance de son propre spectre, et discret côté opérateur.
 - Attention aux **traces** : les logs (pcapng, netxml, gpsxml) révèlent les emplacements (GPS) et le contenu du trafic — à chiffrer et détruire après analyse.
@@ -563,7 +563,7 @@ Kismet → GPS → cartes (OpenStreetMap, Google Earth via KML)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Passif par conception** : Kismet ne peut pas déauthentifier, injecter, ni tester d'injection.
 - Le channel hopping **rate des événements courts** sur des spectres larges.
@@ -575,7 +575,7 @@ Kismet → GPS → cartes (OpenStreetMap, Google Earth via KML)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Mode moniteur puis lancement Kismet avec logs
@@ -606,7 +606,7 @@ tshark -r Kismet-*.pcapng -Y "wlan.fc.type_subtype == 0x08"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -615,11 +615,11 @@ tshark -r Kismet-*.pcapng -Y "wlan.fc.type_subtype == 0x08"
 | **Commande principale** | `sudo kismet --no-root --override-kismet-logdir /pentest/rf wlan0mon` |
 | **Alternative principale** | airodump-ng (capture ciblée) / Airmon |
 | **Concepts importants** | Mode passif, channel hopping, datasources, netxml, UI web port 2501, SSID cachés |
-| **Liens associés** | [[Techniques/Attaques WiFi - Outils & Recon\|🧰 Outils & Recon]] · [[Outil - Wireshark]] · [[Outil - aircrack-ng]] |
+| **Liens associés** | [[Techniques/Attaques WiFi - Outils & Recon\| Outils & Recon]] · [[Outil - Wireshark]] · [[Outil - aircrack-ng]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -631,15 +631,15 @@ tshark -r Kismet-*.pcapng -Y "wlan.fc.type_subtype == 0x08"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Kismet fonctionne **sans injection** (mode passif) : c'est l'outil de choix pour la **recon discrète**.
 > - Les logs pcapng sont directement exploitables par Wireshark et par la plupart des outils d'analyse Wi-Fi.
 > - Utilise l'API web JSON pour automatiser l'export des devices vers tes scripts ou un SIEM.
 > - Avec plusieurs cartes, alloue une carte par bande pour éviter le hopping.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le channel hopping par défaut rate les bursts courts : fixe un canal (`-c 6`) pour une chasse ciblée.
 > - N'oublie pas `--no-root` ni les groupes (`kismet`, `dialout`) sinon les interfaces USB sont invisibles.
 > - Les sources « auto » peuvent choisir la mauvaise carte si plusieurs interfaces sont présentes : déclare toujours ta source explicitement.
@@ -647,7 +647,7 @@ tshark -r Kismet-*.pcapng -Y "wlan.fc.type_subtype == 0x08"
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -670,9 +670,9 @@ tshark -r Kismet-*.pcapng -Y "wlan.fc.type_subtype == 0x08"
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel Kismet](https://github.com/kismetwireless/kismet)
 > - [Documentation Kismet](https://www.kismetwireless.net/)
 > - [Releases (2025-09-R1, 4 septembre 2025)](https://www.kismetwireless.net/releases/)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi - Outils & Recon|🧰 Outils & Recon]] · [[Techniques/Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP]] · [[Outil - aircrack-ng]] · [[Outil - Wireshark]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi - Outils & Recon| Outils & Recon]] · [[Techniques/Attaques WiFi - Préparation & Basiques| Préparation]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP]] · [[Outil - aircrack-ng]] · [[Outil - Wireshark]]

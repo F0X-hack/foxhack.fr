@@ -1,11 +1,11 @@
 ---
 title: "Outil - Maltego"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 4.12.1
 licence: Propriétaire (Community Edition gratuite)
@@ -17,14 +17,14 @@ doc: https://docs.maltego.com
 ---
 
 
-# 🕵️ Maltego — Link Analysis pour la recon OSINT
+# Maltego — Link Analysis pour la recon OSINT
 
 > [!info] **En 1 phrase**
 > Maltego est un outil de « link analysis » qui visualise sous forme de graphe les relations entre entités (personnes, domaines, emails, IP) lors d'une recon OSINT.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: https://docs.maltego.com
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Maltego transforme les données de recon en **graphe interactif** : chaque élément est une *entité* (domaine, personne, email, IP, organisation) et chaque relation est un *lien*. Les **transforms** sont des plugins qui interrogent des sources (DNS, whois, Shodan, réseaux sociaux, Certificate Transparency) et créent de nouvelles entités reliées à la précédente. Idéal pour identifier qui se cache derrière une infrastructure, relier des emails à des domaines, et présenter des résultats exploitables. La **Community Edition** gratuite couvre l'essentiel (transforms publics, usage non commercial), tandis que les versions payantes (CTID, Pro) débloquent les transform sets privés et l'intégration Radar.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -131,14 +131,14 @@ Invoke-WebRequest -Uri https://cdn.maltego.com/downloads/maltego.exe -OutFile ma
 # L'API Maltego (fichier de transform, CTID) s'utilise sans GUI pour certains scripts.
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Java Runtime (JRE 11+) obligatoire : sans lui, l'application ne démarre pas.
 > - Un compte (gratuit) est nécessaire au premier lancement pour s'identifier.
 > - Les téléchargements passent par le site officiel : les URLs exactes peuvent changer — vérifier sur maltego.com/downloads.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Configuration principale : après le premier lancement (identifiants du compte), via l'interface.
 
@@ -156,7 +156,7 @@ Configuration principale : après le premier lancement (identifiants du compte),
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Client Java** : application de bureau multiplateforme (Windows, macOS, Linux) qui gère l'affichage du graphe, la manipulation des entités et le lancement des transforms.
 - **Serveurs de transform** : machines (locales ou hébergées par Maltego, CTID) qui exécutent les transforms et renvoient les résultats au client.
@@ -167,7 +167,7 @@ Configuration principale : après le premier lancement (identifiants du compte),
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -198,7 +198,7 @@ maltego
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -220,7 +220,7 @@ maltego
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -261,7 +261,7 @@ maltego
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Créer l'entité racine** — démarrer l'investigation depuis une donnée connue.
    ```bash
@@ -286,7 +286,7 @@ maltego
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : cartographie d'une infrastructure cible
 
@@ -314,7 +314,7 @@ maltego
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -326,7 +326,7 @@ maltego
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -340,7 +340,7 @@ maltego
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -394,7 +394,7 @@ rule Maltego_Client_Detection {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — préparer une liste d'entités pour import
@@ -432,7 +432,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Export des entités du graphe en CSV pour parsing
@@ -453,15 +453,15 @@ with open("entities.csv") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Amass|Amass]] — sources de sous-domaines à importer dans le graphe
 - [[Outil - subfinder|subfinder]] — liste de sous-domaines à importer
 - [[Outil - Censys|Censys]] / [[Outil - Shodan CLI|Shodan CLI]] — sources via API (transforms ou export)
 - [[Outil - theHarvester|theHarvester]] — emails/domaines à croiser dans le graphe
 - [[Outil - SpiderFoot|SpiderFoot]] — alternative automatisée de collecte OSINT
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
@@ -471,7 +471,7 @@ subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -485,7 +485,7 @@ subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Charge : le client Java est gourmand en mémoire sur les très grands graphes (des milliers d'entités).
 - Les transforms distants (CTID) déportent l'exécution et réduisent la charge locale.
@@ -497,7 +497,7 @@ subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Collecte passive** : Maltego interroge des sources publiques tierces : l'activité est peu visible par la cible.
 - **Clés API** : stocker les clés (Shodan, VirusTotal…) de manière sécurisée ; certaines évoluent selon les éditions.
@@ -537,7 +537,7 @@ subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Outil propriétaire : les fonctionnalités avancées (CTID, Radar) sont payantes.
 - Client Java gourmand en ressources sur les grands graphes.
@@ -547,7 +547,7 @@ subfinder / theHarvester → (import) → Maltego → Export graphe → rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrage
@@ -566,7 +566,7 @@ maltego
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -579,7 +579,7 @@ maltego
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -590,15 +590,15 @@ maltego
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Commence par « Expand Transforms » sur une entité pour densifier le graphe, puis affine.
 > - Importe tes listes (sous-domaines, emails) en CSV pour les transformer en entités en masse.
 > - Utilise les vues (views) et « Collapse » pour garder un graphe lisible sur les grosses investigations.
 > - Exporte le graphe en PDF/PNG : c'est un excellent livrable pour le rapport.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - L'édition CE ne donne pas accès à tous les transforms (privés/payants).
 > - Un graphe sans filtrage devient vite illisible : limite les sets et le volume de résultats.
 > - Les données personnelles collectées (RGPD) : à traiter avec prudence et dans un cadre autorisé.
@@ -606,7 +606,7 @@ maltego
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -629,4 +629,4 @@ maltego
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - theHarvester|theHarvester]] · [[Outil - SpiderFoot|SpiderFoot]] · [[01 - Reconnaissance|🔎 Reconnaissance]]
+**Liens :** [[Tools| Outils]] · [[Outil - theHarvester|theHarvester]] · [[Outil - SpiderFoot|SpiderFoot]] · [[01 - Reconnaissance| Reconnaissance]]

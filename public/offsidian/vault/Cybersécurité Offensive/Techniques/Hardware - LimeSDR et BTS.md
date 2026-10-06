@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📶 Fausse BTS GSM avec LimeSDR
+# Fausse BTS GSM avec LimeSDR
 
 > [!info] **En 1 phrase**
 > Monter une **vraie station GSM 2G** avec un **LimeSDR** + la stack **Osmocom**
@@ -21,13 +21,13 @@ statut: publie
 
 ---
 
-> [!warning] ⚠️ **AVERTISSEMENT LÉGAL**
+> [!warning] **AVERTISSEMENT LÉGAL**
 > Cette procédure est **hautement illégale dans la plupart des régions du monde**.
 > À n'exécuter que dans un **environnement RF fermé** (aussi appelé **cage de Faraday**).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -39,7 +39,7 @@ statut: publie
 | **Complexité** | Élevée |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["LimeSDR (SDR)"] --> B["Stack Osmocom (BTS software)"]
@@ -51,7 +51,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Une **BTS (Base Transceiver Station)** est le composant radio d'un réseau cellulaire. En utilisant un SDR comme le **LimeSDR** combiné à la suite logicielle **Osmocom** (open source), il est possible de simuler une station GSM 2G complète — un « Network In A Box » (NITB) — à laquelle les téléphones environnants se connectent automatiquement, permettant l'interception d'appels, de SMS, et le suivi d'IMSI.
 
@@ -76,7 +76,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### GSM 2G — Architecture simplifiée
 
@@ -129,7 +129,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -191,7 +191,7 @@ LimeSDR Mini v2 — Ports RF principaux :
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### GSM 2G (UM空中 interface — Um)
 
@@ -234,7 +234,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -302,7 +302,7 @@ dpkg -l | grep osmo
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du logiciel d'interfaçage
 
@@ -403,7 +403,7 @@ auth policy accept-all
 - `long name` → **nom long** de l'opérateur.
 - `auth policy` → comment on **accepte les téléphones** qui tentent de se connecter.
 
-> ⚠️ **Prudence** avec ces réglages, surtout avec une politique `accept-all` : si tu mets un MCC/MNC d'un opérateur existant, **tout téléphone proche de ton LimeSDR s'y connectera**. Le nom de l'opérateur (au moins sur Android) n'apparaît qu'**après connexion**.
+> **Prudence** avec ces réglages, surtout avec une politique `accept-all` : si tu mets un MCC/MNC d'un opérateur existant, **tout téléphone proche de ton LimeSDR s'y connectera**. Le nom de l'opérateur (au moins sur Android) n'apparaît qu'**après connexion**.
 
 #### `osmo-bts.cfg` (utilisé par osmo-bts-trx)
 
@@ -501,7 +501,7 @@ trx
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -549,9 +549,9 @@ print(tn.read_until(b'OpenBSC> ').decode())
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lancer la BTS et vérifier
+### Débutant — Lancer la BTS et vérifier
 
 ```bash
 # Étape 1 : Vérifier le LimeSDR
@@ -570,7 +570,7 @@ osmo-bts-trx
 # Aller dans Paramètres → Réseau → Sélection manuelle → Choisir "HUEHUE"
 ```
 
-### 🟡 Intermédiaire — Lister les abonnés et envoyer un SMS
+### Intermédiaire — Lister les abonnés et envoyer un SMS
 
 ```bash
 # Script bash pour lister les abonnés via la console OpenBSC
@@ -580,7 +580,7 @@ echo "show subscriber all" | nc -q 1 127.0.0.1 4242
 echo "subscriber extension 1001 sms sender extension 2001 send TestSMS" | nc -q 1 127.0.0.1 4242
 ```
 
-### 🔴 Avancé — Broadcast SMS à tous les abonnés
+### Avancé — Broadcast SMS à tous les abonnés
 
 ```python
 #!/usr/bin/env python3
@@ -648,7 +648,7 @@ if __name__ == "__main__":
     print("Broadcast terminé.")
 ```
 
-### ⚫ Expert — Spam SMS ciblé avec numéros aléatoires
+### Expert — Spam SMS ciblé avec numéros aléatoires
 
 ```python
 #!/usr/bin/env python3
@@ -714,7 +714,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -768,7 +768,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Démo IMSI Catcher pour audit sécurité
 
@@ -778,7 +778,7 @@ flowchart TB
 | **Matériel** | LimeSDR Mini v2, antenne GSM 900 MHz, cage de Faraday, téléphone Android |
 | **Étapes** | 1. Monter la BTS en mode accept-all 2. Forcer le téléphone en 2G 3. Intercepter IMSI 4. Capturer le SMS en clair |
 | **Résultat** | Preuve que les appareils 2G exposent IMSI + SMS en clair |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -795,11 +795,11 @@ flowchart LR
 | **Matériel** | LimeSDR USB, antenne directionnelle, PC portable |
 | **Étapes** | 1. Scanner les fréquences GSM locales 2. Émettre une fausse BTS sur ARFCN libre 3. Observer les téléphones qui se connectent 4. Documenter les IMSI/MSISDN collectés |
 | **Résultat** | Liste des appareils vulnérables à la rétrogradation 2G |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -817,7 +817,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -849,7 +849,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -892,7 +892,7 @@ adb shell settings put global preferred_network_mode 9  # LTE/3G/2G (auto)
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -953,7 +953,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -987,12 +987,12 @@ grep -i "location update" /var/log/osmocom/*.log
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - SDR|📡 SDR]] — Vue d'ensemble SDR
-- [[Hardware - Flipper Zero|🏴‍☠️ Flipper Zero]] — Outil RF complémentaire
-- [[Hardware - RFID et NFC|🏷️ RFID/NFC]] — Autres protocoles RF
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - SDR| SDR]] — Vue d'ensemble SDR
+- [[Hardware - Flipper Zero| Flipper Zero]] — Outil RF complémentaire
+- [[Hardware - RFID et NFC| RFID/NFC]] — Autres protocoles RF
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -1009,7 +1009,7 @@ grep -i "location update" /var/log/osmocom/*.log
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -1028,7 +1028,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -1049,7 +1049,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -1096,7 +1096,7 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -1118,7 +1118,7 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -1140,7 +1140,7 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -1174,7 +1174,7 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -1189,7 +1189,7 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -1210,7 +1210,7 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Légalité** : construire/exploiter une fausse BTS hors cage de Faraday est un **délit** (usurpation d'identité opérateur, interception). Lab RF fermé uniquement.
 - **`accept-all` + MCC réel** = tous les téléphones proches basculent sur ta BTS (rétrogradation 2G). Utilise un MCC/MNC **fictif** (901/70 = non attribué).
@@ -1230,9 +1230,9 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — GSM Network: LimeSDR](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/radio-frequency/limesdr-bts.md)
 > - [Creating your own GSM Network with LimeSDR](https://lucasteske.dev/2019/12/creating-your-own-gsm-network-with-limesdr/)
 > - [OpenBSC: Configuration Modes](https://osmocom.org/projects/openbsc/wiki/OpenBSC#Configurations-Modes)
@@ -1264,4 +1264,4 @@ telnet 127.0.0.1 4242 -e "" -c "show timeslot"
 | The GSM System for Mobile Communications | Mouly & Pautet | 1992 |
 | GSM Security and Encryption | Sauter | 2014 |
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - SDR|📡 SDR]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]] · [[Hardware - Flipper Zero|🏴‍☠️ Flipper Zero]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - SDR| SDR]] · [[Hardware - RFID et NFC| RFID/NFC]] · [[Hardware - Flipper Zero| Flipper Zero]]

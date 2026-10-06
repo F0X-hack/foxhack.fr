@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🍞 Bruschetta Board
+# Bruschetta Board
 
 > [!info] **En 1 phrase**
 > **BRUSCHETTA** = le « couteau suisse multi-protocoles » du hardware hacker
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Bruschetta Board"] --> B["UART / JTAG"]
@@ -46,7 +46,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 La Bruschetta Board est un breakout FT232H multi-protocole conçu par Luca Bongiorni (WHID) pour les hardware hackers. Elle combine UART, JTAG, SPI et I2C en une seule carte avec **level shifters intégrés** (1.8V, 2.5V, 3.3V, 5V) et 4 modes de fonctionnement via switches DIP.
 
@@ -63,7 +63,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### FT232H — Le cœur de la Bruschetta
 
@@ -98,7 +98,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -135,7 +135,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Protocoles supportés par mode
 
@@ -157,7 +157,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -218,7 +218,7 @@ Bruschetta Board  ────────  Device cible
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Sélection du voltage (Level Shifter)
 
@@ -240,7 +240,7 @@ Bruschetta Board  ────────  Device cible
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Mode 2 — UART + I2C + SPI
 
@@ -273,9 +273,9 @@ openocd -f interface/ftdi/ft2232h-module.cfg \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Connexion UART
+### Débutant — Connexion UART
 
 ```text
 1. Régler S1=ON, S2=OFF (Mode 2) OU S1=ON, S2=ON (Mode 4)
@@ -285,7 +285,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg \
 5. Observer la console du device
 ```
 
-### 🟡 Intermédiaire — Flash SPI avec flashrom
+### Intermédiaire — Flash SPI avec flashrom
 
 ```text
 1. Régler en Mode 2 (S1=ON, S2=OFF)
@@ -295,7 +295,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg \
 5. flashrom -p ft2232_spi:type=2232H,port=A -w new_firmware.bin
 ```
 
-### 🔴 Avancé — JTAG debug avec OpenOCD
+### Avancé — JTAG debug avec OpenOCD
 
 ```text
 1. Régler en Mode 4 (S1=ON, S2=ON)
@@ -305,7 +305,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg \
 5. Lire les registres, breakpoints, dump mémoire
 ```
 
-### ⚫ Expert — Combinaison Bruschetta + PIZZAbite
+### Expert — Combinaison Bruschetta + PIZZAbite
 
 ```text
 1. Fixer les sondes PIZZAbite sur les pads test du PCB
@@ -317,7 +317,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -365,7 +365,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -f target/stm32f1x.cfg
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Audit complet d'un IoT avec Bruschetta
 
@@ -375,7 +375,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -f target/stm32f1x.cfg
 | **Matériel** | Bruschetta Board, PIZZAbite, PC |
 | **Étapes** | 1. Mode 2 : scanner I2C + sniff UART<br>2. Mode 4 : scan JTAG<br>3. Mode 2 : dump SPI flash<br>4. Analyser firmware |
 | **Résultat** | Accès complet au device |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -395,11 +395,11 @@ flowchart LR
 | **Matériel** | Bruschetta Board, clips SOIC-8, PC |
 | **Étapes** | 1. Identifier la flash NOR sur le PCB<br>2. Connecter SPI via Bruschetta<br>3. flashrom -r dump.bin<br>4. Analyser (binwalk) |
 | **Résultat** | Firmware dump complet |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -417,7 +417,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -435,7 +435,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -463,7 +463,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -495,7 +495,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -515,12 +515,12 @@ cat uart_sniff.log | grep -i "error\|login\|password"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - UART|🔌 UART]] — Console série
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] — Bus communication
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] — Debug
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - UART| UART]] — Console série
+- [[Hardware - I2C et SPI| I2C/SPI]] — Bus communication
+- [[Hardware - JTAG et SWD| JTAG/SWD]] — Debug
 - [[Hardware - CH341A]] — Alternative SPI low-cost
 
 | Outils associés | Usage complémentaire |
@@ -532,7 +532,7 @@ cat uart_sniff.log | grep -i "error\|login\|password"
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -551,7 +551,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -562,7 +562,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -589,7 +589,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -609,7 +609,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -627,7 +627,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -655,7 +655,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -668,7 +668,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -687,7 +687,7 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : **Vérifier les switches avant branchement** : le mode détermine les protocoles actifs.
 - **Piège 2** : **Débrancher I2C/SPI** avant d'utiliser UART/JTAG pour éviter les conflits.
@@ -704,9 +704,9 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Bruschetta Board](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/bruschetta-board.md)
 > - [whid-injector/BRUSCHETTA-Board — GitHub](https://github.com/whid-injector/BRUSCHETTA-Board)
 > - [PIZZAbite & BRUSCHETTA — Blog WHID](https://www.whid.ninja/blog/pizzabite-bruschetta-board-the-hardware-hackers-tools-you-need-to-kickstart-your-own-lab)
@@ -733,4 +733,4 @@ openocd -f interface/ftdi/ft2232h-module.cfg -c "adapter speed 100; scan_chain"
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - JTAG et SWD| JTAG/SWD]]

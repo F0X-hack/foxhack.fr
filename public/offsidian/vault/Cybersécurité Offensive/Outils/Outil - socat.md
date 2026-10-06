@@ -1,7 +1,7 @@
 ---
 title: "Outil - socat"
 type: outil
-categorie: 🛠️ Divers
+categorie: Divers
 tags:
   - cyber
   - outil
@@ -17,14 +17,14 @@ site: http://www.dest-unreach.org/socat/
 doc: http://www.dest-unreach.org/socat/doc/socat.html
 ---
 
-# 🔁 socat — Le relais universel de sockets
+# socat — Le relais universel de sockets
 
 > [!info] **En 1 phrase**
 > socat connecte deux flux de données (sockets TCP/UDP/UNIX, fichiers, processus, ports série, SSL…) entre eux, ce qui en fait l'outil idéal pour les relais, tunnels et shells avancés.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: http://www.dest-unreach.org/socat/doc/socat.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Là où netcat ne gère qu'une « socket », socat gère **deux extrémités génériques** appelées *adresses*. Chaque adresse décrit un canal : `TCP:host:port`, `TCP-LISTEN:port`, `UDP:`, `UNIX-LISTEN:chemin`, `OPENSSL:host:port` (TLS), `EXEC:'commande'`, `SYSTEM:'commande'`, `PTY:`, `FILE:fichier`, `STDIO`, `SOCKS4:`, `PROXY:`… socat connecte les deux et fait circuler les octets dans les deux sens, avec une **couche d'options** (bind, reuseaddr, fork, timeout, buffer) sur chaque adresse.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -118,7 +118,7 @@ tar xzf socat-1.8.1.3.tar.gz && cd socat-1.8.1.3
 sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le support OpenSSL nécessite les dev headers (`libssl-dev`) à la compilation ; les paquets binaires l'incluent.
 > - L'écoute sur port < 1024 requiert root.
 > - Windows : socat n'est pas natif ; utiliser WSL ou Cygwin.
@@ -126,7 +126,7 @@ sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 socat n'a pas de fichier de config : tout passe par les adresses et leurs options. Les combinaisons récurrentes pour l'automatisation.
 
@@ -145,7 +145,7 @@ socat n'a pas de fichier de config : tout passe par les adresses et leurs option
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 socat construit une **chaîne de traitement** entre deux adresses : chaque adresse est un « endpoint » (socket, fichier, processus, PTY), et les données transitent par des *flow directions* configurables.
 
@@ -166,7 +166,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -202,7 +202,7 @@ socat UDP-LISTEN:5353,reuseaddr,fork UDP:10.10.20.15:5353
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / Adresse | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -230,7 +230,7 @@ socat UDP-LISTEN:5353,reuseaddr,fork UDP:10.10.20.15:5353
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -275,7 +275,7 @@ socat TCP-LISTEN:4444,fork,reuseaddr TCP:192.168.1.10:3389
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Écouter côté attaquant** :
    ```bash
@@ -298,7 +298,7 @@ socat TCP-LISTEN:4444,fork,reuseaddr TCP:192.168.1.10:3389
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : pivot vers un segment isolé
 
@@ -335,7 +335,7 @@ socat -u TCP-LISTEN:4444,fork,reuseaddr FILE:rapport.pdf
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -348,7 +348,7 @@ socat -u TCP-LISTEN:4444,fork,reuseaddr FILE:rapport.pdf
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -363,7 +363,7 @@ socat -u TCP-LISTEN:4444,fork,reuseaddr FILE:rapport.pdf
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -409,7 +409,7 @@ alert tcp any any -> any 3389 (msg:"Possible pivot to internal RDP"; flow:to_ser
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — démarrer un relais persistant avec journal
@@ -433,7 +433,7 @@ s.close()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 socat produit ses diagnostics sur **stderr** avec `-d` (niveaux 1 à 4) et `-v` (dump hexadécimal des données). Les données applicatives transitent par les adresses (stdout ou fichiers).
 
@@ -454,9 +454,9 @@ grep -E "received|sent" trace.log | head
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Netcat]] / [[Outil - Ncat]] — les cousins simples ; socat est l'évolution riche
 - [[Outil - tshark]] / [[Outil - tcpdump]] — valider le trafic des relais (décryptage OPENSSL impossible sans clés)
 - [[Outil - Scapy]] — complément pour la forgerie côté réseau
@@ -470,7 +470,7 @@ socat TCP-LISTEN:1080,fork SOCKS4:proxy:host:80  →  relais proxy
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -483,7 +483,7 @@ socat TCP-LISTEN:1080,fork SOCKS4:proxy:host:80  →  relais proxy
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Buffering** : `-b` règle la taille des buffers — à augmenter (64 Ko) pour les gros transferts.
 - **Unidirectionnel** : `-u`/`-U` évitent le coût de la double direction pour du mono-sens.
@@ -496,7 +496,7 @@ socat TCP-LISTEN:1080,fork SOCKS4:proxy:host:80  →  relais proxy
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -532,7 +532,7 @@ socat TCP-LISTEN:1080,fork SOCKS4:proxy:host:80  →  relais proxy
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Chiffrement** : `OPENSSL-*` protège le flux ; sans lui tout est en clair.
 - **Vérification TLS** : `verify=0` autorise les certificats auto-signés → vulnérable au MITM si utilisé sans précaution.
@@ -543,7 +543,7 @@ socat TCP-LISTEN:1080,fork SOCKS4:proxy:host:80  →  relais proxy
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Syntaxe complexe (adresses + options) : courbe d'apprentissage réelle.
 - Relais « utilisateur » : débit limité vs iptables/NAT.
@@ -554,7 +554,7 @@ socat TCP-LISTEN:1080,fork SOCKS4:proxy:host:80  →  relais proxy
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Bind shell multi-clients
@@ -580,7 +580,7 @@ socat -d -d -v TCP-LISTEN:4444,fork SYSTEM:'date'
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,7 +593,7 @@ socat -d -d -v TCP-LISTEN:4444,fork SYSTEM:'date'
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -605,16 +605,16 @@ socat -d -d -v TCP-LISTEN:4444,fork SYSTEM:'date'
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours mettre `,reuseaddr` sur les écoutes répétées.
 > - `,fork` pour accepter plusieurs connexions simultanées.
 > - Pour un shell propre : `EXEC:/bin/bash,pty,stderr,setsid,sigint,sane`.
 > - `-d -d -v` pour tracer chaque octet pendant le débogage.
 > - `-T <sec>` ferme les sessions inactives (évite les processus zombies).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un `TCP-LISTEN` sur 0.0.0.0 expose le service à tout le réseau.
 > - `verify=0` = pas de vérification de certificat = vulnérable au MITM.
 > - Oublier `fork` : le relais se ferme après la première connexion.
@@ -623,7 +623,7 @@ socat -d -d -v TCP-LISTEN:4444,fork SYSTEM:'date'
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ socat -d -d -v TCP-LISTEN:4444,fork SYSTEM:'date'
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Netcat|Netcat]] · [[Outil - Ncat|Ncat]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]]
+**Liens :** [[Tools| Outils]] · [[Outil - Netcat|Netcat]] · [[Outil - Ncat|Ncat]] · [[Outil - Nmap|Nmap]] · [[Outil - Metasploit|Metasploit]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧠 Business Logic Errors
+# Business Logic Errors
 
 > [!info] **En 1 phrase**
 > Business Logic Errors = exploiter la **logique métier** de l'app (paiement, commandes, abonnements,
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,13 +33,13 @@ flowchart LR
     C --> E[Coupon illimité]
     C --> F[Étapes sautées]
     C --> G[Quantités fantômes]
-    D --> H[💸 Impact économique direct]
+    D --> H[Impact économique direct]
     E --> H
     F --> H
     G --> H
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > À la différence d'une SQLi ou d'un XSS, **il n'y a pas de bug de code** : les entrées sont filtrées,
 > les requêtes sont correctes. C'est **la règle métier** qui est absente ou mal écrite
 > (ex : aucun contrôle que le montant reste `> 0`, qu'un coupon n'est utilisé qu'une fois,
@@ -47,9 +47,9 @@ flowchart LR
 
 ---
 
-## 🧩 Les catégories
+## Les catégories
 
-### 💰 Manipulation de prix
+### Manipulation de prix
 
 La valeur finale est calculée côté serveur à partir de paramètres, ou bien **fidèlement stockée** sans
 recalcul. On altère le champ directement.
@@ -83,11 +83,11 @@ Content-Type: application/json
 | Décimales | `"price": 0.001`, `"price": 999.9999` | arrondi / perte de centimes |
 | Quantité changée | `"quantity": 999999` | overflow stock/prix |
 
-> [!warning] ⚠️ **Le prix est souvent recalculé côté serveur** — mais le calcul peut utiliser le prix
+> [!warning] **Le prix est souvent recalculé côté serveur** — mais le calcul peut utiliser le prix
 > **envoyé par le client** au lieu de celui de la BDD. Teste les deux : champs `price` dans le body
 > **et** manipulation du prix entre l'ajout au panier et le checkout.
 
-### 🏷️ Coupons & discount codes
+### Coupons & discount codes
 
 - Même code coupon appliqué **plusieurs fois** (réutilisable / sans compteur d'usage).
 - Coupon **mono-usage** : Race Condition en l'utilisant depuis 2 comptes simultanément.
@@ -108,7 +108,7 @@ Content-Type: application/x-www-form-urlencoded
 coupon=WELCOME20&coupon=SECRET50
 ```
 
-### 💱 Devises, taxes & arrondis
+### Devises, taxes & arrondis
 
 - **Arbitrage de devises** : payer en USD, se faire rembourser en EUR — la différence de taux = profit.
 - Mélanger plusieurs devises dans le même panier (`"currency": "USD"` puis `"EUR"`).
@@ -127,7 +127,7 @@ Content-Type: application/json
 {"currency":"EUR","amount":1}            # remboursé en EUR, taux favorable → profit
 ```
 
-### ➖ Quantités négatives & double soumission
+### Quantités négatives & double soumission
 
 - Ajouter `quantity: -5` pour **réduire** le total, voire le rendre négatif → solde crédité.
 - Ajouter plus d'articles que le stock disponible.
@@ -138,7 +138,7 @@ Content-Type: application/json
 {"items":[{"product":"A","quantity":-5},{"product":"B","quantity":5}]}
 ```
 
-### 🔄 États de commande & workflows
+### États de commande & workflows
 
 Le flux a des étapes (panier → paiement → livraison → réception) ; on **saute une étape** ou on force
 une **transition illégitime**.
@@ -160,7 +160,7 @@ POST /api/payments/confirm HTTP/1.1
 {"transaction_id":"PAY-12345"}
 ```
 
-### 🔑 Manipulation d'IDs & paramètres dans les flows
+### Manipulation d'IDs & paramètres dans les flows
 
 Flux multi-étapes (promotion, invitation, parrainage, reset de mdp) où un **ID/paramètre** contrôle
 qui obtient quoi.
@@ -180,7 +180,7 @@ Content-Type: application/json
 {"user_id": 1, "amount": 9999}
 ```
 
-### 🚧 Bypass de limites
+### Bypass de limites
 
 Les limites (rate, quotas) sont **souvent côté client** ou **par utilisateur au lieu d'être globales**.
 
@@ -196,7 +196,7 @@ Les limites (rate, quotas) sont **souvent côté client** ou **par utilisateur a
 {"email":"attacker@x.com","is_verified":true,"trial_days":999}
 ```
 
-### ⏰ Time manipulation
+### Time manipulation
 
 L'app se fie à l'**horloge** pour les essais, promotions, enchères, calendriers.
 
@@ -211,7 +211,7 @@ L'app se fie à l'**horloge** pour les essais, promotions, enchères, calendrier
 
 ---
 
-## 🎯 Exemples concrets (payloads)
+## Exemples concrets (payloads)
 
 ### Solde négatif → créditer le compte
 
@@ -306,9 +306,9 @@ curl -X POST https://target/api/transfer \
 
 ---
 
-## 🕵️ Méthodologie de détection
+## Méthodologie de détection
 
-> [!tip] 💡 **Pas de scanner qui détecte ça** : la vulnérabilité est **fonctionnelle**, pas technique.
+> [!tip] **Pas de scanner qui détecte ça** : la vulnérabilité est **fonctionnelle**, pas technique.
 > Il faut **comprendre le métier** avant de tester.
 
 1. **Cartographier le flux métier** : chaque étape (panier, coupon, checkout, paiement, remboursement,
@@ -322,12 +322,12 @@ curl -X POST https://target/api/transfer \
 6. **Multi-comptes** : vérifier les vérifications par compte (parrainage, coupon, essai, avis).
 7. **Documenter l'impact économique** : chaque bug = `montant × nombre d'itérations` → ça chiffre le rapport.
 
-> [!warning] ⚠️ Les **tests de race condition** (2 comptes, même coupon) sont **destructeurs** sur les
+> [!warning] Les **tests de race condition** (2 comptes, même coupon) sont **destructeurs** sur les
 > systèmes réels : coupons brûlés, paiements réels. Toujours sur un compte de test / un montant minimal.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -348,7 +348,7 @@ curl -X POST https://target/api/transfer \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -364,15 +364,15 @@ curl -X POST https://target/api/transfer \
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre de test**
+> [!tip] **Ordre de test**
 > 1. **Comprendre le flux** (toujours en premier) : panier → coupon → checkout → paiement → remboursement.
 > 2. **Casser l'ordre** : sauter, rejouer, inverser les étapes.
 > 3. **Manipuler les valeurs** : limites, négatifs, booléens, dates, IDs.
 > 4. **Automatiser** ce qui marche (race, boucle, montant) pour prouver l'impact chiffré.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - **Valider côté client ≠ valider côté serveur** : un `disabled` en JS ou un champ caché ne protège rien.
 > - Ne jamais confondre **bug de code** (l'app plante) et **bug de logique** (l'app répond, mal). Si la
 >   réponse est propre et la transaction exécutée… c'est souvent un business logic bug.
@@ -388,11 +388,11 @@ curl -X POST https://target/api/transfer \
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[IDOR|🎯 IDOR]]
-- [[Race Condition|🏁 Race Conditions]]
-- [[Mass Assignment|⚖️ Mass Assignment]]
-- [[Injection SQL|💾 Injection SQL]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Business Logic Errors](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Business%20Logic%20Errors/README.md)
+- [[IDOR| IDOR]]
+- [[Race Condition| Race Conditions]]
+- [[Mass Assignment| Mass Assignment]]
+- [[Injection SQL| Injection SQL]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Business Logic Errors](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Business%20Logic%20Errors/README.md)

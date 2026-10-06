@@ -1,11 +1,11 @@
 ---
 title: "Outil - Autopsy"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: 4.23.1 (2026)
 licence: Apache-2.0 (Autopsy) ; IPL-1.0/CPL (The Sleuth Kit)
@@ -16,20 +16,20 @@ site: https://www.sleuthkit.org/autopsy/
 doc: https://sleuthkit.org/autopsy/docs.php
 ---
 
-# 🔎 Autopsy — Forensics, Threat Intel & Honeypots
+# Autopsy — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > Autopsy est l'interface graphique d'analyse forensique de disques basée sur The Sleuth Kit, qui permet d'ouvrir une image disque, d'ingérer des modules d'analyse et de reconstruire timeline, fichiers supprimés et artefacts en quelques clics.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Autopsy |
 | Description | Interface graphique d'analyse forensique de disques basée sur The Sleuth Kit : ingestion modulaire, timeline, carving et rapports |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Digital Forensics / Disk Analysis / Incident Response |
 | Fonction principale | Analyser une image disque (E01, dd, VMDK...) : fichiers supprimés, artefacts, timeline, mots-clés, extraction de preuves |
 | Type d'outil | Application de bureau + serveur web local (localhost:9999) + CLI TSK |
@@ -50,7 +50,7 @@ doc: https://sleuthkit.org/autopsy/docs.php
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Autopsy est le front-end graphique de **The Sleuth Kit (TSK)** : il expose sous forme de modules cochables l'ensemble des analyseurs de systèmes de fichiers (NTFS, FAT, EXT4, HFS+, APFS) sans taper la moindre commande. On l'utilise typiquement en **réponse à incident** : acquisition d'une preuve, ingestion automatique, extraction d'éléments et corrélation temporelle. Il se déploie aussi en mode « case server » (port 9999) pour qu'une équipe collabore sur la même affaire depuis des postes différents.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu
 
@@ -107,14 +107,14 @@ docker run -d -p 9999:9999 -v /mnt/evidence:/evidence blacktop/autopsy
 
 Sur Windows/macOS : installateur signé depuis sleuthkit.org (Java inclus). La version 4 embarque un serveur web local (localhost:9999) ; il ne faut plus lancer l'ancien mode servlet. Sur Kali, `autopsy` est déjà présent avec toute la chaîne TSK.
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Java 8+ est requis pour Autopsy 4 ; vérifier la version Java avant installation sur les postes à jour.
 > - Le port 9999 ne doit pas être exposé publiquement : en mode collaboratif, passer par un VPN.
 > - Sur les images de très gros volume, prévoir un espace de travail avec assez de place pour les fichiers extraits.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -131,7 +131,7 @@ Sur Windows/macOS : installateur signé depuis sleuthkit.org (Java inclus). La v
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux à l'exécution :
 
@@ -147,7 +147,7 @@ Flux type : ajout d'une image E01 → TSK lit la table de partitions (`mmls`) �
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -181,7 +181,7 @@ tsk_recover -e /mnt/evidence/incident.E01 /sortie
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -201,7 +201,7 @@ tsk_recover -e /mnt/evidence/incident.E01 /sortie
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -241,7 +241,7 @@ wc -l hashs.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. Créer une case : `New Case` → nom d'affaire (ex. `INC-2026-042`) → le stockage SQLite est généré automatiquement.
 2. `Add Data Source` → `Disk Image` → choisir `incident.E01`, cocher `Compute Hash` (MD5 + SHA-256) pour chaque fichier.
@@ -254,7 +254,7 @@ wc -l hashs.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Récupération par carving dans les zones non allouées
 
@@ -302,7 +302,7 @@ find /sortie -type f -exec sha256sum {} + > hashs.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -315,7 +315,7 @@ find /sortie -type f -exec sha256sum {} + > hashs.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -331,7 +331,7 @@ find /sortie -type f -exec sha256sum {} + > hashs.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -378,7 +378,7 @@ rule Suspicious_Renamed_Binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline d'extraction + hashing pour une liste prête à interroger
@@ -405,7 +405,7 @@ for row in cur.execute(
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les résultats sont stockés dans la base `autopsy.db` (SQLite) et exportés via les rapports (HTML, Excel, CSV, KML, STIX). La timeline peut être produite au format bodyfile pour `mactime`.
 
@@ -429,7 +429,7 @@ with open("timeline.csv") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Autopsy (exports) → rapports HTML/Excel → dossier d'incident / SIEM
@@ -438,7 +438,7 @@ Autopsy → TSK CLI (mmls/fls/icat/tsk_recover) → pipelines scriptés
 Autopsy Central Repository → PostgreSQL → partage entre analystes
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - FTK Imager]] — acquisition d'images disque complémentaire
 - [[Outil - Volatility]] — analyse mémoire (Autopsy traite le disque, Volatility la RAM)
 - [[Outil - Wazuh]] — détection en amont, Autopsy en forensique post-incident
@@ -448,7 +448,7 @@ Autopsy Central Repository → PostgreSQL → partage entre analystes
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -463,7 +463,7 @@ Autopsy Central Repository → PostgreSQL → partage entre analystes
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ingest multi-thread** : les modules d'ingest s'exécutent en parallèle sur les fichiers ; sur les gros disques (plusieurs To), la durée se compte en heures — il est possible de naviguer pendant l'ingest.
 - **Hash computation coûteux** : calculer MD5 + SHA-256 sur chaque fichier double le temps de lecture ; l'activer par défaut pour la custody mais le désactiver sur les gros volumes si urgent.
@@ -476,7 +476,7 @@ Autopsy Central Repository → PostgreSQL → partage entre analystes
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -512,7 +512,7 @@ Autopsy Central Repository → PostgreSQL → partage entre analystes
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Intégrité de la preuve** : toujours analyser une **copie** (image E01/dd) avec un write blocker ; ne jamais laisser Autopsy écrire sur le support source.
 - **Chaîne de custody** : hasher les fichiers à l'ingest (MD5/SHA-256), documenter la case (n° d'affaire, analyste, date, outil de capture).
@@ -523,7 +523,7 @@ Autopsy Central Repository → PostgreSQL → partage entre analystes
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas d'analyse en direct** : conçu pour l'analyse d'images hors-ligne, pas pour le live forensics.
 - **Chiffrement** : les volumes chiffrés (BitLocker, VeraCrypt) nécessitent les clés/le décryptage au préalable.
@@ -534,7 +534,7 @@ Autopsy Central Repository → PostgreSQL → partage entre analystes
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Inspection d'image
@@ -558,7 +558,7 @@ mactime -b body.txt -z UTC -d > timeline.csv
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -571,7 +571,7 @@ mactime -b body.txt -z UTC -d > timeline.csv
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -583,24 +583,24 @@ mactime -b body.txt -z UTC -d > timeline.csv
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `Keyword Search` accepte les expressions régulières : `(?i)(backup|secret)\d{2,5}` pour une recherche insensible à la casse, plus efficace que les mots-clés simples.
 > - Utilisez `tsk_recover -e` pour extraire en masse vers un dossier dédié, puis hashuez chaque fichier extrait : cela donne une liste d'empreintes prête à interroger VirusTotal / MISP.
 > - Activez `Recent Activity` et `Timeline` systématiquement : ce sont eux qui reconstruisent le scénario d'incident.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Autopsy écrit dans la case (SQLite) : une mauvaise manipulation sur le disque source invalide la preuve.
 > - La timeline inclut les accès MFT : une simple ouverture de dossier antérieure au compromis pollue l'analyse si l'on ne filtre pas sur les événements CREATED/MODIFIED.
 > - Ne lancez pas deux instances d'ingest sur la même case : les bases SQLite verrouillées provoquent des erreurs `database is locked` et des modules incomplets.
 
-> [!warning] ⚠️ **Piège** : le hash est calculé pendant l'ingest, pas avant.
+> [!warning] **Piège** : le hash est calculé pendant l'ingest, pas avant.
 > Si la source est ajoutée sans `Compute Hash`, l'empreinte n'est pas disponible : la chaîne de custody devient fragile. Activer le calcul avant de lancer l'ingest.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -624,4 +624,4 @@ mactime -b body.txt -z UTC -d > timeline.csv
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]] · [[Techniques/10 - Cheatsheets|📜 Cheatsheets]] · [[Techniques/11 - Glossaire|📖 Glossaire]]
+**Liens :** [[Tools| Outils]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]] · [[Techniques/10 - Cheatsheets| Cheatsheets]] · [[Techniques/11 - Glossaire| Glossaire]]

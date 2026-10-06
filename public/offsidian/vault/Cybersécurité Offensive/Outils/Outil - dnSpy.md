@@ -1,7 +1,7 @@
 ---
 title: "Outil - dnSpy"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: (aucun site officiel, dépôt GitHub uniquement)
 doc: https://github.com/dnSpyEx/dnSpy/blob/master/README.md
 ---
 
-# 🧬 dnSpy — Débogueur et désassembleur .NET
+# dnSpy — Débogueur et désassembleur .NET
 
 > [!info] **En 1 phrase**
 > dnSpy est le débogueur/décompilateur .NET qui permet de lire un malware C# en pseudo-code source, de poser des breakpoints et même de patcher l'assembly — indispensable pour les loaders et RAT .NET.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | dnSpy (.NET Debugger and Assembly Editor) |
 | Description | Décompilateur + débogueur + éditeur d'assemblys .NET : reconstitution du code source C# à partir d'un binaire, débogage pas à pas, édition et recompilation sur place |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Reverse engineering — .NET |
 | Fonction principale | Lire un malware .NET en code source C#, le déboguer et le patcher sans fichier de symboles |
 | Type d'outil | Application desktop (GUI) + CLI (`dnSpy.Console.exe`) |
@@ -50,7 +50,7 @@ doc: https://github.com/dnSpyEx/dnSpy/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 dnSpy est un outil .NET tout-en-un : il décompile un assembly (C#/VB.NET) en code source C# lisible, permet de déboguer pas à pas, d'éditer le code et de recompiler l'assembly sur place. Un analyste ouvre `sample.exe`, navigue dans les types et méthodes, et obtient instantanément le code source de chaque fonction. Il peut aussi poser des breakpoints pour observer l'exécution (par exemple au moment du déchiffrement d'un payload), modifier une méthode (patcher un anti-debug ou une vérification) et recompiler le binaire.
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation portable (archive zip), aucun installeur requis :
 
@@ -108,14 +108,14 @@ dnSpy.Console.exe -o ./src "C:\malware\sample.exe"
 wine dnSpy.exe "C:\malware\sample.exe"
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Runtime** : la build `net472` nécessite .NET Framework 4.7.2+ ; la build `net` embarque tout (self-contained) et fonctionne aussi sur Linux/macOS.
 > - **Antivirus** : certains EDR signalent dnSpy en raison de sa capacité de patch — ajouter une exception sur le poste d'analyse isolé.
 > - **Toujours analyser dans une VM** : l'exécution de l'échantillon dans le débogueur est une vraie détonation.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 dnSpy est presque sans configuration : les réglages se trouvent dans `Tools → Options`.
 
@@ -133,7 +133,7 @@ dnSpy est presque sans configuration : les réglages se trouvent dans `Tools →
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Moteur de décompilation** : basé sur le décompilateur ILSpy (licence MIT), intégré dans le processus — pas de service externe.
 - **Noyau `dnlib`** : bibliothèque de lecture/écriture des assemblys .NET ; c'est elle qui lit l'IL, les métadonnées et permet de réécrire les modules (patches).
@@ -158,7 +158,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -190,7 +190,7 @@ dnSpy.Console.exe -o ./src -t sample.Form1 malware.exe  # un type précis
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### CLI (dnSpy.Console.exe)
 
@@ -219,7 +219,7 @@ dnSpy.Console.exe -o ./src -t sample.Form1 malware.exe  # un type précis
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -256,7 +256,7 @@ grep -rEi "https?://|\.onion|Convert.FromBase64String" ./src/
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Ouvrir l'assembly** — lancer le binaire dans dnSpy et inspecter la hiérarchie des types.
 
@@ -276,7 +276,7 @@ grep -rEi "https?://|\.onion|Convert.FromBase64String" ./src/
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Loader qui charge un payload en base64
 
@@ -324,7 +324,7 @@ grep -rEi "http://|https://|\.exe|\.dll" ./src/ | sort -u > iocs.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -337,7 +337,7 @@ grep -rEi "http://|https://|\.exe|\.dll" ./src/ | sort -u > iocs.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -355,7 +355,7 @@ grep -rEi "http://|https://|\.exe|\.dll" ./src/ | sort -u > iocs.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -402,7 +402,7 @@ rule DotNet_StringEncryption_Heuristic
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — décompilation en masse d'un corpus .NET et collecte des IOCs
@@ -437,7 +437,7 @@ for root, _, files in os.walk("/opt/iocs"):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le mode GUI permet de copier le code source décompilé, de l'exporter ou de resauvegarder l'assembly. Le mode CLI produit des fichiers `.cs` :
 
@@ -470,16 +470,16 @@ for root, _, files in os.walk("./src"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - x64dbg]] — complément natif quand le loader finit en code non managé
 - [[Outil - Ghidra]] — analyse statique du payload extrait ou des assemblys mixtes
 - [[Outil - Cutter]] — alternative GUI pour le volet natif (radare2)
 - [[Outil - Flare VM]] — distribution Windows avec dnSpy et de4dot préinstallés
 - [[Outil - YARA]] — signatures sur les assemblys .NET et les chaînes extraites
 - [[Outil - CAPE]] / [[Outil - Cuckoo Sandbox]] — exécution dynamique pour confirmer le comportement
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
@@ -487,7 +487,7 @@ Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -501,7 +501,7 @@ Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Décompilation instantanée pour la plupart des assemblys (quelques secondes pour les gros binaires).
 - La décompilation en CLI est parallélisable par lot (boucle shell sur un corpus).
@@ -511,7 +511,7 @@ Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -547,7 +547,7 @@ Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution réelle** : « Debug → Start » exécute réellement le malware — uniquement dans une VM isolée.
 - **Téléchargement** : obtenir les binaires depuis les Releases officielles (dnSpyEx/dnSpy) et vérifier les hashes.
@@ -558,7 +558,7 @@ Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - L'original ne supporte pas .NET Core/5+ ; seul le fork dnSpyEx le fait.
 - La décompilation sur du code fortement obfusqué peut être trompeuse (flow de contrôle cassé, strings chiffrées) — il faut de4dot en amont et la vue IL en secours.
@@ -569,7 +569,7 @@ Assembly .NET → dnSpy (décompilation) → config/C2 → YARA + MISP → SOC
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Ouvrir un assembly en GUI
@@ -599,7 +599,7 @@ dnSpy.Console.exe -l il -o ./il malware.exe
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -612,7 +612,7 @@ dnSpy.Console.exe -l il -o ./il malware.exe
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -625,16 +625,16 @@ dnSpy.Console.exe -l il -o ./il malware.exe
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez le fork **dnSpyEx** pour les .NET récents : l'original ne supporte pas .NET Core/5+.
 > - Passez les échantillons obfusqués dans de4dot AVANT dnSpy : le code reconstruit est alors exploitable.
 > - Le mode « View IL » permet de vérifier ce que le décompilateur a pu mal reconstruire sur du code obfusqué.
 > - Utilisez « Search Strings » (Ctrl+Shift+R) pour repérer rapidement les URLs et clés en dur.
 > - Posez un breakpoint à la fin d'une méthode de décodage : le payload déchiffré attend dans Locals.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sur du code obfusqué, la décompilation C# est parfois fausse : croisez toujours avec la vue IL avant de conclure.
 > - Ne « runnez » pas l'échantillon dans dnSpy sur une machine de prod : c'est une exécution réelle du malware.
 > - Un assembly édité et resauvegardé perd sa signature : vérifiez les effets secondaires avant de l'utiliser.
@@ -642,7 +642,7 @@ dnSpy.Console.exe -l il -o ./il malware.exe
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -665,4 +665,4 @@ dnSpy.Console.exe -l il -o ./il malware.exe
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - x64dbg|🧬 x64dbg]] · [[Outils/Outil - Ghidra|🔬 Ghidra]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Outils/Outil - Flare VM|🔥 Flare VM]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - x64dbg| x64dbg]] · [[Outils/Outil - Ghidra| Ghidra]] · [[Outils/Outil - YARA| YARA]] · [[Outils/Outil - Flare VM| Flare VM]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

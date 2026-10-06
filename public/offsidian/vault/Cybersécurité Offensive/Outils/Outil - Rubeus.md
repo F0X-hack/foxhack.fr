@@ -1,11 +1,11 @@
 ---
 title: "Outil - Rubeus"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 2.3.3
 licence: BSD 3-Clause
@@ -16,14 +16,14 @@ site: https://github.com/GhostPack
 doc: https://github.com/GhostPack/Rubeus/wiki
 ---
 
-# 👑 Rubeus — Active Directory & Windows
+# Rubeus — Active Directory & Windows
 
 > [!info] **En 1 phrase**
 > Rubeus est un **toolkit Kerberos en C#** (GhostPack) qui s'exécute en mémoire sur un poste Windows : Kerberoasting, AS-REP roasting, Pass-the-Ticket, délégation S4U et dump des tickets.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,7 +40,7 @@ doc: https://github.com/GhostPack/Rubeus/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Rubeus est un outil C# de la collection **GhostPack** (HarmJ0y) qui manipule directement le **protocole Kerberos** (TGT/TGS) sans dépendre des outils natifs Windows (klist, kinit). Il est conçu pour être lancé **sans écriture sur disque** : chargé en mémoire via PowerShell (`Invoke-Binary`), Cobalt Strike, ou exécuté depuis un smbserver. Il couvre la plupart des attaques Kerberos post-compromission : **Kerberoasting** (dump des TGS des SPN), **AS-REP roasting** (comptes sans pré-authentification), **Pass-the-Ticket** (`ptt`), **récupération du TGT courant** (`tgtdeleg`), **délégation S4U** (`s4u` pour les délégations contraintes et RBCD) et **surveillance des tickets** (`monitor`, utile sur les hôtes à délégation non contrainte). Dans un pentest AD, il s'utilise depuis un compte de domaine compromis sur un poste Windows joint au domaine.
 
@@ -56,7 +56,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans Rubeus |
 |---|---|
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Compilation (développement)
 
@@ -103,7 +103,7 @@ copy \\192.168.1.50\share\Rubeus.exe C:\Windows\Temp\
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Rubeus se configure par **arguments de ligne de commande** (sous-commandes + `/options`). Il n'y a pas de fichier de configuration : chaque commande définit le contexte (user, hash, ticket, SPN).
 
@@ -125,7 +125,7 @@ Rubeus se configure par **arguments de ligne de commande** (sous-commandes + `/o
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Langage** : C#/.NET, compatible Windows (un seul exe, aucune dépendance externe).
 - **Implémentation Kerberos** : Rubeus implémente le client Kerberos en C# (AS-REQ, TGS-REQ, encodage ASN.1, chiffrement RC4/AES) sans passer par `sspi`.
@@ -136,7 +136,7 @@ Rubeus se configure par **arguments de ligne de commande** (sous-commandes + `/o
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -197,7 +197,7 @@ Rubeus.exe dump /luid:0x123456 /nowrap
 Rubeus.exe ptt /ticket:<base64>
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -224,7 +224,7 @@ Rubeus.exe ptt /ticket:<base64>
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -274,7 +274,7 @@ Rubeus.exe ptt /ticket:<base64>
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : vous avez un **compte domaine** sur un poste Windows.
 
@@ -302,7 +302,7 @@ Scénario : vous avez un **compte domaine** sur un poste Windows.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : AS-REP Roasting ciblé
 
@@ -342,7 +342,7 @@ dir \\dc01\C$
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -356,7 +356,7 @@ dir \\dc01\C$
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -370,7 +370,7 @@ dir \\dc01\C$
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > Rubeus est centré **Kerberos** : T1558 (roasts, tickets, S4U) et T1550.003 (PtT) sont les plus pertinents.
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -386,7 +386,7 @@ dir \\dc01\C$
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -398,7 +398,7 @@ dir \\dc01\C$
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Console** : les roasts affichent les hashes (RC4/AES) et tickets en base64 (`/nowrap` pour une ligne complète).
 - **Fichiers** : `/outfile:<f>` écrit les hashes directement utilisables par hashcat/john (`/format:hashcat` ou `john`).
@@ -413,7 +413,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème Rubeus |
 |---|---|
@@ -426,7 +426,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -438,7 +438,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -449,7 +449,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -462,7 +462,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution en mémoire** : éviter d'écrire `Rubeus.exe` sur disque (détection de signatures) ; charger en mémoire via PowerShell/framework.
 - **Données sensibles** : les hashes et tickets sortis sont des secrets → fichiers chiffrés, effacement après analyse.
@@ -472,7 +472,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Windows uniquement** : nécessite un poste Windows joint au domaine (pas de version Linux native).
 - **Dépendances** : .NET Framework présent ; le chargement en mémoire requiert un contexte d'exécution adapté (PowerShell, Cobalt Strike).
@@ -482,7 +482,7 @@ hashcat -m 13100 tgs_hashes.txt rockyou.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Kerberoasting
@@ -514,7 +514,7 @@ Rubeus.exe describe /ticket:<base64>
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -528,7 +528,7 @@ Rubeus.exe describe /ticket:<base64>
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -540,19 +540,19 @@ Rubeus.exe describe /ticket:<base64>
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **/nowrap systématique** : en sortie terminal, les hashes sont tronqués. `Rubeus.exe kerberoast /nowrap` évite de casser les hashes au moment de les coller dans hashcat.
+> [!tip] **/nowrap systématique** : en sortie terminal, les hashes sont tronqués. `Rubeus.exe kerberoast /nowrap` évite de casser les hashes au moment de les coller dans hashcat.
 
-> [!warning] ⚠️ **Piège** : `kerberoast` sans filtre roast aussi les comptes **machines** (`$`) dont le mot de passe est aléatoire — perte de temps et bruit. Filtre : `kerberoast /ldapfilter:'(samAccountType=805306368)'`.
+> [!warning] **Piège** : `kerberoast` sans filtre roast aussi les comptes **machines** (`$`) dont le mot de passe est aléatoire — perte de temps et bruit. Filtre : `kerberoast /ldapfilter:'(samAccountType=805306368)'`.
 
-> [!warning] ⚠️ **Piège** : un compte avec **preauth activée** ne donnera jamais de hash AS-REP exploitable. Vérifie d'abord avec `kerberoast /stats` l'état `DONT_REQ_PREAUTH`.
+> [!warning] **Piège** : un compte avec **preauth activée** ne donnera jamais de hash AS-REP exploitable. Vérifie d'abord avec `kerberoast /stats` l'état `DONT_REQ_PREAUTH`.
 
-> [!warning] ⚠️ **Piège** : en environnement **AES-only**, les hashes roastes (mode 19700) sont beaucoup plus lents à cracker : privilégier les comptes avec encodage RC4 si présents, sinon anticiper un cracking long.
+> [!warning] **Piège** : en environnement **AES-only**, les hashes roastes (mode 19700) sont beaucoup plus lents à cracker : privilégier les comptes avec encodage RC4 si présents, sinon anticiper un cracking long.
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/GhostPack/Rubeus
 - Wiki Rubeus : https://github.com/GhostPack/Rubeus/wiki
@@ -560,5 +560,5 @@ Rubeus.exe describe /ticket:<base64>
 - The Hacker Recipes — Kerberos : https://www.thehacker.recipes/ad/movement/kerberos/
 - Portail Obsidian `Techniques` : [[Kerberoasting]], [[AS-REP Roasting]], [[Golden Ticket]]
 
-➡️ **Liens :** [[Outil - Rubeus]] | [[Outil - Impacket]] | [[Outil - Mimikatz]] | [[Outil - hashcat]] | [[Outil - Evil-WinRM]] | [[Outil - BloodHound]] | [[Outil - Kerbrute]]
+**Liens :** [[Outil - Rubeus]] | [[Outil - Impacket]] | [[Outil - Mimikatz]] | [[Outil - hashcat]] | [[Outil - Evil-WinRM]] | [[Outil - BloodHound]] | [[Outil - Kerbrute]]
 

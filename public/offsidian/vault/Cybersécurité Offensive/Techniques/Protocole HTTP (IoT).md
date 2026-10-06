@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌍 Protocole HTTP (IoT)
+# Protocole HTTP (IoT)
 
 > [!info] **En 1 phrase**
 > Les objets connectés exposent des **APIs HTTP embarquées** (panneaux de config, firmware,
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ### Proxies HTTPS
 
@@ -50,7 +50,7 @@ flowchart LR
 
 ---
 
-## 💡 Usage orienté IoT / embedded
+## Usage orienté IoT / embedded
 
 - **Interposer un proxy** : configurer le device pour pointer vers ton proxy (si réseau) ou faire un **ARP spoofing** sur le segment.
 - **Analyse du firmware** : récupérer les endpoints HTTP dans le firmware dumpé (voir la fiche Dump de firmware).
@@ -60,7 +60,7 @@ flowchart LR
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -70,7 +70,7 @@ flowchart LR
 | **HSTS + certs valides** | Limiter le MITM sur HTTPS (pinning pour les devices sensibles) |
 | **Surveiller le trafic** | Détecter les connexions inhabituelles depuis un device |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Cette fiche reste **orientée IoT/embedded** : pour les techniques Web générales (XSS, SSRF, injection SQL…), va voir les fiches **Web** du vault.
 - Un device qui "n'a pas d'interface web" expose quand même souvent **un petit HTTP** sur son IP locale.
@@ -80,7 +80,7 @@ flowchart LR
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — HTTP](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/http.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Protocole MQTT|📨 MQTT]] · [[Protocole UPnP|🏠 UPnP]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Protocole MQTT| MQTT]] · [[Protocole UPnP| UPnP]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]

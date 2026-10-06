@@ -1,11 +1,11 @@
 ---
 title: "Outil - Name-That-Hash"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 1.11.0
 licence: GPL-3.0-or-later
@@ -16,20 +16,20 @@ site: https://nth.skerritt.blog
 doc: https://github.com/HashPals/name-that-hash/wiki
 ---
 
-# 💥 Name-That-Hash — Identification du type de hash
+# Name-That-Hash — Identification du type de hash
 
 > [!info] **En 1 phrase**
 > Name-That-Hash identifie instantanément le type d'un hash inconnu et affiche directement les modes hashcat et John the Ripper correspondants, sur plus de 500 formats.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Name-That-Hash (binaire : `nth`) |
 | Description | Identification du type d'un hash inconnu (MD5, NTLM, bcrypt, sha512crypt, JWT...) avec affichage direct des modes hashcat et des formats John the Ripper |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Reconnaissance de hash / cracking de mots de passe |
 | Fonction principale | Nommer l'algorithme d'un hash en analysant sa signature (longueur, caractères, structure) et trier les candidats par popularité |
 | Type d'outil | CLI (`nth`) + bibliothèque Python + application web (https://nth.skerritt.blog) |
@@ -50,7 +50,7 @@ doc: https://github.com/HashPals/name-that-hash/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Face à un hash inconnu (dérobé dans `/etc/shadow`, une fuite de base de données, un token JWT encodé...), la première question est : *quel algorithme ?* Name-That-Hash répond en analysant la longueur, les caractères et la structure du hash, puis en confrontant ces signatures à sa base de plus de 500 types.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -125,14 +125,14 @@ git clone https://github.com/HashPals/name-that-hash.git && cd name-that-hash
 python -m pip install -e .
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Python 3.7+ obligatoire (le binaire affiche un message explicite sinon).
 > - `pipx` est la méthode conseillée pour ne pas polluer l'environnement Python global.
 > - L'application web https://nth.skerritt.blog fonctionne sans installation (les hashes sont envoyés au serveur : ne pas l'utiliser sur des données sensibles).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Name-That-Hash n'utilise **aucun fichier de configuration** ni variable d'environnement : tout se pilote par options de la ligne de commande. Les seuls éléments « configurables » sont les options d'affichage et la base de signatures :
 
@@ -149,7 +149,7 @@ Name-That-Hash n'utilise **aucun fichier de configuration** ni variable d'enviro
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le paquet Python `name_that_hash` est organisé en modules à responsabilité unique :
 
@@ -177,7 +177,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ nth -t '$6$rounds=656000$0PNQURm7Dm5ULGYB$.....' -a --no-banner --no-hashcat
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ nth -t '$6$rounds=656000$0PNQURm7Dm5ULGYB$.....' -a --no-banner --no-hashcat
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -295,7 +295,7 @@ print(resultats[0]["name"], resultats[0]["hashcat"])
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer le hash** — depuis un dump `/etc/shadow`, une fuite SQL, un cookie ou un endpoint : `$1$...`, `e99a18c4...`, `5e884898...`.
 2. **Identifier le type** :
@@ -321,7 +321,7 @@ Le choix du mode hashcat détermine toute la performance du crack : privilégie 
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Identification en boucle sur plusieurs hashes
 
@@ -349,7 +349,7 @@ hashcat -m 1000 hash.txt wordlist.txt       # NTLM
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 Name-That-Hash intervient dans la phase **post-exploitation / compromission de mots de passe** : une fois un hash récupéré sur la cible, il faut en déterminer le type pour choisir le bon outil de cracking.
 
@@ -364,7 +364,7 @@ Name-That-Hash intervient dans la phase **post-exploitation / compromission de m
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -377,7 +377,7 @@ Name-That-Hash intervient dans la phase **post-exploitation / compromission de m
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 Name-That-Hash ne génère **aucun trafic réseau** : il est impossible de le détecter à distance. En revanche, son utilisation s'inscrit dans une chaîne (lecture de hashes, puis cracking) dont chaque maillon est observable côté défense.
 
@@ -419,7 +419,7 @@ La détection se fait surtout au niveau **système** (auditd, Sysmon, EDR sur fi
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Identifier un lot de hashes et générer les commandes hashcat correspondantes
@@ -448,7 +448,7 @@ nth -t "$(curl -s https://example.com/token)" -g --no-banner | jq -r '.[0].name'
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie par défaut est **humaine** (tableaux colorés `rich`, classés par popularité, avec modes hashcat et formats John). La sortie `-g` est du **JSON** structuré, scriptable avec `jq`.
 
@@ -471,7 +471,7 @@ print(d[0][0]["name"])
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Fuites / shadow / SAM → Name-That-Hash → hashcat (modes -m) → Valid Accounts
@@ -479,7 +479,7 @@ Fuites / shadow / SAM → Name-That-Hash → hashcat (modes -m) → Valid Accoun
                      → hashid (recoupement des candidats ambigus)
 ```
 
-- [[Tools|🧰 Outils]] — catalogue des outils du vault
+- [[Tools| Outils]] — catalogue des outils du vault
 - [[Outils/Outil - hashcat|hashcat]] — cracker GPU à alimenter avec le mode identifié
 - [[Outils/Outil - John the Ripper|John the Ripper]] — cracker CPU à alimenter avec le format identifié
 - [[Outil - hashid|hashid]] — outil équivalent plus ancien, utile pour recouper
@@ -489,7 +489,7 @@ L'application web https://nth.skerritt.blog offre la même fonctionnalité sans 
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -503,7 +503,7 @@ L'application web https://nth.skerritt.blog offre la même fonctionnalité sans 
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Temps d'identification quasi nul** : le matching est une comparaison de regex en mémoire, de l'ordre de la milliseconde par hash.
 - **Aucune consommation réseau** : l'outil est 100 % local et fonctionne hors-ligne.
@@ -513,7 +513,7 @@ L'application web https://nth.skerritt.blog offre la même fonctionnalité sans 
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -544,7 +544,7 @@ L'application web https://nth.skerritt.blog offre la même fonctionnalité sans 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Aucune exfiltration** : l'exécution locale de `nth` n'envoie **rien** sur le réseau — c'est le point clé pour des hashes de production. À l'inverse, l'application web https://nth.skerritt.blog transmet le hash au serveur : ne jamais l'utiliser sur des hashes réels sensibles.
 - **Permission** : aucun besoin de root pour fonctionner.
@@ -555,7 +555,7 @@ L'application web https://nth.skerritt.blog offre la même fonctionnalité sans 
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **N'identifie pas tout** : les formats très récents ou exotiques peuvent être absents de la base (extensible via `hashes.py`).
 - **Ne cracke pas** : c'est uniquement une brique d'identification ; il faut la chaîner avec [[Outils/Outil - hashcat|hashcat]] ou [[Outils/Outil - John the Ripper|John the Ripper]].
@@ -567,7 +567,7 @@ L'application web https://nth.skerritt.blog offre la même fonctionnalité sans 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Identifier un hash (guillemets simples obligatoires)
@@ -595,7 +595,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -608,7 +608,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -621,16 +621,16 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise `-g` (JSON) dans tes scripts pour parser le résultat et choisir automatiquement le mode hashcat avec `jq -r '.[0].hashcat'`.
 > - Toujours des **guillemets simples** pour les hashes : les `$` des formats saltés (`$6$`, `$2b$`) seraient interprétés par le shell.
 > - Pense à `-b64` quand le hash provient d'un export, d'un cookie ou d'un JWT : il est souvent encodé en Base64.
 > - Le mode `-e` (extreme) est parfait pour fouiller un dump de logs ou un fichier binaire à la recherche de hashes noyés.
 > - Combine avec [[Outil - hashid|hashid]] pour recouper les candidats sur les formats ambigus.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Une même empreinte peut correspondre à **plusieurs algorithmes** (MD5 vs NTLM par ex.) : l'outil ne lève pas l'ambiguïté, c'est à toi de trancher.
 > - L'outil n'indique pas si un hash est **salé** ou non : un candidat non salé avec un vrai sel donnera des cracks sans fin et faux.
 > - Il **ne cracke pas** : c'est uniquement une brique d'identification, il faut la chaîner avec hashcat/john.
@@ -639,7 +639,7 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -662,4 +662,4 @@ hashcat -m 0 -a 0 hash.txt wordlist.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - John the Ripper|John the Ripper]] · [[Outil - hashid|hashid]] · [[Outil - BruteDum|BruteDum]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Cracking|Password Cracking]] · [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - John the Ripper|John the Ripper]] · [[Outil - hashid|hashid]] · [[Outil - BruteDum|BruteDum]]

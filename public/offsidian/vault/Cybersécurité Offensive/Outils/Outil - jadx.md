@@ -1,11 +1,11 @@
 ---
 title: "Outil - jadx"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 1.5.6
 licence: Apache License 2.0
@@ -16,7 +16,7 @@ site: https://github.com/skylot/jadx
 doc: https://github.com/skylot/jadx/wiki
 ---
 
-# 📱 jadx — Mobile & Reverse Engineering
+# jadx — Mobile & Reverse Engineering
 
 > [!info] **En 1 phrase**
 > **jadx** est le décompilateur **Java/Dalvik** le plus pratique : il transforme le bytecode dex d'un APK
@@ -25,13 +25,13 @@ doc: https://github.com/skylot/jadx/wiki
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | jadx (Java Decompiler for DEX) |
 | Description | Décompilateur Java pour bytecode DEX/APK/class/jar : produit du code source Java lisible, avec CLI et GUI |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Sous-catégorie | Reverse statique d'applications Android (décompilation du bytecode) |
 | Fonction principale | `jadx -d out/ app.apk` (décompile en Java), `jadx-gui app.apk` (navigation interactive) |
 | Type d'outil | CLI (`jadx`) + GUI (`jadx-gui`) |
@@ -46,7 +46,7 @@ doc: https://github.com/skylot/jadx/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Un APK Android contient le bytecode **DEX (Dalvik Executable)** — le code exécuté par la machine virtuelle Dalvik/ART — ainsi que des ressources binaires (`resources.arsc`, `res/*.xml`), le manifeste (`AndroidManifest.xml`), les bibliothèques natives (`lib/*.so`) et les assets. jadx (Java Decompiler + DEX) **remonte le processus inverse de la compilation** : il parse le DEX, construit une représentation intermédiaire (IR), puis **génère du code source Java lisible** (la chaîne smali → IR → Java). La GUI `jadx-gui` ajoute un explorateur de classes, une recherche plein texte dans tout le projet et la navigation par **références croisées** (jump to declaration / find usage).
 
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -81,7 +81,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Linux (Debian / Ubuntu / Kali)
 
@@ -114,14 +114,14 @@ git clone https://github.com/skylot/jadx && cd jadx
 # archives prêtes à l'emploi dans build/
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Java 11+** requis (JDK 17 recommandé). Sans Java, `jadx` échoue avec une erreur de classpath.
 > - `jadx-gui` embarque JavaFX dans les distributions officielles : si la GUI ne démarre pas, vérifier la version de Java et la variable `JAVA_HOME`.
 > - Sur Linux, si le binaire ne se lance pas : `chmod +x bin/jadx` ou `./bin/jadx` directement.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 jadx n'utilise pas de fichier de configuration global obligatoire : tout se passe en **ligne de commande** (CLI) ou dans les réglages de la GUI (sauvegardés dans le profil utilisateur).
 
@@ -143,7 +143,7 @@ jadx n'utilise pas de fichier de configuration global obligatoire : tout se pass
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **jadx-core** : le cœur — parser DEX (librairie dexlib), construction du graphe de classes, passes d'analyse et de décompilation, génération du code Java. C'est une bibliothèque réutilisable (API Java).
 - **jadx-cli** : enveloppe ligne de commande (parsing des arguments commons-cli, gestion des threads, écriture sur disque, export Gradle).
@@ -155,7 +155,7 @@ jadx n'utilise pas de fichier de configuration global obligatoire : tout se pass
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -193,7 +193,7 @@ grep -rEn "https?://[^\"']+" out/sources/ | head -20
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -215,7 +215,7 @@ grep -rEn "https?://[^\"']+" out/sources/ | head -20
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -255,7 +255,7 @@ cd proj && ./gradlew build   # (le code généré peut nécessiter des correctio
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : retrouver un flag ou une clé API cachée dans une application (test / CTF).**
 
@@ -277,7 +277,7 @@ cd proj && ./gradlew build   # (le code généré peut nécessiter des correctio
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Extraction des endpoints API et des secrets hardcodés
 
@@ -311,7 +311,7 @@ jadx -s com.malware.bad.Main -d out/ classes.dex
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -324,7 +324,7 @@ jadx -s com.malware.bad.Main -d out/ classes.dex
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -338,7 +338,7 @@ jadx -s com.malware.bad.Main -d out/ classes.dex
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -387,7 +387,7 @@ rule Dex_Embedded_Infrastructure {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — décompiler un lot d'APK et extraire les endpoints
@@ -421,7 +421,7 @@ for path, kind, value in report["secrets"][:20]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie de jadx est un **dossier de fichiers Java** (`sources/`) plus éventuellement des ressources XML décodées (`resources/`). Pas de rapport JSON : le parsing passe par `grep`/`rg` ou par l'API Java de `jadx-core`.
 
@@ -452,24 +452,24 @@ print(java_methods("out/sources/com/example/app/MainActivity.java"))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 jadx (lecture Java) → APKTool (patch smali / repack) → apksigner → adb install → Frida (vérif runtime)
 jadx (endpoints trouvés) → Burp (interception) → MobSF (rapport SAST de confirmation)
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - APKTool|📱 APKTool]] — smali modifiable et recompilable (jadx ne recompile pas son Java)
-- [[Outil - Frida|📱 Frida]] — hook runtime sur les méthodes identifiées dans jadx-gui
-- [[Outil - objection|📱 objection]] — instrumentation rapide sans écrire de scripts
-- [[Outil - MobSF|📱 MobSF]] — scan statique automatisé en complément
-- [[Outil - Ghidra|🧬 Ghidra]] / [[Outil - Cutter|🔪 Cutter]] — code natif (`.so`) hors du DEX
-- [[Techniques/Insecure Deserialization|🧬 Désérialisation]] · [[Techniques/Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+- [[Tools| Outils]] global
+- [[Outil - APKTool| APKTool]] — smali modifiable et recompilable (jadx ne recompile pas son Java)
+- [[Outil - Frida| Frida]] — hook runtime sur les méthodes identifiées dans jadx-gui
+- [[Outil - objection| objection]] — instrumentation rapide sans écrire de scripts
+- [[Outil - MobSF| MobSF]] — scan statique automatisé en complément
+- [[Outil - Ghidra| Ghidra]] / [[Outil - Cutter| Cutter]] — code natif (`.so`) hors du DEX
+- [[Techniques/Insecure Deserialization| Désérialisation]] · [[Techniques/Hardware - Dump et Analyse de Firmware| Dump de firmware]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -484,7 +484,7 @@ jadx (endpoints trouvés) → Burp (interception) → MobSF (rapport SAST de con
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - La décompilation d'un APK standard (10–50 Mo) prend **de quelques secondes à ~1 minute** ; `-j <N>` parallélise sur les multi-core.
 - `--no-res` accélère nettement (pas de décodage des ressources) : à privilégier pour l'analyse de code pur.
@@ -497,7 +497,7 @@ jadx (endpoints trouvés) → Burp (interception) → MobSF (rapport SAST de con
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ jadx (endpoints trouvés) → Burp (interception) → MobSF (rapport SAST de con
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Malware** : analyser un échantillon malveillant avec jadx dans un environnement dédié (le DEX peut être exploitant, les ressources piégées) ; ne pas exécuter l'app décompilée sur un device personnel.
 - **Secrets** : le code décompilé peut révéler des clés, tokens et endpoints sensibles — ne pas stocker les dossiers `sources/` dans des dépôts partagés ou non chiffrés.
@@ -537,7 +537,7 @@ jadx (endpoints trouvés) → Burp (interception) → MobSF (rapport SAST de con
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Java ≠ original** : la décompilation est imparfaite (types, génériques, boucles, constructeurs) ; le code généré n'est pas garanti compilable.
 - **Pas de recompile fiable** : contrairement au smali d'apktool, le Java de jadx ne se recompile pas toujours (`--export-gradle` reste expérimental).
@@ -548,7 +548,7 @@ jadx (endpoints trouvés) → Burp (interception) → MobSF (rapport SAST de con
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Décompiler (réflexe de base)
@@ -581,7 +581,7 @@ jadx --export-gradle proj/ app.apk && cd proj && ./gradlew build
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -594,7 +594,7 @@ jadx --export-gradle proj/ app.apk && cd proj && ./gradlew build
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -606,16 +606,16 @@ jadx --export-gradle proj/ app.apk && cd proj && ./gradlew build
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `--deobf` fait gagner du temps sur du code R8/ProGuard : les classes `a.a.a` redeviennent lisibles (ex. `MainActivity`).
 > - Coupler à [[Outil - Frida|Frida]] : repérer une fonction intéressante dans jadx-gui, puis la hooker pour observer les arguments réels au runtime.
 > - Utiliser `--show-bad-code` : le code « invalide » est souvent plus proche de la réalité que la version propre.
 > - `Ctrl+Shift+F` dans jadx-gui cherche dans tout le projet (code + ressources) : plus efficace que 20 `grep`.
 > - Pour un DEX extrait d'un malware, passer le fichier directement à jadx (`jadx classes.dex`) : pas besoin de reconstruire un APK.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La décompilation peut être **incorrecte** (boucles, génériques) sur du code optimisé : vérifier la logique dans le smali (apktool) en cas de doute.
 > - Le Java généré ne se **recompile pas toujours** : ne pas s'appuyer sur `--export-gradle` pour un repack de production.
 > - La sortie est **volumineuse** (une classe = un fichier) : `--no-res` et un `grep` ciblé sont plus efficaces que tout lire dans la GUI sur les grosses apps.
@@ -623,7 +623,7 @@ jadx --export-gradle proj/ app.apk && cd proj && ./gradlew build
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ jadx --export-gradle proj/ app.apk && cd proj && ./gradlew build
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - APKTool|📱 APKTool]] · [[Outil - Frida|📱 Frida]] · [[Outil - MobSF|📱 MobSF]] · [[Outil - objection|📱 objection]] · [[Outil - Ghidra|🧬 Ghidra]] · [[Outil - Cutter|🔪 Cutter]] · [[Techniques/Insecure Deserialization|🧬 Désérialisation]] · [[Techniques/Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[Tools| Outils]] · [[Outil - APKTool| APKTool]] · [[Outil - Frida| Frida]] · [[Outil - MobSF| MobSF]] · [[Outil - objection| objection]] · [[Outil - Ghidra| Ghidra]] · [[Outil - Cutter| Cutter]] · [[Techniques/Insecure Deserialization| Désérialisation]] · [[Techniques/Hardware - Dump et Analyse de Firmware| Dump de firmware]]

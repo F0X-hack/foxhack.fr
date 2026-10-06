@@ -1,7 +1,7 @@
 ---
 title: "Outil - waybackurls"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/tomnomnom/waybackurls
 doc: https://github.com/tomnomnom/waybackurls
 ---
 
-# 🕰️ waybackurls — Extraction d'URLs historiques (Wayback Machine)
+# waybackurls — Extraction d'URLs historiques (Wayback Machine)
 
 > [!info] **En 1 phrase**
 > waybackurls remonte le temps pour retrouver toutes les URLs qu'un domaine a exposées, grâce aux archives d'Internet.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/tomnomnom/waybackurls
 
 ---
 
-## 🎯 Concept
+## Concept
 
 waybackurls (tomnomnom) interroge l'API CDX de la Wayback Machine (Internet Archive) et restitue l'historique des URLs capturées pour un domaine. Il permet de retrouver des endpoints oubliés, d'anciens paramètres, des fichiers sensibles exposés autrefois ou des pages d'admin supprimées depuis. Position : phase de content gathering de la recon web — après l'énumération de sous-domaines, avant les tests actifs.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Via Go (Linux / macOS / Windows)
 
@@ -109,7 +109,7 @@ waybackurls -h
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Pas de fichier de config
 
@@ -131,7 +131,7 @@ waybackurls n'a pas de configuration persistante : tout se passe en stdin/stdout
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -150,7 +150,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -177,7 +177,7 @@ echo example.com | waybackurls -no-subs
 
 ---
 
-## 🚩 Options et flags (détail)
+## Options et flags (détail)
 
 | Flag | Défaut | Description |
 |---|---|---|
@@ -191,7 +191,7 @@ echo example.com | waybackurls -no-subs
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Extraction simple
 
@@ -225,7 +225,7 @@ echo example.com | waybackurls -subs | grep "=" | httpx -sc -silent
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Collecter les domaines** — issus de subfinder/chaos.
    ```bash
@@ -250,7 +250,7 @@ echo example.com | waybackurls -subs | grep "=" | httpx -sc -silent
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Chasse aux fichiers sensibles historiques
 
@@ -298,7 +298,7 @@ echo example.com | waybackurls -subs \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -310,7 +310,7 @@ echo example.com | waybackurls -subs \
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec waybackurls |
 |---|---|---|
@@ -322,7 +322,7 @@ echo example.com | waybackurls -subs \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -336,7 +336,7 @@ echo example.com | waybackurls -subs \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Script de content discovery
 
@@ -366,7 +366,7 @@ sort -u all_urls.txt -o all_urls.txt
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Sortie simple
 
@@ -395,7 +395,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -409,7 +409,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -421,7 +421,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -433,7 +433,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -446,7 +446,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -457,7 +457,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -470,7 +470,7 @@ grep -E "^https?" urls.txt | cut -d/ -f3 | sort -u
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Extraction simple
@@ -497,7 +497,7 @@ cat urls.txt | grep -Ei "(admin|console|swagger|staging|dev)"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -511,7 +511,7 @@ cat urls.txt | grep -Ei "(admin|console|swagger|staging|dev)"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -523,41 +523,41 @@ cat urls.txt | grep -Ei "(admin|console|swagger|staging|dev)"
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **`-dates` aide à reconstituer la chronologie**
+> [!tip] `-dates` aide à reconstituer la chronologie**
 > Utile pour dater l'apparition et la disparition d'un endpoint sensible.
 
-> [!tip] 💡 **Filtre à la volée avec grep**
+> [!tip] **Filtre à la volée avec grep**
 > Isole les extensions ou mots-clés sensibles avant d'analyser.
 
-> [!tip] 💡 **Passe par httpx ensuite**
+> [!tip] **Passe par httpx ensuite**
 > La majorité des URLs archivées est morte.
 
-> [!tip] 💡 **La sortie est dédupliquée**
+> [!tip] **La sortie est dédupliquée**
 > Un même endpoint n'apparaît qu'une fois.
 
-> [!tip] 💡 **Pipe vers un fichier**
+> [!tip] **Pipe vers un fichier**
 > `> urls.txt` évite d'écraser ton terminal sur les gros volumes.
 
-> [!warning] ⚠️ **Beaucoup de bruit**
+> [!warning] **Beaucoup de bruit**
 > Fichiers statiques, pages d'erreur : filtre avant analyse.
 
-> [!warning] ⚠️ **Sans `-subs`, tu ne vois que le domaine racine**
+> [!warning] **Sans `-subs`, tu ne vois que le domaine racine**
 > Pense à `-subs` pour une couverture complète.
 
-> [!warning] ⚠️ **Wayback rate les URLs jamais crawlisées**
+> [!warning] **Wayback rate les URLs jamais crawlisées**
 > gau (Common Crawl, OTX, URLScan) apporte plus de profondeur.
 
-> [!warning] ⚠️ **Les URLs peuvent pointer vers des hôtes retirés du DNS**
+> [!warning] **Les URLs peuvent pointer vers des hôtes retirés du DNS**
 > Toujours revalider avec httpx.
 
-> [!danger] 🚫 **Une URL archivée n'est pas une autorisation d'attaque**
+> [!danger] **Une URL archivée n'est pas une autorisation d'attaque**
 > L'exploitation des endpoints découverts exige un scope autorisé.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [GitHub officiel waybackurls](https://github.com/tomnomnom/waybackurls)
@@ -573,4 +573,4 @@ cat urls.txt | grep -Ei "(admin|console|swagger|staging|dev)"
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - gau|🎯 gau]] · [[Outil - httpx|🌐 httpx]] · [[Outil - katana|🗡️ katana]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - gau| gau]] · [[Outil - httpx| httpx]] · [[Outil - katana| katana]]

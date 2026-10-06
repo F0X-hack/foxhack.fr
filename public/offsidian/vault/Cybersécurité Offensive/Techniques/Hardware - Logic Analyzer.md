@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 📈 Logic Analyzer
+# Logic Analyzer
 
 > [!info] **En 1 phrase**
 > Le **logic analyzer** enregistre l'état de plusieurs signaux numériques dans le temps et
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Device cible"] --> B["Probes sur signaux"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Un logic analyzer capture l'état logique (0/1) de plusieurs signaux numériques simultanément, avec un horodatage précis. Contrairement à un oscilloscope (analogique), il ne mesure que les niveaux logiques et les timings. Il est utilisé pour capturer et décoder les communications sur les bus debug (UART, I2C, SPI, JTAG) afin d'extraire les données transitant entre les composants d'un PCB.
 
@@ -62,12 +62,12 @@ flowchart TB
     style F fill:#ffcdd2
 ```
 
-> [!info] 💡 **Pourquoi un logic analyzer ?**
+> [!info] **Pourquoi un logic analyzer ?**
 > Un oscilloscope montre la forme d'onde analogique (utile pour vérifier la qualité du signal), mais un logic analyzer est spécialisé dans la **capture et le décodage des protocoles numériques**. Il est moins cher, plus portable, et ses décodeurs de protocoles rendent l'analyse beaucoup plus rapide.
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Échantillonnage et timing
 
@@ -105,7 +105,7 @@ Le décodeur SPI identifie le Chip Select (CS bas), puis décode MOSI et MISO en
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Comparaison des logic analyzers
 
@@ -177,7 +177,7 @@ Connexion typique :
 
 ---
 
-## ⚡ Protocoles décodés
+## Protocoles décodés
 
 ### UART (Async Serial)
 
@@ -228,7 +228,7 @@ Connexion typique :
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -287,7 +287,7 @@ sigrok-cli --scan
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres PulseView
 
@@ -323,7 +323,7 @@ sigrok-cli --scan
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles PulseView
 
@@ -366,14 +366,14 @@ screen /dev/ttyUSB0 115200
 # Le logic analyzer capture les signaux physiques pendant que screen affiche le texte
 ```
 
-> [!info] 💡 **Puissance combinée**
+> [!info] **Puissance combinée**
 > Un logic analyzer + un terminal série sur la même UART permet de voir à la fois le texte décodé ET le signal brut — idéal pour diagnostiquer les problèmes de communication.
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Capture UART au boot
+### Débutant — Capture UART au boot
 
 ```bash
 # 1. Connecter les probes : GND → GND cible, CH0 → TX du device
@@ -386,7 +386,7 @@ screen /dev/ttyUSB0 115200
 # 8. Sauvegarder la capture (File → Save)
 ```
 
-### 🟡 Intermédiaire — Capture SPI flash read
+### Intermédiaire — Capture SPI flash read
 
 ```bash
 # 1. Connecter les probes : GND, CH0=CLK, CH1=MOSI, CH2=MISO, CH3=CS
@@ -399,7 +399,7 @@ screen /dev/ttyUSB0 115200
 # 8. Filtrer les trames CS bas → données lues
 ```
 
-### 🔴 Avancé — Capture JTAG scan chain
+### Avancé — Capture JTAG scan chain
 
 ```bash
 # 1. Connecter les probes : GND, CH0=TMS, CH1=TCK, CH2=TDI, CH3=TDO
@@ -412,7 +412,7 @@ screen /dev/ttyUSB0 115200
 # 8. Identifier la scan chain (nombre de devices, IDs)
 ```
 
-### ⚫ Expert — Analyse multi-protocole simultanée
+### Expert — Analyse multi-protocole simultanée
 
 ```python
 #!/usr/bin/env python3
@@ -478,7 +478,7 @@ for frame in uart:
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -524,7 +524,7 @@ Analyser les données décodées, extraire les secrets, documenter les findings.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Extraction de credentials via UART debug
 
@@ -534,7 +534,7 @@ Analyser les données décodées, extraire les secrets, documenter les findings.
 | **Matériel** | Logic analyzer 8ch, sondes Hook, câbles Dupont |
 | **Étapes** | 1. Identifier UART TX sur le PCB → 2. Connecter LA → 3. PulseView, décodeur UART 115200 → 4. Capturer le boot complet → 5. Parser les logs |
 | **Résultat** | Shell root avec credentials |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -552,11 +552,11 @@ flowchart LR
 | **Matériel** | Logic analyzer 16ch (DSLogic), sondes |
 | **Étapes** | 1. Connecter 4 probes SPI → 2. DSView, décodeur SPI → 3. Capturer pendant 60s → 4. Filtrer les commandes Read/Write → 5. Analyser les données |
 | **Résultat** | Protocole SPI complet décodé |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -575,7 +575,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -604,7 +604,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -643,7 +643,7 @@ openocd -f interface/stlink.cfg -c "stm32f1x.lock 0"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -715,7 +715,7 @@ if "password" in parsed.lower() or "login" in parsed.lower():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -755,13 +755,13 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1m \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - UART|🔌 UART]] pour la console série
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] pour les protocoles de bus
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] pour le debug
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse post-capture
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - UART| UART]] pour la console série
+- [[Hardware - I2C et SPI| I2C/SPI]] pour les protocoles de bus
+- [[Hardware - JTAG et SWD| JTAG/SWD]] pour le debug
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse post-capture
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -778,7 +778,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1m \
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -798,7 +798,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -819,7 +819,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -865,7 +865,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -885,7 +885,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -906,7 +906,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -932,7 +932,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -945,7 +945,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -965,7 +965,7 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : **Échantillonner trop bas** = décodeurs faux → toujours au moins **4× la vitesse du signal**.
 - **Piège 2** : **Masse commune obligatoire** entre l'analyzer et la cible, sinon bruit.
@@ -982,9 +982,9 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Logic Analyzer](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/logic-analyzer.md)
 > - [sigrok — Downloads](https://sigrok.org/wiki/Downloads)
 > - [Saleae Logic 2](https://www.saleae.com)
@@ -1017,4 +1017,4 @@ sigrok-cli -d fx2lafw --config samplerate=1m --samples 1k --channels 0
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]

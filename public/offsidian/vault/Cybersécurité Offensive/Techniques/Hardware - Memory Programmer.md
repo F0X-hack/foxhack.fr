@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🗄️ Programmeur mémoire (RT809H)
+# Programmeur mémoire (RT809H)
 
 > [!info] **En 1 phrase**
 > Un **programmeur ISP** comme le **RT809H** lit/écrit **toutes les mémoires** — SPI NOR,
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Élevée |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Device cible"] --> B["Déssoudage / Clip ISP"]
@@ -44,7 +44,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le RT809H est un programmeur ISP (In-System Programming) professionnel qui supporte la lecture et l'écriture de toutes les mémoires courantes : SPI NOR, NAND Flash, eMMC, EEPROM, et même certains MCUs. Il est équipé de sockets BGA et d'adaptateurs pour les packages les plus courants, ce qui en fait l'outil de choix quand le clip SOIC-8 ne suffit pas (chips BGA, eMMC soudées).
 
@@ -62,7 +62,7 @@ flowchart TB
     style J fill:#ffcdd2
 ```
 
-> [!info] 💡 **Quand utiliser le RT809H ?**
+> [!info] **Quand utiliser le RT809H ?**
 > - La flash est en **BGA** (pas de clip possible)
 > - La flash est **sous bouclier EM/RF** et doit être dessoudée
 > - Vous avez besoin de lire une **eMMC** (smartphone, tablette, DVR)
@@ -70,7 +70,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Types de mémoire flash
 
@@ -109,7 +109,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -148,7 +148,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### MMC/SD (pour eMMC)
 
@@ -191,7 +191,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -242,7 +242,7 @@ flashrom -p rt809h_spi
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du logiciel RT809H
 
@@ -276,7 +276,7 @@ flashrom -p rt809h_spi
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -321,9 +321,9 @@ sudo flashrom -p rt809h_spi -v dump.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Dump eMMC via socket BGA
+### Débutant — Dump eMMC via socket BGA
 
 ```bash
 # 1. Identifier le chip eMMC sur le PCB (marquage, datasheet)
@@ -338,7 +338,7 @@ sudo flashrom -p rt809h_spi -v dump.bin
 # 10. Sauvegarder le dump en .bin
 ```
 
-### 🟡 Intermédiaire — Lecture ISP d'un DVR
+### Intermédiaire — Lecture ISP d'un DVR
 
 ```bash
 # 1. Identifier les pads ISP sur le PCB du DVR
@@ -353,13 +353,13 @@ strings -n 6 dump.bin | grep -iE 'pass|key|token|root|admin'
 grep -ra "default.*pass" dump.bin
 ```
 
-### 🔴 Avancé — Re-flash eMMC de DVR
+### Avancé — Re-flash eMMC de DVR
 
 ```python
 #!/usr/bin/env python3
 """
 Script expert : backup et re-flash d'une eMMC via RT809H
-⚠️ ATTENTION : risque de brick du device
+ATTENTION : risque de brick du device
 """
 import subprocess
 import hashlib
@@ -414,7 +414,7 @@ backup = backup_emmc()
 verify_integrity("emmc_backup.bin")
 ```
 
-### ⚫ Expert — Analyse eMMC multi-partitions
+### Expert — Analyse eMMC multi-partitions
 
 ```bash
 # 1. Dump complet de l'eMMC
@@ -439,7 +439,7 @@ grep -ra "password\|secret\|key\|token" bootloader.bin rootfs.bin config.bin
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -488,7 +488,7 @@ Analyser le dump (binwalk, strings, reverse), extraire les partitions, recherche
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Extraction firmware DVR Hikvision via eMMC
 
@@ -498,7 +498,7 @@ Analyser le dump (binwalk, strings, reverse), extraire les partitions, recherche
 | **Matériel** | RT809H, socket BGA153, préchauffeur, station de soudure |
 | **Étapes** | 1. Identifier eMMC Samsung KLMAG1JETD → 2. Dessouder (260°C, 30s) → 3. Socket BGA153 → 4. RT809H Read → 5. Dump 4GB → 6. binwalk extraction |
 | **Résultat** | Firmware Linux complet avec credentials root |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -518,11 +518,11 @@ flowchart LR
 | **Matériel** | RT809H, socket BGA162, firmware officiel, préchauffeur |
 | **Étapes** | 1. Dessouder eMMC BGA-162 → 2. Vérifier le dump (corrompu) → 3. Télécharger firmware officiel → 4. Flasher via RT809H → 5. Resouder → 6. Tester |
 | **Résultat** | TV restaurée |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -542,7 +542,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -573,7 +573,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -616,7 +616,7 @@ openocd -f interface/stlink.cfg -c "stm32f1x.lock 0"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -693,7 +693,7 @@ dump = dump_emmc()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -733,13 +733,13 @@ binwalk -E emmc_dump.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - CH341A|💾 CH341A]] pour les dumps SPI simples
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse post-dump
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] pour les MCU protégés
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] pour les protocoles de communication
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - CH341A| CH341A]] pour les dumps SPI simples
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse post-dump
+- [[Hardware - JTAG et SWD| JTAG/SWD]] pour les MCU protégés
+- [[Hardware - I2C et SPI| I2C/SPI]] pour les protocoles de communication
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -756,7 +756,7 @@ binwalk -E emmc_dump.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -776,7 +776,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -797,7 +797,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -842,7 +842,7 @@ fdisk -l dump.bin
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -864,7 +864,7 @@ fdisk -l dump.bin
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -886,7 +886,7 @@ fdisk -l dump.bin
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -913,7 +913,7 @@ fdisk -l dump.bin
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -926,7 +926,7 @@ fdisk -l dump.bin
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -946,7 +946,7 @@ fdisk -l dump.bin
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : BGA = dessoudage risqué → préchauffeur obligatoire, attention à la température.
 - **Piège 2** : Toujours **lire la puce en plusieurs fois** et comparer les checksums pour un dump fiable.
@@ -962,9 +962,9 @@ fdisk -l dump.bin
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Memory Programmer](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/memory-programmer.md)
 > - [flashrom — Supported Hardware](https://www.flashrom.org/supported_hw/supported_programmers.html)
 > - [RT809H Programmer — Datasheet](http://www.rt809h.com)
@@ -994,4 +994,4 @@ fdisk -l dump.bin
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - JTAG et SWD| JTAG/SWD]]

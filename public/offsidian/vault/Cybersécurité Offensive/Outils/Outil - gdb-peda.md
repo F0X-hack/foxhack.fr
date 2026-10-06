@@ -1,7 +1,7 @@
 ---
 title: "Outil - gdb-peda"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/longld/peda
 doc: https://github.com/longld/peda/blob/master/README.md
 ---
 
-# 🛠️ GDB-PEDA — Le debugger GDB boosté pour l'exploitation
+# GDB-PEDA — Le debugger GDB boosté pour l'exploitation
 
 > [!info] **En 1 phrase**
 > GDB avec une interface colorée et des commandes d'exploitation intégrées (checksec, pattern, ROP, X/nx) pour debugger et exploiter les binaires en un clin d'œil.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -49,7 +49,7 @@ doc: https://github.com/longld/peda/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 gdb-peda est un plugin Python pour GDB qui transforme le débogueur en outil orienté exploitation. À chaque instruction, il affiche **automatiquement** les registres, la stack, le code désassemblé et les segments de mémoire. Il ajoute des commandes dédiées : `checksec` (protections), `pattern create/search` (offset de buffer overflow), `pwnhelp` (aide exploitation), `rop`/`ropgadget` (recherche de gadgets), `dumpargs`, `xinfo`... Avec PEDA, on repère immédiatement l'état du programme au moment du crash, on copie une adresse utile, et on valide qu'un payload a bien écrasé RIP. C'est l'environnement de debug de référence pour le pwn en CTF.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -124,13 +124,13 @@ gdb -q ./challenge
 (gdb) pwnhelp
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Python 2** : PEDA requiert un GDB construit avec Python 2 ; sur les distributions récentes (GDB en Python 3), utiliser `python2-gdb`, un environnement `pyenv` Python 2, ou un fork à jour. Certains utilisent **pwndbg** (maintenu activement) en alternative.
 > - GDB doit être installé : `sudo apt install gdb` (ou `gdb-multiarch` pour l'ARM).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -148,7 +148,7 @@ gdb -q ./challenge
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Un script unique** : PEDA est un fichier `peda.py` (décomposé en `peda/*.py` dans la branche master récente : `utils.py`, `commands.py`, `gdb/`...). Il s'interface avec l'API Python embarquée de GDB (`gdb.execute`, `gdb.selected_inferior()`).
 - **Hooking du prompt** : PEDA se connecte à l'événement de mise à jour du prompt GDB pour réafficher le **contexte** (registres, stack, code, segments) à chaque arrêt.
@@ -159,7 +159,7 @@ gdb -q ./challenge
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -199,7 +199,7 @@ gdb -q ./challenge
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option PEDA | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -219,7 +219,7 @@ gdb -q ./challenge
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -265,7 +265,7 @@ gdb -q ./challenge
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Protections du binaire** :
    ```bash
@@ -298,7 +298,7 @@ gdb -q ./challenge
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : ret2libc complet
 
@@ -336,7 +336,7 @@ gdb -q ./challenge
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -349,7 +349,7 @@ gdb -q ./challenge
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -363,7 +363,7 @@ gdb -q ./challenge
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -406,7 +406,7 @@ alert ip any any -> any any (msg:"Repeated crash/segfault signals"; classtype:at
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer gdb-peda en script (batch) sans interaction
@@ -435,7 +435,7 @@ cat /tmp/peda_cmd | gdb -q ./challenge
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie de PEDA est conçue pour l'œil humain (couleurs, sections). Pour du parsing, on utilise les commandes GDB natives (`x/`, `info`, `maintenance`) et des scripts :
 
@@ -463,22 +463,22 @@ print("PIE" in out, "NX" in out)  # booléens utiles au choix d'exploitation
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 checksec (PEDA) → pwntools (payload) → gdb.attach (debug) → ROPgadget (chaîne) → exploit
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - pwntools]] — construction des payloads et `gdb.attach`
 - [[Outil - ROPgadget]] — génération des ROP chains (PEDA a `rop` en interne, ROPgadget est plus exhaustif)
 - [[Outil - Ghidra]] — analyse statique du binaire avant debug
 - [[Outil - radare2]] — alternative debug/reverse en CLI
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -492,7 +492,7 @@ checksec (PEDA) → pwntools (payload) → gdb.attach (debug) → ROPgadget (cha
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Affichage contexte** : PEDA désassemble et dump la mémoire à **chaque arrêt** — sur de longues boucles, privilégier `set context code,stack` restreint ou désactiver le contexte pendant les runs.
 - **Pattern create/search** : rapide même sur de grandes tailles (mémoire du motif en Python).
@@ -504,7 +504,7 @@ checksec (PEDA) → pwntools (payload) → gdb.attach (debug) → ROPgadget (cha
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -530,7 +530,7 @@ checksec (PEDA) → pwntools (payload) → gdb.attach (debug) → ROPgadget (cha
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution locale** : PEDA n'exécute que des commandes GDB locales ; aucune exfiltration réseau.
 - **Binaires malveillants** : déboguer un malware peut déclencher du code hostile — utiliser une VM jetable.
@@ -539,7 +539,7 @@ checksec (PEDA) → pwntools (payload) → gdb.attach (debug) → ROPgadget (cha
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Python 2 legacy** : incompatible de base avec GDB en Python 3 (voir Troubleshooting) — principale raison de migrer vers pwndbg/gef.
 - **Pas de génération de ROP chain complète** : PEDA liste les gadgets mais la construction fine revient à [[Outil - ROPgadget]] / pwntools.
@@ -549,7 +549,7 @@ checksec (PEDA) → pwntools (payload) → gdb.attach (debug) → ROPgadget (cha
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Chargement
@@ -580,7 +580,7 @@ echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,7 +593,7 @@ echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -604,16 +604,16 @@ echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `checksec` en premier : le choix de l'exploitation dépend des protections.
 > - `aslr off` pour stabiliser les tests locaux, mais pensez à **PIE** qui s'ajoute à l'ASLR.
 > - `telescope $rsp` pour suivre les pointeurs chaînés dans la stack.
 > - `set context code,registers` pour un affichage lisible dans les terminaux étroits.
 > - Utilisez `xinfo` avant chaque adresse pour connaître sa page et ses permissions.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne pas confondre `pattern create` (génère) et `pattern search` (recherche l'offset) : faites `run` entre les deux !
 > - Sur un binaire **PIE**, les adresses varient à chaque run : `aslr off` ne suffit pas toujours, relancez proprement.
 > - `set context` trop large ralentit les boucles : restreignez pendant les longues exécutions.
@@ -621,7 +621,7 @@ echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -645,4 +645,4 @@ echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - pwntools|🎯 pwntools]] · [[Outil - ROPgadget|🧩 ROPgadget]] · [[Outil - Ghidra|🔬 Ghidra]] · [[Outil - radare2|🕵️ radare2]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]] · [[Outil - CyberChef|🧪 CyberChef]]
+**Liens :** [[Tools| Outils]] · [[Outil - pwntools| pwntools]] · [[Outil - ROPgadget| ROPgadget]] · [[Outil - Ghidra| Ghidra]] · [[Outil - radare2| radare2]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]] · [[Outil - CyberChef| CyberChef]]

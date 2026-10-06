@@ -1,7 +1,7 @@
 ---
 title: "Outil - naabu"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/naabu/usage
 ---
 
-# 🚪 naabu — Scanner de ports rapide intégré au pipeline
+# naabu — Scanner de ports rapide intégré au pipeline
 
 > [!info] **En 1 phrase**
 > naabu scan les ports de milliers d'hôtes en quelques secondes et alimente directement httpx, nuclei et nmap.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.projectdiscovery.io/tools/naabu/usage
 
 ---
 
-## 🎯 Concept
+## Concept
 
 naabu est le scanner de ports de la suite **ProjectDiscovery**. Il est pensé comme le maillon de vitesse entre l'énumération de sous-domaines et le probing HTTP : en entrée des hôtes, IP, ranges ou listes (`-list`), en sortie une liste `host:port` dédupliquée directement consommable par `httpx`, `nuclei` ou `dnsx` sans parsing intermédiaire. Son mode SYN scan envoie des probes par paquets bruts (nécessite root sous Linux) avec un **taux de paquets/s réglable** (`-rate`) et des **workers internes** (`-c`), ce qui le rend capable de couvrir de grandes portées en quelques secondes ; sans privilèges, il bascule sur un **TCP connect scan** (`-s connect`), plus lent mais sans droits root.
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -155,14 +155,14 @@ sudo mv naabu /usr/local/bin/
 naabu -version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le **SYN scan** (`-s syn`, défaut) nécessite **root** sous Linux et le paquet `libpcap` ; sans root, naabu bascule en CONNECT (`-s connect`).
 > - Windows : Npcap requis pour les paquets bruts (depuis v2.6.0).
 > - Si `naabu` n'est pas trouvé après `go install`, vérifier que `$(go env GOPATH)/bin` est dans le `PATH`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 naabu ne lit **pas** de fichier de configuration global obligatoire : tout se passe par flags CLI, mais il accepte aussi un **fichier de ports** et des **listes d'hôtes** en entrée, et une **config YAML ProjectDiscovery** (`$HOME/.config/pd/`) pour le cloud.
 
@@ -186,7 +186,7 @@ naabu ne lit **pas** de fichier de configuration global obligatoire : tout se pa
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 naabu est un **binaire Go unique** organisé en packages (`cmd/naabu` pour le CLI, `pkg/runner` pour l'orchestration, `pkg/scan` pour le moteur réseau) :
 
@@ -200,7 +200,7 @@ Le flux : cibles → résolution → envoi des probes au taux configuré → cor
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -239,7 +239,7 @@ sudo naabu -host example.com -p 80,443 -sv
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -274,7 +274,7 @@ sudo naabu -host example.com -p 80,443 -sv
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -321,7 +321,7 @@ sudo naabu -host example.com -top-ports 1000 -exclude-cdn -verify -json -o infra
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer les hôtes** — énumération passive des sous-domaines, validation des noms résolvants.
    ```bash
@@ -348,7 +348,7 @@ Astuce de cadence : commence par `-top-ports 100` sur l'ensemble, puis approfond
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : scan massif d'un périmètre réseau
 
@@ -375,7 +375,7 @@ naabu -host example.com -top-ports 100 -s connect -proxy socks5://127.0.0.1:9050
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -387,7 +387,7 @@ naabu -host example.com -top-ports 100 -s connect -proxy socks5://127.0.0.1:9050
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -400,7 +400,7 @@ naabu -host example.com -top-ports 100 -s connect -proxy socks5://127.0.0.1:9050
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -457,7 +457,7 @@ alert tcp any any -> $HOME_NET any \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline sous-domaines → ports → probing HTTP → fichiers
@@ -484,7 +484,7 @@ with open("scan.jsonl") as fh:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Formats natifs : texte `host:port` (`-silent`), JSONL (`-json` / `-oJ`), CSV (`-csv`), markdown (`-md`), sortie fichier (`-o`). Le format texte est directement consommable par httpx/nuclei.
 
@@ -507,9 +507,9 @@ print(df.groupby("host")["port"].apply(list))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - subfinder]] — énumération de sous-domaines en amont
 - [[Outil - dnsx]] — validation des hôtes qui résolvent
 - [[Outil - httpx]] — probing HTTP sur les `host:port` découverts
@@ -524,7 +524,7 @@ subfinder → dnsx → naabu → httpx → nuclei → rapport
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -537,7 +537,7 @@ subfinder → dnsx → naabu → httpx → nuclei → rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Débit contrôlé par `-rate` (défaut **1000 probes/s**, ajustable) et parallélisme par `-c` (défaut **25 workers**).
 - `-top-ports 1000` couvre l'essentiel des services exposés en un temps raisonnable ; `-p all` (65 535) est réservé aux cibles prioritaires.
@@ -549,7 +549,7 @@ subfinder → dnsx → naabu → httpx → nuclei → rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -575,7 +575,7 @@ subfinder → dnsx → naabu → httpx → nuclei → rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Permission** : le SYN scan nécessite root ; à n'utiliser que sur des cibles autorisées (cadre légal des tests d'intrusion, scope bug bounty).
 - **Bruit** : `-rate 5000` sur un grand périmètre génère un volume très visible (IDS, SIEM) ; en engagement réel, rester modéré et coordonner.
@@ -585,7 +585,7 @@ subfinder → dnsx → naabu → httpx → nuclei → rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Le SYN scan sous Linux nécessite **root** ; Windows nécessite **Npcap**.
 - Détection de versions limitée sans Nmap : `-sv` couvre un sous-ensemble de services.
@@ -596,7 +596,7 @@ subfinder → dnsx → naabu → httpx → nuclei → rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan par défaut (100 top-ports)
@@ -627,7 +627,7 @@ naabu -host example.com -verify
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -640,7 +640,7 @@ naabu -host example.com -verify
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -653,15 +653,15 @@ naabu -host example.com -verify
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `-top-ports 1000` couvre l'essentiel en un temps raisonnable ; `-p all` est réservé aux cibles prioritaires.
 > - En bug bounty, respecte le rate limit annoncé : `-rate` et `-c` sont tes freins.
 > - La sortie `host:port` est directement consommable par httpx/nuclei : aucun parsing nécessaire.
 > - Pour rejouer un scan identique, conserve la commande exacte : les options `-p`, `-top-ports` et `-exclude-ports` changent complètement le résultat.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le scan SYN nécessite root sous Linux ; sans root, `-s connect` est obligatoire (et plus bruyant).
 > - Un firewall peut filtrer silencieusement : augmente `-retries`/`-timeout` et vérifie avec `-verify`.
 > - `-p 1-65535` sur tout un périmètre sans coordination est bruyant et long : évite, ou limite avec `-rate`.
@@ -669,7 +669,7 @@ naabu -host example.com -verify
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -692,4 +692,4 @@ naabu -host example.com -verify
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - dnsx|dnsx]] · [[Outil - httpx|httpx]] · [[Outil - Nmap|Nmap]] · [[Outil - nuclei|nuclei]]
+**Liens :** [[Tools| Outils]] · [[Outil - dnsx|dnsx]] · [[Outil - httpx|httpx]] · [[Outil - Nmap|Nmap]] · [[Outil - nuclei|nuclei]]

@@ -1,11 +1,11 @@
 ---
 title: "Outil - mitmproxy"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 12.2.3 (mai 2026)
 licence: MIT
@@ -16,20 +16,20 @@ site: https://mitmproxy.org
 doc: https://docs.mitmproxy.org/stable/
 ---
 
-# 🔍 mitmproxy — Proxy d'interception TLS scriptable en Python
+# mitmproxy — Proxy d'interception TLS scriptable en Python
 
 > [!info] **En 1 phrase**
 > mitmproxy est un proxy d'interception TLS ultra-puissant et 100 % scriptable en Python, décliné en trois outils : `mitmproxy` (interface interactive), `mitmdump` (CLI) et `mitmweb` (interface web).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | mitmproxy |
 | Description | Proxy d'interception (MITM) qui décrypte, inspecte, modifie, enregistre et rejoue le trafic HTTP/HTTPS, HTTP/2, HTTP/3, WebSockets, TCP brut, UDP/DTLS et DNS |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Proxy d'interception / analyse de trafic / MITM |
 | Fonction principale | Intercepter le trafic réseau via un certificat CA pour l'inspecter et le modifier en temps réel |
 | Type d'outil | CLI (TUI `mitmproxy`, CLI `mitmdump`, UI web `mitmweb`) |
@@ -51,7 +51,7 @@ doc: https://docs.mitmproxy.org/stable/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 mitmproxy est un proxy MITM (Man In The Middle) écrit en Python qui intercepte, inspecte, modifie, enregistre et rejoue le trafic HTTP/HTTPS (et WebSockets). Il se place entre le client et le serveur et décrypte le HTTPS grâce à un **certificat CA** que l'on installe dans le navigateur ou l'appareil cible.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Recommandé : pipx (environnement isolé)
 
@@ -143,14 +143,14 @@ docker run --rm -it -p 8080:8080 -p 8081:8081 mitmproxy/mitmproxy mitmweb --web-
 mitmproxy --version   # affiche version Python + OpenSSL embarqué
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Python 3.12+** requis (depuis mitmproxy 11.1.0) ; les binaires standalone embarquent leur propre Python (3.14 depuis 12.2.0).
 > - Après installation, le certificat CA est généré au premier lancement dans `~/.mitmproxy/` ; il faut l'**installer dans le client** (onboarding `http://mitm.it`).
 > - Le paquet apt est souvent obsolète : utiliser pipx ou les binaires officiels pour rester à jour.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -174,7 +174,7 @@ mitmproxy --version   # affiche version Python + OpenSSL embarqué
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Trois interfaces, un moteur** : `mitmproxy` (TUI curses), `mitmdump` (CLI), `mitmweb` (UI web) partagent le même cœur asyncio et le même système d'addons.
 - **Cœur asyncio (Python)** : gestion événementielle des connexions ; les flux sont modélisés en objets `HTTPFlow`, `TCPFlow`, `WebSocketFlow`, `DNSFlow` manipulables dans les addons.
@@ -190,7 +190,7 @@ Flux type : client → proxy (TLS décrypté via CA) → addons (`request`/`resp
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -253,7 +253,7 @@ mitmdump --ignore-hosts ".*\.(google|facebook)\.com" -w cap.mitm
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -286,7 +286,7 @@ mitmdump --ignore-hosts ".*\.(google|facebook)\.com" -w cap.mitm
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -344,7 +344,7 @@ mitmdump -m dns -p 53
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Démarrer le proxy** et installer le certificat CA dans le navigateur (http://mitm.it après le lancement) :
    ```bash
@@ -358,7 +358,7 @@ mitmdump -m dns -p 53
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Addon Python qui réinjecte un payload
 
@@ -434,7 +434,7 @@ Redirige une résolution DNS vers une IP contrôlée — classique en test de re
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -447,7 +447,7 @@ Redirige une résolution DNS vers une IP contrôlée — classique en test de re
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -462,7 +462,7 @@ Redirige une résolution DNS vers une IP contrôlée — classique en test de re
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -517,7 +517,7 @@ rule Mitmproxy_Addon {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Automatiser la capture + export HAR en tâche de fond
@@ -566,7 +566,7 @@ with open("capture.mitm", "rb") as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 mitmproxy exporte les flows dans plusieurs formats : fichier `.mitm` (natif), **HAR** (`--hardump` / `save.har`), et exports ponctuels depuis la TUI (curl, httpie, python, raw).
 
@@ -598,7 +598,7 @@ EOF
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 mitmproxy -> proxy navigateur / émulateur -> application cible
@@ -607,7 +607,7 @@ mitmproxy -> addons Python -> automatisation des tests
 mitmproxy -> Frida/objection -> contournement du pinning mobile
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Burp Suite]] — proxy GUI équivalent (Intruder, Repeater, extensions)
 - [[Outil - OWASP ZAP]] — alternative open source avec scanner automatisé
 - [[Techniques/IDOR|IDOR]] · [[Techniques/SSRF|SSRF]] · [[Techniques/HTTP Request Smuggling|HTTP Request Smuggling]] · [[Techniques/Injection de commandes|Injection de commandes]]
@@ -615,7 +615,7 @@ mitmproxy -> Frida/objection -> contournement du pinning mobile
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -629,7 +629,7 @@ mitmproxy -> Frida/objection -> contournement du pinning mobile
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rust `mitmproxy_rs`** : les chemins critiques (UDP, contentviews, mTLS) sont en Rust ; depuis v12, les contentviews Rust sont supportées.
 - **Compression** : depuis 12.2.2, toutes les compressions de contenu utilisent les réglages « fastest » par défaut → réécriture de `message.content` beaucoup plus rapide.
@@ -643,7 +643,7 @@ mitmproxy -> Frida/objection -> contournement du pinning mobile
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -679,7 +679,7 @@ mitmproxy -> Frida/objection -> contournement du pinning mobile
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **CA compromettant** : le CA privé de mitmproxy permet de décrypter tout le trafic qui lui fait confiance — le garder hors de portée et ne l'installer que sur des cibles autorisées.
 - **mitmweb** : depuis 11.1.2, l'API est protégée par un **jeton d'authentification** par défaut (fix du CVE-2025-23217 / SSRF) ; penser à `web_password` pour un accès stable.
@@ -690,7 +690,7 @@ mitmproxy -> Frida/objection -> contournement du pinning mobile
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Confiance basée sur le CA** : sans installation du certificat, pas de décryptage HTTPS ; Android 7+ et iOS limitent la confiance des CA user.
 - **Pinning** : ne contourne pas le certificate pinning tout seul — nécessite Frida/objection.
@@ -702,7 +702,7 @@ mitmproxy -> Frida/objection -> contournement du pinning mobile
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Proxy interactif
@@ -738,7 +738,7 @@ mitmdump -m local
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -751,7 +751,7 @@ mitmdump -m local
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -765,16 +765,16 @@ mitmdump -m local
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise `mitmweb` quand tu veux une vue graphique et un historique facilement navigable ; `mitmdump` pour les scripts et l'automatisation.
 > - Enregistre systématiquement tes flux avec `-w` : ils deviennent une preuve rejouable de l'engagement.
 > - En mode **reverse** tu interceptes toute l'API d'un hôte en une commande — très efficace pour auditer une API mobile.
 > - Utilise `--hardump` pour générer un HAR à intégrer au rapport sans étape manuelle.
 > - Les **contentviews interactives** (v12+) permettent d'éditer un Protobuf en YAML et de le re-sérialiser — pratique pour les API gRPC.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans installation du certificat CA, le HTTPS n'est **pas** décrypté (le navigateur bloquera avec une erreur de certificat) : c'est la première cause d'échec.
 > - Le mode **transparent** nécessite root et une configuration réseau (iptables/route) ; en virtualisation, le proxy doit être sur la même VM que le client.
 > - Les apps avec **pinning** résistent à l'interception : pense à `Frida`/objection pour les contourner, ou à `--ssl-insecure` pour les cas simples.
@@ -784,7 +784,7 @@ mitmdump -m local
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -807,4 +807,4 @@ mitmdump -m local
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Burp Suite|Burp Suite]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/IDOR|IDOR]] · [[Techniques/SSRF|SSRF]] · [[Techniques/HTTP Request Smuggling|HTTP Request Smuggling]]
+**Liens :** [[Tools| Outils]] · [[Outil - Burp Suite|Burp Suite]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/IDOR|IDOR]] · [[Techniques/SSRF|SSRF]] · [[Techniques/HTTP Request Smuggling|HTTP Request Smuggling]]

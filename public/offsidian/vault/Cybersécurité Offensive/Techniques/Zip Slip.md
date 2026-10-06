@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🗜️ Zip Slip — Zip Traversal
+# Zip Slip — Zip Traversal
 
 > [!info] **En 1 phrase**
 > Zip Slip = extraire une archive contenant des noms de fichiers **traversants** (`../../`)
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,14 +34,14 @@ flowchart LR
     D --> G[Écrasement de<br>code applicatif]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le code d'extraction concatène simplement **nom d'entrée + dossier de destination**
 > (`os.path.join(dest, entry_name)`) sans **normaliser/valider le chemin résultant**.
 > `../../../../etc/passwd` remonte l'arborescence et écrit où l'utilisateur de l'app a les droits.
 
 ---
 
-## ⚙️ Le mécanisme
+## Le mécanisme
 
 - Une archive ZIP (ou TAR, JAR, WAR, CPIO, APK, RAR, 7z…) contient des entrées dont les noms
   contiennent des séquences de **traversal** : `../`, `..\`, chemins absolus.
@@ -57,12 +57,12 @@ malicious.zip
   └── normal.txt                             → écrit normalement dans le dossier cible
 ```
 
-> [!warning] ⚠️ **Prérequis** : un point d'**upload d'archive** + une fonctionnalité qui **décompresse**
+> [!warning] **Prérequis** : un point d'**upload d'archive** + une fonctionnalité qui **décompresse**
 > côté serveur (import ZIP, extraction d'images, mise à jour de thèmes/plugins, upload de backups…).
 
 ---
 
-## 🚀 Payloads
+## Payloads
 
 ### Noms de fichiers traversants
 
@@ -109,7 +109,7 @@ tar -cf pwn.tar ../../../../tmp/shell.php    # chemin relatif remontant
 
 ---
 
-## 🎯 Exploitation
+## Exploitation
 
 ### 1. Webshell (objectif RCE)
 
@@ -139,7 +139,7 @@ tar -cf pwn.tar ../../../../tmp/shell.php    # chemin relatif remontant
 
 ---
 
-## 🧩 Variantes
+## Variantes
 
 | Variante | Détail |
 |---|---|
@@ -150,12 +150,12 @@ tar -cf pwn.tar ../../../../tmp/shell.php    # chemin relatif remontant
 | **Double slash / encodage** | `..//..//`, `%2e%2e%2f`, `..%5c` pour bypasser les filtres de chaîne `../` |
 | **Unicode / UTF-8** | `..\u2216..\u2216` (fullwidth) selon la normalisation de l'extracteur |
 
-> [!info] 💡 **Portée** : la vulnérabilité touche des **centaines de bibliothèques** dans tous les
+> [!info] **Portée** : la vulnérabilité touche des **centaines de bibliothèques** dans tous les
 > langages (Java, Node, Python, PHP, .NET, Ruby…). Liste de référence : [snyk/zip-slip-vulnerability](https://github.com/snyk/zip-slip-vulnerability).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -187,16 +187,16 @@ def safe_extract(zip_path, dest):
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Méthodo de test**
+> [!tip] **Méthodo de test**
 > - Chercher les **uploads d'archives** : `zip`, `tar`, `7z`, `rar`, import de plugins/thèmes,
 >   batch d'images, sauvegardes, exports "restaurer".
 > - Tester avec une entrée `../../` et vérifier l'**écriture** (timestamp, accès au fichier) ou via callback.
 > - Privilégier l'écriture dans un dossier web (`shell.php`) pour un impact RCE démontrable.
 > - Tester sur une **archive de test** : ne jamais écraser un vrai fichier système de la cible.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les **filtres naïfs** (`replace("../", "")`) se contournent : `....//`, `%2e%2e/`, `..//`.
 > - `realpath`/`resolve` est **obligatoire** : `os.path.join` seul ne suffit pas (les `..` restent).
 > - Windows : penser aux séparateurs `\`, aux **chemins absolus** (`C:\...`) et aux UNC (`\\server\`).
@@ -206,12 +206,12 @@ def safe_extract(zip_path, dest):
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Upload de fichiers|📤 Upload]]
-- [[Path Traversal|🗂️ Path Traversal]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[Denial of Service|💥 DoS (Web)]] (zip bomb)
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [Snyk — Zip Slip](https://snyk.io/research/zip-slip-vulnerability) — [evilarc](https://github.com/ptoomey3/evilarc)
+- [[Upload de fichiers| Upload]]
+- [[Path Traversal| Path Traversal]]
+- [[LFI et RFI| LFI / RFI]]
+- [[Injection de commandes| Injection de commandes]]
+- [[Denial of Service| DoS (Web)]] (zip bomb)
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [Snyk — Zip Slip](https://snyk.io/research/zip-slip-vulnerability) — [evilarc](https://github.com/ptoomey3/evilarc)

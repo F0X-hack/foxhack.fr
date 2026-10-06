@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔗 Kerberos — Constrained Delegation
+# Kerberos — Constrained Delegation
 
 > [!info] **En 1 phrase**
 > La délégation contrainte limite un service à **s'impersonner les utilisateurs vers une liste précise de SPN** :
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -30,7 +30,7 @@ flowchart LR
     K -->|"4. ST forwardable pour le SPN<br>autorisé (ex. cifs/dc)"| A
 ```
 
-> [!info] 💡 **Le mécanisme**
+> [!info] **Le mécanisme**
 > Deux extensions du protocole :
 > - **S4U2Self** : le service demande un ST pour la cible **sans que celle-ci s'authentifie** — il se fait passer pour elle.
 > - **S4U2Proxy** : ce ST est présenté pour obtenir un **nouveau ST vers un SPN** listé dans `msDS-AllowedToDelegateTo`.
@@ -38,7 +38,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 > Nécessite : le **mot de passe ou hash** du compte (service ou machine) autorisé à déléguer.
 
@@ -77,7 +77,7 @@ dir \\dc.domain.com\c$
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -88,20 +88,20 @@ dir \\dc.domain.com\c$
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **`/altservice` : l'astuce qui change tout**
+> [!tip] `/altservice` : l'astuce qui change tout**
 > Le SPN déclaré (`time/dc`) peut être échangé contre des **SPN alternatifs** (`cifs,http,host,rpcss,wsman,ldap`) — un SPN faible se transforme en accès fichiers ou WinRM.
 
-> [!warning] ⚠️ **Piège** : le hash d'un compte **machine** ne se cracke pas — il vient du **dump LSASS/SAM** de la machine compromise. On l'utilise directement via `Rubeus.exe s4u /rc4:<hash>`.
+> [!warning] **Piège** : le hash d'un compte **machine** ne se cracke pas — il vient du **dump LSASS/SAM** de la machine compromise. On l'utilise directement via `Rubeus.exe s4u /rc4:<hash>`.
 
-> [!warning] ⚠️ **Piège** : S4U2Self/S4U2Proxy échouent sur les comptes **Protected Users** ou "sensitive and cannot be delegated" — sauf via [[Kerberos - Bronze Bit|Bronze Bit]] (si non patché).
+> [!warning] **Piège** : S4U2Self/S4U2Proxy échouent sur les comptes **Protected Users** ou "sensitive and cannot be delegated" — sauf via [[Kerberos - Bronze Bit|Bronze Bit]] (si non patché).
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [InternalAllTheThings — Kerberos Delegation](https://github.com/swisskyrepo/InternalAllTheThings/tree/main/docs/active-directory)
 > - [Harmj0y — Another Word on Delegation](https://blog.harmj0y.net/activedirectory/another-word-on-delegation/)
 > - [The Hacker Recipes — Delegations](https://www.thehacker.recipes/ad/movement/kerberos/delegations)
 
-➡️ **Liens :** [[Kerberos Delegation|🎯 Hub Délégation]] · [[Kerberos - Unconstrained Delegation|🔓 Unconstrained]] · [[Kerberos - RBCD (Resource-Based Constrained Delegation)|🧬 RBCD]] · [[Kerberos - Bronze Bit|🥉 Bronze Bit]] · [[Kerberos - Le protocole|👑 Kerberos]]
+**Liens :** [[Kerberos Delegation| Hub Délégation]] · [[Kerberos - Unconstrained Delegation| Unconstrained]] · [[Kerberos - RBCD (Resource-Based Constrained Delegation)| RBCD]] · [[Kerberos - Bronze Bit| Bronze Bit]] · [[Kerberos - Le protocole| Kerberos]]

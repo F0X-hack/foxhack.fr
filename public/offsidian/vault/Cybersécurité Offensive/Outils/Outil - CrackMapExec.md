@@ -1,11 +1,11 @@
 ---
 title: "Outil - CrackMapExec"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 1.5.1 (NetExec, 2026-02-23)
 licence: BSD-2-Clause (NetExec)
@@ -16,20 +16,20 @@ site: https://www.netexec.wiki/
 doc: https://www.netexec.wiki/
 ---
 
-# 💥 CrackMapExec (NetExec) — Post-exploitation réseau
+# CrackMapExec (NetExec) — Post-exploitation réseau
 
 > [!info] **En 1 phrase**
 > CrackMapExec, désormais **NetExec (`nxc`)**, = la boîte à outils post-exploitation Active Directory : valider des creds, énumérer SMB/WinRM/LDAP/MSSQL et dumper des secrets à l'échelle.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | CrackMapExec (legacy, `cme`) / NetExec (successeur, `nxc`) |
 | Description | Outil de post-exploitation Active Directory : validation de credentials, énumération SMB/WinRM/LDAP/MSSQL/SSH/RDP/FTP/VNC, dumping de secrets, mouvement latéral |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Post-exploitation Active Directory |
 | Type d'outil | CLI |
 | Licence | BSD-2-Clause (NetExec) |
@@ -46,7 +46,7 @@ doc: https://www.netexec.wiki/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le projet original (crackmapexec / `cme`) n'est plus maintenu : la suite est **NetExec** (`nxc`), fork communautaire. On valide des couples user:pass ou hash (`-u -p`, `-H`) sur des protocoles (`smb`, `winrm`, `ldap`, `mssql`, `ssh`) puis on énumère (`--shares`, `--users`, `--sessions`) et on dump (`--sam`, `--lsa`, `-M mimikatz`, `-M lsassy`). `--exec-method` choisit la méthode d'exécution (smbexec, wmiexec, mmcexec).
 
@@ -64,7 +64,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,14 +136,14 @@ pipx install .
 pipx install crackmapexec
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Python 3.8+ requis ; `pipx` isole l'outil et évite les conflits de dépendances (impacket, cryptography, etc.).
 > - Ne pas mélanger avec d'autres outils impacket dans le même environnement (`pip install --user`) : conflits de versions fréquents.
 > - Mettre à jour régulièrement : la v1.5.1 corrige une vulnérabilité d'écriture arbitraire dans le module `spider_plus`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 NetExec utilise un **fichier de configuration INI** créé au premier lancement, plus un dossier de données dédié.
 
@@ -159,7 +159,7 @@ NetExec utilise un **fichier de configuration INI** créé au premier lancement,
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Sous-commandes par protocole** : `nxc smb`, `winrm`, `ldap`, `mssql`, `ssh`, `rdp`, `ftp`, `vnc`, `wmi`, `nfs`... Chacun a son namespace d'options et de modules.
 - **Brique d'authentification** : construite sur **impacket** (Kerberos/NTLM, DCE/RPC, SMB, LDAP). Supporte password, hash NTLM (`-H`), tickets Kerberos (`-k`, `--use-kcache`, `--aes`) et authentification locale (`--local-auth`).
@@ -170,7 +170,7 @@ NetExec utilise un **fichier de configuration INI** créé au premier lancement,
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ nxc smb 10.10.10.10 -u admin -p 'Password123' -M bloodhound --options '-c All'
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -229,7 +229,7 @@ nxc smb 10.10.10.10 -u admin -p 'Password123' -M bloodhound --options '-c All'
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -258,7 +258,7 @@ nxc smb 10.10.10.10 -u admin -p 'Password123' --ntds
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Creds initiaux** : `jdoe:Summer2024!` récupérés → `nxc smb 10.10.10.10 -u jdoe -p 'Summer2024!'` → `[+]` (valid).
 2. **Énumération** : `nxc smb 10.10.10.10 -u jdoe -p 'Summer2024!' --shares` → partage `Finance` lisible ; `--sessions` et `--users` complètent la cartographie.
@@ -269,7 +269,7 @@ nxc smb 10.10.10.10 -u admin -p 'Password123' --ntds
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : password spray sur tout le domaine
 
@@ -296,7 +296,7 @@ nxc ssh 10.10.10.20 -u user -p 'Password123' -x 'id'
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -308,7 +308,7 @@ nxc ssh 10.10.10.20 -u user -p 'Password123' -x 'id'
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 CrackMapExec est référencé comme **Software S0488** (utilisé notamment par Dragonfly G0035, MuddyWater G0069, FIN7 G0046, APT39 G0087 et Ember Bear G1003).
 
@@ -332,7 +332,7 @@ CrackMapExec est référencé comme **Software S0488** (utilisé notamment par D
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -374,7 +374,7 @@ alert tcp any any -> any 445 (msg:"NETEXEC - SMB enumeration traffic"; flow:to_s
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — valider les creds et ne garder que les accès admin
@@ -393,7 +393,7 @@ for u in open("users.txt").read().split():
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie est textuelle et **colorée** (`[+]` succès, `[-]` échec, `Pwn3d!` admin). Pas de sortie JSON native stabilisée : penser au parsing texte.
 
@@ -416,7 +416,7 @@ for ip, domain, status in re.findall(r"(10\.10\.10\.\d+)\s+445\s+(\S+)\s+(\S+)",
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → Rubeus/Kerberos → Rapport
@@ -428,12 +428,12 @@ Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → R
 - [[Outil - Evil-WinRM]] — shell WinRM interactif post-accès
 - [[Outil - Responder]] — capturer des hashes NetNTLMv2 puis les rejouer/relayer
 - [[Outil - Rubeus]] / [[Outil - Kerbrute]] — tickets Kerberos (`-k`, `--use-kcache`)
-- [[Tools|🧰 Outils]] global
-- [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]] · [[Techniques/Password Spraying|🔁 Password Spraying]] · [[Techniques/NTLM Relay|🔄 NTLM Relay]] · [[Techniques/Dump NTDS.dit|🗄️ Dump NTDS.dit]] · [[Techniques/DCsync|📡 DCsync]] · [[Techniques/Golden Ticket|🥇 Golden Ticket]] · [[Techniques/AS-REP Roasting|🌄 AS-REP Roasting]] · [[Techniques/Privilege Escalation Windows|⏫ PrivEsc Windows]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting]]
+- [[Tools| Outils]] global
+- [[Techniques/Pass-the-Hash| Pass-the-Hash]] · [[Techniques/Password Spraying| Password Spraying]] · [[Techniques/NTLM Relay| NTLM Relay]] · [[Techniques/Dump NTDS.dit| Dump NTDS.dit]] · [[Techniques/DCsync| DCsync]] · [[Techniques/Golden Ticket| Golden Ticket]] · [[Techniques/AS-REP Roasting| AS-REP Roasting]] · [[Techniques/Privilege Escalation Windows| PrivEsc Windows]] · [[Techniques/Pivoting et Tunneling| Pivoting]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -446,7 +446,7 @@ Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → R
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Parallélisme** : `-t` contrôle le nombre de threads ; un CIDR /24 se traite en quelques dizaines de secondes selon le réseau.
 - **Volume** : un jeu de creds validé sur tout un périmètre en une passe ; `--continue-on-success` poursuit le spray après un succès.
@@ -458,7 +458,7 @@ Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → R
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -484,7 +484,7 @@ Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → R
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Droits requis** : les dumps et l'exécution nécessitent des comptes privilégiés ; usage **autorisé par écrit** uniquement (test d'intrusion).
 - **Stockage local** : hashes et secrets restent dans `~/.nxc/` — nettoyer après engagement, chiffrer les postes de travail.
@@ -494,7 +494,7 @@ Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → R
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Windows/AD en pratique** : les techniques ciblent SMB/WinRM/AD ; pas d'équivalent natif pour d'autres SI.
 - **Dépendant d'impacket** : une mise à jour d'impacket peut casser certaines fonctions (exécution, Kerberos).
@@ -504,7 +504,7 @@ Nmap/Masscan → nxc (validation creds) → BloodHound → Mimikatz/lsassy → R
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Valider des creds
@@ -531,7 +531,7 @@ nxc smb 10.10.10.0/24 -U users.txt -p 'Summer2024!' --continue-on-success --no-b
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -540,11 +540,11 @@ nxc smb 10.10.10.0/24 -U users.txt -p 'Summer2024!' --continue-on-success --no-b
 | **Commande principale** | `nxc smb 10.10.10.10 -u user -p 'Password123' --shares` |
 | **Alternative principale** | impacket (psexec/wmiexec), Evil-WinRM (interactif), BloodHound CE (analyse) |
 | **Concepts importants** | Pass-the-Hash, password spraying, SAM/LSA/NTDS.dit, lsass, smbexec/wmiexec |
-| **Liens associés** | [[Outil - BloodHound]] · [[Outil - Impacket]] · [[Outil - Mimikatz]] · [[Outil - Responder]] · [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]] |
+| **Liens associés** | [[Outil - BloodHound]] · [[Outil - Impacket]] · [[Outil - Mimikatz]] · [[Outil - Responder]] · [[Techniques/Pass-the-Hash| Pass-the-Hash]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -557,15 +557,15 @@ nxc smb 10.10.10.0/24 -U users.txt -p 'Summer2024!' --continue-on-success --no-b
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - `nxc` (NetExec) est le **successeur actif** : `cme` est mort, migre tes scripts.
 > - `-M lsassy` et `--lsa` passent là où mimikatz échoue (défenses renforcées).
 > - Passe à `--exec-method wmiexec` quand l'exécution SMB échoue.
 > - Lire `--pass-pol` **avant** tout spray pour calibrer l'intervalle anti-lockout.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un spray trop rapide **verrouille des comptes** : garde un intervalle entre les tentatives.
 > - `--sam`/`--lsa` ne fonctionnent que si l'utilisateur a les droits **admin local** de la machine cible.
 > - La sortie est textuelle : ne pas parser sans vérifier le format réel (colonnes variables).
@@ -573,7 +573,7 @@ nxc smb 10.10.10.0/24 -U users.txt -p 'Summer2024!' --continue-on-success --no-b
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -596,4 +596,4 @@ nxc smb 10.10.10.0/24 -U users.txt -p 'Summer2024!' --continue-on-success --no-b
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS]] · [[Techniques/Kerberoasting|🧀 Kerberoasting]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Pass-the-Hash| Pass-the-Hash]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS]] · [[Techniques/Kerberoasting| Kerberoasting]]

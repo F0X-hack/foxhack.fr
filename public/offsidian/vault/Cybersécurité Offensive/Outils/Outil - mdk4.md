@@ -1,11 +1,11 @@
 ---
 title: "Outil - mdk4"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: git (aucune release officielle ; paquets Debian/Kali régulièrement mis à jour)
 licence: GPL-3.0
@@ -16,20 +16,20 @@ site: https://www.aircrack-ng.org/
 doc: https://www.aircrack-ng.org/doku.php?id=mdk4
 ---
 
-# 📡 mdk4 — DoS et fuzzing Wi-Fi (deauth, beacon flood, auth flood)
+# mdk4 — DoS et fuzzing Wi-Fi (deauth, beacon flood, auth flood)
 
 > [!info] **En 1 phrase**
 > Outil de **DoS WiFi** par injection massive : déauthentification de masse, **beacon flood** et **auth DoS** contre les points d'accès et leurs clients — le standard pour tester la résilience (et la détection) d'un WIDS.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | mdk4 (successeur de mdk3) |
 | Description | Générateur de charge 802.11 : injection de trames deauth, beacon flood, auth flood, probe flood, PATP/EPA pour tester la résilience et le fuzzing des AP |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque & DoS WiFi (déni de service, fuzzing, test WIDS) |
 | Fonction principale | Saturer les AP et clients par des flots de trames de contrôle/management ; forcer des reconnexions pour la capture de handshakes |
 | Type d'outil | CLI (générateur de trames 802.11) |
@@ -50,7 +50,7 @@ doc: https://www.aircrack-ng.org/doku.php?id=mdk4
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `mdk4` (successeur de mdk3) injecte des flux de trames pour **saturer** un AP ou ses clients. Les modes principaux : **`b`** (beacon flood : spam de faux AP qui noie les scanners), **`a`** (auth DoS : rafale de requêtes d'authentification qui gèle les clients), **`d`** (deauth ciblé ou globale) et **`p`** (probe flood : inondation de requêtes de sondage). C'est un outil **très bruyant et destructeur** : il sert à valider la **disponibilité** d'un réseau, tester les contre-mesures (WIDS) et, en préparation d'attaque, à forcer les clients à se reconnecter (pour capturer des handshakes). À n'utiliser que sur des cibles **autorisées**.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,7 +136,7 @@ git clone https://github.com/aircrack-ng/mdk4.git && cd mdk4
 make && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Carte Wi-Fi **mode moniteur + injection** obligatoire (chipset Realtek/Atheros/Ralink recommandés).
 > - Vérifier l'injection : `sudo airmon-ng start wlan0` puis `sudo aireplay-ng -9 wlan0mon`.
 > - `airmon-ng check kill` pour libérer la carte des services (NetworkManager/wpa_supplicant).
@@ -144,7 +144,7 @@ make && sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 mdk4 se configure **uniquement en ligne de commande** (pas de fichier de config). Les listes de cibles (BSSID, MAC clients, SSID) se fournissent dans des **fichiers texte**, un élément par ligne.
 
@@ -163,7 +163,7 @@ mdk4 se configure **uniquement en ligne de commande** (pas de fichier de config)
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 mdk4 est un **binaire C** qui pilote la carte en mode moniteur via raw sockets (libpcap/radiotap) :
 
@@ -177,7 +177,7 @@ L'outil ne génère **pas de fichier de log** : la sortie est uniquement la cons
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -210,7 +210,7 @@ sudo mdk4 wlan0mon b -f /tmp/ssids.txt -c 11 -m
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -234,7 +234,7 @@ sudo mdk4 wlan0mon b -f /tmp/ssids.txt -c 11 -m
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -276,7 +276,7 @@ sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : tester la détection WIDS d'un site (test autorisé) face à une deauth massive.**
 
@@ -302,7 +302,7 @@ sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Capturer un handshake WPA2 en forçant la reconnexion
 
@@ -336,7 +336,7 @@ sudo mdk4 wlan0mon a -i AA:BB:CC:DD:EE:FF -c 6 -s 200
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -348,7 +348,7 @@ sudo mdk4 wlan0mon a -i AA:BB:CC:DD:EE:FF -c 6 -s 200
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -362,7 +362,7 @@ sudo mdk4 wlan0mon a -i AA:BB:CC:DD:EE:FF -c 6 -s 200
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -402,7 +402,7 @@ alert wlan any any -> any any (msg:"Probe request flood - possible mdk4"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Exemple : script de test WIDS (rafale courte puis rapport)
@@ -439,7 +439,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 mdk4 n'écrit **pas de fichier de sortie** : sa « sortie » est l'effet radio (visible depuis un autre récepteur) et la console. Pour valider/analyser une attaque, on enregistre le trafic avec un récepteur dédié et on l'analyse hors-ligne.
 
@@ -465,7 +465,7 @@ print(f"trames deauth : {len(deauth)} ; fenêtre: {pkts[-1].time - pkts[0].time:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 mdk4 (deauth) → reconnexion clients → airodump-ng / hcxdumptool → capture handshake/PMKID
@@ -473,7 +473,7 @@ mdk4 (floods) → WIDS/SIEM → validation des détections défensives
 mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - aircrack-ng]] — capture + crack du handshake forcé par la deauth
 - [[Outil - hcxdumptool]] — capture PMKID pendant les reconnexions
 - [[Outil - Kismet]] — surveillance passive complémentaire (côté défense)
@@ -481,7 +481,7 @@ mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -494,7 +494,7 @@ mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - L'injection est limitée par la **carte et le driver** : au-delà d'un certain `-s`, la carte ne suit plus et les trames sont perdues (instabilité). Commencer à ~100 pps.
 - Les modes `b` (beacon flood) et `a` (auth flood) sont les plus **coûteux** en trames émises : une rafale d'une minute suffit à créer des milliers de faux AP.
@@ -504,7 +504,7 @@ mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -534,7 +534,7 @@ mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - mdk4 est un outil **destructeur** : beacon/auth flood peuvent **casser** un AP, un switch de voisinage ou gêner des services critiques (usages légaux uniquement, accord écrit).
 - Root requis pour l'accès raw à la carte.
@@ -545,7 +545,7 @@ mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Nécessite du matériel **mode moniteur + injection** (pas d'Intel/Broadcom).
 - Pas de fichiers de log natifs (traçabilité par capture externe uniquement).
@@ -556,7 +556,7 @@ mdk4 (ciblé) → Kismet / Wireshark → preuve radio de l'attaque
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Deauth ciblée d'un AP
@@ -585,7 +585,7 @@ sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -594,11 +594,11 @@ sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap
 | **Commande principale** | `sudo mdk4 wlan0mon d -B AA:BB:CC:DD:EE:FF -c 6` |
 | **Alternative principale** | aireplay-ng `-0` (deauth simple) |
 | **Concepts importants** | Mode moniteur, injection, deauth, beacon flood, auth flood, WIDS |
-| **Liens associés** | [[Techniques/Attaques WiFi - Préparation & Basiques\|🧰 Préparation]] · [[Outil - aircrack-ng]] · [[Outil - Kismet]] |
+| **Liens associés** | [[Techniques/Attaques WiFi - Préparation & Basiques\| Préparation]] · [[Outil - aircrack-ng]] · [[Outil - Kismet]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -611,17 +611,17 @@ sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 mdk4 est un outil de **validation** (DoS, WIDS) et d'aide à la capture : une deauth courte (`d -B <bssid>`) suffit à forcer une reconnexion pour attraper un handshake (aircrack) ou un PMKID (hcxdumptool). Bien calibrer `-s` pour la discrétion.
+> [!tip] mdk4 est un outil de **validation** (DoS, WIDS) et d'aide à la capture : une deauth courte (`d -B <bssid>`) suffit à forcer une reconnexion pour attraper un handshake (aircrack) ou un PMKID (hcxdumptool). Bien calibrer `-s` pour la discrétion.
 
-> [!warning] ⚠️ **Danger réel** : beacon flood et auth DoS peuvent **casser l'AP cible** ou son switch de voisinage, et les clients verront le réseau tomber. Jamais sans accord écrit. Un `b -m` sans liste génère des **millions de faux AP** qui noient aussi vos propres outils (Kismet, airodump) — en limiter la durée.
+> [!warning] **Danger réel** : beacon flood et auth DoS peuvent **casser l'AP cible** ou son switch de voisinage, et les clients verront le réseau tomber. Jamais sans accord écrit. Un `b -m` sans liste génère des **millions de faux AP** qui noient aussi vos propres outils (Kismet, airodump) — en limiter la durée.
 
-> [!tip] 💡 **Bonus handshake** : combine `d` (deauth) et `p` (probe flood) sur le même canal pour accélérer la reconnexion des clients ; garde une fenêtre airodump active sur le canal pour ne rater aucun handshake.
+> [!tip] **Bonus handshake** : combine `d` (deauth) et `p` (probe flood) sur le même canal pour accélérer la reconnexion des clients ; garde une fenêtre airodump active sur le canal pour ne rater aucun handshake.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -643,9 +643,9 @@ sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt cap-01.cap
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel mdk4](https://github.com/aircrack-ng/mdk4)
 > - [Documentation mdk4 (aircrack-ng)](https://www.aircrack-ng.org/doku.php?id=mdk4)
 > - [MITRE ATT&CK T1466 — Wi-Fi Disassociation](https://attack.mitre.org/techniques/T1466/)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Techniques/Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Techniques/Attaques WiFi - Outils & Recon|🧰 Outils & Recon]] · [[Outil - aircrack-ng]] · [[Outil - hcxdumptool]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi - Préparation & Basiques| Préparation]] · [[Techniques/Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Techniques/Attaques WiFi - Outils & Recon| Outils & Recon]] · [[Outil - aircrack-ng]] · [[Outil - hcxdumptool]]

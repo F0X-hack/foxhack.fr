@@ -1,18 +1,42 @@
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { BookOpen, FileCode2, FileText, Search, Star, Wrench, X } from 'lucide-react'
-import type { OpenNote, VaultGroup, VaultManifest, VaultNote, VaultSearchIndex } from './types'
+import type {
+  OpenNote,
+  VaultGroup,
+  VaultManifest,
+  VaultNote,
+  VaultOutline,
+  VaultSearchIndex,
+} from './types'
+import { loadSearchIndex } from './searchIndex'
 import { normalizeSearch, shortTitle } from './utils'
 
 type Filter = 'Toutes' | 'Guides' | 'Techniques' | 'Outils'
 const FILTERS: Filter[] = ['Toutes', 'Guides', 'Techniques', 'Outils']
+
+/** Termes de l'index qui commencent par `prefix` (clés triées), 80 au plus. */
+function keysWithPrefix(sortedKeys: string[], prefix: string) {
+  let low = 0
+  let high = sortedKeys.length
+  while (low < high) {
+    const middle = (low + high) >> 1
+    if (sortedKeys[middle] < prefix) low = middle + 1
+    else high = middle
+  }
+  const found: string[] = []
+  for (let index = low; index < sortedKeys.length && found.length < 80; index += 1) {
+    if (!sortedKeys[index].startsWith(prefix)) break
+    found.push(sortedKeys[index])
+  }
+  return found
+}
 
 function ResultIcon({ note }: { note: VaultNote }) {
   const Icon = note.group === 'Outils' ? Wrench : note.group === 'Techniques' ? FileCode2 : note.group === 'Guides' ? BookOpen : FileText
   return <Icon aria-hidden="true" />
 }
 
-function Highlight({ text, query }: { text: string; query: string }) {
-  const normalizedQuery = normalizeSearch(query)
+function Highlight({ text, query, normalizedQuery }: { text: string; query: string; normalizedQuery: string }) {
   if (!normalizedQuery) return <>{text}</>
   const normalizedText = normalizeSearch(text)
   const at = normalizedText.indexOf(normalizedQuery)
@@ -29,6 +53,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
 type SearchPaletteProps = {
   open: boolean
   manifest: VaultManifest
+  outline: VaultOutline | null
   recent: string[]
   favorites: string[]
   onClose: () => void
@@ -38,6 +63,7 @@ type SearchPaletteProps = {
 export default function SearchPalette({
   open,
   manifest,
+  outline,
   recent,
   favorites,
   onClose,
@@ -45,6 +71,8 @@ export default function SearchPalette({
 }: SearchPaletteProps) {
   const [query, setQuery] = useState('')
   const deferredQuery = useDeferredValue(query)
+  /* Normalisée une fois : `Highlight` s'en sert sur chaque ligne de résultat. */
+  const normalizedQuery = useMemo(() => normalizeSearch(deferredQuery), [deferredQuery])
   const [filter, setFilter] = useState<Filter>('Toutes')
   const [activeIndex, setActiveIndex] = useState(0)
   const [searchIndex, setSearchIndex] = useState<VaultSearchIndex | null>(null)
@@ -56,17 +84,42 @@ export default function SearchPalette({
     if (!open) return
     const frame = requestAnimationFrame(() => inputRef.current?.focus())
     setActiveIndex(0)
+
+    let cancelled = false
     if (!searchIndex && !indexFailed) {
-      fetch('/offsidian/search-index.json')
-        .then((response) => {
-          if (!response.ok) throw new Error(`Index HTTP ${response.status}`)
-          return response.json() as Promise<VaultSearchIndex>
+      loadSearchIndex()
+        .then((index) => {
+          if (!cancelled) setSearchIndex(index)
         })
-        .then(setSearchIndex)
-        .catch(() => setIndexFailed(true))
+        .catch(() => {
+          if (!cancelled) setIndexFailed(true)
+        })
     }
-    return () => cancelAnimationFrame(frame)
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(frame)
+    }
   }, [indexFailed, open, searchIndex])
+
+  /* Champs normalisés une fois par manifeste : repasser 344 notes dans
+     `normalizeSearch` (NFD + minuscules) à chaque frappe coûte plus cher que
+     la recherche elle-même. */
+  const searchable = useMemo(
+    () =>
+      manifest.notes.map((note) => ({
+        note,
+        title: normalizeSearch(note.title),
+        name: normalizeSearch(note.name),
+        taxonomy: normalizeSearch(`${note.category} ${note.tags.join(' ')} ${note.group}`),
+        headings: normalizeSearch((outline?.[note.id]?.headings ?? []).map(([, text]) => text).join(' ')),
+        excerpt: normalizeSearch(note.excerpt),
+      })),
+    [manifest.notes, outline],
+  )
+
+  /* L'index compte ~25 000 termes : triés une fois, ceux qui commencent par la
+     saisie se trouvent par dichotomie au lieu d'être tous parcourus. */
+  const sortedIndexKeys = useMemo(() => (searchIndex ? Object.keys(searchIndex).sort() : null), [searchIndex])
 
   const results = useMemo(() => {
     const normalized = normalizeSearch(deferredQuery)
@@ -89,13 +142,8 @@ export default function SearchPalette({
     const scores = new Map<number, number>()
     const fullTextHits = new Map<number, number>()
 
-    manifest.notes.forEach((note, index) => {
+    searchable.forEach(({ note, title, name, taxonomy, headings, excerpt }, index) => {
       if (!filterNote(note)) return
-      const title = normalizeSearch(note.title)
-      const name = normalizeSearch(note.name)
-      const taxonomy = normalizeSearch(`${note.category} ${note.tags.join(' ')} ${note.group}`)
-      const headings = normalizeSearch(note.headings.map((heading) => heading.text).join(' '))
-      const excerpt = normalizeSearch(note.excerpt)
       let score = 0
       if (title === normalized || name === normalized) score += 160
       if (title.startsWith(normalized) || name.startsWith(normalized)) score += 90
@@ -114,8 +162,8 @@ export default function SearchPalette({
       for (const token of tokens) {
         const matchingKeys = searchIndex[token]
           ? [token]
-          : token.length >= 3
-            ? Object.keys(searchIndex).filter((key) => key.startsWith(token)).slice(0, 80)
+          : token.length >= 3 && sortedIndexKeys
+            ? keysWithPrefix(sortedIndexKeys, token)
             : []
         const tokenHits = new Set<number>()
         for (const key of matchingKeys) {
@@ -135,7 +183,7 @@ export default function SearchPalette({
       .sort((a, b) => b[1] - a[1] || manifest.notes[a[0]].title.localeCompare(manifest.notes[b[0]].title, 'fr'))
       .slice(0, 30)
       .map(([index]) => manifest.notes[index])
-  }, [deferredQuery, favorites, filter, manifest.notes, noteById, recent, searchIndex])
+  }, [deferredQuery, favorites, filter, manifest.notes, noteById, recent, searchable, searchIndex, sortedIndexKeys])
 
   useEffect(() => setActiveIndex(0), [deferredQuery, filter])
 
@@ -225,7 +273,7 @@ export default function SearchPalette({
             >
               <span className="offsidian-result-icon"><ResultIcon note={note} /></span>
               <span className="offsidian-result-copy">
-                <strong><Highlight text={shortTitle(note)} query={query} /></strong>
+                <strong><Highlight text={shortTitle(note)} query={query} normalizedQuery={normalizedQuery} /></strong>
                 <small>{note.excerpt}</small>
                 <span>
                   {note.group} <b>/</b> {note.category}

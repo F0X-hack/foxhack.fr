@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎧 Protocole Bluetooth (BLE)
+# Protocole Bluetooth (BLE)
 
 > [!info] **En 1 phrase**
 > Le **Bluetooth Low Energy (BLE)** parle via le modèle **GATT** (services → caractéristiques) :
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart TB
@@ -37,7 +37,7 @@ flowchart TB
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 - [bettercap](https://github.com/bettercap/bettercap)
 - [bluez/gatttool](https://manpages.debian.org/unstable/bluez/gatttool.1.en.html)
@@ -49,7 +49,7 @@ flowchart TB
 
 ---
 
-## ⚙️ Configuration Bluetooth (Kali)
+## Configuration Bluetooth (Kali)
 
 ```powershell
 sudo apt-get install bluetooth blueman bluez
@@ -80,7 +80,7 @@ sudo cp attrib/gatttool /usr/local/bin/
 
 ---
 
-## 📋 Cheatsheet BLE (méthodes classiques vs Caeruleus)
+## Cheatsheet BLE (méthodes classiques vs Caeruleus)
 
 | Cas d'usage | Méthode classique | Avec Caeruleus |
 |---|---|---|
@@ -97,7 +97,7 @@ sudo cp attrib/gatttool /usr/local/bin/
 
 ---
 
-## 🔎 Énumérer services et caractéristiques
+## Énumérer services et caractéristiques
 
 Avec bettercap :
 
@@ -140,7 +140,7 @@ handle = 0x0015, char properties = 0x02, char value handle = 0x0016, uuid = 0000
 
 ---
 
-## 📖 Lire des données
+## Lire des données
 
 ```powershell
 sudo gatttool -b $MAC -I
@@ -165,7 +165,7 @@ gatttool -b $MAC --char-read -a 0x002a|awk -F':' '{print $2}'|tr -d ' '|xxd -r -
 
 ---
 
-## 🔔 Lire notifications / indications
+## Lire notifications / indications
 
 ```powershell
 gatttool -b $MAC -a 0x0040 --char-write-req --value=0100 --listen
@@ -176,7 +176,7 @@ gatttool -b $MAC -a 0x0044 --char-write-req --value=0200 --listen
 
 ---
 
-## ✍️ Écrire des données
+## Écrire des données
 
 Avec bettercap :
 
@@ -202,7 +202,7 @@ Characteristic value/descriptor: 43 6f 6e [...] 2e
 
 ---
 
-## 🏷️ Changer le MAC Bluetooth
+## Changer le MAC Bluetooth
 
 ```powershell
 bdaddr -r 11:22:33:44:55:66
@@ -213,7 +213,7 @@ gatttool -I -b E8:77:6D:8B:09:96 -t random
 
 ---
 
-## 📡 Sniffer une communication BLE
+## Sniffer une communication BLE
 
 ### Avec Ubertooth (il en faut **3**)
 
@@ -242,14 +242,14 @@ adb bugreport filename
 
 ---
 
-## 🏴 CTF d'entraînement
+## CTF d'entraînement
 
 - [BLE HackMe](https://www.microsoft.com/store/apps/9N7PNVS9J1B7) — fonctionne avec nRF Connect (Android)
 - [hackgnar/ble_ctf](https://github.com/hackgnar/ble_ctf) — Capture The Flag Bluetooth Low Energy
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -259,7 +259,7 @@ adb bugreport filename
 | **Désactiver les notifications** | Ne pas exposer le CCCD en écriture libre (exfiltration active) |
 | **Détection de scans massifs** | Les périphériques peuvent logger les connexions/scan suspects (Flipper, ubertooth) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Les UUID customs** (`000000ff-…`, `4b796c6f-…`) sont tes meilleurs amis : c'est là que sont les commandes/flags, pas dans les UUID standard.
 - `char-read-hnd` retourne de l'**hex** : décodé en ASCII, c'est souvent le message en clair.
@@ -271,9 +271,9 @@ adb bugreport filename
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Bluetooth](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/bluetooth.md)
 > - [Caeruleus — BLE Security Testing (Praetorian)](https://www.praetorian.com/blog/ble-testing-caeruleus/)
 > - [WHAD — documentation](https://whad.readthedocs.io/en/stable/)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Attaques WiFi (WPA2 et PMKID)|📡 WiFi]] · [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Attaques WiFi (WPA2 et PMKID)| WiFi]] · [[Hardware - RFID et NFC| RFID/NFC]]

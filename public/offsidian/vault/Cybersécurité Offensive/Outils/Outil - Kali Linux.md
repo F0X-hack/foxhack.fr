@@ -1,7 +1,7 @@
 ---
 title: "Outil - Kali Linux"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.kali.org
 doc: https://www.kali.org/docs/
 ---
 
-# 🐉 Kali Linux — Le couteau suisse du pentest Debian
+# Kali Linux — Le couteau suisse du pentest Debian
 
 > [!info] **En 1 phrase**
 > Kali Linux est la distribution offensive de référence, basée sur Debian, embarquant plus de 600 outils de pentest, forensics et reverse engineering dans un système rolling release.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Kali Linux |
 | Description | Distribution offensive Debian rolling release avec 600+ outils de pentest, forensics, RE, Wi-Fi, web, exploitation |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution offensive (Kali-Pentesting-Platform) |
 | Fonction principale | Plateforme de test d'intrusion : reconnaissance, exploitation, post-exploitation, forensics, OSINT |
 | Type d'outil | Distribution Linux complète (CLI + GUI) |
@@ -50,7 +50,7 @@ doc: https://www.kali.org/docs/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Kali Linux est la distribution offensive de référence, développée par **Offensive Security** (OffSec) et héritière de **BackTrack Linux** (2006-2013). Contrairement à une distro de bureau, elle est pensée comme une **plateforme d'armes de test d'intrusion** : chaque outil est choisi, configuré et testé pour fonctionner immédiatement après installation. Le système est en **rolling release** : les paquets suivent Debian Testing et sont mis à jour en continu avec les derniers outils, exploits et noyaux.
 
@@ -75,7 +75,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -92,7 +92,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Télécharger et vérifier l'image
 
@@ -136,14 +136,14 @@ sudo apt update && sudo apt full-upgrade -y
 sudo apt install kali-tools-top10   # ou un méta-paquet ciblé
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'image **Installer** ne contient que quelques outils : installer ensuite les méta-paquets souhaités.
 > - En VM, installer **open-vm-tools** ou **virtualbox-guest-utils** pour le presse-papiers et la résolution d'écran.
 > - `kali-linux-everything` est très lourd : privilégier les méta-paquets ciblés (`kali-tools-*`).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Kali se configure comme Debian : fichiers dans `/etc`, paquets via `apt`. Points spécifiques à Kali :
 
@@ -158,7 +158,7 @@ Kali se configure comme Debian : fichiers dans `/etc`, paquets via `apt`. Points
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Kali est un **dérivé Debian** : gestion de paquets `dpkg`/`apt`, système d'init `systemd`, structure `/usr`, `/etc`, `/var`. Les outils sont répartis dans des **méta-paquets** logiques définis par le projet :
 
@@ -172,7 +172,7 @@ Au niveau système : noyau **6.19** (2026.2), bureau **Xfce 4.20.7** par défaut
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -206,7 +206,7 @@ sudo gzip -dk /usr/share/wordlists/rockyou.txt.gz
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -227,7 +227,7 @@ sudo gzip -dk /usr/share/wordlists/rockyou.txt.gz
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -271,7 +271,7 @@ GetUserSPNs.py lab.local/user:pass -dc-ip 10.10.20.15 -request
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer l'environnement** — mettre à jour et vérifier le réseau.
    ```bash
@@ -305,7 +305,7 @@ GetUserSPNs.py lab.local/user:pass -dc-ip 10.10.20.15 -request
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Attaque Wi-Fi WPA2 via WPS puis crack du handshake
 
@@ -334,7 +334,7 @@ meterpreter > sysinfo
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -351,7 +351,7 @@ meterpreter > sysinfo
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -366,7 +366,7 @@ meterpreter > sysinfo
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -410,7 +410,7 @@ alert tcp any any -> any any (msg:"ET SCAN NMAP -sS window 1024"; flags:S; windo
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scan d'un /24 et rapport par hôte
@@ -429,7 +429,7 @@ for pkg in PACKAGES:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties proviennent des outils eux-mêmes : Kali fournit surtout les **formats standards** et les **wordlists**.
 
@@ -457,9 +457,9 @@ for host in tree.getroot().findall('host'):
 > Kali ne dispose pas d'un format de sortie unifié : chaque outil gère le sien. Pour un pipeline, privilégier les sorties JSON (`nuclei -json`, `ffuf -json`, `nmap -oX`).
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Nmap]] — scan et énumération
 - [[Outil - Metasploit]] — exploitation (`msfconsole` préinstallé)
 - [[Outil - Burp Suite]] — proxy web (édition communautaire préinstallée)
@@ -477,7 +477,7 @@ Nmap → Metasploit → Mimikatz → BloodHound → rapport
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -491,7 +491,7 @@ Nmap → Metasploit → Mimikatz → BloodHound → rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Installation minimale** : ~4 Go d'espace disque ; **kali-linux-everything** : 20+ Go (compter ~1-2 h selon le réseau).
 - **RAM** : 2 Go suffisent pour un usage basique, 4 Go pour Metasploit + navigation simultanée, 8 Go conseillés en VM de lab.
@@ -500,7 +500,7 @@ Nmap → Metasploit → Mimikatz → BloodHound → rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -530,7 +530,7 @@ Nmap → Metasploit → Mimikatz → BloodHound → rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Root par défaut** : Kali est conçue pour tourner en root/sudo — n'exposez jamais la machine sur un réseau non maîtrisé sans changer les identifiants par défaut (`kali`/`kali`).
 - **Identifiants faibles** : les images VM officielles gardent des mots de passe connus ; les changer immédiatement (Docker aussi : `root`/`toor`).
@@ -540,7 +540,7 @@ Nmap → Metasploit → Mimikatz → BloodHound → rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas une distro de bureau** : rolling release, privilèges root, paquets parfois expérimentaux — mauvaise idée en production.
 - **Mémoire disque** : `kali-linux-everything` est volumineux et long à installer.
@@ -550,7 +550,7 @@ Nmap → Metasploit → Mimikatz → BloodHound → rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Mise à jour
@@ -578,7 +578,7 @@ searchsploit apache 2.4
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ searchsploit apache 2.4
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -603,22 +603,22 @@ searchsploit apache 2.4
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise **Kali en VM en NAT/Host-Only** pour le lab, jamais Kali en machine principale sur des réseaux non autorisés.
 > - Installe par **méta-paquets ciblés** (`kali-tools-*`) plutôt que `kali-linux-everything` : système plus léger et plus propre.
 > - Fais des **snapshots de VM** avant chaque exploitation risquée pour un retour rapide.
 > - Change immédiatement les identifiants par défaut (`kali`/`kali`) sur toute machine exposée.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Ne pas utiliser Kali comme distro de bureau quotidienne** : rolling release = casses possibles ; préférer Debian stable + outils dédiés.
 > - `sudo apt upgrade` seul ne suffit pas toujours : utiliser `full-upgrade` pour résoudre les changements de dépendances.
 > - Les images officielles gardent des **identifiants connus** : une machine exposée sera compromise en quelques minutes.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -643,8 +643,8 @@ searchsploit apache 2.4
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://www.kali.org/
 > - https://www.kali.org/docs/
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Metasploit|🛠️ Metasploit]] · [[Outil - Nmap|📡 Nmap]] · [[Outil - Parrot OS|🦜 Parrot OS]] · [[Outil - BlackArch|🖤 BlackArch]] · [[Outil - Commando VM|🖥️ Commando VM]] · [[Outil - Burp Suite|🕷️ Burp Suite]]
+**Liens :** [[Tools| Outils]] · [[Outil - Metasploit| Metasploit]] · [[Outil - Nmap| Nmap]] · [[Outil - Parrot OS| Parrot OS]] · [[Outil - BlackArch| BlackArch]] · [[Outil - Commando VM| Commando VM]] · [[Outil - Burp Suite| Burp Suite]]

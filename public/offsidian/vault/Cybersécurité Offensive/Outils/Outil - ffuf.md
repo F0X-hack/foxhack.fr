@@ -1,11 +1,11 @@
 ---
 title: "Outil - ffuf"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 2.2.1 (juillet 2026)
 licence: MIT
@@ -16,14 +16,14 @@ site: https://github.com/ffuf/ffuf
 doc: https://github.com/ffuf/ffuf/wiki
 ---
 
-# 🔍 ffuf — Fuzzer web ultra-rapide (Fuzz Faster U Fool)
+# ffuf — Fuzzer web ultra-rapide (Fuzz Faster U Fool)
 
 > [!info] **En 1 phrase**
 > ffuf est un fuzzer web ultra-rapide en Go, basé sur le mot-clé `FUZZ`, pour découvrir répertoires, paramètres, vhosts et valeurs cachées.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/ffuf/ffuf/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ffuf (Fuzz Faster U Fool) est l'un des fuzzers web les plus rapides grâce à son implémentation en Go et son moteur de multiplexage. Il s'appuie sur un mot-clé `FUZZ` placé n'importe où dans l'URL, un en-tête ou le corps de la requête, remplacé par chaque mot de la wordlist.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -147,14 +147,14 @@ go install github.com/ffuf/ffuf/v2@latest   # la même commande sert de mise à 
 git clone https://github.com/ffuf/ffuf ; cd ffuf ; go build
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Go 1.20+** requis pour compiler depuis les sources ; préférer les binaires précompilés signés (vérifier les checksums dans `_checksums.txt`).
 > - Un build local affiche `git-<date>-<commit>` au lieu d'un tag : seuls les binaires des releases sont des versions officielles.
 > - Sur Kali, le paquet `ffuf` peut être plus ancien que la dernière release GitHub.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -178,7 +178,7 @@ git clone https://github.com/ffuf/ffuf ; cd ffuf ; go build
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Cœur Go asynchrone** : ffuf multiplexe les requêtes HTTP sur de nombreuses connexions concurrentes (threads `-t`, défaut 40), ce qui lui donne sa vitesse.
 - **Moteur de templates** : chaque `-w` avec alias définit un « slot » de fuzz (`FUZZ`, `ALIAS`...) ; l'URL/requête est rendue en remplaçant les mots-clés, avec un mode par défaut en produit cartésien quand plusieurs wordlists sont actives.
@@ -193,7 +193,7 @@ Flux type : wordlist(s) → moteur de templates → requêtes HTTP multiplexées
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -237,7 +237,7 @@ ffuf -search <FFUFHASH>
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -273,7 +273,7 @@ ffuf -search <FFUFHASH>
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -336,7 +336,7 @@ ffuf -search <FFUFHASH>
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Établir une baseline** — requêter `http://10.10.10.10/FUZZ` avec une petite wordlist et noter la taille des réponses 404.
    ```bash
@@ -362,7 +362,7 @@ ffuf -search <FFUFHASH>
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : fuzzing de vhosts sur un serveur partagé
 
@@ -408,7 +408,7 @@ jq -r '.results[] | select(.status == 200) | .url' results.json | sort -u
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -421,7 +421,7 @@ jq -r '.results[] | select(.status == 200) | .url' results.json | sort -u
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -435,7 +435,7 @@ jq -r '.results[] | select(.status == 200) | .url' results.json | sort -u
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -492,7 +492,7 @@ rule Ffuf_Binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Lancer des scans en série et agréger les résultats
@@ -534,7 +534,7 @@ for r in data.get("results", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ffuf exporte en **json, ejson, html, md, csv** (`-of`). Le JSON est le plus simple à parser ; le mode `-s` (silencieux) n'affiche que les résultats.
 
@@ -565,7 +565,7 @@ for r in data.get("results", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 ffuf -> wordlist SecLists -> cible web -> résultats JSON
@@ -573,7 +573,7 @@ ffuf -> proxy Burp (-x http://127.0.0.1:8080) -> inspection des requêtes
 ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - gobuster]] / [[Outil - Feroxbuster]] / [[Outil - dirsearch]] — découverte de contenu (moins flexible que ffuf)
 - [[Outil - Burp Suite]] — relaye/inspecte les requêtes via `-x`
 - [[Outil - nuclei]] — validation template-based des endpoints découverts
@@ -582,7 +582,7 @@ ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -596,7 +596,7 @@ ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse** : l'un des fuzzers les plus rapides grâce au runtime Go et au multiplexage (`-t`, défaut 40 threads).
 - **Débit** : `-rate` borne les requêtes/seconde (0 = illimité) ; `-p` ajoute un délai fixe ou aléatoire entre requêtes.
@@ -609,7 +609,7 @@ ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -639,7 +639,7 @@ ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Volumétrie** : un scan sans `-rate` est un **mini-DoS** — toujours adapter le débit à la cible autorisée.
 - **Binaires** : ne télécharger que depuis **GitHub releases** (checksums fournis) ; les builds locaux non taggés ne sont pas des versions officielles.
@@ -649,7 +649,7 @@ ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de GUI** : tout se passe en CLI (mode interactif disponible mais minimaliste).
 - **Pas de récursion automatique** de répertoires (contrairement à Feroxbuster) : il faut relancer sur chaque répertoire trouvé.
@@ -659,7 +659,7 @@ ffuf -> jq / Python -> tri des URLs -> rapport d'engagement
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Découverte de répertoires
@@ -687,7 +687,7 @@ ffuf -w wordlist:FUZZ -u http://10.10.10.10/FUZZ -rate 50 -p 0.5
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -700,7 +700,7 @@ ffuf -w wordlist:FUZZ -u http://10.10.10.10/FUZZ -rate 50 -p 0.5
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -714,16 +714,16 @@ ffuf -w wordlist:FUZZ -u http://10.10.10.10/FUZZ -rate 50 -p 0.5
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Calibre toujours le filtre de taille (`-fs`) sur la réponse 404 réelle de la cible : c'est la méthode la plus fiable pour éliminer le bruit, même quand le statut est trompeur.
 > - Utilise `-rate` pour limiter le débit et `-x` pour relayer par Burp.
 > - Active `-ac` (auto-calibration) sur les SPA et pages d'erreur custom.
 > - Donne un **alias** à chaque wordlist (`-w file:ALIAS`) : c'est plus clair dans le cartésien et les headers.
 > - Exporte systématiquement en JSON (`-of json -o out.json`) pour intégrer les résultats au rapport.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `-mc` explicite, ffuf peut remonter aussi les 404 ; définis toujours `-mc` ou `-fc`/`-fs` pour ne pas noyer les vrais résultats.
 > - Un `-t` très élevé sans `-rate` peut **saturer la cible** et fausser les résultats (mini-DoS).
 > - Sur une page wildcard, sans `-fs`/`-ac`, tu obtiendras des **milliers de faux positifs** de taille identique.
@@ -731,7 +731,7 @@ ffuf -w wordlist:FUZZ -u http://10.10.10.10/FUZZ -rate 50 -p 0.5
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -753,4 +753,4 @@ ffuf -w wordlist:FUZZ -u http://10.10.10.10/FUZZ -rate 50 -p 0.5
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - wfuzz|wfuzz]] · [[Outil - gobuster|gobuster]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[Techniques/Hidden Parameters|Hidden Parameters]] · [[Techniques/03 - Exploitation Web|Exploitation Web]]
+**Liens :** [[Tools| Outils]] · [[Outil - wfuzz|wfuzz]] · [[Outil - gobuster|gobuster]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[Techniques/Hidden Parameters|Hidden Parameters]] · [[Techniques/03 - Exploitation Web|Exploitation Web]]

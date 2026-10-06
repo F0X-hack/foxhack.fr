@@ -1,7 +1,7 @@
 ---
 title: "Outil - CAPE"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://capesandbox.com (démonstration publique)
 doc: https://capev2.readthedocs.io/en/latest/
 ---
 
-# 🧬 CAPE — Extraction automatisée de configurations et de payloads
+# CAPE — Extraction automatisée de configurations et de payloads
 
 > [!info] **En 1 phrase**
 > CAPE (Config And Payload Extraction) est la sandbox qui prolonge Cuckoo en dépaquetant automatiquement les malwares et en extrayant leurs configurations (C2, clés, fichiers volés) grâce à un débogueur embarqué.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | CAPE — Malware Configuration And Payload Extraction (CAPEv2) |
 | Description | Sandbox dynamique dérivée de Cuckoo : exécution instrumentée d'échantillons, dépaquetage automatique par débogueur, extraction statique/dynamique des configurations (C2, clés, mutex, chemins de fichiers) |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse dynamique automatisée — sandbox |
 | Fonction principale | Exécuter un malware dans une VM jetable, dépaqueter le payload et extraire la configuration de la famille |
 | Type d'outil | Framework / serveur (CLI + Web UI + API REST) |
@@ -50,7 +50,7 @@ doc: https://capev2.readthedocs.io/en/latest/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 CAPE est le **successeur maintenu de Cuckoo Sandbox** spécialisé dans l'extraction de configurations et de payloads. Là où Cuckoo se contente de décrire le comportement (appels API, fichiers, registre, réseau), CAPE exécute l'échantillon sous un **débogueur dans la VM Windows**, intercepte le saut du packer vers le code original (OEP) et extrait automatiquement : la configuration déchiffrée (URLs de C2, clés RC4/AES, mutex, noms de fichiers volés), les payloads dépaquetés et les données exfiltrées. C'est l'outil de référence du CTI pour les familles de banking trojans et de loaders (Emotet, Dridex, TrickBot, QakBot…).
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation sur une distribution Ubuntu/Debian **dédiée** (jamais sur une machine de production, jamais sur la machine d'analyse). Le dépôt fournit des scripts d'installation et une pile de services à démarrer :
 
@@ -109,7 +109,7 @@ sudo systemctl enable --now postgresql elasticsearch
 ./cape2.sh
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Utilisateurs** : seul le **rooter** doit tourner en root ; tout le reste (démon, web) tourne sous l'utilisateur `cape`. Tout lancer en root casse les permissions.
 > - **Guest** : installer `agent.py` (Python 3.7/3.8 **x86**) dans la VM Windows, configurer `conf/cuckoo.conf` (réseau host-only, chemin de stockage) et prendre un snapshot propre (nom exact déclaré dans `conf/virtualbox.conf` / `conf/qemu.conf`), sinon l'analyse échoue au démarrage.
 > - **Isolation réseau** : la VM doit être sur un réseau host-only **sans accès Internet réel** ; les requêtes DNS sortantes faussent l'analyse.
@@ -133,7 +133,7 @@ cd CAPEv2 && ls extra/
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Toute la configuration se trouve dans le dossier `conf/` (fichiers `.conf` au format legacy INI, analogues à Cuckoo) :
 
@@ -153,7 +153,7 @@ Toute la configuration se trouve dans le dossier `conf/` (fichiers `.conf` au fo
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 CAPE reprend l'architecture de Cuckoo v1 et la prolonge. Les composants principaux :
 
@@ -171,7 +171,7 @@ Flux d'une analyse : soumission (web/API/submit.py) → création de la tâche �
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -208,7 +208,7 @@ python3 submit.py --custom /opt/parsers/mon_famille.py sample.bin
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -233,7 +233,7 @@ python3 submit.py --custom /opt/parsers/mon_famille.py sample.bin
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -282,7 +282,7 @@ curl -s http://localhost:8000/apiv2/tasks/get/report/$TASK | jq '.network.domain
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Lancer la stack** — démarrer le démon et vérifier que la VM est détectée comme disponible (state « available ») dans l'UI web.
 
@@ -311,7 +311,7 @@ curl -s http://localhost:8000/apiv2/tasks/get/report/$TASK | jq '.network.domain
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Extraction de la config d'un loader
 
@@ -374,7 +374,7 @@ rule AntiSandbox_QueryFirmwareTable {
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -387,7 +387,7 @@ rule AntiSandbox_QueryFirmwareTable {
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -405,7 +405,7 @@ rule AntiSandbox_QueryFirmwareTable {
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -443,7 +443,7 @@ alert tcp any any -> any any (msg:"Potential malware downloader from sandbox"; c
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — boucle de soumission d'un dossier d'échantillons
@@ -476,7 +476,7 @@ while True:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 CAPE produit un rapport **JSON** (report.json), une version **HTML** (lisible dans la web UI) et des artefacts bruts dans `storage/analyses/<id>/` :
 
@@ -511,9 +511,9 @@ for sig in report.get("signatures", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Cuckoo Sandbox]] — l'ancêtre dont CAPE hérite (architecture, packages, API)
 - [[Outil - Volatility]] — analyse des dumps mémoire produits par CAPE
 - [[Outil - YARA]] — signatures de classification des payloads dépaquetés
@@ -523,7 +523,7 @@ for sig in report.get("signatures", []):
 - [[Outil - REMnux]] — distribution complémentaire pour l'analyse d'échantillons
 - [[Outil - Wireshark]] / [[Outil - tshark]] — validation du PCAP capturé
 - [[Outil - Suricata]] — analyse IDS du trafic capturé (module optionnel)
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTotal → MISP → SOC
@@ -531,7 +531,7 @@ Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTo
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -546,7 +546,7 @@ Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTo
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Débit limité par le nombre de VMs et la ressource hyperviseur : chaque analyse consomme une VM (2-4 Go RAM conseillés par invité Windows).
 - Parallélisation : `submit.py --max N` (ou le paramètre `max_analysis_count` du scheduler) lance plusieurs analyses simultanées.
@@ -559,7 +559,7 @@ Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTo
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -595,7 +595,7 @@ Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTo
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation** : CAPE exécute du code malveillant. Ne jamais installer le démon sur une machine de production ; utiliser un réseau host-only sans Internet réel.
 - **Privilèges** : seul le rooter doit tourner en root. L'invité a besoin de droits admin pour l'agent, mais reste cloisonné dans la VM.
@@ -607,7 +607,7 @@ Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTo
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - CAPE n'extrait que ce qu'il arrive à dépaqueter : les packers/crypters maison ou anti-debug exigent un travail manuel sous x64dbg.
 - Les parsers de configuration sont spécifiques à chaque famille et se cassent à chaque nouvelle version de malware ; il faut les maintenir.
@@ -619,7 +619,7 @@ Pipeline d'analyse → CAPE (sandbox) → config C2 + payload → YARA / VirusTo
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Démarrer le démon
@@ -659,7 +659,7 @@ python3 cuckoo.py --clean
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -672,7 +672,7 @@ python3 cuckoo.py --clean
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -684,16 +684,16 @@ python3 cuckoo.py --clean
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Gardez la VM Windows avec un snapshot propre et restaurez-le à chaque analyse : le dépaquetage par debugger laisse des traces qui faussent les analyses suivantes.
 > - Écrivez des scripts d'extraction `--custom` pour les nouvelles familles : ils automatiseront la sortie des clés et C2.
 > - Couplez CAPE avec un dump mémoire (`--memory`) : certains payloads chargés en mémoire ne sont visibles qu'avec Volatility.
 > - Utilisez `jq` sur `report.json` dès la sortie de l'analyse : la web UI est confortable, mais le JSON est exploitable par script.
 > - Vérifiez la section anti-sandbox du rapport : un échantillon qui détecte la VM produit une analyse vide sans être innocent.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - CAPE n'extrait que ce qu'il arrive à dépaqueter : les packers/crypters maison ou anti-debug demandent un travail manuel sous x64dbg.
 > - Un réseau mal isolé laisse le malware résoudre un vrai DNS et fausser la config extraite : restez sur un réseau host-only sans Internet.
 > - Si le rapport n'a pas de section CAPE, vérifiez que le debugger tourne réellement dans la VM (droits admin de l'agent) avant de conclure à une résistance du malware.
@@ -701,7 +701,7 @@ python3 cuckoo.py --clean
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -727,4 +727,4 @@ python3 cuckoo.py --clean
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - Cuckoo Sandbox|🧬 Cuckoo Sandbox]] · [[Outils/Outil - Volatility|🔎 Volatility]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Outils/Outil - x64dbg|🧬 x64dbg]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]] · [[Outil - MISP]] · [[Outil - REMnux]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - Cuckoo Sandbox| Cuckoo Sandbox]] · [[Outils/Outil - Volatility| Volatility]] · [[Outils/Outil - YARA| YARA]] · [[Outils/Outil - x64dbg| x64dbg]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]] · [[Outil - MISP]] · [[Outil - REMnux]]

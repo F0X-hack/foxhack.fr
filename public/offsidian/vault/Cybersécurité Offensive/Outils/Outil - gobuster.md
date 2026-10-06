@@ -1,11 +1,11 @@
 ﻿---
 title: "Outil - gobuster"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 3.8.2 (septembre 2025)
 licence: Apache-2.0
@@ -16,20 +16,20 @@ site: https://github.com/OJ/gobuster
 doc: https://github.com/OJ/gobuster
 ---
 
-# 🔍 gobuster — Brute-force de répertoires, DNS et vhosts
+# gobuster — Brute-force de répertoires, DNS et vhosts
 
 > [!info] **En 1 phrase**
 > gobuster brute-force les répertoires, les hôtes virtuels (vhosts) et les sous-domaines en testant des mots depuis une wordlist.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | gobuster |
 | Description | Outil de brute-force écrit en Go qui teste des mots d'une wordlist contre des chemins HTTP, des en-têtes `Host` ou des enregistrements DNS |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Découverte de contenu (`dir`), sous-domaines (`dns`), vhosts (`vhost`), buckets cloud (`s3`/`gcs`), TFTP (`tftp`), fuzzing custom (`fuzz`) |
 | Fonction principale | Envoyer des requêtes HTTP/DNS en masse pour découvrir des ressources non référencées |
 | Type d'outil | CLI (binaire Go autonome) |
@@ -52,7 +52,7 @@ doc: https://github.com/OJ/gobuster
 
 ---
 
-## 🎯 Concept
+## Concept
 
 gobuster est un brute-forcer écrit en Go, rapide et léger, qui envoie des requêtes HTTP/DNS en masse pour découvrir des ressources non référencées. Il s'utilise pendant la phase d'énumération web, quand le crawl passif n'a rien donné ou pour compléter un scan automatique.
 
@@ -74,7 +74,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -91,7 +91,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -142,14 +142,14 @@ go mod tidy && go build
 ./gobuster version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Go 1.24+** est requis pour compiler depuis les sources ; préférer les binaires précompilés des releases.
 > - Vérifier que `$GOPATH/bin` est dans le `$PATH` après un `go install` (`export PATH=$PATH:$(go env GOPATH)/bin`).
 > - Sur Windows, **impossible de définir un résolveur DNS custom** en mode `dns` (limitation Go : `--resolver` refuse de s'exécuter).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -175,7 +175,7 @@ go mod tidy && go build
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Un binaire Go, 7 modes** : `dir`, `dns`, `vhost`, `s3`, `gcs`, `tftp`, `fuzz` — chaque mode est un plugin (`gobusterdir`, `gobusterdns`, `gobustervhost`...) avec ses options propres, reliés par un noyau commun (`libgobuster`).
 - **Goroutines** : la concurrence Go (`-t`, défaut 10) multiplexe les requêtes ; `-d`/`--delay` espère les requêtes par thread, `--retry`/`--retry-attempts` (3 par défaut) relancent en cas de timeout.
@@ -190,7 +190,7 @@ Flux type : wordlist (ou STDIN) → mots transformés par les patterns → requ�
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -237,7 +237,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt --proxy http://127.0.0.1:8080 -wo 
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -293,7 +293,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt --proxy http://127.0.0.1:8080 -wo 
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -350,7 +350,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt --proxy http://127.0.0.1:8080 -wo 
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Vérifier que la cible répond** :
    ```bash
@@ -381,7 +381,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt --proxy http://127.0.0.1:8080 -wo 
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : découverte d'endpoints d'API cachés
 
@@ -418,7 +418,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt -wo 50000 -o scan_suite.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -431,7 +431,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt -wo 50000 -o scan_suite.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -446,7 +446,7 @@ gobuster dir -u http://10.10.10.10 -w big.txt -wo 50000 -o scan_suite.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -504,7 +504,7 @@ rule Gobuster_Binary {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Lancer des scans en série et agréger les résultats
@@ -555,7 +555,7 @@ for url, status in re.findall(r"(\S+)\s+\(Status:\s+(\d+)\)", out):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 gobuster écrit en **texte brut** (pas de JSON natif). Par défaut les lignes ressemblent à `/admin (Status: 200) [Size: 1234]` ; avec `-e`, les URLs complètes sont affichées.
 
@@ -585,7 +585,7 @@ grep -E "Status: (200|301|403)" scan.txt | awk '{print $1}'
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 gobuster -> wordlist SecLists -> cible web -> sortie texte
@@ -593,7 +593,7 @@ gobuster -> proxy Burp (--proxy http://127.0.0.1:8080) -> inspection des requêt
 gobuster dns -> httpx -> validation des sous-domaines vivants
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - ffuf]] — fuzzer générique plus fin pour la phase suivante
 - [[Outil - Feroxbuster]] / [[Outil - dirsearch]] — alternatives de découverte de contenu
 - [[Outil - httpx]] — valider les vhosts/sous-domaines trouvés par `dns`/`vhost`
@@ -603,7 +603,7 @@ gobuster dns -> httpx -> validation des sous-domaines vivants
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -617,7 +617,7 @@ gobuster dns -> httpx -> validation des sous-domaines vivants
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse** : binaire Go léger, concurrence par goroutines (`-t`, défaut 10 threads) ; très rapide sur les cibles réactives.
 - **Débit** : `-d`/`--delay` espère les requêtes par thread ; `--retry`/`-ra` relancent en cas de timeout sans casser le scan.
@@ -631,7 +631,7 @@ gobuster dns -> httpx -> validation des sous-domaines vivants
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -664,7 +664,7 @@ gobuster dns -> httpx -> validation des sous-domaines vivants
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Volumétrie** : un scan `dir` avec `-t 100` sans `-d` est un **mini-DoS** potentiel — toujours adapter le débit à la cible autorisée.
 - **Binaires** : ne télécharger que depuis **GitHub releases** (checksums fournis) ; les builds locaux non taggés ne sont pas des versions officielles.
@@ -674,7 +674,7 @@ gobuster dns -> httpx -> validation des sous-domaines vivants
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de GUI** : tout en CLI ; aucune fonctionnalité graphique ou mode serveur.
 - **Pas de récursion native** : il faut relancer `dir` sur chaque répertoire découvert (contrairement à Feroxbuster).
@@ -686,7 +686,7 @@ gobuster dns -> httpx -> validation des sous-domaines vivants
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Découverte de répertoires
@@ -713,7 +713,7 @@ gobuster dir -u http://10.10.10.10 -w wordlist.txt -t 5 -d 500ms
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -726,7 +726,7 @@ gobuster dir -u http://10.10.10.10 -w wordlist.txt -t 5 -d 500ms
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -740,9 +740,9 @@ gobuster dir -u http://10.10.10.10 -w wordlist.txt -t 5 -d 500ms
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Passe par un proxy (`--proxy http://127.0.0.1:8080`) pour rejouer les requêtes dans Burp et exporte le résultat avec `-o` pour le réutiliser ensuite.
 > - Utilise des wordlists spécifiques (Seclists `Discovery/Web-Content`) plutôt que `common.txt` pour gagner en pertinence.
 > - `-t 50` ou plus accélère nettement les gros scans ; surveille les timeouts et réduis si besoin.
@@ -750,7 +750,7 @@ gobuster dir -u http://10.10.10.10 -w wordlist.txt -t 5 -d 500ms
 > - `-s 200,204,301` (mode dir) n'affiche QUE les statuts souhaités : utile pour noyer le bruit quand le site répond 404 partout.
 > - En mode `dns`, force un résolveur public en lab (`--resolver 8.8.8.8:53`) pour ne pas dépendre d'un DNS filtrant.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le mode `dir` remonte beaucoup de faux positifs avec les statuts `403` ; exclut les extensions inutiles et les codes redondants (`-b 301,403`) pour réduire le bruit.
 > - Sans `--append-domain`, le mode `vhost` concatène les mots sans le domaine cible : les requêtes partent en erreur (un warning existe depuis v3.7).
 > - Depuis v3.7, `-p` ne désigne **plus** le proxy mais le fichier de patterns ; le proxy est `--proxy`.
@@ -760,7 +760,7 @@ gobuster dir -u http://10.10.10.10 -w wordlist.txt -t 5 -d 500ms
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -783,4 +783,4 @@ gobuster dir -u http://10.10.10.10 -w wordlist.txt -t 5 -d 500ms
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - ffuf|ffuf]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Outil - httpx|httpx]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[Techniques/Hidden Parameters|Hidden Parameters]] · [[03 - Exploitation Web|Exploitation Web]]
+**Liens :** [[Tools| Outils]] · [[Outil - ffuf|ffuf]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Outil - httpx|httpx]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[Techniques/Hidden Parameters|Hidden Parameters]] · [[03 - Exploitation Web|Exploitation Web]]

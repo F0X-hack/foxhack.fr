@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎯 IDOR — Insecure Direct Object References
+# IDOR — Insecure Direct Object References
 
 > [!info] **En 1 phrase**
 > IDOR = l'app référence un objet (profil, fichier, commande…) directement via une **valeur fournie par l'utilisateur** (id, uuid, filename…) **sans vérifier que l'utilisateur est autorisé** sur cet objet → lecture/écriture/suppression de données d'autrui, simple à trouver et à exploiter.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,14 +33,14 @@ flowchart LR
     D --> G[Fuite de données<br>PII, cartes bancaires, tokens]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > La faille n'est pas le **format** de l'ID mais **l'absence de contrôle d'autorisation par objet**.
 > L'app vérifie que l'on est connecté (auth) mais PAS que l'objet demandé nous appartient (authz).
 > Change le paramètre → tu accèdes à l'objet d'un autre compte.
 
 ---
 
-## 📚 Définition & vocabulaire
+## Définition & vocabulaire
 
 - **IDOR** (Insecure Direct Object Reference) : référence directe à un objet via une entrée utilisateur, sans contrôle d'accès. Catégorie rattachée à **BOLA** (Broken Object Level Authorization) dans l'OWASP API Top 10.
 - **Auth ≠ Autorisation** :
@@ -69,11 +69,11 @@ Content-Type: application/json
 
 ---
 
-## 🕵️ Détection
+## Détection
 
 ### Méthodologie de base (2 comptes)
 
-> [!tip] 💡 **La méthode des 2 comptes** (account A / account B) est le cœur de la détection.
+> [!tip] **La méthode des 2 comptes** (account A / account B) est le cœur de la détection.
 > Connecte-toi avec le compte A, capture une requête qui touche un objet, puis remplace l'identifiant
 > par celui du compte B. Si la réponse contient les données de B → **IDOR confirmé**.
 
@@ -109,7 +109,7 @@ Content-Type: application/json
 
 ---
 
-## 💥 Payloads & manipulation d'identifiants
+## Payloads & manipulation d'identifiants
 
 ### Incrémentation d'IDs numériques
 
@@ -147,7 +147,7 @@ id=0x7b   → 123
 # sha1("john.doe@mail.com") → hash prédictible si le format est connu
 ```
 
-> [!tip] 💡 **Hash ≠ sécurité** : si l'ID est `md5(user_id)` ou `sha1(username)`,
+> [!tip] **Hash ≠ sécurité** : si l'ID est `md5(user_id)` ou `sha1(username)`,
 > rebrute simplement les valeurs candidates (`id=1..N`, emails, usernames) et recompute le hash.
 
 ### UUID / GUID
@@ -173,7 +173,7 @@ GET /api/users/ HTTP/1.1
 GET /api/users?limit=100000 HTTP/1.1
 ```
 
-> [!warning] ⚠️ Certains backends interprètent `*`, `%`, `_`, `.` ou un **paramètre vide**
+> [!warning] Certains backends interprètent `*`, `%`, `_`, `.` ou un **paramètre vide**
 > comme un filtre "tout" → réponse contenant les objets de **tous les utilisateurs**.
 
 ### IDs dans le body JSON
@@ -207,7 +207,7 @@ done
 
 ---
 
-## 🔌 Cas API / GraphQL
+## Cas API / GraphQL
 
 ### REST endpoints
 
@@ -222,7 +222,7 @@ PUT    /api/v1/users/{id}
 GET    /api/v2/accounts/{uuid}/transactions
 ```
 
-> [!tip] 💡 **Chaque verbe HTTP = un test séparé** : un GET peut être protégé alors que le
+> [!tip] **Chaque verbe HTTP = un test séparé** : un GET peut être protégé alors que le
 > DELETE/PUT/PATCH ne l'est pas. Automatise les 4 verbes sur chaque ressource.
 
 ### Arrays d'IDs (mass assignment)
@@ -254,7 +254,7 @@ Content-Type: application/json
 
 ### GraphQL
 
-> Lien détaillé : [[GraphQL|🌀 GraphQL]]. En bref :
+> Lien détaillé : [[GraphQL| GraphQL]]. En bref :
 
 ```graphql
 # Query : accéder à un objet par son ID sans contrôle
@@ -273,7 +273,7 @@ query {
 
 ---
 
-## 🚀 Escalades IDOR
+## Escalades IDOR
 
 ### IDOR en écriture (write IDOR)
 
@@ -332,7 +332,7 @@ Content-Type: application/xml
 
 ---
 
-## 📄 IDOR par référence de fichier
+## IDOR par référence de fichier
 
 ```http
 GET /download?id=12 HTTP/1.1
@@ -357,12 +357,12 @@ done
 # Une taille > 0 sur un fichier qui n'est pas le nôtre = IDOR fichier
 ```
 
-> [!tip] 💡 **Tester aussi le nom de fichier** : `file=../../../etc/passwd` peut se
-> transformer en **LFI** si le chemin n'est pas validé (voir [[LFI et RFI|📂 LFI / RFI]]).
+> [!tip] **Tester aussi le nom de fichier** : `file=../../../etc/passwd` peut se
+> transformer en **LFI** si le chemin n'est pas validé (voir [[LFI et RFI| LFI / RFI]]).
 
 ---
 
-## 🛠️ Outils & automatisation
+## Outils & automatisation
 
 ### Burp Suite
 
@@ -408,12 +408,12 @@ for i in $(seq 1 1000); do
 done
 ```
 
-> [!tip] 💡 **Idées d'outils open-source** : `idor-finder` (recherche des paramètres dans le
+> [!tip] **Idées d'outils open-source** : `idor-finder` (recherche des paramètres dans le
 > trafic), scripts Burp custom, `bdc/turbo-intruder` (mass IDOR très rapide en Python).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Problème | Défense |
 |---|---|
@@ -430,16 +430,16 @@ done
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre des tests**
+> [!tip] **Ordre des tests**
 > 1. Se connecter (compte A) et **mapper l'app** : historique Burp, endpoint discovery, JS files.
 > 2. **Découvrir les paramètres** qui référencent des objets (id, uid, file, token…).
 > 3. Capturer une requête, créer un **compte B**, comparer les réponses (même requête, ID de B).
 > 4. Automatiser : Autorize/AutoRepeater sur tout le trafic, puis fuzzing d'IDs.
 > 5. Escalader : écriture → takeover, fichiers → PII, chaînes d'IDOR → impact maximal.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - **403/404 ≠ protégé** : vérifie le contenu de la réponse, pas seulement le statut.
 > - **UUID n'arrête pas le bruteforce** : fuites dans le JS, URLs partagées, timestamps (UUID v1), MongoDB ObjectId prédictibles.
 > - **Le hash d'un ID n'est pas un contrôle d'accès** : recompute hash("1"), hash("2")...
@@ -451,12 +451,12 @@ done
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]] — injection de requêtes, autre faille web classique
-- [[GraphQL|🌀 GraphQL]] — surface d'attaque IDOR via queries/mutations
-- [[Attaques JWT|🔏 Attaques JWT]] — quand l'ID est dans le token, jwt à forger/altérer
-- [[LFI et RFI|📂 LFI / RFI]] — quand l'IDOR fichier se transforme en lecture de fichiers serveur
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — IDOR](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Direct%20Object%20References/README.md)
-- 🧪 Lab : [PortSwigger — Insecure Direct Object References](https://portswigger.net/web-security/access-control/lab-insecure-direct-object-references)
+- [[Injection SQL| SQLi]] — injection de requêtes, autre faille web classique
+- [[GraphQL| GraphQL]] — surface d'attaque IDOR via queries/mutations
+- [[Attaques JWT| Attaques JWT]] — quand l'ID est dans le token, jwt à forger/altérer
+- [[LFI et RFI| LFI / RFI]] — quand l'IDOR fichier se transforme en lecture de fichiers serveur
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — IDOR](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Direct%20Object%20References/README.md)
+- Lab : [PortSwigger — Insecure Direct Object References](https://portswigger.net/web-security/access-control/lab-insecure-direct-object-references)

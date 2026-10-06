@@ -1,7 +1,7 @@
 ---
 title: "Outil - REMnux"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://remnux.org
 doc: https://docs.remnux.org/
 ---
 
-# 🧫 REMnux — Le laboratoire d'analyse de malwares
+# REMnux — Le laboratoire d'analyse de malwares
 
 > [!info] **En 1 phrase**
 > REMnux est une distribution Ubuntu dédiée à l'analyse de malwares (static et dynamique) : elle regroupe plus de 200 outils de reverse engineering, de désassemblage et de détection d'analyse de programmes malveillants.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | REMnux (Reverse Engineering Malware Ubuntu) |
 | Description | Toolkit Linux d'analyse de malwares : RE statique/dynamique, analyse mémoire, documents malveillants, simulation réseau |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution défensive / forensique |
 | Fonction principale | Analyser des échantillons malveillants (PE, ELF, Office, PDF, URLs) en environnement isolé |
 | Type d'outil | Distribution Linux (CLI + GNOME) + scripts + images Docker |
@@ -50,7 +50,7 @@ doc: https://docs.remnux.org/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 REMnux (Reverse Engineering Malware Ubuntu), créée par **Lenny Zeltser**, est une distribution Ubuntu LTS pensée **exclusivement pour l'analyse de malwares**. Contrairement aux distros offensives (Kali, Parrot), elle est orientée **défensive/forensique** : l'analyste examine des échantillons (PE, ELF, documents Office/PDF malveillants, URLs, QR codes, firmwares) sans risque pour sa machine de travail.
 
@@ -74,7 +74,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -90,7 +90,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Télécharger la VM officielle
 
@@ -132,14 +132,14 @@ curl -sSf https://raw.githubusercontent.com/ekristen/cast/main/install.sh | bash
 sudo cast install remnux/remnux
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - REMnux est en **x86/amd64 uniquement** : pas d'ARM ni de M-series Apple.
 > - L'analyse dynamique exige un **réseau isolé** : toute fuite vers Internet peut exposer la VM et ses données.
 > - `remnux install` remplace l'ancien `remnux-cli` : suivre la documentation v8 pour les commandes exactes.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -153,7 +153,7 @@ sudo cast install remnux/remnux
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 REMnux v8 repose sur **Ubuntu 24.04 LTS** avec le bureau **GNOME** par défaut. Deux changements architecturaux majeurs :
 
@@ -164,7 +164,7 @@ Les outils restent des paquets/scripts standard Ubuntu : `apt` pour la plupart, 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -210,7 +210,7 @@ thug -u http://evil.example/payload.html -o /tmp/rapport-thug
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -228,7 +228,7 @@ thug -u http://evil.example/payload.html -o /tmp/rapport-thug
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -269,7 +269,7 @@ sudo tcpdump -i eth0 -w capture.pcap
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Environnement sécurisé** — lancer REMnux en VM isolée (Host-Only).
    ```bash
@@ -304,7 +304,7 @@ sudo tcpdump -i eth0 -w capture.pcap
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Analyse d'un document Office malveillant
 
@@ -337,7 +337,7 @@ thug -u http://evil.example --connect-timeout 10
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -351,7 +351,7 @@ thug -u http://evil.example --connect-timeout 10
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -365,7 +365,7 @@ thug -u http://evil.example --connect-timeout 10
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -397,7 +397,7 @@ rule Suspicious_Office_Macro {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — tri automatisé d'un dossier d'échantillons
@@ -422,7 +422,7 @@ print(iocs("sample.exe"))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les outils REMnux produisent des sorties texte/JSON qu'il est utile de parser pour automatiser l'extraction d'IOC.
 
@@ -448,9 +448,9 @@ for row in data.get("pslist", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Flare VM]] — analyse Windows (complément naturel en réseau Host-Only)
 - [[Outil - SIFT Workstation]] — forensics disque/mémoire côté Linux
 - [[Outil - Ghidra]] — reverse engineering GUI
@@ -468,7 +468,7 @@ for row in data.get("pslist", []):
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -482,7 +482,7 @@ for row in data.get("pslist", []):
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ressources VM** : 4 Go de RAM et ~100 Go de disque recommandés ; l'OVA fait ~9 Go.
 - **Le plus gourmand** : Ghidra (analyse Java/JVM) et les sandboxes dynamiques ; limiter les projets Ghidra ouverts simultanément.
@@ -495,7 +495,7 @@ for row in data.get("pslist", []):
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -525,7 +525,7 @@ for row in data.get("pslist", []):
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation obligatoire** : ne jamais exécuter un échantillon avec accès Internet réel (exfiltration, C2 réel, propagation).
 - **Comptes par défaut** : VM livrée avec `remnux`/`malware` — changer le mot de passe.
@@ -535,7 +535,7 @@ for row in data.get("pslist", []):
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **x86/amd64 uniquement** : pas d'ARM (M-series Apple, Raspberry Pi).
 - **Pas un système de production** : dédié à l'analyse, pas au travail quotidien.
@@ -546,7 +546,7 @@ for row in data.get("pslist", []):
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Analyse statique
@@ -578,7 +578,7 @@ yarax -r regles.yar /chemin/scan
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ yarax -r regles.yar /chemin/scan
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -603,15 +603,15 @@ yarax -r regles.yar /chemin/scan
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Garde toujours un **réseau Host-Only** : le malware ne doit jamais accéder à Internet directement.
 > - Utilise `inetsim` pour faire croire au malware qu'il a accès à des services (HTTP, SMTP, DNS) : il se révèlera davantage.
 > - Documente tes analyses : conserve le hash (MD5/SHA256), les IOC et les commandes utilisées.
 > - Couple REMnux avec **Flare VM** en Host-Only : REMnux pour le réseau simulé et la capture, Flare pour le débogage Windows.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne **jamais exécuter** un échantillon directement sur la machine hôte ni sur un réseau de production : une VM isolée est obligatoire (et un snapshot avant lancement).
 > - `strings` ne suffit pas : les malwares sont souvent packés/obfusqués ; croise toujours avec `file`, `radare2`, `binwalk` et l'analyse mémoire.
 > - Ne te fie pas aux signatures seules : beaucoup de détections YARA/AV donnent des faux positifs ; valide le comportement.
@@ -619,7 +619,7 @@ yarax -r regles.yar /chemin/scan
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -642,8 +642,8 @@ yarax -r regles.yar /chemin/scan
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://remnux.org/
 > - https://docs.remnux.org/
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Flare VM|🔥 Flare VM]] · [[Outil - SIFT Workstation|🧬 SIFT Workstation]] · [[Outil - Ghidra|🔧 Ghidra]] · [[Outil - Volatility|🧠 Volatility]] · [[Outil - YARA|🛡️ YARA]] · [[Outil - oletools|📄 oletools]]
+**Liens :** [[Tools| Outils]] · [[Outil - Flare VM| Flare VM]] · [[Outil - SIFT Workstation| SIFT Workstation]] · [[Outil - Ghidra| Ghidra]] · [[Outil - Volatility| Volatility]] · [[Outil - YARA| YARA]] · [[Outil - oletools| oletools]]

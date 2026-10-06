@@ -1,11 +1,11 @@
 ---
 title: "Outil - radare2"
 type: outil
-categorie: 📱 Mobile & Reverse Engineering
+categorie: Mobile & Reverse Engineering
 tags:
   - cyber
   - outil
-  - 📱 Mobile & Reverse Engineering
+  - Mobile & Reverse Engineering
 statut: publie
 version: 6.2.0
 licence: GNU GPL v3
@@ -16,7 +16,7 @@ site: https://rada.re
 doc: https://book.rada.re
 ---
 
-# 🧬 radare2 — Mobile & Reverse Engineering
+# radare2 — Mobile & Reverse Engineering
 
 > [!info] **En 1 phrase**
 > **radare2 (r2)** est un framework de reverse engineering **100% CLI** : analyse, désassemblage, édition,
@@ -25,13 +25,13 @@ doc: https://book.rada.re
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | radare2 (r2) |
 | Description | Framework de reverse engineering en CLI : analyse, désassemblage, édition, debug et visualisation de binaires |
-| Catégorie | 📱 Mobile & Reverse Engineering |
+| Catégorie | Mobile & Reverse Engineering |
 | Fonction principale | `r2 -A <binaire>` → boucle interactive `[0x...]>` (analyse, désassemblage, patch) |
 | Type d'outil | CLI (avec vue graphe en terminal) + bibliothèque (libr2) + outils satellites |
 | Licence | GNU GPL v3 |
@@ -48,7 +48,7 @@ doc: https://book.rada.re
 
 ---
 
-## 🎯 Concept
+## Concept
 
 r2 est un outil en ligne de commande puissant mais à la courbe d'apprentissage raide : une boucle
 interactive (`[0x...]>`) où tout se pilote avec des commandes courtes (`aaa` = analyse automatique,
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Linux (paquet)
 
@@ -115,14 +115,14 @@ r2pm -ci r2ghidra                # compile et installe le décompilateur
 r2 -A ./binaire && s main && pdd # vérification
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - `r2pm -ci r2ghidra` compile le plugin (C++/CMake) : nécessite un compilateur et du temps.
 > - Sous Windows, préférer le zip officiel (pas de dépendances système).
 > - Si `r2` existe en version ancienne (paquet distro) et qu'un `r2` frais est installé, vérifier `r2 -v` et le `PATH` (conflits fréquents avec le fork Rizin).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 r2 se configure via les **variables `e`** (eval), le **fichier de démarrage** `~/.radare2rc` et les flags de ligne de commande.
 
@@ -138,7 +138,7 @@ r2 se configure via les **variables `e`** (eval), le **fichier de démarrage** `
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **libr2** : bibliothèque C monolithique découpée en couches : `libr_core` (orchestration, boucle interactive), `libr_io` (couche I/O fichier/processus/réseau), `libr_bin` (parsers de formats : ELF, PE, Mach-O, DEX, MZ…), `libr_asm` (assemblage/désassemblage multi-architectures via plugins), `libr_anal` (analyse : fonctions, xrefs, types), `libr_debug` (backends de debug : ptrace, windbg…), `libr_esil` (émulation d'instructions).
 - **Boucle interactive** : `[0x...]>` — commandes courtes à 1-2 lettres regroupées par préfixe (`s` = seek, `p` = print, `a` = analyse, `w` = write, `d` = debug, `i` = info, `x` = hexdump).
@@ -148,7 +148,7 @@ r2 se configure via les **variables `e`** (eval), le **fichier de démarrage** `
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -186,7 +186,7 @@ r2 -qc "s main; pdd" ./binaire             # décompilation directe
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Flags de ligne de commande `r2`
 
@@ -218,7 +218,7 @@ r2 -qc "s main; pdd" ./binaire             # décompilation directe
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -270,7 +270,7 @@ q                         # sauvegarde le patch (mode -w)
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : retrouver la chaîne de comparaison d'un programme de CTF.
 
@@ -309,7 +309,7 @@ r2 -qc "aaa; s main; pdd" ./challenge
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Patching d'un binaire de CTF (contournement de check)
 
@@ -343,7 +343,7 @@ pdf @ main                       # comprendre le point d'entrée
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -355,7 +355,7 @@ pdf @ main                       # comprendre le point d'entrée
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -369,7 +369,7 @@ pdf @ main                       # comprendre le point d'entrée
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -408,7 +408,7 @@ level: low
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lot d'analyse : extraire strings + fonctions de plusieurs binaires
@@ -434,7 +434,7 @@ r2.quit()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 r2 produit du **texte** par défaut et du **JSON** avec les commandes suffixées `j` (`aflj`, `pdfj`, `iIj`, `izzj`). C'est la voie recommandée pour automatiser.
 
@@ -462,23 +462,23 @@ if url:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 r2 (analyse/script) → r2ghidra (pdd) → patch (wx) → re-test dynamique (r2 -d)
 rabin2/rz-bin (metadata) → scripts d'analyse → rapport
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - Cutter|🔪 Cutter]] — GUI construite sur le même moteur (Rizin pour la v2+)
-- [[Outil - Ghidra|🧬 Ghidra]] — décompilateur de référence (dont r2ghidra est un portage)
-- [[Outil - gdb-peda|🐛 gdb-peda]] — debug dynamique complémentaire
-- [[Outil - x64dbg|🐛 x64dbg]] — debug/RE sous Windows (interface graphique)
-- [[Techniques/Buffer Overflow|Buffer Overflow]] · [[Techniques/Hardware - JTAG et SWD|🔧 JTAG / SWD]]
+- [[Tools| Outils]] global
+- [[Outil - Cutter| Cutter]] — GUI construite sur le même moteur (Rizin pour la v2+)
+- [[Outil - Ghidra| Ghidra]] — décompilateur de référence (dont r2ghidra est un portage)
+- [[Outil - gdb-peda| gdb-peda]] — debug dynamique complémentaire
+- [[Outil - x64dbg| x64dbg]] — debug/RE sous Windows (interface graphique)
+- [[Techniques/Buffer Overflow|Buffer Overflow]] · [[Techniques/Hardware - JTAG et SWD| JTAG / SWD]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -492,7 +492,7 @@ rabin2/rz-bin (metadata) → scripts d'analyse → rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - `r2` ouvre un binaire **en millisecondes** ; `aaa` peut prendre de **quelques secondes à plusieurs minutes** sur les gros binaires (d'où `anal.depth`, `e anal.threads`).
 - L'indexation des strings (`izz`) est rapide mais volumineuse sur les gros fichiers — filtrer (`~http`).
@@ -502,7 +502,7 @@ rabin2/rz-bin (metadata) → scripts d'analyse → rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -526,7 +526,7 @@ rabin2/rz-bin (metadata) → scripts d'analyse → rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Malware** : analyser les échantillons dans une VM isolée (réseau cloisonné) ; le mode debug (`r2 -d`) exécute le binaire.
 - **Chaîne d'outils** : compiler depuis les sources ou télécharger les releases officielles (https://github.com/radareorg/radare2/releases) ; vérifier les signatures.
@@ -536,7 +536,7 @@ rabin2/rz-bin (metadata) → scripts d'analyse → rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Courbe d'apprentissage raide** : les commandes courtes et la syntaxe `@`/`e`/`?` demandent du temps.
 - **Analyse imparfaite** : sur les binaires strippés/obfusqués, `aaa` reconstruit partiellement (`afl` moins utile) ; `aaaa` aide mais ralentit.
@@ -546,7 +546,7 @@ rabin2/rz-bin (metadata) → scripts d'analyse → rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Ouvrir + analyser
@@ -578,7 +578,7 @@ r2 -qc "aaa; s main; pdf" ./binaire
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ r2 -qc "aaa; s main; pdf" ./binaire
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -603,26 +603,26 @@ r2 -qc "aaa; s main; pdf" ./binaire
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **La boucle interactive gagne du temps**
+> [!tip] **La boucle interactive gagne du temps**
 > Tout se fait dans la boucle `[0x...]>` : combine `s`, `pdf`, `px`, `axt` pour naviguer sans relancer
 > l'outil. Tape `?` pour lister les commandes de la catégorie courante.
 
-> [!tip] 💡 **r2ghidra en CLI = Ghidra sans GUI**
+> [!tip] **r2ghidra en CLI = Ghidra sans GUI**
 > `pdd` produit le pseudo-code C : parfait pour les scripts et serveurs d'analyse sans interface
 > graphique.
 
-> [!warning] ⚠️ **`-A` OU `aaa`, pas les deux**
+> [!warning] `-A` OU `aaa`, pas les deux**
 > `r2 -A` lance déjà l'analyse : refaire `aaa` derrière est inutile et ralentit. Choisis un mode.
 
-> [!warning] ⚠️ **Bien choisir son outil**
+> [!warning] **Bien choisir son outil**
 > r2 excelle en **CLI/scripting** ; Cutter apporte la GUI ; Ghidra le décompilateur de référence.
 > CTF rapide = r2, gros binaire = Ghidra.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ r2 -qc "aaa; s main; pdf" ./binaire
 - Rizin (fork) : https://github.com/rizinorg/rizin
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Cutter|🧬 Cutter]] · [[Outil - Ghidra|🧬 Ghidra]] · [[Outil - gdb-peda|🐛 gdb-peda]] · [[Outil - x64dbg|🐛 x64dbg]] · [[Techniques/Buffer Overflow|Buffer Overflow]] · [[Techniques/Hardware - JTAG et SWD|🔧 JTAG / SWD]]
+**Liens :** [[Tools| Outils]] · [[Outil - Cutter| Cutter]] · [[Outil - Ghidra| Ghidra]] · [[Outil - gdb-peda| gdb-peda]] · [[Outil - x64dbg| x64dbg]] · [[Techniques/Buffer Overflow|Buffer Overflow]] · [[Techniques/Hardware - JTAG et SWD| JTAG / SWD]]

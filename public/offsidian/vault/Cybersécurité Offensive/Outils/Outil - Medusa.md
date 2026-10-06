@@ -1,11 +1,11 @@
 ---
 title: "Outil - Medusa"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 2.3 (mai 2025)
 licence: GPL-2.0
@@ -17,20 +17,20 @@ doc: https://jmk-foofus.github.io/medusa/medusa.html
 ---
 
 
-# 💥 Medusa — Brute-force en ligne massivement parallèle
+# Medusa — Brute-force en ligne massivement parallèle
 
 > [!info] **En 1 phrase**
 > Medusa = brute-force en ligne **massivement parallèle**, alternative moins connue à hydra, pilotée par modules (`-M`) avec un contrôle fin du threading.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Medusa Parallel Network Login Auditor |
 | Description | Brute-force d'authentification réseau parallèle et modulaire : test de couples utilisateur/mot de passe sur de nombreux services (SSH, FTP, SMB/NTLM, HTTP, RDP, VNC, MSSQL, MySQL, PostgreSQL…) |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Attaque de mots de passe en ligne |
 | Fonction principale | Tester massivement des identifiants sur des services exposés, avec parallélisme multi-hôtes |
 | Type d'outil | CLI |
@@ -51,7 +51,7 @@ doc: https://jmk-foofus.github.io/medusa/medusa.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Medusa appartient à la même famille que [[Outil - hydra]] : tester des couples user/mot de passe sur un service distant. Sa particularité est le **parallélisme massif basé sur pthread** : les logins sont testés en concurrence (`-t`) et plusieurs hôtes peuvent être attaqués simultanément (`-T`), avec un partage des dictionnaires sans duplication mémoire (contrairement à hydra qui forke un processus par cible). L'architecture **modulaire** — chaque service est un module `.mod` indépendant — rend l'ajout de protocoles simple et n'exige aucune modification du cœur de l'outil.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -140,12 +140,12 @@ git clone https://github.com/jmk-foofus/medusa.git && cd medusa
 medusa -d   # liste les modules disponibles
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Dépendances par module : `libssl` (OpenSSL), `libpq` (PostgreSQL), `libssh2` (SSH), `libsmb2` (SMBv2/3, non packagé partout), `libsvn` (SVN), `freerdp3-dev` (RDP). Sur Debian/Ubuntu : `build-essential automake libssl-dev libpq-dev libssh2-1-dev libsvn-dev freerdp3-dev`. Sans `libsmb2`, le module `smbnt` ne gère que SMBv1.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Medusa n'a pas de fichier de configuration global : tout se passe en arguments CLI. Les « paramètres de module » (`-m`) sont le seul levier de réglage par service.
 
@@ -161,7 +161,7 @@ Medusa n'a pas de fichier de configuration global : tout se passe en arguments C
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Medusa est écrit en C et s'appuie sur **pthread** pour paralléliser les tentatives. L'outil charge au démarrage les modules `.mod` présents dans `/usr/local/lib/medusa/modules` (ou le dossier courant). Chaque module implémente des fonctions d'initialisation, de test d'une authentification et de finalisation ; le cœur orchestre les threads, la répartition des tâches entre hôtes et la gestion des sockets (vérification de disponibilité `-c`, timeouts). Les modules communiquent avec le cœur via un contrat d'interface défini dans les en-têtes C partagés.
 
@@ -179,7 +179,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -226,7 +226,7 @@ medusa -h 10.10.20.15 -u '' -P pass.txt -M vnc -m "MAXSLEEP:30" -f
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -257,7 +257,7 @@ medusa -h 10.10.20.15 -u '' -P pass.txt -M vnc -m "MAXSLEEP:30" -f
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -302,7 +302,7 @@ medusa -Z scan.map -H hosts.txt -U users.txt -P pass.txt -M ssh -O ssh.log -f
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Reconnaissance** — identifier les services exposés sur le parc.
    ```bash
@@ -325,7 +325,7 @@ medusa -Z scan.map -H hosts.txt -U users.txt -P pass.txt -M ssh -O ssh.log -f
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Password spraying anti-lockout sur un domaine
 
@@ -361,7 +361,7 @@ medusa -H equipements.txt -u admin -P default-passwords.txt -M ssh -n 22 -f
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -373,7 +373,7 @@ medusa -H equipements.txt -u admin -P default-passwords.txt -M ssh -n 22 -f
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -387,7 +387,7 @@ medusa -H equipements.txt -u admin -P default-passwords.txt -M ssh -n 22 -f
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -428,7 +428,7 @@ alert tcp any any -> any 22 (msg:"Potential SSH brute force"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script : spray sur un parc avec gestion du lockout et log horodaté
@@ -453,7 +453,7 @@ subprocess.run(["medusa", "-h", "10.10.20.15", "-C", "combos.txt",
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 La sortie de Medusa affiche pour chaque tentative son statut (`ACCOUNT FOUND`, `ACCOUNT RE-USE`, erreur) et, avec `-O`, journalise tout dans un fichier texte. Il n'y a pas de format JSON natif : on parse le texte ou on passe par les logs.
 
@@ -479,13 +479,13 @@ print(f"{len(found)} comptes valides : {found}")
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Nmap -sV → service exposé → Medusa -M <module> → identifiants valides → CrackMapExec / Evil-WinRM / Impacket → SIEM
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - hydra]] — alternative majeure (plus de modules, syntaxe différente)
 - [[Outil - ncrack]] — alternative orientée haute vitesse / timing templates
 - [[Outil - Patator]] — alternative pour conditions de succès fines
@@ -496,7 +496,7 @@ Nmap -sV → service exposé → Medusa -M <module> → identifiants valides →
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -508,13 +508,13 @@ Nmap -sV → service exposé → Medusa -M <module> → identifiants valides →
 
 ---
 
-## ⚡ Performance
+## Performance
 
 Medusa utilise **pthread** : les listes d'utilisateurs/mots de passe sont partagées en mémoire entre threads (pas de duplication comme avec les forks d'hydra), ce qui réduit fortement la surcharge sur de gros dictionnaires. `-t` contrôle les logins concurrents par hôte, `-T` les hôtes concurrents ; une valeur `-T` trop élevée sature le réseau et peut faire tomber la cible (à éviter hors lab). Chaque tentative consomme une connexion TCP : sur des services à coût d'authentification élevé (SSH, RDP), le facteur limitant est souvent le serveur, pas Medusa. L'option `-c` règle le délai d'attente de vérification de socket (défaut 500 µs) et `-L` parallélise par utilisateur pour équilibrer la charge. Chiffres indicatifs uniquement : des tests communautaires placent Medusa au même niveau que hydra en débit brut, avec une meilleure stabilité sur les longues campagnes.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -544,7 +544,7 @@ Medusa utilise **pthread** : les listes d'utilisateurs/mots de passe sont partag
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Usage autorisé uniquement** : Medusa est un outil de test d'intrusion ; toute campagne doit avoir un périmètre écrit. Les verrouillages de comptes peuvent constituer un DoS d'authentification.
 - **Privilèges** : aucun privilège root n'est requis, ce qui limite la surface d'attaque du binaire ; exécuter avec un utilisateur dédié dans un lab.
@@ -554,7 +554,7 @@ Medusa utilise **pthread** : les listes d'utilisateurs/mots de passe sont partag
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de support des services non prévus** : chaque protocole nécessite un module `.mod` compilé (plus de 24 modules, mais pas d'extension à chaud).
 - **Documentation limitée** : la man page et le README sont moins détaillés que ceux d'hydra ; certaines options de module ne sont documentées que par `-q`.
@@ -565,7 +565,7 @@ Medusa utilise **pthread** : les listes d'utilisateurs/mots de passe sont partag
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lister les modules et voir les options d'un module
@@ -597,7 +597,7 @@ medusa -Z ssh.log -H hosts.txt -U users.txt -P pass.txt -M ssh
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -610,7 +610,7 @@ medusa -Z ssh.log -H hosts.txt -U users.txt -P pass.txt -M ssh
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -623,15 +623,15 @@ medusa -Z ssh.log -H hosts.txt -U users.txt -P pass.txt -M ssh
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Pour un **spray** (anti-lockout), utilise `-U users.txt -p MotDePasse` plutôt que `-P`.
 > - Vérifie les modules avec `medusa -d` et leurs options avec `medusa -M <module> -q`.
 > - Utilise `-O` pour logguer proprement et pouvoir reprendre une campagne.
 > - `-e nsr` valide les comptes vides/par défaut (null, user=pass, user inversé) en un seul passage.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne confonds pas `-t` (logins concurrents) et `-T` (hôtes concurrents) : un `-T` trop élevé sature le réseau.
 > - `-w` est en secondes, `-r` aussi : un `-w` omis avec un gros dictionnaire verrouille les comptes.
 > - Le module `smbnt` sans libsmb2 ne gère que SMBv1 : cibles modernes → compiler avec libsmb2 ou utiliser [[Outil - CrackMapExec]].
@@ -639,7 +639,7 @@ medusa -Z ssh.log -H hosts.txt -U users.txt -P pass.txt -M ssh
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -662,4 +662,4 @@ medusa -Z ssh.log -H hosts.txt -U users.txt -P pass.txt -M ssh
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Password Spraying|🧂 Password Spraying]] · [[Techniques/Pivoting et Tunneling|🔀 Pivoting et Tunneling]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Password Spraying| Password Spraying]] · [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]]

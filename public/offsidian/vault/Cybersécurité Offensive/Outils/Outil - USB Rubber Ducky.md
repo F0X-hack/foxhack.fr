@@ -1,12 +1,12 @@
 ---
 title: "Outil - USB Rubber Ducky"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: DuckyScript 3.0 (Mark II, 2022) / DuckyScript 1.0 (Mark I, 2011)
 licence: propriétaire (firmware Hak5) ; DuckyScript sous licence Hak5 ; payloads sous licence GPLv3 (repo communautaire)
@@ -17,20 +17,20 @@ site: https://shop.hak5.org/products/usb-rubber-ducky
 doc: https://docs.hak5.org/usb-rubber-ducky/
 ---
 
-# 🦆 USB Rubber Ducky — L'injection clavier en quelques millisecondes
+# USB Rubber Ducky — L'injection clavier en quelques millisecondes
 
 > [!info] **En 1 phrase**
 > Un gadget USB qui se fait passer pour un **clavier** et frappe un script « Duckyscript » à ~1000 mots/minute — la référence de l'**injection HID** : un branchement = shell, malware ou exfiltration.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | USB Rubber Ducky (Mark I 2011, Mark II 2022) |
 | Description | Gadget USB qui s'énumère comme **clavier HID** et injecte des frappes à très haute vitesse (~1000 mots/min) depuis un payload DuckyScript compilé (`inject.bin`) |
-| Catégorie | 🔌 USB / HID & Gadgets |
+| Catégorie | USB / HID & Gadgets |
 | Sous-catégorie | Keystroke Injection (BadUSB) |
 | Fonction principale | Injection de raccourcis et de texte clavier sur la machine cible en quelques secondes d'accès physique |
 | Type d'outil | Hardware + langage de script (DuckyScript) |
@@ -48,7 +48,7 @@ doc: https://docs.hak5.org/usb-rubber-ducky/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 L'USB Rubber Ducky ressemble à une clé USB lambda, mais son microcontrôleur **ATmega32u4** (Mark II) énumère un **périphérique HID clavier**. L'OS de la cible le « voit » comme un clavier légitime et **accepte ses frappes sans aucune authentification** : c'est la confiance implicite accordée au bus USB qui est exploitée (famille BadUSB). Le script d'attaque, écrit en **DuckyScript**, est **compilé** en `inject.bin` stocké sur une microSD ; un **switch physique** sélectionne le payload à exécuter. Moins d'une seconde après l'insertion, le Ducky tape un raccourci (`GUI r` pour « Exécuter » sous Windows), lance PowerShell, télécharge un payload ou exfiltre des données.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Le Ducky est **prêt à l'emploi** : il ne se « flashe » pas (voir l'avertissement de Hak5). L'installation concerne l'**encoder** (compilation des payloads) et la préparation de la microSD.
 
@@ -112,7 +112,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 # 4. Téléverser sur la cible avec le switch sur le slot désiré
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Ne PAS flasher** le Mark II : la garantie ne couvre pas un flash ; architecuture pensée pour Payload Studio (toute procédure de flash concerne le Mark I legacy).
 > - **Java** requis pour `duckencoder.jar` (`sudo apt install default-jre` sur Debian/Kali).
 > - **Layout clavier** : encoder avec le layout cible (`-l us`, `-l fr`, …) ; un payload encodé pour QWERTY tape mal sur une machine AZERTY.
@@ -121,7 +121,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -136,7 +136,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Matériel** : microcontrôleur **ATmega32u4** (Mark II ; ATmega32u4 avec USB-A/USB-C), microSD, switch de slots, LED (rouge/vert/bleu), capteur éventuel, bouton.
 - **Firmware** : interprète `inject.bin` (bytecode DuckyScript compilé) ; il pilote l'énumération USB (HID/STORAGE/OFF), les VID/PID, les modes composites et la réflexion de frappes. Aucun flash n'est prévu par l'utilisateur.
@@ -146,7 +146,7 @@ java -jar duckencoder.jar -i payload.txt -o inject.bin -l us
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales (DuckyScript)
 
@@ -194,7 +194,7 @@ END_IF
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / commande | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -218,7 +218,7 @@ END_IF
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -249,7 +249,7 @@ END_IF
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Écrire le payload** — un reverse shell PowerShell « sans fichier » (download cradle) :
    ```bash
@@ -267,7 +267,7 @@ END_IF
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Reverse shell PowerShell avec baisse de l'UAC (download cradle)
 
@@ -326,7 +326,7 @@ Le payload (lui-même sur la SD) copie des données vers la partie « clé USB �
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -339,7 +339,7 @@ Le payload (lui-même sur la SD) copie des données vers la partie « clé USB �
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ Le payload (lui-même sur la SD) copie des données vers la partie « clé USB �
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -405,7 +405,7 @@ rule DuckyScript_Payload {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — encoder en boucle tous les payloads d'un dossier
@@ -430,7 +430,7 @@ with open('payload.txt', 'w') as f:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le Ducky n'a pas de sortie « console » : son résultat est l'**effet produit sur la cible** (processus, fichiers, registre, réseau). Les canaux d'observation sont indirects :
 
@@ -451,9 +451,9 @@ for event in tree.iter('Event'):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Bash Bunny]] — version multi-vecteurs (HID, storage, réseau, série) du même écosystème
 - [[Outil - Hak5 Payload Studio]] — éditeur web officiel pour créer/encoder les payloads
 - [[Outil - Duckuino]] — équivalent Arduino/ATtiny pour payer moins cher
@@ -466,7 +466,7 @@ for event in tree.iter('Event'):
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -479,7 +479,7 @@ for event in tree.iter('Event'):
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse d'injection** : ~1000 mots/minute annoncés ; en pratique le débit HID (125 Hz, 8 octets) permet plusieurs centaines de caractères/s. L'EDR moderne le détecte → réduire avec jitter (`$_JITTER_MAX`).
 - **Latence de démarrage** : l'attaque démarre dès l'énumération USB (< 1-2 s selon l'OS) ; `DELAY` initial absorbe les variations de boot.
@@ -489,7 +489,7 @@ for event in tree.iter('Event'):
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -520,7 +520,7 @@ for event in tree.iter('Event'):
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Légalité** : l'injection de payloads sur une machine sans autorisation est illégale. Utiliser uniquement en test autorisé (mandat, lab, machines dédiées).
 - **Confidentialité des payloads** : un `inject.bin` est trivial à désassembler ; ne pas y stocker de secrets. `HIDE_PAYLOAD` ne protège que contre la curiosité basique.
@@ -530,7 +530,7 @@ for event in tree.iter('Event'):
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **N'exécute rien sur la cible** : il ne fait que « taper » ; tout outil/payload doit être téléchargé ou déjà présent.
 - **Dépend de la session active** : sur un écran verrouillé, la plupart des raccourcis ne fonctionnent pas (prévoir `WAIT_FOR`/écran de login, ou des vecteurs physiques).
@@ -541,7 +541,7 @@ for event in tree.iter('Event'):
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Encodage d'un payload
@@ -575,7 +575,7 @@ ATTACKMODE HID VID_046D PID_C31C
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -588,7 +588,7 @@ ATTACKMODE HID VID_046D PID_C31C
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -601,16 +601,16 @@ ATTACKMODE HID VID_046D PID_C31C
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours tester sur une VM (VirtualBox/VMware) avant la cible réelle : le timing (`DELAY`) varie selon la machine et l'OS.
 > - Préférer `DEFAULT_DELAY 50` aux `DELAY` épars : exécution plus fiable et plus rapide.
 > - Sur le Ducky Mark II, les slots multiples (switch) permettent d'embarquer plusieurs payloads et de basculer sans reflash.
 > - Utiliser `HOLD`/`RELEASE` pour les combinaisons longues (surbrillance, copier-coller).
 > - Activer `OS_DETECT` pour qu'un seul `inject.bin` couvre Windows, macOS et Linux.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **AZERTY vs QWERTY** : le Ducky énumère un clavier **US** ; sur une cible FR, `STRING` tape des caractères différents. Forcer la disposition dans le payload ou tester avec la disposition cible.
 > - `GUI r` peut être bloqué par certaines GPO ; prévoir un fallback (`CTRL SHIFT ESC`, `CTRL ALT DELETE`).
 > - Un EDR moderne détecte la frappe à 1000 mpm : insérer des `DELAY` réalistes ou un payload « humain » plus lent.
@@ -619,7 +619,7 @@ ATTACKMODE HID VID_046D PID_C31C
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ ATTACKMODE HID VID_046D PID_C31C
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Protocole USB|🔌 Protocole USB]] · [[Techniques/Hardware - Arduino|🎛️ Hardware Arduino]] · [[Techniques/Reverse Shells|🖥️ Reverse Shells]] · [[Outil - Hak5 Payload Studio|💻 Payload Studio]] · [[Outil - Bash Bunny|🐰 Bash Bunny]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Protocole USB| Protocole USB]] · [[Techniques/Hardware - Arduino| Hardware Arduino]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Outil - Hak5 Payload Studio| Payload Studio]] · [[Outil - Bash Bunny| Bash Bunny]]

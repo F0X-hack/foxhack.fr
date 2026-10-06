@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🚗 CAN Bus (Controller Area Network)
+# CAN Bus (Controller Area Network)
 
 > [!info] **En 1 phrase**
 > Le **bus CAN** est le protocole série **multi-maître** et orienté **message** des systèmes
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 Le CAN (Controller Area Network) est un protocole de communication série **haute intégrité**,
 conçu pour l'échange de données en temps réel dans les systèmes embarqués. Tous les nœuds
@@ -37,14 +37,14 @@ flowchart TB
     B --> D["Multi-maître: chaque nœud peut émettre"]
 ```
 
-> [!info] 💡 **À retenir pour l'offensif**
+> [!info] **À retenir pour l'offensif**
 > - **Pas d'authentification** : n'importe quel nœud peut envoyer des trames valides → **injection de trames**.
 > - La trame n'est pas adressée : tout le monde lit tout → **sniffing trivial**.
 > - Un seul **ID** de contrôleur absorbé peut faire tomber le réseau → **DoS**.
 
 ---
 
-## 🛠️ Interagir avec le bus (Python)
+## Interagir avec le bus (Python)
 
 ```bash
 pip install python-can
@@ -64,7 +64,7 @@ while True:
 
 ---
 
-## 💻 SocketCAN (Linux)
+## SocketCAN (Linux)
 
 Le noyau Linux expose le CAN comme une interface réseau (`can0`) — les outils réseaux
 classiques fonctionnent alors dessus.
@@ -79,7 +79,7 @@ cansend can0 123#DEADBEEF                      # envoyer une trame ID=0x123, pay
 
 ---
 
-## 📊 Wireshark
+## Wireshark
 
 Wireshark dissèque nativement les trames CAN (`can`, `canfd`, `sockcan`) :
 
@@ -89,7 +89,7 @@ Wireshark dissèque nativement les trames CAN (`can`, `canfd`, `sockcan`) :
 
 ---
 
-## 🩺 UDS (Unified Diagnostic Services)
+## UDS (Unified Diagnostic Services)
 
 > L'UDS est le protocole de diagnostic des **ECU** automobiles : diagnostic, mise à jour de
 > firmware, tests de routine… C'est l'API officielle pour **parler à une voiture**.
@@ -143,7 +143,7 @@ Implémentations :
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -154,7 +154,7 @@ Implémentations :
 | **Chiffrement applicatif** | Les protocoles haute couche peuvent chiffrer (ex: SecOC, TLS) |
 | **Surveillance réseau** | Détection d'IDs anormaux, de taux d'émission incohérents |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Le bus CAN est broadcast** : ne te fie jamais à un ID pour l'authenticité d'une trame.
 - Le **bitrate** doit matcher le réseau (souvent 500 kbit/s en auto, 125 kbit/s en industrie) sinon rien ne se lit.
@@ -165,10 +165,10 @@ Implémentations :
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — CAN](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/can.md)
 > - [iDoka/awesome-canbus](https://github.com/iDoka/awesome-canbus)
 > - [UDS SID Table (rfwireless-world)](https://www.rfwireless-world.com/Terminology/UDS-SID-Table.html)
 > - [UDS Explained (csselectronics)](https://www.csselectronics.com/pages/uds-protocol-tutorial-unified-diagnostic-services)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - JTAG et SWD| JTAG/SWD]]

@@ -1,7 +1,7 @@
 ---
 title: "Outil - gau"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/lc/gau
 doc: https://github.com/lc/gau/blob/master/README.md
 ---
 
-# 🕸️ gau — Agrégateur d'URLs multi-sources (Get All URLs)
+# gau — Agrégateur d'URLs multi-sources (Get All URLs)
 
 > [!info] **En 1 phrase**
 > gau collecte toutes les URLs connues d'un domaine en interrogeant Wayback, Common Crawl, OTX et URLScan en parallèle.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/lc/gau/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 gau (Get All URLs, de lc) agrège l'historique des URLs d'un domaine depuis plusieurs providers : Wayback Machine (CDX), Common Crawl, AlienVault OTX et URLScan.io. Plus complet que waybackurls (un seul provider), il offre le multithreading, les filtres d'extensions, les filtres de codes de réponse et la sortie JSON. Position : phase de découverte d'URLs, entre l'énumération de sous-domaines et le test des endpoints. S'utilise en complément de waybackurls (profondeur) et de katana (crawl actif).
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -138,14 +138,14 @@ sudo mv gau /usr/local/bin/
 gau --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Clé API **URLScan optionnelle** (`URLSCAN_API_KEY`) pour activer le provider URLScan.
 > - Config (fichier TOML) chargée depuis `$HOME/config.toml` (Linux) ou `%USERPROFILE%\.gau.toml` (Windows) si présente.
 > - Les providers peuvent être lents ou timeouter sur les gros domaines : ajuster `--timeout` et `--retries`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier de configuration (TOML)
 
@@ -177,7 +177,7 @@ index = "CC-MAIN-2026-30"   # index Common Crawl à utiliser
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Providers** : chaque source (`wayback`, `commoncrawl`, `otx`, `urlscan`) est un adaptateur qui interroge son API (CDX pour Wayback, index Common Crawl, OTX indicators API, urlscan.io API) et normalise les résultats en URLs.
 - **Concurrence** : goroutines Go pilotées par `--threads` ; chaque provider est interrogé en parallèle, avec `--retries` et `--timeout` par requête.
@@ -187,7 +187,7 @@ index = "CC-MAIN-2026-30"   # index Common Crawl à utiliser
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -219,7 +219,7 @@ gau example.com --config ~/.config/gau.toml
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -248,7 +248,7 @@ gau example.com --config ~/.config/gau.toml
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -292,7 +292,7 @@ gau example.com --subs | grep "=" | sort -u
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Collecte multi-sources** sur tout le périmètre.
    ```bash
@@ -318,7 +318,7 @@ gau example.com --subs | grep "=" | sort -u
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : fuite de secrets et clés API
 
@@ -350,7 +350,7 @@ cat api_urls.txt | httpx -mc 200 -json -o api_live.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -362,7 +362,7 @@ cat api_urls.txt | httpx -mc 200 -json -o api_live.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -375,7 +375,7 @@ cat api_urls.txt | httpx -mc 200 -json -o api_live.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -420,7 +420,7 @@ alert http any any -> any any (msg:"ET POLICY URLScan API Usage"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — pipeline complet de découverte d'URLs
@@ -451,7 +451,7 @@ print(f"{len(urls)} URLs, {len(endpoints)} avec paramètres")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte (URL par ligne) ou JSON (`--json`, un objet par ligne).
 
@@ -482,15 +482,15 @@ for line in out.splitlines():
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - waybackurls|waybackurls]] — profondeur mono-provider à fusionner
 - [[Outil - httpx|httpx]] — validation des URLs vivantes
 - [[Outil - katana|katana]] — crawl actif complémentaire (ce que les archives ne voient pas)
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités sur les endpoints
 - [[Outil - ffuf|ffuf]] / [[Outil - gobuster|gobuster]] — fuzzing des paramètres découverts
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 gau → httpx → nuclei
@@ -499,7 +499,7 @@ gau → httpx → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -513,7 +513,7 @@ gau → httpx → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Goroutines Go : collecte multi-providers simultanée, `--threads` pour monter en charge.
 - La durée dépend surtout des providers (Wayback CDX peut être lent sur les gros domaines).
@@ -525,7 +525,7 @@ gau → httpx → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -555,7 +555,7 @@ gau → httpx → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Clés API** : `URLSCAN_API_KEY` en variable d'environnement ou TOML → ne pas committer, permissions restrictives.
 - **Recon passif** : aucun trafic vers la cible — le plus sûr juridiquement.
@@ -564,7 +564,7 @@ gau → httpx → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Les URLs collectées sont **historiques** : beaucoup ne sont plus en ligne (revalider avec httpx).
 - Couverture limitée à ce que les archives ont déjà crawlées : les endpoints jamais indexés sont invisibles.
@@ -574,7 +574,7 @@ gau → httpx → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Collecte simple
@@ -604,7 +604,7 @@ gau example.com --subs | grep -Ei "(token|secret|password|AKIA[0-9A-Z]{16})"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -617,7 +617,7 @@ gau example.com --subs | grep -Ei "(token|secret|password|AKIA[0-9A-Z]{16})"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -629,16 +629,16 @@ gau example.com --subs | grep -Ei "(token|secret|password|AKIA[0-9A-Z]{16})"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Configure `URLSCAN_API_KEY` pour activer le provider URLScan et gagner en couverture.
 > - `--fc 404,403` épure les résultats morts avant même la sortie.
 > - Pour les gros périmètres, monte `--threads` (10-20) et garde un œil sur les timeouts.
 > - Chainage type : `gau --subs | sort -u | httpx -mc 200 -silent | nuclei` pour un tri automatique du start au scan.
 > - `--from`/`--to` permet de cibler des fenêtres temporelles (nouvelles APIs, campagnes récentes).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Sans `--subs`, seul le domaine racine est traité.
 > - Les providers peuvent timeout sur les gros domaines : ajuste `--timeout` et `--retries`.
 > - Les URLs collectées sont historiques : re-valide toujours avec httpx avant de tester.
@@ -647,7 +647,7 @@ gau example.com --subs | grep -Ei "(token|secret|password|AKIA[0-9A-Z]{16})"
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -668,4 +668,4 @@ gau example.com --subs | grep -Ei "(token|secret|password|AKIA[0-9A-Z]{16})"
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - waybackurls|waybackurls]] · [[Outil - httpx|httpx]] · [[Outil - katana|katana]]
+**Liens :** [[Tools| Outils]] · [[Outil - waybackurls|waybackurls]] · [[Outil - httpx|httpx]] · [[Outil - katana|katana]]

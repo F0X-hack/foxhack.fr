@@ -1,7 +1,7 @@
 ---
 title: "Outil - peirates"
 type: outil
-categorie: 🔒 Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://www.inguardians.com/peirates/
 doc: https://github.com/inguardians/peirates/blob/main/README.md
 ---
 
-# 🏴‍☠️ peirates - Le framework de post-exploitation Kubernetes
+# peirates - Le framework de post-exploitation Kubernetes
 
 > [!info] **En 1 phrase**
 > peirates automatise l'escalade et le pivot dans un cluster Kubernetes depuis un pod compromis : vol de tokens de service accounts, accès aux secrets, évasion de conteneur et contrôle du cluster en quelques menus.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | peirates |
 | Description | Framework interactif de post-exploitation Kubernetes : vole les tokens de service accounts, récupère les secrets, escale les permissions, pivote entre namespaces et s'échappe vers le nœud |
-| Catégorie | 🔒 Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Kubernetes / Post-exploitation / Escalade de privilèges |
 | Type d'outil | Binaire Go interactif (menu) |
 | Licence | GPL-2.0 |
@@ -50,7 +50,7 @@ doc: https://github.com/inguardians/peirates/blob/main/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 peirates est conçu pour la phase où tu as **déjà un pied dans le cluster** (RCE dans un conteneur, accès à un nœud) mais pas encore le contrôle. Il centralise les techniques connues de post-exploitation Kubernetes dans un menu interactif :
 
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -92,7 +92,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 peirates se déploie en binaire statique (download ou build) ou en image conteneur.
 
@@ -122,14 +122,14 @@ go get -v "github.com/inguardians/peirates" "k8s.io/kubectl/pkg/cmd"
 cd scripts && ./build.sh
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Il faut une **exécution de code dans un conteneur Kubernetes** ou un accès à un nœud : peirates n'est pas un scanner de premier accès.
 > - Le binaire doit être transféré dans le pod (wget, curl, kubectl cp, ou base64) puis exécuté.
 > - « This tool attacks a Kubernetes cluster » : obtenir l'autorisation écrite du propriétaire avant usage.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 peirates n'a pas de fichier de configuration global : il découvre son environnement (token monté, API server) au démarrage et propose ses actions en menu.
 
@@ -143,7 +143,7 @@ peirates n'a pas de fichier de configuration global : il découvre son environne
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 peirates est un binaire Go organisé en modules d'attaque, pilotés par un menu interactif :
 
@@ -168,7 +168,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -196,7 +196,7 @@ flowchart LR
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -211,7 +211,7 @@ flowchart LR
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -258,7 +258,7 @@ Résultat attendu : un menu numéroté listant les techniques de post-exploitati
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Déposer le binaire** - transférer peirates dans le pod compromis.
    ```bash
@@ -288,7 +288,7 @@ Résultat attendu : un menu numéroté listant les techniques de post-exploitati
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Du token de pod au cluster-admin
 
@@ -322,7 +322,7 @@ cat /host/var/lib/kubelet/config.yaml
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -335,7 +335,7 @@ cat /host/var/lib/kubelet/config.yaml
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -355,7 +355,7 @@ cat /host/var/lib/kubelet/config.yaml
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -396,7 +396,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 peirates est interactif ; les étapes répétables sont reproduites via les API/wrappers :
 
@@ -428,7 +428,7 @@ except Exception as e:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Le menu affiche les résultats en texte ; les tokens volés sont affichés et mémorisés pour être réutilisés dans les menus. L'interface kubectl intégrée permet les sorties standard (wide/json) pour le parsing.
 
@@ -443,9 +443,9 @@ kubectl --token=$(cat /tmp/token.txt) --insecure-skip-tls-verify=true get pods -
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🛠 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - kubectl|kubectl]] - complément direct (commandes hors menu)
 - [[Outil - kube-hunter|kube-hunter]] - reconnaissance réseau avant exploitation
 - [[Outil - kube-bench|kube-bench]] - cartographie des misconfigs à exploiter
@@ -459,7 +459,7 @@ cloudfox/kube-hunter (accès) -> kubectl (premier pivot) -> peirates (post-explo
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -471,7 +471,7 @@ cloudfox/kube-hunter (accès) -> kubectl (premier pivot) -> peirates (post-explo
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide** : binaire statique Go ; démarrage immédiat dans le pod.
 - **Peu de ressources** : adapté aux conteneurs limités (CPU/mémoire).
@@ -480,7 +480,7 @@ cloudfox/kube-hunter (accès) -> kubectl (premier pivot) -> peirates (post-explo
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -504,7 +504,7 @@ cloudfox/kube-hunter (accès) -> kubectl (premier pivot) -> peirates (post-explo
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : peirates « attaque » volontairement le cluster : autorisation écrite obligatoire (pentest signé, lab).
 - **Impact** : l'évasion hostPath et les rolebindings cluster-admin modifient l'état du cluster : impacts à assumer.
@@ -514,7 +514,7 @@ cloudfox/kube-hunter (accès) -> kubectl (premier pivot) -> peirates (post-explo
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Post-exploitation uniquement** : il faut déjà une exécution de code dans le cluster.
 - **Interactif** : moins adapté à l'automatisation que kubectl pur.
@@ -524,7 +524,7 @@ cloudfox/kube-hunter (accès) -> kubectl (premier pivot) -> peirates (post-explo
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer peirates dans le pod
@@ -549,7 +549,7 @@ kubectl --token=<token> auth can-i --list -A
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -562,7 +562,7 @@ kubectl --token=<token> auth can-i --list -A
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -575,15 +575,15 @@ kubectl --token=<token> auth can-i --list -A
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Commence par voler le token courant et tester les droits AVANT toute technique lourde : `auth can-i --list`.
 > - Les tokens des autres SA dans les secrets sont souvent plus privilégiés : priorise le menu « Get tokens from secrets ».
 > - Utilise l'interface kubectl intégrée pour les actions hors menu sans quitter peirates.
 > - Découpe la démo : montre le menu, un token, une escalade, une évasion, dans cet ordre.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - peirates ne crée pas d'accès initial : sans RCE dans un pod, inutile de l'emporter.
 > - Les actions (rolebinding, hostPath) sont **destructives/persistantes** : impacts à valider avec le client.
 > - Tout est loggé par l'API server : l'outil est facile à détecter en audit a posteriori.
@@ -591,7 +591,7 @@ kubectl --token=<token> auth can-i --list -A
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -616,4 +616,4 @@ kubectl --token=<token> auth can-i --list -A
 
 ---
 
-➡️ **Liens :** [[Tools|🛠 Outils]] · [[Outil - kubectl|kubectl]] · [[Outil - kube-hunter|kube-hunter]] · [[Outil - cloudfox|cloudfox]]
+**Liens :** [[Tools| Outils]] · [[Outil - kubectl|kubectl]] · [[Outil - kube-hunter|kube-hunter]] · [[Outil - cloudfox|cloudfox]]

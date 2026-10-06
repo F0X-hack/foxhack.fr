@@ -23,20 +23,20 @@ statut: brouillon
 
 ---
 
-## 🎯 Objectif
+## Objectif
 <!-- Pourquoi cette technique ? Dans quel contexte l'utiliser ? -->
 
-## 🐞 Vulnérabilité / Principe
+## Vulnérabilité / Principe
 <!-- Le problème sous-jacent, le mécanisme technique -->
 
-## 🔧 Mise en œuvre
+## Mise en œuvre
 <!-- Commandes, scripts, outils utilisés, pas à pas -->
 
 ```bash
 # Exemple de commande
 ```
 
-## 🛠️ Outils associés
+## Outils associés
 ```dataview
 TABLE sans-serif
 FROM "Cybersécurité Offensive/Outils" AND #<categorie>
@@ -44,14 +44,14 @@ WHERE file.name != this.file.name
 SORT file.name ASC
 ```
 
-## 🔍 Détection & Défense
+## Détection & Défense
 <!-- Comment détecter une exploitation ? Comment se protéger ? -->
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 - 
 
-## 🧪 Lab / Validation
+## Lab / Validation
 <!-- Environnement de test, lien vers la box -->
 
-## 🔗 Liens
-- [[Cybersécurité Offensive|🗺️ Index]]
+## Liens
+- [[Cybersécurité Offensive| Index]]

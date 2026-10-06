@@ -1,7 +1,7 @@
 ---
 title: "Outil - kwprocessor"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://hashcat.net
 doc: https://hashcat.net/wiki/doku.php?id=kwprocessor
 ---
 
-# ⌨️ kwprocessor — Mots de passe « marche clavier » (keyboard walk)
+# kwprocessor — Mots de passe « marche clavier » (keyboard walk)
 
 > [!info] **En 1 phrase**
 > kwprocessor, l'outil C officiel du projet hashcat, génère des mots de passe formés par des déplacements sur le clavier (qwerty, qazwsx, 1qaz2wsx...) en combinant basechars, keymap et routes.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | kwprocessor (KWP) — Advanced keyboard-walk generator |
 | Description | Générateur de mots de passe « marche clavier » : suites de touches adjacentes formées par des déplacements sur le clavier |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Keyboard walk / patterns clavier |
 | Fonction principale | Produire tous les chemins d'un motif (route) depuis des caractères de départ (basechars) sur une disposition (keymap) |
 | Type d'outil | CLI (programme C) |
@@ -50,7 +50,7 @@ doc: https://hashcat.net/wiki/doku.php?id=kwprocessor
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Beaucoup de mots de passe « sécurisés » ne sont en réalité que des **parcours de clavier** : `qwerty`, `qazwsx`, `1qaz2wsx`, `zxcvbnm`, `1234rewq`, `q2w3e4r`... Pour l'utilisateur, une suite de touches adjacentes se retient sans effort et semble aléatoire à un observateur. Pour le craqueur, c'est au contraire un motif prévisible : le générateur doit reproduire la logique de l'utilisateur, pas celle d'un académique — c'est le postulat de Jens Steube, qui écrivait ce code parce qu'aucun générateur existant ne correspondait à sa définition d'une marche clavier.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -150,12 +150,12 @@ make
 # binaire produit : ./kwp
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Nécessite un compilateur C (`make`, `gcc`) ; pas de dépendance externe au-delà. `make` génère le binaire `kwp` dans le dossier du dépôt. Les fichiers de config (`basechars/`, `keymaps/`, `routes/`) doivent être conservés : l'outil les lit à chaque exécution.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout est passé en arguments — le triplé positionnel `basechars keymap routes` et les options de modificateurs/directions/distances.
 
@@ -170,7 +170,7 @@ Pas de fichier de configuration : tout est passé en arguments — le triplé po
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Un unique fichier C (`src/kwp.c`, ~900 lignes). La keymap est lue et découpée en trois matrices `keymap_basic[14][4]`, `keymap_shift[14][4]`, `keymap_altgr[14][4]` (14 colonnes × 4 rangées) ; les caractères sont traités en `wchar_t`. Pour chaque caractère possible, `setup_cs()` construit une table `map[16][3][9]` : par distance (jusqu'à 16), par modificateur (basic/shift/altgr) et par direction (9) — chaque entrée étant le caractère atteint (ou invalide si hors du clavier).
 
@@ -178,7 +178,7 @@ Les routes sont parsées en `repeat[32]` (pas par changement de direction, hex 1
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -214,7 +214,7 @@ kwp [options]... basechars-file keymap-file routes-file
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -242,7 +242,7 @@ kwp [options]... basechars-file keymap-file routes-file
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -284,7 +284,7 @@ hcxpcapngtool capture.cap -o /tmp/wpa.hc22000
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer le dépôt et compiler** :
    ```bash
@@ -312,7 +312,7 @@ hcxpcapngtool capture.cap -o /tmp/wpa.hc22000
    ```
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : WPA2-PSK avec keymap AZERTY (cible francophone)
 
@@ -344,7 +344,7 @@ Utiliser les routes exhaustives courtes pour un bruteforce discipliné, et les g
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -356,7 +356,7 @@ Utiliser les routes exhaustives courtes pour un bruteforce discipliné, et les g
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -369,7 +369,7 @@ Utiliser les routes exhaustives courtes pour un bruteforce discipliné, et les g
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -408,7 +408,7 @@ alert tcp any any -> any 445 (msg:"Potential password spray - many SMB errors fr
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — générer en parallèle sur plusieurs keymaps et concaténer
@@ -440,7 +440,7 @@ p.wait()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Formats : texte brut sur stdout (un candidat par ligne) ou fichier via `-o` (en mode append). Les candidats sont écrits dans l'ordre des routes puis des basechars ; la sortie est tamponnée et vidée en bloc (`out_flush`), ce qui la rend efficace en pipeline.
 
@@ -466,7 +466,7 @@ p.stdout.close()
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 hcxpcapngtool (handshake WPA) → kwp (walks) → hashcat -m 22000 → PMKID/WPA2 cracké
@@ -474,18 +474,18 @@ kwp → hashcat -r rules (OneRuleToRuleThemAll) → NetNTLM/NTLM
 SecLists / Crunch / CUPP → compléments de mots de passe classiques
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - hashcat|hashcat]] — consommateur principal (pipeline stdout)
 - [[Outil - aircrack-ng|aircrack-ng]] / `hcxpcapngtool` — capture et conversion des handshakes WPA
 - [[Outil - John the Ripper|John the Ripper]] — alternative de cracking (stdin)
 - [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] — règles de mutation appliquées aux walks
 - [[Outil - Crunch|Crunch]] et [[Outil - CUPP|CUPP]] — complément génération par masque / par profil
 - [[Outil - SecLists|SecLists]] et [[Outil - rsmangler|rsmangler]] — wordlists classiques à croiser
-- [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Attaques WiFi - WPA2 PSK|WPA2-PSK]] · [[Techniques/Attaques WiFi - PMKID|PMKID]] · [[Techniques/Password Cracking|🔐 Password Cracking]]
+- [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Attaques WiFi - WPA2 PSK|WPA2-PSK]] · [[Techniques/Attaques WiFi - PMKID|PMKID]] · [[Techniques/Password Cracking| Password Cracking]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -499,13 +499,13 @@ SecLists / Crunch / CUPP → compléments de mots de passe classiques
 
 ---
 
-## ⚡ Performance
+## Performance
 
 kwprocessor est écrit en C : la génération est très rapide et consomme peu de mémoire (les tables de mapping sont précalculées en `wchar_t`). Le volume de candidats est dicté par la formule `basechars × (dist × mod × dir)^changes` : passer de 4 directions (défaut) à 9 (`-0`) multiplie déjà le keyspace par 2,25 par changement ; ajouter Shift/AltGr le multiplie encore. Les routes longues (fichier `2-to-32-max-5-direction-changes.route` fait 1 Mo à lui seul, donc potentiellement des milliards de mots) sont réservées au cracking GPU. Pour des routes raisonnables (`2-to-10-max-3`), la sortie tient dans quelques Mo et s'écoule sans effort sur un disque ou dans un pipe. Préférer toujours le pipeline stdout → hashcat plutôt que le fichier intermédiaire.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -541,13 +541,13 @@ kwprocessor est écrit en C : la génération est très rapide et consomme peu d
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 kwprocessor est un générateur local, sans réseau ni télémétrie : aucun risque de fuite lié à l'outil lui-même. En revanche, les wordlists produites reflètent les dispositions de clavier les plus courantes : leur simple présence sur un poste de travail peut signaler une activité de préparation d'attaque à un EDR. La sortie peut atteindre plusieurs centaines de Mo pour les grandes routes : surveiller l'espace disque et le volume écrit (les logs d'antivirus s'emballent sur les gros fichiers de mots de passe). Comme toujours pour un outil offensif, l'usage est réservé aux périmètres autorisés (audit, lab, CTF).
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de caractères 8 bits** : les touches accentuées (é, à, ç) et caractères étendus doivent être espacées dans la keymap — les candidats accentués ne sont pas générés.
 - **Pas de doublons contrôlés par design** : la contrainte « direction différente » limite les figures, certaines formes avec répétition de touche exigent `-5 1`.
@@ -558,7 +558,7 @@ kwprocessor est un générateur local, sans réseau ni télémétrie : aucun ris
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Génération par défaut (en-us, droites, basic)
@@ -591,7 +591,7 @@ kwprocessor est un générateur local, sans réseau ni télémétrie : aucun ris
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -600,11 +600,11 @@ kwprocessor est un générateur local, sans réseau ni télémétrie : aucun ris
 | **Commande principale** | `./kwp basechars/full.base keymaps/en-us.keymap routes/2-to-10-max-3-direction-changes.route` |
 | **Alternative principale** | Crunch (masques), CUPP/Mentalist (profil humain) |
 | **Concepts importants** | Basechar, keymap (12 lignes), route, 9 directions × 3 modificateurs, pas de doublons |
-| **Liens associés** | [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - hashcat|hashcat]] |
+| **Liens associés** | [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Password Cracking| Password Cracking]] · [[Outil - hashcat|hashcat]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -615,17 +615,17 @@ kwprocessor est un générateur local, sans réseau ni télémétrie : aucun ris
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > Pipe directement dans hashcat : évite d'écrire des centaines de Mo sur disque. Teste plusieurs routes (exhaustive, direction-changes, combinator) — chaque route couvre des figures différentes. Active `-s 1` seulement si la politique de la cible exige des majuscules, sinon tu multiplies le volume pour peu de gains. Pour les cibles francophones, utilise la keymap fournie `keymaps/fr.keymap` (AZERTY). Commence par `wc -l` pour calibrer le volume avant un gros run.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > L'ordre des arguments est strict : `basechars keymap routes`. Les fichiers réels s'appellent `keymaps/en-us.keymap` et `routes/2-to-10-max-3-direction-changes.route` (pas `en.keymap` ni `3-to-3-exhaustive`). Les options `-s`, `-a`, `-1` à `-9` attendent un argument `0`/`1` (`-s 1`), seuls `-z`, `-c`, `-0` sont des raccourcis sans argument. Certaines routes sont énormes (`2-to-32-max-5` fait 1 Mo à lui seul) : vérifie le keyspace avant. Sans keymap adaptée (AZERTY vs QWERTY), les candidats ne correspondent pas aux habitudes de la cible.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ kwprocessor est un générateur local, sans réseau ni télémétrie : aucun ris
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hashcat|hashcat]] · [[Outil - aircrack-ng|aircrack-ng]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Password Cracking|🔐 Password Cracking]]
+**Liens :** [[Tools| Outils]] · [[Outil - hashcat|hashcat]] · [[Outil - aircrack-ng|aircrack-ng]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|Attaques WiFi]] · [[Techniques/Password Cracking| Password Cracking]]

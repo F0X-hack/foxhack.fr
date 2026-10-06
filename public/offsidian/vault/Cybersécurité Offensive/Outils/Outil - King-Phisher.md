@@ -1,7 +1,7 @@
 ---
 title: "Outil - King-Phisher"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://king-phisher.readthedocs.io
 doc: https://king-phisher.readthedocs.io
 ---
 
-# 👑 King-Phisher — Framework complet de phishing et de sensibilisation
+# King-Phisher — Framework complet de phishing et de sensibilisation
 
 > [!info] **En 1 phrase**
 > King-Phisher est un framework open source pour créer, déployer et analyser des campagnes de phishing, avec un serveur central, un client GUI, une API et des capacités de credential harvesting et de tracking.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | King-Phisher |
 | Description | Framework client-serveur de gestion de campagnes de phishing : serveur central (campagnes, cibles, métriques), client GUI GTK, credential harvesting, tracking et plugins |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing Campaign Management |
 | Type d'outil | Application client-serveur (Python) |
 | Licence | BSD 3-Clause |
@@ -49,7 +49,7 @@ doc: https://king-phisher.readthedocs.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 King-Phisher est un framework de phishing développé par Andrew Hay pour RSA Security, construit sur une architecture **client-serveur**. Le **serveur** centralise les campagnes, les templates d'emails, les landing pages, les cibles et toutes les métriques (stockage PostgreSQL ou SQLite), tandis que le **client** graphique (GTK) permet à un opérateur de piloter plusieurs serveurs à distance depuis une seule interface. Cette mutualisation le distingue de la plupart des outils concurrents : une équipe d'engagement peut gérer des dizaines de campagnes sur plusieurs VPS tout en agrégeant les résultats dans le client.
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -90,7 +90,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Paquet Kali Linux
 
@@ -115,14 +115,14 @@ docker run -d -p 8000:8000 -p 443:443 --name kp kingphisher/king-phisher:latest
 # Vérifier le tag disponible ; l'image officielle n'est plus mise à jour depuis 2020
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le projet d'origine (Python 2) ne compile plus sur les systèmes récents : utiliser le fork `CrimsonForge-io/king-phisher` ou l'installation par paquet Kali.
 > - Le client GTK requiert un affichage graphique (X11/Wayland) ; en SSH, utiliser le client seul sur sa machine et un serveur distant.
 > - Les ports 8000 (protocole client-serveur) et 443 (phishing) doivent être libres.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait dans **`server_config.py`** (serveur) et via l'interface du client pour les profils SMTP, templates et campagnes.
 
@@ -156,7 +156,7 @@ phishing_server = {
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 King-Phisher est découpé en deux composants Python distincts :
 
@@ -171,7 +171,7 @@ Flux d'exécution : le client crée la campagne → le serveur génère les URLs
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ ss -tlnp | grep -E ':(8000|443)'
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -218,7 +218,7 @@ ss -tlnp | grep -E ':(8000|443)'
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -257,7 +257,7 @@ echo "Martin,Marie,marie.martin@corp.local" >> cibles.csv
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Démarrer le serveur** — `sudo king-phisher-server`, noter l'adresse (ex : 10.10.20.15) et le port 8000.
    ```bash
@@ -280,7 +280,7 @@ echo "Martin,Marie,marie.martin@corp.local" >> cibles.csv
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : campagne multi-serveurs mutualisée
 
@@ -319,7 +319,7 @@ L'agrégation multi-serveurs permet de répartir l'envoi (éviter les limites an
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -332,7 +332,7 @@ L'agrégation multi-serveurs permet de répartir l'envoi (éviter les limites an
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -347,7 +347,7 @@ L'agrégation multi-serveurs permet de répartir l'envoi (éviter les limites an
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -390,7 +390,7 @@ alert tcp any any -> any 443 (msg:"ET Phishing credentials POST to landing page"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — vérifier la disponibilité du serveur et du serveur de phishing
@@ -417,7 +417,7 @@ ss.close()
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 King-Phisher agrège les métriques par cible : **envoyé**, **ouvert**, **cliqué**, **soumis**, avec horodatage. L'export se fait par le client (CSV).
 
@@ -437,9 +437,9 @@ with open("rapport_campagne.csv", newline="", encoding="utf-8") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - GoPhish]] — successeur moderne (API REST, interface web) pour les nouvelles campagnes
 - [[Outil - SET]] — vecteurs d'email alternatifs (payloads, HTA)
 - [[Outil - BeEF]] — hook du navigateur après clic sur la landing
@@ -452,7 +452,7 @@ Client GTK → Serveur (8000) → PostgreSQL → SMTP → victime → landing (4
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -466,7 +466,7 @@ Client GTK → Serveur (8000) → PostgreSQL → SMTP → victime → landing (4
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Serveur Python : consommation mémoire modérée (dépend de PostgreSQL) ; adapté à des campagnes de quelques milliers de cibles.
 - L'envoi SMTP est séquentiel : pour de gros volumes, multiplier les serveurs (fonctionnalité native multi-serveurs) et espacer les lancements.
@@ -478,7 +478,7 @@ Client GTK → Serveur (8000) → PostgreSQL → SMTP → victime → landing (4
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -508,7 +508,7 @@ Client GTK → Serveur (8000) → PostgreSQL → SMTP → victime → landing (4
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Protocole client-serveur** : chiffré par TLS (port 8000) — générer un certificat dédié, ne pas exposer hors réseau d'engagement.
 - **Authentification** : comptes opérateurs gérés par le serveur — restreindre les droits et changer les mots de passe par défaut.
@@ -519,7 +519,7 @@ Client GTK → Serveur (8000) → PostgreSQL → SMTP → victime → landing (4
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Projet non maintenu** : dernière release v1.4.1 (2020), dépendances obsolètes (Python 2 côté historique).
 - Pas de phishing 2FA persistant : la capture d'un OTP ne donne pas une session rejouable (utiliser Evilginx2).
@@ -530,7 +530,7 @@ Client GTK → Serveur (8000) → PostgreSQL → SMTP → victime → landing (4
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Lancer le serveur et le client
@@ -557,7 +557,7 @@ echo "Dupont,Jean,jean.dupont@corp.local" > cibles.csv
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -570,7 +570,7 @@ echo "Dupont,Jean,jean.dupont@corp.local" > cibles.csv
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -583,15 +583,15 @@ echo "Dupont,Jean,jean.dupont@corp.local" > cibles.csv
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez les **variables de template** (`{{FirstName}}`, `{{Organization}}`) : un email personnalisé passe mieux les filtres anti-spam et attire plus de clics.
 > - Activez le **tracking d'ouverture** et paramétrez la redirection post-capture vers le vrai site : le test reste discret.
 > - Exploitez la fonctionnalité **multi-serveurs** native pour répartir l'envoi et agréger les métriques dans un seul client.
 > - Exportez les métriques en **CSV** pour votre rapport : les statistiques de King-Phisher s'intègrent directement à une présentation.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le projet n'est **plus maintenu** : sur un système récent, l'installation depuis le dépôt d'origine échoue — utiliser le paquet Kali ou le fork `CrimsonForge-io/king-phisher`.
 > - Le serveur doit rester accessible depuis le client : vérifiez le port **8000** dans le firewall.
 > - Sans SMTP correctement configuré (SPF/DKIM), les emails partent en spam et faussent les résultats.
@@ -599,7 +599,7 @@ echo "Dupont,Jean,jean.dupont@corp.local" > cibles.csv
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -622,4 +622,4 @@ echo "Dupont,Jean,jean.dupont@corp.local" > cibles.csv
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SET|SET]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - BeEF|BeEF]]
+**Liens :** [[Tools| Outils]] · [[Outil - GoPhish|GoPhish]] · [[Outil - SET|SET]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - BeEF|BeEF]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ☀️ AS-REP Roasting
+# AS-REP Roasting
 
 > [!info] **En 1 phrase**
 > AS-REP Roasting = viser les comptes AD avec **"Do not require Kerberos preauthentication"** :
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -34,14 +34,14 @@ sequenceDiagram
 ```
 
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > La pre-authentification Kerberos (chiffrer un timestamp avec son hash) est là pour
 > empêcher le cracking offline. Si un compte l'a **désactivée**, le KDC renvoie un TGT
 > chiffré avec la clé de l'utilisateur → **offline cracking sans contact préalable**.
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Lister les comptes** avec `UF_DONT_REQUIRE_PREAUTH` (bit `0x400000` de `userAccountControl`).
 2. **Demander un TGT** pour chacun (sans mot de passe).
@@ -49,7 +49,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Impacket (Linux) - il faut une liste d'utilisateurs
@@ -66,7 +66,7 @@ john --format=krb5asrep asrep.txt --wordlist=rockyou.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -75,18 +75,18 @@ john --format=krb5asrep asrep.txt --wordlist=rockyou.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Quasi identique au Kerberoast, mais sans creds**
+> [!tip] **Quasi identique au Kerberoast, mais sans creds**
 > Le Kerberoast exige un compte de domaine ; l'AS-REP roast peut se faire **anonyme** si l'énumération des utilisateurs a réussi (ex : via RID brute).
 
-> [!warning] ⚠️ **Piège** : les comptes **machines** ne sont jamais AS-REP roastables. Filtre-les.
+> [!warning] **Piège** : les comptes **machines** ne sont jamais AS-REP roastables. Filtre-les.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[Kerberoasting|🧀 Kerberoasting]]
-- [[Password Cracking|🔐 Password Cracking]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[Kerberoasting| Kerberoasting]]
+- [[Password Cracking| Password Cracking]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

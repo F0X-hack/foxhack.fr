@@ -9,7 +9,7 @@
  *
  * Position et taille se règlent avec les classes Tailwind passées en `className`.
  *
- * ⚠️ Le ton est transmis par variable CSS inline, pas par une classe
+ * Le ton est transmis par variable CSS inline, pas par une classe
  * `spotlight--${tone}` : Tailwind analyse le code source de façon statique et purgerait
  * une classe composée dynamiquement. Les classes littérales ci-dessous, elles,
  * sont bien détectées.

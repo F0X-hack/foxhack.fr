@@ -12,26 +12,26 @@ statut: publie
 
 
 
-# 💾 Dump NTDS.dit
+# Dump NTDS.dit
 
 > [!info] **En 1 phrase**
 > NTDS.dit = la **base de données AD** (sur chaque DC) qui contient **tous les hashes NTLM/AES du domaine** —
 > le dumper = avoir **tous les mots de passe** (en hash) d'un seul coup.
 
-> [!info] 💡 **Principe**
+> [!info] **Principe**
 > NTDS.dit est chiffré avec la **SYSTEM hive** (SYSKEY). Il faut donc **les deux fichiers** :
 > `ntds.dit` **+** `SYSTEM` (`C:\Windows\System32\config\SYSTEM`) → `secretsdump.py LOCAL`.
 
 ---
 
-## 🎯 Les sources de hashes
+## Les sources de hashes
 
 ```mermaid
 flowchart TB
     D[DC / machine compromise] --> A1[DCSync<br>réplication]
     D --> A2[NTDS.dit + SYSTEM<br>fichiers]
     D --> A3[Mémoire LSASS<br>mimikatz sekurlsa]
-    A1 --> H[🎯 Tous les hashes NTLM/AES]
+    A1 --> H[Tous les hashes NTLM/AES]
     A2 --> H
     A3 --> H
     H --> C[hashcat -m 1000 / PtH direct]
@@ -39,15 +39,15 @@ flowchart TB
 
 | Méthode | Simplicité | Discrétion | Outils |
 |---|---|---|---|
-| **DCSync** | ⭐⭐⭐ | ⭐ | `secretsdump -just-dc`, mimikatz `lsadump::dcsync` |
-| **VSS (Volume Shadow Copy)** | ⭐⭐ | ⭐⭐⭐ | `vssadmin`, `nxc --ntds vss` |
-| **ntdsutil IFM** | ⭐⭐ | ⭐⭐ | `ntdsutil` (compte admin requis) |
-| **Mémoire (LSASS)** | ⭐ | ⭐⭐⭐⭐ | mimikatz `sekurlsa::krbtgt` / `lsadump::lsa` |
-| **Forensics (dumpit/volatility)** | ⭐ | ⭐⭐⭐⭐⭐ | `dumpit` + `volatility` |
+| **DCSync** | | | `secretsdump -just-dc`, mimikatz `lsadump::dcsync` |
+| **VSS (Volume Shadow Copy)** | | | `vssadmin`, `nxc --ntds vss` |
+| **ntdsutil IFM** | | | `ntdsutil` (compte admin requis) |
+| **Mémoire (LSASS)** | | | mimikatz `sekurlsa::krbtgt` / `lsadump::lsa` |
+| **Forensics (dumpit/volatility)** | | | `dumpit` + `volatility` |
 
 ---
 
-## 🛠️ Méthodes détaillées
+## Méthodes détaillées
 
 ### 1. DCSync (le plus simple, le plus bruyant)
 
@@ -64,7 +64,7 @@ nxc smb 10.10.10.10 -u admin -p pass --ntds            # dump via ntdsutil
 nxc smb 10.10.10.10 -u admin -p pass --ntds vss        # dump via VSS (plus discret)
 ```
 
-> [!warning] ⚠️ **OPSEC** : la réplication **se fait toujours entre 2 ordinateurs** → un DCSync
+> [!warning] **OPSEC** : la réplication **se fait toujours entre 2 ordinateurs** → un DCSync
 > depuis un compte utilisateur peut lever des alertes. Les **comptes machines** (`DC$`) et
 > Domain/Enterprise Admins peuvent le faire.
 
@@ -120,7 +120,7 @@ python ntdissector/tools/user_to_secretsdump.py *.json
 
 ---
 
-## 🔍 Bonus : reversible encryption (mdp en clair !)
+## Bonus : reversible encryption (mdp en clair !)
 
 > Les comptes avec `userAccountControl` bit `0x80` ("Store passwords using reversible encryption")
 > ont leur mdp stocké **chiffré mais réversible** → secretsdump les affiche **en clair**.
@@ -131,7 +131,7 @@ Get-ADUser -Filter 'userAccountControl -band 128' -Properties userAccountControl
 
 ---
 
-## 📊 Tableau des hashes extraits (hashcat)
+## Tableau des hashes extraits (hashcat)
 
 | Type | Mode hashcat | Note |
 |---|---|---|
@@ -147,7 +147,7 @@ hashcat -m 1000 ntds-hashes.txt rockyou.txt -O -w 4
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -157,7 +157,7 @@ hashcat -m 1000 ntds-hashes.txt rockyou.txt -O -w 4
 | **Credential Guard** | Isole les secrets du LSASS (mémoire) |
 | **Monitorer vssadmin / ntdsutil** | Logs de commandes système sensibles |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **NTDS + SYSTEM = même moment** : la SYSTEM hive doit correspondre au moment du dump (SYSKEY change au reboot).
 - Les **hashes AES256** sont aussi dans NTDS (utile pour [[Kerberos Delegation|délégation]] / tickets).
@@ -167,8 +167,8 @@ hashcat -m 1000 ntds-hashes.txt rockyou.txt -O -w 4
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [InternalAllTheThings — NTDS Dumping](https://github.com/swisskyrepo/InternalAllTheThings/blob/main/docs/active-directory/ad-adds-ntds-dumping.md)
 > - [Bypassing EDR NTDS.dit protection using BlueTeam tools](https://medium.com/@0xcc00/bypassing-edr-ntds-dit-protection-using-bluteteam-tools-1d161a554f9f)
 
-➡️ Liens : [[DCsync|📥 DCsync]] · [[Password Cracking|🔓 Password Cracking]] · [[05 - Active Directory|👑 Active Directory]]
+Liens : [[DCsync| DCsync]] · [[Password Cracking| Password Cracking]] · [[05 - Active Directory| Active Directory]]

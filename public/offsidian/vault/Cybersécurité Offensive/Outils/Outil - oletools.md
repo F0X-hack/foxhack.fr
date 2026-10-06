@@ -1,7 +1,7 @@
 ---
 title: "Outil - oletools"
 type: outil
-categorie: 🧬 Malware & Sandbox
+categorie: Malware & Sandbox
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.decalage.info/python/oletools
 doc: https://www.decalage.info/python/oletools
 ---
 
-# 🧬 oletools — Analyse des documents Office malveillants
+# oletools — Analyse des documents Office malveillants
 
 > [!info] **En 1 phrase**
 > oletools est la boîte à outils Python de référence pour inspecter les fichiers Office (doc, xls, ppt, rtf) et extraire ou désobfusquer les macros VBA, objets OLE et liens DDE utilisés par les malwares.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | oletools (OLE tools / suite d'analyse des documents Office) |
 | Description | Boîte à outils Python en ligne de commande et en bibliothèque : diagnostic (`oleid`), extraction et désobfuscation de macros VBA (`olevba`), extraction d'objets OLE (`oleobj`), analyse RTF (`rtfobj`), métadonnées (`olemeta`), et plus |
-| Catégorie | 🧬 Malware & Sandbox |
+| Catégorie | Malware & Sandbox |
 | Sous-catégorie | Analyse statique de documents Office — macros VBA / OLE / DDE |
 | Fonction principale | Détecter et extraire le contenu malveillant des documents Office (macro, OLE, DDE) sans les ouvrir |
 | Type d'outil | Suite CLI + bibliothèque Python |
@@ -50,7 +50,7 @@ doc: https://www.decalage.info/python/oletools
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Les documents Office restent un vecteur d'intrusion majeur : macros VBA, objets OLE embarqués, DDE, équations OLE et liens externes permettent de délivrer des droppers en une interaction. oletools regroupe des utilitaires en ligne de commande spécialisés : `oleid` dresse un diagnostic rapide des risques, `olevba` extrait et analyse les macros VBA (avec désobfuscation et détection des IOCs comme `URLDownloadToFile`, `WScript.Shell`, `Shell`), `rtfobj` récupère les objets embarqués dans les fichiers RTF, `olemeta` lit les métadonnées, et `oleobj` extrait les objets OLE de fichiers OLE.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation via pip (Python 3) :
 
@@ -104,14 +104,14 @@ for path, filename, stream, code in parser.extract_macros():
     print(filename, code[:500])
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Python 3** : oletools requiert Python 3.x (les anciennes versions de l'outil dépendaient de `olefile`, inclus par défaut).
 > - **Fichiers chiffrés** : un document protégé par mot de passe doit d'abord être déchiffré avec `msoffcrypto-tool`.
 > - **Fichiers OOXML (docx/xlsx)** : les macros y sont dans des fichiers `.bin` OLE séparés ; `olevba` les analyse via le flux approprié.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 oletools est utilisé en ligne de commande, sans configuration globale. Les principaux réglages sont passés en arguments :
 
@@ -129,7 +129,7 @@ oletools est utilisé en ligne de commande, sans configuration globale. Les prin
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **`olefile`** : bibliothèque de lecture des fichiers OLE/CFB (métadonnées, flux, répertoires).
 - **`oletools.olevba.VBA_Parser`** : analyseur de macros VBA — localise les flux `VBA`, décode les compressés, extrait le code et applique des heuristiques d'IOCs.
@@ -154,7 +154,7 @@ flowchart TD
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -194,7 +194,7 @@ mraptor -a dropper.doc
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -214,7 +214,7 @@ mraptor -a dropper.doc
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -259,7 +259,7 @@ mraptor -a dropper.doc
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Triage rapide** — identifier la menace sans l'ouvrir.
 
@@ -290,7 +290,7 @@ mraptor -a dropper.doc
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Macro obfusquée avec charge PowerShell
 
@@ -339,7 +339,7 @@ python3 submit.py --package doc --timeout 120 facture.doc
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -352,7 +352,7 @@ python3 submit.py --package doc --timeout 120 facture.doc
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -369,7 +369,7 @@ python3 submit.py --package doc --timeout 120 facture.doc
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -416,7 +416,7 @@ rule Office_Macro_VBA_Present
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — triage d'un lot de pièces jointes et extraction des payloads
@@ -447,7 +447,7 @@ for macro in data.get("macros", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **`oleid`** : texte lisible (score de risque, flags macros/DDE/OLE).
 - **`olevba -j`** : JSON structuré (IOCs, macros, décodages) pour les pipelines.
@@ -475,16 +475,16 @@ for _, _, _, code in parser.extract_macros():
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - REMnux]] — suite préinstallée sur la distribution d'analyse
 - [[Outil - CAPE]] / [[Outil - Cuckoo Sandbox]] — exécution dynamique des documents (package `doc`) pour confirmer le comportement
 - [[Outil - YARA]] — signatures sur les documents et payloads extraits
 - [[Outil - MISP]] — publication des IOCs issus des macros
 - [[Outil - Flare VM]] — distribution Windows avec oletools installable
 - [[Outil - Ghidra]] — analyse du payload extrait (statique)
-- [[09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ```text
 Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + MISP → SOC
@@ -492,7 +492,7 @@ Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + 
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -506,7 +506,7 @@ Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + 
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - `oleid` : quasi instantané (parcours des flux OLE).
 - `olevba -a -c --decode` : de l'ordre de la seconde pour un document classique ; plus lent sur les gros fichiers ou les macros XLM volumineuses.
@@ -516,7 +516,7 @@ Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + 
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -552,7 +552,7 @@ Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Lecture seule** : oletools n'exécute jamais le code des macros — analyse statique sûre.
 - **Artefacts** : les fichiers extraits (`rtfobj -s`) sont des malwares potentiels ; les hasher et les conserver dans un emplacement contrôlé.
@@ -562,7 +562,7 @@ Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + 
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - La désobfuscation n'est jamais totale : les constructions maison (concaténation, XOR, chiffrement custom) exigent de l'analyse manuelle.
 - `olevba` n'exécute rien : certains comportements ne se révèlent qu'à l'exécution (sandbox).
@@ -573,7 +573,7 @@ Pièce jointe → oletools (oleid/olevba/rtfobj) → macro + payload → YARA + 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Diagnostic rapide
@@ -609,7 +609,7 @@ mraptor -a facture.doc
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -622,7 +622,7 @@ mraptor -a facture.doc
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -634,15 +634,15 @@ mraptor -a facture.doc
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lancez toujours `oleid` en premier : il dit en une seconde si le fichier mérite une analyse VBA approfondie.
 > - `olevba -c --decode` donne le code quasi-désobfusqué : croisez les strings extraites avec les IOCs connus.
 > - Pour les fichiers chiffrés par mot de passe, utilisez `msoffcrypto-tool` avant l'analyse.
 > - Utilisez `olevba -j` en sortie JSON pour automatiser l'ingestion des IOCs dans un SIEM ou MISP.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un document sans macros n'est pas innocent : il peut encore contenir un objet OLE, du DDE ou un lien externe.
 > - La désobfuscation n'est jamais totale : les constructions maison (concaténation, XOR) demandent encore de l'analyse manuelle.
 > - Les macros XLM (4.0) sont invisibles pour certains scanners : vérifiez `oleid` pour le flag « Excel 4.0 » avant de conclure.
@@ -650,7 +650,7 @@ mraptor -a facture.doc
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -672,4 +672,4 @@ mraptor -a facture.doc
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outils/Outil - REMnux|🔬 REMnux]] · [[Outils/Outil - Cuckoo Sandbox|🧬 Cuckoo Sandbox]] · [[Outils/Outil - CAPE|🧬 CAPE]] · [[Outils/Outil - YARA|🔎 YARA]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+**Liens :** [[Tools| Outils]] · [[Outils/Outil - REMnux| REMnux]] · [[Outils/Outil - Cuckoo Sandbox| Cuckoo Sandbox]] · [[Outils/Outil - CAPE| CAPE]] · [[Outils/Outil - YARA| YARA]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]

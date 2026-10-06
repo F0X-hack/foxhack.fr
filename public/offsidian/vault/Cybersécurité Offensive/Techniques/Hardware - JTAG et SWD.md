@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 🔧 JTAG et SWD
+# JTAG et SWD
 
 > [!info] **En 1 phrase**
 > JTAG/SWD = le **débogueur matériel** des microcontrôleurs : s'il n'est pas protégé, on a
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Moyenne → Élevée |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     DBG["Debugger<br>OpenOCD"] -->|"JTAG/SWD"| MCU["µC"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > JTAG (IEEE 1149.1) est la norme de debug/test. SWD est la version ARM compacte (2 fils). Si non désactivées en production, elles offrent un accès mémoire complet.
 
@@ -58,7 +58,7 @@ flowchart TB
     style C fill:#c8e6c9
 ```
 
-> [!info] 💡 **Ce que permet JTAG/SWD**
+> [!info] **Ce que permet JTAG/SWD**
 > - **Dump firmware** complet.
 > - **Lecture/écriture** RAM et registres.
 > - **Breakpoints** → reverse dynamique.
@@ -66,7 +66,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Signaux JTAG
 
@@ -96,7 +96,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 | Outil | Usage | Prix |
 |---|---|---|
@@ -119,7 +119,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 | Paramètre | JTAG | SWD |
 |---|---|---|
@@ -131,7 +131,7 @@ flowchart TB
 
 ---
 
-## 🔍 Identifier les broches JTAG
+## Identifier les broches JTAG
 
 ### Méthodes
 
@@ -175,7 +175,7 @@ Résistance 33Ω en série sur chaque pin testée
 
 ---
 
-## 🛠️ Exploitation (OpenOCD)
+## Exploitation (OpenOCD)
 
 ### Dump firmware
 
@@ -221,11 +221,11 @@ avrdude -p m128 -c jtagmkI -P /dev/ttyUSB0 -U flash:r:flash.bin:r
 
 ---
 
-## 🚧 Les protections (RDP / lock bits)
+## Les protections (RDP / lock bits)
 
 | Protection | Effet | Contournement |
 |---|---|---|
-| AVR lock bits | Bloque lecture flash | Efface tout ⚠️ |
+| AVR lock bits | Bloque lecture flash | Efface tout |
 | STM32 RDP Level 1 | Pas de dump debug | Glitching possible |
 | STM32 RDP Level 2 | Debug irréversible | EM fault injection |
 | Read-protect + vérif | Dump mais code vérifie | Patch via debug |
@@ -243,9 +243,9 @@ flowchart TB
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Dump STM32
+### Débutant — Dump STM32
 
 ```bash
 sudo openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg \
@@ -253,7 +253,7 @@ sudo openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg \
 binwalk firmware.bin
 ```
 
-### 🟡 Intermédiaire — Énumération JTAG
+### Intermédiaire — Énumération JTAG
 
 ```bash
 # 1. Connecter broches candidates à JTAGenum
@@ -263,7 +263,7 @@ binwalk firmware.bin
 # 5. Dump
 ```
 
-### 🔴 Avancé — Bypass RDP Level 1
+### Avancé — Bypass RDP Level 1
 
 ```python
 import serial, time
@@ -277,7 +277,7 @@ for delay in range(100, 500, 10):
 ser.close()
 ```
 
-### ⚫ Expert — Scan chain multi-device
+### Expert — Scan chain multi-device
 
 ```bash
 sudo openocd -f interface/jlink.cfg \
@@ -289,7 +289,7 @@ sudo openocd -f interface/jlink.cfg \
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -297,9 +297,9 @@ flowchart TB
     B --> C["Connecter debugger"]
     C --> D["OpenOCD dump"]
     D --> E{"Protection ?"}
-    E -->|"aucune"| F["🟢 Dump complet"]
-    E -->|"RDP 1"| G["⚠️ Glitching"]
-    E -->|"RDP 2"| H["❌ EM fault"]
+    E -->|"aucune"| F["Dump complet"]
+    E -->|"RDP 1"| G["Glitching"]
+    E -->|"RDP 2"| H["EM fault"]
     F --> I["Analyse binwalk/strings"]
     style F fill:#c8e6c9
 ```
@@ -314,7 +314,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Routeur : dump firmware JTAG
 
@@ -324,7 +324,7 @@ flowchart TB
 | **Matériel** | J-Link, pinces |
 | **Étapes** | Trouver broches → JTAGenum → OpenOCD → dump |
 | **Résultat** | Firmware complet → Ghidra |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — STM32 : bypass RDP1
 
@@ -333,11 +333,11 @@ flowchart TB
 | **Objectif** | Dump firmware STM32F4 RDP1 |
 | **Matériel** | ChipWhisperer, ST-Link |
 | **Étapes** | Voltage glitch → réactivation debug → dump |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -353,7 +353,7 @@ flowchart TB
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -371,7 +371,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -383,7 +383,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 import subprocess, os
@@ -405,7 +405,7 @@ jtag_dump("stlink-v2", "stm32f1x", "firmware.bin")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 binwalk firmware.bin
@@ -416,11 +416,11 @@ radare2 -q -c 'aaa; afl' firmware.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - JTAG et SWD]] (cette fiche)
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
 
 | Outil | Usage |
 |---|---|
@@ -430,7 +430,7 @@ radare2 -q -c 'aaa; afl' firmware.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -440,7 +440,7 @@ radare2 -q -c 'aaa; afl' firmware.bin
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur |
 |---|---|
@@ -450,7 +450,7 @@ radare2 -q -c 'aaa; afl' firmware.bin
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -465,7 +465,7 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -479,7 +479,7 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -489,7 +489,7 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -508,7 +508,7 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -520,7 +520,7 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -530,7 +530,7 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Mesure d'abord** : continuité GND, tensions avant brancher debugger.
 - **Dump peut être énorme** → stocke proprement.
@@ -541,9 +541,9 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — JTAG](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/debug-interfaces/jtag.md)
 > - [JTAG HDD — wrongbaud](https://wrongbaud.github.io/posts/jtag-hdd/)
 
@@ -555,4 +555,4 @@ lsusb | grep -i "st-link\|jlink"
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - Fault Injection|⚡ Fault Injection]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - Fault Injection| Fault Injection]]

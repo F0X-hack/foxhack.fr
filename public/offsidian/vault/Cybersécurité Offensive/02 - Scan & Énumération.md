@@ -1,10 +1,10 @@
-# 🔍 Scan & Énumération
+# Scan & Énumération
 
 > [!info] **C'est quoi ?**
 > La phase où l'on **cartographie** la cible : ports ouverts, services, versions,
 > utilisateurs, partages, vulnérabilités connues. C'est **le cœur** du pentest.
 
-> 🧰 **Outils associés :** [[Outils/Outil - Nmap|Nmap]] · [[Outils/Outil - Masscan|Masscan]] · [[Outils/Outil - RustScan|RustScan]] · [[Outils/Outil - nuclei|nuclei]] → voir [[Tools|🧰 Bibliothèque d'Outils]]
+> **Outils associés :** [[Outils/Outil - Nmap|Nmap]] · [[Outils/Outil - Masscan|Masscan]] · [[Outils/Outil - RustScan|RustScan]] · [[Outils/Outil - nuclei|nuclei]] → voir [[Tools| Bibliothèque d'Outils]]
 
 ---
 
@@ -673,7 +673,7 @@ nxc ldap 192.168.1.10 -u user -p pass --get-netbios
 | `msDS-AllowedToDelegateTo` | Delegation autorisée |
 | `ms-Mcs-AdmPwd` | Mot de passe LAPS |
 
-Voir [[05 - Active Directory|👑 Active Directory]] pour les attaques LDAP avancées.
+Voir [[05 - Active Directory| Active Directory]] pour les attaques LDAP avancées.
 
 ---
 
@@ -1445,7 +1445,7 @@ enum4linux-ng -A -J recon/smb/enum.json 192.168.1.10
 
 ### 23.1 Checklist "qu'est-ce que je fais avec un service ouvert ?"
 
-> [!success] 🏆 **Checklist "qu'est-ce que je fais avec un service ouvert ?"**
+> [!success] **Checklist "qu'est-ce que je fais avec un service ouvert ?"**
 >
 > | Service | Questions à se poser |
 > |---|---|
@@ -1486,9 +1486,9 @@ graph TD
 
 ---
 
-## 24. 🧠 Tips & Pièges
+## 24. Tips & Pièges
 
-> [!tip] ⚡ **Le workflow de scan efficace (rapide d'abord)**
+> [!tip] **Le workflow de scan efficace (rapide d'abord)**
 > ```bash
 > # 1. Découverte d'hôtes (avant tout nmap)
 > netdiscover -r 192.168.1.0/24            # ARP (local uniquement)
@@ -1500,7 +1500,7 @@ graph TD
 > ```
 > Passer du temps sur `-sV -sC` sur **tous** les 65535 ports = beaucoup de temps perdu.
 
-> [!tip] 🧊 **ICMP bloqué ?**
+> [!tip] **ICMP bloqué ?**
 > ```bash
 > # Si ping ne répond pas, forcer le scan (ne pas s'arrêter là)
 > nmap -Pn 192.168.1.10
@@ -1508,7 +1508,7 @@ graph TD
 > nmap -sn -PS21,22,80,443 192.168.1.0/24
 > ```
 
-> [!tip] 🐚 **Parsing des résultats (gagner des heures)**
+> [!tip] **Parsing des résultats (gagner des heures)**
 > ```bash
 > # Extraire "IP:port" de tous les scans
 > grep "open" scan.gnmap | cut -d' ' -f2 > hots.txt
@@ -1518,36 +1518,36 @@ graph TD
 > xsltproc scan.xml -o scan.html
 > ```
 
-> [!warning] ⚠️ **Piège n°1 : le scan UDP**
+> [!warning] **Piège n°1 : le scan UDP**
 > `-sU` est **extrêmement lent**. Ne scannes que les top ports (`--top-ports 20`) et
 > prioritise les services UDP critiques : **SNMP (161), DNS (53), NTP (123), TFTP (69)**.
 
-> [!warning] ⚠️ **Piège n°2 : scripts intrusifs en prod**
+> [!warning] **Piège n°2 : scripts intrusifs en prod**
 > `--script vuln` et les scans `-O` peuvent **crasher** des services. Sur un engagement réel,
 > préfère `-sV` propre, puis lance les scripts vuln **ciblés** service par service.
 
-> [!warning] ⚠️ **Piège n°3 : services "muets"**
+> [!warning] **Piège n°3 : services "muets"**
 > Un port ouvert ≠ service exploitable. Un service **sans bannière** (nmap met `unknown`)
 > mérite un test manuel : `nc -nv IP port`, puis le traffic peut être sur `TLS` (`openssl s_client`).
 
-> [!success] 🏆 **La règle d'or de l'énumération**
+> [!success] **La règle d'or de l'énumération**
 > **Chaque service ouvert = une piste d'exploitation potentielle.** Avant de t'acharner sur une
 > vulnérabilité, termine l'énumération complète (SMB + LDAP + Kerberos + HTTP + tous les ports).
 > Souvent la faille "facile" était sur un service que tu n'avais pas encore regardé.
 
-> [!tip] 💡 **Piège n°4 : les faux positifs avec --script vuln**
+> [!tip] **Piège n°4 : les faux positifs avec --script vuln**
 > Nmap retourne parfois des CVE qui ne s'appliquent pas à la version exacte. **Toujours vérifier** la version exacte du service et comparer avec le CVE affiché. Un Apache 2.4.51 ne sera pas vulnérable à une CVE affectant uniquement 2.4.49.
 
-> [!warning] ⚠️ **Piège n°5 : oublier le DNS reverse**
+> [!warning] **Piège n°5 : oublier le DNS reverse**
 > Ne pas oublier de faire un `nmap -sL` ou `dnsreverse` sur les IPs trouvées. Parfois le hostname révèle le rôle de la machine (`dc01`, `sql-prod`, `backup-server`).
 
-> [!tip] 💡 **Piège n°6 : la vitesse vs la fiabilité**
+> [!tip] **Piège n°6 : la vitesse vs la fiabilité**
 > Masscan est 600x plus rapide que Nmap mais **rate 2-5% des ports**. Pour un pentest officiel, toujours compléter avec Nmap sur les ports trouvés. Pour un CTF, Masscan seul suffit souvent.
 
-> [!warning] ⚠️ **Piège n°7 : les scans sur les hosts Windows fragiles**
+> [!warning] **Piège n°7 : les scans sur les hosts Windows fragiles**
 > Certains hôtes Windows anciens crashent avec les scans agressifs. Utiliser `-T2` ou `-T3` et limiter les probes (`--max-retries 2`) pour ne pas interrompre le service.
 
-> [!tip] 💡 **Piège n°8 : le tunnel SSH pour pivoter**
+> [!tip] **Piège n°8 : le tunnel SSH pour pivoter**
 > Si tu compromises un host dans un réseau interne, utilise un tunnel SSH pour y lancer tes scans :
 > ```bash
 > ssh -L 8080:target_internal:80 user@compromised_host
@@ -1696,6 +1696,6 @@ Pour chaque vulnérabilité identifiée, structurer ainsi :
 
 ---
 
-> [!warning] ⚖️ **Rappel légal** : scan = intrusion dans la plupart des juridictions sans autorisation. Lab uniquement !
+> [!warning] **Rappel légal** : scan = intrusion dans la plupart des juridictions sans autorisation. Lab uniquement !
 
-➡️ Suite logique : [[03 - Exploitation Web|🌍 Exploitation Web]] / [[05 - Active Directory|👑 Active Directory]]
+Suite logique : [[03 - Exploitation Web| Exploitation Web]] / [[05 - Active Directory| Active Directory]]

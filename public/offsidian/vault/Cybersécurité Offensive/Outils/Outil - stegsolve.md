@@ -1,7 +1,7 @@
 ---
 title: "Outil - stegsolve"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: http://www.caesum.com/handbook/stego.htm
 doc: http://www.caesum.com/handbook/stego.htm
 ---
 
-# 🖼️ StegSolve — L'analyseur visuel de stéganographie d'images
+# StegSolve — L'analyseur visuel de stéganographie d'images
 
 > [!info] **En 1 phrase**
 > Passez une image pixel par pixel, plan de bits par plan de bits, pour révéler le flag invisible caché dans les couleurs ou les bits de poids faible.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -48,7 +48,7 @@ doc: http://www.caesum.com/handbook/stego.htm
 
 ---
 
-## 🎯 Concept
+## Concept
 
 StegSolve est un petit utilitaire **Java** qui permet d'analyser une image en profondeur. Au lieu de chercher un fichier caché, il explore les **plans de bits** (bit plane) de chaque canal de couleur (R, G, B, A) et propose des opérations **XOR**, **AND** et **OR** entre canaux. Un flag dissimulé via **LSB** (least significant bit) devient alors visible : la technique du LSB encode le message dans les bits de poids faible de chaque pixel, invisibles à l'œil nu. Avec StegSolve, on bascule entre les plans pour faire apparaître le message en clair.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Prérequis : Java
 
@@ -122,14 +122,14 @@ java -jar stegsolve.jar
 java -jar stegsolve.jar image.png
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Java (JRE 8+) obligatoire : `java -version` pour vérifier.
 > - L'ancien lien caesum.com peut être mort : privilégier les forks GitHub (eugenekolo, Giotino) ou le paquet dans `zardus/ctf-tools`.
 > - Certains paquets système (`apt install stegsolve-java`) existent mais peuvent être anciens — vérifier la version.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 StegSolve étant une **GUI Java**, la configuration est limitée : menus d'analyse et paramètres de Data Extract dans l'interface.
 
@@ -147,7 +147,7 @@ StegSolve étant une **GUI Java**, la configuration est limitée : menus d'analy
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Application Java Swing** : interface fenêtrée avec menus (Analyse, Options) et navigation par touches.
 - **Lecture d'images** : utilise les lecteurs Java AWT/ImageIO (PNG, BMP, JPEG, GIF) pour décoder la matrice de pixels RGBA.
@@ -158,7 +158,7 @@ StegSolve étant une **GUI Java**, la configuration est limitée : menus d'analy
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 StegSolve est une **GUI** : il n'y a pas de CLI complète. Les « commandes » sont les actions des menus.
 
@@ -183,7 +183,7 @@ java -jar stegsolve.jar image.png
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 Comme c'est une GUI, les « options » sont les paramètres des boîtes de dialogue :
 
@@ -203,7 +203,7 @@ Comme c'est une GUI, les « options » sont les paramètres des boîtes de dialo
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -253,7 +253,7 @@ java -jar stegsolve.jar
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Ouvrir l'image suspecte** :
    ```bash
@@ -267,7 +267,7 @@ java -jar stegsolve.jar
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : flag réparti entre canaux (XOR)
 
@@ -300,7 +300,7 @@ java -jar stegsolve.jar
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -312,7 +312,7 @@ java -jar stegsolve.jar
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -326,7 +326,7 @@ java -jar stegsolve.jar
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -372,7 +372,7 @@ rule suspicious_png_size
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 StegSolve étant une GUI, l'automatisation passe par des outils CLI complémentaires ([[Outil - zsteg]], ImageMagick, Python) :
 
@@ -404,7 +404,7 @@ done
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 StegSolve exporte par **Save** (image PNG de la vue courante) et par les boutons de Data Extract (texte ou binaire).
 
@@ -427,22 +427,22 @@ print(data.decode("utf-8", errors="ignore"))
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Image → stegsolve (plans/Data Extract) → zsteg (auto) → CyberChef (décodage) → flag
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - zsteg]] — détection automatique complémentaire (CLI)
 - [[Outil - exiftool]] — métadonnées avant analyse visuelle
 - [[Outil - CyberChef]] — décodage des données extraites (base64/hex/ROT)
 - [[Outil - binwalk]] — extraction de fichiers embarqués si l'image en cache un
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -457,7 +457,7 @@ Image → stegsolve (plans/Data Extract) → zsteg (auto) → CyberChef (décoda
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **GUI légère** : la navigation dans les plans est instantanée (calcul à la volée).
 - **Data Extract** : rapide sur les images CTF (quelques Mo) ; l'extraction complète est quasi immédiate.
@@ -469,7 +469,7 @@ Image → stegsolve (plans/Data Extract) → zsteg (auto) → CyberChef (décoda
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -495,7 +495,7 @@ Image → stegsolve (plans/Data Extract) → zsteg (auto) → CyberChef (décoda
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution Java** : le jar exécute du code Java ; ne télécharger que depuis des sources fiables (forks officiels).
 - **Fichiers analysés** : les images sont lues localement, sans envoi réseau.
@@ -503,7 +503,7 @@ Image → stegsolve (plans/Data Extract) → zsteg (auto) → CyberChef (décoda
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **GUI uniquement** : pas de CLI native (l'automatisation passe par d'autres outils).
 - **Java requis** : dépendance JRE à installer sur la machine.
@@ -513,7 +513,7 @@ Image → stegsolve (plans/Data Extract) → zsteg (auto) → CyberChef (décoda
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Lancer
@@ -536,7 +536,7 @@ Fichier > Save (PNG)
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -549,7 +549,7 @@ Fichier > Save (PNG)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -560,16 +560,16 @@ Fichier > Save (PNG)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Parcourez **tous** les plans (A0-A7 compris) : le flag peut être dans l'alpha.
 > - Testez toujours **MSB First ET LSB First** dans Data Extract.
 > - Une bande de bruit « structurée » sur un plan LSB = signature classique d'un message.
 > - Combinez avec [[Outil - zsteg]] pour confirmer automatiquement ce que vous voyez.
 > - Utilisez Image Combiner si le challenge fournit deux images « presque identiques ».
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne confondez pas le plan 0 (LSB) et le plan 7 (MSB) : le message peut être dans l'un comme l'autre.
 > - L'ordre de lecture (row/column, MSB/LSB first) change tout le résultat de l'extraction.
 > - Les données extraites peuvent être en base64/hex : décodez-les ([[Outil - CyberChef]]) avant de conclure.
@@ -578,7 +578,7 @@ Fichier > Save (PNG)
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -602,4 +602,4 @@ Fichier > Save (PNG)
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - zsteg|📦 zsteg]] · [[Outil - exiftool|🏷️ ExifTool]] · [[Outil - binwalk|🧱 binwalk]] · [[Outil - CyberChef|🧪 CyberChef]] · [[Outil - Ghidra|🔬 Ghidra]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]]
+**Liens :** [[Tools| Outils]] · [[Outil - zsteg| zsteg]] · [[Outil - exiftool| ExifTool]] · [[Outil - binwalk| binwalk]] · [[Outil - CyberChef| CyberChef]] · [[Outil - Ghidra| Ghidra]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]]

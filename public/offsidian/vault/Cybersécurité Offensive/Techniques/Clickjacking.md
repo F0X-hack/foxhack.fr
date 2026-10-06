@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🖱️ Clickjacking — UI Redressing
+# Clickjacking — UI Redressing
 
 > [!info] **En 1 phrase**
 > Clickjacking (UI Redressing) = piéger l'utilisateur en superposant une **iframe invisible** d'un site
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Définition & mécanisme
+## Définition & mécanisme
 
 ```mermaid
 sequenceDiagram
@@ -33,13 +33,13 @@ sequenceDiagram
     V->>A: Navigue sur la page malveillante
     A->>C: Charge la cible dans une iframe (opacity:0, z-index haut)
     A->>V: Superpose un bouton trompeur (z-index bas, visible)
-    V->>A: Clique sur "🎁 Gagnez un cadeau"
+    V->>A: Clique sur "Gagnez un cadeau"
     A->>C: Le clic traverse et tombe sur le bouton réel de la cible
     C->>C: Action sensible exécutée (like, email, admin...)
     C-->>V: Conséquence inattendue, aucun consentement
 ```
 
-> [!warning] ⚠️ **Clickjacking ≠ CSRF**
+> [!warning] **Clickjacking ≠ CSRF**
 > - **CSRF** : l'attaquant forge une requête HTTP (auto-submit, images) → contournable avec des **tokens CSRF**.
 > - **Clickjacking** : la victime **clique elle-même** dans une vraie page chargée dans l'iframe →
 >   le navigateur envoie les **vrais cookies + tokens CSRF valides**. Les tokens CSRF ne protègent **pas** du clickjacking.
@@ -55,7 +55,7 @@ sequenceDiagram
 
 ---
 
-## 🧱 Payloads de base — iframe invisible
+## Payloads de base — iframe invisible
 
 ### Les propriétés CSS clés
 
@@ -103,7 +103,7 @@ iframe {
 </style>
 </head>
 <body>
-  <div class="faux">🎁 Cliquez ici pour gagner un cadeau</div>
+  <div class="faux">Cliquez ici pour gagner un cadeau</div>
   <iframe src="https://CIBLE.com/bouton-sensible"></iframe>
 </body>
 </html>
@@ -123,12 +123,12 @@ iframe {
 <iframe src="https://CIBLE.com/action" style="opacity: 0; height: 0; width: 0; border: none;"></iframe>
 ```
 
-> [!tip] 💡 **Alignement** : charger d'abord l'iframe **visible** (`opacity: 0.2`), repérer la position exacte
+> [!tip] **Alignement** : charger d'abord l'iframe **visible** (`opacity: 0.2`), repérer la position exacte
 > du bouton cible dans les devtools, reporter ces coordonnées dans le `.faux`, puis repasser à `opacity: 0`.
 
 ---
 
-## 🎭 Variantes d'attaque
+## Variantes d'attaque
 
 ### Clickjacking par drag & drop (file drop)
 
@@ -143,7 +143,7 @@ zone d'upload réelle de la cible → le fichier local est téléversé à l'ins
            z-index: 1; border: 3px dashed #999; }
 </style>
 <iframe src="https://CIBLE.com/upload"></iframe>
-<div class="zone">🖱️ Déposez votre fichier ici (jeu de glisser-déposer)</div>
+<div class="zone">Déposez votre fichier ici (jeu de glisser-déposer)</div>
 ```
 
 ### Pointer events (`pointer-events: none` vs `auto`)
@@ -195,7 +195,7 @@ Voir section dédiée : `sandbox`, double iframe, `onBeforeUnload`, 204 No Conte
 
 ---
 
-## 🎯 Cas d'utilisation
+## Cas d'utilisation
 
 | Cible | Résultat |
 |---|---|
@@ -214,7 +214,7 @@ Voir section dédiée : `sandbox`, double iframe, `onBeforeUnload`, 204 No Conte
            opacity: 0; z-index: 2; }
 </style>
 <iframe src="https://CIBLE.com/admin/users"></iframe>
-<div class="faux">🎁 Cliquez ici</div>
+<div class="faux">Cliquez ici</div>
 ```
 
 ### Double-click jacking (`dblclick`)
@@ -228,7 +228,7 @@ Voir section dédiée : `sandbox`, double iframe, `onBeforeUnload`, 204 No Conte
 <!-- Les deux clics du décor tombent sur le bouton réel qui attend un dblclick -->
 ```
 
-> [!tip] 💡 **Cas où le simple clic ne suffit pas** : certains flux exigent un double-clic de confirmation.
+> [!tip] **Cas où le simple clic ne suffit pas** : certains flux exigent un double-clic de confirmation.
 > L'iframe reçoit les événements `dblclick` → aligner la zone et tester les deux clics.
 
 ### Top / opaque trick
@@ -238,9 +238,9 @@ Si le framebusting de la cible teste `top.location`, on l'encapsule dans une ifr
 
 ---
 
-## 🧨 Bypass des protections
+## Bypass des protections
 
-> [!warning] ⚠️ **X-Frame-Options est INSUFFISANT**
+> [!warning] **X-Frame-Options est INSUFFISANT**
 > - Header souvent **oublié sur certains endpoints** (le site protège `/` mais pas `/admin`, `/api/...`).
 > - Ne couvre pas les **navigations top-level** (page entière) : certains vecteurs utilisent `window.open`,
 >   les liens, ou `location` plutôt que le framing iframe.
@@ -306,7 +306,7 @@ framebusting dans un **paramètre** de la cible pour déclencher un faux positif
 
 ---
 
-## 🕵️ Test : la cible est-elle clickjackable ?
+## Test : la cible est-elle clickjackable ?
 
 ```bash
 # Headers de la home
@@ -333,15 +333,15 @@ Interprétation :
 | `X-Frame-Options: SAMEORIGIN` | Protégé si l'attaquant est cross-origin |
 | `Content-Security-Policy: frame-ancestors 'self'` / `'none'` | Protégé (**CSP prioritaire sur XFO**) |
 | Aucun des deux | **Candidate** → confirmer avec un PoC réel |
-| CSP **en meta tag** | ⚠️ `frame-ancestors` n'est pas supporté en meta → pas de protection |
+| CSP **en meta tag** | `frame-ancestors` n'est pas supporté en meta → pas de protection |
 | Site accessible en HTTP (`http://`) | Candidat même si HTTPS protégé (mixed framing) |
 
-> [!warning] ⚠️ **L'absence de header ne prouve pas la vulnérabilité** : il faut toujours confirmer par un
+> [!warning] **L'absence de header ne prouve pas la vulnérabilité** : il faut toujours confirmer par un
 > PoC réel (iframe + click), et **tester chaque endpoint**, pas juste la page d'accueil.
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -353,7 +353,7 @@ Interprétation :
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -367,31 +367,31 @@ Interprétation :
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Méthodo rapide**
+> [!tip] **Méthodo rapide**
 > 1. `curl -sI` sur **tous** les endpoints sensibles → identifier l'absence de XFO/CSP.
 > 2. Générer un PoC (Clickbandit ou manuel) → aligner sur le bouton réel.
 > 3. Valider l'impact : changement d'email/phone = prise de compte, admin = élévation de droits.
 > 4. Ne jamais t'arrêter à la home : `/admin`, `/api`, les endpoints d'upload et de profil sont les cibles.
 
-> [!warning] ⚠️ **Pièges de la détection par headers**
+> [!warning] **Pièges de la détection par headers**
 > - **XFO présent** mais `SAMEORIGIN` avec une sous-domaine contrôlable / framing cross-origin autorisé ailleurs.
 > - **XFO absent mais CSP présent** : la CSP `frame-ancestors` protège quand même → pas vulnérable.
 > - **CSP en meta tag** : `frame-ancestors` ignoré → protection inexistante malgré la CSP.
 > - Un PoC qui "ne marche pas" peut être un **mauvais alignement**, pas une protection réelle.
 > - **Clickjacking ≠ CSRF** : des tokens CSRF présents ne bloquent pas le clickjacking (le clic est réel).
 
-> [!warning] ⚠️ **Limites de l'attaque**
+> [!warning] **Limites de l'attaque**
 > - La victime doit être **connectée** au site cible (session active).
 > - Impact seul parfois faible → à **chaîner** (XSS, CSRF, tabnabbing...) pour obtenir un réel impact.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[CSRF|🔄 CSRF]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Clickjacking](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Clickjacking/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[CSRF| CSRF]]
+- [[LFI et RFI| LFI / RFI]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Clickjacking](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Clickjacking/README.md)

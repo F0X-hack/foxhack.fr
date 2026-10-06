@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import MarkdownNote from '../src/offsidian/MarkdownNote'
 import type { VaultManifest } from '../src/offsidian/types'
-import { createVaultResolver } from '../src/offsidian/utils'
+import { createVaultResolver, expandHeadings } from '../src/offsidian/utils'
+import type { VaultOutline } from '../src/offsidian/types'
 
 const manifest = JSON.parse(
   readFileSync(new URL('../public/offsidian/manifest.json', import.meta.url), 'utf8'),
@@ -43,4 +44,36 @@ for (const item of manifest.notes) {
   for (const backlink of item.backlinks) assert(ids.has(backlink), `Backlink cassé depuis ${item.path}: ${backlink}`)
 }
 
-console.log(`✓ Offsidian: ${manifest.notes.length} notes, wikilinks, callouts, Dataview et liens vérifiés`)
+/* ------------------------------------------------------------------ outline
+   Le plan des notes vit dans `outline.json` et ses ancres sont recalculées par
+   `expandHeadings`. Elles doivent correspondre exactement à celles que le rendu
+   Markdown produit, sinon le panneau « Sur cette page » pointerait dans le vide. */
+const outline = JSON.parse(
+  readFileSync(new URL('../public/offsidian/outline.json', import.meta.url), 'utf8'),
+) as VaultOutline
+
+assert.equal(Object.keys(outline).length, manifest.notes.length, 'Chaque note doit avoir un plan')
+for (const item of manifest.notes) {
+  assert(!('headings' in item), `Le manifeste ne doit plus embarquer le plan de ${item.path}`)
+  assert(outline[item.id], `Plan manquant pour ${item.id}`)
+}
+
+for (const id of ['sommaire', 'index', 'active-directory']) {
+  const item = resolver.noteById.get(id)
+  assert(item, `La note ${id} doit exister`)
+  const noteHtml = renderToStaticMarkup(
+    <MarkdownNote
+      source={readFileSync(new URL(`../public/offsidian/vault/${item.path}`, import.meta.url), 'utf8')}
+      note={item}
+      manifest={manifest}
+      resolver={resolver}
+      onOpenNote={() => undefined}
+    />,
+  )
+  for (const heading of expandHeadings(outline[id].headings)) {
+    if (heading.depth < 2 || heading.depth > 3) continue
+    assert(noteHtml.includes(`id="${heading.slug}"`), `Ancre « ${heading.slug} » absente du rendu de ${item.path}`)
+  }
+}
+
+console.log(`✓ Offsidian: ${manifest.notes.length} notes, wikilinks, callouts, Dataview, liens et plans vérifiés`)

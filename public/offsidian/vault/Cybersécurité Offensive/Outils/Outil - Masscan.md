@@ -1,11 +1,11 @@
 ---
 title: "Outil - Masscan"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 1.3.2
 licence: AGPL-3.0
@@ -17,14 +17,14 @@ doc: https://github.com/robertdavidgraham/masscan/blob/master/README.md
 ---
 
 
-# 🕵️ Masscan — Scan de ports ultrarapide, complément de Nmap
+# Masscan — Scan de ports ultrarapide, complément de Nmap
 
 > [!info] **En 1 phrase**
 > Masscan est le scanner de ports le plus rapide au monde : jusqu'à 10 millions de ports/s en parallèle, idéal pour cartographier un grand réseau en quelques secondes.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: https://github.com/robertdavidgraham/masscan/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Masscan repose sur le même moteur de scan SYN que Nmap, mais avec une architecture **asynchrone** qui permet d'atteindre des débits énormes. Il est conçu pour scanner de **larges plages** (un `/8` entier à 10 M ports/s) plutôt que pour l'énumération fine. On l'utilise pour découvrir rapidement tous les ports ouverts d'un périmètre, puis on exporte le résultat vers Nmap pour l'analyse détaillée (versions, scripts NSE).
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -136,14 +136,14 @@ git clone https://github.com/robertdavidgraham/masscan.git && cd masscan
 make -j && sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Les scans SYN nécessitent les privilèges root (`sudo masscan …`).
 > - Binaire Linux/BSD : pas de build Windows officiel maintenu (portage expérimental). Pour Windows, passer par WSL.
 > - Le scan UDP est lent : les ports fermés ne répondent pas toujours, les résultats sont partiels.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout passe par les options CLI.
 
@@ -163,7 +163,7 @@ Pas de fichier de configuration : tout passe par les options CLI.
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Moteur SYN asynchrone** : envoi en continu de segments SYN sans attendre les réponses ; le récepteur capture les SYN-ACK (port ouvert) et RST (port fermé).
 - **Stockage de résultats en mémoire** : réponses collectées puis écrites à la fin du scan dans le format demandé (`-oL/-oG/-oJ/-oX/-oB`).
@@ -173,7 +173,7 @@ Pas de fichier de configuration : tout passe par les options CLI.
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -203,7 +203,7 @@ sudo masscan 10.0.0.0/8 -p443 --rate 100000 --excludefile exclusions.txt --rando
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ sudo masscan 10.0.0.0/8 -p443 --rate 100000 --excludefile exclusions.txt --rando
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -278,7 +278,7 @@ sudo masscan 10.0.0.0/8 -p443 --rate 100000 --adapter-ip 10.0.0.5 --randomize-ho
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparation** : définir la cible et le rate adapté. Sur un lab `10.10.10.0/24`, un `--rate 10000` suffit.
 2. **Scan global** :
@@ -299,7 +299,7 @@ Le format `-oL` produit une ligne par hôte (`open tcp 443 10.10.10.10`) : c'est
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Scan d'un périmètre internet (/8) sans toucher aux IP sensibles
 
@@ -330,7 +330,7 @@ cat banners.json | jq -r '.ip + ":" + (.ports[].port|tostring) + " " + (.ports[]
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -342,7 +342,7 @@ cat banners.json | jq -r '.ip + ":" + (.ports[].port|tostring) + " " + (.ports[]
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -355,7 +355,7 @@ cat banners.json | jq -r '.ip + ":" + (.ports[].port|tostring) + " " + (.ports[]
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -420,7 +420,7 @@ rule Masscan_Binary_Detection {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scan + conversion automatique vers Nmap
@@ -451,7 +451,7 @@ for host in res:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte (`-oL`), grepable (`-oG`), JSON (`-oJ`), XML (`-oX`), binaire (`-oB`).
 
@@ -476,14 +476,14 @@ with open("scan.json") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Nmap|Nmap]] — analyse fine (versions, scripts NSE) sur les ports trouvés par Masscan
 - [[Outil - naabu|naabu]] — alternative projectdiscovery pour le scan de ports
 - [[Outil - httpx|httpx]] — probing HTTP des ports web découverts
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités sur les services exposés
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
@@ -491,7 +491,7 @@ Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -505,7 +505,7 @@ Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Débit revendiqué : jusqu'à 10 M ports/s sur du matériel spécifique (10 Gbit/s) ; en pratique le débit dépend du réseau.
 - Un `--rate` trop élevé provoque des **pertes de paquets** : faux négatifs ; augmenter `--retries` ou re-scanner les ports trouvés.
@@ -517,7 +517,7 @@ Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -553,7 +553,7 @@ Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Détectabilité** : un rate élevé ressemble à un SYN flood et déclenche les IDS/IPS ; l'activité est clairement visible dans les flux réseau.
 - **Usurpation possible** : `--adapter-ip`/`--adapter-port` permettent de falsifier la source (à réserver aux labos autorisés).
@@ -563,7 +563,7 @@ Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Scan de surface : pas de détection fine de versions (équivalent `-sV`) ni de scripts NSE.
 - Faux négatifs à haut rate (pertes de paquets) : résultats jamais exhaustifs.
@@ -574,7 +574,7 @@ Masscan (large) → Nmap -sV -sC (fin) → httpx → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan SYN rapide d'une machine : tous les ports TCP
@@ -602,7 +602,7 @@ sudo masscan --readscan scan.bin -oJ scan.json
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -615,7 +615,7 @@ sudo masscan --readscan scan.bin -oJ scan.json
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -627,26 +627,26 @@ sudo masscan --readscan scan.bin -oJ scan.json
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Toujours exporter vers Nmap**
+> [!tip] **Toujours exporter vers Nmap**
 > Masscan ne fait pas la détection de versions complète : `-oL` + `awk` + `nmap -sV -sC` donne le meilleur des deux mondes.
 
-> [!tip] 💡 **Ajuster `--rate` au contexte**
+> [!tip] **Ajuster `--rate` au contexte**
 > 1000-5000 p/s sur un lab, 100 000+ sur un grand périmètre ; sur un réseau d'entreprise, un rate élevé = alertes SOC quasi certaines. Utilise `--randomize-hosts` pour lisser le profil de scan.
 
-> [!warning] ⚠️ **Le port 0 existe**
+> [!warning] **Le port 0 existe**
 > Par convention on écrit `-p1-65535`, mais certains services exotiques utilisent le port 0 : tester aussi `-p0-65535`.
 
-> [!warning] ⚠️ **Faux négatifs à haut rate**
+> [!warning] **Faux négatifs à haut rate**
 > Avec `--rate 100000`, des paquets se perdent : les résultats ne sont jamais exhaustifs. Re-scanner les ports clés trouvés (ou augmenter `--retries`).
 
-> [!warning] ⚠️ **Ce n'est pas un outil d'énumération**
+> [!warning] **Ce n'est pas un outil d'énumération**
 > Masscan est un balayage de surface : ne pas l'utiliser pour la détection fine de services ou les scripts NSE — réserver Nmap pour cela.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -666,4 +666,4 @@ sudo masscan --readscan scan.bin -oJ scan.json
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Nmap|🕵️ Nmap]] · [[Outil - naabu|naabu]] · [[01 - Reconnaissance|🔎 Reconnaissance]]
+**Liens :** [[Tools| Outils]] · [[Outil - Nmap| Nmap]] · [[Outil - naabu|naabu]] · [[01 - Reconnaissance| Reconnaissance]]

@@ -1,11 +1,11 @@
 ---
 title: "Outil - Covenant"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: aucune release taguée (développement sur master)
 licence: GPL-3.0
@@ -16,20 +16,20 @@ site: https://cobbr.io/Covenant.html
 doc: https://github.com/cobbr/Covenant/wiki
 ---
 
-# 🕹️ Covenant — Framework C2 .NET avec UI web
+# Covenant — Framework C2 .NET avec UI web
 
 > [!info] **En 1 phrase**
 > Covenant est un framework C2 open-source écrit en C#/.NET avec une interface web complète, qui gère des agents appelés « Grunts » via des launchers .NET (PowerShell, exe, dll, installutil).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Covenant (collaborative .NET C2 framework) |
 | Description | Framework C2 .NET avec UI web (Razor + Angular) et API REST : gestion de listeners, launchers, agents « Grunts » et tâches post-exploitation |
-| Catégorie | 🕹️ C2 & Post-Exploitation |
+| Catégorie | C2 & Post-Exploitation |
 | Sous-catégorie | C2 & Implants .NET |
 | Fonction principale | Command & control d'agents .NET en mémoire, génération de launchers, post-exploitation |
 | Type d'outil | Framework serveur web (ASP.NET Core) + agents clients |
@@ -50,7 +50,7 @@ doc: https://github.com/cobbr/Covenant/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Covenant centralise la gestion d'agents .NET (**Grunts**) depuis un navigateur : tableau de bord, gestion des listeners, des launchers, des sessions et des tâches, le tout via une API REST + UI Angular. C'est un outil de choix pour la red team quand on cible des environnements Windows où le framework .NET est présent (l'implant s'exécute en mémoire, sans écrire de fichier).
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali / Arch / Fedora
 
@@ -114,13 +114,13 @@ dotnet run
 # → binaire dans bin/Release/netcoreapp3.1/...
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le master cible **.NET Core 3.1** (`netcoreapp3.1`) : avec seulement .NET 6+, `dotnet run` échoue. La branche `dev` passe à .NET 5.
 > - `export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1` si erreur ICU. Le clone doit être **récursif** (`--recursive`) pour la UI Angular.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait principalement dans l'**UI web** (et l'API REST), avec quelques fichiers côté serveur.
 
@@ -142,7 +142,7 @@ La configuration se fait principalement dans l'**UI web** (et l'API REST), avec 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Serveur** : application **ASP.NET Core** (`Covenant/Covenant`) avec API REST, Entity Framework Core (base SQLite par défaut), interface Razor + **Angular** (sous-module `covenant/src/CovenantUI`).
 - **UI & API** : tout est pilotable via HTTP/HTTPS sur le port **7443** par défaut : utilisateurs, listeners, launchers, grunts, tâches, événements, graph.
@@ -154,7 +154,7 @@ La configuration se fait principalement dans l'**UI web** (et l'API REST), avec 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -178,11 +178,11 @@ cd Covenant/Covenant && dotnet run
 | `Profiles` | Personnaliser User-Agent/en-têtes HTTP | Launchers maquillés |
 
 > [!note] À vérifier
-> L'API REST (jeton, listeners, tâches) est détaillée dans **🤖 Automatisation** ci-dessous ; les schémas exacts sont à confirmer sur le wiki avant automatisation.
+> L'API REST (jeton, listeners, tâches) est détaillée dans **Automatisation** ci-dessous ; les schémas exacts sont à confirmer sur le wiki avant automatisation.
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -206,7 +206,7 @@ cd Covenant/Covenant && dotnet run
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -250,7 +250,7 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /logfile= /LogTo
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Démarrer Covenant** : `dotnet run` dans `Covenant/Covenant`, ouvrir `http://localhost:7443`.
 2. **Créer un compte** lors du premier accès (First-Time setup), puis se connecter.
@@ -263,7 +263,7 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /logfile= /LogTo
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : chargement en mémoire avec execute-assembly
 
@@ -286,7 +286,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -299,7 +299,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -315,7 +315,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -364,7 +364,7 @@ level: high
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — vérifier que le serveur Covenant répond (healthcheck)
@@ -395,7 +395,7 @@ for g in grunts:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 L'UI centralise les sorties ; l'API REST expose les données en JSON (grunts, tasks, events, hosts).
 
@@ -419,24 +419,24 @@ for t in tasks:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Phishing/exploit → launcher PowerShell → Grunt → listener HTTP/SMB → Covenant UI → Rubeus/Seatbelt → GruntSocks → proxychains → nmap interne
 ```
 
-- [[Tools|🧰 Outils]] global
-- [[Outil - Rubeus|🎫 Rubeus]] / [[Techniques/Kerberoasting|🔥 Kerberoasting]] — via `execute-assembly`
-- [[Outil - BloodHound|🩸 BloodHound]] — SharpHound en mémoire
-- [[Outil - Mimikatz|👤 Mimikatz]] — via assembly en mémoire (variantes)
-- [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]] — mouvement latéral post-récolte
-- [[Outil - Nmap|🕵️ Nmap]] — scan du réseau interne via GruntSocks/proxychains
-- [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]] — cibles post-exploitation
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]] — concepts de livraison d'agents
+- [[Tools| Outils]] global
+- [[Outil - Rubeus| Rubeus]] / [[Techniques/Kerberoasting| Kerberoasting]] — via `execute-assembly`
+- [[Outil - BloodHound| BloodHound]] — SharpHound en mémoire
+- [[Outil - Mimikatz| Mimikatz]] — via assembly en mémoire (variantes)
+- [[Techniques/Pass-the-Hash| Pass-the-Hash]] — mouvement latéral post-récolte
+- [[Outil - Nmap| Nmap]] — scan du réseau interne via GruntSocks/proxychains
+- [[Techniques/Privilege Escalation Windows| PrivEsc Windows]] — cibles post-exploitation
+- [[Techniques/Reverse Shells| Reverse Shells]] — concepts de livraison d'agents
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -450,7 +450,7 @@ Phishing/exploit → launcher PowerShell → Grunt → listener HTTP/SMB → Cov
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Serveur léger : ASP.NET Core + SQLite, adapté à une VM 1-2 vCPU pour quelques dizaines de Grunts.
 - Chaque Grunt = un callback périodique (Delay) ; réduire la cadence réduit le bruit réseau mais retarde les commandes.
@@ -462,7 +462,7 @@ Phishing/exploit → launcher PowerShell → Grunt → listener HTTP/SMB → Cov
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -493,7 +493,7 @@ Phishing/exploit → launcher PowerShell → Grunt → listener HTTP/SMB → Cov
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : framework C2 à n'utiliser que sur des cibles autorisées.
 - **Certificat** : HTTPS autosigné sur 7443 : ne pas exposer la UI sur Internet sans proxy/reverse et MFA.
@@ -504,7 +504,7 @@ Phishing/exploit → launcher PowerShell → Grunt → listener HTTP/SMB → Cov
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Développement ralenti** : pas de release taguée, .NET Core 3.1/5 (EOL), incompatibilités avec les SDK .NET récents.
 - Nécessite le **runtime .NET** sur la cible (Windows .NET Framework requis) : pas d'implant natif C/Go.
@@ -514,7 +514,7 @@ Phishing/exploit → launcher PowerShell → Grunt → listener HTTP/SMB → Cov
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Cloner avec sous-modules et lancer
@@ -537,7 +537,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -546,26 +546,26 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 | **Commande principale** | `dotnet run` puis https://localhost:7443 |
 | **Alternative principale** | [[Outil - Sliver]] / [[Outil - Mythic]] / [[Outil - PowerShell Empire]] |
 | **Concepts importants** | Grunt, listener HTTP/SMB, launcher, `execute-assembly`, GruntSocks, Profile HTTP |
-| **Liens associés** | [[Techniques/Privilege Escalation Windows\|⬆️ PrivEsc Windows]] · [[Techniques/Kerberoasting\|🔥 Kerberoasting]] · [[Techniques/Pass-the-Hash\|🔑 Pass-the-Hash]] |
+| **Liens associés** | [[Techniques/Privilege Escalation Windows\| PrivEsc Windows]] · [[Techniques/Kerberoasting\| Kerberoasting]] · [[Techniques/Pass-the-Hash\| Pass-the-Hash]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
-> Les signes observables, règles Sigma/YARA et défenses détaillées figurent dans la section **🛡️ Defensive Security** ci-dessus. Réflexes : surveiller `InstallUtil.exe -U`/`MSBuild.exe` sur .xml inconnu, les charges .NET in-memory (`dotnet`, `Assembly.Load`), les pipes SMB inconnus (Sysmon EID 17/18) et le HTTP(S) sortant régulier avec UA custom.
+> Les signes observables, règles Sigma/YARA et défenses détaillées figurent dans la section **Defensive Security** ci-dessus. Réflexes : surveiller `InstallUtil.exe -U`/`MSBuild.exe` sur .xml inconnu, les charges .NET in-memory (`dotnet`, `Assembly.Load`), les pipes SMB inconnus (Sysmon EID 17/18) et le HTTP(S) sortant régulier avec UA custom.
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Personnalisez les **Profiles** (User-Agent, chemins, en-têtes) pour chaque opération : un UA par défaut est un signal immédiat pour un SOC.
 > - Utilisez `execute-assembly` pour Rubeus/Seatbelt/SharpHound : rien d'écrit sur le disque.
 > - Configurez `Delay`/`JitterPercent` (ex. 5000 ms / 30 %) pour un trafic moins régulier.
 > - Vérifiez le framework .NET de la cible avant de générer le launcher.
 > - Testez les launchers `InstallUtil`/`MSBuild` dans un lab : les EDR surveillent ces exécutables signés.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Covenant nécessite .NET sur la cible ; sans .NET (ou .NET Core seul), le Grunt ne se connecte pas.
 > - Le master exige .NET Core 3.1 : `dotnet run` échoue sur les SDK récents.
 > - Développement ralenti : vérifier que les fonctionnalités (gRPC, SMB) fonctionnent sur votre version.
@@ -574,7 +574,7 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -598,4 +598,4 @@ proxychains4 -q nmap -sT -Pn -p 445,3389 172.16.5.0/24
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Pivoting et Tunneling|🌉 Pivoting]] · [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pivoting et Tunneling| Pivoting]] · [[Techniques/Privilege Escalation Windows| PrivEsc Windows]]

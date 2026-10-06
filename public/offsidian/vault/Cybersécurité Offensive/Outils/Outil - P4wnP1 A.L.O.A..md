@@ -1,12 +1,12 @@
 ---
 title: "Outil - P4wnP1 A.L.O.A."
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: "P4wnP1 A.L.O.A. (Kali image) ; P4wnP1 d'origine (successeur maintenu par RoganDawes)"
 licence: GPL-3.0 (P4wnP1) ; image Kali (Kali Linux)
@@ -17,14 +17,14 @@ site: https://p4wnp1.readthedocs.io/
 doc: https://www.kali.org/docs/arm/raspberry-pi-zero-w-p4wnp1-aloa/
 ---
 
-# 🥧 P4wnP1 A.L.O.A. — La Raspberry Pi Zero W devenue arme USB
+# P4wnP1 A.L.O.A. — La Raspberry Pi Zero W devenue arme USB
 
 > [!info] **En 1 phrase**
 > Un firmware (mame82) qui transforme une **Raspberry Pi Zero W** en gadget USB composite : **HID** (clavier), **réseau fantôme** (RNDIS/ECM), **stockage**, **Bluetooth** (HIDjacking) — le tout pilotable à distance via WiFi/SSH.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -43,7 +43,7 @@ doc: https://www.kali.org/docs/arm/raspberry-pi-zero-w-p4wnp1-aloa/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 P4wnP1 A.L.O.A. (A Lot Of Attacks) est un firmware pour Raspberry Pi Zero W (par Marcus Mengs / mame82) qui fait de la carte un **USB gadget multi-fonctions**. Branché en USB à une cible, le Pi peut se présenter comme plusieurs périphériques **en même temps** :
 - **HID** : clavier/souris émulés (injection de frappes compatible Duckyscript) ;
@@ -65,7 +65,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Notion | Détail |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # 1. Télécharger l'image Kali "Raspberry Pi Zero W P4wnP1 ALOA"
@@ -112,7 +112,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres USB (Web UI / CLI `P4wnP1_cli`)
 
@@ -147,7 +147,7 @@ ENTER
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -169,7 +169,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ```bash
 # Payload HID (fichier payloads/payload.txt, syntaxe ducky-compatible)
@@ -203,7 +203,7 @@ function trigger() {
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option (P4wnP1 d'origine : setup.cfg / payload) | Description |
 |---|---|
@@ -219,7 +219,7 @@ function trigger() {
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Basic — reverse shell PowerShell
 
@@ -252,7 +252,7 @@ function trigger() {
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparation** — flasher l'image, placer `payloads/payload.txt` et `triggers/default.js`, configurer le WiFi AP (SSID, clé, canal).
 2. **Branchement** — insérer le port USB gadget dans la cible : le Pi s'énumère (clavier + réseau RNDIS), le trigger démarre.
@@ -262,7 +262,7 @@ function trigger() {
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : HIDjacking — détournement d'un clavier Bluetooth
 
@@ -313,7 +313,7 @@ function trigger() {
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Description |
 |---|---|
@@ -326,7 +326,7 @@ function trigger() {
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Exemple P4wnP1 |
 |---|---|---|
@@ -342,7 +342,7 @@ function trigger() {
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Signe | Défense |
 |---|---|
@@ -379,7 +379,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # P4wnP1_cli — contrôle depuis la machine attaquante
@@ -403,7 +403,7 @@ print(stdout.read().decode())
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 | Sortie | Description |
 |---|---|
@@ -420,9 +420,9 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Techniques/Hardware - Raspberry Pi]] — plateforme matérielle
 - [[Techniques/Protocole USB]] — gadget USB, VID/PID, classes
 - [[Techniques/Protocole Bluetooth]] — HIDjacking, BLE
@@ -436,7 +436,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Matériel | Coût | Points forts | Points faibles |
 |---|---|---|---|---|
@@ -448,7 +448,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Temps de boot** : ~30-60 s (démarrage Linux complet) avant que le trigger s'exécute — prévoir le `DELAY` côté cible.
 - **Débit réseau fantôme** : limité par l'USB 2.0 (~450 Mbit/s max) ; fausse annonce jusqu'à 20 Gbit/s (ratepatch) pour la route par défaut.
@@ -458,7 +458,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Problème : la cible ne voit pas l'interface réseau
 
@@ -486,7 +486,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : l'insertion d'un gadget sur un poste tiers est intrusive — autorisation écrite obligatoire.
 - **Traces** : le Pi est un mini-OS avec logs ; effacer `journalctl`, les historiques shell et /loot avant réutilisation.
@@ -495,7 +495,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pi Zero W uniquement** (officiellement) : les autres Pi n'ont pas de port gadget USB natif ; Zero 2 W = forks non officiels.
 - **Boot lent** : ~1 min avant que les triggers s'exécutent.
@@ -506,7 +506,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 | Action | Commande |
 |---|---|
@@ -521,7 +521,7 @@ cat /var/log/p4wnp1.log
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 ```js
 // Trigger par défaut : HID + réseau + payload
@@ -543,7 +543,7 @@ ENTER
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -555,16 +555,16 @@ ENTER
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - La Pi Zero W **sans W** ne permet pas le contrôle WiFi — prendre le modèle **W** pour le mode AP distant.
 > - Tester sur VM/OS différents : le timing HID dépend du boot (USB enumeration, fast boot).
 > - Le trigger « recon » (sans HID, réseau seul) est idéal pour un premier déploiement discret avant l'attaque.
 > - Utiliser `useDeactivateRNDIS()` après le payload : moins de surface visible sur la cible.
 > - Changer les identifiants par défaut (WiFi, SSH) avant tout déploiement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Le mode par défaut (réseau seul) donne l'IP **172.16.0.1** à la carte côté USB et **172.24.0.1** en WiFi — vérifier la doc de la version pour ne pas chercher la mauvaise IP.
 > - L'énumération RNDIS **modifie la configuration réseau de la cible** (nouveau NIC) : très visible pour un SOC qui surveille les interfaces.
 > - Le HIDjacking nécessite que le clavier légitime se déconnecte (batterie, portée) : l'attaque échoue si les deux « claviers » sont actifs.
@@ -572,9 +572,9 @@ ENTER
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub — RoganDawes/P4wnP1_aloa](https://github.com/RoganDawes/P4wnP1_aloa)
 > - [GitHub — mame82/P4wnP1 (projet d'origine)](https://github.com/mame82/P4wnP1)
 > - [Kali Docs — Raspberry Pi Zero W P4wnP1 A.L.O.A.](https://www.kali.org/docs/arm/raspberry-pi-zero-w-p4wnp1-aloa/)
@@ -582,4 +582,4 @@ ENTER
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Hardware - Raspberry Pi|🍓 Raspberry Pi]] · [[Techniques/Protocole USB|🔌 Protocole USB]] · [[Techniques/Protocole Bluetooth|📶 Bluetooth]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Hardware - Raspberry Pi| Raspberry Pi]] · [[Techniques/Protocole USB| Protocole USB]] · [[Techniques/Protocole Bluetooth| Bluetooth]]

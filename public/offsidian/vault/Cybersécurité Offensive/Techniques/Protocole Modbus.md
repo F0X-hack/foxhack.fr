@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏭 Protocole Modbus
+# Protocole Modbus
 
 > [!info] **En 1 phrase**
 > **Modbus** est le protocole **ICS/SCADA** le plus répandu pour interroger des capteurs et
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart TB
@@ -37,7 +37,7 @@ flowchart TB
 
 ---
 
-## 🎯 Discovery
+## Discovery
 
 ### Clients Modbus
 
@@ -53,7 +53,7 @@ nmap --script modbus-discover.nse --script-args='modbus-discover.aggressive=true
 
 ---
 
-## 🔌 Connexion à un esclave
+## Connexion à un esclave
 
 ```python
 from pymodbus.client import ModbusTcpClient
@@ -71,14 +71,14 @@ client.close()
 
 ---
 
-## 🧪 Simulateurs (lab)
+## Simulateurs (lab)
 
 - **Simulateur d'esclave** : [Diagslave](https://www.modbusdriver.com/diagslave.html) · [ModbusPal](https://modbuspal.sourceforge.net/)
 - **Simulateur de maître** : [modpoll](https://www.modbusdriver.com/modpoll.html)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -88,7 +88,7 @@ client.close()
 | **Detection des commandes illégales** | Journaliser les requêtes anormales (read/write à outrance, fonctions rares) |
 | **Patch des PLC/RTU** | Beaucoup de modèles ont des vulns connues (stack overflow, firmware) |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Commence par un **scan passif de registres** (read holding/input) avant d'écrire : une écriture peut **stopper une chaîne de production**.
 - Le **port 502** est la cible classique, mais Modbus RTU transite aussi sur **série** (RS-485) → souvent accessible via une passerelle/convertiseur.
@@ -98,7 +98,7 @@ client.close()
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Modbus](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/modbus.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Injection de commandes|💻 Injection de commandes]] · [[SSRF|🌐 SSRF]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Injection de commandes| Injection de commandes]] · [[SSRF| SSRF]]

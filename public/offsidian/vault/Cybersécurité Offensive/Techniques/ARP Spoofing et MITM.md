@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🕸️ ARP Spoofing & MITM
+# ARP Spoofing & MITM
 
 > [!info] **En 1 phrase**
 > MITM (Man-In-The-Middle) = s'intercaler **entre** la victime et sa passerelle pour voir/modifier
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,13 +32,13 @@ flowchart LR
     M -->|modifie/observe| V
 ```
 
-> [!info] 💡 **Pourquoi ARP**
+> [!info] **Pourquoi ARP**
 > ARP associe IP→MAC **sans authentification**. On envoie de fausses réponses ARP pour que la
 > victime pense que notre MAC = passerelle → tout son trafic passe par nous.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # 1. Forwarding (sinon la victime perd Internet)
@@ -64,7 +64,7 @@ sudo responder -I eth0 -wrf        # → hashes NetNTLMv2 (voir LLMNR poisoning)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -75,18 +75,18 @@ sudo responder -I eth0 -wrf        # → hashes NetNTLMv2 (voir LLMNR poisoning)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **MITM moderne = peu rentable sans cert**
+> [!tip] **MITM moderne = peu rentable sans cert**
 > Le trafic est chiffré partout. Les cibles rentables : **protocoles legacy**, **hashes NTLM**
 > (via Responder), et les **requêtes claires** internes.
 
-> [!warning] ⚠️ **Piège** : sans `ip_forward=1`, la victime **perd Internet** → l'utilisateur le remarque immédiatement.
+> [!warning] **Piège** : sans `ip_forward=1`, la victime **perd Internet** → l'utilisateur le remarque immédiatement.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[LLMNR-NBT-NS Poisoning|🎙️ LLMNR/NBT-NS Poisoning]]
-- [[NTLM Relay|🔗 NTLM Relay]]
-- → Note complète : [[07 - Wireless, MITM & Social Engineering|📡 Wireless / MITM / SE]]
+- [[LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]]
+- [[NTLM Relay| NTLM Relay]]
+- → Note complète : [[07 - Wireless, MITM & Social Engineering| Wireless / MITM / SE]]

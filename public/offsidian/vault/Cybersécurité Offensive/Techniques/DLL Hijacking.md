@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧩 DLL Hijacking
+# DLL Hijacking
 
 > [!info] **En 1 phrase**
 > DLL Hijacking = déposer une **DLL malveillante** à un endroit où un service légitime va la charger
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -32,13 +32,13 @@ sequenceDiagram
     Note over S: Code malveillant exécuté en SYSTEM
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Windows charge les DLL par **ordre de recherche** (dossier du process, puis System32, puis PATH).
 > Si le dossier de l'app est en écriture, on y met notre DLL avant que Windows cherche System32.
 
 ---
 
-## 🎯 Deux variantes
+## Deux variantes
 
 | Variante | Principe |
 |---|---|
@@ -47,7 +47,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # 1. Repérer un service avec un binaire/dossier writable
@@ -66,7 +66,7 @@ sc start <service>
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -77,17 +77,17 @@ sc start <service>
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Procmon est l'outil clé**
+> [!tip] **Procmon est l'outil clé**
 > Il montre le **chemin exact** des DLL chargées et les "NAME NOT FOUND" → on sait où placer la notre.
 
-> [!warning] ⚠️ **Piège** : changer de dossier d'installation de l'app peut "réparer" la vuln. C'est une mise à jour de config, pas toujours un simple patch.
+> [!warning] **Piège** : changer de dossier d'installation de l'app peut "réparer" la vuln. C'est une mise à jour de config, pas toujours un simple patch.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Privilege Escalation Windows|🪟 Privesc Windows]]
-- [[Reverse Shells|🕸️ Reverse Shells]]
-- → Note complète : [[06 - Post-Exploitation|🕹️ Post-Exploitation]]
+- [[Privilege Escalation Windows| Privesc Windows]]
+- [[Reverse Shells| Reverse Shells]]
+- → Note complète : [[06 - Post-Exploitation| Post-Exploitation]]

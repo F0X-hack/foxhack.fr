@@ -1,7 +1,7 @@
 ---
 title: "Outil - Prowler"
 type: outil
-categorie: ☁️ Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -20,20 +20,20 @@ site: https://www.prowler.com/
 doc: https://docs.prowler.com
 ---
 
-# 🦅 Prowler — Le scanner de conformité cloud (CIS)
+# Prowler — Le scanner de conformité cloud (CIS)
 
 > [!info] **En 1 phrase**
 > Outil de sécurité cloud qui audite AWS, Azure et GCP contre les benchmarks CIS, NIST, PCI-DSS et plus de 300 checks de sécurité.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Prowler |
 | Description | Scanner de conformité et de posture de sécurité multi-cloud (AWS, Azure, GCP) : applique des centaines de checks basés sur les benchmarks CIS, NIST 800-53, PCI-DSS, ISO 27001, HIPAA, ENS et produit des rapports exploitables |
-| Catégorie | ☁️ Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Audit de configuration / Conformité / Security Posture Management |
 | Type d'outil | CLI (scanner de configuration passif) |
 | Licence | Apache License 2.0 |
@@ -53,7 +53,7 @@ doc: https://docs.prowler.com
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Prowler est un outil de ligne de commande Python qui vérifie la posture de sécurité d'un cloud public en appliquant des centaines de checks : **CIS Benchmarks, NIST 800-53, PCI-DSS, ISO 27001, HIPAA, ENS, SOC 2** et des checks personnalisés. Chaque check interroge les API du fournisseur (boto3 pour AWS, SDK Azure et GCP) et rend un verdict **PASS / FAIL / WARNING** avec des preuves (ressource concernée, région, message). Prowler produit des rapports exploitables : **CSV, JSON, HTML, XLSX, SARIF et ASFF** (pour AWS Security Hub), avec des intégrations Slack, MS Teams, email ou stockage S3.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Prowler s'installe via `pip`, un package distribuable, ou Docker. Python 3.9+ est requis pour la v5.
 
@@ -126,7 +126,7 @@ docker run --rm -t -v ~/.aws:/root/.aws:ro \
   ghcr.io/prowler-cloud/prowler:latest aws --profile audit -M html
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Python 3.9+ requis pour la v5 ; sous Kali/Debian ancien, installer une version récente de Python avant le venv.
 > - L'authentification Azure passe par un **Service Principal** (`--sp-env-auth` avec `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`) ou `--az-cli-auth`.
 > - Pour GCP, fournir la clé de service account via la variable `GOOGLE_APPLICATION_CREDENTIALS` ou le fichier JSON et `--project-id`.
@@ -134,7 +134,7 @@ docker run --rm -t -v ~/.aws:/root/.aws:ro \
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Prowler se configure par **ligne de commande** (options), par **variables d'environnement** pour les credentials, et par **fichier de config YAML** (`--config`) pour les réglages récurrents.
 
@@ -156,7 +156,7 @@ Prowler se configure par **ligne de commande** (options), par **variables d'envi
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le dépôt `prowler-cloud/prowler` est un package Python modulaire structuré ainsi :
 
@@ -178,7 +178,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -211,7 +211,7 @@ prowler aws --profile audit -M asff --security-hub \
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -235,7 +235,7 @@ prowler aws --profile audit -M asff --security-hub \
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -296,7 +296,7 @@ GOOGLE_APPLICATION_CREDENTIALS=./sa.json \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Configurer un accès de lecture** — rôle `SecurityAudit`/`ReadOnlyAccess` assumable, ou profil AWS dédié.
    ```bash
@@ -316,7 +316,7 @@ GOOGLE_APPLICATION_CREDENTIALS=./sa.json \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Audit centralisé via AWS Security Hub
 
@@ -344,7 +344,7 @@ Prowler agrège les rapports d'un même dossier en un dashboard multi-cloud — 
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -357,7 +357,7 @@ Prowler agrège les rapports d'un même dossier en un dashboard multi-cloud — 
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -373,7 +373,7 @@ Prowler agrège les rapports d'un même dossier en un dashboard multi-cloud — 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -419,7 +419,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — audit planifié et archivage des rapports (bucket fictif)
@@ -433,7 +433,7 @@ echo "Exit code: $?"
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Prowler produit les rapports dans le dossier courant ou `--output-dir` : `csv`, `json`, `html`, `xlsx`, `sarif`, `asff`. Le JSON est la forme la plus exploitable pour du traitement automatisé.
 
@@ -453,9 +453,9 @@ jq '.[] | select(.check_id == "s3_bucket_public_access" or
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - ScoutSuite|ScoutSuite]] — audit multi-cloud complémentaire (moins précis côté conformité)
 - [[Outil - Pacu|Pacu]] — exploitation des failles détectées par Prowler
 - [[Outil - cloudfox|cloudfox]] — cartographie des chemins de confiance IAM après le constat de posture
@@ -470,7 +470,7 @@ Credentials lecture → Prowler (checks CIS) → CSV/JSON/ASFF → Security Hub 
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -484,7 +484,7 @@ Credentials lecture → Prowler (checks CIS) → CSV/JSON/ASFF → Security Hub 
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Latence API** : chaque check émet des appels de lecture ; le temps total dépend du nombre de services, de régions et de ressources (un scan AWS multi-région complet prend de quelques minutes à plusieurs dizaines).
 - **Parallélisme** : le moteur v5 parallélise les checks par région ; les grosses ressources (multiples comptes, organizations) allongent le scan.
@@ -494,7 +494,7 @@ Credentials lecture → Prowler (checks CIS) → CSV/JSON/ASFF → Security Hub 
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -524,7 +524,7 @@ Credentials lecture → Prowler (checks CIS) → CSV/JSON/ASFF → Security Hub 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Accès en lecture seule** : Prowler n'exécute aucune action d'écriture ; utiliser des credentials **en lecture** dédiés à l'audit (jamais un compte humain à privilèges larges).
 - **Rapports sensibles** : CSV/JSON/HTML contiennent la posture complète (ressources, policies, régions, findings) → traiter comme confidentiel, stockage chiffré, jamais committé.
@@ -535,7 +535,7 @@ Credentials lecture → Prowler (checks CIS) → CSV/JSON/ASFF → Security Hub 
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de test d'exploitabilité** : un FAIL indique un écart de configuration, pas une preuve de compromission.
 - **Permissions limitées = résultats trompeurs** : sans les droits de lecture sur un service, les checks sortent en WARNING ou FAIL à tort — vérifier le rôle utilisé.
@@ -545,7 +545,7 @@ Credentials lecture → Prowler (checks CIS) → CSV/JSON/ASFF → Security Hub 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -578,7 +578,7 @@ prowler aws --profile audit -M asff --security-hub
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ prowler aws --profile audit -M asff --security-hub
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -602,16 +602,16 @@ prowler aws --profile audit -M asff --security-hub
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise `-z` dans tes pipelines CI/CD pour faire échouer le build uniquement sur les vrais FAIL.
 > - `-M csv json html` en une seule passe est plus efficace que de relancer le scan pour chaque format.
 > - `--compliance cis_2.0_aws` aligne l'audit sur un référentiel : idéal pour justifier chaque FAIL devant le client.
 > - `--checks` permet d'isoler un check unique pour valider une correction en quelques secondes.
 > - Garde un rôle d'audit dédié (`SecurityAudit`/`ReadOnlyAccess`) et des credentials de courte durée.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un « PASS » ne prouve pas l'absence de vulnérabilité : Prowler vérifie la configuration, pas l'exploitabilité.
 > - Sur AWS, l'absence de droits sur un service produit des FAIL ou WARNING trompeurs : vérifie le rôle utilisé.
 > - Les scans multi-régions sont lents : cible les régions pertinentes pour ton périmètre.
@@ -620,7 +620,7 @@ prowler aws --profile audit -M asff --security-hub
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -647,4 +647,4 @@ prowler aws --profile audit -M asff --security-hub
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - ScoutSuite|ScoutSuite]] · [[Outil - cloudfox|cloudfox]]
+**Liens :** [[Tools| Outils]] · [[Outil - ScoutSuite|ScoutSuite]] · [[Outil - cloudfox|cloudfox]]

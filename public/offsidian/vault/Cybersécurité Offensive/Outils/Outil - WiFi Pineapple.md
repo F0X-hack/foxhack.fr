@@ -1,12 +1,12 @@
 ---
 title: "Outil - WiFi Pineapple"
 type: outil
-categorie: 🔌 USB / HID & Gadgets
+categorie: USB / HID & Gadgets
 tags:
   - cyber
   - outil
   - hardware
-  - 🔌 USB / HID & Gadgets
+  - USB / HID & Gadgets
 statut: publie
 version: Mark VII (2020) / Mark X ; firmware Entanglement 2.x (2.1.3 confirmé 2024)
 licence: propriétaire (firmware Hak5) ; modules communautaires sous licences diverses (MIT, GPL…)
@@ -17,20 +17,20 @@ site: https://shop.hak5.org/products/wifi-pineapple
 doc: https://docs.hak5.org/wifi-pineapple/
 ---
 
-# 🍍 WiFi Pineapple — Rogue AP, PineAP et Evil Portal
+# WiFi Pineapple — Rogue AP, PineAP et Evil Portal
 
 > [!info] **En 1 phrase**
 > Une plateforme sans-fil (OpenWrt) conçue pour créer des **points d'accès rogues** : elle force les clients WiFi à se connecter à elle (PineAP), capte leur trafic et sert des **portails captifs** de phishing.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | WiFi Pineapple (Mark VII 2020, Mark X) |
 | Description | Boîtier deux radios WiFi sous OpenWrt dédié aux attaques **Rogue AP / Evil Twin** : beacons PineAP, déauthentification, MITM, portail captif, collecte de credentials |
-| Catégorie | 🔌 USB / HID & Gadgets |
+| Catégorie | USB / HID & Gadgets |
 | Sous-catégorie | WiFi / Rogue Access Point & Evil Twin |
 | Fonction principale | Attirer les clients WiFi sur un faux point d'accès, intercepter leur trafic et capturer des identifiants |
 | Type d'outil | Hardware + plateforme OpenWrt + modules (interface web) |
@@ -49,7 +49,7 @@ doc: https://docs.hak5.org/wifi-pineapple/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le WiFi Pineapple (Hak5, modèles Mark VII et Mark X) est un boîtier embarquant **deux cartes WiFi** et un système **OpenWrt** personnalisé. Sa fonction principale : se faire passer pour le **SSID légitime** d'une entreprise (ou un AP ouvert) et **déauthentifier les clients** pour les faire basculer sur le faux point d'accès. Une fois les clients connectés, l'attaquant dispose d'un **MITM complet** : reniflage, injection, portail captif, modules. Les briques clés :
 - **PineAP Daemon** : diffuse des beacons vers les SSID qu'il « connaît », répond aux probes, déauthentifie les clients ciblés et pousse vers son AP ;
@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Le WiFi Pineapple est **prêt à l'emploi** en usine ; l'installation consiste à l'alimenter, le mettre à jour et installer les modules.
 
@@ -122,7 +122,7 @@ opkg update
 opkg install tshark responder mdk4
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Ne jamais brancher le Pineapple sur un réseau d'entreprise en production** sans autorisation : le Rogue AP déclenche immédiatement les WIDS/WIPS.
 > - La **batterie** tient peu en PineAP actif : prévoir une alimentation USB continue.
 > - Les **identifiants SSH par défaut** et le SSID usine doivent être changés avant toute opération hors lab.
@@ -130,7 +130,7 @@ opkg install tshark responder mdk4
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -145,7 +145,7 @@ opkg install tshark responder mdk4
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Matériel** : deux radios WiFi (2.4 + 5 GHz), SoC MIPS/ARM, flash, batterie, USB-C. Le **Mark VII** ajoute un second slot MicroSD et le **dual-band simultané**.
 - **Système** : **OpenWrt** personnalisé (firmware « Entanglement ») : gestion des paquets via `opkg`, services systemd/init.d, `hostapd` pour l'AP, `iptables` pour le routage.
@@ -157,7 +157,7 @@ opkg install tshark responder mdk4
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -202,7 +202,7 @@ cp /etc/pineapple/pineap_settings /sd/backup_pineap_settings
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option / commande | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -223,7 +223,7 @@ cp /etc/pineapple/pineap_settings /sd/backup_pineap_settings
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -256,7 +256,7 @@ Cloner un SSID légitime (« Corporate-FR », canal 6) dans **PineAP Settings**,
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparation** — alimenter le Pineapple, se connecter à l'UI (`http://172.16.42.1:1471`), mettre à jour le firmware, installer les modules (Evil Portal, Responder), changer les identifiants par défaut.
 2. **Cibler** — identifier le SSID légitime à cloner (ex. « Corporate-FR ») et son canal via le logger ou un scan (`airodump-ng`).
@@ -268,7 +268,7 @@ Cloner un SSID légitime (« Corporate-FR », canal 6) dans **PineAP Settings**,
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Evil Portal — portail captif de phishing WiFi
 
@@ -315,7 +315,7 @@ Complète l'attaque Rogue AP : les hashes capturés servent ensuite en **Pass-th
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -328,7 +328,7 @@ Complète l'attaque Rogue AP : les hashes capturés servent ensuite en **Pass-th
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -343,7 +343,7 @@ Complète l'attaque Rogue AP : les hashes capturés servent ensuite en **Pass-th
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -398,7 +398,7 @@ rule EvilPortal_Postback {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — surveiller en boucle les clients connectés et sauvegarder les logs
@@ -417,7 +417,7 @@ for m in re.finditer(r"(?P<mac>[0-9A-Fa-f:]{17}).*SSID=(?P<ssid>[^\s]+).*rssi=(?
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties du Pineapple sont les **logs des modules** (interface web) et les **fichiers de logs** sur la SD (`/sd/logs`).
 
@@ -448,9 +448,9 @@ with open("evilportal_logs.json") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Responder]] — capture NTLMv2 sur le réseau MITM du Pineapple
 - [[Outil - Wireshark]] / [[Outil - tshark]] — analyse des captures effectuées sur le boîtier
 - [[Outil - hashcat]] — crack des hashes NTLMv2 récoltés (`-m 5600`)
@@ -472,7 +472,7 @@ Clients WiFi → Pineapple (PineAP + Evil Portal) → logs → hashcat / Pass-th
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -486,7 +486,7 @@ Clients WiFi → Pineapple (PineAP + Evil Portal) → logs → hashcat / Pass-th
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Radios** : dual-band 2.4/5 GHz simultanés (Mark VII) — capture des clients sur les deux bandes.
 - **Portée** : dépend de l'antenne et de la puissance (configurable) ; en intérieur, quelques dizaines de mètres.
@@ -496,7 +496,7 @@ Clients WiFi → Pineapple (PineAP + Evil Portal) → logs → hashcat / Pass-th
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ Clients WiFi → Pineapple (PineAP + Evil Portal) → logs → hashcat / Pass-th
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Légalité** : créer un Rogue AP et intercepter le trafic sans autorisation est illégal (espionnage des communications). Uniquement en test autorisé (mandat, lab).
 - **Identifiants par défaut** : changer immédiatement le mot de passe root et le SSID « Pineapple » hors lab ; sinon l'attaquant lui-même est compromettable.
@@ -537,7 +537,7 @@ Clients WiFi → Pineapple (PineAP + Evil Portal) → logs → hashcat / Pass-th
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas d'exploitation système en soi** : il capture et relaie ; l'exploitation repose sur les modules et les outils externes.
 - **Détectable par WIDS/WIPS** : beacons, deauth massifs et double SSID sont des signatures classiques.
@@ -548,7 +548,7 @@ Clients WiFi → Pineapple (PineAP + Evil Portal) → logs → hashcat / Pass-th
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Accès
@@ -575,7 +575,7 @@ openvpn --config /etc/openvpn/client.conf --daemon
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -588,7 +588,7 @@ openvpn --config /etc/openvpn/client.conf --daemon
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -602,16 +602,16 @@ openvpn --config /etc/openvpn/client.conf --daemon
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utiliser **deux canaux** (2.4 + 5 GHz) pour couvrir les deux bandes et maximiser le taux de capture des clients.
 > - La fonction **« Responder + PineAP »** fonctionne mieux la nuit (bureaux vides, portables qui se reconnectent seuls).
 > - Cloner le SSID du vrai AP **avec le bon canal et la même bande** : les clients basculent plus facilement.
 > - Configurer le **Client Filter** (liste MAC) pour ne piéger que les appareils cibles.
 > - Tester toujours la template du portail captif sur un appareil témoin avant le déploiement réel.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - PineAP ouvert = **n'importe qui** peut se connecter au faux AP : sans filtrage, l'attaque devient visible et des clients tiers peuvent la compromettre.
 > - Un portail captif mal configuré peut **bloquer la connexion** sans capturer quoi que ce soit : tester la template avant le déploiement.
 > - Le Rogue AP est **facilement détecté** par un WIDS (BSSID inconnu, deauth en rafale) : en test autorisé, prévenir le client et définir des horaires.
@@ -620,7 +620,7 @@ openvpn --config /etc/openvpn/client.conf --daemon
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -644,4 +644,4 @@ openvpn --config /etc/openvpn/client.conf --daemon
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP & MITM]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 LLMNR/NBT-NS Poisoning]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP & MITM]] · [[Techniques/LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]] · [[Techniques/Attaques WiFi (WPA2 et PMKID)| Hub WiFi]]

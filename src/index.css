@@ -10,7 +10,7 @@
    Règle : le noir domine, un seul accent porte l'interaction, les couleurs
    chaudes restent rares. Aucun violet, aucun néon décoratif.
 
-   ⚠️  IMPORTANT — pourquoi les couleurs de thème sont écrites en CSS direct
+   IMPORTANT — pourquoi les couleurs de thème sont écrites en CSS direct
    (p. ex. `color: rgb(var(--signal))`) et JAMAIS via `@apply` d'une couleur de thème :
    Tailwind met `tailwind.config.js` en cache au démarrage du process. Si le
    serveur tourne encore avec une ancienne palette, un `@apply` sur une

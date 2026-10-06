@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧀 Kerberoasting
+# Kerberoasting
 
 > [!info] **En 1 phrase**
 > Kerberoasting = demander un **TGS** pour un compte de service, puis **cracker le hash hors-ligne** :
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -33,26 +33,26 @@ sequenceDiagram
     A->>A: hashcat -m 13100 tgs.txt rockyou.txt
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Pour demander un TGS, il suffit d'être **authentifié au domaine** (n'importe quel compte).
 > Le TGS est chiffré avec la clé du service → on le **brute-force offline** (aucun risque de lockout).
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Énumérer les SPN** : `service/hostname` attribués à des **comptes utilisateurs**.
 2. **Demander les TGS** pour ces SPN.
 3. **Cracker** le ticket (mode hashcat **13100** / john `krb5tgs`).
 4. Si le mot de passe du service est faible → **accès au compte de service**.
 
-> [!warning] 🚨 **La nuance clé**
+> [!warning] **La nuance clé**
 > - SPN sur un **compte utilisateur** → hash **crackable** (mdp choisi par un humain).
 > - SPN sur un **compte machine** (`$`) → mot de passe **aléatoire 120+ caractères**, inutile de cracker.
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Impacket (Linux)
@@ -73,7 +73,7 @@ john --format=krb5tgs kerberoast.txt --wordlist=rockyou.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -83,19 +83,19 @@ john --format=krb5tgs kerberoast.txt --wordlist=rockyou.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Le bon timing**
+> [!tip] **Le bon timing**
 > Les TGS ont une validité de **10h** : les TGS capturés ne servent qu'au cracking, pas à la connexion directe. Lance le crack rapidement.
 
-> [!warning] ⚠️ **Piège** : demander des TGS pour un compte **machine** (`$`) = perte de temps. Filtre BloodHound : `hasspn=true AND NOT name ends with '$'`.
+> [!warning] **Piège** : demander des TGS pour un compte **machine** (`$`) = perte de temps. Filtre BloodHound : `hasspn=true AND NOT name ends with '$'`.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[AS-REP Roasting|☀️ AS-REP Roasting]]
-- [[Password Cracking|🔐 Password Cracking]]
-- [[Silver Ticket|💠 Silver Ticket]] (résultat possible si on a la clé du service)
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[AS-REP Roasting| AS-REP Roasting]]
+- [[Password Cracking| Password Cracking]]
+- [[Silver Ticket| Silver Ticket]] (résultat possible si on a la clé du service)
+- → Note complète : [[05 - Active Directory| Active Directory]]

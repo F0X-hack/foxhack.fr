@@ -1,7 +1,7 @@
 ---
 title: "Outil - SocialFish"
 type: outil
-categorie: 🎭 Social Engineering & Phishing
+categorie: Social Engineering & Phishing
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://github.com/UndeadSec/SocialFish
 doc: https://github.com/UndeadSec/SocialFish/wiki
 ---
 
-# 🐟 SocialFish — Phishing automatisé avec clonage de sites en quelques commandes
+# SocialFish — Phishing automatisé avec clonage de sites en quelques commandes
 
 > [!info] **En 1 phrase**
 > SocialFish est un outil de phishing en Python (Flask) qui clone un site web, génère une fausse page de connexion et capture les identifiants, avec un serveur intégré, un tunneling Ngrok et une interface web.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | SocialFish |
 | Description | Outil de phishing : clone un site, injecte une fausse page de login, capture identifiants/cookies/OTP, expose via tunneling (Ngrok/Cloudflared) avec panneau opérateur web |
-| Catégorie | 🎭 Social Engineering & Phishing |
+| Catégorie | Social Engineering & Phishing |
 | Sous-catégorie | Phishing, Credential Harvesting, Clone de sites |
 | Fonction principale | Cloner un site et capturer identifiants / sessions / codes 2FA en temps réel |
 | Type d'outil | CLI + interface web (panneau opérateur) |
@@ -50,7 +50,7 @@ doc: https://github.com/UndeadSec/SocialFish/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 SocialFish est un outil de phishing open source écrit en **Python** et basé sur **Flask**, popularisé par **UndeadSec**. Il clone un site web cible, injecte une fausse page de connexion et sert le tout sur un port local avec un **serveur HTTP intégré**. Une **interface web** (panneau opérateur) permet de lancer les attaques et de consulter les identifiants capturés en temps réel. Il supporte le **tunneling Ngrok/Cloudflared** pour exposer le phishing derrière une URL publique HTTPS, même derrière un NAT.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux / macOS / Windows
 
@@ -113,14 +113,14 @@ docker run -it --rm -p 4444:4444 socialfish
 pip install socialfish
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - La v3 repose sur **Playwright** : si le `requirements.txt` l'inclut, installer aussi le navigateur Chromium (`python3 -m playwright install chromium`). À vérifier selon votre build.
 > - Sur Kali récent, `pip install` hors virtualenv est bloqué : utiliser `python3 -m venv` ou `pipx`.
 > - Le port 4444 doit être libre ; les droits **root** ne sont pas indispensables mais pratiques pour les ports < 1024.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration passe par des **arguments de ligne de commande** (user/pass du panneau, port, domaine cloné) et, en v3, par le **panneau web** (modes de clone, templates, webhooks).
 
@@ -139,7 +139,7 @@ La configuration passe par des **arguments de ligne de commande** (user/pass du 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 SocialFish est une application **Flask** qui combine un serveur HTTP de phishing et un panneau d'administration :
 
@@ -164,7 +164,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -206,7 +206,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://twitter.com -s
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -224,7 +224,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://twitter.com -s
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -263,7 +263,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://twitter.com -s
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Cloner et installer les dépendances.**
    ```bash
@@ -287,7 +287,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://twitter.com -s
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : exposer le phishing derrière un NAT via Ngrok
 
@@ -329,7 +329,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://login.microsoftonline.com -u
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -341,7 +341,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://login.microsoftonline.com -u
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -356,7 +356,7 @@ python3 SocialFish.py jdoe Tartempion2024! https://login.microsoftonline.com -u
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -398,7 +398,7 @@ alert dns any any -> any any (msg:"DNS query for ngrok tunneling domain"; dns.qu
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — vérifier le clone et l'écoute après lancement
@@ -424,7 +424,7 @@ for user, pw in re.findall(r'Username:\s*(\S+)[^\n]*Password:\s*(\S+)', data):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les sorties principales : **terminal** (logs en temps réel), **panneau web** (interface opérateur), **fichiers de log** et **export JSON/CSV des sessions** (v3).
 
@@ -449,13 +449,13 @@ for s in sessions:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OTP → Rejeu (session hijack) → SIEM
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - BeEF]] — hook du navigateur de la victime après le clic sur la page clonée
 - [[Outil - Evilginx2]] · [[Outil - Modlishka]] — reverse proxies 2FA (au-delà de SocialFish)
 - [[Outil - SET]] — framework complet pour aller plus loin (payloads, mass mailer)
@@ -463,11 +463,11 @@ Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OT
 - [[Outil - CredSniper]] — phishing 2FA via reverse proxy
 - [[Outil - GoPhish]] — campagnes structurées avec tracking
 - [[Outil - Nmap]] — repérer le serveur de phishing exposé / vérifier les ports
-- [[07 - Wireless, MITM & Social Engineering|🎭 Wireless, MITM & Social Engineering]]
+- [[07 - Wireless, MITM & Social Engineering| Wireless, MITM & Social Engineering]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -482,7 +482,7 @@ Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OT
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Lancement** : quasi instantané (Flask) ; le clonage d'une page statique prend 1-3 secondes.
 - **Pages JavaScript lourdes** : en v3, Playwright ralentit le clonage (chargement navigateur complet) mais améliore la fidélité — prévoir plusieurs secondes à une minute selon la cible.
@@ -495,7 +495,7 @@ Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OT
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -525,7 +525,7 @@ Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OT
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Panneau opérateur exposé** : l'interface web est servie sur le même port que le phishing — si vous êtes derrière un NAT avec Ngrok, le panneau peut être accessible en ligne. Changer les identifiants par défaut et protéger par firewall.
 - **Identifiants par défaut faibles** : ne jamais réutiliser `admin/admin` ; utiliser des valeurs fictives fortes en lab (`jdoe` / `Tartempion2024!`).
@@ -535,7 +535,7 @@ Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OT
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de campagne massive** : pas de gestion multi-cibles mature, tracking minimal par rapport à [[Outil - GoPhish]].
 - **Fidélité du clone** : les sites riches (SPA, JS lourd) cassent souvent ; la v3 (Playwright) améliore le rendu mais pas pour tous les sites.
@@ -545,7 +545,7 @@ Email/SMS (lien Ngrok) → SocialFish (page clonée) → Capture creds/cookie/OT
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -574,7 +574,7 @@ curl -I http://localhost:4444
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -587,7 +587,7 @@ curl -I http://localhost:4444
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -600,16 +600,16 @@ curl -I http://localhost:4444
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `-u` (Ngrok) pour une URL **HTTPS publique** : indispensable pour éviter l'alerte navigateur en dehors du réseau local.
 > - Testez d'abord localement avec `curl -I http://localhost:4444` pour vérifier que la page clonée est servie correctement.
 > - Changez le port avec `-p` si le 4444 est bloqué par un firewall.
 > - Restreignez le serveur au réseau de test : ne laissez jamais le panneau admin accessible sur Internet (firewall + identifiants forts).
 > - En v3, activez un webhook Discord/Slack pour être notifié immédiatement de chaque capture.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - SocialFish ne fait **pas de réécriture complète** : certains assets du site cloné peuvent casser et trahir l'attaque.
 > - Le projet est maintenu par intermittence : vérifiez la compatibilité avec votre version de Python/Flask (et Playwright en v3).
 > - Ne réutilisez pas des identifiants faibles sur l'interface web (`admin/pass`) : elle peut être exposée.
@@ -618,7 +618,7 @@ curl -I http://localhost:4444
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -641,4 +641,4 @@ curl -I http://localhost:4444
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - CredSniper|CredSniper]] · [[Outil - BeEF|BeEF]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - Modlishka|Modlishka]] · [[Outil - SET|SET]] · [[Outil - Weeman|Weeman]] · [[Outil - GoPhish|GoPhish]]
+**Liens :** [[Tools| Outils]] · [[Outil - CredSniper|CredSniper]] · [[Outil - BeEF|BeEF]] · [[Outil - Evilginx2|Evilginx2]] · [[Outil - Modlishka|Modlishka]] · [[Outil - SET|SET]] · [[Outil - Weeman|Weeman]] · [[Outil - GoPhish|GoPhish]]

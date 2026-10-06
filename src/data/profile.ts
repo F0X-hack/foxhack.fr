@@ -29,7 +29,7 @@ export const profile = {
      la méthode et la devise sont déjà dits ailleurs, une fois chacun. */
   bio: 'The file behind the handle.',
 
-  location: { label: 'France', flag: '🇫🇷' },
+  location: { label: 'France' },
 
   /** 18 ans — auto-évaluation, apprenant continu */
   age: 18,

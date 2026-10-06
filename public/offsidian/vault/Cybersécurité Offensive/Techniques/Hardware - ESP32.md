@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🔌 ESP32
+# ESP32
 
 > [!info] **En 1 phrase**
 > L'**ESP32** est le microcontrôleur WiFi/Bluetooth le plus répandu de l'Internet des
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Élevée |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["ESP32 DevKit"] --> B["UART / JTAG / SPI"]
@@ -44,7 +44,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 L'ESP32 est un microcontrôleur Espressif intégrant WiFi 2.4 GHz et Bluetooth. C'est à la fois une **cible** (IoT embarquant massivement des ESP32) et un **outil** (ESP32Marauder, attaques WiFi). Sa flash SPI externe contient le firmware, ses pins UART exposent la console de debug, et ses strapping pins contrôlent le mode de boot.
 
@@ -62,7 +62,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Xtensa LX6 / RISC-V
 
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -145,7 +145,7 @@ Console UART à 115200 bauds pour le flash et le debug
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Comparaison des protocoles
 
@@ -158,7 +158,7 @@ Console UART à 115200 bauds pour le flash et le debug
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -190,7 +190,7 @@ pip install adafruit-ampy
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du logiciel d'interfaçage
 
@@ -212,7 +212,7 @@ pip install adafruit-ampy
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -253,9 +253,9 @@ ampy --port /dev/ttyUSB0 run main.py
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lecture du chip ID
+### Débutant — Lecture du chip ID
 
 ```bash
 # Mettre en mode download (BOOT + RESET)
@@ -263,7 +263,7 @@ esptool.py -p /dev/ttyUSB0 flash_id
 # Sortie : Chip ID, Flash size, Flash mode
 ```
 
-### 🟡 Intermédiaire — Dump + analyse de credentials
+### Intermédiaire — Dump + analyse de credentials
 
 ```bash
 #!/bin/bash
@@ -272,7 +272,7 @@ esptool.py -p $PORT read_flash 0 0x400000 dump.bin
 strings dump.bin | grep -iE "(password|key|token|secret|http|mqtt)"
 ```
 
-### 🔴 Avancé — Extraction de secrets
+### Avancé — Extraction de secrets
 
 ```python
 #!/usr/bin/env python3
@@ -296,7 +296,7 @@ for name, pat in patterns.items():
             print(f"    {m.decode('utf-8', errors='replace')}")
 ```
 
-### ⚫ Expert — Bypass Secure Boot v2 via voltage glitching
+### Expert — Bypass Secure Boot v2 via voltage glitching
 
 ```text
 Scénario : Secure Boot v2 activé (efuses programmés).
@@ -310,7 +310,7 @@ Scénario : Secure Boot v2 activé (efuses programmés).
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -363,7 +363,7 @@ python esp32knife.py --chip=esp32 load_from_file flash_dump.bin
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Clonage WiFi via firmware dump
 
@@ -373,7 +373,7 @@ python esp32knife.py --chip=esp32 load_from_file flash_dump.bin
 | **Matériel** | USB-UART bridge, PC |
 | **Étapes** | Identifier pads UART → Connecter TX/RX/GND → Dump flash → Extraire credentials |
 | **Résultat** | SSID et mot de passe WiFi en clair |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -390,11 +390,11 @@ flowchart LR
 | **Matériel** | PC, câble USB-UART |
 | **Étapes** | Dump original → Analyser (binwalk) → Compiler firmware backdoor → Patcher partitions → Flasher → Capturer shell |
 | **Résultat** | Accès shell distant |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -412,7 +412,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -441,7 +441,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -475,7 +475,7 @@ esptool.py --chip esp32 efuse_summary
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -510,7 +510,7 @@ if __name__=="__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -536,12 +536,12 @@ esptool.py -p COM7 flash_id > chip_info.txt 2>&1
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - UART|🔌 UART]] — Console de debug
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] — Debug avancé
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - UART| UART]] — Console de debug
+- [[Hardware - JTAG et SWD| JTAG/SWD]] — Debug avancé
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -551,7 +551,7 @@ esptool.py -p COM7 flash_id > chip_info.txt 2>&1
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -568,7 +568,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -578,7 +578,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -605,7 +605,7 @@ sudo systemctl stop ModemManager
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -627,7 +627,7 @@ sudo systemctl stop ModemManager
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -645,7 +645,7 @@ sudo systemctl stop ModemManager
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -674,7 +674,7 @@ sudo systemctl stop ModemManager
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -687,7 +687,7 @@ sudo systemctl stop ModemManager
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -707,7 +707,7 @@ sudo systemctl stop ModemManager
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : GPIO0 à GND au boot = mode download : récupère un ESP32 verrouillé.
 - **Piège 2** : Console UART par défaut 115200 : permuter RX/TX si rien ne s'affiche.
@@ -724,9 +724,9 @@ sudo systemctl stop ModemManager
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — ESP32](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/esp32.md)
 > - [Espressif SoCs](https://www.espressif.com/en/products/socs)
 > - [esptool GitHub](https://github.com/espressif/esptool)
@@ -753,4 +753,4 @@ sudo systemctl stop ModemManager
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - Secure Boot]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - Secure Boot]]

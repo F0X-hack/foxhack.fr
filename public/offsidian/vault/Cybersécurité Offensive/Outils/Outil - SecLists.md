@@ -1,7 +1,7 @@
 ---
 title: "Outil - SecLists"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://seclists.dev/
 doc: https://github.com/danielmiessler/SecLists
 ---
 
-# 📚 SecLists — La collection de wordlists et payloads du testeur
+# SecLists — La collection de wordlists et payloads du testeur
 
 > [!info] **En 1 phrase**
 > SecLists est la boîte à listes de référence du testeur d'intrusion : usernames, mots de passe, chemins web, DNS, payloads, webshells et patterns de données sensibles — à cloner une fois et à brancher sur gobuster, ffuf, hydra ou hashcat.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | SecLists |
 | Description | Collection de listes pour assessments sécurité : usernames, mots de passe, URLs, patterns de données sensibles, payloads de fuzzing, webshells, etc. |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Dictionnaires & listes de référence (collection) |
 | Fonction principale | Fournir les listes prêtes à l'emploi pour l'énumération, le fuzzing, la découverte de contenu et le cracking de mots de passe |
 | Type d'outil | Collection de fichiers texte + utilitaires (`/.bin`) |
@@ -50,7 +50,7 @@ doc: https://github.com/danielmiessler/SecLists
 
 ---
 
-## 🎯 Concept
+## Concept
 
 SecLists est la concrétisation d'une idée simple : un testeur doit pouvoir **cloner un seul dépôt sur une machine de test neuve et y trouver toutes les listes dont il a besoin** — usernames, mots de passe, chemins web, sous-domaines, payloads, webshells, patterns. Historiquement chaque outil livrait ses propres listes éparpillées ; SecLists centralise, normalise et documente.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Kali Linux
 
@@ -132,12 +132,12 @@ unzip SecList.zip && rm -f SecList.zip
 git clone --depth 1 https://github.com/danielmiessler/SecLists.git
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Le dépôt fait plusieurs centaines de Mo (clone complet ~7-8 min à 50 Mo/s). L'antivirus peut **faussement signaler** des fichiers (webshells, payloads) : ajouter le dossier aux exclusions. Il n'est pas recommandé de stocker ces fichiers sur un serveur de production (risque de local file include).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : SecLists se « configure » par le **choix des listes**. La règle d'or : cibler la bonne liste pour l'étape (top 1 000 pour un spray, liste complète pour un crack hors-ligne).
 
@@ -151,7 +151,7 @@ Pas de fichier de configuration : SecLists se « configure » par le **choix des
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 SecLists est organisé en **dossiers thématiques**, chacun dédié à une étape du test. `Usernames/` contient les listes d'utilisateurs (top-usernames-shortlist, xato-net-10-million-usernames...). `Passwords/` est le plus utilisé : sous-dossiers `Common-Credentials/` (10-million-password-list-top-1000/10000/100000, 100k-most-used-passwords-NCSC), `Leaked-Databases/` (rockyou.txt.tar.gz, LinkedIn, Ashley-Madison, Antipublic, RockYou2021/2024...), `Permutations/`, `Wifi-WPA/`, `Software/`. `Discovery/` rassemble `DNS/`, `Web-Content/` (directory-list-2.3-medium.txt, raft-*, Common-PHP-Filenames...) et `Infrastructure/`. `Fuzzing/` et `Payloads/` fournissent les payloads XSS, SQLi, command injection, XXE. `Web-Shells/` (PHP, ASP, JSP), `Pattern-Matching/` (regex CC/SSN/emails), `Miscellaneous/` et `Ai/LLM_Testing/` complètent l'ensemble. Enfin `.bin/` porte des petits scripts (générateurs, mutateurs) et `.github/` l'outillage de contribution.
 
@@ -159,7 +159,7 @@ Le format de fichier est **uniforme : texte brut, une entrée par ligne** — ce
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 SecLists n'a pas de CLI propre : les « commandes » sont celles des outils consommateurs, avec le chemin de liste en argument.
 
@@ -190,7 +190,7 @@ cat top-usernames-shortlist.txt /tmp/emails.txt | sort -u > /tmp/users.txt
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 Pas de flags propres : le « réglage » se fait en sélectionnant la bonne liste. Le tableau ci-dessous aide à choisir.
 
@@ -210,7 +210,7 @@ Pas de flags propres : le « réglage » se fait en sélectionnant la bonne list
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -259,7 +259,7 @@ hashcat -m 5600 netntlmv2.txt /tmp/candidats.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Installer** le paquet Kali (`sudo apt install -y seclists`) ou cloner le dépôt.
 2. **Choisir les listes** pour l'objectif : discovery web → `Discovery/Web-Content/directory-list-2.3-medium.txt` ; cracking → rockyou ou top-100000.
@@ -276,7 +276,7 @@ hashcat -m 5600 netntlmv2.txt /tmp/candidats.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : découverte complète d'un périmètre web
 
@@ -318,7 +318,7 @@ grep -E '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$' /tmp/dump.txt > /tmp/
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -331,7 +331,7 @@ grep -E '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$' /tmp/dump.txt > /tmp/
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -344,7 +344,7 @@ grep -E '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$' /tmp/dump.txt > /tmp/
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -383,7 +383,7 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"Potential directory brute fo
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — mise à jour régulière des listes
@@ -421,7 +421,7 @@ print(pick_list("spray"))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 SecLists produit des **fichiers texte, une entrée par ligne**. La sortie est donc consommée par les outils et manipulée avec les outils Unix classiques.
 
@@ -451,7 +451,7 @@ print("leet :", leet, "| fin par année :", annee)
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 SecLists ──> gobuster / ffuf / dirsearch / wfuzz  (discovery web & DNS)
@@ -461,7 +461,7 @@ SecLists ──> aircrack-ng / Reaver                  (Wi-Fi)
 SecLists ──> Burp Suite Intruder                   (fuzzing applicatif)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - CeWL|CeWL]], [[Outil - CUPP|CUPP]], [[Outil - rsmangler|rsmangler]], [[Outil - pydictor|pydictor]] — génération/mutation de listes sur mesure
 - [[Outil - hashcat|hashcat]] et [[Outil - John the Ripper|John the Ripper]] — consommation des listes Passwords
 - [[Outil - gobuster|gobuster]], [[Outil - ffuf|ffuf]], [[Outil - dirsearch|dirsearch]], [[Outil - wfuzz|wfuzz]] — consommation de Discovery
@@ -469,11 +469,11 @@ SecLists ──> Burp Suite Intruder                   (fuzzing applicatif)
 - [[Outil - Burp Suite|Burp Suite]] — Intruder sur les listes Fuzzing/Payloads
 - [[Outil - aircrack-ng|aircrack-ng]] — listes Wifi-WPA
 - [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] — règles de mutation complémentaires
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -488,13 +488,13 @@ SecLists ──> Burp Suite Intruder                   (fuzzing applicatif)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 Le point clé est la **taille des fichiers** : clone complet ~400-500 Mo (~7-8 min à 50 Mo/s), `--depth 1` nettement plus rapide. `rockyou.txt` fait ~14 M de lignes (~130 Mo) ; `directory-list-2.3-medium.txt` ~220 000 entrées ; `10-million-password-list-top-100000.txt` 100 000 lignes. Les outils consommateurs streament ces fichiers ligne par ligne : la limite est la RAM pour les gros fichiers dans des outils qui bufferisent, pas pour gobuster/ffuf/hashcat (streaming). Utiliser `sort -u`, `grep` et `awk` pour pré-filtrer évite de tester des doublons ou des entrées hors politique. Un clone complet est plus lent à synchroniser : `git pull` sur `--depth 1` est rapide mais ne récupère pas l'historique.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -530,13 +530,13 @@ Le point clé est la **taille des fichiers** : clone complet ~400-500 Mo (~7-8 m
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 SecLists est un **dépôt passif de fichiers texte** : aucun code exécuté à l'installation, pas de télémétrie ni de collecte. Les risques sont d'abord de **faux positifs antivirus** (webshells, payloads) — d'où la recommandation officielle d'exclure le dossier du scan et de ne pas le déployer sur des serveurs de production (risque de local file include si une liste est servie telle quelle). Côté usage, la licence **MIT** autorise l'usage commercial et personnel ; les listes de mots de passe leakées restent des **données potentiellement sensibles** : les manipuler dans le cadre légal d'un engagement autorisé, les stocker de façon protégée et les purger après la mission. Vérifier l'intégrité du dépôt (clone officiel, hashes) pour éviter un dépôt tiers modifié. Le projet se prête aussi à la **mesure de la robustesse** des politiques : comparer une politique interne au top-1000/100000 et au RockYou2024.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas un générateur** : liste fixe ; le sur-mesure nécessite des mutateurs (rsmangler, pydictor, Crunch).
 - **Taille** : dépôt volumineux (clone complet ~400-500 Mo), mises à jour git lentes.
@@ -547,7 +547,7 @@ SecLists est un **dépôt passif de fichiers texte** : aucun code exécuté à l
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation
@@ -574,7 +574,7 @@ grep -E '^.{8,14}$' 10-million-password-list-top-10000.txt | sort -u > /tmp/pass
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -583,11 +583,11 @@ grep -E '^.{8,14}$' 10-million-password-list-top-10000.txt | sort -u > /tmp/pass
 | **Commande principale** | Pas de CLI ; usage via `gobuster -w`, `hydra -P`, `hashcat <liste>`, `ffuf -w`... |
 | **Alternative principale** | Assetnote Wordlists (discovery), PayloadsAllTheThings (fuzzing), rockyou.txt seul |
 | **Concepts importants** | Wordlist, liste classée, leakée, fuzzing, discovery, `.bin/`, MIT |
-| **Liens associés** | [[Outil - hashcat|hashcat]] · [[Outil - hydra|hydra]] · [[Outil - gobuster|gobuster]] · [[Techniques/Password Cracking|🔐 Password Cracking]] |
+| **Liens associés** | [[Outil - hashcat|hashcat]] · [[Outil - hydra|hydra]] · [[Outil - gobuster|gobuster]] · [[Techniques/Password Cracking| Password Cracking]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -599,17 +599,17 @@ grep -E '^.{8,14}$' 10-million-password-list-top-10000.txt | sort -u > /tmp/pass
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > Installe via le paquet Kali (`apt install seclists`) pour avoir les listes à jour sous `/usr/share/seclists`. Toujours `sort -u` avant usage. Croise SecLists avec [[Outil - rsmangler|rsmangler]] et [[Outil - CUPP|CUPP]] pour du sur-mesure. `--depth 1` pour un clone rapide, puis `git pull` pour la fraîcheur. Utilise `top-usernames-shortlist` + top-1000 pour un spray initial rapide, rockyou pour le gros cracking.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > L'antivirus peut bloquer des fichiers (faux positifs) : exclure le dossier. `rockyou.txt` est archivé en `tar.gz` : l'extraire avant usage. Le clone complet est volumineux : préférer `--depth 1`. Ne pas stocker les webshells sur un serveur de production (risque d'inclusion locale). Les listes leakées sont des données sensibles : usage légal uniquement, purge après engagement.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -634,4 +634,4 @@ grep -E '^.{8,14}$' 10-million-password-list-top-10000.txt | sort -u > /tmp/pass
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hashcat|hashcat]] · [[Outil - hydra|hydra]] · [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Outil - rsmangler|rsmangler]] · [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] · [[Techniques/Password Cracking|🔐 Password Cracking]]
+**Liens :** [[Tools| Outils]] · [[Outil - hashcat|hashcat]] · [[Outil - hydra|hydra]] · [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Outil - rsmangler|rsmangler]] · [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] · [[Techniques/Password Cracking| Password Cracking]]

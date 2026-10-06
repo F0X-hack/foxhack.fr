@@ -1,7 +1,7 @@
 ---
 title: "Outil - CeWL"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://digi.ninja/projects/cewl.php
 doc: https://github.com/digininja/CeWL
 ---
 
-# 🕷️ CeWL — Wordlist sur mesure depuis un site web
+# CeWL — Wordlist sur mesure depuis un site web
 
 > [!info] **En 1 phrase**
 > CeWL spider un site web et en extrait tous les mots, e-mails et métadonnées pour créer une wordlist taillée pour la cible — des candidats réalistes, dérivés du contenu même du site.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | CeWL — Custom Word List Generator |
 | Description | Spider un site web jusqu'à une profondeur configurable et génère une wordlist des mots uniques, des adresses e-mail et des noms d'auteurs extraits des métadonnées des documents (Office, PDF) |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Génération de wordlists contextuelles (web crawling / OSINT) |
 | Fonction principale | Crawler un site et produire des listes de mots, e-mails et usernames utilisables par les crackers de mots de passe (hashcat, John the Ripper) ou les outils de bruteforce en ligne (hydra) |
 | Type d'outil | CLI (script Ruby) |
@@ -50,7 +50,7 @@ doc: https://github.com/digininja/CeWL
 
 ---
 
-## 🎯 Concept
+## Concept
 
 CeWL est né d'une discussion sur **PaulDotCom (épisode 129)** : plutôt que d'utiliser une wordlist générique comme rockyou, Robin Wood a eu l'idée de **crawler le site de la cible** pour récupérer les mots réellement employés par l'organisation — noms de produits, slogans, marques, noms de personnes. Ces mots, combinés aux e-mails et aux métadonnées des documents publics, produisent des candidats de mots de passe infiniment plus réalistes que des listes génériques : un utilisateur tend à bâtir son mot de passe autour de son univers professionnel.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Debian / Ubuntu / Kali (paquet officiel, contient cewl.rb, fab.rb et les docs)
@@ -114,7 +114,7 @@ docker build -t cewl .
 docker run --rm -v "$PWD:/data" cewl -d 2 -m 5 -w /data/words.txt https://example.com
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Ruby ≥ 3.0 conseillé ; les gems requises : `mime`, `mime-types`, `mini_exiftool`, `nokogiri`, `public_suffix`, `rubyzip`, `spider`, `getoptlong`. Installables via `bundle install`.
 > - L'option `--meta` nécessite l'application **exiftool** (`sudo apt install exiftool`), pas seulement la gem.
 > - L'authentification **digest** nécessite la gem `net-http-digest_auth` (`gem install net-http-digest_auth`).
@@ -122,7 +122,7 @@ docker run --rm -v "$PWD:/data" cewl -d 2 -m 5 -w /data/words.txt https://exampl
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 CeWL n'a **pas de fichier de configuration** : tout se passe en ligne de commande. Les valeurs par défaut sont codées dans `cewl.rb` (profondeur 2, longueur minimale 3, répertoire temporaire `/tmp/`, port proxy 8080).
 
@@ -141,7 +141,7 @@ CeWL n'a **pas de fichier de configuration** : tout se passe en ligne de command
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 CeWL se compose de deux fichiers Ruby principaux (`cewl.rb` et `cewl_lib.rb`) plus `fab.rb` pour FAB :
 
@@ -156,7 +156,7 @@ CeWL se compose de deux fichiers Ruby principaux (`cewl.rb` et `cewl_lib.rb`) pl
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -186,7 +186,7 @@ cewl --auth_type basic --auth_user admin --auth_pass pwd --proxy_host 127.0.0.1 
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -221,7 +221,7 @@ cewl --auth_type basic --auth_user admin --auth_pass pwd --proxy_host 127.0.0.1 
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -267,7 +267,7 @@ cewl --debug --proxy_host 127.0.0.1 --proxy_port 8080 \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Cadrer le périmètre** — lister les pages pertinentes (contact, produits, blog, « notre équipe ») et vérifier qu'on a l'autorisation de crawler.
 2. **Crawler le site et écrire la wordlist** :
@@ -299,7 +299,7 @@ cewl --debug --proxy_host 127.0.0.1 --proxy_port 8080 \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : mot de passe d'un blog corporatif
 
@@ -332,7 +332,7 @@ wc -l /tmp/groups.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -345,7 +345,7 @@ wc -l /tmp/groups.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -359,7 +359,7 @@ wc -l /tmp/groups.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -406,7 +406,7 @@ alert tcp any any -> any 80 (msg:"Suspicious high-rate HTTP crawling from single
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — générer une wordlist pour chaque sous-domaine connu (via subfinder)
@@ -432,7 +432,7 @@ print("Wordlist ready: /tmp/words.txt")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 CeWL écrit sur **stdout** par défaut (un mot par ligne), ou dans des fichiers via `-w`, `--email_file`, `--meta_file`. Avec `-c`, chaque ligne devient `mot, compteur`. La wordlist est triée par fréquence décroissante.
 
@@ -456,13 +456,13 @@ for w, c in sorted(rows, key=lambda x: x[1], reverse=True)[:20]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mentalist → hashcat / John / hydra → comptes valides
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - hashcat|hashcat]] · [[Outil - John the Ripper|John the Ripper]] — cracking hors-ligne des wordlists générées
 - [[Outil - hydra|hydra]] · [[Outil - Medusa|Medusa]] · [[Outil - ncrack|ncrack]] · [[Outil - Patator|Patator]] — bruteforce en ligne
 - [[Outil - rsmangler|rsmangler]] · [[Outil - CUPP|CUPP]] · [[Outil - Mentalist|Mentalist]] · [[Outil - pydictor|pydictor]] · [[Outil - Crunch|Crunch]] · [[Outil - kwprocessor|kwprocessor]] — mutation / combinaison / génération complémentaires
@@ -471,12 +471,12 @@ Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mental
 - [[Outil - Burp Suite|Burp Suite]] — proxy (crawl à travers Burp) et spider alternatif
 - [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Outil - wfuzz|wfuzz]] · [[Outil - dirsearch|dirsearch]] — découverte de contenu web (complément du mode `--capture-paths`)
 - [[Outil - subfinder|subfinder]] · [[Outil - theHarvester|theHarvester]] · [[Outil - Recon-ng|Recon-ng]] · [[Outil - spiderfoot|spiderfoot]] · [[Outil - Maltego|Maltego]] — OSINT amont (domaines, e-mails)
-- [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[08 - Password Cracking|🔑 Password Cracking]]
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]
+- [[01 - Reconnaissance| Reconnaissance]] · [[08 - Password Cracking| Password Cracking]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -491,7 +491,7 @@ Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mental
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Mono-thread** : la gem `Spider` de Ruby récupère les pages séquentiellement — CeWL est lent sur les gros sites (pas de parallélisation ni `--min-rate`).
 - **Complexité exponentielle** : chaque niveau de profondeur multiplie le nombre d'URLs possibles. `-d 4` sur un gros site peut générer des dizaines de milliers de requêtes ; limiter avec `--allowed`/`--exclude`.
@@ -503,7 +503,7 @@ Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mental
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -533,7 +533,7 @@ Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mental
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **robots.txt ignoré** : la surcharge `allowed?` télécharge tout, y compris ce que le site interdit. Crawler sans autorisation peut être **illicite** et déclencher des alertes — réservé aux périmètres autorisés.
 - **Certificats TLS non vérifiés** : `SSL::VERIFY_NONE` expose les requêtes à un MITM (utile pour Burp, risqué hors lab).
@@ -543,7 +543,7 @@ Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mental
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de rendu JavaScript** : les SPA (Vue/React) ne sont pas exploitées ; CeWL ne récupère qu'une partie du contenu JS (les chaînes et les redirections `location.href`).
 - **Mono-thread** : lent sur les gros sites ; pas de parallélisme ni de rate control fin.
@@ -555,7 +555,7 @@ Site web → CeWL (mots + e-mails + métadonnées) → rsmangler / CUPP / Mental
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Crawl standard (profondeur 2, mots >= 5, fichier)
@@ -582,7 +582,7 @@ cat words.txt authors.txt | tr 'A-Z' 'a-z' | sort -u > final.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -595,7 +595,7 @@ cat words.txt authors.txt | tr 'A-Z' 'a-z' | sort -u > final.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -608,16 +608,16 @@ cat words.txt authors.txt | tr 'A-Z' 'a-z' | sort -u > final.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours combiner `-d 2 -m 5 -w fichier` : profondeur raisonnable, mots propres, sortie exploitable.
 > - Utiliser `--email_file` et `--meta_file` pour séparer les flux : les usernames (préfixe local des e-mails) et les auteurs sont des candidats précieux.
 > - Appliquer `--lowercase` puis `sort -u` avant de nourrir hashcat/hydra : moins de doublons, cracking plus rapide.
 > - Faire suivre CeWL de [[Outil - rsmangler|rsmangler]] (mutation) et d'une règle type [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] pour couvrir les variations (année, majuscules, suffixes).
 > - Penser à `--capture-url-structure` : les noms de chemins et de sous-domaines révèlent le vocabulaire technique interne.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les sites SPA (100 % JavaScript) donnent une wordlist quasi vide : vérifier avec `curl` avant d'attribuer un échec à CeWL.
 > - `-d 5+` sur un gros site génère un volume de requêtes massif (et des alertes) : rester raisonnable, surtout en production.
 > - robots.txt est **ignoré** : un crawl peut être illégal sur une cible non autorisée — toujours vérifier le périmètre.
@@ -626,7 +626,7 @@ cat words.txt authors.txt | tr 'A-Z' 'a-z' | sort -u > final.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -649,4 +649,4 @@ cat words.txt authors.txt | tr 'A-Z' 'a-z' | sort -u > final.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hashcat|hashcat]] · [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - CUPP|CUPP]] · [[Outil - rsmangler|rsmangler]] · [[Outil - SecLists|SecLists]]
+**Liens :** [[Tools| Outils]] · [[Outil - hashcat|hashcat]] · [[Techniques/Password Cracking| Password Cracking]] · [[Outil - CUPP|CUPP]] · [[Outil - rsmangler|rsmangler]] · [[Outil - SecLists|SecLists]]

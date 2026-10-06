@@ -1,11 +1,11 @@
 ---
 title: "Outil - PowerShell Empire"
 type: outil
-categorie: 🕹️ C2 & Post-Exploitation
+categorie: C2 & Post-Exploitation
 tags:
   - cyber
   - outil
-  - 🕹️ C2 & Post-Exploitation
+  - C2 & Post-Exploitation
 statut: publie
 version: v6.6.0 (2026-04-25)
 licence: BSD-3-Clause
@@ -16,20 +16,20 @@ site: https://bc-security.gitbook.io/empire-wiki/
 doc: https://bc-security.gitbook.io/empire-wiki/
 ---
 
-# 🕹️ PowerShell Empire — C2 & Post-Exploitation
+# PowerShell Empire — C2 & Post-Exploitation
 
 > [!info] **En 1 phrase**
 > Empire (Empire Starkiller / BC Security fork) est un framework de post-exploitation et de command & control piloté en PowerShell (agents Windows) et Python (agents Linux/macOS).
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | PowerShell Empire (Empire) |
 | Description | Framework C2 et post-exploitation : agents PowerShell (Windows) et Python (Linux/macOS), bibliothèque de modules étendue |
-| Catégorie | 🕹️ C2 & Post-Exploitation |
+| Catégorie | C2 & Post-Exploitation |
 | Sous-catégorie | Command & Control (C2), post-exploitation |
 | Fonction principale | Contrôler des agents post-compromission, automatiser privesc/persistance/exfiltration |
 | Type d'outil | Framework (server + client CLI + UI web Starkiller) |
@@ -50,7 +50,7 @@ doc: https://bc-security.gitbook.io/empire-wiki/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Empire permet, après une compromission initiale, de déployer un **agent** (stager PowerShell ou Python) qui se connecte à un **listener** contrôlé par le serveur Empire. L'architecture historique est un serveur de commandes (`empire server`) auquel se connecte un client (`empire client`), désormais complété par **Starkiller**, une interface web moderne. Il est utilisé pour automatiser la persistance, l'exfiltration et l'escalade de privilèges via une bibliothèque de modules (privesc, exfil, persistence, lateral-movement).
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -105,13 +105,13 @@ cd starkiller && npm install && npm run build
 # URL : https://localhost:1337
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Empire repose sur PowerShell 5.1 pour les agents Windows ; PowerShell Core seul ne suffit pas pour beaucoup de modules.
 > - L'installation via `pip` peut nécessiter des outils de compilation (gcc) ; sur Kali, utiliser un `venv` pour éviter les conflits de paquets.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 La configuration se fait principalement dans le client/Starkiller : création de listeners, génération de stagers, sélection de modules.
 
@@ -125,7 +125,7 @@ La configuration se fait principalement dans le client/Starkiller : création de
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Le `empire server` (Python) gère une base de données locale (agents, credentials, listeners), une API REST et des conteneurs de listeners. Le `empire client` ou Starkiller s'authentifie et envoie des requêtes à l'API. À la création d'un listener, le serveur ouvre un socket (HTTP/HTTPS/DNS) ; les stagers générés contiennent l'URL du listener et un payload PowerShell/Python.
 
@@ -151,7 +151,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -183,7 +183,7 @@ execute
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -202,7 +202,7 @@ execute
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -247,7 +247,7 @@ wmiexec.py DOMAIN/user@10.10.14.20 "powershell -nop -w hidden -enc <stager>"
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Démarrer serveur et client** : `./ps-empire server` puis `./ps-empire client`.
 2. **Étape 2 — Créer un listener HTTP** :
@@ -275,7 +275,7 @@ wmiexec.py DOMAIN/user@10.10.14.20 "powershell -nop -w hidden -enc <stager>"
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Mouvement latéral via Pass-the-Hash ou WMI
 
@@ -312,7 +312,7 @@ Les requêtes DNS sortantes sont moins filtrées que l'HTTP(S) : utile quand le 
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -324,7 +324,7 @@ Les requêtes DNS sortantes sont moins filtrées que l'HTTP(S) : utile quand le 
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -342,7 +342,7 @@ Les requêtes DNS sortantes sont moins filtrées que l'HTTP(S) : utile quand le 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -392,7 +392,7 @@ rule Empire_Powershell_stager_example {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 L'**API REST** d'Empire permet d'automatiser la création de listeners, la génération de stagers et l'envoi de commandes.
 
@@ -406,7 +406,7 @@ curl -k -s -u empireadmin:password https://localhost:1337/api/v2/agents
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les résultats des tâches remontent dans le client/Starkiller au format texte/JSON. L'API REST renvoie du JSON exploitable par scripts.
 
@@ -424,27 +424,27 @@ curl -k -s -u empireadmin:password https://localhost:1337/api/v2/agents | jq '.a
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Compromission initiale → stager Empire → agent → modules privesc/persistance/exfil
 Empire ↔ Mimikatz (module) ↔ Rubeus (module/credential) → mouvement latéral
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]]
-- [[Techniques/Reverse Shells|🐚 Reverse Shells]]
-- [[Techniques/Pass-the-Hash|🔓 Pass-the-Hash]]
-- [[Techniques/Kerberoasting|🔑 Kerberoasting]]
-- [[Techniques/Pivoting et Tunneling|🌉 Pivoting et Tunneling]]
-- [[Outil - Mimikatz|🐱 Mimikatz]]
-- [[Outil - Rubeus|🎫 Rubeus]]
-- [[Outil - Covenant|🐉 Covenant]]
-- [[Outil - Sliver|🐺 Sliver]]
+- [[Tools| Outils]]
+- [[Techniques/Privilege Escalation Windows| PrivEsc Windows]]
+- [[Techniques/Reverse Shells| Reverse Shells]]
+- [[Techniques/Pass-the-Hash| Pass-the-Hash]]
+- [[Techniques/Kerberoasting| Kerberoasting]]
+- [[Techniques/Pivoting et Tunneling| Pivoting et Tunneling]]
+- [[Outil - Mimikatz| Mimikatz]]
+- [[Outil - Rubeus| Rubeus]]
+- [[Outil - Covenant| Covenant]]
+- [[Outil - Sliver| Sliver]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -458,7 +458,7 @@ Empire ↔ Mimikatz (module) ↔ Rubeus (module/credential) → mouvement latér
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Agent PowerShell in-memory : faible empreinte disque, mais CPU/mémoire variables selon les modules.
 - Le server Python gère de nombreux agents ; charge dépend du nombre de listeners et de tâches.
@@ -466,7 +466,7 @@ Empire ↔ Mimikatz (module) ↔ Rubeus (module/credential) → mouvement latér
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -490,7 +490,7 @@ Empire ↔ Mimikatz (module) ↔ Rubeus (module/credential) → mouvement latér
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Chiffrement** : le trafic entre client et server est protégé (certificats) ; vérifier la config TLS du listener HTTPS.
 - **Identifiants** : changer les creds par défaut de l'API/Starkiller (config Empire) et les garder secrètes.
@@ -500,7 +500,7 @@ Empire ↔ Mimikatz (module) ↔ Rubeus (module/credential) → mouvement latér
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Agents PowerShell fortement détectés par AV/EDR modernes (AMSI) : l'évasion repose sur l'obfuscation.
 - Nécessite PowerShell 5.1 pour la plupart des modules Windows ; pas de scanner d'exploits (foothold requis).
@@ -508,7 +508,7 @@ Empire ↔ Mimikatz (module) ↔ Rubeus (module/credential) → mouvement latér
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Serveur + client
@@ -536,7 +536,7 @@ remove <agent-id>
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -545,11 +545,11 @@ remove <agent-id>
 | **Commande principale** | `./ps-empire server` puis `./ps-empire client` |
 | **Alternative principale** | Covenant (web, .NET) ou Sliver (Go) |
 | **Concepts importants** | Listener, stager, agent, module, Starkiller, API REST |
-| **Liens associés** | [[Outil - Covenant\|🐉 Covenant]] · [[Outil - Sliver\|🐺 Sliver]] · [[Outil - Mimikatz\|🐱 Mimikatz]] |
+| **Liens associés** | [[Outil - Covenant\| Covenant]] · [[Outil - Sliver\| Sliver]] · [[Outil - Mimikatz\| Mimikatz]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -561,16 +561,16 @@ remove <agent-id>
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Testez les modules en lab avant engagement : beaucoup reposent sur PowerShell 5.1 et tombent si PowerShell Core seul est installé.
 > - Utilisez Starkiller (UI web) pour les équipes, mais maîtrisez d'abord le CLI.
 > - Pour les environnements Linux/macOS, générez des stagers Python (`usestager multi/launcher` + `set Language python`).
 > - Combinez Empire avec des modules credentials (mimikatz, Rubeus) pour préparer le mouvement latéral.
 > - Configurez un User-Agent réaliste sur les listeners pour réduire les signatures réseau.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les stagers PowerShell encodés en base64 sont détectés par AV/EDR modernes (AMSI + cloud) : ne comptez pas sur `-enc` seul.
 > - Vérifiez que la cible atteint bien le listener (port ouvert, firewall) avant de blâmer l'agent.
 > - Ne réutilisez pas les mêmes creds par défaut pour l'API/Starkiller.
@@ -578,7 +578,7 @@ remove <agent-id>
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -597,4 +597,4 @@ remove <agent-id>
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Privilege Escalation Windows|⬆️ PrivEsc Windows]] · [[Techniques/Reverse Shells|🐚 Reverse Shells]] · [[Techniques/Pass-the-Hash|🔑 Pass-the-Hash]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Privilege Escalation Windows| PrivEsc Windows]] · [[Techniques/Reverse Shells| Reverse Shells]] · [[Techniques/Pass-the-Hash| Pass-the-Hash]]

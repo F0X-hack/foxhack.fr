@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🍓 Raspberry Pi
+# Raspberry Pi
 
 > [!info] **En 1 phrase**
 > Le **Raspberry Pi** n'est pas qu'un mini-PC : son **header GPIO 40 broches** expose
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Faible → Élevée |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Raspberry Pi"] --> B["GPIO 40 pins"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Le Raspberry Pi est un mini-ordinateur Linux complet dont le header GPIO 40 broches expose UART, I2C, SPI et GPIO libres. En pentest hardware, il sert de **plateforme de debug** (scanner I2C, dumper flash SPI via flashrom, console UART) et de **cible** (le Pi lui-même peut être compromis via son boot).
 
@@ -61,7 +61,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### GPIO Header 40 pins
 
@@ -89,7 +89,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### GPIO Pinout (40 pins)
 
@@ -140,7 +140,7 @@ gpio readall
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Protocoles GPIO
 
@@ -154,7 +154,7 @@ gpio readall
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -195,7 +195,7 @@ Raspberry Pi GPIO  ────────  Device cible
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Console UART — libérer GPIO14/15
 
@@ -226,7 +226,7 @@ ls -la /dev/spidev*
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -268,9 +268,9 @@ sudo minicom -D /dev/ttyAMA0 -b 115200
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Scanner I2C
+### Débutant — Scanner I2C
 
 ```bash
 # Activer I2C puis scanner
@@ -280,7 +280,7 @@ i2cdetect -y 1
 # Ex: 0x50 = EEPROM, 0x68 = RTC, 0x76 = Capteur
 ```
 
-### 🟡 Intermédiaire — Dump flash SPI
+### Intermédiaire — Dump flash SPI
 
 ```bash
 # Connecter le Pi aux pins SPI de la flash NOR du device cible
@@ -295,7 +295,7 @@ md5sum dump.bin
 strings dump.bin | grep -iE "password|key|admin"
 ```
 
-### 🔴 Avancé — Raspberry Pi comme serveur d'exfil
+### Avancé — Raspberry Pi comme serveur d'exfil
 
 ```python
 #!/usr/bin/env python3
@@ -326,7 +326,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
 ```
 
-### ⚫ Expert — JTAG custom via GPIO
+### Expert — JTAG custom via GPIO
 
 ```text
 1. Mapper JTAG sur GPIO libres via device tree overlay
@@ -342,7 +342,7 @@ if __name__ == '__main__':
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -393,7 +393,7 @@ binwalk dump.bin
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Dump flash NOR via flashrom sur Pi
 
@@ -403,7 +403,7 @@ binwalk dump.bin
 | **Matériel** | Raspberry Pi, fils, probe clips sur la flash |
 | **Étapes** | 1. Identifier la flash NOR sur le PCB<br>2. Connecter SPI (MOSI/MISO/CS/SCK) au Pi<br>3. flashrom -r dump.bin<br>4. Analyser (binwalk, strings) |
 | **Résultat** | Firmware dump complet |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -420,11 +420,11 @@ flowchart LR
 | **Matériel** | Pi Zero 2 W, carte microSD |
 | **Étapes** | 1. Configurer Pi Zero 2 W en WiFi client<br>2. Installer serveur d'exfil (Flask)<br>3. Connecter GPIO au device cible<br>4. Exfiltrer données via HTTPS |
 | **Résultat** | Accès réseau distant au device |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -442,7 +442,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -462,7 +462,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -496,7 +496,7 @@ sudo rpi-eeprom-update -a
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -542,7 +542,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -562,13 +562,13 @@ strings dump.bin | grep -iE "password|key|admin"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - UART|🔌 UART]] — Console série
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] — Bus communication
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] — Debug
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - UART| UART]] — Console série
+- [[Hardware - I2C et SPI| I2C/SPI]] — Bus communication
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
+- [[Hardware - JTAG et SWD| JTAG/SWD]] — Debug
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -578,7 +578,7 @@ strings dump.bin | grep -iE "password|key|admin"
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -597,7 +597,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -608,7 +608,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -636,7 +636,7 @@ dmesg | tail
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -656,7 +656,7 @@ dmesg | tail
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -675,7 +675,7 @@ dmesg | tail
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -702,7 +702,7 @@ dmesg | tail
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -715,7 +715,7 @@ dmesg | tail
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -734,7 +734,7 @@ dmesg | tail
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Pas d'isolation galvanique : boucles de masse possibles.
 - **Piège 2** : GPIO = 3.3V : ne pas alimenter bus 5V directement.
@@ -751,9 +751,9 @@ dmesg | tail
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Raspberry Pi](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/raspberry-pi.md)
 > - [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
 > - [RPi 5 GPIO Theory (Wevolver)](https://www.wevolver.com/article/raspberry-pi-5-gpio-pinout-theory-and-practice-for-engineers)
@@ -780,4 +780,4 @@ dmesg | tail
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - UART|🔌 UART]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - UART| UART]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - JTAG et SWD| JTAG/SWD]]

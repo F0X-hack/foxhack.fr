@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔄 CSRF — Cross-Site Request Forgery
+# CSRF — Cross-Site Request Forgery
 
 > [!info] **En 1 phrase**
 > CSRF = forcer un utilisateur **authentifié** à exécuter une action qu'il n'a pas demandée
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -38,18 +38,18 @@ sequenceDiagram
     S-->>V: Réponse (l'attaquant ne peut PAS la lire)
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le cookie est envoyé avec **chaque** requête vers le domaine cible, peu importe son **origine**.
 > L'attaquant ne peut pas **lire** la réponse (Same-Origin Policy) mais n'en a pas besoin :
 > CSRF cible uniquement des **actions qui changent l'état**, jamais le vol de données.
 
 ---
 
-## 📮 Payloads classiques
+## Payloads classiques
 
 ### GET — action d'état en requête simple
 
-> [!warning] ⚠️ Le paramètre qui change l'état ne doit PAS être dangereux côté attaquant
+> [!warning] Le paramètre qui change l'état ne doit PAS être dangereux côté attaquant
 > (voir **Login CSRF** et les pièges `SameSite=Lax` en fin de note).
 
 ```html
@@ -91,7 +91,7 @@ xhr.open("POST", "http://www.example.com/api/setrole");
 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 xhr.send("role=admin");
 
-// fetch équivalent — ⚠️ credentials: "include" OBLIGATOIRE
+// fetch équivalent — credentials: "include" OBLIGATOIRE
 fetch("http://www.example.com/api/setrole", {
   method: "POST",
   credentials: "include",
@@ -100,7 +100,7 @@ fetch("http://www.example.com/api/setrole", {
 });
 ```
 
-> [!tip] 💡 **`credentials: "include"`** : avec `fetch`, les cookies ne partent qu'avec ce flag
+> [!tip] `credentials: "include"`** : avec `fetch`, les cookies ne partent qu'avec ce flag
 > (équivalent `withCredentials = true` en XHR). Sans lui, pas de session → pas de CSRF via fetch.
 
 ### POST — iframe avec `target`
@@ -118,7 +118,7 @@ fetch("http://www.example.com/api/setrole", {
 
 ---
 
-## 🚀 Payloads avancés
+## Payloads avancés
 
 ### multipart/form-data — upload de fichier (interaction requise)
 
@@ -187,7 +187,7 @@ xhr.send('{"role":admin}');
 
 ---
 
-## ⚖️ CSRF : GET vs POST
+## CSRF : GET vs POST
 
 | Méthode | Faisabilité | Notes |
 |---|---|---|
@@ -195,9 +195,9 @@ xhr.send('{"role":admin}');
 | **POST** | Simple | `<form>` auto-submit : la façon la plus fiable de forcer un POST cross-site. |
 | **PUT / PATCH / DELETE** | Difficile | Non déclenchables par `<form>`/`<img>`. Nécessite XHR + CORS permissif, ou méthode de tunneling (`_method=PUT`). |
 
-## 🔎 Trouver les endpoints vulnérables
+## Trouver les endpoints vulnérables
 
-> [!tip] 💡 **Méthodo de tri** : intercepter un changement d'état authentifié (Burp → Repeater),
+> [!tip] **Méthodo de tri** : intercepter un changement d'état authentifié (Burp → Repeater),
 > puis supprimer **un par un** les éléments de protection :
 
 1. **Retirer le token** : la requête marche toujours sans `csrf_token` / `X-CSRFToken` ?
@@ -219,11 +219,11 @@ role=admin
 ```
 
 > Si la réponse est **identique** sans le header/token → CSRF confirmé. Générer le PoC avec Burp
-> (voir 🧰 Outils) et le valider dans un navigateur de test avec une vraie session.
+> (voir Outils) et le valider dans un navigateur de test avec une vraie session.
 
 ---
 
-## 🔓 Bypass de protections
+## Bypass de protections
 
 ### Tokens — fuite et contournement
 
@@ -236,7 +236,7 @@ role=admin
 | **Token non lié au user** | Valide pour tous les utilisateurs → même technique. |
 | **Token prédictible** | Hash/date/incrément → devinable puis injecté. |
 
-> [!warning] ⚠️ **Token dans l'URL = mauvais design.** Il fuite via le Referer (headers, logs
+> [!warning] **Token dans l'URL = mauvais design.** Il fuite via le Referer (headers, logs
 > serveur/proxy, addons) → l'attaquant peut l'obtenir sans même lire la réponse.
 
 ### SameSite — contournements
@@ -249,7 +249,7 @@ role=admin
 | Sous-domaine | Le scope d'un cookie (`Domain=example.com`) couvre `*.example.com` → `evil.example.com` peut le lire/le fixer. |
 | Top-level navigation | Un clic / `window.open` / `location=` / redirect = navigation top-level → cookies `Lax` partent. |
 
-> [!warning] ⚠️ **`SameSite=Lax` ≠ panacée** : toute action de changement d'état en **GET** reste
+> [!warning] `SameSite=Lax` ≠ panacée** : toute action de changement d'état en **GET** reste
 > exploitable. Chrome applique aussi une exception **"Lax+POST"** (~2 min après une navigation
 > top-level) où un POST porte les cookies → exploit via redirect en chaîne.
 
@@ -290,7 +290,7 @@ Referer: http://evil.com/example.com
 
 ---
 
-## 🔌 CSRF sur les APIs / JSON
+## CSRF sur les APIs / JSON
 
 ### Contraintes du navigateur
 
@@ -336,7 +336,7 @@ fetch("http://api.example.com/v1/user/role", {
 
 ---
 
-## 🔐 Login CSRF
+## Login CSRF
 
 > Forcer la victime à se connecter au **compte de l'attaquant**. Impact : l'attaquant voit tout
 > ce que la victime tape (mot de passe, CB...), et la victime ne peut plus créer son propre compte.
@@ -351,13 +351,13 @@ fetch("http://api.example.com/v1/user/role", {
 <script>document.getElementById("l").submit();</script>
 ```
 
-> [!tip] 💡 **Pourquoi ça marche** : le login est un **changement d'état** → CSRFable. La victime
+> [!tip] **Pourquoi ça marche** : le login est un **changement d'état** → CSRFable. La victime
 > ne remarque pas qu'elle est connectée au mauvais compte. Défense : token CSRF sur le login
 > **et** ne pas connecter automatiquement une session fraîche.
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -375,7 +375,7 @@ python xsrfprobe -u http://example.com/change-email --cookie "session=xxx" --pos
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Protection | Détail | Contournable ? |
 |---|---|---|
@@ -387,15 +387,15 @@ python xsrfprobe -u http://example.com/change-email --cookie "session=xxx" --pos
 | **Pas de cookie** | Auth par header `Authorization` (Bearer), token en JS. | **La plus robuste** : rien n'est rejoué automatiquement |
 | **CAPTCHA / re-auth** | Interaction humaine pour les actions sensibles. | UX lourde, réservé aux actions critiques |
 
-> [!tip] 💡 **La défense ultime** : aucune information d'authentification envoyée automatiquement.
+> [!tip] **La défense ultime** : aucune information d'authentification envoyée automatiquement.
 > Les tokens Bearer (`Authorization`) ne sont jamais envoyés par le navigateur tout seul →
 > rien à forger.
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre des tests (rapide et logique)**
+> [!tip] **Ordre des tests (rapide et logique)**
 > 1. **Token ?** — le retirer (ou changer sa valeur) → toujours 200 = vulnérable.
 > 2. **Méthode ?** — si POST protégé, tester GET/PUT/DELETE/OPTIONS (règle souvent oubliée).
 > 3. **`SameSite` ?** — inspecter le `Set-Cookie` du login : `None` = CSRF direct, `Lax` = tester le GET top-level.
@@ -403,7 +403,7 @@ python xsrfprobe -u http://example.com/change-email --cookie "session=xxx" --pos
 > 5. **Double-submit ?** — le token cookie est-il prédictible ou fixable via un sous-domaine ?
 > 6. Générer le **PoC fonctionnel** (Burp) et le valider dans un navigateur avec session réelle.
 
-> [!warning] ⚠️ **Pièges classiques**
+> [!warning] **Pièges classiques**
 > - **`SameSite=Lax` ≠ protégé** : toute action d'état en **GET** reste CSRFable (top-level
 >   navigation, `<img>`, `<a>`). Teste la version GET de chaque POST.
 > - **Cookies sur sous-domaines** : `Domain=example.com` = le cookie part sur `*.example.com` →
@@ -420,12 +420,12 @@ python xsrfprobe -u http://example.com/change-email --cookie "session=xxx" --pos
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[CORS|🌐 CORS]]
-- [[Clickjacking|🖱️ Clickjacking]]
-- [[SSRF|🌐 SSRF]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Cross-Site Request Forgery](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Cross-Site%20Request%20Forgery/README.md)
-- 🧪 Labs : [PortSwigger — CSRF](https://portswigger.net/web-security/csrf)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[CORS| CORS]]
+- [[Clickjacking| Clickjacking]]
+- [[SSRF| SSRF]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Cross-Site Request Forgery](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Cross-Site%20Request%20Forgery/README.md)
+- Labs : [PortSwigger — CSRF](https://portswigger.net/web-security/csrf)

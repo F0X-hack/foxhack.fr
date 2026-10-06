@@ -1,7 +1,7 @@
 ---
 title: "Outil - Mentalist"
 type: outil
-categorie: 🔑 Wordlists & Générateurs
+categorie: Wordlists & Générateurs
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://github.com/sc0tfree/mentalist/wiki
 doc: https://github.com/sc0tfree/mentalist/wiki
 ---
 
-# 🧠 Mentalist — Génération graphique de wordlists par mutation
+# Mentalist — Génération graphique de wordlists par mutation
 
 > [!info] **En 1 phrase**
 > Mentalist est un générateur de wordlists en GUI Windows qui applique des mutations visuelles (leet, chiffres, années, casse) et un générateur de phrases — pour prototyper un pipeline de mots sans écrire une ligne de script.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Mentalist |
 | Description | Générateur graphique de wordlists par chaînage de nœuds de mutation (casse, substitution, append/prepend) |
-| Catégorie | 🔑 Wordlists & Générateurs |
+| Catégorie | Wordlists & Générateurs |
 | Sous-catégorie | Mutation / génération de mots de passe (GUI) |
 | Fonction principale | Construire une chaîne de transformations sur des mots de base et produire une wordlist ou des règles hashcat/John |
 | Type d'outil | GUI (interface Tkinter), scriptable par lignes de commande de lancement |
@@ -50,7 +50,7 @@ doc: https://github.com/sc0tfree/mentalist/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Mentalist est l'outil graphique du projet hashcat-friendly pour la génération de wordlists. Là où CUPP interroge le profil d'une victime et Crunch énumère des charsets, Mentalist propose une **interface visuelle par nœuds** : on assemble une « chaîne » de transformations (casse, substitutions type leetspeak, ajout de nombres/années/symboles, mots en préfixe ou suffixe) sur des mots de base, puis on génère soit la **wordlist complète**, soit — point fort — les **règles hashcat et John the Ripper** qui reproduisent la même chaîne à la volée. Cette double sortie le rend aussi efficace comme outil pédagogique : on visualise l'effet de chaque mutation, on estime le volume, puis on déporte la logique dans les moteurs de cracking sans générer de fichiers intermédiaires.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -127,12 +127,12 @@ mentalist
 
 Pas d'image officielle ; l'interface Tkinter rend l'usage en conteneur hasardeux (X11 requis). Alternative : utiliser Mentalist en local et partager les règles générées (`docker run --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python:3.11 ...` n'est qu'un wrapper non supporté).
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Python 3.11+ requis pour la v2.0 ; les binaires v1.0 couvrent Python 3.6-3.10. L'interface Tkinter exige le paquet `python3-tk`/`tk` sous Linux, souvent absent par défaut. Sous Kali, les distributions anciennes peuvent pointer vers la v1.0 via les paquets communautaires — privilégier l'installation depuis les sources.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : tout se règle dans la GUI. Les chaînes se **persistent** (sauvegarde/chargement) via le menu — utile pour réutiliser un pattern sur plusieurs cibles.
 
@@ -147,7 +147,7 @@ Pas de fichier de configuration : tout se règle dans la GUI. Les chaînes se **
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Mentalist est une application **Tkinter** (Python) séparée en logique GUI et logique de transformation. Les nœuds sont des classes (`BaseWords`, `Case`, `Substitution`, `Append`, `Prepend`) dotées d'attributs mutuellement exclusifs ; le moteur traverse la chaîne et, pour chaque mot de base, applique les attributs de chaque nœud en dédupliquant les variantes produites (chaque nœud ne transmet que les mots uniques). Certains attributs (ex. `Numbers: Small (0-100)`) créent 101 sorties par mot d'entrée — d'où l'importance d'estimer le volume avant génération.
 
@@ -155,7 +155,7 @@ L'originalité réside dans le **générateur de règles** : chaque nœud expose
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -183,7 +183,7 @@ python -m pytest tests/
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 Mentalist étant une GUI, ses « options » sont les nœuds et leurs attributs (mutuellement exclusifs au sein d'un nœud) :
 
@@ -210,7 +210,7 @@ Mentalist étant une GUI, ses « options » sont les nœuds et leurs attributs (
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -265,7 +265,7 @@ mentalist
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer la matière** — une petite wordlist de mots-clés (CeWL, CUPP ou extrait de SecLists) :
    ```bash
@@ -293,7 +293,7 @@ mentalist
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : mot de passe Wi-Fi personnel (WPA2-PSK)
 
@@ -334,7 +334,7 @@ La persistance des chaînes évite de tout reconstruire : on charge la chaîne �
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -346,7 +346,7 @@ La persistance des chaînes évite de tout reconstruire : on charge la chaîne �
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -359,7 +359,7 @@ La persistance des chaînes évite de tout reconstruire : on charge la chaîne �
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -401,7 +401,7 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"Potential password spray - HTT
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — lancer Mentalist, puis traiter la wordlist générée
@@ -438,7 +438,7 @@ print(len(resultat), resultat[:5])
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Mentalist propose **trois modes de sortie** (wiki « Output ») :
 
@@ -465,24 +465,24 @@ print("avec année 2020-2025 :",
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 CeWL / CUPP / SecLists → Mentalist (mots de base) → wordlist ou règles → hashcat / John / hydra
 Mentalist (règles) → hashcat -r → mutation à la volée sans fichier géant
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - hashcat|hashcat]] — consommation des wordlists et des règles exportées
 - [[Outil - John the Ripper|John the Ripper]] — consommation des règles (`--rules=mentalist`)
 - [[Outil - CeWL|CeWL]] et [[Outil - CUPP|CUPP]] — production des mots de base
 - [[Outil - rsmangler|rsmangler]] et [[Outil - pydictor|pydictor]] — alternatives de mutation en CLI
 - [[Outil - SecLists|SecLists]] et [[Outil - OneRuleToRuleThemAll|OneRuleToRuleThemAll]] — compléments
-- [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
+- [[Techniques/Password Cracking| Password Cracking]] · [[Techniques/Password Spraying|Password Spraying]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -497,13 +497,13 @@ Mentalist (règles) → hashcat -r → mutation à la volée sans fichier géant
 
 ---
 
-## ⚡ Performance
+## Performance
 
 Mentalist est du Python : pour des chaînes raisonnables, la génération est quasi instantanée, mais la **combinatoire explose** avec les attributs Append/Prepend. L'attribut `Numbers: Full (0-10000)` crée 10 001 variantes par mot de base ; un `Append Words` croise chaque mot avec chaque mot de la liste annexe (N×M). La déduplication par nœud atténue le volume (un nœud ne transmet que les variantes uniques) mais pas la charge mémoire du nœud lui-même. La v2.0 (Python 3.11+) reste monoprocessus ; les chaînes très larges doivent être exportées en **règles** plutôt qu'en wordlist complète — c'est le levier principal pour réduire temps et espace disque. Les binaires PyInstaller v1.0 démarrent plus vite que l'interpréteur en mode sources.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -539,13 +539,13 @@ Mentalist est du Python : pour des chaînes raisonnables, la génération est qu
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 Mentalist s'exécute localement, sans réseau ni télémétrie : pas de collecte de données. Le README porte un disclaimer explicite — usage uniquement à des fins d'information ou dans le cadre d'audits autorisés. À noter : les chaînes sauvegardées (`.json`) et les wordlists générées contiennent les données de mots de passe de la cible ; les protéger et les supprimer après usage. Sur Windows, les binaires PyInstaller non signés peuvent être bloqués par l'antivirus — en environnement professionnel, privilégier l'installation depuis les sources. L'outil ne contient aucune fonctionnalité de vol de données ; il reste un outil offensif réservé aux périmètres autorisés (lab, CTF, audit mandaté).
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **GUI uniquement** : pas de mode headless/CLI pour générer sans interface (les règles générées, elles, se réutilisent en CLI).
 - **Contenus US par défaut** : noms (men/women/pets), area codes et zip codes sont américains — penser aux fichiers personnalisés pour les cibles francophones.
@@ -556,7 +556,7 @@ Mentalist s'exécute localement, sans réseau ni télémétrie : pas de collecte
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Installation v2.0 (Python 3.11+)
@@ -584,7 +584,7 @@ hashcat -m 22000 handshake.hc22000 /tmp/wordlist.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -593,11 +593,11 @@ hashcat -m 22000 handshake.hc22000 /tmp/wordlist.txt
 | **Commande principale** | `mentalist` (GUI) puis Base Words → mutations → Generate |
 | **Alternative principale** | rsmangler, pydictor (CLI) / hashcat `-r` (règles) |
 | **Concepts importants** | Chaîne de nœuds, attributs mutuellement exclusifs, déduplication par nœud, sortie wordlist ou règles |
-| **Liens associés** | [[Techniques/Password Cracking|🔐 Password Cracking]] · [[Outil - hashcat|hashcat]] · [[Outil - rsmangler|rsmangler]] |
+| **Liens associés** | [[Techniques/Password Cracking| Password Cracking]] · [[Outil - hashcat|hashcat]] · [[Outil - rsmangler|rsmangler]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -609,17 +609,17 @@ hashcat -m 22000 handshake.hc22000 /tmp/wordlist.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > L'aperçu par bloc permet de valider chaque mutation avant génération : teste d'abord sur 10 mots de base pour contrôler la taille estimée. Exporte en **règles hashcat/John** dès que le pattern est validé : même rendu, moins de disque, plus de flexibilité. Sauvegarde la chaîne (Save Chain) pour rejouer le pattern sur la cible suivante. Associe Mentalist à CUPP (mots de base) pour des candidats très personnalisés. Vérifie la cohérence casse/leet avec l'aperçu avant l'export final.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > Le volume explose vite : chaque attribut Append multiplie la liste — vérifie l'estimation avant de générer. L'ordre des nœuds compte : `Case` puis `Substitution` ne donne pas le même résultat que l'inverse (déduplication comprise). « Replace First/Last Instance » ne passe pas en règles : prévois la conversion en « Replace All ». C'est une **GUI** : pas d'automatisation directe en pipeline — en headless, préfère rsmangler ou hashcat `-r`. Sous Linux, `python3-tk` doit être installé.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -642,4 +642,4 @@ hashcat -m 22000 handshake.hc22000 /tmp/wordlist.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - hashcat|hashcat]] · [[Outil - John the Ripper|John the Ripper]] · [[Outil - rsmangler|rsmangler]] · [[Outil - CUPP|CUPP]] · [[Techniques/Password Cracking|🔐 Password Cracking]]
+**Liens :** [[Tools| Outils]] · [[Outil - hashcat|hashcat]] · [[Outil - John the Ripper|John the Ripper]] · [[Outil - rsmangler|rsmangler]] · [[Outil - CUPP|CUPP]] · [[Techniques/Password Cracking| Password Cracking]]

@@ -12,7 +12,10 @@
     "dev:clean": "rm -rf node_modules/.vite && vite --host 0.0.0.0 --port 5173",
     "clean": "rm -rf dist dist-ssr node_modules/.vite",
     "check:scrollspy": "node scripts/check-scrollspy.mjs",
-    "vault:index": "node scripts/build-offsidian.mjs"
+    "vault:index": "node scripts/build-offsidian.mjs",
+    "check:emoji": "node scripts/strip-emoji.mjs --check",
+    "check:offsidian": "tsx scripts/smoke-offsidian.tsx && tsx scripts/smoke-offsidian-dom.tsx",
+    "bench:offsidian": "tsx scripts/bench-offsidian.tsx"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
@@ -25,13 +28,16 @@
     "simple-icons": "^13.21.0"
   },
   "devDependencies": {
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.4",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "jsdom": "^30.1.2",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.3",
     "vite": "^5.4.11"
   }

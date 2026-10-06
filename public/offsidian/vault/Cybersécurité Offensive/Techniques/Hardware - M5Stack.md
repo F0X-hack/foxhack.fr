@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 📡 M5Stack
+# M5Stack
 
 > [!info] **En 1 phrase**
 > **Evil-M5Core2** = un logiciel de déploiement facile de **« Evil Portal » et
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: publie
 | **Complexité** | Moyenne |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["M5Stack Core2"] --> B["Wi-Fi 2.4 GHz"]
@@ -44,7 +44,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le M5Stack Core2 est une plateforme ESP32 tout-en-un (écran tactile, batterie, microSD, Wi-Fi) qui permet de déployer des attaques Wi-Fi portables : clone de SSID (Karma), portail captif pour harvest de credentials, sniffing de probes, et serveur web de contrôle à distance — le tout dans un boîtier de 54×54×16.5mm.
 
@@ -59,13 +59,13 @@ flowchart TB
     style G fill:#ffcdd2
 ```
 
-> [!info] 💡 **Le principe**
+> [!info] **Le principe**
 > On clône un SSID connu, le téléphone de la victime se reconnecte tout seul,
 > et le M5Core2 affiche une page de login qui capture les identifiants.
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Karma Attack & probe sniffing
 
@@ -97,7 +97,7 @@ Un système WIDS (Wireless Intrusion Detection System) peut détecter les SSID f
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -151,7 +151,7 @@ Brochage M5-Bus (bas du module) :
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Wi-Fi 2.4 GHz (802.11 b/g/n)
 
@@ -194,7 +194,7 @@ Brochage M5-Bus (bas du module) :
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -204,7 +204,7 @@ Brochage M5-Bus (bas du module) :
 | M5Stack boards manager | latest | arduino board manager |
 | Librairie M5Unified | latest | Arduino Library Manager |
 | Librairie adafruit_neopixel | latest | Arduino Library Manager |
-| ESP32 board package | v2.0.14 (⚠️ pas 3.0.0-alpha3) | arduino board manager |
+| ESP32 board package | v2.0.14 (pas 3.0.0-alpha3) | arduino board manager |
 
 ### Connexion physique
 
@@ -252,7 +252,7 @@ mkdir -p SD_ROOT/sites
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du logiciel Evil-M5Core2
 
@@ -285,7 +285,7 @@ mkdir -p SD_ROOT/sites
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -326,9 +326,9 @@ esptool.py --port COM3 erase_flash
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Scan des réseaux Wi-Fi
+### Débutant — Scan des réseaux Wi-Fi
 
 ```bash
 # 1. Flasher le firmware Evil-M5Core2 sur le M5Stack Core2
@@ -339,7 +339,7 @@ esptool.py --port COM3 erase_flash
 # 6. La liste des SSID s'affiche avec force du signal
 ```
 
-### 🟡 Intermédiaire — Karma Attack sur un SSID capturé
+### Intermédiaire — Karma Attack sur un SSID capturé
 
 ```bash
 # 1. Activer le probe sniffing (menu → Sniff Probes)
@@ -351,7 +351,7 @@ esptool.py --port COM3 erase_flash
 # 7. Les credentials sont stockés sur la microSD
 ```
 
-### 🔴 Avancé — Déploiement complet Evil Portal + Web Server
+### Avancé — Déploiement complet Evil Portal + Web Server
 
 ```python
 #!/usr/bin/env python3
@@ -391,7 +391,7 @@ while True:
     time.sleep(30)
 ```
 
-### ⚫ Expert — Attaque Karma automatisée multi-probes
+### Expert — Attaque Karma automatisée multi-probes
 
 ```python
 #!/usr/bin/env python3
@@ -442,7 +442,7 @@ while True:
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -486,7 +486,7 @@ Récupérer les credentials depuis la microSD ou le web server distant, analyser
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Evil Twin + Captive Portal sur réseau entreprise
 
@@ -496,7 +496,7 @@ Récupérer les credentials depuis la microSD ou le web server distant, analyser
 | **Matériel** | M5Stack Core2, carte microSD 32GB, batterie externe |
 | **Étapes** | 1. Scan des probes → 2. Identifier le SSID entreprise → 3. Cloner le SSID → 4. Lancer le portail captif avec page "Mise à jour réseau" → 5. Capturer les credentials |
 | **Résultat** | Identifiants Wi-Fi du réseau entreprise |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -513,11 +513,11 @@ flowchart LR
 | **Matériel** | M5Stack Core2, batterie 5000mAh, sac à dos discret |
 | **Étapes** | 1. Probe sniffing continu → 2. Karma Attack séquentielle sur chaque probe → 3. Portail captif avec page "Wi-Fi gratuit" → 4. Récupération à distance via web server |
 | **Résultat** | Multiples identifiants Wi-Fi et/ou emails |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -535,7 +535,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -566,7 +566,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -609,7 +609,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -680,7 +680,7 @@ for probe in probes.split("\n"):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -714,12 +714,12 @@ grep "2025-08-14" /mnt/sd/credentials.csv
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - ESP32|🔌 ESP32]] pour les détails sur l'architecture
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse du firmware M5Stack
-- [[Hardware - I2C et SPI|🔗 I2C/SPI]] pour les protocoles internes
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - ESP32| ESP32]] pour les détails sur l'architecture
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse du firmware M5Stack
+- [[Hardware - I2C et SPI| I2C/SPI]] pour les protocoles internes
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -736,7 +736,7 @@ grep "2025-08-14" /mnt/sd/credentials.csv
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -755,7 +755,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -777,7 +777,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -819,7 +819,7 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -840,7 +840,7 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -861,7 +861,7 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -889,7 +889,7 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -902,7 +902,7 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -923,7 +923,7 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Version esp32 3.0.0-alpha3 = plantages → reste sur `v2.0.14` ou moins.
 - **Piège 2** : La microSD doit être formatée en FAT32 avec les dossiers `IMG` et `sites` préparés.
@@ -938,9 +938,9 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — M5Stack](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/m5stack.md)
 > - [Evil-M5Core2 — GitHub](https://github.com/7h30th3r0n3/Evil-M5Core2)
 > - [M5Stack Documentation — Core2](https://docs.m5stack.com/en/core/Core2)
@@ -971,4 +971,4 @@ xxd /tmp/header.bin | head -5
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - ESP32|🔌 ESP32]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - ESP32| ESP32]] · [[Hardware - I2C et SPI| I2C/SPI]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]

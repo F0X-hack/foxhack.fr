@@ -13,7 +13,7 @@ statut: publie
 
 ---
 
-# 🏷️ HydraNFC Shield v2
+# HydraNFC Shield v2
 
 > [!info] **En 1 phrase**
 > Le **HydraNFC Shield v2** est un shield NFC open-source basé sur le chipset
@@ -24,7 +24,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -38,13 +38,13 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > HydraNFC Shield v2 est une extension pour **HydraBus v1** ajoutant la communication
 > **NFC (Near Field Communication)** via le chip **ST25R3916** de STMicroelectronics.
 > Il est utilisé via le firmware **HydraNFC FW**.
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **ST25R3916** : chip reader NFC HF 13.56 MHz, toutes les variantes ISO14443
 > - **HydraBus v1** : plateforme hôte (LPC4330, Cortex-M4 204 MHz)
 > - **Modes** : reader, sniffing, emulation
@@ -61,7 +61,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Architecture HydraNFC Shield v2
 
@@ -95,7 +95,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -134,7 +134,7 @@ HydraNFC Shield v2          HydraBus v1
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### ISO14443A
 
@@ -157,7 +157,7 @@ HydraNFC Shield v2          HydraBus v1
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -199,7 +199,7 @@ nfc> help
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Modes HydraNFC
 
@@ -223,7 +223,7 @@ nfc> help
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes NFC essentielles
 
@@ -242,9 +242,9 @@ nfc> help
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lecture d'un tag NFC
+### Débutant — Lecture d'un tag NFC
 
 ```text
 # 1. Connecter le shield HydraNFC à HydraBus
@@ -261,7 +261,7 @@ nfc> reader poll
 nfc> reader read <UID>
 ```
 
-### 🟡 Intermédiaire — Sniffing de trafic NFC
+### Intermédiaire — Sniffing de trafic NFC
 
 ```text
 nfc> sniff
@@ -271,7 +271,7 @@ nfc> sniff stop
 nfc> sniff save /sd/sniff_capture.bin
 ```
 
-### 🔴 Avancé — Émulation d'un tag MIFARE
+### Avancé — Émulation d'un tag MIFARE
 
 ```text
 nfc> emulate
@@ -280,7 +280,7 @@ nfc> emulate uid 04:AA:BB:CC:DD:EE:FF:00
 # Le tag est maintenant présentable à un reader
 ```
 
-### ⚫ Expert — Sniffing + analyse protocole NFC
+### Expert — Sniffing + analyse protocole NFC
 
 ```text
 nfc> sniff
@@ -293,7 +293,7 @@ nfc> sniff save /sd/protocol_trace.bin
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -315,7 +315,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Clonage d'un badge MIFARE Classic
 
@@ -325,7 +325,7 @@ flowchart TB
 | **Matériel** | HydraNFC Shield v2 + HydraBus v1 + tag vierge MIFARE |
 | **Étapes** | 1. Lire badge → 2. Extraire clés → 3. Écrire sur tag vierge |
 | **Résultat** | Badge cloné fonctionnel |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Sniffing de session NFC Android
 
@@ -335,11 +335,11 @@ flowchart TB
 | **Matériel** | HydraNFC Shield v2 + HydraBus v1 |
 | **Étapes** | 1. Sniff mode → 2. Phone scanne reader → 3. Analyse protocole |
 | **Résultat** | Session NFC complète capturée |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -356,7 +356,7 @@ flowchart TB
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -367,7 +367,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -393,7 +393,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -437,7 +437,7 @@ print(scan_tags(ser))
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 | Format | Utilité |
 |---|---|
@@ -453,12 +453,12 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - RFID MIFARE (HF 13.56 MHz)|🏷️ MIFARE]]
-- [[Hardware - Amiibo et NTAG215|🎮 NTAG215]]
-- [[Hardware - RFID LF (125 kHz)|🏷️ RFID LF]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]]
+- [[Hardware - Amiibo et NTAG215| NTAG215]]
+- [[Hardware - RFID LF (125 kHz)| RFID LF]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -468,7 +468,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -479,7 +479,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -490,7 +490,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -502,7 +502,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -517,7 +517,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -528,7 +528,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────────┐
@@ -557,7 +557,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -573,7 +573,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -593,7 +593,7 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : HydraNFC est un shield — il nécessite une HydraBus v1 en plateforme hôte.
 - **Piège 2** : La portée est limitée à ~10 cm — rapprocher physiquement le tag du shield.
@@ -605,9 +605,9 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — HydraNFC Shield v2](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/hydranfc_shield_v2.md)
 > - [Wiki HydraNFC Shield v2](https://github.com/hydrabus/hydrafw_hydranfc_shield_v2/wiki)
 > - [Spécifications ST25R3916](https://www.st.com/resource/en/datasheet/st25r3916.pdf)
@@ -621,4 +621,4 @@ xxd sniff_capture.bin | head -40
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - HydraBus|🚌 HydraBus]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)|🏷️ MIFARE]] · [[Hardware - RFID LF (125 kHz)|🏷️ RFID LF]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - HydraBus| HydraBus]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] · [[Hardware - RFID LF (125 kHz)| RFID LF]] · [[Bibliothèque technique| Index]]

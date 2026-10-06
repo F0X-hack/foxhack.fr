@@ -1,11 +1,11 @@
 ---
 title: "Outil - bettercap"
 type: outil
-categorie: 📡 Wireless & Réseau
+categorie: Wireless & Réseau
 tags:
   - cyber
   - outil
-  - 📡 Wireless & Réseau
+  - Wireless & Réseau
 statut: publie
 version: v2.41.7 (11 mai 2026)
 licence: GPL-3.0
@@ -16,20 +16,20 @@ site: https://www.bettercap.org/
 doc: https://www.bettercap.org/modules/
 ---
 
-# 📡 bettercap — Wireless & Réseau
+# bettercap — Wireless & Réseau
 
 > [!info] **En 1 phrase**
 > Framework de **MITM (Man-in-The-Middle)** moderne : spoofing ARP, reniflage de trafic, proxy HTTP(S), **spoofing DNS**, caplets, modules BLE/802.15.4 et interface web — le couteau suisse du pentest réseau local.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | bettercap |
 | Description | Framework modulaire de reconnaissance et d'attaque réseau (IPv4/IPv6, WiFi, BLE, HID, CAN-bus) avec MITM complet, reniflage, injection et interface web |
-| Catégorie | 📡 Wireless & Réseau |
+| Catégorie | Wireless & Réseau |
 | Sous-catégorie | Attaque réseau local & MITM (ARP/DNS/HTTP), modules radio (WiFi/BLE/802.15.4) |
 | Fonction principale | Empoisonnement ARP, sniffing réseau, proxy HTTP(S), spoofing DNS, récolte de credentials, attaques WiFi et Bluetooth |
 | Type d'outil | Framework (binaire unique avec modules dynamiques + UI web + CLI interactive) |
@@ -50,7 +50,7 @@ doc: https://www.bettercap.org/modules/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 `bettercap` a été conçu par Simone Margaritelli pour remplacer la vieille stack `ettercap` (dont la maintenabilité s'était dégradée) par une **binaire unique en Go**, portable, extensible par modules et pilotable par une console interactive. Le cœur du concept : chaque capacité est un **module** (`net.probe`, `net.sniff`, `arp.spoof`, `dns.spoof`, `http.proxy`, `https.proxy`, `wifi.*`, `ble.*`, `canbus.*`, `hid.*`…) activable/désactivable à la volée, le tout orchestré depuis un shell avec autocomplétion ou des **caplets** (scripts textuels réutilisables, façon interact script). Une **API REST** et une **interface web** (`http-ui`) permettent la supervision distante.
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -144,14 +144,14 @@ go install github.com/bettercap/bettercap/v2@latest
 make build
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Dépendances système : `pkg-config`, `libpcap`, `libusb-1.0-0` (module HID), `libnetfilter-queue` (Linux, module `packet.proxy`).
 > - Windows : l'analyse de paquets requiert **Npcap** ; les modules WiFi/BLE sont très limités.
 > - Docker : `--privileged --net=host` indispensable ; pas de support des modules radio.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Les paramètres se définissent dans la console (`set <param> <valeur>`) ou dans des caplets (`.cap`) chargés avec `-caplet` ou `-eval`. L'historique des commandes est sauvegardé ; `update.check on` vérifie la présence de nouvelles versions.
 
@@ -170,7 +170,7 @@ Les paramètres se définissent dans la console (`set <param> <valeur>`) ou dans
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 bettercap est un **binaire Go unique** dont le cycle de vie est orchestré par le noyau (`core/`), la session (`session/`) et un moteur d'événements. Au démarrage :
 
@@ -186,7 +186,7 @@ Les données (hosts, sessions, credentials, événements) sont tenues en mémoir
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -229,7 +229,7 @@ curl http://127.0.0.1/api/session -u user:pass | jq .
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -252,7 +252,7 @@ curl http://127.0.0.1/api/session -u user:pass | jq .
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -314,7 +314,7 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 **Scénario : MITM complet sur un client pour récolter ses identifiants.**
 
@@ -348,7 +348,7 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Spoofing DNS vers une fausse page de login
 
@@ -391,7 +391,7 @@ wifi.assoc all
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -405,7 +405,7 @@ wifi.assoc all
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -421,7 +421,7 @@ wifi.assoc all
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -461,7 +461,7 @@ alert arp any any -> any any (msg:"Possible ARP spoofing bettercap"; arp.opcode:
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Lancement headless + polling de l'API REST
@@ -488,7 +488,7 @@ for cred in data["session"]["credentials"]:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 bettercap produit un **stdout interactif** (TUI) et des **événements JSON** consommables via l'API REST (`http://127.0.0.1/api/session`, `api/events`, `api/session/hosts`…). `-pcapdump` génère un **pcap** analysable dans [[Outil - Wireshark]] / [[Outil - tshark]] ; `-log` journalise tout en texte.
 
@@ -506,7 +506,7 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq -r '.session.credentials[
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 bettercap (MITM) → pcapdump → Wireshark / tshark → analyse forensique
@@ -515,7 +515,7 @@ bettercap (wifi.deauth) → aircrack-ng / hcxdumptool → crack hors-ligne
 bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - tshark]] · [[Outil - Wireshark]] — analyse des captures
 - [[Outil - aircrack-ng]] · [[Outil - hcxdumptool]] — attaques WiFi complémentaires
 - [[Outil - Wifiphisher]] — evil twin / rogue AP en appui du MITM
@@ -523,7 +523,7 @@ bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -537,7 +537,7 @@ bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Binaire Go **statique**, démarrage quasi instantané, empreinte mémoire modérée (souvent < 100 Mo selon le nombre de sessions).
 - Sniffing **passif** : coût CPU proportionnel au trafic analysé ; `net.sniff.filter` (BPF) réduit fortement la charge.
@@ -548,7 +548,7 @@ bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -584,7 +584,7 @@ bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - bettercap doit s'exécuter en **root** (ou avec capabilities réseau) : surface d'attaque élevée si compromis.
 - **Ne jamais le déployer sans contrôle** : `arp.spoof` + sniffing impactent tout le segment et peuvent servir à des tiers malveillants.
@@ -596,7 +596,7 @@ bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Ne déchiffre pas le HTTPS** par magie : il faut installer la CA dans le trust store de la victime ou cibler des flux HTTP/HSTS absents.
 - **SSLstrip** inefficace face aux navigateurs modernes appliquant HSTS (préload) : la récolte passe par le MITM certs ou les réseaux Wi-Fi ouverts.
@@ -608,7 +608,7 @@ bettercap (dns.spoof) → Wifiphisher / site de phishing → récolte
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Découverte des hôtes
@@ -644,7 +644,7 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -653,11 +653,11 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 | **Commande principale** | `sudo bettercap -iface eth0 -caplet net-sniff` |
 | **Alternative principale** | ettercap (legacy) / mitmproxy (HTTP/S applicatif) |
 | **Concepts importants** | ARP spoofing, forwarding IP, SSLstrip, caplets, net.sniff / net.creds, UI web + API REST |
-| **Liens associés** | [[Techniques/ARP Spoofing et MITM\|🌐 ARP Spoofing]] · [[Outil - Wireshark]] · [[Outil - aircrack-ng]] |
+| **Liens associés** | [[Techniques/ARP Spoofing et MITM\| ARP Spoofing]] · [[Outil - Wireshark]] · [[Outil - aircrack-ng]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -670,16 +670,16 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Privilégier les **caplets** officiels (`net-sniff`, `http-req-dump`, `sniff-spoof`…) pour des setups reproductibles. `bettercap -caplet -h` les liste.
 > - Activer `ip.forward on` dès le lancement : évite de couper internet à la victime et rend l'attaque plus discrète.
 > - Utiliser `-eval` pour enchaîner les commandes au démarrage et produire des setups propres.
 > - Changer le mot de passe `user:pass` de l'UI/API avant toute session d'audit.
 > - Coupler bettercap à `-pcapdump` pour garder une trace analysable dans Wireshark.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `arp.spoof` casse la connexion de la victime si le **forwarding IP est désactivé** — vérifier `ip.forward on` dans bettercap (ou `/proc/sys/net/ipv4/ip_forward`) pour ne pas couper internet.
 > - SSLstrip ne marche que si la victime tape `http://` (HSTS le bloque) : préférer la génération de certificats avec `https.proxy` + la CA installée pour les sites sans HSTS.
 > - Une attaque ARP est **visible** par tout le réseau (MAC de l'attaquant dans les tables) : nettoyer avec `arp.spoof off` après le test.
@@ -688,7 +688,7 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -713,9 +713,9 @@ curl -s -u user:pass http://127.0.0.1/api/session | jq '.session.hosts'
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [GitHub officiel bettercap](https://github.com/bettercap/bettercap)
 > - [Documentation & caplets](https://www.bettercap.org/)
 > - [Releases GitHub (v2.41.7, 11 mai 2026)](https://github.com/bettercap/bettercap/releases)
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/ARP Spoofing et MITM|🌐 ARP Spoofing]] · [[Techniques/Attaques WiFi - Rogue AP|🎭 Rogue AP & MITM]] · [[Techniques/LLMNR-NBT-NS Poisoning|📡 Poisoning réseau]]
+**Liens :** [[Tools| Outils]] · [[Techniques/ARP Spoofing et MITM| ARP Spoofing]] · [[Techniques/Attaques WiFi - Rogue AP| Rogue AP & MITM]] · [[Techniques/LLMNR-NBT-NS Poisoning| Poisoning réseau]]

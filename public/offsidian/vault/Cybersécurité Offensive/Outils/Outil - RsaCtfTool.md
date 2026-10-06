@@ -1,7 +1,7 @@
 ---
 title: "Outil - RsaCtfTool"
 type: outil
-categorie: 🎯 CTF & Développement
+categorie: CTF & Développement
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://github.com/RsaCtfTool/RsaCtfTool
 doc: https://github.com/RsaCtfTool/RsaCtfTool
 ---
 
-# 🔑 RsaCtfTool — L'arsenal d'attaque RSA pour CTF
+# RsaCtfTool — L'arsenal d'attaque RSA pour CTF
 
 > [!info] **En 1 phrase**
 > Attaque automatique des cryptosystèmes RSA fragiles : si `n`, `e`, `c` (ou `p`, `q`) traînent, RsaCtfTool trouve la clé et déchiffre le flag.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -49,7 +49,7 @@ doc: https://github.com/RsaCtfTool/RsaCtfTool
 
 ---
 
-## 🎯 Concept
+## Concept
 
 RsaCtfTool teste automatiquement une **trentaine d'attaques RSA connues** à partir de paramètres partiels : petit `e` (low exponent, cube root attack), `n` factorisable (FactorDB, Fermat, Pollard p-1, Williams p+1), `p`/`q` proches, `d` partiel, oracle, attaques sur `n` réutilisés (multi_key)... On lui fournit `n`, `e`, `c` (ou un fichier de clé publique `-p`, ou `--dumpkey`), et il tente chaque attaque jusqu'à retrouver le message clair. C'est l'outil incontournable des challenges crypto RSA où un seul paramètre est mal généré.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -87,7 +87,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -128,14 +128,14 @@ sudo apt install sagemath
 python3 RsaCtfTool.py --help
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - `gmpy2` nécessite une lib GMP compilée (fournie par pip sur la plupart des systèmes).
 > - L'outil cible les **clés semi-premières « textbook »** : les clés générées correctement (≥1024 bits bien formées) ne sont pas cassées — l'attaque vient d'une mauvaise génération de paramètres.
 > - L'usage est destiné à l'éducation et aux engagements autorisés (voir la notice « educational purposes only » du dépôt).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -156,7 +156,7 @@ python3 RsaCtfTool.py --help
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Chargement dynamique des attaques** : le dossier `attacks/single_key` contient un fichier par attaque (fermat.py, wiener.py, smallfraction.py, factordb.py, gcd.py...) ; RsaCtfTool les charge et les exécute en séquence.
 - **Multi_key** : `attacks/multi_key` regroupe les attaques nécessitant plusieurs clés (shared factor via GCD, common modulus).
@@ -167,7 +167,7 @@ python3 RsaCtfTool.py --help
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -208,7 +208,7 @@ python3 RsaCtfTool.py --publickey pub1.pem --publickey pub2.pem --attack multi
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -231,7 +231,7 @@ python3 RsaCtfTool.py --publickey pub1.pem --publickey pub2.pem --attack multi
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -270,7 +270,7 @@ python3 RsaCtfTool.py --n ... --e ... --uncipher ... --factor /usr/bin/msieve --
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Récupérer les paramètres** : dans l'énoncé CTF ou via `openssl rsa -in pub.pem -pubin -text -noout`.
 2. **Étape 2 — Inspecter la clé** :
@@ -287,7 +287,7 @@ python3 RsaCtfTool.py --n ... --e ... --uncipher ... --factor /usr/bin/msieve --
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : n factorisable — p et q proches (Fermat)
 
@@ -325,7 +325,7 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -337,7 +337,7 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -351,7 +351,7 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -398,7 +398,7 @@ rule rsa_short_key
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Boucle : tester plusieurs fichiers chiffrés contre une clé
@@ -428,7 +428,7 @@ print(m.group().decode() if m else "no flag")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Sortie type (verbose)
@@ -458,22 +458,22 @@ openssl rsa -in pub.pem -pubin -text -noout
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Clé/énoncé → dumpkey (RsaCtfTool) → attaque auto → clair → CyberChef (décodage) → flag
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - CyberChef]] — décodage du clair (ASCII/hex/base64) après déchiffrement
 - [[Outil - pwntools]] — automatisation réseau si le déchiffrement est interactif
 - [[Outil - binwalk]] — extraction de blobs contenant des clés/chiffrés
 - [[Outil - hashcat]] / [[Outil - John the Ripper]] — cracking de clés dérivées de mots de passe
-- [[10 - Cheatsheets|📋 Cheatsheets]]
+- [[10 - Cheatsheets| Cheatsheets]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -488,7 +488,7 @@ Clé/énoncé → dumpkey (RsaCtfTool) → attaque auto → clair → CyberChef 
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Attaques rapides** : Fermat, GCD, petit e, FactorDB s'exécutent en quelques secondes sur les clés courtes.
 - **Factorisation lourde** : les grands `n` (≥1024 bits) nécessitent msieve/yafu — potentiellement des heures selon la taille.
@@ -501,7 +501,7 @@ Clé/énoncé → dumpkey (RsaCtfTool) → attaque auto → clair → CyberChef 
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ Clé/énoncé → dumpkey (RsaCtfTool) → attaque auto → clair → CyberChef 
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Usage autorisé** : le dépôt précise un but **éducatif** — utiliser uniquement en CTF/lab/engagement autorisé.
 - **FactorDB** : les requêtes partagent `n` avec un service tiers ; éviter avec des clés sensibles.
@@ -536,7 +536,7 @@ Clé/énoncé → dumpkey (RsaCtfTool) → attaque auto → clair → CyberChef 
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Clés textbook uniquement** : RsaCtfTool ne brise pas les clés correctement générées ; il exploite des **erreurs de génération**.
 - **Pas d'oracle custom** : les attaques par oracle (padding) nécessitent des scripts dédiés.
@@ -546,7 +546,7 @@ Clé/énoncé → dumpkey (RsaCtfTool) → attaque auto → clair → CyberChef 
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Attaque directe n, e, c
@@ -571,7 +571,7 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -584,7 +584,7 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -595,16 +595,16 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lancez d'abord l'attaque automatique avec `--verbose` : elle affiche chaque essai.
 > - `--dumpkey` avant d'attaquer permet de voir `e` (petit `e` → attaque racine).
 > - Pensez à **FactorDB** : si `n` a déjà été factorisé, l'attaque est instantanée.
 > - Pour les challenges, la clé privée est parfois fournie : `--private` déchiffre directement.
 > - Recoupez le clair avec [[Outil - CyberChef]] (ASCII, hex, base64) avant de conclure.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne confondez pas `n` et `c` : inverser les valeurs ne donne rien.
 > - `e = 3` avec `m^3 > n` : la racine cubique directe échoue (il faut `m^3 = c + k*n`).
 > - Le `--uncipher` attend de l'hexadécimal ; un fichier chiffré brut → `--uncipherfile`.
@@ -613,7 +613,7 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -636,4 +636,4 @@ python3 RsaCtfTool.py --private priv.pem --uncipherfile flag.enc
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - CyberChef|🧪 CyberChef]] · [[Outil - pwntools|🎯 pwntools]] · [[Outil - hashcat|⚡ hashcat]] · [[Outil - John the Ripper|🔓 John the Ripper]] · [[Outil - binwalk|🧱 binwalk]] · [[Outil - gdb-peda|🛠️ gdb-peda]] · [[Outil - ROPgadget|🧩 ROPgadget]]
+**Liens :** [[Tools| Outils]] · [[Outil - CyberChef| CyberChef]] · [[Outil - pwntools| pwntools]] · [[Outil - hashcat| hashcat]] · [[Outil - John the Ripper| John the Ripper]] · [[Outil - binwalk| binwalk]] · [[Outil - gdb-peda| gdb-peda]] · [[Outil - ROPgadget| ROPgadget]]

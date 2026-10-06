@@ -1,11 +1,11 @@
 ---
 title: "Outil - sqlmap"
 type: outil
-categorie: 💥 Exploitation & Cracking
+categorie: Exploitation & Cracking
 tags:
   - cyber
   - outil
-  - 💥 Exploitation & Cracking
+  - Exploitation & Cracking
 statut: publie
 version: 1.10.8 (août 2026)
 licence: GPLv2
@@ -16,20 +16,20 @@ site: https://sqlmap.org
 doc: https://github.com/sqlmapproject/sqlmap/wiki
 ---
 
-# 💥 sqlmap — Automatisation Injection SQL
+# sqlmap — Automatisation Injection SQL
 
 > [!info] **En 1 phrase**
 > sqlmap = l'outil d'exploitation automatique des injections SQL : détection de la technique, énumération de la base et extraction des données en une seule commande.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | sqlmap — Automatic SQL injection and database takeover tool |
 | Description | Détection et exploitation automatisées des injections SQL : fingerprint du SGBD, énumération, extraction (dump), lecture de fichiers et exécution de commandes sur le serveur de base de données |
-| Catégorie | 💥 Exploitation & Cracking |
+| Catégorie | Exploitation & Cracking |
 | Sous-catégorie | Injection SQL (SQLi) automatisée |
 | Fonction principale | Détecter la technique SQLi et exploiter la vulnérabilité pour extraire des données ou prendre le contrôle du serveur |
 | Type d'outil | CLI (Python) + API REST (`sqlmapapi.py`) |
@@ -50,7 +50,7 @@ doc: https://github.com/sqlmapproject/sqlmap/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 sqlmap automatise le cycle complet de l'injection SQL : il détecte le point d'injection (`-u` + `-p`), choisit la meilleure technique (booléen, erreur, UNION, time-based, stacked queries, requêtes inline), fingerprinte le SGBD (`--banner`, `--dbms`), énumère (`--dbs`, `-D`, `-T`, `--columns`) puis extrait les données (`--dump`). Il est né en 2006 de la volonté de mutualiser les scripts maison de Bernardo Damele et de les doter d'un moteur de détection robuste ; il est devenu la référence des tests SQLi, tant en pentest qu'en bug bounty.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -83,7 +83,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -132,12 +132,12 @@ git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
 cd sqlmap-dev && python sqlmap.py --version
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > Python ≥ 3.x requis (les branches récentes ont abandonné Python 2.7). Les dépendances optionnelles (`python-impacket`, `pysqlite3` pour SQLite, `kex` pour Oracle) améliorent la couverture : installez-les via `pip install -r requirements.txt` ou le paquet du système. Le paquet Kali peut être en retard d'une release : privilégiez le clone git pour être toujours à jour.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 sqlmap fonctionne principalement via options CLI, mais lit un fichier de configuration `sqlmap.conf` (dans le dossier source) qui reprend toutes les options avec leurs valeurs par défaut — idéal pour industrialiser des campagnes.
 
@@ -156,7 +156,7 @@ sqlmap fonctionne principalement via options CLI, mais lit un fichier de configu
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 sqlmap est organisé en packages Python : `lib/controller` (orchestration), `lib/core` (options, logger, option, injection), `lib/request` (connexions HTTP, DNS, méthodes d'exfiltration), `lib/tamper` (scripts d'obfuscation), `plugins/dbms` (un plugin par SGBD : MySQL, Oracle, PostgreSQL, MSSQL, SQLite, Access, DB2, Firebird, HSQLDB, SAP MaxDB, MariaDB, Sybase, Informix…) et `data/xml` (payloads, bannières, tests). L'outil crée un **dossier de session** par cible : requêtes, réponses, données extraites et fichiers temporaires y sont stockés en CSV/JSON/TXT/SQL.
 
@@ -175,7 +175,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -222,7 +222,7 @@ sqlmap -u "http://10.10.20.15" --crawl=2 --forms --batch
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -258,7 +258,7 @@ sqlmap -u "http://10.10.20.15" --crawl=2 --forms --batch
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -307,7 +307,7 @@ hashcat -m 0 users.hash /usr/share/wordlists/rockyou.txt
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Capturer la requête** — intercepter un POST de login dans [[Outil - Burp Suite]] (ou Caido) et exporter la requête brute dans `login.req`.
    ```bash
@@ -338,7 +338,7 @@ hashcat -m 0 users.hash /usr/share/wordlists/rockyou.txt
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : RCE via UDF (MySQL) ou fichiers écrits
 
@@ -375,7 +375,7 @@ hashcat -m 0 users.hash /usr/share/wordlists/rockyou.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -388,7 +388,7 @@ hashcat -m 0 users.hash /usr/share/wordlists/rockyou.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -403,7 +403,7 @@ hashcat -m 0 users.hash /usr/share/wordlists/rockyou.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -446,7 +446,7 @@ alert http any any -> $HOME_NET any (msg:"SQLi UNION SELECT attempt"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Script : scanner une liste de cibles, dumper les tables users, logguer le tout
@@ -478,7 +478,7 @@ print(status["status"])
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 sqlmap stocke chaque résultat dans le dossier de session (`--output-dir`), sous forme de fichiers TXT (sortie), CSV (données dumpées) et JSON (`data.json`), plus une base SQLite pour l'état de la session.
 
@@ -502,14 +502,14 @@ for host, dbs in data.items():
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 Burp Suite / Caido → export requête (-r) → sqlmap → CSV/JSON → hashcat / John → SIEM
 Nmap -sV → version identifiée → sqlmap --dbms → dump → SearchSploit (exploits complémentaires)
 ```
 
-- [[Tools|🧰 Outils]]
+- [[Tools| Outils]]
 - [[Outil - Burp Suite]] — capture et export de requêtes, observation des payloads via `--proxy`
 - [[Outil - hashcat]] / [[Outil - John the Ripper]] — cracking des hashes extraits
 - [[Outil - Name-That-Hash]] / [[Outil - hashid]] — identification du format des hashes
@@ -520,7 +520,7 @@ Nmap -sV → version identifiée → sqlmap --dbms → dump → SearchSploit (ex
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -532,13 +532,13 @@ Nmap -sV → version identifiée → sqlmap --dbms → dump → SearchSploit (ex
 
 ---
 
-## ⚡ Performance
+## Performance
 
 sqlmap est connu pour être **lent sur les techniques blind** : chaque bit/caractère extrait demande plusieurs requêtes HTTP (souvent 6-8 requêtes par caractère en booléen/time-based). `--threads` (jusqu'à 10) accélère l'extraction au prix d'une charge serveur accrue. L'option `--eta` affiche le temps restant estimé. Pour les gros dumps, préférez les techniques in-band (UNION) qui extraient en une requête par enregistrement, et activez `--hex`/`--no-cast` pour stabiliser l'extraction sur certains SGBD. En time-based, `--time-sec` (défaut 5 s) règle le délai : descendre à 2 s accélère mais augmente les faux négatifs. L'usage massif (`--risk=3` + gros `--level`) peut saturer la cible — dimensionnez `--delay`/`--threads` en conséquence.
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -568,7 +568,7 @@ sqlmap est connu pour être **lent sur les techniques blind** : chaque bit/carac
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Exécution en binôme** : toujours router les scans via `--proxy` pour valider chaque payload avant envoi à la cible.
 - **Pas de run non autorisé** : `--risk=3` et `--time-sec` produisent des requêtes lourdes assimilables à un DoS ; un usage hors périmètre autorisé est illégal.
@@ -578,7 +578,7 @@ sqlmap est connu pour être **lent sur les techniques blind** : chaque bit/carac
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Lenteur intrinsèque des techniques blind** : une extraction complète peut prendre des heures.
 - **Dépendance au contexte HTTP** : les injections dans des endpoints non-HTTP (WebSockets, GraphQL, gRPC) nécessitent des adaptations ou d'autres outils (cf. [[Techniques/GraphQL]]).
@@ -589,7 +589,7 @@ sqlmap est connu pour être **lent sur les techniques blind** : chaque bit/carac
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Détection simple
@@ -619,7 +619,7 @@ sqlmap -u "http://10.10.20.15/page.php?id=1" --random-agent --delay=2 --threads=
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -632,7 +632,7 @@ sqlmap -u "http://10.10.20.15/page.php?id=1" --random-agent --delay=2 --threads=
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -645,15 +645,15 @@ sqlmap -u "http://10.10.20.15/page.php?id=1" --random-agent --delay=2 --threads=
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Consulte toujours `sqlmap -hh` pour la liste complète et `--list-tampers` pour les scripts disponibles.
 > - Passe systématiquement par `--proxy` au début pour visualiser les payloads dans [[Outil - Burp Suite]].
 > - Confirme l'injection **manuellement** avant un scan complet, et force `--dbms` dès la bannière connue.
 > - Utilise `--eta` pour estimer les dumps longs et `--flush-session` pour repartir proprement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - `--risk=3` peut **DoS** la cible (time-based lourds) : réservé aux environnements autorisés.
 > - `--os-shell` exige le privilège `FILE` **et** un dossier web en écriture : teste d'abord `--file-read=/etc/passwd`.
 > - `--batch` accepte tout par défaut : avec une requête multi-paramètres, vérifie que `-p` cible le bon paramètre.
@@ -661,7 +661,7 @@ sqlmap -u "http://10.10.20.15/page.php?id=1" --random-agent --delay=2 --threads=
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -684,4 +684,4 @@ sqlmap -u "http://10.10.20.15/page.php?id=1" --random-agent --delay=2 --threads=
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/Injection SQL|💾 Injection SQL]] · [[Techniques/NoSQL|🍃 NoSQL]] · [[Techniques/LFI et RFI|📂 LFI / RFI]]
+**Liens :** [[Tools| Outils]] · [[Techniques/Injection SQL| Injection SQL]] · [[Techniques/NoSQL| NoSQL]] · [[Techniques/LFI et RFI| LFI / RFI]]

@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 📡 Proxmark3
+# Proxmark3
 
 > [!info] **En 1 phrase**
 > Le **Proxmark3** est la référence en **recherche RFID** : il **lit, écrit et clone** la
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Moyenne → Élevée (attaques avancées) |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     PM["Proxmark3<br>MCU ARM + FPGA"] --> LF["Antenne LF<br>125/134 kHz"]
@@ -47,7 +47,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Le Proxmark3 est une plateforme open-source de **recherche RFID/NFC** conçue à l'origine
 > par Jonathan Westhues. Le **firmware Iceman fork** (RfidResearchGroup) est aujourd'hui la
@@ -70,7 +70,7 @@ flowchart TB
     style FLASH fill:#c8e6c9
 ```
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **RDV4** : MCU ARM Cortex-M4, FPGA dédié, 256K flash SPI (standalone), Smart Card module, connecteur FPC (BlueShark), antennes LF/HF interchangeables
 > - **Easy** : MCU AT91SAM7S256 ou 512, antenne fixe, pas de flash externe, pas de Bluetooth
 > - **Iceman fork** : firmware dominant, 5000+ commits, support complet de RDV4
@@ -79,7 +79,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Architecture RFID
 
@@ -128,7 +128,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -154,7 +154,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### LF — Basse fréquence (125/134 kHz)
 
@@ -202,7 +202,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -248,7 +248,7 @@ sudo ./pm3-flash-all /dev/ttyACM0
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Compilation options
 
@@ -272,7 +272,7 @@ sudo ./pm3-flash-all /dev/ttyACM0
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -348,9 +348,9 @@ hf mfdes lsapp --no-auth
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Clonage EM410X
+### Débutant — Clonage EM410X
 
 ```bash
 # Étape 1 : Lecture du badge LF
@@ -364,7 +364,7 @@ lf em 410x clone --id 1122334455
 lf em 410x read
 ```
 
-### 🟡 Intermédiaire — MIFARE autopwn
+### Intermédiaire — MIFARE autopwn
 
 ```bash
 # Étape 1 : Recherche du tag
@@ -380,7 +380,7 @@ hf mf dump 1
 hf mf rdbl 0 A ffffffffffff
 ```
 
-### 🔴 Avancé — Hardnested + crypto1_bs
+### Avancé — Hardnested + crypto1_bs
 
 ```bash
 # Étape 1 : Collecte de nonces
@@ -396,7 +396,7 @@ hf mf nested 0 0 A <clé_trouvée> t
 hf mf dump 1
 ```
 
-### ⚫ Expert — Standalone HF_14ASNIFF
+### Expert — Standalone HF_14ASNIFF
 
 ```bash
 # Activer le mode standalone sur RDV4
@@ -415,7 +415,7 @@ hf list 14a
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -462,7 +462,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Pentest RFID complet
 
@@ -472,7 +472,7 @@ flowchart TB
 | **Matériel** | Proxmark3 RDV4 + BlueShark + antennes |
 | **Étapes** | 1. Recon (scan LF+HF) → 2. Lecture badges → 3. Attaque → 4. Clonage |
 | **Résultat** | Badge cloné, accès physique compromis |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -491,11 +491,11 @@ flowchart LR
 | **Matériel** | Proxmark3 RDV4 + antenne HF |
 | **Étapes** | 1. hf iclass rd → 2. hf iclass blacktears → 3. Clés extraites |
 | **Résultat** | Badge iClass clonable |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -514,7 +514,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -544,7 +544,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -584,7 +584,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -640,7 +640,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -676,11 +676,11 @@ hf list 14a
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - RFID et NFC|🏷️ Hub RFID]]
-- [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - RFID et NFC| Hub RFID]]
+- [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -690,7 +690,7 @@ hf list 14a
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -709,7 +709,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -732,7 +732,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -771,7 +771,7 @@ lf search
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -793,7 +793,7 @@ lf search
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -813,7 +813,7 @@ lf search
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -853,7 +853,7 @@ lf search
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -871,7 +871,7 @@ lf search
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -894,7 +894,7 @@ lf search
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Le Proxmark Easy 256K ne peut pas faire de hardnested — vérifier la taille du flash.
 - **Piège 2** : Les antennes comptent énormément — un mauvais câble coax réduit la portée à presque rien.
@@ -911,9 +911,9 @@ lf search
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Proxmark](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/proxmark.md)
 > - [Iceman Fork — RfidResearchGroup](https://github.com/RfidResearchGroup/proxmark3)
 > - [Proxmark Wiki](https://github.com/Proxmark/proxmark3/wiki)
@@ -947,4 +947,4 @@ lf search
 
 ---
 
-➡️ **Liens :** [[Hardware - RFID et NFC|🏷️ Hub RFID]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]] · [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)|📡 LF]] · [[Hardware - Flipper Zero|🐬 Flipper]] · [[Hardware - HydraNFC|🏷️ HydraNFC]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Hardware - RFID et NFC| Hub RFID]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] · [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)| LF]] · [[Hardware - Flipper Zero| Flipper]] · [[Hardware - HydraNFC| HydraNFC]] · [[Bibliothèque technique| Index]]

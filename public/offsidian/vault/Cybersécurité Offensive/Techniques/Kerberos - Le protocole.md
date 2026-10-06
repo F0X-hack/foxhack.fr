@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 👑 Kerberos — Le protocole
+# Kerberos — Le protocole
 
 > [!info] **En 1 phrase**
 > Kerberos est le protocole d'authentification d'Active Directory : l'utilisateur obtient des **tickets**
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 sequenceDiagram
@@ -42,7 +42,7 @@ sequenceDiagram
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 | Étape       | Ce qui se passe                                                                  | Chiffré par             |
 | ----------- | -------------------------------------------------------------------------------- | ----------------------- |
@@ -52,14 +52,14 @@ sequenceDiagram
 | **TGS-REP** | Le KDC renvoie un **TGS** pour ce service précis                                 | Clé du **service**      |
 | **Service** | Le service vérifie le TGS et accorde l'accès                                     | —                       |
 
-> [!danger] 🚨 **Les 2 clés à retenir**
+> [!danger] **Les 2 clés à retenir**
 > - **krbtgt** : la clé du compte krbtgt chiffre les **TGT**. La voler = **Golden Ticket**.
 > - **Service (SPN)** : la clé du compte de service chiffre les **TGS**. La voler = **Silver Ticket** / Kerberoast.
 > Le protocole lui-même est robuste : **ce sont les clés/hashes mal protégés qu'on attaque**.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 - Activer le **logging avancé** Kerberos (événement 4769 : "Kerberos Service Ticket requested")
 - Surveiller les demandes de tickets **anormales** (beaucoup de TGS différents en peu de temps = Kerberoast)
@@ -68,11 +68,11 @@ sequenceDiagram
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Pass-the-Ticket et Overpass-the-Hash|🎫 Pass-the-Ticket / Overpass]]
-- [[Golden Ticket|👑 Golden Ticket]]
-- [[Silver Ticket|💠 Silver Ticket]]
-- [[Kerberoasting|🧀 Kerberoasting]]
-- [[AS-REP Roasting|☀️ AS-REP Roasting]]
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Pass-the-Ticket et Overpass-the-Hash| Pass-the-Ticket / Overpass]]
+- [[Golden Ticket| Golden Ticket]]
+- [[Silver Ticket| Silver Ticket]]
+- [[Kerberoasting| Kerberoasting]]
+- [[AS-REP Roasting| AS-REP Roasting]]
+- → Note complète : [[05 - Active Directory| Active Directory]]

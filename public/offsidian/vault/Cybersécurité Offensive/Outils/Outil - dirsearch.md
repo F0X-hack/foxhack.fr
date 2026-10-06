@@ -1,11 +1,11 @@
 ---
 title: "Outil - dirsearch"
 type: outil
-categorie: 🔍 Scan Web & Fuzzing
+categorie: Scan Web & Fuzzing
 tags:
   - cyber
   - outil
-  - 🔍 Scan Web & Fuzzing
+  - Scan Web & Fuzzing
 statut: publie
 version: 0.5.0 (août 2026)
 licence: GNU General Public License v2
@@ -16,14 +16,14 @@ site: https://github.com/maurosoria/dirsearch
 doc: https://github.com/maurosoria/dirsearch/wiki
 ---
 
-# 🔍 dirsearch — Scanner de répertoires web (Web path scanner)
+# dirsearch — Scanner de répertoires web (Web path scanner)
 
 > [!info] **En 1 phrase**
 > dirsearch est un scanner de répertoires web écrit en Python, riche en options de sortie et de filtrage, avec une wordlist intégrée.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/maurosoria/dirsearch/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 dirsearch est un outil mature d'énumération de répertoires et de fichiers, entièrement en Python. Il est apprécié pour sa wordlist par défaut correcte (`db/dicc.txt`), ses formats d'export multiples (plain, JSON, CSV, XML, MD, **SQLite** depuis 2022) et sa gestion fine des statuts via `--exclude-status`. Moins rapide que les implémentations Go (gobuster, feroxbuster), il reste très utile quand seul Python est disponible — par exemple sur un poste de compromission, dans un environnement restreint — ou sur des cibles qui ne supportent pas un haut débit de requêtes.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -84,7 +84,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -147,14 +147,14 @@ cd dirsearch
 python3 dirsearch.py -u http://10.10.10.10 -e php,html,js
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Python 3.11+ obligatoire** pour les versions récentes.
 > - `pip3 install -r requirements.txt` doit être exécuté avant le premier lancement.
 > - Sur Kali, le paquet `dirsearch` peut être plus ancien que la version GitHub : privilégier le clone git pour la dernière version.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -172,7 +172,7 @@ python3 dirsearch.py -u http://10.10.10.10 -e php,html,js
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Cœur Python** : le scanner itère les entrées de la wordlist, construit les URLs (chemin ± extension), envoie les requêtes HTTP et évalue chaque réponse.
 - **Multi-threading** : `-t` contrôle le nombre de threads concurrents (défaut 25) ; chaque thread traite une entrée indépendamment.
@@ -186,7 +186,7 @@ Flux type : wordlist → threads → requêtes HTTP → évaluation (statut/tail
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -244,7 +244,7 @@ python3 dirsearch.py --resume
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -274,7 +274,7 @@ python3 dirsearch.py --resume
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -336,7 +336,7 @@ done
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Lancement rapide** — démarrer avec la wordlist par défaut et des extensions ciblées.
    ```bash
@@ -359,7 +359,7 @@ done
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : chasse aux fichiers de sauvegarde (backups)
 
@@ -397,7 +397,7 @@ python3 dirsearch.py -u http://10.10.10.10/api -e json -i 200,401 \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -410,7 +410,7 @@ python3 dirsearch.py -u http://10.10.10.10/api -e json -i 200,401 \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -424,7 +424,7 @@ python3 dirsearch.py -u http://10.10.10.10/api -e json -i 200,401 \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -479,7 +479,7 @@ rule Dirsearch_Source {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Scanner une liste de cibles puis agréger les résultats JSON
@@ -520,7 +520,7 @@ for r in data.get("results", []):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 dirsearch exporte en **plain, JSON, CSV, XML, MD et SQLite** (`--format`). Le JSON est le plus simple à parser.
 
@@ -551,7 +551,7 @@ for r in data.get("results", []):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 dirsearch -> wordlist (dicc.txt / SecLists) -> cible web -> résultats JSON/MD/SQLite
@@ -559,7 +559,7 @@ dirsearch -> proxy Burp (--proxy 127.0.0.1:8080) -> inspection des réponses
 dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 ```
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Burp Suite]] — relaye/inspecte les requêtes dirsearch via `--proxy`
 - [[Outil - gobuster]] / [[Outil - ffuf]] / [[Outil - Feroxbuster]] — alternatives plus rapides en Go/Rust
 - [[Outil - nuclei]] — validation template-based des ressources découvertes
@@ -568,7 +568,7 @@ dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -582,7 +582,7 @@ dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Vitesse** : plus lent que les scanners Go/Rust purs (gobuster, feroxbuster) en raison du runtime Python ; le **backend Rust natif** (opt-in) réduit l'écart.
 - **Threads** : `-t` (défaut 25) ; augmenter prudemment — un nombre élevé de threads peut saturer une cible fragile et fausser les résultats.
@@ -595,7 +595,7 @@ dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -625,7 +625,7 @@ dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **CSV injection (CVE-2021-47901)** : dirsearch 0.4.1 était vulnérable à l'injection de formules CSV via l'option `--csv-report` (CVSS 9.8) — toujours utiliser une version ≥ 0.4.2 et être prudent en ouvrant les exports dans Excel/Sheets.
 - **Volumétrie** : sans délai ni limite de threads, un scan est un **mini-DoS** — toujours adapter `-t` et `--delay` à la cible autorisée.
@@ -635,7 +635,7 @@ dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas d'exploitation des vhosts** : pour le vhost busting, utiliser gobuster/ffuf.
 - **Plus lent** que les implémentations Go/Rust sur les très gros scans.
@@ -645,7 +645,7 @@ dirsearch (API Python) -> pipeline d'énumération -> SIEM / rapport
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan de base
@@ -673,7 +673,7 @@ pip3 install -r requirements.txt
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -686,7 +686,7 @@ pip3 install -r requirements.txt
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -699,16 +699,16 @@ pip3 install -r requirements.txt
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilise `--random-agent` et un `--delay` léger (ex. `--delay 1`) pour passer plus inaperçu.
 > - Exporte en JSON (`--format=json`) pour intégrer les résultats à tes notes d'engagement.
 > - Croise les extensions avec la techno détectée : `.php` sur WordPress, `.json` sur une API, `.aspx` sur IIS.
 > - Lance d'abord un **petit scan** pour calibrer les filtres (statuts, tailles), puis le scan complet.
 > - Pour une SPA ou une API, charge une **wordlist Seclists adaptée** plutôt que la wordlist par défaut.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La wordlist par défaut est orientée « web classique » : sur une SPA ou une API, elle produit beaucoup de faux négatifs. Charge une wordlist Seclists adaptée à la techno.
 > - Sans `--exclude-status=404`, le scan est noyé sous les réponses négatives et ralentit l'analyse.
 > - Sur les cibles fragiles, un nombre de threads élevé (`-t 50+`) peut saturer le serveur et fausser les résultats.
@@ -717,7 +717,7 @@ pip3 install -r requirements.txt
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -738,4 +738,4 @@ pip3 install -r requirements.txt
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Techniques/03 - Exploitation Web|Exploitation Web]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/Injection de commandes|Injection de commandes]]
+**Liens :** [[Tools| Outils]] · [[Outil - Feroxbuster|Feroxbuster]] · [[Outil - gobuster|gobuster]] · [[Outil - ffuf|ffuf]] · [[Techniques/03 - Exploitation Web|Exploitation Web]] · [[Techniques/Path Traversal|Path Traversal]] · [[Techniques/Injection de commandes|Injection de commandes]]

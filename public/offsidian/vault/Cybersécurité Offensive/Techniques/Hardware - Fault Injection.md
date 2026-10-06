@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# ⚡ Fault Injection
+# Fault Injection
 
 > [!info] **En 1 phrase**
 > Le **glitching** (ou fault injection) : provoquer un **défaut électrique contrôlé** au bon moment
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -34,20 +34,20 @@ statut: publie
 | **Complexité** | Élevée → Très élevée |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     ATK["Attaquant"] -->|"Voltage / Clock / EM"| MCU["µC en boot"]
 >     MCU -->|"check"| CHECK{"Saut vérif ?"}
->     CHECK -->|"oui"| OK["🟢 Accès / RCE"]
->     CHECK -->|"non"| FAIL["🔴 Reboot"]
+>     CHECK -->|"oui"| OK["Accès / RCE"]
+>     CHECK -->|"non"| FAIL["Reboot"]
 >     style OK fill:#c8e6c9
 >     style FAIL fill:#ffcdd2
 > ```
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Les vérifications de sécurité sont des opérations séquentielles. Un perturbateur au bon moment peut sauter l'instruction de comparaison, corrompre le résultat, ou forcer un branchement conditionnel.
 
@@ -55,13 +55,13 @@ statut: publie
 flowchart TB
     A["Power On"] --> B["Bootloader"]
     B --> C{"Vérif signature"}
-    C -->|"intacte"| D["⛔ Refus"]
-    C -->|"perturbée"| E["🟢 Boot custom"]
+    C -->|"intacte"| D["Refus"]
+    C -->|"perturbée"| E["Boot custom"]
     ATK["Attaquant"] -.->|"glitch"| C
     style E fill:#c8e6c9
 ```
 
-> [!info] 💡 **Applications classiques**
+> [!info] **Applications classiques**
 > - **Bypass secure boot** → boot firmware non signé
 > - **Bypass mot de passe** → accès à l'appareil
 > - **Réactivation debug** → RDP désactivé (STM32)
@@ -69,7 +69,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Les 3 types de glitch
 
@@ -103,7 +103,7 @@ Temps ────────────────────────�
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -127,7 +127,7 @@ Temps ────────────────────────�
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### Voltage Glitch
 
@@ -155,7 +155,7 @@ Temps ────────────────────────�
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -182,7 +182,7 @@ PC ──── Glitcheur ──── Device cible
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres Faultier
 
@@ -205,7 +205,7 @@ PC ──── Glitcheur ──── Device cible
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Faultier
 
@@ -242,16 +242,16 @@ scope.glitch.offset = 500
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Pin2Pwn
+### Débutant — Pin2Pwn
 
 ```text
 Court-circuiter MOSI ↔ CS flash SPI au boot → µC ne lit pas firmware → shell
 Matériel : aiguille à coudre uniquement
 ```
 
-### 🟡 Intermédiaire — Bypass RDP STM32
+### Intermédiaire — Bypass RDP STM32
 
 ```python
 import chipwhisperer as cw
@@ -264,13 +264,13 @@ for width in range(0, 50, 2):
         # Test lecture JTAG → si succès = RDP bypassé
 ```
 
-### 🔴 Avancé — Bypass secure boot
+### Avancé — Bypass secure boot
 
 | Cible | Méthode | Timing |
 |---|---|---|
 | U-Boot signé | Voltage glitch | 100–500 ms après power-on |
 
-### ⚫ Expert — Double fault
+### Expert — Double fault
 
 ```text
 1er glitch : réactiver debug (RDP bypass)
@@ -280,7 +280,7 @@ Résultat : accès complet
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -288,7 +288,7 @@ flowchart TB
     B --> C["3. Connecter glitcheur"]
     C --> D["4. Balayage delay/length"]
     D --> E{"Succès ?"}
-    E -->|"oui"| F["🟢 Accès"]
+    E -->|"oui"| F["Accès"]
     E -->|"non"| G["Ajuster paramètres"]
     G --> D
     style F fill:#c8e6c9
@@ -304,7 +304,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Trezor One : bypass PIN
 
@@ -313,7 +313,7 @@ flowchart TB
 | **Objectif** | Accès crypto wallet Trezor |
 | **Méthode** | Voltage glitch + UART |
 | **Résultat** | PIN bypassé, seed extractible |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — nRF52832 : bypass APPROTECT
 
@@ -322,7 +322,7 @@ flowchart TB
 | **Objectif** | Debug complet nRF52832 (AirTag) |
 | **Méthode** | EM glitch pendant reset |
 | **Résultat** | SWD réactivé, dump firmware |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -335,7 +335,7 @@ flowchart LR
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -351,7 +351,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -369,7 +369,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -387,7 +387,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -413,7 +413,7 @@ for r in results:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Analyse timing boot
@@ -429,11 +429,11 @@ with open('scope.csv') as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - Fault Injection]] (cette fiche)
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+- [[Hardware - JTAG et SWD| JTAG/SWD]]
 
 | Outil | Usage |
 |---|---|
@@ -443,7 +443,7 @@ with open('scope.csv') as f:
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -453,7 +453,7 @@ with open('scope.csv') as f:
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur |
 |---|---|
@@ -464,7 +464,7 @@ with open('scope.csv') as f:
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -474,7 +474,7 @@ with open('scope.csv') as f:
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -488,7 +488,7 @@ with open('scope.csv') as f:
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -498,7 +498,7 @@ with open('scope.csv') as f:
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -517,7 +517,7 @@ with open('scope.csv') as f:
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -529,7 +529,7 @@ with open('scope.csv') as f:
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -539,7 +539,7 @@ with open('scope.csv') as f:
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Trial-and-error massif** : prévois setup automatisé.
 - **Chaque tentative peut crasher** : watchdog/power-cycle.
@@ -551,9 +551,9 @@ with open('scope.csv') as f:
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Fault Injection](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/side-channel/fault-injection.md)
 > - [Attacking STM32F4 — PicoGlitcher](https://mkesenheimer.github.io/blog/glitching-the-stm32f4.html)
 > - [Replicant: Trezor One](https://voidstarsec.com/blog/replicant-part-1)
@@ -565,4 +565,4 @@ with open('scope.csv') as f:
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Secure Boot|🔐 Secure Boot]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Secure Boot| Secure Boot]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]

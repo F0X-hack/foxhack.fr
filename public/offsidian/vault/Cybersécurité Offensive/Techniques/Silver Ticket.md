@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 💠 Silver Ticket
+# Silver Ticket
 
 > [!info] **En 1 phrase**
 > Silver Ticket = forger un **TGS** (ticket de service) pour un service précis en possédant la clé
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -28,27 +28,27 @@ flowchart LR
     B --> C[Accès direct au service<br>sans passer par le DC]
 ```
 
-> [!info] 💡 **Différence avec le Golden Ticket**
+> [!info] **Différence avec le Golden Ticket**
 > - **Golden** : forge un TGT (krbtgt) → **tout le domaine**.
 > - **Silver** : forge un TGS pour **un service précis** → moins de bruit, pas de contact KDC.
 > Les deux nécessitent une clé compromise.
 
 ---
 
-## ⚙️ Comment ça marche
+## Comment ça marche
 
 1. **Obtenir le hash NTLM** d'un compte de service (Kerberoast, mimikatz, secretsdump).
 2. **Connaître** le SPN ciblé (ex : `HTTP/web01.corp.local`) et son SID.
 3. **Forger** un TGS avec le bon SID (user arbitraire, groupes arbitraires).
 4. Utiliser le ticket pour accéder **à ce service**.
 
-> [!warning] 🚨 **Limite**
+> [!warning] **Limite**
 > Le Silver Ticket ne couvre **qu'un service** : si tu as le hash du service HTTP, tu peux forger
 > des tickets HTTP — pas SMB. Mais beaucoup de services suffisent (CIFS, HTTP, LDAP...).
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 ```bash
 # Mimikatz
@@ -64,7 +64,7 @@ export KRB5CCNAME=fake.ccache
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Indicateur | Détail |
 |---|---|
@@ -73,18 +73,18 @@ export KRB5CCNAME=fake.ccache
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Moins bruyant que le Golden**
+> [!tip] **Moins bruyant que le Golden**
 > Pas de requête Kerberos vers le DC (le ticket est forgé localement) → passe souvent inaperçu des logs du KDC.
 
-> [!warning] ⚠️ **Piège** : le TGS doit correspondre au **SPN exact** (majuscules, FQDN). Une erreur de casse = échec.
+> [!warning] **Piège** : le TGS doit correspondre au **SPN exact** (majuscules, FQDN). Une erreur de casse = échec.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Kerberos - Le protocole|👑 Kerberos]]
-- [[Golden Ticket|👑 Golden Ticket]]
-- [[Kerberoasting|🧀 Kerberoasting]] (source de la clé du service)
-- → Note complète : [[05 - Active Directory|👑 Active Directory]]
+- [[Kerberos - Le protocole| Kerberos]]
+- [[Golden Ticket| Golden Ticket]]
+- [[Kerberoasting| Kerberoasting]] (source de la clé du service)
+- → Note complète : [[05 - Active Directory| Active Directory]]

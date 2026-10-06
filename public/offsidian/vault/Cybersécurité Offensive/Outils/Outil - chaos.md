@@ -1,7 +1,7 @@
 ---
 title: "Outil - chaos"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://chaos.projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/chaos
 ---
 
-# 🌪️ chaos — Données DNS historiques du bug bounty
+# chaos — Données DNS historiques du bug bounty
 
 > [!info] **En 1 phrase**
 > chaos donne accès aux datasets DNS de ProjectDiscovery pour retrouver passivement l'historique des sous-domaines d'un domaine.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.projectdiscovery.io/tools/chaos
 
 ---
 
-## 🎯 Concept
+## Concept
 
 chaos est le client CLI de la plateforme de données ProjectDiscovery, qui agrège les données DNS collectées via les programmes de bug bounty publics et le monitoring continu d'Internet. Un sous-domaine apparu dans les datasets peut avoir été supprimé depuis : chaos permet de le retrouver (dangling DNS, ré-enregistrement potentiel d'un domaine orphelin). Les datasets sont fournis sous forme de fichiers journaliers téléchargeables sur la plateforme, et le client les interroge en temps réel avec une clé API.
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -79,7 +79,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -133,14 +133,14 @@ go build -o chaos cmd/chaos/main.go
 sudo mv chaos /usr/local/bin/
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Clé API obligatoire** : obtenir l'accès via le dépôt GitHub projectdiscovery/chaos (compte GitHub + approbation).
 > - Go 1.21+ pour la compilation.
 > - Le paquet `pdtm` (ProjectDiscovery Tools Manager) peut aussi installer et mettre à jour chaos : `pdtm -i chaos`.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Pas de fichier de configuration : la configuration passe par la **variable d'environnement** `CHAOS_API_KEY` ou l'option `-key`.
 
@@ -161,7 +161,7 @@ Pas de fichier de configuration : la configuration passe par la **variable d'env
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Client Go** (`cmd/chaos`) : interroge l'API REST du Chaos Dataset (`https://api.projectdiscovery.io/...`), gère l'authentification (`-key`/`CHAOS_API_KEY`), la pagination et la conversion des réponses.
 - **Côté serveur** : le dataset est alimenté par les contributions des chercheurs (programmes de bug bounty) et le monitoring continu ; exposé via l'API et téléchargeable sous forme de fichiers journaliers.
@@ -170,7 +170,7 @@ Pas de fichier de configuration : la configuration passe par la **variable d'env
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -201,7 +201,7 @@ chaos -d example.com -v
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -222,7 +222,7 @@ chaos -d example.com -v
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -265,7 +265,7 @@ chaos -d example.com -silent \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Récupérer les données du dataset**.
    ```bash
@@ -288,7 +288,7 @@ chaos -d example.com -silent \
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : chasse aux sous-domaines orphelins (dangling DNS)
 
@@ -316,7 +316,7 @@ chaos -d example.com -silent \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -328,7 +328,7 @@ chaos -d example.com -silent \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -341,7 +341,7 @@ chaos -d example.com -silent \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -387,7 +387,7 @@ alert http any any -> any any (msg:"ET POLICY Chaos API Usage"; \
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — monitoring quotidien avec journal
@@ -420,7 +420,7 @@ for sub in chaos_subs("example.com", "TA_CLE"):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sorties : texte (un nom par ligne, `-silent`) ou JSON (`-json`).
 
@@ -442,15 +442,15 @@ with open("chaos.json") as f:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - subfinder|subfinder]] — seconde source passive (croiser les datasets)
 - [[Outil - dnsx|dnsx]] — validation DNS et collecte des CNAME
 - [[Outil - httpx|httpx]] — probing HTTP des sous-domaines vivants
 - [[Outil - nuclei|nuclei]] — scan de vulnérabilités sur les hôtes validés
 - [[Outil - Amass|Amass]] — corrélation et persistance des résultats
-- [[01 - Reconnaissance|🕵️ Reconnaissance]]
+- [[01 - Reconnaissance| Reconnaissance]]
 
 ```text
 chaos → subfinder → dnsx → httpx → nuclei
@@ -458,7 +458,7 @@ chaos → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -472,7 +472,7 @@ chaos → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - Client Go : un seul binaire, latence dominée par les appels API (pas de scan local).
 - `-dL` permet de traiter des milliers de domaines en une passe (une requête par domaine).
@@ -484,7 +484,7 @@ chaos → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -514,7 +514,7 @@ chaos → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Clé API** : en clair dans la variable d'environnement → ne pas la committer, la passer par un secrets manager en CI.
 - **Passif par nature** : aucune requête DNS vers la cible, aucune trace côté cible.
@@ -523,7 +523,7 @@ chaos → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Couverture **limitée aux domaines suivis par le bug bounty** : pas de garantie de complétude.
 - Données historiques : un nom présent dans le dataset peut être mort ou réaffecté.
@@ -533,7 +533,7 @@ chaos → subfinder → dnsx → httpx → nuclei
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Sous-domaines d'un domaine
@@ -557,7 +557,7 @@ chaos -d example.com -silent | dnsx -cname -resp -silent
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -570,7 +570,7 @@ chaos -d example.com -silent | dnsx -cname -resp -silent
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -581,15 +581,15 @@ chaos -d example.com -silent | dnsx -cname -resp -silent
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - chaos est une mine pour le dangling DNS : un sous-domaine supprimé qui pointe encore vers un CNAME peut être repris.
 > - Croise systématiquement avec subfinder : les deux datasets se complètent.
 > - La clé API s'obtient via le dépôt GitHub projectdiscovery/chaos (compte GitHub actif + approbation).
 > - `-count` permet d'estimer la couverture avant de lancer une grosse énumération.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - La couverture est limitée aux domaines suivis par le programme : tout ne s'y trouve pas.
 > - Une clé API expirée donne des résultats vides : vérifie l'état du compte.
 > - Les données peuvent être datées : re-valide toujours avec dnsx/httpx.
@@ -597,7 +597,7 @@ chaos -d example.com -silent | dnsx -cname -resp -silent
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -618,4 +618,4 @@ chaos -d example.com -silent | dnsx -cname -resp -silent
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - subfinder|subfinder]] · [[Outil - dnsx|dnsx]] · [[Outil - httpx|httpx]]
+**Liens :** [[Tools| Outils]] · [[Outil - subfinder|subfinder]] · [[Outil - dnsx|dnsx]] · [[Outil - httpx|httpx]]

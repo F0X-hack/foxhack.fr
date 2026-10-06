@@ -1,11 +1,11 @@
 ---
 title: "Outil - Shodan"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 1.31.0
 licence: MIT
@@ -16,14 +16,14 @@ site: https://www.shodan.io
 doc: https://developer.shodan.io
 ---
 
-# 🕵️ Shodan — Moteur de recherche des services exposés sur Internet
+# Shodan — Moteur de recherche des services exposés sur Internet
 
 > [!info] **En 1 phrase**
 > Shodan est un moteur de recherche qui indexe les bannières de tous les appareils connectés à Internet : idéal pour trouver des services exposés, des équipements IoT et des vulnérabilités sans envoyer un seul paquet.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://developer.shodan.io
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Shodan scanne en permanence Internet (un « Google du réseau ») et stocke les **bannières**, ports ouverts, produits et métadonnées de chaque hôte. Contrairement à un moteur web, il n'indexe pas les pages mais les **réponses des services** (SSH, HTTP, MySQL, RTSP...). C'est une mine d'or pour la **reconnaissance passive** : on y cherche les services exposés d'une entreprise, des équipements vulnérables ou la présence d'une technologie précise, sans émettre le moindre paquet vers la cible.
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### CLI (Python 3)
 
@@ -118,7 +118,7 @@ shodan myip        # IP publique
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier de clé
 
@@ -147,7 +147,7 @@ shodan alert remove <id>
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -168,7 +168,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -205,7 +205,7 @@ shodan parse --fields ip_str,port,product resultats.json.gz
 
 ---
 
-## 🚩 Options et flags
+## Options et flags
 
 ### Filtres principaux
 
@@ -236,7 +236,7 @@ before:/after:                       # fenêtres temporelles
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Recherche de services RDP en France
 
@@ -270,7 +270,7 @@ shodan search "port:554 product:Hikvision" --fields ip_str,port
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Reconnaissance de l'entreprise** : lister les services exposés liés au domaine.
    ```bash
@@ -296,7 +296,7 @@ shodan search "port:554 product:Hikvision" --fields ip_str,port
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Chasse à une CVE récente avec sortie exploitable
 
@@ -355,7 +355,7 @@ shodan search "ssl.cert.subject.cn:<domaine>"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -368,7 +368,7 @@ shodan search "ssl.cert.subject.cn:<domaine>"
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec Shodan |
 |---|---|---|
@@ -381,7 +381,7 @@ shodan search "ssl.cert.subject.cn:<domaine>"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -396,7 +396,7 @@ shodan search "ssl.cert.subject.cn:<domaine>"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Script de revue mensuelle de surface
 
@@ -433,7 +433,7 @@ shodan stream --alerts >> /var/log/shodan_alerts.log 2>&1
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Sortie CSV (avec `--separator ,`)
 
@@ -466,7 +466,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -481,7 +481,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -493,7 +493,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -505,7 +505,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -519,7 +519,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -531,7 +531,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -544,7 +544,7 @@ for match in api.search("product:mongodb")["matches"]:
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Recherche avec champs et séparateur CSV
@@ -577,7 +577,7 @@ shodan info
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -593,7 +593,7 @@ shodan info
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -605,32 +605,32 @@ shodan info
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Utilise `--fields` et `--separator ,`**
+> [!tip] **Utilise `--fields` et `--separator ,`**
 > Pour des exports CSV directement exploitables (`ip_str,port,product,hostnames`).
 
-> [!tip] 💡 **Le filtre `vuln:` est une mine**
+> [!tip] **Le filtre `vuln:` est une mine**
 > CVE connue + filtre géographique = liste de cibles potentielles immédiate pour un scan confirmatoire.
 
-> [!tip] 💡 **Privilégie `shodan count`**
+> [!tip] **Privilégie `shodan count`**
 > Compter les résultats sans les lister économise le quota de recherche.
 
-> [!warning] ⚠️ **Le compte gratuit est bridé**
+> [!warning] **Le compte gratuit est bridé**
 > ~100 requêtes/mois, résultats limités : réserve les requêtes importantes ou prévois un plan payant pour un pentest sérieux.
 
-> [!warning] ⚠️ **Les résultats datent**
+> [!warning] **Les résultats datent**
 > Shodan ne rescanne pas tout en temps réel, une bannière peut avoir plusieurs mois. Toujours confirmer par `nmap` avant d'exploiter.
 
-> [!warning] ⚠️ **L'utilisation de Shodan pour du scan de plages tierces**
+> [!warning] **L'utilisation de Shodan pour du scan de plages tierces**
 > Doit rester dans le cadre autorisé (signatures, périmètre client).
 
-> [!danger] 🚫 **Info ≠ droit d'agir**
+> [!danger] **Info ≠ droit d'agir**
 > Voir une cible dans Shodan n'autorise pas à l'attaquer : autorisation écrite obligatoire.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [Site officiel Shodan](https://www.shodan.io)
@@ -647,4 +647,4 @@ shodan info
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - Shodan CLI|🌍 Shodan CLI]] · [[Outil - Amass|🌐 Amass]] · [[Outil - spiderfoot|🕸️ SpiderFoot]] · [[Outil - Censys|🔎 Censys]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - Shodan CLI| Shodan CLI]] · [[Outil - Amass| Amass]] · [[Outil - spiderfoot| SpiderFoot]] · [[Outil - Censys| Censys]]

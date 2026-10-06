@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧰 Attaques WiFi — Outils & Recon
+# Attaques WiFi — Outils & Recon
 
 > [!info] **En 1 phrase**
 > Les outils **complémentaires** d'aircrack-ng : **décrypter/déshabiller** des captures (airdecap-ng),
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ flowchart LR
 
 ---
 
-## 🧹 airdecap-ng : décrypter/déshabiller les captures
+## airdecap-ng : décrypter/déshabiller les captures
 
 ```bash
 # Retirer les headers WiFi (réseau ouvert) → fichier .dec.cap
@@ -47,11 +47,11 @@ airdecap-ng -w $WEP_KEY wep.cap
 airdecap-ng -e $AP_SSID -p $WPA_PASSWORD tkip.cap
 ```
 
-> 💡 Utile pour analyser le **contenu applicatif** d'une capture (HTTP, creds) après crack.
+> Utile pour analyser le **contenu applicatif** d'une capture (HTTP, creds) après crack.
 
 ---
 
-## 🛰️ airserv-ng : aircrack à distance
+## airserv-ng : aircrack à distance
 
 ```bash
 airmon-ng start wlan0 3
@@ -65,7 +65,7 @@ airodump-ng -c 3 --bssid $AP_MAC $HOST:$PORT
 
 ---
 
-## 🛡️ airtun-ng : WIDS (détection temps réel)
+## airtun-ng : WIDS (détection temps réel)
 
 > Requiert la **clé WiFi** et le **BSSID** — déchiffre les paquets en direct sur une interface virtuelle.
 
@@ -78,7 +78,7 @@ airtun-ng -a $AP_MAC -w $WEP_KEY mon0
 
 ---
 
-## 📊 airgraph-ng : graphes de recon
+## airgraph-ng : graphes de recon
 
 > À partir du **CSV** exporté par airodump-ng.
 
@@ -92,7 +92,7 @@ airgraph-ng -i wifu-01.csv -g CPG -o wifu-cpg.png
 
 ---
 
-## 🗺️ Kismet + giskismet : recon SQL + GPS
+## Kismet + giskismet : recon SQL + GPS
 
 ```bash
 # Kismet : scan passif
@@ -115,7 +115,7 @@ giskismet -q "select * from wireless where Encryption='WEP'" -o wepaps.kml
 
 ---
 
-## 🧪 Astuces & contournements
+## Astuces & contournements
 
 ```bash
 # Trouver un SSID caché : deauth un client → le SSID apparaît dans les probes
@@ -136,7 +136,7 @@ mdk3 wlan0mon a -a $AP_MAC
 
 ---
 
-## 🎛️ Filtres tshark
+## Filtres tshark
 
 ```bash
 # Filtrer le handshake EAPOL dans une capture
@@ -154,7 +154,7 @@ aircrack-ng -J network network.cap
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -163,14 +163,14 @@ aircrack-ng -J network network.cap
 | **Surveillance RF** | Kismet permanent pour repérer les AP non autorisés |
 | **Filtrage MAC** | Ne protège rien (contournable en 30 s) — ne pas s'y fier |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **airdecap-ng** a besoin de la clé/passphrase : c'est un outil d'**analyse post-crack**.
 - **Kismet** est passif et multi-cartes : idéal pour la recon sans être détecté.
 - Le **CSV** d'airgraph doit être exporté par `airodump-ng` (option `-w` produit le .csv).
 - `mdk3` et la deauth globale sont des **attaques de disponibilité** → cadre autorisé uniquement.
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-other.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-other.md)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - Préparation & Basiques|🧰 Préparation]] · [[Attaques WiFi - WEP|🔓 WEP]] · [[Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - Préparation & Basiques| Préparation]] · [[Attaques WiFi - WEP| WEP]] · [[Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[Bibliothèque technique| Index]]

@@ -1,4 +1,4 @@
-# 🎓 Ressources & Lab
+# Ressources & Lab
 
 > [!info] **Tout pour progresser et s'entraîner légalement.**
 
@@ -58,7 +58,7 @@ flowchart LR
 | **OSWE** | Exploitation web | ~1600€ | Avancé |
 | **CRTO** | Red team / AD | ~500€ | Intermédiaire-Avancé |
 
-> [!tip] 💡 **Conseil**
+> [!tip] **Conseil**
 > La **pratique** compte plus que les certifs. Fais 50 machines THM/HTB avant de t'inquiéter du OSCP.
 
 ---
@@ -139,8 +139,8 @@ nmap -sV -sC 192.168.56.101
 
 ---
 
-> [!success] 🏆 **Le message final**
+> [!success] **Le message final**
 > La cybersécurité offensive est un **métier de pratique**. 
-> *"Try harder"* — et reste toujours dans le cadre légal. 🔒
+> *"Try harder"* — et reste toujours dans le cadre légal.
 >
-> ➡️ Revenir au début : [[Cybersécurité Offensive|🗺️ Index de la base de connaissances]]
+> Revenir au début : [[Cybersécurité Offensive| Index de la base de connaissances]]

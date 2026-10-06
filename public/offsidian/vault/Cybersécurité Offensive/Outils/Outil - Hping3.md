@@ -1,7 +1,7 @@
 ---
 title: "Outil - Hping3"
 type: outil
-categorie: 🌐 Réseau & Capture
+categorie: Réseau & Capture
 tags:
   - cyber
   - outil
@@ -17,14 +17,14 @@ site: http://www.hping.org/
 doc: http://www.hping.org/documentation.html
 ---
 
-# 🏹 Hping3 — Le forgeron de paquets TCP/IP
+# Hping3 — Le forgeron de paquets TCP/IP
 
 > [!info] **En 1 phrase**
 > hping3 assemble et envoie des paquets TCP/IP entièrement personnalisés (flags, adresses, ports, fragments) pour scanner, tester des pare-feu, déjouer des IDS et mesurer la réactivité d'un réseau.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -51,7 +51,7 @@ doc: http://www.hping.org/documentation.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 hping3 est un **constructeur de paquets** : contrairement à un scanner classique, il ne se contente pas d'ouvrir des connexions — il forge l'en-tête IP/TCP/UDP/ICMP lui-même. On choisit les **flags TCP** (`-S`, `-A`, `-F`, `-P`, `-R`, `-U`, `-X`, `-Y`), le **TTL**, le **port source/destination**, la **taille et le contenu des données** (`-d`, `--data`, `-E fichier`), la **fragmentation** (`-f`), et même l'**adresse source usurpée** (`-a`). Cette liberté permet de reproduire des comportements impossibles avec un socket normal (fragments volontairement malformés, flags illégaux, spoofing).
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -86,7 +86,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Debian / Ubuntu / Kali Linux
 
@@ -124,7 +124,7 @@ make
 sudo make install
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - L'envoi de paquets bruts exige `root` (socket brut).
 > - La compilation moderne peut nécessiter `libpcap-dev` et `tcl8.6-dev` ; le `configure` est ancien.
 > - Le projet est peu actif : les paquets Debian restent la source fiable.
@@ -132,7 +132,7 @@ sudo make install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 hping3 se configure exclusivement par arguments. Les réglages les plus utilisés pour des tests reproductibles.
 
@@ -152,7 +152,7 @@ hping3 se configure exclusivement par arguments. Les réglages les plus utilisé
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 hping3 repose sur un **constructeur d'en-têtes** et un **moteur d'analyse de réponses** :
 
@@ -174,7 +174,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -208,7 +208,7 @@ sudo hping3 -E payload.bin --ttl 64 -S -p 4444 -c 1 10.10.20.15
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -237,7 +237,7 @@ sudo hping3 -E payload.bin --ttl 64 -S -p 4444 -c 1 10.10.20.15
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -281,7 +281,7 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Vérifier la connectivité** — ping ICMP :
    ```bash
@@ -300,7 +300,7 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : contournement de règle par fragmentation
 
@@ -337,7 +337,7 @@ done
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -350,7 +350,7 @@ done
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -365,7 +365,7 @@ done
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -401,7 +401,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — sweep ICMP sur un /24 et garder les répondeurs
@@ -427,7 +427,7 @@ print("port 80 :", "ouvert" if re.search(r"1 packets received", out) else "ferm�
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 hping3 affiche les réponses brutes ligne par ligne : `len`, `ip`, flags reçus (`S` = SYN-ACK, `RA` = RST+ACK), `ttl`, `id`, et le résumé final (`X packets transmitted, Y packets received`).
 
@@ -444,9 +444,9 @@ sudo hping3 -S -p 80 -c 2 10.10.20.15 2>&1 | tail -n 1
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Nmap]] — le scan complet ; hping3 pour le sur-mesure
 - [[Outil - Scapy]] — la forgerie en Python (évolution scriptée de hping3)
 - [[Outil - tcpdump]] / [[Outil - tshark]] — valider les paquets forgés par hping3
@@ -461,7 +461,7 @@ hping3 -T -t 1 <cible>       →  traceroute TCP
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -475,7 +475,7 @@ hping3 -T -t 1 <cible>       →  traceroute TCP
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Cadence** : `-i u1000` (1 ms) est un bon compromis scan ; `--flood` sature sans attendre de réponse.
 - **Sweep ICMP** : `-i u100` sur un /24 est rapide mais les réponses se perdent si trop agressif.
@@ -488,7 +488,7 @@ hping3 -T -t 1 <cible>       →  traceroute TCP
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -518,7 +518,7 @@ hping3 -T -t 1 <cible>       →  traceroute TCP
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Privilèges** : root requis pour les sockets brutes.
 - **Spoofing** : `-a` masque la source — traçable côté cible uniquement via les anti-spoofing ; usage réservé au lab.
@@ -529,7 +529,7 @@ hping3 -T -t 1 <cible>       →  traceroute TCP
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - Projet peu actif : pas de release majeure depuis des années.
 - Compilation dépendante d'anciennes libs (libpcap, Tcl).
@@ -540,7 +540,7 @@ hping3 -T -t 1 <cible>       →  traceroute TCP
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Ping ICMP
@@ -570,7 +570,7 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -583,7 +583,7 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -595,16 +595,16 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Toujours limiter les envois avec `-c` et un intervalle raisonnable.
 > - Croiser `-S`, `-F`, `-2` pour confirmer l'état d'un port.
 > - Utiliser `-v` pour voir les flags reçus (SA = ouvert, RA = fermé).
 > - Observer les réponses avec tcpdump pour comprendre le comportement d'un équipement.
 > - En lab, isoler le réseau de test : un flood peut dégrader l'environnement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un SYN scan peut déclencher les alertes IDS et les blocs des WAF.
 > - Le FIN scan est inopérant sur certains OS (réponses RST même filtrés).
 > - Spoofing et floods sont illégaux hors autorisation — traçables malgré tout.
@@ -613,7 +613,7 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -637,4 +637,4 @@ sudo hping3 -S -p 80 --flood --rand-source 10.10.20.15
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Nmap|Nmap]] · [[Outil - Scapy|Scapy]] · [[Outil - tcpdump|tcpdump]] · [[Outil - Suricata|Suricata]]
+**Liens :** [[Tools| Outils]] · [[Outil - Nmap|Nmap]] · [[Outil - Scapy|Scapy]] · [[Outil - tcpdump|tcpdump]] · [[Outil - Suricata|Suricata]]

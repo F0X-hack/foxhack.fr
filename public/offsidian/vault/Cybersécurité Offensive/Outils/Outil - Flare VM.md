@@ -1,7 +1,7 @@
 ---
 title: "Outil - Flare VM"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.mandiant.com/resources/blog/flare-vm-new
 doc: https://github.com/mandiant/flare-vm/blob/main/README.md
 ---
 
-# 🔥 Flare VM — L'environnement Windows d'analyse de malwares (Mandiant)
+# Flare VM — L'environnement Windows d'analyse de malwares (Mandiant)
 
 > [!info] **En 1 phrase**
 > Flare VM est une distribution Windows (FireEye/Mandiant) entièrement dédiée à l'analyse de malwares : plus de 100 outils de reverse engineering, débogage et désassemblage, installés via Chocolatey.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | Flare VM (FireEye Labs Advanced Reverse Engineering VM) |
 | Description | Machine virtuelle Windows dédiée au malware analysis : 100+ outils de RE, débogage, décompilation |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution défensive / reverse engineering |
 | Fonction principale | Analyser des binaires Windows malveillants (statique et dynamique) |
 | Type d'outil | Machine virtuelle préconfigurée + scripts PowerShell d'installation |
@@ -50,7 +50,7 @@ doc: https://github.com/mandiant/flare-vm/blob/main/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Flare VM est l'équivalent Windows de **REMnux** : une **machine virtuelle Windows préconfigurée** pour l'**analyse de malwares**. Créée par les équipes de recherche FireEye (aujourd'hui Mandiant/Google Cloud), elle installe automatiquement plus de 100 outils via **Chocolatey** depuis le feed **VM-Packages**. L'analyste dispose ainsi d'un environnement complet pour le **reverse engineering de binaires PE/Windows** : débogueurs (**x64dbg**, **OllyDbg**, **WinDbg**), décompilateurs (**Ghidra**, **dnSpy**, **Java Decompiler**, **ILSpy**), analyse de documents (**oletools**, **pdf-parser**), capture réseau (**Wireshark**, **Fiddler**, **Burp Suite**), suivi système (**Process Hacker**, **procmon**, **autoruns**), et extraction d'IOC (**hashdeep**, **exiftool**).
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Préparation (obligatoire)
 
@@ -124,14 +124,14 @@ choco list --local-only
 # (VMware/VirtualBox : snapshot "base propre")
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - **Windows Defender doit être désactivé** avant l'installation (via GPO, pas seulement temporairement).
 > - L'installation télécharge beaucoup d'outils depuis le feed MyGet : prévoir un réseau stable.
 > - Faire un snapshot **propre** dès l'installation terminée : c'est la référence pour chaque analyse.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -144,7 +144,7 @@ choco list --local-only
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Flare VM est un **Windows + Chocolatey + feed VM-Packages** : `install.ps1` déroule les packages du profil par défaut, chacun exécutant son propre script d'installation (binaires, PATH, raccourcis du menu « FLARE VM »). Le menu de démarrage regroupe les outils par catégorie : **Disassembly & Debugging** (x64dbg, OllyDbg, WinDbg), **Decompilers** (Ghidra, dnSpy, Java Decompiler, ILSpy), **Network** (Wireshark, Fiddler, Burp Suite), **System** (Process Hacker, procmon, autoruns), **Documents** (oletools, pdf-parser)…
 
@@ -152,7 +152,7 @@ Au runtime, l'analyste orchestre ses propres outils : x64dbg en premier plan pou
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -194,7 +194,7 @@ diec.exe sample.exe
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -213,7 +213,7 @@ diec.exe sample.exe
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -256,7 +256,7 @@ autorunsc.exe -a -c > autoruns.csv
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Préparer l'environnement isolé** — snapshot propre, réseau Host-Only, copier l'échantillon.
    ```powershell
@@ -287,7 +287,7 @@ autorunsc.exe -a -c > autoruns.csv
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Analyse d'un dropper .NET avec dnSpy
 
@@ -319,7 +319,7 @@ pdf-parser.exe -a pièce_jointe.pdf
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -335,7 +335,7 @@ pdf-parser.exe -a pièce_jointe.pdf
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -350,7 +350,7 @@ pdf-parser.exe -a pièce_jointe.pdf
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -399,7 +399,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```powershell
 # PowerShell — batch d'analyse statique d'un dossier
@@ -422,7 +422,7 @@ for u in sorted(urls):
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Les outils de Flare VM produisent des sorties texte, CSV et fichiers binaires à analyser.
 
@@ -448,9 +448,9 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - REMnux]] — simulation réseau et capture côté Linux (complément Host-Only)
 - [[Outil - Ghidra]] — décompilation multi-architectures
 - [[Outil - x64dbg]] — débogage dynamique
@@ -470,7 +470,7 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -483,7 +483,7 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Ressources** : 4 Go de RAM minimum (8 Go conseillés avec Ghidra + x64dbg), 60-80 Go de disque.
 - **Ghidra** est le plus gourmand (JVM + indexation) : fermer les projets inutilisés.
@@ -497,7 +497,7 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -527,7 +527,7 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Isolation obligatoire** : réseau Host-Only, jamais d'Internet réel (exfiltration, C2, propagation).
 - **Snapshots** : snapshot propre avant chaque analyse ; rollback après exécution de l'échantillon.
@@ -538,7 +538,7 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Windows requis** : licence Windows, ressources, lourdeur du système.
 - **x64 uniquement** : pas de support ARM.
@@ -549,7 +549,7 @@ with open("autoruns.csv") as fh:
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```powershell
 # Identification et hashes
@@ -578,7 +578,7 @@ wireshark.exe
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -591,7 +591,7 @@ wireshark.exe
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -603,15 +603,15 @@ wireshark.exe
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Fais un **snapshot propre** de Flare VM avant chaque analyse : un malware peut rendre le système instable.
 > - Utilise **procmon** avec des filtres (par processus) : sans filtre, on obtient des milliers d'événements inutiles.
 > - Couple Flare VM avec **REMnux** en Host-Only : Flare pour l'analyse Windows, REMnux pour la simulation réseau et la capture.
 > - Place des **breakpoints sur les API réseau** (ws2_32!send, InternetOpenA) pour révéler les C2 rapidement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - **Ne jamais analyser un échantillon avec un accès Internet direct** : utilise un réseau Host-Only et un faux serveur (INetSim sur REMnux).
 > - Ne pas exécuter d'échantillon **sans snapshot** : le malware peut supprimer des fichiers, modifier le boot ou s'enfoncer dans le système.
 > - Les AV/EDR de la VM peuvent supprimer l'échantillon : configure des exclusions **avant** de commencer.
@@ -619,7 +619,7 @@ wireshark.exe
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -642,8 +642,8 @@ wireshark.exe
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://github.com/mandiant/flare-vm
 > - https://www.mandiant.com/resources/blog/flare-vm-new
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - REMnux|🧫 REMnux]] · [[Outil - Ghidra|🔧 Ghidra]] · [[Outil - x64dbg|🐞 x64dbg]] · [[Outil - dnSpy|🔍 dnSpy]] · [[Outil - Wireshark|📡 Wireshark]] · [[Outil - oletools|📄 oletools]] · [[Outil - Sysinternals Suite|🛠️ Sysinternals]]
+**Liens :** [[Tools| Outils]] · [[Outil - REMnux| REMnux]] · [[Outil - Ghidra| Ghidra]] · [[Outil - x64dbg| x64dbg]] · [[Outil - dnSpy| dnSpy]] · [[Outil - Wireshark| Wireshark]] · [[Outil - oletools| oletools]] · [[Outil - Sysinternals Suite| Sysinternals]]

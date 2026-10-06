@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 🔌 UART
+# UART
 
 > [!info] **En 1 phrase**
 > UART = la **console série** des objets connectés (bootloader + logs + souvent un **shell root**)
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     PC["PC (attaquant)"] -->|"USB-TTL"| TXRX["Broches TX/RX"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > UART permet la communication série asynchrone. En pentest hardware, c'est la porte d'entrée n°1 : console série active offrant accès au bootloader, logs et shell root.
 
@@ -58,14 +58,14 @@ flowchart TB
     style F fill:#ffcdd2
 ```
 
-> [!info] 💡 **Ce qu'on peut obtenir**
+> [!info] **Ce qu'on peut obtenir**
 > - **Shell** (parfois root) ou prompt **U-Boot** → dump flash, boot custom.
 > - **Logs de démarrage** → versions, secrets, chemins.
 > - **Mot de passe root** (souvent en clair).
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Protocole série asynchrone
 
@@ -87,7 +87,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -120,7 +120,7 @@ flowchart TB
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 | Paramètre | Valeur |
 |---|---|
@@ -141,7 +141,7 @@ flowchart TB
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -178,7 +178,7 @@ sudo usermod -a -G dialout $USER
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Option | Défaut | Description |
 |---|---|---|
@@ -198,7 +198,7 @@ sudo usermod -a -G dialout $USER
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 | Commande | Description |
 |---|---|
@@ -219,9 +219,9 @@ python2.7 baudrate.py -p /dev/ttyUSB0
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Connexion
+### Débutant — Connexion
 
 ```bash
 dmesg | grep ttyUSB          # identifier le port
@@ -229,7 +229,7 @@ screen /dev/ttyUSB0 115200   # se connecter
 # Appuyer Entrée → prompt = accès
 ```
 
-### 🟡 Intermédiaire — Scan bauds
+### Intermédiaire — Scan bauds
 
 ```bash
 #!/bin/bash
@@ -242,7 +242,7 @@ for baud in 9600 19200 38400 57600 115200 230400; do
 done
 ```
 
-### 🔴 Avancé — Brute-force
+### Avancé — Brute-force
 
 ```python
 import serial, time
@@ -255,7 +255,7 @@ for pwd in ["root","admin","password","1234",""]:
 ser.close()
 ```
 
-### ⚫ Expert — Sigrok
+### Expert — Sigrok
 
 ```bash
 sigrok-cli -d fx2lafw --config samplerate=1000000 --samples 10000000 \
@@ -264,7 +264,7 @@ sigrok-cli -d fx2lafw --config samplerate=1000000 --samples 10000000 \
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -272,9 +272,9 @@ flowchart TB
     B --> C["3. Détecter baudrate"]
     C --> D["4. Console"]
     D --> E{"Prompt ?"}
-    E -->|"root"| F["🟢 Exploitation"]
-    E -->|"login"| G["🔑 Brute-force"]
-    E -->|"U-Boot"| H["🔧 Bootloader"]
+    E -->|"root"| F["Exploitation"]
+    E -->|"login"| G["Brute-force"]
+    E -->|"U-Boot"| H["Bootloader"]
     style F fill:#ffcdd2
 ```
 
@@ -288,7 +288,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Routeur : shell root
 
@@ -297,7 +297,7 @@ flowchart TB
 | **Objectif** | Shell root routeur TP-Link |
 | **Matériel** | CH340G, pinces |
 | **Étapes** | 4 broches → screen 115200 → root shell |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Caméra : dump firmware
 
@@ -306,11 +306,11 @@ flowchart TB
 | **Objectif** | Extraire firmware Hikvision |
 | **Matériel** | CP2102 |
 | **Étapes** | UART → U-Boot → tftpboot → dd dump |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -327,7 +327,7 @@ flowchart TB
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -347,7 +347,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -363,7 +363,7 @@ saveenv
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 import serial, time, base64
@@ -388,7 +388,7 @@ class UARTExploit:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # IPs dans logs
@@ -401,11 +401,11 @@ xxd dump.bin > dump.hex; binwalk dump.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - UART]]
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]]
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]]
 
 | Outil associé | Usage |
 |---|---|
@@ -415,7 +415,7 @@ xxd dump.bin > dump.hex; binwalk dump.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -425,7 +425,7 @@ xxd dump.bin > dump.hex; binwalk dump.bin
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur |
 |---|---|
@@ -436,7 +436,7 @@ xxd dump.bin > dump.hex; binwalk dump.bin
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -453,7 +453,7 @@ groups $USER
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -470,7 +470,7 @@ groups $USER
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -480,7 +480,7 @@ groups $USER
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -497,7 +497,7 @@ groups $USER
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -509,7 +509,7 @@ groups $USER
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -520,7 +520,7 @@ groups $USER
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **RX ↔ TX s'inversent** : TX device → RX adaptateur.
 - **VCC/GND** : VCC sur GND = device grillé.
@@ -534,9 +534,9 @@ groups $USER
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — UART](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/debug-interfaces/uart.md)
 
 | Source | URL |
@@ -547,4 +547,4 @@ groups $USER
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - I2C et SPI|🔗 I2C/SPI]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - JTAG et SWD| JTAG/SWD]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - I2C et SPI| I2C/SPI]]

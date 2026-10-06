@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 💥 Denial of Service (Web)
+# Denial of Service (Web)
 
 > [!info] **En 1 phrase**
 > DoS = rendre un service **indisponible** en épuisant ses ressources (CPU, mémoire,
@@ -22,7 +22,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -38,14 +38,14 @@ flowchart LR
     G --> H[Indisponibilité du service]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Une app suppose ses ressources **illimitées** : elle ne limite ni la taille des entrées,
 > ni le nombre de connexions, ni la profondeur des structures (XML, regex, archive) à traiter.
 > Un petit payload peut produire une **amplification** énorme (bombes, lenteurs, regex).
 
 ---
 
-## 🧱 Types de DoS
+## Types de DoS
 
 ### 1. Côté serveur — épuisement des ressources
 
@@ -92,7 +92,7 @@ flowchart LR
 
 ---
 
-## 🚀 Payloads
+## Payloads
 
 ### Slowloris
 
@@ -118,8 +118,8 @@ slowloris -v -ua <USER_AGENT> --socktimeout 30 <target> -p 80
 <lolz>&lol9;</lolz>
 ```
 
-> [!warning] ⚠️ **Effet** : `&lol9;` = ~3 **milliards** de caractères "lol" en mémoire/CPU.
-> À envoyer avec parcimonie, sur un endpoint XML/XXE (voir [[XXE|📄 XXE]]).
+> [!warning] **Effet** : `&lol9;` = ~3 **milliards** de caractères "lol" en mémoire/CPU.
+> À envoyer avec parcimonie, sur un endpoint XML/XXE (voir [[XXE| XXE]]).
 
 ### gzip bomb
 
@@ -162,7 +162,7 @@ envoyer de nombreuses clés qui produisent le même hash (même bucket)
 
 ---
 
-## 🧠 DoS Logique — exemples
+## DoS Logique — exemples
 
 ### Cache & sessions
 
@@ -178,7 +178,7 @@ for i in $(seq 1 5000); do curl -s "http://target/page?cb=$i" -o /dev/null; done
 ### Verrouillage de comptes
 
 ```bash
-# ⚠️ Risqué et souvent OUT-OF-SCOPE : bannir un vrai compte utilisateur
+# Risqué et souvent OUT-OF-SCOPE : bannir un vrai compte utilisateur
 for i in {1..100}; do curl -X POST -d "username=victim&password=wrong" http://target/login; done
 ```
 
@@ -191,7 +191,7 @@ Export CSV/PDF de l'ensemble des données d'un tenant avec les relations.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -199,7 +199,7 @@ Export CSV/PDF de l'ensemble des données d'un tenant avec les relations.
 | **Limites d'input** | Taille max des corps (upload, XML, JSON), profondeur, nombre d'éléments |
 | **Timeouts** | Lecture/écriture socket, temps de traitement, max connections concurrentes |
 | **Anti-slowloris** | Timeout d'en-têtes HTTP, proxy/CDN (Nginx `client_header_timeout`) |
-| **XML sécurisé** | Désactiver DTD/entités (→ voir [[XXE\|📄 XXE]]) |
+| **XML sécurisé** | Désactiver DTD/entités (→ voir [[XXE\| XXE]]) |
 | **Regex sûres** | Éviter le backtracking catastrophique, ancrer `^$`, limiter la longueur d'entrée |
 | **Anti-bombe** | Décompression limitée (taille max, ratio compression), pas d'archives imbriquées |
 | **Sessions/cache** | Expiration courte, quotas de cache par tenant, éviction mémoire |
@@ -208,14 +208,14 @@ Export CSV/PDF de l'ensemble des données d'un tenant avec les relations.
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Méthodo de test**
+> [!tip] **Méthodo de test**
 > - Commencer par les DoS **logiques** (les moins destructeurs) : coût d'opération, lockout, cache.
 > - Mesurer le **temps de réponse** avant/après (`time curl`), surveiller l'impact réel.
 > - Toujours confirmer auprès du client le **scope** : un DoS peut casser la prod.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Verrouillage de comptes et bombes = **haut risque**, souvent **out-of-scope** : un seul test peut
 >   bloquer un compte client ou faire crasher le serveur durablement.
 > - Une bombe qui marche sur l'attaquant (décompression locale, fork bomb) peut aussi **tuer votre propre VM**.
@@ -224,11 +224,11 @@ Export CSV/PDF de l'ensemble des données d'un tenant avec les relations.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Injection SQL|💾 SQLi]]
-- [[XXE|📄 XXE]]
-- [[Brute Force Rate Limit|⏱️ Brute Force & Rate Limit]]
-- [[Business Logic|🧠 Business Logic]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Denial of Service](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Denial%20of%20Service/README.md)
+- [[Injection SQL| SQLi]]
+- [[XXE| XXE]]
+- [[Brute Force Rate Limit| Brute Force & Rate Limit]]
+- [[Business Logic| Business Logic]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Denial of Service](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Denial%20of%20Service/README.md)

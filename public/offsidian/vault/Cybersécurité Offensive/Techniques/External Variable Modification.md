@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🌐 External Variable Modification
+# External Variable Modification
 
 > [!info] **En 1 phrase**
 > External Variable Modification = l'app importe des **données contrôlées par l'attaquant** (GET/POST/headers) dans la **portée globale** de variables (ex : `extract($_GET)` en PHP) → l'attaquant écrase des variables internes critiques.
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -32,12 +32,12 @@ flowchart LR
     C --> F[RCE via gadgets]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > `extract()` (PHP) importe par défaut avec `EXTR_OVERWRITE` : les clés de l'array d'entrée **remplacent** les variables existantes du même nom. Si des variables contrôlant la logique (`$authenticated`, `$page`, `$GLOBALS`) sont dans le scope → l'attaquant les fixe.
 
 ---
 
-## 🎭 Overwriting de variables critiques
+## Overwriting de variables critiques
 
 ```php
 <?php
@@ -58,7 +58,7 @@ http://example.com/vuln.php?authenticated=1
 
 ---
 
-## 📂 Poisoning de File Inclusion
+## Poisoning de File Inclusion
 
 > `extract()` combiné à un `include` → l'attaquant contrôle le **chemin de fichier** → LFI.
 
@@ -76,7 +76,7 @@ http://example.com/vuln.php?page=../../etc/passwd
 
 ---
 
-## 🧨 Injection de variables globales ($GLOBALS)
+## Injection de variables globales ($GLOBALS)
 
 > `extract()` sur une valeur non fiable permet d'écraser des **variables globales**, y compris des entrées de `$GLOBALS` qui changent les réglages d'exécution (ex : indicateurs de sécurité).
 
@@ -84,24 +84,24 @@ http://example.com/vuln.php?page=../../etc/passwd
 http://example.com/vuln.php?GLOBALS[admin]=1
 ```
 
-> [!warning] ⚠️ **Depuis PHP 8.1.0**
+> [!warning] **Depuis PHP 8.1.0**
 > L'écriture de **tout l'array `$GLOBALS`** n'est plus supportée (il devient en lecture seule globalement). Le vecteur historique via `GLOBALS[x]=...` est **neutralisé** sur PHP 8.1+ — toujours tester la version cible.
 
 ---
 
-## 🧰 Vecteurs connexes
+## Vecteurs connexes
 
 | Vecteur | Description |
 |---|---|
 | `extract($_POST)` | Même logique sur les données POST |
 | `import_request_variables()` | Importe GET/POST/cookies en global (déprécié) |
 | Variables d'environnement serveur | Headers HTTP exposés dans `$_SERVER` (`HTTP_*`) si mal filtrés, variables `register_globals` (déprécié) |
-| Frameworks | Certains "variable globals" / assignment dynamique (cf. [[Mass Assignment|⚖️ Mass Assignment]]) |
+| Frameworks | Certains "variable globals" / assignment dynamique (cf. [[Mass Assignment| Mass Assignment]]) |
 | Gadgets | L'écrasement d'une variable peut déclencher **LFI → RCE** ou **bypass de sécurité** en chaîne |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -114,12 +114,12 @@ http://example.com/vuln.php?GLOBALS[admin]=1
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Signature à repérer**
-> En test d'intrusion : chercher dans le code source (cf. [[Insecure Source Code Management|🗄️ Insecure Source Code Management]]) ou le diff un `extract()` sur de l'input → ensuite tester `?variable_critique=valeur`.
+> [!tip] **Signature à repérer**
+> En test d'intrusion : chercher dans le code source (cf. [[Insecure Source Code Management| Insecure Source Code Management]]) ou le diff un `extract()` sur de l'input → ensuite tester `?variable_critique=valeur`.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Testez toujours **`authenticated=1` ET `authenticated=true`** — selon le typage PHP, un seul passe le `if`.
 > - L'écrasement est silencieux : le contrôle de version PHP 8.1+ sur `$GLOBALS` change le vecteur.
 > - CWE-473 (External Variable Modification) et CWE-621 (Variable Extraction Error) couvrent cette famille.
@@ -127,10 +127,10 @@ http://example.com/vuln.php?GLOBALS[admin]=1
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Mass Assignment|⚖️ Mass Assignment]]
-- [[LFI et RFI|📂 LFI / RFI]]
-- [[Injection de commandes|🐚 Injection de commandes]]
-- → [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — External Variable Modification](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/External%20Variable%20Modification/README.md)
+- [[Mass Assignment| Mass Assignment]]
+- [[LFI et RFI| LFI / RFI]]
+- [[Injection de commandes| Injection de commandes]]
+- → [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — External Variable Modification](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/External%20Variable%20Modification/README.md)

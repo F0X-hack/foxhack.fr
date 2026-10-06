@@ -1,7 +1,7 @@
 ---
 title: "Outil - BlackArch"
 type: outil
-categorie: 🐧 Distributions & Lab
+categorie: Distributions & Lab
 tags:
   - cyber
   - outil
@@ -16,20 +16,20 @@ site: https://www.blackarch.org
 doc: https://blackarch.org/guide.html
 ---
 
-# 🖤 BlackArch — L'arsenal Arch Linux pour pentesters exigeants
+# BlackArch — L'arsenal Arch Linux pour pentesters exigeants
 
 > [!info] **En 1 phrase**
 > BlackArch est un dépôt et une distribution basée sur Arch Linux fournissant plus de 2900 outils offensifs, pensée pour les pentesters qui veulent un système roulant, minimal et ultra-personnalisable.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | BlackArch Linux |
 | Description | Dépôt de paquets et distribution Arch Linux orientée pentest : 2865+ outils classés par catégories |
-| Catégorie | 🐧 Distributions & Lab |
+| Catégorie | Distributions & Lab |
 | Sous-catégorie | Distribution offensive (Arch Linux) |
 | Fonction principale | Fournir un arsenal offensif complet sur une base Arch minimale et rolling |
 | Type d'outil | Distribution Linux (CLI-first) + dépôt pacman |
@@ -50,7 +50,7 @@ doc: https://blackarch.org/guide.html
 
 ---
 
-## 🎯 Concept
+## Concept
 
 BlackArch n'est pas une distro « clé en main » comme Kali : c'est d'abord un **référentiel de paquets** que l'on ajoute à une **Arch Linux** existante via le script `strap.sh`, ou une **ISO standalone** pour une installation autonome. La philosophie est celle d'Arch : **rolling release**, système minimal, l'utilisateur installe exactement ce qu'il veut. Le gestionnaire `pacman` est réputé pour sa vitesse et sa simplicité.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -89,7 +89,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Option A : ajouter le dépôt à une Arch existante (recommandé)
 
@@ -123,14 +123,14 @@ sudo pacman-key --update
 sudo pacman -Syyu --needed --overwrite='*'
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - `strap.sh` exige une connexion Internet et une clé GPG valide : sans signature, pacman refuse les paquets.
 > - Les ISO **Full** sont volumineuses (plusieurs dizaines de Go) et officiellement déconseillées pour une mise à jour ensuite : préférer Slim/Netinstall ou le dépôt.
 > - L'ISO Slim est minimale : aucun outil supplémentaire par défaut, installation manuelle des catégories.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Valeur possible | Impact | Exemple |
 |---|---|---|---|---|
@@ -142,7 +142,7 @@ sudo pacman -Syyu --needed --overwrite='*'
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 BlackArch se compose de deux briques :
 
@@ -153,7 +153,7 @@ Au runtime, rien ne diffère d'Arch : `pacman -Syu` met à jour noyau, outils et
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -190,7 +190,7 @@ sudo pacman -Syu --needed --overwrite='*'
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -211,7 +211,7 @@ sudo pacman -Syu --needed --overwrite='*'
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -256,7 +256,7 @@ cd blackarch-iso
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Ajouter le dépôt** sur une Arch propre.
    ```bash
@@ -287,7 +287,7 @@ cd blackarch-iso
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Utiliser BlackArch comme dépôt complémentaire sans casser Arch
 
@@ -320,7 +320,7 @@ sudo pacman -Syu
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -337,7 +337,7 @@ sudo pacman -Syu
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -352,7 +352,7 @@ sudo pacman -Syu
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -394,7 +394,7 @@ alert tcp any any -> any any (msg:"ET SCAN NMAP"; flags:S; threshold: type limit
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — installer plusieurs catégories en une passe
@@ -420,7 +420,7 @@ pacman -Sg | grep '^blackarch' | sort
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 BlackArch ne modifie pas les sorties des outils (standards) ; il fournit surtout des **listes de paquets** manipulables.
 
@@ -447,9 +447,9 @@ for t in tools:
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🧰 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - Kali Linux]] — équivalent Debian (comparaison de référence)
 - [[Outil - Parrot OS]] — alternative Debian + vie privée
 - [[Outil - Metasploit]] — exploitation (`pacman -S metasploit`)
@@ -466,7 +466,7 @@ pacman -S blackarch-recon → nmap/recon-ng → sqlmap → post-exploitation
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -480,7 +480,7 @@ pacman -S blackarch-recon → nmap/recon-ng → sqlmap → post-exploitation
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Dépôt** : aucune surcharge (un simple ajout à `pacman.conf`) ; l'indexation `pacman -Sy` est rapide.
 - **Système** : aussi léger qu'une Arch de base — quelques centaines de Mo en CLI, ~1-2 Go avec un bureau minimal.
@@ -493,7 +493,7 @@ pacman -S blackarch-recon → nmap/recon-ng → sqlmap → post-exploitation
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -523,7 +523,7 @@ pacman -S blackarch-recon → nmap/recon-ng → sqlmap → post-exploitation
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Signatures GPG** : tous les paquets blackarch sont signés par `blackarch-keyring` ; ne jamais forcer sans comprendre.
 - **PKGBUILD** : chaque paquet est auditable dans les dépôts GitHub (principe d'Arch).
@@ -533,7 +533,7 @@ pacman -S blackarch-recon → nmap/recon-ng → sqlmap → post-exploitation
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Pas de support officiel** : communauté et wiki seulement, pas de contrat de support.
 - **Pas de GUI clé en main** : la distro est minimaliste ; installer un bureau à la main est requis (niveau utilisateur).
@@ -543,7 +543,7 @@ pacman -S blackarch-recon → nmap/recon-ng → sqlmap → post-exploitation
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Ajouter le dépôt
@@ -571,7 +571,7 @@ which nmap msfconsole
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -584,7 +584,7 @@ which nmap msfconsole
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -596,15 +596,15 @@ which nmap msfconsole
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Installe par **catégorie** plutôt que tout d'un coup : `blackarch-webapp` est léger alors que la Full fait des dizaines de Go.
 > - Utilise `pacman -Q <outil>` pour savoir si un paquet vient de blackarch et `pacman -Si <paquet>` pour ses métadonnées.
 > - En VM de lab, fais des **snapshots** avant les mises à jour : le rolling Arch peut casser un paquet.
 > - Utilise le **toolkit** (`blackarch -i`, `blackarch -u`) pour gérer la base d'outils plus confortablement.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Ne **jamais** activer blackarch comme dépôt par défaut de toute la machine : conflits avec les paquets officiels ; utiliser `IgnorePkg` ou une VM dédiée.
 > - L'ISO **Full** est déconseillée par le projet lui-même : préférer Slim/Netinstall ou le dépôt sur une Arch propre.
 > - `strap.sh` exige une connexion Internet ; sans signature valide, pacman refuse les paquets — ne force pas aveuglément avec `--overwrite`.
@@ -612,7 +612,7 @@ which nmap msfconsole
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -637,8 +637,8 @@ which nmap msfconsole
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - https://www.blackarch.org/
 > - https://blackarch.org/strap.sh
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Outil - Kali Linux|🐉 Kali Linux]] · [[Outil - Metasploit|🛠️ Metasploit]] · [[Outil - Parrot OS|🦜 Parrot OS]] · [[Outil - Nmap|📡 Nmap]] · [[Outil - Ghidra|🔧 Ghidra]] · [[Outil - hashcat|🐱 hashcat]]
+**Liens :** [[Tools| Outils]] · [[Outil - Kali Linux| Kali Linux]] · [[Outil - Metasploit| Metasploit]] · [[Outil - Parrot OS| Parrot OS]] · [[Outil - Nmap| Nmap]] · [[Outil - Ghidra| Ghidra]] · [[Outil - hashcat| hashcat]]

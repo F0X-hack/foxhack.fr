@@ -1,7 +1,7 @@
 ---
 title: "Outil - subfinder"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
@@ -16,14 +16,14 @@ site: https://projectdiscovery.io
 doc: https://docs.projectdiscovery.io/tools/subfinder/usage
 ---
 
-# 🔭 subfinder — Découverte massive de sous-domaines (passif + actif)
+# subfinder — Découverte massive de sous-domaines (passif + actif)
 
 > [!info] **En 1 phrase**
 > subfinder agrège des dizaines de sources OSINT pour retrouver tous les sous-domaines d'une cible en quelques secondes, sans la toucher.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://docs.projectdiscovery.io/tools/subfinder/usage
 
 ---
 
-## 🎯 Concept
+## Concept
 
 subfinder est le moteur d'énumération de sous-domaines de l'écosystème **ProjectDiscovery**. Il interroge en parallèle un grand nombre de sources passives — logs de transparence des certificats (CT), bases de données DNS historiques, engines de recherche, API de bug bounty et OSINT — et consolide les résultats dédupliqués. Position : tout premier maillon de la recon web ; sa sortie alimente **dnsx** (validation), **httpx** (probing HTTP) et **naabu** (scan de ports). La phase passive ne génère quasiment aucun trafic vers la cible elle-même.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Via Go (binaire à jour)
 
@@ -123,7 +123,7 @@ subfinder -h
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier de clés API : `~/.config/subfinder/provider-config.yaml`
 
@@ -160,7 +160,7 @@ subfinder -s crtsh     # n'utiliser que la source crtsh
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -181,7 +181,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -214,7 +214,7 @@ subfinder -d example.com -nW -o live.txt                      # ne garde que les
 
 ---
 
-## 🚩 Options et flags (détail)
+## Options et flags (détail)
 
 | Flag | Défaut | Description |
 |---|---|---|
@@ -239,7 +239,7 @@ subfinder -d example.com -nW -o live.txt                      # ne garde que les
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Énumération simple
 
@@ -279,7 +279,7 @@ subfinder -d example.com -all -r 8.8.8.8,1.1.1.1 -silent
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Énumération initiale** — toutes sources, sortie propre.
    ```bash
@@ -308,7 +308,7 @@ subfinder -d example.com -all -r 8.8.8.8,1.1.1.1 -silent
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Énumération profonde d'une cible critique
 
@@ -343,7 +343,7 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -title -silent 
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -356,7 +356,7 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -title -silent 
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec subfinder |
 |---|---|---|
@@ -368,7 +368,7 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -title -silent 
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -382,7 +382,7 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -title -silent 
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Pipeline classique (binaire à binaire)
 
@@ -413,7 +413,7 @@ subfinder -d example.com -all -oJ -silent | jq -r '.host, .source'
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Sortie texte (stdout)
 
@@ -449,7 +449,7 @@ wc -l all_subs.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -465,7 +465,7 @@ wc -l all_subs.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -478,7 +478,7 @@ wc -l all_subs.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -491,7 +491,7 @@ wc -l all_subs.txt
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -505,7 +505,7 @@ wc -l all_subs.txt
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -517,7 +517,7 @@ wc -l all_subs.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -530,7 +530,7 @@ wc -l all_subs.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Énumération de base
@@ -557,7 +557,7 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -silent
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -573,7 +573,7 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -silent
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -584,35 +584,35 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -silent
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Renseigne `provider-config.yaml`**
+> [!tip] **Renseigne `provider-config.yaml`**
 > SecurityTrails, VirusTotal, Censys... : la couverture explose avec les clés.
 
-> [!tip] 💡 **Combine `-all` + `-recursive` sur les cibles prioritaires**
+> [!tip] **Combine `-all` + `-recursive` sur les cibles prioritaires**
 > Garde `-all` seul pour le volume ; ajoute `-recursive` sur les cibles critiques.
 
-> [!tip] 💡 **`-oJ` journalise les sources**
+> [!tip] `-oJ` journalise les sources**
 > Chaque sous-domaine garde la trace de sa source (utile pour le rapport).
 
-> [!warning] ⚠️ **Sans clés API, des sources restent inactives**
+> [!warning] **Sans clés API, des sources restent inactives**
 > VirusTotal, SecurityTrails, Censys... : ta couverture est amputée silencieusement.
 
-> [!warning] ⚠️ **Les domaines wildcard polluent les résultats**
+> [!warning] **Les domaines wildcard polluent les résultats**
 > Ex : `*.example.com` répond à tout : valide toujours avec dnsx/massdns.
 
-> [!warning] ⚠️ **`-brute` a été retiré des versions récentes**
+> [!warning] `-brute` a été retiré des versions récentes**
 > Préfère puredns/alterx pour le bruteforce moderne.
 
-> [!warning] ⚠️ **En `-all`, certaines sources sont lentes ou instables**
+> [!warning] **En `-all`, certaines sources sont lentes ou instables**
 > Fixez `-max-time` pour borner la durée.
 
-> [!danger] 🚫 **Énumération ≠ autorisation**
+> [!danger] **Énumération ≠ autorisation**
 > Même passive, l'énumération sur une cible non autorisée peut violer des conditions d'utilisation.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [GitHub officiel subfinder](https://github.com/projectdiscovery/subfinder)
@@ -628,4 +628,4 @@ subfinder -d example.com -all -silent | dnsx -silent | httpx -sc -silent
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[01 - Reconnaissance|🕵️ Reconnaissance]] · [[Outil - dnsx|🧬 dnsx]] · [[Outil - httpx|🌐 httpx]] · [[Outil - chaos|🌀 chaos]] · [[Outil - Amass|🌐 Amass]]
+**Liens :** [[Tools| Outils]] · [[01 - Reconnaissance| Reconnaissance]] · [[Outil - dnsx| dnsx]] · [[Outil - httpx| httpx]] · [[Outil - chaos| chaos]] · [[Outil - Amass| Amass]]

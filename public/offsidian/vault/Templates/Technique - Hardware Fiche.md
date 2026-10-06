@@ -20,7 +20,7 @@ statut: brouillon
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,7 +32,7 @@ statut: brouillon
 | **Complexité** | Faible / Moyenne / Élevée |
 | **Dernière mise à jour** | YYYY-MM-DD |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Composant principal"] --> B["Bus/protocole"]
@@ -44,7 +44,7 @@ statut: brouillon
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Description du concept : quoi, pourquoi, quand l'utiliser en pentest hardware.
 
@@ -57,7 +57,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### [Sous-concept 1]
 
@@ -78,7 +78,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -107,7 +107,7 @@ Vue du composant (pin 1 marqué par un point/dot) :
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### [Protocole 1]
 
@@ -137,7 +137,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -168,7 +168,7 @@ pip install <outil>
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres du logiciel d'interfaçage
 
@@ -193,7 +193,7 @@ pip install <outil>
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes essentielles
 
@@ -226,9 +226,9 @@ minicom -D /dev/ttyUSB0 -b 115200
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — [Scénario 1]
+### Débutant — [Scénario 1]
 
 ```bash
 # Étape 1
@@ -237,21 +237,21 @@ minicom -D /dev/ttyUSB0 -b 115200
 <commande>
 ```
 
-### 🟡 Intermédiaire — [Scénario 2]
+### Intermédiaire — [Scénario 2]
 
 ```bash
 # Script de scan complet
 <commande>
 ```
 
-### 🔴 Avancé — [Scénario 3]
+### Avancé — [Scénario 3]
 
 ```python
 # Script d'exploitation avancé
 <code>
 ```
 
-### ⚫ Expert — [Scénario 4]
+### Expert — [Scénario 4]
 
 ```python
 # Technique de niveau expert
@@ -260,7 +260,7 @@ minicom -D /dev/ttyUSB0 -b 115200
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -293,7 +293,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — [Nom]
 
@@ -303,7 +303,7 @@ flowchart TB
 | **Matériel** | |
 | **Étapes** | |
 | **Résultat** | |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -318,11 +318,11 @@ flowchart LR
 | **Matériel** | |
 | **Étapes** | |
 | **Résultat** | |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -337,7 +337,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -361,7 +361,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -388,7 +388,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -413,7 +413,7 @@ flowchart TB
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -439,9 +439,9 @@ flowchart TB
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
+- [[13 - Hardware & IoT| Hardware & IoT]] global
 - [Techniques similaires]
 - [Outils complémentaires]
 
@@ -455,7 +455,7 @@ flowchart TB
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -470,7 +470,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -487,7 +487,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -514,7 +514,7 @@ dmesg | tail
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -531,7 +531,7 @@ dmesg | tail
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -545,7 +545,7 @@ dmesg | tail
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -565,7 +565,7 @@ dmesg | tail
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -578,7 +578,7 @@ dmesg | tail
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -593,7 +593,7 @@ dmesg | tail
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : [description]
 - **Piège 2** : [description]
@@ -607,9 +607,9 @@ dmesg | tail
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [Lien 1](url)
 > - [Lien 2](url)
 > - [Lien 3](url)
@@ -634,4 +634,4 @@ dmesg | tail
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [liens vers fichiers similaires]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [liens vers fichiers similaires]

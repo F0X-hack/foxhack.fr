@@ -11,7 +11,7 @@ statut: publie
 
 
 
-# 🧩 Composants électroniques
+# Composants électroniques
 
 > [!info] **En 1 phrase**
 > Reconnaître les composants sur un PCB (résistances, condensateurs, transistors,
@@ -19,7 +19,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -31,7 +31,7 @@ statut: publie
 | **Complexité** | Faible (identification) → Élevée (analyse avancée) |
 | **Dernière mise à jour** | 2025-08-14 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["PCB cible"] --> B["Identification composants"]
@@ -47,7 +47,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Savoir identifier les composants sur un PCB est la base du hardware hacking. Chaque composant a un rôle (alimentation, logique, communication) et représente une cible ou un obstacle. Les grosses puces = SoC/MCU (cibles firmware), les petites autour = flash, régulateurs, interfaces (signaux). Les TPM/Secure Element = le coffre-fort (clés).
 
@@ -75,14 +75,14 @@ flowchart TB
     style F fill:#ffcdd2
 ```
 
-> [!info] 💡 **Règle d'or du hardware hacker**
+> [!info] **Règle d'or du hardware hacker**
 > - Les **grosses puces** = SoC/MCU (cibles principales : firmware, debug).
 > - Les **petites autour** = flash, régulateurs, interfaces (là où passent les signaux).
 > - **TPM / Secure Element** = le coffre-fort (clés, mesures de boot).
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Hiérarchie des composants
 
@@ -129,7 +129,7 @@ flowchart LR
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Résistances
 
@@ -259,7 +259,7 @@ flowchart LR
 
 ---
 
-## ⚡ Protocoles de communication
+## Protocoles de communication
 
 ### Comparaison des bus
 
@@ -275,7 +275,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -324,7 +324,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Table des pins MCU courantes
 
@@ -351,7 +351,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Commandes d'identification
 
@@ -377,9 +377,9 @@ flowchart LR
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Identification des composants d'un routeur
+### Débutant — Identification des composants d'un routeur
 
 ```bash
 # 1. Photographier le PCB du routeur
@@ -392,7 +392,7 @@ flowchart LR
 # 8. Documenter : SoC=Allwinner H3, Flash=W25Q64, UART=115200
 ```
 
-### 🟡 Intermédiaire — Analyse de la chaîne d'alimentation
+### Intermédiaire — Analyse de la chaîne d'alimentation
 
 ```bash
 # 1. Tracer le chemin de l'alimentation USB (5V)
@@ -403,7 +403,7 @@ flowchart LR
 # 6. Documenter : rail 3.3V pour flash/UART, rail 1.8V pour SoC
 ```
 
-### 🔴 Avancé — Recherche des points d'attaque
+### Avancé — Recherche des points d'attaque
 
 ```bash
 # 1. Identifier le MCU → chercher la datasheet (top marking)
@@ -416,7 +416,7 @@ flowchart LR
 # 8. Documenter : plan d'attaque complet
 ```
 
-### ⚫ Expert — Analyse complète d'un PCB inconnu
+### Expert — Analyse complète d'un PCB inconnu
 
 ```python
 #!/usr/bin/env python3
@@ -475,7 +475,7 @@ for comp in components:
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -521,7 +521,7 @@ Analyser les données extraites, documenter les findings.
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Analyse complète d'un DVR IP inconnu
 
@@ -531,7 +531,7 @@ Analyser les données extraites, documenter les findings.
 | **Matériel** | Microscope USB, multimètre, loupe, caméra |
 | **Étapes** | 1. Photo haute résolution → 2. Identifier SoC Hi3516 → 3. Flash eMMC BGA-153 → 4. UART exposé (3 pins) → 5. JTAG non exposé → 6. Plan d'attaque : dump eMMC via RT809H |
 | **Résultat** | Plan d'attaque complet, firmware extrait |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -549,11 +549,11 @@ flowchart LR
 | **Matériel** | Microscope, multimètre, bus analyzer |
 | **Étapes** | 1. Identifier les puces candidates (petites, sous bouclier) → 2. Vérifier les traces vers le SoC → 3. Identifier interface (SPI/I2C/LPC) → 4. Tenter side-channel |
 | **Résultat** | TPM identifié, interface connue |
-| **Difficulté** | ⭐⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -572,7 +572,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -601,7 +601,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -639,7 +639,7 @@ openocd -f interface/stlink.cfg -c "stm32f1x.lock 0"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -698,7 +698,7 @@ for m in markings:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -735,12 +735,12 @@ EOF
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] pour l'analyse post-identification
-- [[Hardware - JTAG et SWD|🔧 JTAG/SWD]] pour le debug
-- [[Hardware - Identification de puces|🔬 Identification de puces]] pour l'identification avancée
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] pour l'analyse post-identification
+- [[Hardware - JTAG et SWD| JTAG/SWD]] pour le debug
+- [[Hardware - Identification de puces| Identification de puces]] pour l'identification avancée
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -757,7 +757,7 @@ EOF
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -775,7 +775,7 @@ flowchart LR
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -793,7 +793,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -829,7 +829,7 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -851,7 +851,7 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -872,7 +872,7 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -900,7 +900,7 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -913,7 +913,7 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -931,7 +931,7 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : Toujours identifier avant de toucher — une sonde sur le mauvais pin = puce grillée. Commence par GND (continuité).
 - **Piège 2** : Les **passifs sont silencieux** — résistances/condensateurs ne dumpent rien, mais leur topologie révèle les rails d'alimentation et les bus.
@@ -947,9 +947,9 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Electronic Components](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/other/electronic-components.md)
 > - [Alldatasheet](https://www.alldatasheet.com)
 > - [SnapEDA](https://www.snapeda.com)
@@ -981,4 +981,4 @@ Solution : Vérifier avec un multimètre avant toute connexion
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Identification de puces|🔬 Identification de puces]] · [[Hardware - Dump et Analyse de Firmware|💾 Dump de firmware]] · [[Hardware - JTAG et SWD|🔧 JTAG/SWD]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Identification de puces| Identification de puces]] · [[Hardware - Dump et Analyse de Firmware| Dump de firmware]] · [[Hardware - JTAG et SWD| JTAG/SWD]]

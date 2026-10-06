@@ -1,7 +1,7 @@
 ---
 title: "Outil - kube-hunter"
 type: outil
-categorie: 🔒 Cloud & Containers
+categorie: Cloud & Containers
 tags:
   - cyber
   - outil
@@ -17,20 +17,20 @@ site: https://github.com/aquasecurity/kube-hunter
 doc: https://github.com/aquasecurity/kube-hunter/blob/master/README.md
 ---
 
-# 🐇 kube-hunter - Le chasseur de vulnérabilités Kubernetes
+# kube-hunter - Le chasseur de vulnérabilités Kubernetes
 
 > [!info] **En 1 phrase**
 > kube-hunter scanne un cluster Kubernetes de l'extérieur ou depuis un pod pour repérer les services exposés et les vulnérabilités connues, avant même d'avoir un kubeconfig.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | kube-hunter |
 | Description | Scanner de sécurité Kubernetes qui identifie les vulnérabilités du cluster (API exposé, anonymous auth, kubelet faible, etcd accessible, CVE connues) en mode réseau ou en mode pod |
-| Catégorie | 🔒 Cloud & Containers |
+| Catégorie | Cloud & Containers |
 | Sous-catégorie | Kubernetes / Reconnaissance / Scan de vulnérabilités |
 | Type d'outil | CLI Python (binaire, conteneur ou à l'intérieur d'un pod) |
 | Licence | Apache-2.0 |
@@ -50,7 +50,7 @@ doc: https://github.com/aquasecurity/kube-hunter/blob/master/README.md
 
 ---
 
-## 🎯 Concept
+## Concept
 
 kube-hunter applique une approche **scanner passif** : il se connecte aux services Kubernetes identifiés (API server 6443, kubelet 10250, etcd 2379, dashboard) et envoie des requêtes non destructives pour déterminer leur version, leur configuration d'authentification et leurs expositions. Il croise ensuite ces informations avec une base de vulnérabilités connues.
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -88,7 +88,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 kube-hunter se déploie en binaire Python, en conteneur, ou en pod Kubernetes.
 
@@ -124,14 +124,14 @@ pip3 install -r requirements.txt
 python3 kube-hunter.py --remote 10.10.20.15
 ```
 
-> [!warning] ⚠️ Prérequis & problèmes potentiels
+> [!warning] Prérequis & problèmes potentiels
 > - Le mode `--pod` requiert la possibilité de créer un pod (le job yaml crée un pod avec `automountServiceAccountToken` par défaut).
 > - En scan réseau, des firewalls/network policies peuvent bloquer les ports 6443/10250/2379 → scanner depuis plusieurs origines.
 > - L'outil étant archivé, certaines signatures de CVE sont obsolètes : recouper avec Trivy pour les CVE récentes.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 kube-hunter se configure essentiellement par flags ; il n'y a pas de fichier de configuration global, mais des plugins extensibles en Python.
 
@@ -149,7 +149,7 @@ kube-hunter se configure essentiellement par flags ; il n'y a pas de fichier de 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 kube-hunter est écrit en Python et organisé en **hunters** (chasseurs) spécialisés, exécutés selon une séquence :
 
@@ -171,7 +171,7 @@ flowchart LR
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -199,7 +199,7 @@ kube-hunter --remote 10.10.20.15 --active
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -218,7 +218,7 @@ kube-hunter --remote 10.10.20.15 --active
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -263,7 +263,7 @@ grep -i 'service' scan-interne.txt | sort -u
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Scanner l'extérieur** - identifier les clusters exposés sur le périmètre.
    ```bash
@@ -289,7 +289,7 @@ grep -i 'service' scan-interne.txt | sort -u
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Détection de l'API server sans authentification
 
@@ -325,7 +325,7 @@ curl -sk -X POST https://10.10.20.15:10250/run/<ns>/<pod>/<container> \
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -338,7 +338,7 @@ curl -sk -X POST https://10.10.20.15:10250/run/<ns>/<pod>/<container> \
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -353,7 +353,7 @@ curl -sk -X POST https://10.10.20.15:10250/run/<ns>/<pod>/<container> \
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -395,7 +395,7 @@ level: medium
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash - scan programmé + archivage du rapport
@@ -424,7 +424,7 @@ for cible in cibles:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 kube-hunter génère un rapport texte lisible ou du JSON. Le JSON contient des listes `services`, `vulnerabilities`, `nodeInfo` et `permissions`.
 
@@ -440,9 +440,9 @@ kube-hunter --remote 10.10.20.15 --json | \
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[Tools|🛠 Outils]] global
+- [[Tools| Outils]] global
 - [[Outil - kubectl|kubectl]] - exploitation des expositions détectées
 - [[Outil - kube-bench|kube-bench]] - audit de posture complémentaire (config vs réseau)
 - [[Outil - peirates|peirates]] - post-exploitation quand une surface est confirmée
@@ -456,7 +456,7 @@ kube-hunter (réseau) + kube-bench (config) -> kubectl/peirates (exploitation)
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -468,7 +468,7 @@ kube-hunter (réseau) + kube-bench (config) -> kubectl/peirates (exploitation)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Rapide en réseau** : quelques secondes par hôte ; le scan d'un /24 prend quelques minutes.
 - **Non destructif** : requêtes passives uniquement (sauf `--active`), aucun changement de configuration.
@@ -477,7 +477,7 @@ kube-hunter (réseau) + kube-bench (config) -> kubectl/peirates (exploitation)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -501,7 +501,7 @@ kube-hunter (réseau) + kube-bench (config) -> kubectl/peirates (exploitation)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Cadre légal** : scan réseau passif ; à effectuer uniquement sur les périmètres autorisés (pentest signé).
 - **Traçabilité** : les connexions vers 6443/10250/2379 sont loggées côté cluster et réseau → prévoir la discrétion.
@@ -511,7 +511,7 @@ kube-hunter (réseau) + kube-bench (config) -> kubectl/peirates (exploitation)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Projet archivé** : plus de mises à jour depuis la fin des années 2020 ; les CVE récentes ne sont pas couvertes.
 - **Passif uniquement** : il détecte des expositions, ne prouve pas toujours l'exploitation.
@@ -521,7 +521,7 @@ kube-hunter (réseau) + kube-bench (config) -> kubectl/peirates (exploitation)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan d'une cible unique
@@ -548,7 +548,7 @@ kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-hunter/mast
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -561,7 +561,7 @@ kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-hunter/mast
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -573,15 +573,15 @@ kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-hunter/mast
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Lance `--cidr` en premier pour cartographier, puis `--remote` sur chaque cluster pour les détails.
 > - Croise les findings avec kube-bench : kube-hunter dit « ça écoute », kube-bench dit « ça à quoi ça ressemble ».
 > - Le mode `--pod` révèle les permissions du service account : précieux pour planifier l'escalade.
 > - `--json` + jq pour extraire les vulnérabilités à haute sévérité dans tes rapports de pentest.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - kube-hunter est **archivé** : une détection absente ne veut pas dire que le cluster est sain.
 > - Un service exposé n'est pas toujours exploitable : confirme avec `--active` ou des requêtes manuelles.
 > - Les connexions de scan sont visibles : sur un vrai pentest, compte-les comme du bruit à assumer.
@@ -589,7 +589,7 @@ kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-hunter/mast
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -611,4 +611,4 @@ kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-hunter/mast
 
 ---
 
-➡️ **Liens :** [[Tools|🛠 Outils]] · [[Outil - kube-bench|kube-bench]] · [[Outil - kubectl|kubectl]] · [[Outil - trivy|trivy]]
+**Liens :** [[Tools| Outils]] · [[Outil - kube-bench|kube-bench]] · [[Outil - kubectl|kubectl]] · [[Outil - trivy|trivy]]

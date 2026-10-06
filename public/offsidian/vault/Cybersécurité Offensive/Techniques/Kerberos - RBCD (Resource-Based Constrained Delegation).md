@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🧬 Kerberos — RBCD (Resource-Based Constrained Delegation)
+# Kerberos — RBCD (Resource-Based Constrained Delegation)
 
 > [!info] **En 1 phrase**
 > RBCD inverse la délégation : c'est la **cible** qui autorise un compte à l'impersonner (attribut
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -31,7 +31,7 @@ flowchart LR
     A -->|"4. CIFS / HOST / HTTP...<br>accès à la cible"| T
 ```
 
-> [!info] 💡 **Différence avec la délégation contrainte**
+> [!info] **Différence avec la délégation contrainte**
 > En **Constrained**, l'attribut `msDS-AllowedToDelegateTo` est porté par le **service** qui délègue.
 > En **RBCD**, c'est l'attribut `msDS-AllowedToActOnBehalfOfOtherIdentity` porté par la **cible** — donc
 > il suffit d'un droit d'écriture sur la cible (souvent `GenericWrite`) pour s'autoriser soi-même,
@@ -39,7 +39,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Exploitation
+## Exploitation
 
 > Nécessite : un compte avec **GenericWrite / GenericAll** sur la cible (ou un compte "machine add").
 
@@ -76,14 +76,14 @@ rbcd.py -f 'swktest$' -dc-ip 10.10.10.10 'domain/user:pass' 'DC01$'
 getST.py -spn cifs/DC01.domain 'domain/swktest$:Weakest123*' -impersonate Administrator -dc-ip 10.10.10.10
 ```
 
-> [!info] 💡 **Cas des machines à haute valeur (DCs)**
+> [!info] **Cas des machines à haute valeur (DCs)**
 > RBCD vers un **DC** est possible par défaut si le compte impersonné n'est pas protégé. En revanche,
 > certains contextes imposent des **contraintes** : `Protected Users`, "sensitive and cannot be delegated",
 > ou le **filtrage des SID** en cross-forest empêchent le S4U. Pour un DC, vise `CIFS` + `HOST` + `LDAP` pour aller jusqu'au **DCSync**.
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -95,20 +95,20 @@ getST.py -spn cifs/DC01.domain 'domain/swktest$:Weakest123*' -impersonate Admini
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Cross-forest friendly**
+> [!tip] **Cross-forest friendly**
 > RBCD marche **sans contact avec le KDC du compte source** : c'est la cible qui autorise → parfait en cross-forest si on a un droit d'écriture.
 
-> [!warning] 🚨 **OPSEC** : **supprime le compte machine** après exploitation (`bloodyAD ... remove rbcd 'DC01$' 'swktest$'` + `delete computer`) — le compte fantôme se voit dans le domaine.
+> [!warning] **OPSEC** : **supprime le compte machine** après exploitation (`bloodyAD ... remove rbcd 'DC01$' 'swktest$'` + `delete computer`) — le compte fantôme se voit dans le domaine.
 
-> [!warning] ⚠️ **Piège** : les comptes **Protected Users** / "sensitive and cannot be delegated" bloquent S4U → RBCD échoue sur eux.
+> [!warning] **Piège** : les comptes **Protected Users** / "sensitive and cannot be delegated" bloquent S4U → RBCD échoue sur eux.
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [Wagging the Dog: Abusing RBCD — Elad Shamir](https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html)
 > - [InternalAllTheThings — Kerberos Delegation](https://github.com/swisskyrepo/InternalAllTheThings/tree/main/docs/active-directory)
 > - [The Hacker Recipes — RBCD](https://www.thehacker.recipes/ad/movement/kerberos/delegations)
 
-➡️ **Liens :** [[Kerberos Delegation|🎯 Hub Délégation]] · [[Kerberos - Constrained Delegation|🔗 Constrained]] · [[Kerberos - Unconstrained Delegation|🔓 Unconstrained]] · [[Kerberos - Bronze Bit|🥉 Bronze Bit]] · [[Kerberos - Le protocole|👑 Kerberos]]
+**Liens :** [[Kerberos Delegation| Hub Délégation]] · [[Kerberos - Constrained Delegation| Constrained]] · [[Kerberos - Unconstrained Delegation| Unconstrained]] · [[Kerberos - Bronze Bit| Bronze Bit]] · [[Kerberos - Le protocole| Kerberos]]

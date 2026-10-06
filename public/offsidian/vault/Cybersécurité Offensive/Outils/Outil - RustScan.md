@@ -1,11 +1,11 @@
 ---
 title: "Outil - RustScan"
 type: outil
-categorie: 🕵️ Reconnaissance & OSINT
+categorie: Reconnaissance & OSINT
 tags:
   - cyber
   - outil
-  - 🕵️ Reconnaissance & OSINT
+  - Reconnaissance & OSINT
 statut: publie
 version: 2.4.1
 licence: GPL-3.0
@@ -16,14 +16,14 @@ site: https://github.com/RustScan/RustScan
 doc: https://github.com/RustScan/RustScan/wiki
 ---
 
-# 🕵️ RustScan — Scan de ports ultra-rapide, relais vers Nmap
+# RustScan — Scan de ports ultra-rapide, relais vers Nmap
 
 > [!info] **En 1 phrase**
 > RustScan est un scanner de ports ultra-rapide écrit en Rust qui découvre tous les ports ouverts en quelques secondes puis délègue automatiquement l'analyse fine à Nmap.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -50,7 +50,7 @@ doc: https://github.com/RustScan/RustScan/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 RustScan est le « disrupteur » de la phase de scan : il effectue un scan massivement parallèle et trouve les ports ouverts d'une machine en **moins de 2 secondes**, là où `nmap -p-` prend plusieurs minutes. Il utilise un **TCP connect scan** parallélisé en lots (batch size) avec des sockets asynchrones (tokio), ce qui lui permet de fonctionner sans privilèges root.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -82,7 +82,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Binaire officiel (Debian/Ubuntu/Kali)
 
@@ -122,7 +122,7 @@ rustscan --help
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Fichier de configuration `~/.rustscan.toml`
 
@@ -153,7 +153,7 @@ exclude = ["10.0.0.1", "10.0.0.0/31"]
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 ```mermaid
 flowchart TB
@@ -174,7 +174,7 @@ flowchart TB
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes essentielles
 
@@ -212,7 +212,7 @@ rustscan -a 10.10.10.10 -n -q
 
 ---
 
-## 🚩 Options et flags (détail)
+## Options et flags (détail)
 
 | Flag | Défaut | Description |
 |---|---|---|
@@ -230,7 +230,7 @@ rustscan -a 10.10.10.10 -n -q
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Scan simple d'une machine
 
@@ -270,7 +270,7 @@ rustscan -a 10.10.10.0/24 -b 1500 -t 2500 -n
 
 ---
 
-## 🔄 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Étape 1 — Scan de découverte** : identifier les ports ouverts de la cible en quelques secondes.
    ```bash
@@ -295,7 +295,7 @@ rustscan -a 10.10.10.0/24 -b 1500 -t 2500 -n
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Scan massif d'un réseau /24 et export structuré
 
@@ -339,7 +339,7 @@ nmap -sC -sV -p "$PORTS" -oA nmap/full "$IP"
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Cas d'usage | Exemple concret |
 |---|---|
@@ -351,7 +351,7 @@ nmap -sC -sV -p "$PORTS" -oA nmap/full "$IP"
 
 ---
 
-## ⚔️ MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique | ID | Rapport avec RustScan |
 |---|---|---|
@@ -362,7 +362,7 @@ nmap -sC -sV -p "$PORTS" -oA nmap/full "$IP"
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Usage défensif | Description |
 |---|---|
@@ -376,7 +376,7 @@ nmap -sC -sV -p "$PORTS" -oA nmap/full "$IP"
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Sortie greppable dans un pipeline
 
@@ -409,7 +409,7 @@ nmap -sC -sV -p "$(rustscan -a "$IP" -g -n | cut -d: -f2 | tr ',' ',')" \
 
 ---
 
-## 📦 Output et parsing
+## Output et parsing
 
 ### Format normal
 
@@ -439,7 +439,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Intégration |
 |---|---|
@@ -453,7 +453,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Différence clé |
 |---|---|
@@ -465,7 +465,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact |
 |---|---|
@@ -477,7 +477,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -492,7 +492,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## 🔒 Sécurité de l'outil
+## Sécurité de l'outil
 
 | Point | Détail |
 |---|---|
@@ -505,7 +505,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limitation | Détail |
 |---|---|
@@ -518,7 +518,7 @@ rustscan -a 10.10.10.0/24 -g | awk -F: '{print NF-1}'
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scan de découverte
@@ -542,7 +542,7 @@ rustscan -a 10.10.10.10 -n -q
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Action | Commande |
 |---|---|
@@ -556,7 +556,7 @@ rustscan -a 10.10.10.10 -n -q
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -568,32 +568,32 @@ rustscan -a 10.10.10.10 -n -q
 
 ---
 
-## 💡 Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Toujours écrire `--` avant les options Nmap**
+> [!tip] **Toujours écrire `--` avant les options Nmap**
 > Sans `--`, RustScan ne transmet rien et se contente du scan de ports : `rustscan -a <ip> -- -sC -sV`.
 
-> [!tip] 💡 **`-u` évite « too many open files »**
+> [!tip] `-u` évite « too many open files »**
 > Sur Linux, ajouter `-u` (ou `--ulimit`) lors des gros scans pour lever la limite système de descripteurs.
 
-> [!tip] 💡 **La sortie `-g` est faite pour les scripts**
+> [!tip] **La sortie `-g` est faite pour les scripts**
 > Pipe-la vers grep/awk/while pour automatiser tes workflows.
 
-> [!warning] ⚠️ **Batch + timeout = équilibre**
+> [!warning] **Batch + timeout = équilibre**
 > Un batch size énorme avec un timeout court peut faire rater des ports : en cas de doute, `-b 500 -t 3000`.
 
-> [!warning] ⚠️ **Pas de version sans Nmap**
+> [!warning] **Pas de version sans Nmap**
 > RustScan ne fait pas de détection de version : sans délégation Nmap (`-- -sV`), tu n'obtiens que des ports, pas les services.
 
-> [!warning] ⚠️ **`-n` ≠ « no DNS »**
+> [!warning] `-n` ≠ « no DNS »**
 > `-n` signifie « no config file » (pas de `.rustscan.toml`), pas « no DNS » : ne te trompe pas sur sa sémantique.
 
-> [!danger] 🚫 **TCP connect = bruyant**
+> [!danger] **TCP connect = bruyant**
 > Les connexions TCP complètes sont visibles côté cible : réserver le scan aux périmètres autorisés.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 - [Dépôt officiel — RustScan](https://github.com/RustScan/RustScan)
@@ -610,4 +610,4 @@ rustscan -a 10.10.10.10 -n -q
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[02 - Scan & Énumération|🔍 Scan & Énum]] · [[Outil - Nmap|🕵️ Nmap]] · [[Outil - naabu|🚪 naabu]] · [[Outil - Masscan|⚡ Masscan]]
+**Liens :** [[Tools| Outils]] · [[02 - Scan & Énumération| Scan & Énum]] · [[Outil - Nmap| Nmap]] · [[Outil - naabu| naabu]] · [[Outil - Masscan| Masscan]]

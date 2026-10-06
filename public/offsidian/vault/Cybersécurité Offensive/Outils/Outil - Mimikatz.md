@@ -1,11 +1,11 @@
 ---
 title: "Outil - Mimikatz"
 type: outil
-categorie: 👑 Active Directory & Windows
+categorie: Active Directory & Windows
 tags:
   - cyber
   - outil
-  - 👑 Active Directory & Windows
+  - Active Directory & Windows
 statut: publie
 version: 2.2.0
 licence: MIT (de code source libre, avec avertissement de non-responsabilité)
@@ -16,14 +16,14 @@ site: https://blog.gentilkiwi.com/
 doc: https://github.com/gentilkiwi/mimikatz/wiki
 ---
 
-# 👑 Mimikatz — Extraction d'identifiants Windows et AD
+# Mimikatz — Extraction d'identifiants Windows et AD
 
 > [!info] **En 1 phrase**
 > Mimikatz est l'outil de référence de la post-exploitation Windows : il extrait les identifiants (mots de passe, hashes NTLM, tickets Kerberos, clés DPAPI) depuis la mémoire et les bases locales de Windows.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Détail |
 |---|---|
@@ -40,7 +40,7 @@ doc: https://github.com/gentilkiwi/mimikatz/wiki
 
 ---
 
-## 🎯 Concept
+## Concept
 
 Mimikatz lit la mémoire du processus **LSASS** (`sekurlsa`) et les bases **SAM / LSA / NTDS** (`lsadump`) pour voler les secrets de la machine et du domaine. Il permet aussi d'injecter des tickets Kerberos (**Pass-the-Ticket**), de faire du **DCSync** et de déchiffrer les données **DPAPI**. Nécessite des droits élevés (`SYSTEM` idéalement) et le privilège `SeDebugPrivilege`.
 
@@ -60,7 +60,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Rôle dans Mimikatz |
 |---|---|
@@ -78,7 +78,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Téléchargement (post-exploitation)
 
@@ -104,7 +104,7 @@ Invoke-Mimikatz -Command '"privilege::debug" "sekurlsa::logonpasswords"'
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Mimikatz fonctionne **en mode interactif** ou **en une ligne** (commandes entre guillemets, séparées par des espaces). Il n'y a pas de fichier de configuration : l'ordre des commandes et les privilèges font tout.
 
@@ -122,7 +122,7 @@ Mimikatz fonctionne **en mode interactif** ou **en une ligne** (commandes entre 
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 - **Langage** : C pur, compilé pour Windows (x86/x64, ARM) — minimal et rapide.
 - **Modules** : chaque domaine fonctionnel est un module (`sekurlsa`, `lsadump`, `kerberos`, `dpapi`, `crypto`, `vault`, `privilege`, …) accessible via la syntaxe `module::fonction`.
@@ -135,7 +135,7 @@ Mimikatz fonctionne **en mode interactif** ou **en une ligne** (commandes entre 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -188,7 +188,7 @@ mimikatz.exe "crypto::certificates /export" "exit"
 mimikatz.exe "sekurlsa::pth /user:admin /domain:corp.local /ntlm:<HASH> /ptt" "exit"
 ```
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -212,7 +212,7 @@ mimikatz.exe "sekurlsa::pth /user:admin /domain:corp.local /ntlm:<HASH> /ptt" "e
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -259,7 +259,7 @@ mimikatz.exe "privilege::debug" "dpapi::cred /in:C:\Users\user\AppData\Local\Mic
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 Scénario : vous avez obtenu une session **SYSTEM** sur un poste du domaine.
 
@@ -276,7 +276,7 @@ Ces opérations s'enchaînent en une seule ligne (`mimikatz.exe "privilege::debu
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Golden Ticket avec le krbtgt
 
@@ -325,7 +325,7 @@ mimikatz.exe "kerberos::golden /user:fakadmin /domain:corp.local /sid:S-1-5-21-X
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -338,7 +338,7 @@ mimikatz.exe "kerberos::golden /user:fakadmin /domain:corp.local /sid:S-1-5-21-X
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -354,7 +354,7 @@ mimikatz.exe "kerberos::golden /user:fakadmin /domain:corp.local /sid:S-1-5-21-X
 > [!note] Ne renseigner que si l'association est réellement pertinente.
 > Mimikatz couvre surtout **Credential Access** (T1003, T1558) et **Defense Evasion** (drivers) ; les tickets relèvent de T1558.
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Élément | Analyse |
 |---|---|
@@ -370,7 +370,7 @@ mimikatz.exe "kerberos::golden /user:fakadmin /domain:corp.local /sid:S-1-5-21-X
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 | Tâche | Outil | Exemple de commande / code |
 |---|---|---|
@@ -382,7 +382,7 @@ mimikatz.exe "kerberos::golden /user:fakadmin /domain:corp.local /sid:S-1-5-21-X
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 - **Sortie console** : lignes `user : domaine : NTLM : <hash>` pour les sessions, tickets listés par `kerberos::list`.
 - **Fichiers** : `log <f>` écrit la session dans un fichier ; les exports DPAPI/certificats produisent des fichiers (`*.pfx`, blobs décryptés).
@@ -396,7 +396,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 | Outil | Usage dans l'écosystème Mimikatz |
 |---|---|
@@ -409,7 +409,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Différence | Pour qui |
 |---|---|---|
@@ -421,7 +421,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Facteur | Impact | Optimisation |
 |---|---|---|
@@ -432,7 +432,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution | Vérification |
 |---|---|---|---|
@@ -445,7 +445,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Usage strictement encadré** : Mimikatz est un outil offensif ; à n'utiliser que dans un cadre de test autorisé (lab, contrat de pentest).
 - **Protection des données** : les hashes, tickets et secrets extraits sont sensibles → chiffrer les fichiers de log, ne jamais les committer.
@@ -455,7 +455,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Droits requis** : SYSTEM/`SeDebugPrivilege` pour la plupart des fonctions.
 - **Protections modernes** : Credential Guard, LSA Protection, WDAG/Core Isolation limitent l'extraction.
@@ -466,7 +466,7 @@ grep -iE 'ntlm:' dump.txt | awk '{print $NF}' | sort -u > hashes.txt
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```text
 # Privilèges (toujours d'abord)
@@ -502,7 +502,7 @@ mimikatz.exe "crypto::certificates /export" "exit"
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Situation | Action immédiate |
 |---|---|
@@ -516,7 +516,7 @@ mimikatz.exe "crypto::certificates /export" "exit"
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -529,19 +529,19 @@ mimikatz.exe "crypto::certificates /export" "exit"
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Contournement LSA Protection** : si `sekurlsa` échoue, dump la mémoire de LSASS (`procdump64 -accepteula -ma lsass.exe lsass.dmp`) puis analyse hors-ligne : `mimikatz.exe "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords"`.
+> [!tip] **Contournement LSA Protection** : si `sekurlsa` échoue, dump la mémoire de LSASS (`procdump64 -accepteula -ma lsass.exe lsass.dmp`) puis analyse hors-ligne : `mimikatz.exe "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords"`.
 
-> [!warning] ⚠️ **Piège** : les hashes d'un **compte local** ne valent que sur la machine. Pour le domaine, il faut le **NTDS** (DCSync ou `secretsdump.py`).
+> [!warning] **Piège** : les hashes d'un **compte local** ne valent que sur la machine. Pour le domaine, il faut le **NTDS** (DCSync ou `secretsdump.py`).
 
-> [!warning] ⚠️ **Piège** : `kerberos::ptt` exige un ticket **.kirbi**. Depuis Linux, convertis un `.ccache` avec `ticketConverter.py` (Impacket).
+> [!warning] **Piège** : `kerberos::ptt` exige un ticket **.kirbi**. Depuis Linux, convertis un `.ccache` avec `ticketConverter.py` (Impacket).
 
-> [!warning] ⚠️ **Piège** : le binaire `mimikatz.exe` est massivement détecté par Defender/EDR. Pense aux chargements mémoire (Reflective DLL), aux variantes modifiées, ou à l'équivalent `secretsdump.py` d'Impacket depuis un accès Linux.
+> [!warning] **Piège** : le binaire `mimikatz.exe` est massivement détecté par Defender/EDR. Pense aux chargements mémoire (Reflective DLL), aux variantes modifiées, ou à l'équivalent `secretsdump.py` d'Impacket depuis un accès Linux.
 
 ---
 
-## 📚 References
+## References
 
 - GitHub officiel : https://github.com/gentilkiwi/mimikatz
 - Wiki Mimikatz : https://github.com/gentilkiwi/mimikatz/wiki
@@ -549,5 +549,5 @@ mimikatz.exe "crypto::certificates /export" "exit"
 - The Hacker Recipes — Mimikatz : https://www.thehacker.recipes/ad/movement/credentials/dumping/
 - Microsoft — LSA Protection : https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection
 
-➡️ **Liens :** [[Outil - Mimikatz]] | [[Outil - Impacket]] | [[Outil - Evil-WinRM]] | [[Outil - Rubeus]] | [[Outil - BloodHound]] | [[Outil - CrackMapExec]] | [[Outil - hashcat]]
+**Liens :** [[Outil - Mimikatz]] | [[Outil - Impacket]] | [[Outil - Evil-WinRM]] | [[Outil - Rubeus]] | [[Outil - BloodHound]] | [[Outil - CrackMapExec]] | [[Outil - hashcat]]
 

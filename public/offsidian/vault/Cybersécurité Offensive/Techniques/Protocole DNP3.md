@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🏗️ Protocole DNP3
+# Protocole DNP3
 
 > [!info] **En 1 phrase**
 > **DNP3** (Distributed Network Protocol) est le protocole **ICS/SCADA** de télécommande
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🔧 Le protocole en bref
+## Le protocole en bref
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
 
 ---
 
-## 🎯 Discovery
+## Discovery
 
 ### Clients / simulateurs DNP3
 
@@ -52,13 +52,13 @@ nmap -sT --script dnp3-enumerate.nse -p 20000 <target_ip>
 
 ---
 
-## 🔧 Génération de trafic
+## Génération de trafic
 
 - [DNP3 Crafter](https://github.com/hpcn-uam/DNP3Crafter) — forger des trames DNP3 personnalisées (tests, injections, fuzzing).
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -68,7 +68,7 @@ nmap -sT --script dnp3-enumerate.nse -p 20000 <target_ip>
 | **Surveillance des trames** | Détecter les énumérations et commandes illégales (audit des masters) |
 | **Patch des IED/RTU** | Les implémentations DNP3 ont un historique de vulns applicatives |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - DNP3 n'est **pas authentifié** par défaut : un acteur réseau peut lire et injecter des commandes maîtres.
 - Le script `dnp3-enumerate.nse` liste les **objets DNP3** supportés par la cible (registres, points).
@@ -77,7 +77,7 @@ nmap -sT --script dnp3-enumerate.nse -p 20000 <target_ip>
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — DNP3](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/dnp3.md)
 
-➡️ Liens : [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Protocole Modbus|🏭 Modbus]] · [[Protocole MMS|⚡ MMS]] · [[Injection de commandes|💻 Injection de commandes]]
+Liens : [[13 - Hardware & IoT| Hardware & IoT]] · [[Protocole Modbus| Modbus]] · [[Protocole MMS| MMS]] · [[Injection de commandes| Injection de commandes]]

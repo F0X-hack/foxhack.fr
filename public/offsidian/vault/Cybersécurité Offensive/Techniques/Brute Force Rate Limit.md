@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔨 Brute Force & Rate Limit Bypass
+# Brute Force & Rate Limit Bypass
 
 > [!info] **En 1 phrase**
 > La brute force = deviner des identifiants/tokens en testant un grand volume de valeurs ;
@@ -23,7 +23,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -35,14 +35,14 @@ flowchart LR
     E --> F[Connexion réussie<br>→ ATO possible]
 ```
 
-> [!info] 💡 **Pourquoi la brute force est bloquée**
+> [!info] **Pourquoi la brute force est bloquée**
 > L'app limite **le nombre de tentatives** (par IP, par compte, par heure) et ralentit/verrouille
 > au-delà. Elle ajoute des **CAPTCHA** pour bloquer les bots et des **WAF** pour détecter le rythme
 > anormal. Le but de l'attaquant = rester **sous le radar** ou **masquer son volume** réel.
 
 ---
 
-## 🎯 Endpoints concernés
+## Endpoints concernés
 
 | Endpoint | Cible | Risque |
 |---|---|---|
@@ -53,12 +53,12 @@ flowchart LR
 | **API** (endpoints d'auth, rate limit faible) | clés, sessions, tokens | accès non autorisé |
 | **Enregistrement** (username déjà pris) | énumération de comptes | prelude à un spray |
 
-> [!tip] 💡 Les **codes OTP de 4-6 chiffres** sont les meilleures cibles : seulement `10⁴` à `10⁶`
+> [!tip] Les **codes OTP de 4-6 chiffres** sont les meilleures cibles : seulement `10⁴` à `10⁶`
 > combinaisons, souvent pas de verrouillage, et réutilisables si le code reste valide 30-60 s.
 
 ---
 
-## 🧊 Bypass de rate limit / CAPTCHA
+## Bypass de rate limit / CAPTCHA
 
 ### En-têtes d'IP (X-Forwarded-For & co)
 
@@ -76,7 +76,7 @@ True-Client-IP: 1.2.3.4         CF-Connecting-IP: 1.2.3.4
 Forwarded: for=1.2.3.4;by=1.2.3.4
 ```
 
-> [!tip] 💡 **Variantes à tester à chaque requête** : `127.0.0.1` (souvent **whitelisté** par le rate
+> [!tip] **Variantes à tester à chaque requête** : `127.0.0.1` (souvent **whitelisté** par le rate
 > limiter !), `X-Forwarded-For: 127.0.0.1`, une IP **de la plage interne** (`10.x`, `192.168.x`,
 > `172.16-31.x`) ou l'IP **du reverse proxy** lui-même.
 
@@ -100,7 +100,7 @@ username=admin&password=xxxx&auth=0
 {"username":"admin","password":"xxxx","username":"admin"}
 ```
 
-> [!warning] ⚠️ Tester la **liste des noms de paramètres** (`username`, `passwd`, `password`, `pwd`,
+> [!warning] Tester la **liste des noms de paramètres** (`username`, `passwd`, `password`, `pwd`,
 > `login`, `user_login`, `loginname`…) : si le limiter ne compte que le champ `username` mais que
 > l'app accepte `user_login`, on **alterne les noms** et on n'atteint jamais la limite.
 
@@ -111,10 +111,10 @@ POST /login HTTP/1.1
 Cookie: PHPSESSID=<nouveau cookie à chaque tentative>
 ```
 
-> [!info] 💡 Le rate limit est souvent lié à la **session** (cookie `sessionid`, `JWT`, token CSRF).
+> [!info] Le rate limit est souvent lié à la **session** (cookie `sessionid`, `JWT`, token CSRF).
 > **Nouveau cookie / nouvelle session à chaque requête** = nouveau compteur. Le token CSRF peut être
 > **réutilisé** ou **régénéré** : à tester. Un JWT faible (`none`, `HS256`) peut être **forgé** →
-> voir [[Attaques JWT|🔐 Attaques JWT]].
+> voir [[Attaques JWT| Attaques JWT]].
 
 ### User-Agent & fingerprinting
 
@@ -125,7 +125,7 @@ curl -s -A "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Mobile/15E148
 curl -s -A "curl/8.0.1" https://target.tld/login ...
 ```
 
-> [!warning] ⚠️ Certains WAF **fingerprintent le TLS** (hash **JA3**) au lieu du User-Agent : changer
+> [!warning] Certains WAF **fingerprintent le TLS** (hash **JA3**) au lieu du User-Agent : changer
 > le UA ne suffit pas. Contournements : `curl-impersonate` (spoof Chrome/Firefox au niveau TLS),
 > Puppeteer/Playwright, plugins de randomisation JA3.
 
@@ -143,7 +143,7 @@ username=adm%69n    # 'i' encodé
 username=&#97;dmin  # HTML / double encodage
 ```
 
-> [!tip] 💡 Si le WAF détecte `password=` ou les mots-clés, encodage double / **HTTP Pipelining**
+> [!tip] Si le WAF détecte `password=` ou les mots-clés, encodage double / **HTTP Pipelining**
 > (plusieurs requêtes sur la même connexion TCP **sans attendre les réponses**) permettent de passer
 > sous le radar d'un limiter qui compte les connexions plutôt que les requêtes.
 
@@ -178,12 +178,12 @@ POST /login
 min&password=xxxx  # req 2 → complète
 ```
 
-> [!warning] ⚠️ La **fragmentation** dépend du parsing de l'app/reverse proxy : tester en vrai,
+> [!warning] La **fragmentation** dépend du parsing de l'app/reverse proxy : tester en vrai,
 > ça ne marche que si le backend **reconstitue** la requête après le WAF/limiter.
 
 ---
 
-## 🛡️ Bypass des WAF
+## Bypass des WAF
 
 ### Timing & rythme
 
@@ -219,7 +219,7 @@ proxychains ffuf -w wordlist.txt -u https://target.tld/FUZZ
 
 ### TLS / JA3
 
-> [!info] 💡 Le hash **JA3** (Client Hello TLS) identifie le client même avec un User-Agent fake.
+> [!info] Le hash **JA3** (Client Hello TLS) identifie le client même avec un User-Agent fake.
 > JA3 connus et **bloquables** : Burp `53d67b2a806147a7d1d5df74b54dd049` /
 > `62f6a6727fda5a1104d5b147cd82e520`, Tor `e7d705a3286e19ea42f587b344ee6865`.
 
@@ -234,7 +234,7 @@ git clone https://github.com/lwthiker/curl-impersonate
 
 ---
 
-## ⚡ Attaques : bruteforce login / OTP
+## Attaques : bruteforce login / OTP
 
 ### Wordlists
 
@@ -303,7 +303,7 @@ hydra -l root -P rockyou.txt target.tld ssh
 
 ### Burp Intruder
 
-> [!tip] 💡 **Config type** : Position sur `password=§xxxx§` → Payload set = wordlist →
+> [!tip] **Config type** : Position sur `password=§xxxx§` → Payload set = wordlist →
 > `Resource pool` → 1 requête / delay (500-1000 ms) pour rester discret → `Grep-Match` sur
 > `Invalid credentials` / `Too many attempts` / `Please wait`.
 
@@ -360,12 +360,12 @@ Too many requests. Try again in 30 minutes.
 302 + set-cookie  → succès ! suivre le cookie de session
 ```
 
-> [!warning] ⚠️ Des messages d'erreur **distincts** (`Invalid username` vs `Invalid password`)
+> [!warning] Des messages d'erreur **distincts** (`Invalid username` vs `Invalid password`)
 > révèlent l'existence d'un compte → c'est le **prérequis d'un password spraying** ciblé.
 
 ---
 
-## 🤖 CAPTCHA / reCAPTCHA
+## CAPTCHA / reCAPTCHA
 
 ### Bypass
 
@@ -387,18 +387,18 @@ r = requests.post("https://target.tld/login", data={
 })
 ```
 
-> [!warning] ⚠️ Un CAPTCHA généré **côté client** (token dans le HTML, réponse calculable) ou à
+> [!warning] Un CAPTCHA généré **côté client** (token dans le HTML, réponse calculable) ou à
 > vérification **asynchrone/débrayable** = pas de réelle protection. Toujours tester le flow **sans**
 > le champ CAPTCHA.
 
 ---
 
-## 👥 Rate limit compte vs IP (spraying)
+## Rate limit compte vs IP (spraying)
 
-> [!info] 💡 Deux modèles de rate limit :
+> [!info] Deux modèles de rate limit :
 > - **Par IP** : N tentatives / IP / fenêtre → contourné par rotation d'IP (headers, proxy).
 > - **Par compte** : N tentatives / **username** / fenêtre → contourné en **spraying**
->   (1 seul mot de passe pour beaucoup de comptes) → voir [[Password Spraying|🧂 Password Spraying]].
+>   (1 seul mot de passe pour beaucoup de comptes) → voir [[Password Spraying| Password Spraying]].
 
 ```bash
 # Spraying : 1 mdp / beaucoup de comptes (sous le seuil par compte)
@@ -410,13 +410,13 @@ hydra -L usernames.txt -p "Spring2025!" target.tld http-post-form \
   "/login:username=^USER^&password=^PASS^:Invalid"
 ```
 
-> [!tip] 💡 Le **spraying** reste sous les limites *par compte* (1 tentative/compte) et *par IP*
-> (peu de requêtes) : la technique la plus furtive. Enchaîne sur [[Account Takeover|👤 ATO]] une fois
-> un compte valide obtenu, et sur [[IDOR|🎯 IDOR]] pour basculer de compte.
+> [!tip] Le **spraying** reste sous les limites *par compte* (1 tentative/compte) et *par IP*
+> (peu de requêtes) : la technique la plus furtive. Enchaîne sur [[Account Takeover| ATO]] une fois
+> un compte valide obtenu, et sur [[IDOR| IDOR]] pour basculer de compte.
 
 ---
 
-## 🧰 Outils
+## Outils
 
 | Outil | Usage |
 |---|---|
@@ -434,7 +434,7 @@ hydra -L usernames.txt -p "Spring2025!" target.tld http-post-form \
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Défense | Détail |
 |---|---|
@@ -449,21 +449,21 @@ hydra -L usernames.txt -p "Spring2025!" target.tld http-post-form \
 | **CSRF tokens** | liés à la session + régénérés → ralentit le bruteforce |
 | **2FA / MFA** | rend le bruteforce du mot de passe seul inutile |
 
-> [!warning] ⚠️ **Lockout trop agressif = faille DoS** : un attaquant peut verrouiller volontairement
+> [!warning] **Lockout trop agressif = faille DoS** : un attaquant peut verrouiller volontairement
 > tous les comptes (`lockout`, `reset`). Préférer des lockouts courts + CAPTCHA plutôt qu'un blocage long.
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Ordre logique d'attaque**
+> [!tip] **Ordre logique d'attaque**
 > 1. **Identifier la limite** : envoyer des requêtes jusqu'à observer `429 / 403 / Too many requests` → on connaît le seuil et la fenêtre.
 > 2. **Identifier la clé** du limiter : IP ? session ? compte ? paramètre ?
 > 3. **Choisir le bypass** : header IP (test rapide) → rotation paramètres/sessions → proxy/IPv6 → WAF/JA3.
 > 4. **Rester furtif** : `-t 1`, `-rate` faible, pauses, jamais d'attaque en parallèle massif.
 > 5. **Confirmer** le succès sur un déclencheur fiable (302, set-cookie, message distinctif).
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Les **messages d'erreur distincts** (`Invalid username` / `Invalid password`) trahissent l'existence d'un compte : vulnérabilité d'énumération.
 > - `X-Forwarded-For` ne marche que si le limiter **fait confiance au header** ; un reverse proxy propre l'écrase → vérifier l'effet réel.
 > - **Connaître la réponse d'échec avant de lancer** la wordlist (filtres `-fs` / `-fc`).
@@ -472,14 +472,14 @@ hydra -L usernames.txt -p "Spring2025!" target.tld http-post-form \
 > - Un CAPTCHA résolu une fois peut être **réutilisé** ; les services de résolution existent mais coûtent.
 > - Un **script dédié** (requests) reste plus fin que hydra pour les flows complexes (JSON, tokens CSRF, OTP).
 
-> [!warning] ⚠️ **Légalité & éthique**
+> [!warning] **Légalité & éthique**
 > Le bruteforce sans autorisation écrite = **illégal** (répression de la fraude informatique).
 > Toute énumération/bruteforce doit se faire dans un **périmètre autorisé** (bug bounty, contrat,
 > lab type PortSwigger) avec un **taux raisonnable** pour ne pas impacter la disponibilité de la cible.
 
 ---
 
-## 🧪 Labs & Références
+## Labs & Références
 
 - PortSwigger Web Security Academy — Authentication (brute force, rate limiting, lockout) : https://portswigger.net/web-security/all-labs#authentication
 - Root-Me : HTTP — brute force (login, otp) : https://www.root-me.org/
@@ -491,11 +491,11 @@ hydra -L usernames.txt -p "Spring2025!" target.tld http-post-form \
 
 ---
 
-## 🔗 Liens
+## Liens
 
-- [[Password Spraying|🧂 Password Spraying]]
-- [[Account Takeover|👤 ATO]]
-- [[IDOR|🎯 IDOR]]
-- [[Attaques JWT|🔐 Attaques JWT]]
-- → Note complète : [[03 - Exploitation Web|🌍 Exploitation Web]]
-- 📚 Source : [PayloadsAllTheThings — Brute Force & Rate Limit](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Brute%20Force/README.md)
+- [[Password Spraying| Password Spraying]]
+- [[Account Takeover| ATO]]
+- [[IDOR| IDOR]]
+- [[Attaques JWT| Attaques JWT]]
+- → Note complète : [[03 - Exploitation Web| Exploitation Web]]
+- Source : [PayloadsAllTheThings — Brute Force & Rate Limit](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Brute%20Force/README.md)

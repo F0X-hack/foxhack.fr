@@ -13,7 +13,7 @@ statut: publie
 
 ---
 
-# 🧪 HydraUSB3
+# HydraUSB3
 
 > [!info] **En 1 phrase**
 > **HydraUSB3** est une plateforme open-source de test de sécurité USB 2.0/3.0 basée
@@ -24,7 +24,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -38,13 +38,13 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > HydraUSB3 est une plateforme open-source de test de sécurité USB conçue pour
 > tester la sécurité des implémentations USB. Elle supporte le **sniffing**, le
 > **fuzzing**, l'**injection HID** et la **man-in-the-Middle USB**.
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **SAM3X8U** : MCU Cortex-M3 à 84 MHz (même que l'Arduino Due)
 > - **USB 2.0** : Low-Speed (1.5 Mbps) et Full-Speed (12 Mbps)
 > - **USB 3.0** : Super-Speed (5 Gbps) via PHY externe
@@ -64,7 +64,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Architecture HydraUSB3
 
@@ -89,7 +89,7 @@ flowchart TB
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -127,7 +127,7 @@ HydraUSB3               Device cible              Host (PC)
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### USB 2.0
 
@@ -161,7 +161,7 @@ HydraUSB3               Device cible              Host (PC)
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -199,7 +199,7 @@ sudo modprobe usbmon   # Linux — pour Wireshark + usbmon
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Paramètres HydraUSB3
 
@@ -221,7 +221,7 @@ sudo modprobe usbmon   # Linux — pour Wireshark + usbmon
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 | Commande | Description |
 |---|---|
@@ -242,9 +242,9 @@ sudo modprobe usbmon   # Linux — pour Wireshark + usbmon
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Sniffing de trafic USB
+### Débutant — Sniffing de trafic USB
 
 ```text
 # 1. Connecter HydraUSB3 entre host et device
@@ -262,7 +262,7 @@ sniff> stop
 sniff> save /sd/capture.bin
 ```
 
-### 🟡 Intermédiaire — Injection HID (clavier)
+### Intermédiaire — Injection HID (clavier)
 
 ```text
 > hid
@@ -271,7 +271,7 @@ hid> type "echo pwned > /tmp/pwned.txt"
 hid> key LCTRL+LALT+DELETE
 ```
 
-### 🔴 Avancé — Fuzzing d'un driver USB
+### Avancé — Fuzzing d'un driver USB
 
 ```text
 > fuzz
@@ -279,7 +279,7 @@ fuzz> start packets 10000
 # Injection de 10000 paquets fuzz — surveiller crashs / BSOD
 ```
 
-### ⚫ Expert — Man-in-the-Middle USB
+### Expert — Man-in-the-Middle USB
 
 ```text
 > mitm
@@ -290,7 +290,7 @@ mitm> save /sd/mitm_session.bin
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -312,7 +312,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Keylogger Hardware via sniffing
 
@@ -322,7 +322,7 @@ flowchart TB
 | **Matériel** | HydraUSB3 + câble USB male/female |
 | **Étapes** | 1. MitM → 2. Sniffer HID → 3. Extraire scancodes → 4. Décoder |
 | **Résultat** | Journal des touches pressées |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Fuzzing d'un driver USB
 
@@ -332,11 +332,11 @@ flowchart TB
 | **Matériel** | HydraUSB3 + PC cible |
 | **Étapes** | 1. Fuzzing HID → 2. Surveiller crashs → 3. Analyser paquets → 4. PoC |
 | **Résultat** | CVE potentielle |
-| **Difficulté** | ⭐⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -354,7 +354,7 @@ flowchart TB
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -365,7 +365,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -396,7 +396,7 @@ echo 'blacklist usb-storage' | sudo tee /etc/modprobe.d/disable-usb-storage.conf
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -433,7 +433,7 @@ hid_inject(ser, "echo pwned")
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 | Format | Utilité |
 |---|---|
@@ -450,12 +450,12 @@ wireshark usb_capture.pcap
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Flipper Zero|🐬 Flipper Zero]]
-- [[Hardware - Proxmark|🔧 Proxmark]]
-- [[Hardware - Pwnagotchi|🤖 Pwnagotchi]]
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Flipper Zero| Flipper Zero]]
+- [[Hardware - Proxmark| Proxmark]]
+- [[Hardware - Pwnagotchi| Pwnagotchi]]
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -464,7 +464,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -474,7 +474,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -487,7 +487,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -499,7 +499,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -519,7 +519,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -529,7 +529,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────────┐
@@ -558,7 +558,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -572,7 +572,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -594,7 +594,7 @@ wireshark usb_capture.pcap
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Piège 1** : HydraUSB3 doit être entre le host et le device pour le sniffing (position MitM).
 - **Piège 2** : Le fuzzing USB peut provoquer des BSOD / kernel panics sur le PC cible.
@@ -610,9 +610,9 @@ wireshark usb_capture.pcap
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — HydraUSB3](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/gadgets/hydranfc_shield_v2.md)
 > - [HydraUSB3 Firmware](https://github.com/hydrabus/ufirmware)
 > - [USB Security Attacks (SRLabs)](https://srlabs.de/usb-security)
@@ -626,4 +626,4 @@ wireshark usb_capture.pcap
 
 ---
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - HydraBus|🚌 HydraBus]] · [[Hardware - HydraNFC|🏷️ HydraNFC]] · [[Hardware - Flipper Zero|🐬 Flipper Zero]] · [[Hardware - Proxmark|🔧 Proxmark]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - HydraBus| HydraBus]] · [[Hardware - HydraNFC| HydraNFC]] · [[Hardware - Flipper Zero| Flipper Zero]] · [[Hardware - Proxmark| Proxmark]] · [[Bibliothèque technique| Index]]

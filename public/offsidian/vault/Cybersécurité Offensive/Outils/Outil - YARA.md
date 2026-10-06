@@ -1,11 +1,11 @@
 ---
 title: "Outil - YARA"
 type: outil
-categorie: 🔎 Forensics, Threat Intel & Honeypots
+categorie: Forensics, Threat Intel & Honeypots
 tags:
   - cyber
   - outil
-  - 🔎 Forensics, Threat Intel & Honeypots
+  - Forensics, Threat Intel & Honeypots
 statut: publie
 version: YARA v4.5.8 (2026) ; YARA-X (successeur)
 licence: BSD-3-Clause
@@ -16,20 +16,20 @@ site: https://virustotal.github.io/yara/
 doc: https://yara.readthedocs.io/en/stable/
 ---
 
-# 🔎 YARA — Forensics, Threat Intel & Honeypots
+# YARA — Forensics, Threat Intel & Honeypots
 
 > [!info] **En 1 phrase**
 > YARA est un langage de règles pour identifier et classer les familles de malwares par signatures (chaînes, opcodes, heuristiques), utilisé dans toute la chaîne d'analyse : sandbox, SOC, threat intel et IR.
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
 | Nom complet | YARA (Yet Another Recursive Acronym) |
 | Description | Langage de règles de détection de malwares par signatures : chaînes, opcodes, heuristiques |
-| Catégorie | 🔎 Forensics, Threat Intel & Honeypots |
+| Catégorie | Forensics, Threat Intel & Honeypots |
 | Sous-catégorie | Malware Detection / Signature |
 | Fonction principale | Identifier et classer les familles de malwares par motifs binaires |
 | Type d'outil | CLI (yara/yarac) + bibliothèque (yara-python) |
@@ -51,7 +51,7 @@ doc: https://yara.readthedocs.io/en/stable/
 
 ---
 
-## 🎯 Concept
+## Concept
 
 YARA permet de décrire des motifs (« patterns ») : chaînes hexadécimales, chaînes ASCII/Unicode, expressions régulières et conditions logiques, puis de scanner des fichiers, des dossiers ou des flux mémoire. On l'utilise pour reconnaître une famille de malwares déjà connue, détecter des variantes, ou taguer des échantillons dans un pipeline d'analyse automatique. C'est le standard de facto : VirusTotal, les sandbox et les EDR intègrent YARA.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 | Concept | Explication |
 |---|---|
@@ -85,7 +85,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 Installation sur Kali/Debian et via pip pour la bibliothèque Python :
 
@@ -102,7 +102,7 @@ Sur Windows : binaire précompilé sur le dépôt GitHub (release) ou `pip insta
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Rôle | Exemple |
 |---|---|---|
@@ -125,7 +125,7 @@ Sur Windows : binaire précompilé sur le dépôt GitHub (release) ou `pip insta
 
 ---
 
-## 🏗️ Architecture interne
+## Architecture interne
 
 Composants et flux :
 
@@ -139,7 +139,7 @@ Flux type : `.yar` → compilation → moteur → données → correspondances. 
 
 ---
 
-## ⌨️ Commandes
+## Commandes
 
 ### Commandes principales
 
@@ -168,7 +168,7 @@ yara -s -m /opt/rules/malware.yar sample.exe
 
 ---
 
-## 🎚️ Options et flags
+## Options et flags
 
 | Option | Description | Exemple | Niveau |
 |---|---|---|---|
@@ -188,7 +188,7 @@ yara -s -m /opt/rules/malware.yar sample.exe
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
 ### Beginner
 
@@ -232,7 +232,7 @@ EOF
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 1. **Écrire une règle de famille** : repérer les chaînes communes d'un loader (mutex, nom de section, API importée).
 
@@ -268,7 +268,7 @@ for m in rules.match("/tmp/evidence/sample.exe"):
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 : Scan de la mémoire d'un processus vivant
 
@@ -317,7 +317,7 @@ wc -l rapport.txt
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Phase | Utilisation |
 |---|---|
@@ -330,7 +330,7 @@ wc -l rapport.txt
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Tactique | Technique / Sub-technique | ID | Raison | Détection | Mitigation |
 |---|---|---|---|---|---|
@@ -346,7 +346,7 @@ wc -l rapport.txt
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Signes observables
 
@@ -373,7 +373,7 @@ rule Suspicious_Yara_Mass_Scan {
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```bash
 # Bash — scan récursif de tous les fichiers d'un dossier d'IR
@@ -402,7 +402,7 @@ with open("rapport.csv", "w", newline="") as out:
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 Sortie par défaut : une ligne `Règle [Nom] [chemin]` par correspondance ; avec `-s` s'ajoutent les chaînes matchées, avec `-m` les métadonnées.
 
@@ -426,7 +426,7 @@ for m in rules.match("/tmp/evidence/sample.exe"):
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
 ```text
 YARA ← règles : virus total, valhalla (nextron), communautés
@@ -437,17 +437,17 @@ YARA → Volatility (scan mémoire via windows.yarascan)
 YARA → VirusTotal (moteur d'exécution de règles)
 ```
 
-- [[Tools|🧰 Outils]]
-- [[Outils/Outil - MISP|🔎 MISP]] — partage des règles et des hashs
-- [[Outils/Outil - Volatility|🔎 Volatility]] — scan mémoire via `windows.yarascan`
+- [[Tools| Outils]]
+- [[Outils/Outil - MISP| MISP]] — partage des règles et des hashs
+- [[Outils/Outil - Volatility| Volatility]] — scan mémoire via `windows.yarascan`
 - [[Outil - Autopsy]] — moteur YARA intégré à l'analyse disque
 - [[Outil - Wazuh]] — module de scan YARA sur les endpoints
 - [[Outil - Cuckoo Sandbox]] — détection dans les sandboxes
-- [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]]
+- [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]]
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Outil | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -461,7 +461,7 @@ YARA → VirusTotal (moteur d'exécution de règles)
 
 ---
 
-## ⚡ Performance
+## Performance
 
 - **Compilation** : `yarac` pré-compile les règles → scan plus rapide (aucune recompilation à chaque run).
 - **Threads** : `-p N` parallélise le scan des fichiers d'un dossier (gain sur les millions de fichiers).
@@ -475,7 +475,7 @@ YARA → VirusTotal (moteur d'exécution de règles)
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common problems
 
@@ -511,7 +511,7 @@ YARA → VirusTotal (moteur d'exécution de règles)
 
 ---
 
-## 🔐 Sécurité de l'outil
+## Sécurité de l'outil
 
 - **Échantillons** : les fichiers scannés peuvent être malveillants : analyser dans un environnement isolé.
 - **Règles** : les signatures maison sont des actifs de sécurité : les versionner et en restreindre l'accès.
@@ -522,7 +522,7 @@ YARA → VirusTotal (moteur d'exécution de règles)
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - **Signatures** : ne détecte que ce qui est signé ; un malware modifié (recompilé) peut échapper aux règles.
 - **Faux positifs** : les motifs courts et les regex larges produisent du bruit.
@@ -533,7 +533,7 @@ YARA → VirusTotal (moteur d'exécution de règles)
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```bash
 # Scanner fichier / dossier
@@ -565,7 +565,7 @@ rule Exemple_minimal {
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | | |
 |---|---|
@@ -574,11 +574,11 @@ rule Exemple_minimal {
 | **Commande principale** | `yara -r -s -m rules/ dossier/` |
 | **Alternative principale** | YARA-X, Loki |
 | **Concepts importants** | Règle, chaîne, condition, module, compilation .yarc |
-| **Liens associés** | [[Outils/Outil - MISP|🔎 MISP]] · [[Outils/Outil - Volatility|🔎 Volatility]] · [[Outil - Autopsy]] |
+| **Liens associés** | [[Outils/Outil - MISP| MISP]] · [[Outils/Outil - Volatility| Volatility]] · [[Outil - Autopsy]] |
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signe | Défense |
 |---|---|
@@ -590,21 +590,21 @@ rule Exemple_minimal {
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
-> [!tip] 💡 **Tips**
+> [!tip] **Tips**
 > - Utilisez `-s` en phase de développement pour voir exactement quelle chaîne a matché : cela accélère le débogage de la règle.
 > - Pensez aux modificateurs `ascii` / `wide` (chaînes Unicode encodées sur 16 bits) : les malwares Windows utilisent souvent les deux.
 > - Compilez avec `yarac` et scannez avec `-C` en production : le gain de vitesse sur des millions de fichiers est considérable.
 
-> [!warning] ⚠️ **Pièges**
+> [!warning] **Pièges**
 > - Un `$hex` trop court (ex. 4 octets) produit des milliers de faux positifs ; exigez des motifs longs et contextuels, et combinez toujours plusieurs conditions.
 > - YARA matche des octets, pas des fichiers : une règle sans condition de type de fichier (`uint16(0) == 0x5A4D`) peut matcher dans des archives, documents et flux réseau. Restreignez via `condition` ou par type de fichier en amont.
 > - `yara -C` charge des règles **déjà compilées** : c'est `yarac` qui compile. Ne pas confondre les deux étapes.
 
 ---
 
-## 📚 References
+## References
 
 ### Official
 
@@ -626,4 +626,4 @@ rule Exemple_minimal {
 
 ---
 
-➡️ **Liens :** [[Tools|🧰 Outils]] · [[Techniques/09 - Reverse Engineering & Malware|🔬 Reverse Engineering & Malware]] · [[Outils/Outil - MISP|🔎 MISP]] · [[Techniques/11 - Glossaire|📖 Glossaire]]
+**Liens :** [[Tools| Outils]] · [[Techniques/09 - Reverse Engineering & Malware| Reverse Engineering & Malware]] · [[Outils/Outil - MISP| MISP]] · [[Techniques/11 - Glossaire| Glossaire]]

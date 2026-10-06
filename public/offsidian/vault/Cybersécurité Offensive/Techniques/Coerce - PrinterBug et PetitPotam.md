@@ -12,19 +12,19 @@ statut: publie
 
 
 
-# 🧲 Coerce — PrinterBug & PetitPotam
+# Coerce — PrinterBug & PetitPotam
 
 > [!info] **En 1 phrase**
 > Coerce = **forcer une machine** (souvent un DC, en SYSTEM) à **initier une authentification vers notre serveur**,
 > sans avoir aucun compte — c'est la brique qui alimente le relay, la délégation et la capture de hashes.
 
-> [!info] 💡 **Pourquoi c'est la clé de voûte**
+> [!info] **Pourquoi c'est la clé de voûte**
 > Le DC s'authentifie **lui-même** (avec son compte machine `DC$`, en SYSTEM) → l'auth est celle
 > d'un compte **super privilégié** (le DC$ peut DCSync !). On la relaie/capture/relie à une délégation.
 
 ---
 
-## 🎯 Le concept
+## Le concept
 
 ```mermaid
 sequenceDiagram
@@ -36,13 +36,13 @@ sequenceDiagram
     R->>R: Relay / Capture / Shadow credentials
 ```
 
-> [!info] 💡 **Le point clé**
+> [!info] **Le point clé**
 > La cible **ne fait que répondre** à un appel RPC "légitime" (bug du spooler, de l'EFS, du DFS...).
 > La machine **croit parler à un collègue** → elle s'authentifie spontanément vers l'attaquant.
 
 ---
 
-## 🛠️ Les outils de coercion
+## Les outils de coercion
 
 | Outil | Protocole | Remarques |
 |---|---|---|
@@ -74,7 +74,7 @@ nxc smb 10.10.10.10/24 -u user -p pass -M coerce_plus -o METHOD=PetitPotam
 
 ---
 
-## 🔗 Combinaisons gagnantes
+## Combinaisons gagnantes
 
 ### 1. Coerce → NTLM Relay (LDAP/ADCS)
 
@@ -114,7 +114,7 @@ ntlmrelayx -t ldap://DC02 --shadow-credentials --shadow-target 'dc01$'
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -125,13 +125,13 @@ ntlmrelayx -t ldap://DC02 --shadow-credentials --shadow-target 'dc01$'
 | **LDAP Signing / LDAPS** | Windows Server 2025 DC : activé par défaut |
 | **Surveiller les connexions sortantes RPC vers des IP inconnues** | Le signe d'une coercion en cours |
 
-> [!warning] 🚩 **Signing : le tableau à retenir**
-> - DC Windows Server 2019/2022 : **SMB Signing ✅**, **LDAP Signing ❌** → relay LDAP encore possible.
+> [!warning] **Signing : le tableau à retenir**
+> - DC Windows Server 2019/2022 : **SMB Signing**, **LDAP Signing** → relay LDAP encore possible.
 > - Machines membres / Windows 10/11 : SMB signing souvent **désactivé** → relay SMB possible.
 > - Windows 11 24H2 : SMB signing **activé par défaut**.
 > → Vérifie avec : `nxc smb 10.10.10.0/24 -M smb-risky` ou le module `--signing`.
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Responder et relay ne font pas bon ménage** : si Responder "mange" la requête SMB, le relay ne reçoit rien. Mets `SMB=Off` et `HTTP=Off` dans `Responder.conf` quand tu relayes.
 - **Coerce → Kerberos ou NTLM ?** : un coerce par **hostname/FQDN** peut amener un ticket **Kerberos** (utile pour délégation) ; par **IP** il ramène du **NTLM** (utile pour relay/capture).
@@ -141,8 +141,8 @@ ntlmrelayx -t ldap://DC02 --shadow-credentials --shadow-target 'dc01$'
 
 ---
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [InternalAllTheThings — Coerce](https://github.com/swisskyrepo/InternalAllTheThings/blob/main/docs/active-directory/internal-relay-coerce.md)
 > - [The Ultimate Guide to Windows Coercion Techniques in 2025 — RedTeam Pentesting](https://blog.redteam-pentesting.de/2025/windows-coercion/)
 
-➡️ Liens : [[NTLM Relay|🔗 NTLM Relay]] · [[LLMNR-NBT-NS Poisoning|🎙️ LLMNR/NBT-NS Poisoning]] · [[Shadow Credentials|🌑 Shadow Credentials]] · [[05 - Active Directory|👑 Active Directory]]
+Liens : [[NTLM Relay| NTLM Relay]] · [[LLMNR-NBT-NS Poisoning| LLMNR/NBT-NS Poisoning]] · [[Shadow Credentials| Shadow Credentials]] · [[05 - Active Directory| Active Directory]]

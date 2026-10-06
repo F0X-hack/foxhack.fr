@@ -13,7 +13,7 @@ date_created: 2024-03-15
 statut: publie
 ---
 
-# 📡 RFID LF (HID, EM410X, Indala, HiTag)
+# RFID LF (HID, EM410X, Indala, HiTag)
 
 > [!info] **En 1 phrase**
 > Les badges 125 kHz (HID Prox, EM410X, Indala, HiTag) émettent un **ID fixe en clair, sans
@@ -21,7 +21,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -33,7 +33,7 @@ statut: publie
 | **Complexité** | Faible → Moyenne |
 | **Dernière mise à jour** | 2024-03-15 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     B["Badge LF 125 kHz"] -->|"ID en clair"| R["Lecture"]
@@ -45,7 +45,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > Les badges LF 125 kHz émettent un identifiant fixe en clair sur le拨radio. Il n'y a aucun chiffrement, aucune authentification, aucune variation. Un attaquant peut lire l'ID en approchant un lecteur, puis l'écrire sur une carte vierge T55x7 pour créer un clone parfait.
 
@@ -59,7 +59,7 @@ flowchart TB
     style E fill:#ffcdd2
 ```
 
-> [!info] 💡 **Le contexte**
+> [!info] **Le contexte**
 > - **HID Prox** : formats H10302/H10304 (26–37 bits), facility code + numéro carte
 > - **Indala** : formats propriétaires Motorola/HID
 > - **EM410X** : mémoire lecture seule (impossible à réécrire)
@@ -68,7 +68,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Formats de badges LF
 
@@ -101,7 +101,7 @@ Bit:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -125,7 +125,7 @@ Bit:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
 
 ---
 
-## ⚡ Protocoles
+## Protocoles
 
 ### LF 125 kHz
 
@@ -152,7 +152,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -187,7 +187,7 @@ cd proxmark3 && make
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 | Paramètre | Défaut | Description |
 |---|---|---|
@@ -197,7 +197,7 @@ cd proxmark3 && make
 
 ---
 
-## ⌨️ Commandes / Manipulations
+## Commandes / Manipulations
 
 ### Scan automatique
 
@@ -261,9 +261,9 @@ lf t55xx wipe
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Lire badge (Flipper Zero)
+### Débutant — Lire badge (Flipper Zero)
 
 ```text
 1. Badges → RFID → Add
@@ -272,7 +272,7 @@ lf t55xx wipe
 4. Badges → Emulate → test porte
 ```
 
-### 🟡 Intermédiaire — Cloner HID Prox
+### Intermédiaire — Cloner HID Prox
 
 ```bash
 # 1. Lire le badge original
@@ -290,7 +290,7 @@ lf hid clone 2004263f88
 lf hid read
 ```
 
-### 🔴 Avancé — Brute-force lecteur HID
+### Avancé — Brute-force lecteur HID
 
 ```bash
 # Facility code connu → balayer tous les numéros
@@ -301,7 +301,7 @@ lf hid brute a 26 f 224
 # d <delay> ms (défaut 1000)
 ```
 
-### ⚫ Expert — Détection double badge
+### Expert — Détection double badge
 
 ```python
 #!/usr/bin/env python3
@@ -324,7 +324,7 @@ if badge1 == badge2:
 
 ---
 
-## 🧪 Workflow complet
+## Workflow complet
 
 ```mermaid
 flowchart TB
@@ -349,7 +349,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Cloner badge accès bureau
 
@@ -359,7 +359,7 @@ flowchart TB
 | **Outil** | Proxmark3 |
 | **Étapes** | `lf search` → `lf hid decode` → `lf hid clone` sur T55x7 |
 | **Résultat** | Badge cloné, accès physique |
-| **Difficulté** | ⭐ |
+| **Difficulté** | |
 
 ### Scénario 2 — Brute-force lecteur parking
 
@@ -369,7 +369,7 @@ flowchart TB
 | **Outil** | Proxmark3 |
 | **Étapes** | Facility code connu → `lf hid brute` → déclenchement porte |
 | **Résultat** | ID valide trouvé, accès parking |
-| **Difficulté** | ⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -388,11 +388,11 @@ flowchart LR
 | **Outil** | 2× Proxmark3 + réseau |
 | **Étapes** | Prox #1 lit badge → relais → Prox #2 émule |
 | **Résultat** | Authentification réussie à distance |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Impact |
 |---|---|---|
@@ -408,7 +408,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie |
 |---|---|---|
@@ -425,7 +425,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 | Mesure | Efficacité | Priorité |
 |---|---|---|
@@ -438,7 +438,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ```python
 #!/usr/bin/env python3
@@ -470,7 +470,7 @@ print(output)
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ```bash
 # Dump badge
@@ -485,21 +485,21 @@ lf hid read | grep "TAG ID"
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]]
+- [[13 - Hardware & IoT| Hardware & IoT]]
 - [[Hardware - RFID LF (HID, EM410X, Indala, HiTag)]] (cette fiche)
-- [[Hardware - RFID et NFC|🏷️ RFID/NFC]]
+- [[Hardware - RFID et NFC| RFID/NFC]]
 
 | Outil | Usage |
 |---|---|
 | [[Hardware - Proxmark]] | RFID dédié |
 | [[Hardware - Flipper Zero]] | Multi-protocole RF |
-| [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]] | HF complémentaire |
+| [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] | HF complémentaire |
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients |
 |---|---|---|
@@ -509,7 +509,7 @@ lf hid read | grep "TAG ID"
 
 ---
 
-## ⚡ Performance
+## Performance
 
 | Métrique | Valeur |
 |---|---|
@@ -520,7 +520,7 @@ lf hid read | grep "TAG ID"
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause | Solution |
 |---|---|---|
@@ -536,7 +536,7 @@ lf search
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Mitigation |
 |---|---|
@@ -550,7 +550,7 @@ lf search
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Contournement |
 |---|---|
@@ -560,7 +560,7 @@ lf search
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -581,7 +581,7 @@ lf search
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur |
 |---|---|
@@ -594,7 +594,7 @@ lf search
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Countermeasure | Efficacité |
 |---|---|
@@ -604,7 +604,7 @@ lf search
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **EM410X = lecture seule** : pour cloner → T55x7, pas EM410X vierge.
 - **Ne jamais écraser** une carte légitime : sauvegarde d'abord.
@@ -616,9 +616,9 @@ lf search
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — LF HID & Indala](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/rfid-nfc/lf-hid-indala.md)
 > - [RFID Hacking — Kevin Chung](https://blog.kchung.co/rfid-hacking-with-the-proxmark-3/)
 
@@ -630,4 +630,4 @@ lf search
 
 ---
 
-➡️ **Liens :** [[Hardware - RFID et NFC|🏷️ Hub RFID]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)|💳 MIFARE]] · [[Hardware - Proxmark|🛠️ Proxmark]] · [[Hardware - Flipper Zero|🎮 Flipper Zero]]
+**Liens :** [[Hardware - RFID et NFC| Hub RFID]] · [[Hardware - RFID MIFARE (HF 13.56 MHz)| MIFARE]] · [[Hardware - Proxmark| Proxmark]] · [[Hardware - Flipper Zero| Flipper Zero]]

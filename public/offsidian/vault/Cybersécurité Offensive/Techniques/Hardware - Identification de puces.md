@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🔬 Identification de puces
+# Identification de puces
 
 > [!info] **En 1 phrase**
 > Identifier la puce d'un device = **remonter au datasheet** (pinout, protocoles, faiblesses)
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🧾 Overview
+## Overview
 
 | Champ | Valeur |
 |---|---|
@@ -32,14 +32,14 @@ statut: publie
 | **Complexité** | Faible à Élevée |
 | **Dernière mise à jour** | 2026-08-16 |
 
-> [!info] 📊 **Diagramme de contexte**
+> [!info] **Diagramme de contexte**
 > ```mermaid
 > flowchart LR
 >     A["Carte PCB en main"] --> B["Retirer le bouclier EM/RF"]
 >     B --> C["Lire le marquage (top marking)"]
 >     C --> D["Google Dork: filetype:pdf <référence>"]
 >     C --> E["Base de datasheets"]
->     D --> F["📄 Datasheet obtenu"]
+>     D --> F["Datasheet obtenu"]
 >     E --> F
 >     F --> G["Pinout, protocoles, faiblesses"]
 >     style A fill:#e1f5fe
@@ -48,7 +48,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 > L'identification de puces est le processus de reconnaissance physique d'un PCB : lire les **marquages** imprimés sur les composants, les associer à leur **datasheet**, et en extraire le **pinout**, les **protocoles**, les **tensions** et les **faiblesses**. C'est une étape fondamentale du hardware hacking car elle détermine toutes les étapes suivantes : quelles broches attaquer (UART, JTAG, SPI), quelles tensions utiliser, et quels outils connecter.
 
@@ -58,7 +58,7 @@ flowchart TB
     B --> C["Lire le marquage (top marking)"]
     C --> D["Google Dork: filetype:pdf <référence>"]
     C --> E["Base de datasheets (alldatasheet, datasheetspdf)"]
-    D --> F["📄 Datasheet obtenu"]
+    D --> F["Datasheet obtenu"]
     E --> F
     F --> G["Pinout, protocoles, tensions, faiblesses"]
     G --> H["Planifier l'attaque: UART, JTAG, SPI, fault injection"]
@@ -66,7 +66,7 @@ flowchart TB
     style H fill:#ffcdd2
 ```
 
-> [!info] 💡 **Ce qu'on gagne avec le datasheet**
+> [!info] **Ce qu'on gagne avec le datasheet**
 > - Le **pinout exact** → où trouver TX/RX UART, TDI/TDO JTAG, SPI flash, etc.
 > - Les **protocoles** et tensions d'alimentation → ne pas griller le circuit.
 > - Les **faiblesses connues** : clés publiques, réinitialisation, debug non désactivé, CVE du SoC/MCU.
@@ -74,7 +74,7 @@ flowchart TB
 
 ---
 
-## 🧠 Concepts fondamentaux
+## Concepts fondamentaux
 
 ### Types de composants sur un PCB
 
@@ -234,7 +234,7 @@ filetype:pdf <référence>                 # datasheet en PDF direct
 
 ---
 
-## 🔌 Matériel / Composants
+## Matériel / Composants
 
 ### Outils principaux
 
@@ -263,7 +263,7 @@ filetype:pdf <référence>                 # datasheet en PDF direct
 
 ---
 
-## 🧲 Bouclier EM/RF (EM/RF shield)
+## Bouclier EM/RF (EM/RF shield)
 
 ### Pourquoi les boucliers sont importants
 
@@ -312,7 +312,7 @@ filetype:pdf <référence>                 # datasheet en PDF direct
 
 ---
 
-## 🔍 Techniques d'identification avancées
+## Techniques d'identification avancées
 
 ### Identification par contexte circuit
 
@@ -386,7 +386,7 @@ fw_printenv              # Depuis le host
 
 ---
 
-## 🛠️ Installation / Setup
+## Installation / Setup
 
 ### Prérequis
 
@@ -446,7 +446,7 @@ ls /dev/i2c*      # I2C
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Outils d'analyse
 
@@ -522,9 +522,9 @@ i2cdetect -y 1
 
 ---
 
-## 🧪 Exemples pratiques
+## Exemples pratiques
 
-### 🟢 Débutant — Identifier les puces d'un PCB
+### Débutant — Identifier les puces d'un PCB
 
 ```bash
 # Étape 1 : Prendre des photos du PCB (toutes les faces)
@@ -534,7 +534,7 @@ i2cdetect -y 1
 # Étape 5 : Télécharger le datasheet → pinout, protocoles, tensions
 ```
 
-### 🟡 Intermédiaire — Identifier les interfaces de debug
+### Intermédiaire — Identifier les interfaces de debug
 
 ```bash
 # Étape 1 : Trouver le SoC sur le PCB (puce la plus grosse)
@@ -549,7 +549,7 @@ i2cdetect -y 1
 # GND → connecté à la masse du PCB
 ```
 
-### 🔴 Avancé — Dump firmware via SPI Flash
+### Avancé — Dump firmware via SPI Flash
 
 ```python
 #!/usr/bin/env python3
@@ -604,7 +604,7 @@ if __name__ == "__main__":
         analyze_firmware(output)
 ```
 
-### ⚫ Expert — Analyse complète avec décapsulation
+### Expert — Analyse complète avec décapsulation
 
 ```python
 #!/usr/bin/env python3
@@ -675,7 +675,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🧪 Workflow complet (scénario pas à pas)
+## Workflow complet (scénario pas à pas)
 
 ```mermaid
 flowchart TB
@@ -725,7 +725,7 @@ flowchart TB
 
 ---
 
-## 🎬 Scénarios avancés
+## Scénarios avancés
 
 ### Scénario 1 — Audit complet d'un routeur IoT
 
@@ -735,7 +735,7 @@ flowchart TB
 | **Matériel** | Loupe, microscope USB, CH341A, fer à souder |
 | **Étapes** | 1. Inspection visuelle 2. Retrait bouclier 3. Identification SoC 4. Datasheet → UART 5. Console UART → root shell |
 | **Résultat** | Shell root sur le routeur via UART |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ```mermaid
 flowchart LR
@@ -754,11 +754,11 @@ flowchart LR
 | **Matériel** | CH341A, probes SOP8, PC avec flashrom |
 | **Étapes** | 1. Identifier la flash SPI 2. Connecter CH341A 3. Dump firmware 4. Analyser avec binwalk 5. Extraire filesystem |
 | **Résultat** | Firmware complet → analyse des vulnérabilités |
-| **Difficulté** | ⭐⭐⭐ |
+| **Difficulté** | |
 
 ---
 
-## 🛡️ Cybersecurity use cases
+## Cybersecurity use cases
 
 | Use case | Sévérité | Matériel requis | Impact |
 |---|---|---|---|
@@ -776,7 +776,7 @@ flowchart LR
 
 ---
 
-## 🎯 MITRE ATT&CK
+## MITRE ATT&CK
 
 | Technique ID | Nom | Catégorie | Applicabilité |
 |---|---|---|---|
@@ -807,7 +807,7 @@ flowchart TB
 
 ---
 
-## 🛡️ Defensive Security
+## Defensive Security
 
 ### Détection
 
@@ -847,7 +847,7 @@ flowchart TB
 
 ---
 
-## 🤖 Automatisation
+## Automatisation
 
 ### Scripts d'exploitation
 
@@ -931,7 +931,7 @@ if __name__ == "__main__":
 
 ---
 
-## 📤 Output et parsing
+## Output et parsing
 
 ### Formats de sortie
 
@@ -972,12 +972,12 @@ file firmware_dump.bin
 
 ---
 
-## 🔗 Intégrations
+## Intégrations
 
-- [[13 - Hardware & IoT|⚙️ Hardware & IoT]] global
-- [[Hardware - Recherche FCC ID|🛰️ FCC ID]] — Photos internes du device (avant teardown)
-- [[Hardware - Mots de passe par défaut IoT|🔑 Creds par défaut]] — Creds dans le firmware
-- [[Hardware - LimeSDR et BTS|📶 LimeSDR/BTS]] — Test des composants RF identifiés
+- [[13 - Hardware & IoT| Hardware & IoT]] global
+- [[Hardware - Recherche FCC ID| FCC ID]] — Photos internes du device (avant teardown)
+- [[Hardware - Mots de passe par défaut IoT| Creds par défaut]] — Creds dans le firmware
+- [[Hardware - LimeSDR et BTS| LimeSDR/BTS]] — Test des composants RF identifiés
 
 | Outils associés | Usage complémentaire |
 |---|---|
@@ -995,7 +995,7 @@ file firmware_dump.bin
 
 ---
 
-## 🔄 Alternatives
+## Alternatives
 
 | Alternative | Avantages | Inconvénients | Cas d'usage |
 |---|---|---|---|
@@ -1015,7 +1015,7 @@ flowchart LR
 
 ---
 
-## ⚙️ Performance
+## Performance
 
 | Métrique | Valeur | Impact |
 |---|---|---|
@@ -1036,7 +1036,7 @@ flowchart LR
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problème | Cause probable | Solution |
 |---|---|---|
@@ -1083,7 +1083,7 @@ ls /sys/class/gpio/
 
 ---
 
-## 🔐 Sécurité
+## Sécurité
 
 | Risque | Impact | Mitigation |
 |---|---|---|
@@ -1105,7 +1105,7 @@ ls /sys/class/gpio/
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 | Limite | Impact | Contournement |
 |---|---|---|
@@ -1126,7 +1126,7 @@ ls /sys/class/gpio/
 
 ---
 
-## 📋 Cheatsheet
+## Cheatsheet
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -1158,7 +1158,7 @@ ls /sys/class/gpio/
 
 ---
 
-## ⚡ Quick reference
+## Quick reference
 
 | Élément | Valeur / Commande |
 |---|---|
@@ -1172,7 +1172,7 @@ ls /sys/class/gpio/
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Signal | Méthode de détection | Outil |
 |---|---|---|
@@ -1194,7 +1194,7 @@ ls /sys/class/gpio/
 
 ---
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - **Repère le pin 1 d'abord** : un point, une encoche, ou un chanfrein sur le boîtier. Tout test sur la mauvaise broche = risque de griller la puce.
 - Ne te fie pas à la seule référence du marquage : certains fabricants re-estampillent (re-marking) des puces.
@@ -1213,9 +1213,9 @@ ls /sys/class/gpio/
 
 ---
 
-## 📚 References
+## References
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > - [HardwareAllTheThings — Chip Identification](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/enumeration/chip-identification.md)
 > - [SMD Codebook — Marsport](http://www.marsport.org.uk/smd/codeintro.htm)
 > - [SMD Marking Codes Database](https://smd.yooneed.one)
@@ -1249,4 +1249,4 @@ ls /sys/class/gpio/
 | Practical IoT Hacking | Fotios Chantzis | 2021 |
 | The IoT Hacker's Handbook | Aditya Gupta | 2019 |
 
-➡️ **Liens :** [[13 - Hardware & IoT|⚙️ Hardware & IoT]] · [[Hardware - Recherche FCC ID|🛰️ FCC ID]] · [[Hardware - Mots de passe par défaut IoT|🔑 Creds par défaut]] · [[Hardware - LimeSDR et BTS|📶 LimeSDR/BTS]]
+**Liens :** [[13 - Hardware & IoT| Hardware & IoT]] · [[Hardware - Recherche FCC ID| FCC ID]] · [[Hardware - Mots de passe par défaut IoT| Creds par défaut]] · [[Hardware - LimeSDR et BTS| LimeSDR/BTS]]

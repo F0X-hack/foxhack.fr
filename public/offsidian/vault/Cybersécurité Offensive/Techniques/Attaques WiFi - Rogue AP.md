@@ -12,7 +12,7 @@ statut: publie
 
 
 
-# 🎭 Attaques WiFi — Rogue AP & MITM
+# Attaques WiFi — Rogue AP & MITM
 
 > [!info] **En 1 phrase**
 > Un **Rogue AP** est un faux point d'accès (airbase-ng) : on y capture des handshakes WPA, on répond à toutes
@@ -20,7 +20,7 @@ statut: publie
 
 ---
 
-## 🎯 Concept
+## Concept
 
 ```mermaid
 flowchart LR
@@ -30,14 +30,14 @@ flowchart LR
     B --> E[AP MITM<br>bridge + sniff]
 ```
 
-> [!info] 💡 **Pourquoi un Rogue AP ?**
+> [!info] **Pourquoi un Rogue AP ?**
 > - Capturer un handshake **sans déauth** (le client croit se connecter au vrai réseau).
 > - **Phishing** (portail, creds AD — voir fiche Enterprise).
 > - **MITM complet** (renifler, injecter, pivoter).
 
 ---
 
-## 📶 Faux AP + capture de handshake
+## Faux AP + capture de handshake
 
 ```bash
 airmon-ng start wlan0 3
@@ -54,12 +54,12 @@ airbase-ng -c 3 -e $AP_SSID -z 4 -W 1 mon0
 aircrack-ng -w /pentest/passwords/john/password.lst airbase-01.cap
 ```
 
-> [!tip] 💡 Pour piéger les clients, déauthentifier ceux du **vrai** AP :
+> [!tip] Pour piéger les clients, déauthentifier ceux du **vrai** AP :
 > `aireplay-ng -0 0 -a <vrai_AP_MAC> mon0` → ils cherchent le réseau → trouvent le faux.
 
 ---
 
-## 🕶️ Karmetasploit (répond à toutes les probes)
+## Karmetasploit (répond à toutes les probes)
 
 > L'AP répond à **toutes** les sondes de clients → les clients « voient » leur réseau préféré → se connectent.
 
@@ -87,7 +87,7 @@ msfconsole -r /root/karma.rc
 
 ---
 
-## 🌐 AP MITM (pont + reniflage)
+## AP MITM (pont + reniflage)
 
 ```bash
 airmon-ng start wlan0 3
@@ -114,7 +114,7 @@ ettercap -G
 
 ---
 
-## 🔍 Détection & Défense
+## Détection & Défense
 
 | Réponse | Détail |
 |---|---|
@@ -123,14 +123,14 @@ ettercap -G
 | **802.1X + certs** | Un Rogue AP ne peut pas reproduire le certificat RADIUS valide |
 | **Scan RF régulier** | `airodump-ng`, Kismet → repérer les AP clones |
 
-## ⚠️ Tips & Pièges
+## Tips & Pièges
 
 - Le **faux AP** doit avoir le **même SSID** ET si possible une **puissance/position** convaincante.
 - `airbase-ng` crée l'interface **at0** : tout trafic client passe par là.
 - **Karmetasploit** est bruyant (répond à toutes les probes) → réservé au lab ou à du client déjà autorisé.
 - AP MITM = **pont transparent** : le client garde sa connexion vers l'internet réel, on écoute au milieu.
 
-> [!info] 📚 **Sources**
+> [!info] **Sources**
 > GitHub : [swisskyrepo/HardwareAllTheThings – `docs/protocols/wifi/wifi-corporate.md`](https://github.com/swisskyrepo/HardwareAllTheThings/blob/main/docs/protocols/wifi/wifi-corporate.md) (Rogue AP)
 
-➡️ **Liens :** [[Attaques WiFi (WPA2 et PMKID)|📶 Hub WiFi]] · [[Attaques WiFi - Enterprise|🏢 Enterprise]] · [[Attaques WiFi - WPA2 PSK|🔐 WPA2-PSK]] · [[ARP Spoofing et MITM|🌐 ARP Spoofing]] · [[Bibliothèque technique|🏠 Index]]
+**Liens :** [[Attaques WiFi (WPA2 et PMKID)| Hub WiFi]] · [[Attaques WiFi - Enterprise| Enterprise]] · [[Attaques WiFi - WPA2 PSK| WPA2-PSK]] · [[ARP Spoofing et MITM| ARP Spoofing]] · [[Bibliothèque technique| Index]]
