@@ -111,6 +111,12 @@ const checks: [string, boolean][] = [
       !html.includes('onrender.com'),
   ],
   [
+    'Offsidian est une catégorie locale du site',
+    html.includes('href="/offsidian/"') &&
+      html.includes('344 public knowledge notes') &&
+      html.includes('OPEN THE VAULT'),
+  ],
+  [
     'FoX-HID renvoie vers une route locale',
     html.includes('FoX-HID') &&
       html.includes('href="/foxhid"') &&
@@ -197,9 +203,15 @@ const checks: [string, boolean][] = [
   ['sitemap.xml : forme et namespaces valides', sitemapOk],
   ['sitemap.xml : images déclarées (extension Google)', (sitemap.match(/<image:loc>/g) ?? []).length >= 2],
   ['sitemap.xml : aucune URL hors du domaine', locs.every((u) => u.startsWith('https://foxhack.fr/'))],
+  ['sitemap.xml : Offsidian publié', locs.includes('https://foxhack.fr/offsidian/')],
   ['sitemap.xml : pas de fragment dans les URLs', !locs.some((u) => u.includes('#'))],
   ['robots.txt : routes de projets accessibles', robots.includes('Allow: /') && !robots.includes('Disallow: /reaper')],
-  ['sitemap.xml : les trois routes projet présentes', ['/evilfox', '/foxhid', '/reaper'].every((path) => locs.includes(`https://foxhack.fr${path}`))],
+  [
+    'sitemap.xml : les trois routes projet présentes',
+    ['/evilfox', '/foxhid', '/reaper'].every((path) =>
+      locs.some((url) => url === `https://foxhack.fr${path}` || url === `https://foxhack.fr${path}/`),
+    ),
+  ],
   [
     'repli sans JavaScript : projets et réseaux',
     shell.includes('<noscript>') && shell.includes('FoX-HID</a>') && shell.includes('TryHackMe — FoXhack'),

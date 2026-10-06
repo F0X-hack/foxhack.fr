@@ -12,6 +12,7 @@ export const navLinks = [
   { id: 'projects', label: 'PROJECTS', href: '#projects' },
   { id: 'ctf', label: 'CTF', href: '#ctf' },
   { id: 'socials', label: 'SOCIALS', href: '#socials' },
+  { id: 'notes', label: 'NOTES', href: '/offsidian/' },
 ] as const
 
 export const footerLinks = [
@@ -36,5 +37,6 @@ export const labFiles = [
   { name: 'ctf.log', role: 'platforms, ranks, challenges', href: '#ctf' },
   { name: 'connect.sh', role: 'profiles and DMs', href: '#socials' },
   { name: 'contact.sh', role: 'how to reach out', href: '#contact' },
+  { name: 'offsidian/', role: '344 public knowledge notes', href: '/offsidian/' },
   { name: '.secrets/', role: 'permission denied', href: null },
 ] as const
