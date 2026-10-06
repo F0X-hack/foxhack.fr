@@ -7,7 +7,7 @@
  * Aucun violet, aucun néon générique : les accents restent rares et fonctionnels.
  */
 export default {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: ['./index.html', './offsidian/index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {

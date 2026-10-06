@@ -63,10 +63,13 @@ export const projects: Project[] = [
   {
     name: 'Offsidian',
     slug: 'offsidian',
-    category: 'Offensive Security',
-    description: 'Offensive security experiments, kept small on purpose.',
-    url: 'https://github.com/F0X-hack/Offsidian',
-    cta: 'VIEW PROJECT →',
+    category: 'Knowledge Base / Offensive Security',
+    description:
+      'A public Obsidian-style vault with 344 notes, full-text search, internal links, diagrams, backlinks and a local knowledge graph.',
+    tech: ['344 Notes', 'Markdown', 'Knowledge Graph'],
+    url: '/offsidian/',
+    cta: 'OPEN THE VAULT →',
+    disclaimer: 'Educational use and authorized labs only.',
     featured: true,
   },
   {
