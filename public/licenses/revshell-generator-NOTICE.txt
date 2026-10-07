@@ -1,4 +1,0 @@
-Payload and listener templates in the FoXhack Revshell catalog are adapted from
-0dayCTF/reverse-shell-generator (https://github.com/0dayCTF/reverse-shell-generator),
-Copyright Ryan Montgomery, 2022, under the MIT License. The applicable license is
-available in revshell-generator-MIT.txt.

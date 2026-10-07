@@ -1,12 +1,10 @@
 import { ArrowUpRight } from 'lucide-react'
 
 type ToolHeaderProps = {
-  active?: 'catalog' | 'revshell' | 'cidr'
+  active?: 'catalog'
 }
 
 export default function ToolHeader({ active = 'catalog' }: ToolHeaderProps) {
-  const toolsActive = active === 'catalog' || active === 'revshell' || active === 'cidr'
-
   return (
     <>
       <a className="tools-skip-link" href="#contenu">Aller au contenu</a>
@@ -24,8 +22,8 @@ export default function ToolHeader({ active = 'catalog' }: ToolHeaderProps) {
             <a href="/" className="tools-nav__link">PORTFOLIO <ArrowUpRight aria-hidden="true" /></a>
             <a
               href="/tools/"
-              className={`tools-nav__link ${toolsActive ? 'is-active' : ''}`}
-              aria-current={active === 'catalog' ? 'page' : active ? 'location' : undefined}
+              className={`tools-nav__link ${active === 'catalog' ? 'is-active' : ''}`}
+              aria-current={active === 'catalog' ? 'page' : 'location'}
             >
               OUTILS <span className="tools-nav__index">01</span>
             </a>

@@ -1,17 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import {
-  ArrowUpRight,
-  Code2,
-  Globe,
-  Network,
-  Nfc,
-  Search,
-  Terminal,
-} from 'lucide-react'
+import { ArrowUpRight, Nfc, Search } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import ToolHeader from './ToolHeader'
 
-type ToolCategory = 'NFC / RFID' | 'Réseau' | 'Web' | 'Utilitaires'
+type ToolCategory = 'NFC / RFID'
 type CatalogFilter = 'Tous' | ToolCategory
 
 type ToolEntry = {
@@ -35,43 +27,9 @@ const tools: ToolEntry[] = [
     href: '/mfkey32/',
     icon: Nfc,
   },
-  {
-    name: 'Revshell',
-    category: 'Réseau',
-    description: 'Génère des commandes de reverse shell et la commande d’écoute associée pour un labo autorisé.',
-    tags: ['Bash', 'Python 3', 'Netcat'],
-    status: 'ready',
-    href: '/tools/revshell/',
-    icon: Terminal,
-  },
-  {
-    name: 'Calculateur CIDR',
-    category: 'Réseau',
-    description: 'Découpage de sous-réseaux, plage d’hôtes et informations IPv4 en un coup d’œil.',
-    tags: ['IPv4', 'Sous-réseau'],
-    status: 'ready',
-    href: '/tools/cidr/',
-    icon: Network,
-  },
-  {
-    name: 'Encode / Decode',
-    category: 'Utilitaires',
-    description: 'Un espace simple pour convertir du texte et inspecter différents encodages courants.',
-    tags: ['Base64', 'URL'],
-    status: 'planned',
-    icon: Code2,
-  },
-  {
-    name: 'Inspecteur HTTP',
-    category: 'Web',
-    description: 'Lire et comparer les en-têtes HTTP pendant les tests d’applications web.',
-    tags: ['HTTP', 'Web'],
-    status: 'planned',
-    icon: Globe,
-  },
 ]
 
-const filters: CatalogFilter[] = ['Tous', 'NFC / RFID', 'Réseau', 'Web', 'Utilitaires']
+const filters: CatalogFilter[] = ['Tous', 'NFC / RFID']
 
 export default function ToolsPage() {
   const [filter, setFilter] = useState<CatalogFilter>('Tous')
@@ -118,8 +76,6 @@ export default function ToolsPage() {
             <div className="tools-hero__meta">
               <span><span className="tools-status-dot" aria-hidden="true" /> {String(readyCount).padStart(2, '0')} DISPONIBLE</span>
               <span className="tools-meta-divider" aria-hidden="true">/</span>
-              <span>{String(tools.length - readyCount).padStart(2, '0')} À VENIR</span>
-              <span className="tools-meta-divider" aria-hidden="true">/</span>
               <span>MISE À JOUR CONTINUE</span>
             </div>
           </div>
@@ -135,7 +91,7 @@ export default function ToolsPage() {
         <section className="tools-catalog" id="catalogue" aria-labelledby="catalogue-title">
           <div className="tools-section-heading">
             <div>
-              <p className="tools-eyebrow">INVENTAIRE / 00{tools.length}</p>
+              <p className="tools-eyebrow">INVENTAIRE / 0{tools.length}</p>
               <h2 id="catalogue-title">Catalogue</h2>
             </div>
             <p className="tools-section-heading__count" aria-live="polite">
@@ -228,11 +184,6 @@ export default function ToolsPage() {
               </button>
             </div>
           )}
-
-          <div className="tools-catalog__footnote">
-            <span className="tools-footnote-mark" aria-hidden="true">i</span>
-            <p>Les cartes « à venir » sont des emplacements de catalogue : leurs outils ne sont pas encore disponibles.</p>
-          </div>
 
           <div className="tools-catalog__footnote">
             <span className="tools-footnote-mark" aria-hidden="true">§</span>

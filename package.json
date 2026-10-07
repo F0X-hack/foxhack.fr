@@ -18,8 +18,6 @@
     "check:emoji": "node scripts/strip-emoji.mjs --check",
     "check:offsidian": "tsx scripts/smoke-offsidian.tsx && tsx scripts/smoke-offsidian-dom.tsx",
     "bench:offsidian": "tsx scripts/bench-offsidian.tsx",
-    "check:revshell": "tsx scripts/check-revshell.ts",
-    "check:cidr": "tsx scripts/check-cidr.ts",
     "check:render": "tsx scripts/smoke-render.tsx"
   },
   "dependencies": {

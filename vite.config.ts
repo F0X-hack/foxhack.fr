@@ -12,8 +12,6 @@ const canonicalPages = [
   '/foxhid',
   '/mfkey32',
   '/tools',
-  '/tools/revshell',
-  '/tools/cidr',
 ] as const
 
 function canonicalPageLocation(url: string | undefined): string | null {
@@ -74,60 +72,8 @@ const staticPageRoutes: Plugin = {
   },
 }
 
-const revshellRawEndpoint: Plugin = {
-  name: 'revshell-raw-endpoint',
-  configureServer(server) {
-    server.middlewares.use((request, response, next) => {
-      const url = request.url ? new URL(request.url, 'http://vite.local') : null
-      if (url?.pathname !== '/tools/revshell/raw') return next()
-      if (request.method !== 'GET' && request.method !== 'HEAD') {
-        response.statusCode = 405
-        response.setHeader('Allow', 'GET, HEAD')
-        response.end('Method not allowed.\n')
-        return
-      }
-      const value = url.searchParams.get('value')
-      if (value === null) {
-        response.statusCode = 400
-        response.setHeader('Content-Type', 'text/plain; charset=utf-8')
-        response.end('Missing value query parameter.\n')
-        return
-      }
-      response.statusCode = 200
-      response.setHeader('Content-Type', 'text/plain; charset=utf-8')
-      response.setHeader('Cache-Control', 'no-store')
-      response.setHeader('X-Content-Type-Options', 'nosniff')
-      response.end(request.method === 'HEAD' ? '' : value)
-    })
-  },
-  configurePreviewServer(server) {
-    server.middlewares.use((request, response, next) => {
-      const url = request.url ? new URL(request.url, 'http://vite.local') : null
-      if (url?.pathname !== '/tools/revshell/raw') return next()
-      if (request.method !== 'GET' && request.method !== 'HEAD') {
-        response.statusCode = 405
-        response.setHeader('Allow', 'GET, HEAD')
-        response.end('Method not allowed.\n')
-        return
-      }
-      const value = url.searchParams.get('value')
-      if (value === null) {
-        response.statusCode = 400
-        response.setHeader('Content-Type', 'text/plain; charset=utf-8')
-        response.end('Missing value query parameter.\n')
-        return
-      }
-      response.statusCode = 200
-      response.setHeader('Content-Type', 'text/plain; charset=utf-8')
-      response.setHeader('Cache-Control', 'no-store')
-      response.setHeader('X-Content-Type-Options', 'nosniff')
-      response.end(request.method === 'HEAD' ? '' : value)
-    })
-  },
-}
-
 export default defineConfig({
-  plugins: [react(), canonicalPageRoutes, staticPageRoutes, revshellRawEndpoint],
+  plugins: [react(), canonicalPageRoutes, staticPageRoutes],
   server: {
     host: '0.0.0.0',
     allowedHosts: true,
@@ -142,8 +88,6 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         offsidian: resolve(__dirname, 'offsidian/index.html'),
         tools: resolve(__dirname, 'tools/index.html'),
-        revshell: resolve(__dirname, 'tools/revshell/index.html'),
-        cidr: resolve(__dirname, 'tools/cidr/index.html'),
       },
     },
   },

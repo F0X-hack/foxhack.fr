@@ -241,10 +241,19 @@ const checks: [string, boolean][] = [
   ],
   ['assets Mfkey32 présents', mfkey32OnDisk.length === mfkey32Assets.length],
   [
-    'catalogue outils : Mfkey32 disponible en tête',
-    toolsHtml.includes('Mfkey32') && toolsHtml.includes('href="/mfkey32/"'),
+    'catalogue outils : Mfkey32, seul outil du catalogue',
+    toolsHtml.includes('Mfkey32') &&
+      toolsHtml.includes('href="/mfkey32/"') &&
+      (toolsHtml.match(/tools-card__action/g) ?? []).length === 1,
   ],
   ['catalogue outils : catégorie NFC / RFID filtrée', toolsHtml.includes('NFC / RFID')],
+  [
+    'catalogue outils : plus de Revshell / CIDR / emplacements à venir',
+    !toolsHtml.includes('Revshell') &&
+      !/CIDR/i.test(toolsHtml) &&
+      !toolsHtml.includes('À VENIR') &&
+      !toolsHtml.includes('EN PRÉPARATION'),
+  ],
   [
     'catalogue outils : notice GPL de Mfkey32 liée',
     toolsHtml.includes('href="/licenses/mfkey32-NOTICE.txt"'),
