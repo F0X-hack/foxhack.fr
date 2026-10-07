@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Portfolio personnel et pages de projets publiques.
+Sitemap: https://foxhack.fr/sitemap.xml

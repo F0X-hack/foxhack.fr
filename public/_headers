@@ -1,0 +1,20 @@
+# En-têtes appliqués par Netlify et Cloudflare Pages (recopiés à la racine de
+# `dist/` par Vite).
+#
+# Le HTML d'Offsidian pointe des assets au nom hashé (`/assets/offsidian-
+# BXdvuEPl.js`). Si le navigateur garde une vieille copie de ce HTML après une
+# mise en ligne, il réclame des fichiers qui n'existent plus : page noire.
+# Le HTML est donc toujours revalidé, les assets hashés sont gardés longtemps.
+
+/offsidian/
+  Cache-Control: no-cache, must-revalidate
+/offsidian/index.html
+  Cache-Control: no-cache, must-revalidate
+/index.html
+  Cache-Control: no-cache, must-revalidate
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/offsidian/manifest.json
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+/offsidian/outline.json
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
