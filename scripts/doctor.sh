@@ -52,7 +52,6 @@ done
 
 # --------------------------------------------------- 2. ce que renvoie le serveur
 printf '\n\033[1m[2] Pages servies\033[0m\n'
-fetch "$BASE/" "$TMP/home.html" >/dev/null
 home_meta=$(fetch "$BASE/" "$TMP/home.html")
 if [ "${home_meta%%|*}" = 200 ]; then
   ok "accueil : $BASE/ répond ($(grep -o '<title>[^<]*' "$TMP/home.html" | head -1 | cut -c8-))"
