@@ -1,0 +1,15 @@
+# Règles lues par Netlify et Cloudflare Pages (recopiées à la racine de `dist/`
+# par Vite, comme tout ce qui se trouve dans `public/`).
+#
+# Les pages construites par Vite vivent dans un dossier (`dist/<page>/index.html`).
+# Sans slash final, certains hôtes renvoient leur fallback au lieu de la page.
+# Ces redirections canonisent les URLs du vault et des outils avant la recherche.
+
+/offsidian          /offsidian/           301
+/offsidian.html     /offsidian/           301
+/evilfox            /evilfox/             301
+/foxhid             /foxhid/              301
+/reaper             /reaper/              301
+/tools              /tools/               301
+/tools/revshell     /tools/revshell/      301
+/tools/cidr         /tools/cidr/          301
