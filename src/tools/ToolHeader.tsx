@@ -1,11 +1,11 @@
 import { ArrowUpRight } from 'lucide-react'
 
 type ToolHeaderProps = {
-  active?: 'catalog' | 'revshell'
+  active?: 'catalog' | 'revshell' | 'cidr'
 }
 
 export default function ToolHeader({ active = 'catalog' }: ToolHeaderProps) {
-  const toolsActive = active === 'catalog' || active === 'revshell'
+  const toolsActive = active === 'catalog' || active === 'revshell' || active === 'cidr'
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function ToolHeader({ active = 'catalog' }: ToolHeaderProps) {
             <a
               href="/tools/"
               className={`tools-nav__link ${toolsActive ? 'is-active' : ''}`}
-              aria-current={active === 'catalog' ? 'page' : active === 'revshell' ? 'location' : undefined}
+              aria-current={active === 'catalog' ? 'page' : active ? 'location' : undefined}
             >
               OUTILS <span className="tools-nav__index">01</span>
             </a>

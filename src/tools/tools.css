@@ -1668,3 +1668,343 @@
     transition: none !important;
   }
 }
+
+/* CIDR calculator */
+.cidr-main {
+  padding-top: 2rem;
+  padding-bottom: 3.7rem;
+}
+
+.cidr-hero {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2.2rem 0 2rem;
+}
+
+.cidr-hero h1 {
+  margin: 1rem 0 0;
+  color: rgb(var(--bone));
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.98;
+}
+
+.cidr-hero h1 span {
+  color: rgb(var(--signal-soft));
+}
+
+.cidr-hero h1 b {
+  color: rgb(var(--signal));
+}
+
+.cidr-hero p:last-child {
+  max-width: 620px;
+  margin: 1rem 0 0;
+  color: rgb(var(--muted));
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.cidr-hero__icon {
+  display: grid;
+  width: 74px;
+  height: 74px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgb(var(--signal) / 0.32);
+  background: rgb(var(--signal) / 0.045);
+  color: rgb(var(--signal-soft));
+}
+
+.cidr-hero__icon svg {
+  width: 2rem;
+  height: 2rem;
+  stroke-width: 1.3;
+}
+
+.cidr-input-panel {
+  padding: 1.3rem;
+  border: 1px solid var(--tool-line);
+  background: var(--tool-panel);
+}
+
+.cidr-input-panel__heading,
+.cidr-results__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cidr-input-panel__heading h2,
+.cidr-results__heading h2 {
+  margin: 0.35rem 0 0;
+  color: rgb(var(--bone));
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.cidr-local-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid rgb(var(--ok) / 0.23);
+  color: rgb(var(--ok));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+}
+
+.cidr-local-badge > span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(var(--ok));
+  box-shadow: 0 0 7px rgb(var(--ok) / 0.5);
+}
+
+.cidr-input-panel__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.15rem;
+}
+
+.cidr-input-field {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 0.8rem;
+  border: 1px solid rgb(255 255 255 / 0.11);
+  background: rgb(0 0 0 / 0.25);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.cidr-input-field:focus-within {
+  border-color: rgb(var(--signal) / 0.55);
+  box-shadow: 0 0 0 2px rgb(var(--signal) / 0.07);
+}
+
+.cidr-input-field:has(input[aria-invalid='true']) {
+  border-color: rgb(var(--alert-soft) / 0.65);
+}
+
+.cidr-input-field__prefix {
+  color: rgb(var(--signal-soft));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.cidr-input-field input {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: rgb(var(--bone));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.86rem;
+}
+
+.cidr-input-field input::placeholder {
+  color: rgb(var(--dim));
+}
+
+.cidr-input-field__suffix {
+  color: rgb(var(--dim));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.51rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.cidr-input-hint {
+  min-height: 1rem;
+  margin: 0.5rem 0 0;
+  color: rgb(var(--dim));
+  font-size: 0.64rem;
+  line-height: 1.45;
+}
+
+.cidr-input-hint.is-error {
+  color: rgb(var(--alert-soft));
+}
+
+.cidr-results {
+  margin-top: 2.6rem;
+}
+
+.cidr-results__heading {
+  margin-bottom: 1rem;
+}
+
+.cidr-results__count {
+  color: rgb(var(--signal-soft));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.54rem;
+  letter-spacing: 0.11em;
+  text-align: right;
+}
+
+.cidr-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.cidr-metric {
+  min-width: 0;
+  min-height: 124px;
+  padding: 0.9rem;
+  border: 1px solid var(--tool-line);
+  background: linear-gradient(150deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.01));
+}
+
+.cidr-metric.is-highlighted {
+  border-color: rgb(var(--signal) / 0.34);
+  background: linear-gradient(145deg, rgb(var(--signal) / 0.08), rgb(255 255 255 / 0.012));
+}
+
+.cidr-metric dt {
+  color: rgb(var(--dim));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cidr-metric dd {
+  overflow-wrap: anywhere;
+  margin: 0.8rem 0 0.35rem;
+  color: rgb(var(--bone));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: clamp(0.76rem, 1.2vw, 0.95rem);
+  font-weight: 600;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.cidr-metric.is-highlighted dd {
+  color: rgb(var(--signal-soft));
+}
+
+.cidr-metric > span {
+  color: rgb(var(--dim));
+  font-size: 0.59rem;
+  line-height: 1.4;
+}
+
+.cidr-empty-state {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px dashed var(--tool-line);
+  color: rgb(var(--muted));
+}
+
+.cidr-empty-state svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: rgb(var(--signal-soft));
+}
+
+.cidr-empty-state p {
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.cidr-callout {
+  margin-top: 2rem;
+}
+
+@media (max-width: 900px) {
+  .cidr-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .cidr-main {
+    padding-top: 1rem;
+  }
+
+  .cidr-hero {
+    padding: 1.7rem 0 1.3rem;
+  }
+
+  .cidr-hero h1 {
+    font-size: clamp(2.8rem, 12vw, 4.2rem);
+  }
+
+  .cidr-hero__icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .cidr-hero__icon svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .cidr-input-panel {
+    padding: 0.9rem;
+  }
+
+  .cidr-input-panel__form {
+    grid-template-columns: 1fr;
+  }
+
+  .cidr-copy-all {
+    width: 100%;
+  }
+
+  .cidr-metrics {
+    gap: 0.5rem;
+  }
+
+  .cidr-metric {
+    min-height: 110px;
+    padding: 0.7rem;
+  }
+
+  .cidr-metric dt {
+    font-size: 0.5rem;
+  }
+
+  .cidr-metric dd {
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  .cidr-metric > span {
+    font-size: 0.53rem;
+  }
+
+  .cidr-results__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cidr-results__count {
+    text-align: left;
+  }
+
+  .cidr-callout {
+    margin-top: 1.5rem;
+  }
+
+  .cidr-callout .tools-callout__code {
+    display: none;
+  }
+}

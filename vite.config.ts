@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react'
 function canonicalToolLocation(url: string | undefined): string | null {
   if (!url) return null
   const [pathname, ...queryParts] = url.split('?')
-  if (pathname !== '/tools' && pathname !== '/tools/revshell') return null
+  if (pathname !== '/tools' && pathname !== '/tools/revshell' && pathname !== '/tools/cidr') return null
   const query = queryParts.length > 0 ? `?${queryParts.join('?')}` : ''
   return `${pathname}/${query}`
 }
@@ -50,6 +50,7 @@ export default defineConfig({
         offsidian: resolve(__dirname, 'offsidian/index.html'),
         tools: resolve(__dirname, 'tools/index.html'),
         revshell: resolve(__dirname, 'tools/revshell/index.html'),
+        cidr: resolve(__dirname, 'tools/cidr/index.html'),
       },
     },
   },

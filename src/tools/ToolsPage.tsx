@@ -38,7 +38,8 @@ const tools: ToolEntry[] = [
     category: 'Réseau',
     description: 'Découpage de sous-réseaux, plage d’hôtes et informations IPv4 en un coup d’œil.',
     tags: ['IPv4', 'Sous-réseau'],
-    status: 'planned',
+    status: 'ready',
+    href: '/tools/cidr/',
     icon: Network,
   },
   {
