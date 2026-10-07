@@ -13,6 +13,7 @@
     "clean": "rm -rf dist dist-ssr node_modules/.vite",
     "check:scrollspy": "node scripts/check-scrollspy.mjs",
     "check:url": "node scripts/check-section-url.mjs",
+    "doctor": "sh scripts/doctor.sh dist https://foxhack.fr",
     "vault:index": "node scripts/build-offsidian.mjs",
     "check:emoji": "node scripts/strip-emoji.mjs --check",
     "check:offsidian": "tsx scripts/smoke-offsidian.tsx && tsx scripts/smoke-offsidian-dom.tsx",
