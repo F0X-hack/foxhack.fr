@@ -34,7 +34,7 @@ import {
   type PayloadTemplate,
 } from './revshell/generator'
 
-type CopyTarget = 'payload' | 'listener'
+type CopyTarget = 'payload' | 'listener' | 'raw'
 type Theme = 'dark' | 'light' | 'meme'
 
 type RevshellSettings = {
@@ -249,6 +249,14 @@ export default function RevshellPage() {
     }
   }, [ready, selectedPayload, settings.category, settings.encoding, settings.host, settings.port, settings.shell])
 
+  const rawCurl = useMemo(() => {
+    if (!generated.command || typeof window === 'undefined') return ''
+    const url = new URL('/tools/revshell/raw', window.location.origin)
+    url.searchParams.set('value', generated.command)
+    if (url.toString().length > 6500) return ''
+    return `curl --fail --silent --show-error --location '${url.toString()}'`
+  }, [generated.command])
+
   const selectedListener = listenerPresets.find((preset) => preset.id === settings.listenerId) ?? listenerPresets[0]
   const listenerOutput = useMemo(() => {
     if (!ready || !selectedListener || !selectedPayload) return { command: '', warning: '' }
@@ -323,7 +331,7 @@ export default function RevshellPage() {
 
         <section className="revshell-warning" aria-label="Avertissement d’utilisation">
           <ShieldAlert aria-hidden="true" />
-          <p><strong>À utiliser uniquement avec autorisation.</strong> La génération est locale : aucune adresse ni commande n’est envoyée à un backend.</p>
+          <p><strong>À utiliser uniquement avec autorisation.</strong> La génération reste locale ; le mode cURL Raw, utilisé à la demande, transmet le texte dans l’URL à une route d’écho sans stockage (l’URL peut figurer dans des logs intermédiaires).</p>
           <span className="revshell-warning__tag">LAB ONLY</span>
         </section>
 
@@ -610,6 +618,7 @@ export default function RevshellPage() {
               <ul>
                 <li>Filtres par système, recherche, shell cible et quatre encodages.</li>
                 <li>Les paramètres sont sauvegardés dans le stockage local de ce navigateur.</li>
+                <li>Le lien cURL Raw contient la commande dans l’URL ; les copies et téléchargements restent locaux.</li>
                 <li>Les ports inférieurs à 1024 peuvent demander des privilèges élevés.</li>
               </ul>
               <p className="revshell-attribution">Catalogue adapté de <a href="https://github.com/0dayCTF/reverse-shell-generator" target="_blank" rel="noreferrer">0dayCTF/reverse-shell-generator</a> — <a href="/licenses/revshell-generator-MIT.txt">licence MIT</a>.</p>
@@ -635,6 +644,21 @@ export default function RevshellPage() {
                 <button type="button" className="revshell-raw-close" onClick={() => setRawMode(false)} aria-label="Fermer le mode Raw"><X aria-hidden="true" /></button>
               </header>
               <pre><code>{generated.command}</code></pre>
+              {rawCurl ? (
+                <section className="revshell-raw-curl" aria-label="Commande cURL pour récupérer la sortie brute">
+                  <div>
+                    <p className="tools-eyebrow">RÉCUPÉRER LA SORTIE AVEC CURL</p>
+                    <pre><code>{rawCurl}</code></pre>
+                  </div>
+                  <button type="button" className="revshell-action-button" onClick={() => void copy(rawCurl, 'raw')}>
+                    {copied === 'raw' ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+                    <span>{copied === 'raw' ? 'CURL COPIÉ' : 'COPIER CURL'}</span>
+                  </button>
+                  <p>Le payload est transmis dans la query de la requête ; la route d’écho ne le stocke pas, mais les logs de proxy peuvent le conserver.</p>
+                </section>
+              ) : (
+                <p className="revshell-raw-curl__too-long">URL cURL trop longue pour être fiable ; utilise la copie ou le téléchargement local ci-dessous.</p>
+              )}
               <div className="revshell-raw-actions">
                 <button type="button" className="revshell-copy-button" onClick={copyPayload}>
                   {copied === 'payload' ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}{copied === 'payload' ? 'COPIÉ' : 'COPIER'}
@@ -651,7 +675,7 @@ export default function RevshellPage() {
       <footer className="tools-footer">
         <div className="tools-shell tools-footer__inner">
           <span>© 2026 FOXHACK <span className="tools-footer__slash">/</span> REVSHELL</span>
-          <span className="tools-footer__local">AUCUNE TÉLÉMÉTRIE <span aria-hidden="true">·</span> AUCUN BACKEND</span>
+          <span className="tools-footer__local">GÉNÉRATION LOCALE <span aria-hidden="true">·</span> RAW SANS STOCKAGE</span>
         </div>
       </footer>
     </div>
