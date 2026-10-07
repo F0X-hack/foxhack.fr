@@ -689,6 +689,17 @@
   line-height: 1.5;
 }
 
+.tools-catalog__footnote a {
+  color: rgb(var(--signal-soft));
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--signal) / 0.35);
+  text-underline-offset: 2px;
+}
+
+.tools-catalog__footnote a:hover {
+  color: rgb(var(--bone));
+}
+
 .tools-callout {
   display: flex;
   align-items: center;

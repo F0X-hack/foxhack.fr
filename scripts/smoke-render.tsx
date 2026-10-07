@@ -9,8 +9,28 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import Home from '../src/pages/Home'
+import ToolsPage from '../src/tools/ToolsPage'
 
 const html = renderToStaticMarkup(<Home />)
+
+/* Catalogue /tools/ : la catégorie outils doit exposer Mfkey32. */
+const toolsHtml = renderToStaticMarkup(<ToolsPage />)
+
+/* Page Mfkey32 servie telle quelle depuis public/mfkey32/. */
+const mfkey32Shell = readFileSync(new URL('../public/mfkey32/index.html', import.meta.url), 'utf8')
+const mfkey32Assets = [
+  'css/styles.css',
+  'js/app.js',
+  'js/mfkey32.mjs',
+  'js/mfkey-worker.js',
+  'js/flipper-serial.js',
+  'js/protobuf.js',
+  'js/icons.js',
+  'assets/mfkey32-mark.svg',
+  'assets/exemple.mfkey32.log',
+  'docs/mfkey32v2.md',
+]
+const mfkey32OnDisk = mfkey32Assets.filter((name) => existsSync(new URL(`../public/mfkey32/${name}`, import.meta.url)))
 
 /* Page Reaper statique et ses assets, servis sur /reaper. */
 const originalHtml = readFileSync(new URL('../public/reaper/index.html', import.meta.url), 'utf8')
@@ -196,7 +216,8 @@ const checks: [string, boolean][] = [
     'JSON-LD : Person + WebSite + ProfilePage + ItemList',
     ['Person', 'WebSite', 'ProfilePage', 'ItemList'].every((t) => types.includes(t)),
   ],
-  ['JSON-LD : les 7 projets listés', (itemList?.itemListElement ?? []).length === 7],
+  ['JSON-LD : les 8 projets listés', (itemList?.itemListElement ?? []).length === 8],
+  ['JSON-LD : Mfkey32 listé', shell.includes('"name": "Mfkey32"')],
   ['JSON-LD : routes de projets sur foxhack.fr', shell.includes('https://foxhack.fr/foxhid') && shell.includes('https://foxhack.fr/reaper') && shell.includes('https://foxhack.fr/evilfox')],
   ['robots.txt : sitemap déclaré', robots.includes('Sitemap: https://foxhack.fr/sitemap.xml')],
   ['sitemap.xml : URL canonique', sitemap.includes('<loc>https://foxhack.fr/</loc>')],
@@ -207,14 +228,37 @@ const checks: [string, boolean][] = [
   ['sitemap.xml : pas de fragment dans les URLs', !locs.some((u) => u.includes('#'))],
   ['robots.txt : routes de projets accessibles', robots.includes('Allow: /') && !robots.includes('Disallow: /reaper')],
   [
-    'sitemap.xml : les trois routes projet présentes',
-    ['/evilfox', '/foxhid', '/reaper'].every((path) =>
+    'sitemap.xml : les routes projet présentes',
+    ['/evilfox', '/foxhid', '/reaper', '/mfkey32'].every((path) =>
       locs.some((url) => url === `https://foxhack.fr${path}` || url === `https://foxhack.fr${path}/`),
     ),
   ],
   [
+    'page Mfkey32 servie telle quelle',
+    mfkey32Shell.includes('<link rel="canonical" href="https://foxhack.fr/mfkey32/" />') &&
+      mfkey32Shell.includes('href="css/styles.css?v=workbench-13"') &&
+      mfkey32Shell.includes('src="js/app.js?v=workbench-13"'),
+  ],
+  ['assets Mfkey32 présents', mfkey32OnDisk.length === mfkey32Assets.length],
+  [
+    'catalogue outils : Mfkey32 disponible en tête',
+    toolsHtml.includes('Mfkey32') && toolsHtml.includes('href="/mfkey32/"'),
+  ],
+  ['catalogue outils : catégorie NFC / RFID filtrée', toolsHtml.includes('NFC / RFID')],
+  [
+    'catalogue outils : notice GPL de Mfkey32 liée',
+    toolsHtml.includes('href="/licenses/mfkey32-NOTICE.txt"'),
+  ],
+  [
+    'portfolio : Mfkey32 dans la section projets',
+    html.includes('Mfkey32') && html.includes('href="/mfkey32/"') && html.includes('MIFARE Classic'),
+  ],
+  [
     'repli sans JavaScript : projets et réseaux',
-    shell.includes('<noscript>') && shell.includes('FoX-HID</a>') && shell.includes('TryHackMe — FoXhack'),
+    shell.includes('<noscript>') &&
+      shell.includes('FoX-HID</a>') &&
+      shell.includes('https://foxhack.fr/mfkey32/') &&
+      shell.includes('TryHackMe — FoXhack'),
   ],
   ['no legacy fox icon', !html.includes('FoxMark')],
   [

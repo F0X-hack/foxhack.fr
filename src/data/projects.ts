@@ -105,6 +105,18 @@ export const projects: Project[] = [
     cta: 'VIEW PROJECT →',
     disclaimer: 'Authorized testing only.',
   },
+  {
+    name: 'Mfkey32',
+    slug: 'mfkey32',
+    category: 'NFC / RFID / Security Research',
+    description:
+      'A browser workbench for Mfkey32: recover MIFARE Classic keys from captured nonces — over Web Serial on a Flipper, from a .mfkey32.log journal or by hand. The calculation stays on the machine.',
+    tech: ['MIFARE Classic', 'Flipper Zero', 'Web Serial'],
+    /* Page projet servie sur le domaine principal. */
+    url: '/mfkey32/',
+    cta: 'OPEN THE TOOL →',
+    disclaimer: 'Educational port of mfkey32v2 (GPL-3) — authorized cards and readers only.',
+  },
 ]
 
 export const projectsMeta = {

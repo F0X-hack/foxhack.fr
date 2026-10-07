@@ -4,13 +4,14 @@ import {
   Code2,
   Globe,
   Network,
+  Nfc,
   Search,
   Terminal,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import ToolHeader from './ToolHeader'
 
-type ToolCategory = 'Réseau' | 'Web' | 'Utilitaires'
+type ToolCategory = 'NFC / RFID' | 'Réseau' | 'Web' | 'Utilitaires'
 type CatalogFilter = 'Tous' | ToolCategory
 
 type ToolEntry = {
@@ -24,6 +25,16 @@ type ToolEntry = {
 }
 
 const tools: ToolEntry[] = [
+  {
+    name: 'Mfkey32',
+    category: 'NFC / RFID',
+    description:
+      'Récupère les clés MIFARE Classic à partir des nonces capturés : Flipper en Web Serial, fichier journal ou saisie manuelle. Le calcul reste dans le navigateur.',
+    tags: ['MIFARE Classic', 'Flipper Zero', 'Web Serial'],
+    status: 'ready',
+    href: '/mfkey32/',
+    icon: Nfc,
+  },
   {
     name: 'Revshell',
     category: 'Réseau',
@@ -60,7 +71,7 @@ const tools: ToolEntry[] = [
   },
 ]
 
-const filters: CatalogFilter[] = ['Tous', 'Réseau', 'Web', 'Utilitaires']
+const filters: CatalogFilter[] = ['Tous', 'NFC / RFID', 'Réseau', 'Web', 'Utilitaires']
 
 export default function ToolsPage() {
   const [filter, setFilter] = useState<CatalogFilter>('Tous')
@@ -221,6 +232,14 @@ export default function ToolsPage() {
           <div className="tools-catalog__footnote">
             <span className="tools-footnote-mark" aria-hidden="true">i</span>
             <p>Les cartes « à venir » sont des emplacements de catalogue : leurs outils ne sont pas encore disponibles.</p>
+          </div>
+
+          <div className="tools-catalog__footnote">
+            <span className="tools-footnote-mark" aria-hidden="true">§</span>
+            <p>
+              Mfkey32 embarque un portage du moteur mfkey32v2 et de crapto1 (GPL-3) —{' '}
+              <a href="/licenses/mfkey32-NOTICE.txt">notice et attributions</a>.
+            </p>
           </div>
         </section>
 

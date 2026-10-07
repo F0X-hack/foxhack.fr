@@ -15,7 +15,7 @@
  */
 
 /** Dossiers qui possèdent leur propre page construite. */
-export const SECTIONS = ['offsidian', 'evilfox', 'foxhid', 'reaper'] as const
+export const SECTIONS = ['offsidian', 'evilfox', 'foxhid', 'reaper', 'tools', 'mfkey32'] as const
 
 export type Section = (typeof SECTIONS)[number]
 

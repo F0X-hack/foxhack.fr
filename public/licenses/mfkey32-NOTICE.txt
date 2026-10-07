@@ -1,0 +1,46 @@
+Mfkey32 — notice d'attribution
+Page servie à https://foxhack.fr/mfkey32/
+Fichiers concernés : public/mfkey32/
+
+-------------------------------------------------------------------------------
+1. Moteur de calcul — GNU GPL v3
+-------------------------------------------------------------------------------
+
+Le moteur (js/mfkey32.mjs, exécuté dans js/mfkey-worker.js) est un portage
+JavaScript de deux projets publiés sous GNU General Public License v3 :
+
+  * mfkey32v2 — https://github.com/equipter/mfkey32v2
+    (mfkey32v2.c)
+  * crapto1 / crypto01 — Proxmark3
+    https://github.com/RfidResearchGroup/proxmark3
+    (include/crypto01.c, include/crypto1.c, include/bucketsort.c)
+
+Le portage est donc distribué sous la même licence, GPL-3.0-or-later
+(SPDX-License-Identifier: GPL-3.0-or-later). Son code source est publié tel
+quel avec la page, dans le dossier /mfkey32/js/ : ouvrir ou télécharger ces
+fichiers suffit à obtenir les sources de cette version.
+
+Texte de référence de la licence : https://www.gnu.org/licenses/gpl-3.0.txt
+
+-------------------------------------------------------------------------------
+2. Interface — autres composants
+-------------------------------------------------------------------------------
+
+  * Icônes mdi-* : Material Design Icons (Apache License 2.0)
+    https://pictogrammers.com/library/mdi/
+  * Illustrations, feuille de style et couche d'interface (index.html,
+    css/styles.css, js/app.js, js/flipper-serial.js, js/protobuf.js) : FoXhack.
+
+-------------------------------------------------------------------------------
+3. Marques
+-------------------------------------------------------------------------------
+
+Reconstruction à but pédagogique, sans lien avec Flipper Zero Inc. Le nom
+Flipper, son logo et sa charte appartiennent à leurs ayants droit.
+
+-------------------------------------------------------------------------------
+4. Usage
+-------------------------------------------------------------------------------
+
+N'utiliser cet outil que sur des cartes et des lecteurs dont vous êtes
+propriétaire ou dont vous avez l'autorisation explicite d'auditer la sécurité.

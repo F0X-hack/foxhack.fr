@@ -24,6 +24,8 @@ const cases = [
   ['ancienne extension', '/offsidian.html', '', '', '/offsidian/'],
   ['déjà canonique — jamais de boucle', '/offsidian/', '', '', null],
   ['les autres pages du labo', '/evilfox', '', '', '/evilfox/'],
+  ['la page mfkey32', '/mfkey32', '', '', '/mfkey32/'],
+  ['le catalogue outils', '/tools', '?q=mfkey', '', '/tools/?q=mfkey'],
   ['accueil', '/', '', '', null],
   ['une note du vault', '/offsidian/vault/Cybersécurité Offensive/01 - Reconnaissance.md', '', '', null],
   ['ancre du portfolio', '/index.html', '', '', null],

@@ -15,7 +15,7 @@ set -eu
 
 DIST=${1:-dist}
 BASE=${2:-https://foxhack.fr}
-SECTIONS="offsidian evilfox foxhid reaper"
+SECTIONS="offsidian evilfox foxhid reaper tools mfkey32"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
@@ -112,6 +112,24 @@ if [ -f "$DIST/offsidian/index.html" ]; then
     esac
   done
 fi
+
+# ------------------------------------------------------- 4. assets de Mfkey32
+printf '\n\033[1m[4] Assets de la page Mfkey32\033[0m\n'
+for asset in js/app.js js/mfkey32.mjs js/mfkey-worker.js css/styles.css assets/mfkey32-mark.svg; do
+  if [ ! -f "$DIST/mfkey32/$asset" ]; then
+    bad "/mfkey32/$asset absent du dossier servi"
+    printf '      → la page mfkey32 a besoin de ses six modules JS servis tels quels.\n'
+    continue
+  fi
+  meta=$(fetch "$BASE/mfkey32/$asset" "$TMP/mfkey-asset.bin")
+  code=$(echo "$meta" | cut -d'|' -f1)
+  type=$(echo "$meta" | cut -d'|' -f2)
+  case "$type" in
+    *text/html*) bad "/mfkey32/$asset → HTTP $code servi en « $type »"
+      printf '      → l hôte renvoie une page à la place du fichier : le module est refusé.\n' ;;
+    *) [ "$code" = 200 ] && ok "/mfkey32/$asset → $code $(echo "$type" | cut -d';' -f1)" || bad "/mfkey32/$asset → HTTP $code" ;;
+  esac
+done
 
 for json in manifest.json outline.json search-index.json; do
   meta=$(fetch "$BASE/offsidian/$json" "$TMP/$json")
