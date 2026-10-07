@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/reaper/">
+<title>REAPER — BW16 WiFi Deauth Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+/* ── VARIABLES ── */
+:root {
+  --red: #ff1a2e;
+  --red-glow: rgba(255,26,46,.35);
+  --red-faint: rgba(255,26,46,.08);
+  --bg: #000000;
+  --surface: #000000;
+  --border: #1c1c24;
+  --text: #b8bcc8;
+  --text-dim: #4a4d5e;
+  --green: #00ff87;
+  --yellow: #ffd60a;
+  --orange: #ff6b35;
+  --blue: #4cc9f0;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* ── GRID OVERLAY — GPU-composited, single element ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,26,46,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,26,46,.02) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── NOISE ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: .12;
+  pointer-events: none;
+  z-index: 2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+}
+
+/* ── SCANLINE ── */
+.scanline {
+  position: fixed;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,26,46,.9) 50%, transparent 100%);
+  box-shadow: 0 0 8px rgba(255,26,46,.7);
+  animation: scan 8s linear infinite;
+  z-index: 999;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+@keyframes scan {
+  0%   { transform: translateY(-1px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: .4; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; width: 100%; display: flex; align-items: center;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 6vw, 6rem); position: relative; z-index: 10;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.hero-left { flex: 1; animation: rise 1s var(--ease) .3s both; }
+@keyframes rise {
+  from { opacity:0; transform: translateY(30px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem,9vw,9rem); line-height: .9;
+  letter-spacing: .03em; color: #fff; margin-bottom: .2rem;
+}
+.hero-title .stroke { -webkit-text-stroke: 2px var(--red); color: transparent; text-shadow: 0 0 20px rgba(255,26,46,.6); }
+.hero-subtitle {
+  font-family: 'Space Mono', monospace; font-size: .8rem;
+  color: var(--text-dim); letter-spacing: .15em;
+  margin-bottom: 2rem; text-transform: uppercase;
+}
+.hero-desc { font-size: clamp(1rem, 1.2vw, 1.35rem); line-height: 1.7; color: var(--text); max-width: clamp(340px, 32vw, 640px); margin-bottom: 2rem; }
+.hero-desc strong { color: #fff; }
+.legal-warn {
+  padding: 1rem; background: rgba(255,26,46,.08);
+  border-left: 2px solid var(--red);
+  font-family: 'Space Mono', monospace; font-size: .7rem;
+  color: #e07070; line-height: 1.6; margin-bottom: 2rem;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-red, .btn-ghost {
+  font-family: 'Space Mono', monospace; font-size: .8rem; font-weight: 700;
+  letter-spacing: .1em; padding: .9rem 1.8rem;
+  text-decoration: none; display: inline-block; text-transform: uppercase;
+  transition: background .25s, box-shadow .25s, transform .25s, border-color .25s, color .25s;
+}
+.btn-red {
+  background: var(--red); color: #fff;
+  clip-path: polygon(0 0,95% 0,100% 5%,100% 100%,5% 100%,0 95%);
+  box-shadow: 0 0 15px rgba(255,26,46,.4);
+}
+.btn-red:hover { background: #ff3a4e; box-shadow: 0 0 25px rgba(255,26,46,.7); transform: translateY(-2px) scale(1.05); }
+.btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
+.btn-ghost:hover { border-color: var(--green); color: var(--green); box-shadow: 0 0 15px rgba(0,255,135,.3); transform: translateY(-1px); }
+
+/* ── HERO RIGHT ── */
+.hero-right { flex:1; display:flex; justify-content:center; align-items:center; }
+.hero-board-wrap { position:relative; width:min(40vw,720px); display:flex; justify-content:center; align-items:center; }
+
+.hero-board-img {
+  width: min(35vw, 620px); object-fit: contain; position: relative; z-index:1;
+  will-change: transform, filter;
+  animation: floatGlow 4s ease-in-out infinite;
+}
+@keyframes floatGlow {
+  0%,100% {
+    transform: translateY(0) rotate(0deg);
+    filter: drop-shadow(0 0 2px rgba(255,26,46,.95)) drop-shadow(0 0 10px rgba(255,26,46,.5));
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+    filter: drop-shadow(0 0 3px rgba(255,26,46,1)) drop-shadow(0 0 18px rgba(255,26,46,.7));
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
+    filter: drop-shadow(0 0 2px rgba(255,26,46,.8)) drop-shadow(0 0 8px rgba(255,26,46,.4));
+  }
+}
+
+.hero-badge {
+  position: absolute; background: #000000; border: 1px solid #1c1c24;
+  padding: .45rem .85rem; font-family: 'Space Mono', monospace;
+  font-size: .65rem; letter-spacing: .06em; white-space: nowrap; z-index: 2;
+  will-change: transform, opacity;
+  animation: floatbadge 3s ease-in-out infinite;
+}
+@keyframes floatbadge {
+  0%,100% { transform: translateY(0) translateX(0); opacity:1; }
+  33%      { transform: translateY(-3px) translateX(2px); }
+  66%      { transform: translateY(-1px) translateX(-1px); }
+}
+
+/* ── TERMINAL ── */
+.terminal-hero {
+  width: 420px; background: #06060a;
+  border: 1px solid rgba(255,26,46,.25); border-top: 2px solid var(--red);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 25px rgba(255,26,46,.15);
+}
+.term-topbar {
+  display:flex; align-items:center; gap:.5rem; padding:.8rem 1rem;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+}
+.term-dot { width:9px; height:9px; border-radius:50%; }
+.td-r{background:#ff5f57}.td-y{background:#febc2e}.td-g{background:#28c840}
+.term-label { font-family:'Space Mono',monospace; font-size:.7rem; color:var(--text-dim); margin-left:auto; letter-spacing:.08em; }
+.term-body { padding:1.5rem; font-family:'Space Mono',monospace; font-size:.8rem; line-height:1.8; color:var(--green); }
+.t-dim{color:var(--text-dim)}.t-white{color:#fff}.t-yellow{color:var(--yellow)}.t-red{color:var(--red)}
+.t-line{display:block}
+.t-cursor::after { content:'█'; animation: blink .8s step-end infinite; }
+@keyframes blink { 50%{ opacity:0; } }
+
+/* ── LOGO ── */
+.logo-img {
+  width:clamp(64px,6vw,110px); height:clamp(64px,6vw,110px); object-fit:contain;
+  will-change: transform, filter;
+  animation: logoPulse 2.5s ease-in-out infinite;
+}
+@keyframes logoPulse {
+  0%,100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(255,26,46,.9)) drop-shadow(0 0 18px rgba(255,26,46,.5));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 6px rgba(255,26,46,1)) drop-shadow(0 0 30px rgba(255,26,46,.7));
+  }
+}
+
+/* ── MENU SHOWCASE ── */
+.menu-showcase {
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: clamp(32px,6vw,80px); align-items: center;
+  padding: clamp(56px,8vw,110px) clamp(24px,6vw,96px);
+  width: 100%;
+  background: var(--surface);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+@media(max-width:960px){ .menu-showcase { grid-template-columns:1fr; gap:48px; padding:64px 24px; } }
+
+.menu-left { display:flex; flex-direction:column; }
+
+.section-label {
+  font-family: 'Space Mono', monospace; font-size: .7rem;
+  letter-spacing: .25em; text-transform: uppercase; color: var(--red);
+  margin-bottom: 1rem; display:flex; align-items:center; gap:.8rem;
+  text-shadow: 0 0 8px rgba(255,26,46,.5);
+}
+.section-label::before {
+  content:''; display:block; width:24px; height:1px;
+  background: var(--red); box-shadow: 0 0 8px var(--red);
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px,5vw,68px); letter-spacing: 3px; line-height: 1;
+  color: #fff; margin-bottom: 1rem;
+}
+.section-desc {
+  font-size: .875rem; color: var(--text-dim); line-height: 1.8;
+  letter-spacing: .5px; margin-bottom: 40px; max-width: 420px;
+}
+
+.menu-section-inner { display:flex; flex-direction:column; border:1px solid var(--border); }
+.menu-item-row {
+  display:flex; align-items:center; gap:16px;
+  padding:14px 20px; border-bottom:1px solid rgba(255,26,46,.07);
+  position:relative; cursor:default;
+  transition: background .25s;
+  overflow: hidden;
+}
+.menu-item-row:last-child { border-bottom:none; }
+.menu-item-row::before {
+  content:''; position:absolute; left:0; top:0; bottom:0;
+  width:2px; background:var(--red); box-shadow:0 0 10px var(--red);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform .25s ease;
+}
+.menu-item-row:hover { background: rgba(255,26,46,.08); }
+.menu-item-row:hover::before { transform: scaleY(1); }
+.menu-idx { font-family:'Space Mono',monospace; font-size:10px; color:var(--red); letter-spacing:2px; opacity:.6; min-width:24px; }
+.menu-name { font-family:'Space Mono',monospace; font-size:13px; color:var(--text); letter-spacing:1px; flex:1; transition:color .25s; }
+.menu-item-row:hover .menu-name { color:#fff; }
+.menu-badge { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; padding:3px 10px; }
+.badge-live {
+  color: #00ff88; border:1px solid rgba(0,255,136,.25); background:rgba(0,255,136,.05);
+  display:flex; align-items:center; gap:6px;
+}
+.badge-live::before {
+  content:''; display:inline-block; width:5px; height:5px; border-radius:50%;
+  background:#00ff88; box-shadow:0 0 6px #00ff88;
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* ── BOARDS ── */
+.oled-wrap { display:flex; justify-content:center; align-items:center; }
+.boards-stack { display:flex; flex-direction:column; align-items:center; gap:2rem; }
+.board-item { position:relative; display:flex; justify-content:center; }
+
+.board-glow {
+  position:absolute; inset:-30px;
+  background: radial-gradient(ellipse, rgba(255,26,46,.15) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+  will-change: opacity, transform;
+  animation: boardGlow 3s ease-in-out infinite;
+}
+.board-glow--intense { inset:-60px; background:radial-gradient(ellipse, rgba(255,26,46,.18) 0%, rgba(255,107,53,.08) 40%, transparent 70%); animation-duration:3.5s; }
+.board-glow--inner  { inset:-20px; background:radial-gradient(ellipse, rgba(255,26,46,.12) 0%, transparent 65%); animation-duration:3.5s; animation-delay:.5s; }
+@keyframes boardGlow { 0%,100%{ opacity:.7; transform:scale(1); } 50%{ opacity:1; transform:scale(1.06); } }
+
+.board-img {
+  width:clamp(160px,22vw,360px); object-fit:contain; border-radius:4px; position:relative; z-index:1;
+  will-change: filter;
+  animation: boardImgGlow 3.5s ease-in-out infinite;
+}
+@keyframes boardImgGlow {
+  0%,100% { filter: drop-shadow(0 0 2px rgba(255,26,46,.8)) drop-shadow(0 0 8px rgba(255,26,46,.45)); }
+  50%      { filter: drop-shadow(0 0 3px rgba(255,26,46,1)) drop-shadow(0 0 16px rgba(255,26,46,.75)); }
+}
+
+/* ── WIRING ── */
+section#wiring {
+  width: 100%;
+  padding: clamp(56px,8vw,110px) clamp(24px,6vw,96px);
+}
+.section-tag {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--red); letter-spacing: 5px; text-transform: uppercase;
+  margin-bottom: 12px; display:flex; align-items:center; gap:12px;
+}
+.section-tag::before {
+  content:''; display:block; width:24px; height:1px;
+  background:var(--red); box-shadow:0 0 8px var(--red);
+}
+.wiring-table { width:100%; border-collapse:collapse; font-family:'Space Mono',monospace; font-size:13px; }
+.wiring-table th {
+  padding:12px 20px; text-align:left; background:rgba(255,26,46,.08);
+  color:var(--red); letter-spacing:3px; font-size:10px; text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.wiring-table td {
+  padding:14px 20px; border-bottom:1px solid rgba(255,26,46,.07);
+  color:var(--text); transition: background .2s;
+}
+.wiring-table tr:hover td { background:rgba(255,26,46,.08); }
+.pin-badge {
+  display:inline-block; padding:2px 8px;
+  background:rgba(255,26,46,.08); border:1px solid var(--border);
+  color:var(--red); font-size:11px; letter-spacing:1px;
+  box-shadow:0 0 8px rgba(255,26,46,.15);
+}
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(25px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── CASE 3D CAROUSEL ── */
+section#case {
+  width: 100%;
+  padding: clamp(56px,8vw,110px) clamp(24px,6vw,96px);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.carousel {
+  position: relative;
+  width: min(100%, 1200px); margin: 0 auto;
+}
+.carousel-viewport { overflow: hidden; }
+.carousel-track {
+  display: flex;
+  transition: transform .6s var(--ease);
+  will-change: transform;
+}
+.case-slide {
+  min-width: 100%;
+  height: min(62vh, 640px);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  padding: clamp(8px,2vw,24px) 0;
+}
+.case-glow {
+  position:absolute; inset:-18px;
+  background: radial-gradient(ellipse, rgba(255,26,46,.05) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+  will-change: opacity, transform;
+  animation: boardGlow 3s ease-in-out infinite;
+}
+.case-img {
+  height: 100%; max-width: 100%; width: auto;
+  object-fit: contain; position: relative; z-index: 1;
+  will-change: filter, transform;
+  animation: caseImgGlow 5s ease-in-out infinite, caseZoom 9s ease-in-out infinite alternate;
+}
+@keyframes caseImgGlow {
+  0%,100% { filter: drop-shadow(0 0 1px rgba(255,26,46,.25)) drop-shadow(0 0 6px rgba(255,26,46,.1)); }
+  50%     { filter: drop-shadow(0 0 2px rgba(255,26,46,.4)) drop-shadow(0 0 10px rgba(255,26,46,.2)); }
+}
+@keyframes caseZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.05); }
+}
+.carousel-btn {
+  position:absolute; top:50%; transform: translateY(-50%);
+  background: rgba(255,26,46,.08); border:1px solid var(--border);
+  color: var(--red); font-family:'Space Mono',monospace; font-size:1rem;
+  width:44px; height:44px; cursor:pointer; z-index:3;
+  display:flex; align-items:center; justify-content:center;
+  transition: background .25s, border-color .25s, box-shadow .25s;
+}
+.carousel-btn:hover { background: rgba(255,26,46,.2); border-color: var(--red); box-shadow: 0 0 12px rgba(255,26,46,.4); }
+.carousel-prev { left: -22px; }
+.carousel-next { right: -22px; }
+.carousel-dots {
+  display:flex; justify-content:center; gap:10px; margin-top:clamp(16px,3vw,32px);
+}
+.carousel-dot {
+  width:8px; height:8px; border-radius:50%; border:1px solid var(--red);
+  background: transparent; cursor:pointer; padding:0;
+  transition: background .25s, box-shadow .25s;
+}
+.carousel-dot.active { background: var(--red); box-shadow: 0 0 8px rgba(255,26,46,.7); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px) {
+  .hero { flex-direction:column; padding:2rem 1.5rem 3rem; text-align:center; }
+  .hero-right { width:100%; }
+  .hero-board-wrap { width:min(70vw,420px); margin-top:2rem; }
+  .hero-board-img { width:min(60vw,360px); }
+  .hero-desc, .legal-warn { margin-left:auto; margin-right:auto; }
+  .hero-btns { justify-content:center; }
+  section#wiring { padding:64px 24px; }
+  .carousel-prev { left:0; }
+  .carousel-next { right:0; }
+  .case-slide { height: min(48vh, 460px); }
+  .scanline { animation-duration:12s; }
+}
+@media(max-width:640px) {
+  .hero-badge { padding:.3rem .6rem; font-size:.55rem; }
+  .menu-badge { display:none; }
+  .boards-stack { gap:1.5rem; }
+  .section-title { letter-spacing:2px; }
+}
+
+/* ── REDUCE MOTION ── */
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div style="margin-bottom:1.5rem;">
+      <img src="logo.png" alt="REAPER Logo" class="logo-img">
+    </div>
+    <h1 class="hero-title">
+      REAP<span class="stroke">ER</span>
+    </h1>
+
+    <p class="hero-desc">
+      Un outil de <strong>Hacking WiFi dual-band portable</strong> construit sur le BW16 AiThinker.
+      Installation simple, <strong>Déauthentification, Scan, Capture Handshake.</strong>
+    </p>
+    <div class="legal-warn">
+      <strong>⚠ USAGE ÉDUCATIF ET AUTORISÉ UNIQUEMENT.</strong><br>
+      Les attaques de déauthentification sont illégales lorsqu'elles sont effectuées sur des réseaux que tu ne possèdes pas ou pour lesquels tu n'as pas de permission explicite. Toujours obtenir une autorisation avant usage.
+    </div>
+    <div class="hero-btns">
+      <a href="#github" class="btn-red">⬡ Install</a>
+      <a href="#setup" class="btn-ghost">Guide de setup →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-board-wrap">
+      <img src="board.png" alt="REAPER PCB board" class="hero-board-img">
+      <div class="hero-badge" style="top:8%;right:-10px;color:var(--green);animation-delay:0s;">◆ 2.4GHz + 5GHz</div>
+      <div class="hero-badge" style="top:36%;left:-30px;color:var(--yellow);animation-delay:.7s;">◆ SSD1306 128x64</div>
+      <div class="hero-badge" style="bottom:22%;right:-5px;color:var(--red);animation-delay:1.4s;">◆ 3 navigation buttons</div>
+      <div class="hero-badge" style="bottom:40%;left:-20px;color:var(--orange);animation-delay:2.1s;">◆ BW16 rtl8720dn</div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTACK MODES / MENU -->
+<div class="menu-showcase" id="menu">
+  <div class="menu-left">
+    <p class="section-label">01 — MODES D'ATTAQUE</p>
+    <h2 class="section-title">6 modes.<br>Menu complet.</h2>
+    <p class="section-desc">Navigation 3 boutons (UP/SELECT/DOWN). Tout tourne sur l'appareil — aucun téléphone requis pour les attaques basiques.</p>
+
+    <div class="menu-section-inner">
+      <div class="menu-item-row reveal"><span class="menu-idx">01</span><span class="menu-name">Attack</span><span class="menu-badge badge-live">Live</span></div>
+      <div class="menu-item-row reveal"><span class="menu-idx">02</span><span class="menu-name">Scan</span><span class="menu-badge badge-live">Live</span></div>
+      <div class="menu-item-row reveal"><span class="menu-idx">03</span><span class="menu-name">Select (réseau)</span><span class="menu-badge badge-live">Live</span></div>
+      <div class="menu-item-row reveal"><span class="menu-idx">04</span><span class="menu-name">DeauthClient + Sniff</span><span class="menu-badge badge-live">Live</span></div>
+      <div class="menu-item-row reveal"><span class="menu-idx">05</span><span class="menu-name">Deauth + Sniff</span><span class="menu-badge badge-live">Live</span></div>
+      <div class="menu-item-row reveal"><span class="menu-idx">06</span><span class="menu-name">Analyzer WiFi</span><span class="menu-badge badge-live">Live</span></div>
+    </div>
+  </div>
+
+  <div class="oled-wrap">
+    <div class="boards-stack">
+      <div class="board-item">
+        <div class="board-glow"></div>
+        <img src="board.png" alt="REAPER board front" class="board-img">
+      </div>
+      <div class="board-item">
+        <div class="board-glow"></div>
+        <img src="backboard.png" alt="REAPER board back" class="board-img">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE 3D -->
+<section id="case">
+  <div class="section-tag">02 — Case 3D</div>
+  <h2 class="section-title">LA CASE EN 3D</h2>
+  <p class="section-desc">L'enclosure REAPER rendue en 3D : vue principale et chaque face en détail.</p>
+
+  <div class="carousel" id="caseCarousel">
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        <div class="case-slide">
+          <div class="case-glow"></div>
+          <img src="case.png" alt="REAPER case 3D" class="case-img">
+        </div>
+        <div class="case-slide">
+          <div class="case-glow"></div>
+          <img src="frontcase.png" alt="REAPER case front" class="case-img">
+        </div>
+        <div class="case-slide">
+          <div class="case-glow"></div>
+          <img src="leftcase.png" alt="REAPER case left" class="case-img">
+        </div>
+        <div class="case-slide">
+          <div class="case-glow"></div>
+          <img src="rightcase.png" alt="REAPER case right" class="case-img">
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-btn carousel-prev" aria-label="Précédent">◀</button>
+    <button class="carousel-btn carousel-next" aria-label="Suivant">▶</button>
+
+    <div class="carousel-dots"></div>
+  </div>
+</section>
+
+<!-- WIRING -->
+<section id="wiring">
+  <div class="section-tag">03 — Wiring</div>
+  <h2 class="section-title">CÂBLAGE</h2>
+  <div class="reveal">
+    <table class="wiring-table">
+      <thead>
+        <tr>
+          <th>Composant</th><th>Pin BW16</th><th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>SSD1306 VCC</td><td><span class="pin-badge">3.3V</span></td><td>Alimentation écran OLED</td></tr>
+        <tr><td>SSD1306 GND</td><td><span class="pin-badge">GND</span></td><td>Masse commune</td></tr>
+        <tr><td>SSD1306 SCL</td><td><span class="pin-badge">PA25</span></td><td>I2C Clock</td></tr>
+        <tr><td>SSD1306 SDA</td><td><span class="pin-badge">PA26</span></td><td>I2C Data</td></tr>
+        <tr><td>BTN UP</td><td><span class="pin-badge">PA12</span></td><td>Bouton navigation haut (pull-up)</td></tr>
+        <tr><td>BTN SELECT</td><td><span class="pin-badge">PA13</span></td><td>Bouton sélection (pull-up)</td></tr>
+        <tr><td>BTN DOWN</td><td><span class="pin-badge">PA14</span></td><td>Bouton navigation bas (pull-up)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 100);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: .1 });
+
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+(function () {
+  const carousel = document.getElementById('caseCarousel');
+  if (!carousel) return;
+  const track = carousel.querySelector('.carousel-track');
+  const slides = carousel.querySelectorAll('.case-slide');
+  const dotsWrap = carousel.querySelector('.carousel-dots');
+  const prevBtn = carousel.querySelector('.carousel-prev');
+  const nextBtn = carousel.querySelector('.carousel-next');
+  let index = 0;
+  let timer;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Diapositive ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap.querySelectorAll('.carousel-dot');
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    dots.forEach((d, j) => d.classList.toggle('active', j === index));
+  }
+
+  function play() { timer = setInterval(() => goTo(index + 1), 8000); }
+  function stop() { clearInterval(timer); }
+
+  prevBtn.addEventListener('click', () => { goTo(index - 1); play(); });
+  nextBtn.addEventListener('click', () => { goTo(index + 1); play(); });
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', play);
+
+  const viewport = carousel.querySelector('.carousel-viewport');
+  let startX = 0;
+  viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stop(); }, { passive: true });
+  viewport.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
+    play();
+  }, { passive: true });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') goTo(index - 1);
+    if (e.key === 'ArrowRight') goTo(index + 1);
+  });
+  play();
+})();
+</script>
+</body>
+</html>

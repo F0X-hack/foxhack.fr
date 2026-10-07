@@ -1,0 +1,820 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   FoXhack — design system « signal »
+   Style unique DEDSEC : Watch Dogs — noir, blanc tranchant,
+   orange sécurité, affiches et bandes de signal.
+
+   Règle : le noir domine, un seul accent porte l'interaction, les couleurs
+   chaudes restent rares. Aucun violet, aucun néon décoratif.
+
+   IMPORTANT — pourquoi les couleurs de thème sont écrites en CSS direct
+   (p. ex. `color: rgb(var(--signal))`) et JAMAIS via `@apply` d'une couleur de thème :
+   Tailwind met `tailwind.config.js` en cache au démarrage du process. Si le
+   serveur tourne encore avec une ancienne palette, un `@apply` sur une
+   couleur de thème fait échouer la compilation (« The class does not exist »).
+   Écrire la couleur directement supprime cette dépendance : ce fichier
+   compile toujours, quel que soit l'état du cache ou du config.
+   Les `@apply` restants ne concernent que des utilitaires sûrs (layout,
+   tailles, familles, couleurs core comme `white/…`).
+
+   Couleurs disponibles (Tailwind, générées depuis le config) :
+   bg-void ink panel elev · text-bone muted dim · signal / signal-soft ·
+   static · alert / alert-soft · ok · warm — utilisables dans les composants.
+   ========================================================================== */
+
+@layer utilities {
+  /* Texte réservé aux lecteurs d'écran et aux moteurs de recherche :
+     présent dans le DOM et dans le HTML, invisible à l'écran. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --void: 6 6 7;
+    --ink: 10 10 11;
+    --panel: 14 14 15;
+    --elev: 20 20 22;
+    --bone: 241 240 236;
+    --muted: 172 170 166;
+    --dim: 108 106 103;
+    --signal: 255 106 32;
+    --signal-soft: 255 158 92;
+    --static: 232 231 226;
+    --alert: 214 46 32;
+    --alert-soft: 240 92 62;
+    --ok: 168 217 74;
+    --warm: 226 206 106;
+    --grid: 255 255 255;
+    --line-alpha: 0.09;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* le décalage d'ancre tient compte de l'encoche (0 px partout ailleurs) */
+    scroll-padding-top: calc(5.5rem + env(safe-area-inset-top, 0px));
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    background-color: rgb(var(--void));
+    color: rgb(var(--bone));
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(80rem 44rem at 82% -12%, rgb(var(--signal) / 0.05), transparent 62%),
+      radial-gradient(60rem 36rem at 4% 8%, rgb(var(--static) / 0.045), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* tactile : pas de délai de double-tap sur les commandes, et un retour visuel
+     immédiat au doigt (le survol n'existe pas sur mobile) */
+  a,
+  button,
+  summary,
+  [role='button'] {
+    touch-action: manipulation;
+  }
+  button:active,
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  ::selection {
+    background: rgb(var(--signal) / 0.3);
+    color: #fff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--signal) / 0.9);
+    outline-offset: 3px;
+    border-radius: 0;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--bone) / 0.14) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgb(var(--bone) / 0.12);
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--signal) / 0.45);
+  }
+}
+
+@layer components {
+  /* ---------------------------------------------------------------- layout */
+  .shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .section {
+    @apply relative py-20 sm:py-28;
+    /* les cônes de lumière sont posés hors cadre : on n'autorise jamais un
+       débordement horizontal (mobile surtout), sans créer de conteneur de scroll */
+    overflow-x: clip;
+  }
+
+  /* -------------------------------------------------------------- surfaces */
+  .panel {
+    @apply relative;
+    border: 1px solid rgb(255 255 255 / 0.07);
+    background-color: rgb(var(--panel) / 0.7);
+  }
+
+  .panel-hover {
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .panel-hover:hover {
+    border-color: rgb(var(--signal) / 0.35);
+    background-color: rgb(var(--elev) / 0.6);
+  }
+
+  /* « card » reprend panel + panel-hover sans dépendre de @apply croisé */
+  .card {
+    @apply relative;
+    border: 1px solid rgb(255 255 255 / 0.07);
+    background-color: rgb(var(--panel) / 0.7);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .card:hover {
+    border-color: rgb(var(--signal) / 0.35);
+    background-color: rgb(var(--elev) / 0.6);
+  }
+
+  /* coins ASCII : le détail qui casse le “card générique” */
+  .corners::before,
+  .corners::after {
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-color: rgb(var(--signal) / 0.55);
+    border-style: solid;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .corners::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .corners::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+  .group:hover .corners::before,
+  .group:hover .corners::after,
+  .corners:hover::before,
+  .corners:hover::after {
+    opacity: 1;
+  }
+
+  .hairline {
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--bone) / 0.16) 8%,
+      rgb(var(--signal) / 0.5) 50%,
+      rgb(var(--bone) / 0.16) 92%,
+      transparent
+    );
+  }
+
+  /* ------------------------------------------------------------ typographie */
+  .mono {
+    @apply font-mono;
+  }
+
+  .label {
+    @apply font-mono uppercase;
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    letter-spacing: 0.22em;
+    color: rgb(var(--dim));
+  }
+
+  .cmd {
+    @apply font-mono text-xs sm:text-sm;
+    color: rgb(var(--signal-soft));
+  }
+
+  /* titres “stencil” : capitales serrées, légèrement encrées */
+  .display {
+    @apply font-semibold uppercase leading-[0.9] tracking-[-0.02em];
+    text-shadow: 0 0 22px rgb(var(--signal) / 0.14);
+  }
+
+  .text-gradient {
+    background: linear-gradient(180deg, rgb(var(--bone)) 16%, rgb(var(--muted)) 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* titre creux (outline) — utilisé une seule fois, dans le hero */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(var(--bone) / 0.55);
+  }
+
+  /* --------------------------------------------------------------- contrôles */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 border bg-white/[0.015] px-5 py-3 font-mono text-[0.7rem] uppercase transition-all duration-300 hover:text-white sm:text-xs;
+    letter-spacing: 0.22em;
+    min-height: 44px;
+    border-radius: 2px;
+    border-color: rgb(255 255 255 / 0.14);
+    color: rgb(var(--bone));
+  }
+  .btn:hover {
+    border-color: rgb(var(--signal) / 0.6);
+    background-color: rgb(var(--signal) / 0.07);
+  }
+
+  .btn-primary {
+    border-color: rgb(var(--signal) / 0.45);
+    background-color: rgb(var(--signal) / 0.09);
+    color: rgb(var(--signal-soft));
+    box-shadow: 0 0 40px -18px rgb(var(--signal) / 0.5);
+  }
+  .btn-primary:hover {
+    border-color: rgb(var(--signal));
+    background-color: rgb(var(--signal) / 0.16);
+    color: #fff;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgb(var(--alert) / 0.45);
+    background-color: rgb(var(--alert) / 0.06);
+    color: rgb(var(--alert-soft));
+  }
+
+  .chip {
+    @apply inline-flex items-center px-2.5 py-1.5 font-mono text-[0.65rem] uppercase tracking-wider;
+    min-height: 28px; /* cible tactile ≥ 24 px (WCAG 2.2) */
+    border-radius: 2px;
+    border: 1px solid rgb(255 255 255 / 0.09);
+    background-color: rgb(255 255 255 / 0.02);
+    color: rgb(var(--muted));
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .chip:hover {
+    border-color: rgb(var(--signal) / 0.4);
+    color: rgb(var(--bone));
+  }
+
+  /* étiquette collée / tampon, légèrement inclinée */
+  .sticker {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[0.6rem] uppercase backdrop-blur-sm;
+    letter-spacing: 0.22em;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    background-color: rgb(var(--void) / 0.85);
+    color: rgb(var(--muted));
+  }
+
+  .tag-signal {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[0.6rem] uppercase;
+    letter-spacing: 0.22em;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--signal) / 0.3);
+    background-color: rgb(var(--signal) / 0.07);
+    color: rgb(var(--signal-soft));
+  }
+
+  .tag-ok {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[0.6rem] uppercase;
+    letter-spacing: 0.22em;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--ok) / 0.35);
+    background-color: rgb(var(--ok) / 0.06);
+    color: rgb(var(--ok));
+  }
+
+  /* --------------------------------------------------------- fonds / textures */
+  .layer {
+    @apply pointer-events-none fixed inset-0;
+  }
+
+  .layer-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--grid) / 0.024) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--grid) / 0.024) 1px, transparent 1px);
+    background-size: 76px 76px;
+    /* la grille ne s'allume que dans le cône du projecteur */
+    mask-image: radial-gradient(80rem 46rem at 50% 4%, #000 12%, transparent 72%);
+    -webkit-mask-image: radial-gradient(80rem 46rem at 50% 4%, #000 12%, transparent 72%);
+  }
+
+
+  .layer-vignette {
+    background: radial-gradient(105% 72% at 50% 30%, transparent 26%, rgba(0, 0, 0, 0.94) 100%);
+  }
+
+  .layer-grain {
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  /* ------------------------------------------------------------- projecteurs */
+  /* Un cône de lumière net derrière une section. Aucun filtre de flou : tout
+     est en dégradé radial (gratuit à rendre). Le halo respire très lentement. */
+  .spotlight {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 9999px;
+    --spot-tone: var(--signal);
+    --spot-core: 0.1;
+    --spot-falloff: 0.03;
+    --spot-breathe: 16s;
+    background-image: radial-gradient(
+      closest-side,
+      rgb(var(--spot-tone) / var(--spot-core)) 0%,
+      rgb(var(--spot-tone) / var(--spot-falloff)) 46%,
+      transparent 74%
+    );
+    animation: breathe var(--spot-breathe) ease-in-out infinite;
+  }
+  /* projecteur secondaire : moitié moins intense, pour l'arrière-plan des sections */
+  .spotlight--low {
+    --spot-core: 0.055;
+    --spot-falloff: 0.018;
+  }
+  /* projecteur du fond global : encore plus doux, il ne doit pas blanchir la page */
+  .spotlight--ambient {
+    --spot-core: 0.1;
+    --spot-falloff: 0.035;
+    --spot-breathe: 22s;
+  }
+  /* cœur net : cône resserré et plus lumineux, posé au-dessus d'un cône large.
+     Gradients plus courts → la lumière paraît venir d'une source unique. */
+  .spotlight--core {
+    --spot-core: 0.17;
+    --spot-falloff: 0.05;
+    --spot-breathe: 20s;
+    background-image: radial-gradient(
+      closest-side,
+      rgb(var(--spot-tone) / var(--spot-core)) 0%,
+      rgb(var(--spot-tone) / var(--spot-falloff)) 38%,
+      transparent 68%
+    );
+  }
+  /* Dérive lente : le projecteur n'est pas vissé au mur. Réservé aux cônes du
+     fond (jamais aux sections, qui ne sont pas rognées et pourraient déborder).
+     On anime `translate` — propriété indépendante — pour ne pas écraser le
+     `-translate-x-1/2` de centrage. Deux animations cumulées : respiration +
+     dérive. */
+  .spotlight--drift {
+    animation-name: breathe, spot-drift;
+    animation-duration: var(--spot-breathe), 96s;
+    animation-timing-function: ease-in-out, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+    animation-direction: normal, alternate;
+  }
+  /* quelques pourcents de la taille du cône : perceptible sur 90 s, jamais gênant */
+  @keyframes spot-drift {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: 3% -4%;
+    }
+  }
+
+  /* -------------------------------------------------- mise au point au scroll */
+  /* Les cônes des sections restent discrets ; celui de la section lue au centre
+     de l'écran remonte à pleine intensité (classe `is-live`, voir
+     useSpotlightFocus). On n'anime que l'opacité : jamais de layout, jamais de
+     repaint du dégradé. */
+  [data-spot] .spotlight {
+    opacity: 0.6;
+    transition: opacity 1.6s ease;
+  }
+  [data-spot].is-live .spotlight {
+    opacity: 1;
+  }
+
+  .dust {
+    @apply absolute;
+    background: rgb(var(--bone) / 0.6);
+    animation-name: drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform, opacity;
+  }
+
+  /* portillon / niveau de signal ▓▓▓░ */
+  .bars {
+    @apply inline-flex items-center gap-[2px];
+  }
+  .bars > i {
+    @apply block h-2.5 w-[3px];
+    background: rgb(255 255 255 / 0.15);
+  }
+  .bars > i[data-on='true'] {
+    background: rgb(var(--signal));
+    box-shadow: 0 0 8px rgb(var(--signal) / 0.55);
+  }
+
+  /* ---------------------------------------------------------- en-tête ASCII */
+  .ascii-rule {
+    @apply flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.62rem] uppercase sm:text-[0.65rem];
+    letter-spacing: 0.14em;
+  }
+  @screen sm {
+    .ascii-rule {
+      letter-spacing: 0.22em;
+    }
+  }
+  .ascii-rule .rule {
+    @apply hidden h-px flex-1 sm:block;
+    background: repeating-linear-gradient(
+      to right,
+      rgb(var(--bone) / 0.22) 0px,
+      rgb(var(--bone) / 0.22) 5px,
+      transparent 5px,
+      transparent 10px
+    );
+  }
+
+  /* ------------------------------------ fenêtres façon terminal (cartes) */
+  .term-window {
+    @apply relative overflow-hidden;
+    box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.95);
+    border-radius: 2px;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    background-color: rgb(var(--void) / 0.96);
+  }
+
+  .term-titlebar {
+    @apply flex items-center gap-3 px-3 py-2.5 sm:px-4;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    background-color: rgb(255 255 255 / 0.02);
+  }
+
+  .term-dot {
+    @apply block h-2.5 w-2.5;
+    border-radius: 1px;
+    border: 1px solid rgb(255 255 255 / 0.2);
+  }
+
+
+
+  /* Le glitch froid est appliqué à la marque (.brand-mark--glitch) : une copie
+     masquée du wordmark, décalée brièvement. Aucune teinte chaude — le rouge
+     est banni de tous les glitchs du site.
+     Les @keyframes glitchBottom sont définies dans tailwind.config.js. */
+
+  /* ----------------------------------------------------- glitch du portrait */
+  /* Le portrait glitche tout seul : une tranche du portrait, teintée froid
+     (--static), se décale par salves très courtes puis se tait. Aucune teinte
+     chaude : le glitch reste monochrome et froid, comme le reste du site.
+     Le survol raccourcit le cycle et monte l'intensité. L'image est déjà en
+     cache : le navigateur ne télécharge rien de plus.
+     `background-blend-mode: color` donne la teinte (teinte+saturation de la
+     couleur, luminosité de la photo). Les deux tons froids du site étant très
+     désaturés, `saturate(3)` est nécessaire pour que la bande se lise sur une
+     photo sombre — sans jamais virer au néon cyan. */
+  .pdp-glitch {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    --pdp-tint: var(--static);
+    --pdp-peak: 0.9;
+    background-image:
+      linear-gradient(rgb(var(--pdp-tint)), rgb(var(--pdp-tint))),
+      var(--pdp-src);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: color;
+    filter: brightness(1.35) saturate(3);
+    will-change: clip-path, transform, opacity;
+    animation: pdpSlice 6.4s steps(1, end) infinite;
+  }
+  /* survol du portrait : cadence rapide, salves pleines */
+  .group:hover .pdp-glitch {
+    animation-duration: 1.6s;
+    --pdp-peak: 1;
+  }
+
+  @keyframes pdpSlice {
+    0%,
+    71%,
+    100% {
+      opacity: 0;
+      clip-path: inset(60% 0 26% 0);
+      transform: translate3d(0, 0, 0);
+    }
+    73% {
+      opacity: var(--pdp-peak);
+      clip-path: inset(66% 0 18% 0);
+      transform: translate3d(11px, 1px, 0);
+    }
+    76% {
+      opacity: var(--pdp-peak);
+      clip-path: inset(38% 0 50% 0);
+      transform: translate3d(-8px, -1px, 0);
+    }
+    79% {
+      opacity: var(--pdp-peak);
+      clip-path: inset(14% 0 74% 0);
+      transform: translate3d(6px, 0, 0);
+    }
+    82% {
+      opacity: var(--pdp-peak);
+      clip-path: inset(52% 0 34% 0);
+      transform: translate3d(-9px, 0, 0);
+    }
+    85% {
+      opacity: 0;
+      clip-path: inset(24% 0 64% 0);
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+  /* --------------------------------------------------- écran de démarrage */
+  /* Ouverture du canal : la marque se révèle par balayage, le journal et la
+     barre suivent l'état réel de la page, puis l'écran se lève comme un
+     rideau (clip-path animé côté framer-motion). */
+  .boot-mark {
+    animation: bootWipe 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .boot-underline {
+    display: block;
+    height: 1px;
+    margin-top: 0.8rem;
+    background: linear-gradient(to right, rgb(var(--signal) / 0.8), rgb(var(--signal) / 0));
+    transform-origin: left center;
+    animation: bootUnderline 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .boot-line {
+    animation: bootLine 0.34s ease-out both;
+  }
+
+  /* pointillés de conduite entre le libellé et sa valeur (style journal) */
+  .boot-leader {
+    flex: 1 1 auto;
+    min-width: 1.5rem;
+    border-bottom: 1px dotted rgb(var(--grid) / 0.45);
+    transform: translateY(-0.28em);
+  }
+
+  /* balayage de synchronisation qui descend sur l'écran */
+  .boot-sweep {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 40vh;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--signal) / 0.05) 58%,
+      rgb(var(--signal) / 0.16)
+    );
+    animation: bootSweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.12s infinite;
+  }
+
+  .boot-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background-color: rgb(var(--ok));
+    box-shadow: 0 0 10px rgb(var(--ok) / 0.75);
+    animation: bootDot 1.6s ease-in-out infinite;
+  }
+
+  @keyframes bootWipe {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes bootUnderline {
+    from {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes bootLine {
+    from {
+      opacity: 0;
+      transform: translateX(-7px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes bootSweep {
+    0% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    14% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(250%);
+    }
+  }
+
+  @keyframes bootDot {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* -------------------------------------------------------------- divers */
+
+  .link-underline {
+    @apply relative transition-colors hover:text-white;
+    color: rgb(var(--bone));
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: rgb(var(--signal));
+    transition: transform 0.35s ease;
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* ------------------------------------------------------------ marque FoXhack */
+  /* Le wordmark est un SVG externe appliqué en masque : mis en cache, colorable
+     via currentColor, et absent du bundle JS. */
+  .brand-mark {
+    position: relative;
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+  .brand-mark--wordmark {
+    aspect-ratio: 1290 / 384;
+    -webkit-mask-image: url('/brand/foxhack-wordmark.svg');
+    mask-image: url('/brand/foxhack-wordmark.svg');
+  }
+  /* Glitch appliqué à la marque elle-même : une copie masquée du wordmark,
+     froide (--static), qui se décale très brièvement — ~3 % du temps.
+     Aucune teinte chaude : le rouge est banni de tous les glitchs du site. */
+  .brand-mark--glitch::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    -webkit-mask-image: url('/brand/foxhack-wordmark.svg');
+    mask-image: url('/brand/foxhack-wordmark.svg');
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+  .brand-mark--glitch::after {
+    background-color: rgb(var(--static) / 0.85);
+    animation: glitchBottom 8.4s steps(1, end) infinite;
+  }
+  .brand-mark--glitch:hover::after {
+    animation-duration: 1.2s;
+  }
+
+  /* zones sûres iOS : l'encoche ne doit pas recouvrir la barre, la barre gestuelle
+     ne doit pas coller le pied de page */
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  /* Le hero démarre SOUS la barre : sur un écran à encoche la barre grandit,
+     donc la marge grandit avec elle. Sans encoche, valeurs d'origine. */
+  .hero-top {
+    padding-top: calc(6rem + env(safe-area-inset-top, 0px));
+  }
+  @screen sm {
+    .hero-top {
+      padding-top: calc(7rem + env(safe-area-inset-top, 0px));
+    }
+  }
+  @screen lg {
+    .hero-top {
+      padding-top: calc(8rem + env(safe-area-inset-top, 0px));
+    }
+  }
+  .safe-bottom {
+    padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .skip-link {
+    @apply absolute left-4 top-4 z-[100] -translate-y-24 px-4 py-2 font-mono text-xs transition-transform focus:translate-y-0;
+    border: 1px solid rgb(var(--signal) / 0.5);
+    background-color: rgb(var(--ink));
+    color: rgb(var(--bone));
+  }
+}
+
+@layer utilities {
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Accessibilité — l'utilisateur garde le contrôle
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .dust,
+  .pdp-glitch,
+  .brand-mark--glitch::after,
+  .boot-sweep,
+  .boot-dot {
+    display: none !important;
+  }
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,3060 @@
+/* ========================================================================== 
+   Offsidian — lecteur de vault public
+   Une interface de notes dense, inspirée des outils de knowledge management,
+   mais raccordée au langage visuel noir / os / orange de FoXhack.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ reset
+   Cette page n'embarque plus le CSS du portfolio (Tailwind génère ~46 Ko
+   d'utilitaires qui ne servent à rien ici). Le bloc reprend les
+   normalisations dont l'interface a besoin.
+
+   `:where()` garde une spécificité nulle : ces règles ne peuvent jamais
+   écraser le style d'un composant écrit plus bas dans le fichier. */
+:where(body.offsidian-page),
+:where(body.offsidian-page) *,
+:where(body.offsidian-page) *::before,
+:where(body.offsidian-page) *::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+
+:where(body.offsidian-page) :where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+:where(body.offsidian-page) :where(h1, h2, h3, h4, h5, h6, p, blockquote, figure, pre, hr, dl, dd) {
+  margin: 0;
+}
+
+:where(body.offsidian-page) :where(ul, ol) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(body.offsidian-page) :where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+:where(body.offsidian-page) :where(button, input, textarea, select) {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  background-color: transparent;
+  background-image: none;
+}
+
+:where(body.offsidian-page) :where(button) {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+:where(body.offsidian-page) :where(img, svg, video, canvas) {
+  display: block;
+  vertical-align: middle;
+}
+
+:where(body.offsidian-page) :where(img, video) {
+  max-width: 100%;
+  height: auto;
+}
+
+:where(body.offsidian-page) :where(table) {
+  border-collapse: collapse;
+  border-color: inherit;
+  text-indent: 0;
+}
+
+:where(body.offsidian-page) :where(pre, code, kbd, samp) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1em;
+}
+
+:where(body.offsidian-page) :where([hidden]) {
+  display: none;
+}
+
+:where(body.offsidian-page) ::placeholder {
+  color: #6f6c68;
+  opacity: 1;
+}
+
+:where(body.offsidian-page) :where(a, button, summary, [role='button']) {
+  touch-action: manipulation;
+}
+
+:where(body.offsidian-page) :focus-visible {
+  outline: 2px solid rgba(255, 106, 32, 0.9);
+  outline-offset: 3px;
+  border-radius: 0;
+}
+
+:where(body.offsidian-page) ::selection {
+  background: rgba(255, 106, 32, 0.3);
+  color: #fff;
+}
+
+:where(body.offsidian-page) * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(241, 240, 236, 0.14) transparent;
+}
+
+:where(body.offsidian-page) *::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+:where(body.offsidian-page) *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:where(body.offsidian-page) *::-webkit-scrollbar-thumb {
+  background: rgba(241, 240, 236, 0.12);
+}
+
+:where(body.offsidian-page) *::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 106, 32, 0.45);
+}
+
+body.offsidian-page {
+  margin: 0;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #080809;
+  color: #efeee9;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Inter, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+#offsidian-root {
+  height: 100%;
+}
+
+.offsidian-app {
+  --os-bg: #09090a;
+  --os-pane: #0d0d0e;
+  --os-pane-2: #111112;
+  --os-elev: #151516;
+  --os-line: rgba(255, 255, 255, 0.075);
+  --os-line-strong: rgba(255, 255, 255, 0.13);
+  --os-text: #efeee9;
+  --os-muted: #aaa7a2;
+  --os-dim: #6f6c68;
+  --os-orange: #ff6a20;
+  --os-orange-soft: #ff9a61;
+  --os-green: #a8d94a;
+  --os-warm: #e2ce6a;
+  position: relative;
+  display: grid;
+  grid-template-rows: 58px minmax(0, 1fr);
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  color: var(--os-text);
+  background: var(--os-bg);
+  isolation: isolate;
+}
+
+.offsidian-app *,
+.offsidian-app *::before,
+.offsidian-app *::after {
+  box-sizing: border-box;
+}
+
+.offsidian-app button,
+.offsidian-app input {
+  font: inherit;
+}
+
+.offsidian-app button {
+  color: inherit;
+}
+
+.offsidian-app svg {
+  flex: 0 0 auto;
+}
+
+/* ---------------------------------------------------------------- top bar */
+.offsidian-topbar {
+  position: relative;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: minmax(270px, 1fr) minmax(260px, 540px) minmax(270px, 1fr);
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+  height: 58px;
+  padding: env(safe-area-inset-top, 0) 14px 0;
+  border-bottom: 1px solid var(--os-line-strong);
+  background: #0b0b0c;
+}
+
+.offsidian-progress {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  max-width: 100%;
+  background: var(--os-orange);
+  transition: width 80ms linear;
+}
+
+.offsidian-topbar-left,
+.offsidian-topbar-actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.offsidian-topbar-left {
+  gap: 11px;
+}
+
+.offsidian-topbar-actions {
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.offsidian-brand-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 42px;
+  color: var(--os-text);
+  transition: color 180ms ease;
+}
+
+.offsidian-brand-link:hover {
+  color: #fff;
+}
+
+.offsidian-wordmark {
+  width: 102px;
+  height: 31px;
+}
+
+.offsidian-topbar-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--os-line-strong);
+}
+
+.offsidian-product-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  color: var(--os-muted);
+  text-decoration: none;
+}
+
+.offsidian-product-mark > span {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  color: var(--os-orange);
+  font-size: 22px;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 106, 32, 0.3));
+}
+
+.offsidian-product-mark strong {
+  color: var(--os-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+}
+
+.offsidian-command-search {
+  display: flex;
+  min-width: 0;
+  height: 36px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 9px 0 12px;
+  border: 1px solid var(--os-line-strong);
+  border-radius: 5px;
+  color: var(--os-dim);
+  background: rgba(255, 255, 255, 0.025);
+  cursor: text;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.offsidian-command-search:hover {
+  border-color: rgba(255, 106, 32, 0.34);
+  color: var(--os-muted);
+  background: rgba(255, 106, 32, 0.035);
+}
+
+.offsidian-command-search > svg {
+  width: 15px;
+  height: 15px;
+}
+
+.offsidian-command-search > span {
+  flex: 1;
+  overflow: hidden;
+  font-size: 0.76rem;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-command-search kbd,
+.offsidian-search-input-row kbd,
+.offsidian-search-footer kbd {
+  display: inline-grid;
+  min-width: 23px;
+  height: 23px;
+  place-items: center;
+  padding: 0 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom-color: rgba(255, 255, 255, 0.17);
+  border-radius: 4px;
+  color: #85817d;
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+}
+
+.offsidian-readonly {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-right: 5px;
+  color: var(--os-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.offsidian-readonly i,
+.offsidian-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--os-green);
+}
+
+.offsidian-icon-btn {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--os-dim);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.offsidian-icon-btn:hover,
+.offsidian-icon-btn.is-active {
+  border-color: var(--os-line-strong);
+  color: var(--os-text);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.offsidian-icon-btn.is-active {
+  color: var(--os-orange-soft);
+}
+
+.offsidian-icon-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.7;
+}
+
+.offsidian-menu-button,
+.offsidian-inspector-button {
+  display: none;
+}
+
+/* -------------------------------------------------------------- workspace */
+.offsidian-workspace {
+  display: grid;
+  grid-template-columns: 286px minmax(0, 1fr) 286px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  transition: grid-template-columns 240ms ease;
+}
+
+.offsidian-app.is-focus-mode .offsidian-workspace {
+  grid-template-columns: 0 minmax(0, 1fr) 0;
+}
+
+.offsidian-app.is-focus-mode .offsidian-sidebar,
+.offsidian-app.is-focus-mode .offsidian-inspector {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------- sidebar */
+.offsidian-sidebar,
+.offsidian-inspector {
+  position: relative;
+  z-index: 12;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: rgba(13, 13, 14, 0.96);
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.offsidian-sidebar {
+  display: grid;
+  grid-template-rows: 42px auto minmax(0, 1fr) 35px;
+  border-right: 1px solid var(--os-line);
+}
+
+.offsidian-pane-title,
+.offsidian-inspector-tabs {
+  display: flex;
+  min-width: 0;
+  height: 42px;
+  align-items: center;
+  border-bottom: 1px solid var(--os-line);
+  color: var(--os-dim);
+  background: rgba(255, 255, 255, 0.012);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.61rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.offsidian-pane-title {
+  justify-content: space-between;
+  padding: 0 12px 0 16px;
+}
+
+.offsidian-sidebar-search {
+  position: relative;
+  display: flex;
+  height: 34px;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 10px 5px;
+  padding: 0 9px;
+  border: 1px solid var(--os-line);
+  border-radius: 4px;
+  color: var(--os-dim);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.offsidian-sidebar-search:focus-within {
+  border-color: rgba(255, 106, 32, 0.38);
+  box-shadow: 0 0 0 2px rgba(255, 106, 32, 0.06);
+}
+
+.offsidian-sidebar-search > svg {
+  width: 13px;
+  height: 13px;
+}
+
+.offsidian-sidebar-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--os-muted);
+  background: transparent;
+  font-size: 0.71rem;
+}
+
+.offsidian-sidebar-search input::placeholder {
+  color: #5f5d5a;
+}
+
+.offsidian-sidebar-search button {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: var(--os-dim);
+  background: transparent;
+  cursor: pointer;
+}
+
+.offsidian-sidebar-search button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.offsidian-tree {
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 7px 20px;
+  overscroll-behavior: contain;
+}
+
+.offsidian-tree-section {
+  margin-bottom: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+.offsidian-tree-label,
+.offsidian-inspector-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 7px 9px 5px;
+  color: #696662;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.offsidian-tree-label svg,
+.offsidian-inspector-title svg {
+  width: 11px;
+  height: 11px;
+}
+
+.offsidian-vault-root-label {
+  display: flex;
+  height: 34px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  color: var(--os-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.offsidian-vault-root-label strong {
+  flex: 1;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+}
+
+.offsidian-vault-root-label > span:last-child {
+  color: var(--os-dim);
+  font-size: 0.58rem;
+}
+
+.offsidian-vault-glyph {
+  color: var(--os-orange);
+  font-size: 19px;
+  line-height: 1;
+}
+
+.offsidian-folder {
+  position: relative;
+}
+
+.offsidian-folder-button,
+.offsidian-file {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  border: 0;
+  border-radius: 3px;
+  color: var(--os-muted);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.offsidian-folder-button {
+  height: 31px;
+  gap: 5px;
+  padding: 0 7px;
+  font-size: 0.71rem;
+  font-weight: 550;
+}
+
+.offsidian-folder-button:hover,
+.offsidian-file:hover {
+  color: var(--os-text);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.offsidian-folder-button > svg:first-child {
+  width: 12px;
+  height: 12px;
+  color: #5d5a57;
+}
+
+.offsidian-folder-button > svg:nth-child(2) {
+  width: 14px;
+  height: 14px;
+  color: #89847f;
+}
+
+.offsidian-folder-button > span {
+  flex: 1;
+}
+
+.offsidian-folder-button small {
+  color: #565451;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.56rem;
+  font-weight: 400;
+}
+
+.offsidian-folder-files {
+  position: relative;
+  margin-left: 13px;
+  padding-left: 7px;
+}
+
+.offsidian-folder-files::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 3px;
+  left: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.offsidian-file {
+  position: relative;
+  min-height: 30px;
+  gap: 7px;
+  padding: 5px 7px;
+  font-size: 0.685rem;
+  line-height: 1.25;
+}
+
+.offsidian-file::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: transparent;
+}
+
+.offsidian-file.is-active {
+  color: #f5f3ef;
+  background: rgba(255, 106, 32, 0.085);
+}
+
+.offsidian-file.is-active::before {
+  background: var(--os-orange);
+}
+
+.offsidian-file > svg {
+  width: 13px;
+  height: 13px;
+  color: #77736f;
+  stroke-width: 1.65;
+}
+
+.offsidian-file.is-active > svg {
+  color: var(--os-orange-soft);
+}
+
+.offsidian-file > span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-file > i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--os-warm);
+}
+
+.offsidian-file .offsidian-file-star {
+  width: 11px;
+  height: 11px;
+  color: var(--os-warm);
+  fill: rgba(226, 206, 106, 0.25);
+}
+
+.offsidian-tree-empty {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 42px 20px;
+  color: var(--os-dim);
+  text-align: center;
+}
+
+.offsidian-tree-empty > svg {
+  width: 23px;
+  height: 23px;
+}
+
+.offsidian-tree-empty p {
+  margin: 0;
+  font-size: 0.73rem;
+}
+
+.offsidian-tree-empty button {
+  border: 0;
+  color: var(--os-orange-soft);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.66rem;
+}
+
+.offsidian-sidebar-footer {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  padding: 0 11px;
+  border-top: 1px solid var(--os-line);
+  color: #615f5b;
+  background: #0b0b0c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.53rem;
+}
+
+.offsidian-sidebar-footer > span:nth-child(2) {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-sidebar-footer > span:last-child {
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------- document frame */
+.offsidian-document-column {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: 42px minmax(0, 1fr);
+  background: var(--os-bg);
+}
+
+.offsidian-tabbar {
+  display: flex;
+  min-width: 0;
+  align-items: stretch;
+  border-bottom: 1px solid var(--os-line);
+  background: #0c0c0d;
+}
+
+.offsidian-note-tab {
+  position: relative;
+  display: flex;
+  width: min(330px, 55vw);
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 0 13px;
+  border-right: 1px solid var(--os-line);
+  color: var(--os-muted);
+  background: #101011;
+  font-size: 0.7rem;
+}
+
+.offsidian-note-tab::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: var(--os-orange);
+}
+
+.offsidian-note-tab svg {
+  width: 13px;
+  height: 13px;
+  color: var(--os-orange-soft);
+}
+
+.offsidian-note-tab span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-note-tab i {
+  width: 5px;
+  height: 5px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--os-orange);
+}
+
+.offsidian-document-scroll {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+.offsidian-document-shell {
+  width: min(100%, 1060px);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 22px clamp(24px, 5vw, 76px) 80px;
+}
+
+.offsidian-breadcrumbs {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  color: var(--os-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.59rem;
+  white-space: nowrap;
+}
+
+.offsidian-breadcrumbs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  color: var(--os-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.offsidian-breadcrumbs button span {
+  color: var(--os-orange);
+  font-size: 15px;
+}
+
+.offsidian-breadcrumbs > svg {
+  width: 11px;
+  height: 11px;
+  color: #4d4b49;
+}
+
+.offsidian-breadcrumbs strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #77736f;
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+.offsidian-note-toolbar {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 6px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.045);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+.offsidian-note-context,
+.offsidian-note-actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.offsidian-note-context {
+  overflow: hidden;
+}
+
+.offsidian-note-context > span {
+  display: inline-flex;
+  height: 23px;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  color: #817d78;
+  background: rgba(255, 255, 255, 0.018);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.53rem;
+  text-transform: lowercase;
+}
+
+.offsidian-note-context > span:first-child {
+  border-color: rgba(255, 106, 32, 0.18);
+  color: var(--os-orange-soft);
+  background: rgba(255, 106, 32, 0.035);
+}
+
+.offsidian-note-actions button {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--os-dim);
+  background: transparent;
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.57rem;
+  text-transform: uppercase;
+}
+
+.offsidian-note-actions button:hover,
+.offsidian-note-actions button.is-active {
+  border-color: var(--os-line);
+  color: var(--os-text);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.offsidian-note-actions button.is-active {
+  color: var(--os-orange-soft);
+}
+
+.offsidian-note-actions svg {
+  width: 13px;
+  height: 13px;
+}
+
+.offsidian-note-path {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: #585653;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.55rem;
+}
+
+.offsidian-note-path svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* -------------------------------------------------------- markdown note */
+.offsidian-markdown {
+  width: 100%;
+  padding: 28px 0 12px;
+  color: #c7c4bf;
+  font-size: 0.985rem;
+  line-height: 1.78;
+  overflow-wrap: anywhere;
+}
+
+.offsidian-markdown > :first-child {
+  margin-top: 0;
+}
+
+.offsidian-markdown h1,
+.offsidian-markdown h2,
+.offsidian-markdown h3,
+.offsidian-markdown h4 {
+  position: relative;
+  scroll-margin-top: 82px;
+  color: var(--os-text);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.offsidian-markdown h1 {
+  max-width: 920px;
+  margin: 10px 0 28px;
+  font-size: clamp(2.05rem, 4vw, 3.55rem);
+  line-height: 1.06;
+}
+
+.offsidian-markdown h1::after {
+  content: '';
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-top: 20px;
+  background: var(--os-orange);
+}
+
+.offsidian-markdown h2 {
+  margin: 62px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.085);
+  font-size: clamp(1.45rem, 2.4vw, 1.95rem);
+  line-height: 1.2;
+}
+
+.offsidian-markdown h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 34px;
+  height: 1px;
+  background: var(--os-orange);
+}
+
+.offsidian-markdown h3 {
+  margin: 40px 0 15px;
+  color: #e1dfda;
+  font-size: 1.22rem;
+  line-height: 1.3;
+}
+
+.offsidian-markdown h4 {
+  margin: 30px 0 12px;
+  color: #d0cdc8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+.offsidian-heading-anchor {
+  position: absolute;
+  right: calc(100% + 9px);
+  top: 0.12em;
+  color: var(--os-orange) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.62em;
+  font-weight: 400;
+  opacity: 0;
+  text-decoration: none !important;
+  transition: opacity 140ms ease;
+}
+
+.offsidian-markdown h1:hover .offsidian-heading-anchor,
+.offsidian-markdown h2:hover .offsidian-heading-anchor,
+.offsidian-markdown h3:hover .offsidian-heading-anchor,
+.offsidian-markdown h4:hover .offsidian-heading-anchor,
+.offsidian-heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.offsidian-markdown p {
+  margin: 0.9em 0 1.15em;
+}
+
+.offsidian-markdown strong {
+  color: #e8e6e1;
+  font-weight: 650;
+}
+
+.offsidian-markdown em {
+  color: #d2cec8;
+}
+
+.offsidian-markdown a {
+  display: inline;
+  color: var(--os-orange-soft);
+  text-decoration-color: rgba(255, 154, 97, 0.28);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+.offsidian-markdown a:hover {
+  color: #ffc09a;
+  text-decoration-color: currentColor;
+}
+
+.offsidian-wikilink {
+  padding: 0 2px;
+  border-radius: 2px;
+  color: #ff9a61 !important;
+  background: rgba(255, 106, 32, 0.055);
+  text-decoration-style: dotted;
+}
+
+.offsidian-wikilink:hover {
+  background: rgba(255, 106, 32, 0.12);
+}
+
+.offsidian-missing-link {
+  color: #8b7063;
+  text-decoration: underline dashed rgba(255, 106, 32, 0.3);
+  text-underline-offset: 3px;
+  cursor: not-allowed;
+}
+
+.offsidian-external-link-icon {
+  display: inline;
+  width: 0.72em;
+  height: 0.72em;
+  margin-left: 0.22em;
+  vertical-align: 0.07em;
+}
+
+.offsidian-markdown ul,
+.offsidian-markdown ol {
+  margin: 1em 0 1.35em;
+  padding-left: 1.55em;
+}
+
+.offsidian-markdown li {
+  margin: 0.38em 0;
+  padding-left: 0.2em;
+}
+
+.offsidian-markdown li::marker {
+  color: #a45d36;
+}
+
+.offsidian-markdown input[type='checkbox'] {
+  width: 14px;
+  height: 14px;
+  margin: 0 0.45em 0 0;
+  accent-color: var(--os-orange);
+  vertical-align: -1px;
+}
+
+.offsidian-markdown hr {
+  height: 1px;
+  margin: 46px 0;
+  border: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.offsidian-markdown blockquote {
+  margin: 24px 0;
+  padding: 3px 0 3px 18px;
+  border-left: 2px solid #625d58;
+  color: #aaa6a0;
+}
+
+.offsidian-markdown blockquote > :first-child,
+.offsidian-callout > div:last-child > :first-child {
+  margin-top: 0;
+}
+
+.offsidian-markdown blockquote > :last-child,
+.offsidian-callout > div:last-child > :last-child {
+  margin-bottom: 0;
+}
+
+.offsidian-callout {
+  position: relative;
+  margin: 25px 0;
+  padding: 14px 17px 15px;
+  overflow: hidden;
+  border: 1px solid rgba(116, 157, 184, 0.2);
+  border-left: 3px solid #79a6c1;
+  border-radius: 3px;
+  color: #b8c7d0;
+  background: rgba(88, 134, 163, 0.055);
+}
+
+.offsidian-callout::after {
+  content: '';
+  position: absolute;
+  top: -42px;
+  right: -42px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.025;
+}
+
+.offsidian-callout-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+  color: #95bdd5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.offsidian-callout-label svg {
+  width: 14px;
+  height: 14px;
+}
+
+.offsidian-callout--tip,
+.offsidian-callout--success {
+  border-color: rgba(168, 217, 74, 0.18);
+  border-left-color: var(--os-green);
+  color: #c3d39f;
+  background: rgba(168, 217, 74, 0.045);
+}
+
+.offsidian-callout--tip .offsidian-callout-label,
+.offsidian-callout--success .offsidian-callout-label {
+  color: var(--os-green);
+}
+
+.offsidian-callout--warning,
+.offsidian-callout--caution {
+  border-color: rgba(226, 206, 106, 0.2);
+  border-left-color: var(--os-warm);
+  color: #d5cc9c;
+  background: rgba(226, 206, 106, 0.045);
+}
+
+.offsidian-callout--warning .offsidian-callout-label,
+.offsidian-callout--caution .offsidian-callout-label {
+  color: var(--os-warm);
+}
+
+.offsidian-callout--danger,
+.offsidian-callout--error {
+  border-color: rgba(255, 106, 32, 0.22);
+  border-left-color: var(--os-orange);
+  color: #d8b49e;
+  background: rgba(255, 106, 32, 0.05);
+}
+
+.offsidian-callout--danger .offsidian-callout-label,
+.offsidian-callout--error .offsidian-callout-label {
+  color: var(--os-orange-soft);
+}
+
+.offsidian-inline-code {
+  padding: 0.14em 0.35em;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  color: #f0b18a;
+  background: rgba(255, 255, 255, 0.04);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.84em;
+  white-space: break-spaces;
+}
+
+.offsidian-code-block {
+  width: 100%;
+  margin: 22px 0 27px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 4px;
+  background: #080809;
+}
+
+.offsidian-code-head {
+  display: flex;
+  height: 35px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: #6f6b67;
+  background: #101011;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.offsidian-code-head > span::before {
+  content: '>_ ';
+  color: var(--os-orange);
+}
+
+.offsidian-code-head button {
+  display: inline-flex;
+  height: 27px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 3px;
+  color: #6f6b67;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.54rem;
+  text-transform: uppercase;
+}
+
+.offsidian-code-head button:hover {
+  color: var(--os-text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.offsidian-code-head button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.offsidian-code-block pre {
+  max-height: 660px;
+  margin: 0;
+  padding: 17px 19px 20px;
+  overflow: auto;
+  color: #c8c5c0;
+  background: #080809;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.77rem;
+  line-height: 1.65;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.offsidian-code-block code {
+  font: inherit;
+}
+
+.offsidian-table-wrap {
+  width: 100%;
+  margin: 24px 0 30px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 3px;
+}
+
+.offsidian-markdown table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 0.79rem;
+  line-height: 1.55;
+}
+
+.offsidian-markdown th,
+.offsidian-markdown td {
+  padding: 10px 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.055);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  text-align: left;
+  vertical-align: top;
+}
+
+.offsidian-markdown th:last-child,
+.offsidian-markdown td:last-child {
+  border-right: 0;
+}
+
+.offsidian-markdown tr:last-child td {
+  border-bottom: 0;
+}
+
+.offsidian-markdown th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: #dbd8d2;
+  background: #141415;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+}
+
+.offsidian-markdown tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.offsidian-markdown tbody tr:hover {
+  background: rgba(255, 106, 32, 0.025);
+}
+
+.offsidian-note-image {
+  margin: 28px 0;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0b0b0c;
+}
+
+.offsidian-note-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 680px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.offsidian-note-image figcaption,
+.offsidian-mermaid figcaption {
+  margin-top: 7px;
+  color: #65625f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.56rem;
+  text-align: center;
+}
+
+.offsidian-external-image,
+.offsidian-missing-image {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 18px 0;
+  padding: 11px 13px;
+  border: 1px dashed rgba(255, 255, 255, 0.11);
+  border-radius: 3px;
+  color: var(--os-dim);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.offsidian-external-image > svg,
+.offsidian-missing-image > svg {
+  width: 17px;
+  height: 17px;
+}
+
+.offsidian-external-image > span {
+  display: grid;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.offsidian-external-image strong {
+  color: var(--os-muted);
+  font-size: 0.72rem;
+}
+
+.offsidian-external-image small {
+  color: var(--os-dim);
+  font-size: 0.61rem;
+}
+
+.offsidian-external-image a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+}
+
+.offsidian-external-image a svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* ------------------------------------------------ diagrams and dataview */
+.offsidian-mermaid {
+  position: relative;
+  width: 100%;
+  margin: 27px 0 32px;
+  padding: 22px 18px 10px;
+  overflow: auto hidden;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 4px;
+  background: #0b0b0c;
+}
+
+.offsidian-mermaid > div:first-child {
+  min-width: 500px;
+  text-align: center;
+}
+
+.offsidian-mermaid svg {
+  width: auto !important;
+  max-width: 100% !important;
+  min-height: 150px;
+  max-height: 600px;
+  margin: 0 auto;
+}
+
+.offsidian-diagram-loading {
+  display: flex;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--os-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.62rem;
+}
+
+.offsidian-diagram-loading span,
+.offsidian-note-loading span {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 106, 32, 0.25);
+  border-top-color: var(--os-orange);
+  border-radius: 50%;
+  animation: offsidian-spin 0.8s linear infinite;
+}
+
+@keyframes offsidian-spin { to { transform: rotate(360deg); } }
+
+.offsidian-mermaid-error {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 7px 11px;
+  margin: 24px 0;
+  padding: 14px;
+  border: 1px solid rgba(255, 106, 32, 0.2);
+  color: var(--os-muted);
+  background: rgba(255, 106, 32, 0.035);
+}
+
+.offsidian-mermaid-error > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--os-orange);
+}
+
+.offsidian-mermaid-error > div {
+  display: grid;
+  line-height: 1.3;
+}
+
+.offsidian-mermaid-error small {
+  color: var(--os-dim);
+  font-size: 0.62rem;
+}
+
+.offsidian-mermaid-error details {
+  grid-column: 1 / -1;
+}
+
+.offsidian-dataview {
+  margin: 24px 0 30px;
+  padding: 15px;
+  border: 1px solid rgba(255, 106, 32, 0.16);
+  border-radius: 4px;
+  background: rgba(255, 106, 32, 0.025);
+}
+
+.offsidian-dataview-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 13px;
+  color: var(--os-orange-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.61rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.offsidian-dataview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.offsidian-dataview-stats > div {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.offsidian-dataview-stats strong {
+  color: var(--os-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.12rem;
+}
+
+.offsidian-dataview-stats span {
+  color: var(--os-dim);
+  font-size: 0.59rem;
+}
+
+.offsidian-dataview-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.offsidian-dataview-categories > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 25px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--os-muted);
+  background: rgba(255, 255, 255, 0.015);
+  font-size: 0.6rem;
+}
+
+.offsidian-dataview-categories b {
+  color: var(--os-orange-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.offsidian-dataview details,
+.offsidian-mermaid-error details {
+  margin-top: 10px;
+}
+
+.offsidian-dataview summary,
+.offsidian-mermaid-error summary {
+  color: var(--os-dim);
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.58rem;
+}
+
+/* ------------------------------------------------------ loading/raw/error */
+.offsidian-note-loading,
+.offsidian-note-error {
+  display: grid;
+  min-height: 420px;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  color: var(--os-dim);
+  text-align: center;
+}
+
+.offsidian-note-loading p {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.64rem;
+}
+
+.offsidian-note-error > svg {
+  width: 28px;
+  height: 28px;
+  color: var(--os-orange);
+}
+
+.offsidian-note-error h1 {
+  margin: 5px 0 0;
+  color: var(--os-text);
+  font-size: 1.35rem;
+}
+
+.offsidian-note-error p {
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+.offsidian-note-error button {
+  margin-top: 8px;
+  padding: 8px 13px;
+  border: 1px solid rgba(255, 106, 32, 0.3);
+  color: var(--os-orange-soft);
+  background: rgba(255, 106, 32, 0.05);
+  cursor: pointer;
+}
+
+.offsidian-raw-view {
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid var(--os-line-strong);
+  border-radius: 4px;
+  background: #080809;
+}
+
+.offsidian-raw-view > div {
+  display: flex;
+  height: 38px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--os-line);
+  color: var(--os-orange-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.59rem;
+  text-transform: uppercase;
+}
+
+.offsidian-raw-view > div svg {
+  width: 13px;
+  height: 13px;
+}
+
+.offsidian-raw-view > div small {
+  margin-left: auto;
+  overflow: hidden;
+  color: var(--os-dim);
+  font-size: 0.53rem;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.offsidian-raw-view pre {
+  max-height: calc(100dvh - 260px);
+  margin: 0;
+  padding: 21px;
+  overflow: auto;
+  color: #aaa7a2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.73rem;
+  line-height: 1.65;
+  tab-size: 2;
+  white-space: pre-wrap;
+}
+
+/* --------------------------------------------------------- note footer */
+.offsidian-note-footer {
+  margin-top: 58px;
+  padding-top: 14px;
+}
+
+.offsidian-note-end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #5e5b58;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+}
+
+.offsidian-note-end i {
+  height: 1px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.offsidian-note-footer > p {
+  margin: 10px 0 20px;
+  color: #5e5b58;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.57rem;
+}
+
+.offsidian-note-pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.offsidian-note-pagination button {
+  display: flex;
+  min-width: 0;
+  min-height: 64px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 13px;
+  border: 1px solid var(--os-line);
+  border-radius: 3px;
+  color: var(--os-dim);
+  background: rgba(255, 255, 255, 0.015);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.offsidian-note-pagination button:last-child {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.offsidian-note-pagination button:hover {
+  border-color: rgba(255, 106, 32, 0.28);
+  background: rgba(255, 106, 32, 0.025);
+}
+
+.offsidian-note-pagination button > svg {
+  width: 16px;
+  height: 16px;
+  color: var(--os-orange-soft);
+}
+
+.offsidian-note-pagination button > span {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.offsidian-note-pagination small {
+  color: var(--os-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.52rem;
+  text-transform: uppercase;
+}
+
+.offsidian-note-pagination strong {
+  overflow: hidden;
+  color: var(--os-muted);
+  font-size: 0.68rem;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------- inspector */
+.offsidian-inspector {
+  display: grid;
+  grid-template-rows: 42px minmax(0, 1fr);
+  border-left: 1px solid var(--os-line);
+}
+
+.offsidian-inspector-tabs {
+  padding: 0 8px;
+}
+
+.offsidian-inspector-tabs > button:not(.offsidian-icon-btn) {
+  position: relative;
+  height: 42px;
+  padding: 0 9px;
+  border: 0;
+  color: var(--os-dim);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.offsidian-inspector-tabs > button:not(.offsidian-icon-btn)::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  left: 8px;
+  height: 1px;
+  background: transparent;
+}
+
+.offsidian-inspector-tabs > button.is-active {
+  color: var(--os-text);
+}
+
+.offsidian-inspector-tabs > button.is-active::after {
+  background: var(--os-orange);
+}
+
+.offsidian-inspector-tabs button span {
+  margin-left: 3px;
+  color: #5e5b58;
+}
+
+.offsidian-inspector-scroll {
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 11px 30px;
+  overscroll-behavior: contain;
+}
+
+.offsidian-properties,
+.offsidian-outline,
+.offsidian-links-panel > section {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.offsidian-inspector-title {
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+.offsidian-inspector-title > span {
+  margin-left: auto;
+  color: #585653;
+}
+
+.offsidian-properties dl {
+  display: grid;
+  gap: 2px;
+  margin: 4px 0 0;
+}
+
+.offsidian-properties dl > div {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  min-height: 29px;
+  padding: 6px 5px;
+  border-radius: 3px;
+  font-size: 0.63rem;
+}
+
+.offsidian-properties dl > div:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.offsidian-properties dt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #686561;
+}
+
+.offsidian-properties dt svg {
+  width: 11px;
+  height: 11px;
+}
+
+.offsidian-properties dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--os-muted);
+}
+
+.offsidian-properties dd a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--os-orange-soft);
+  text-decoration: none;
+}
+
+.offsidian-properties dd a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.offsidian-properties dd a svg {
+  width: 10px;
+  height: 10px;
+}
+
+.offsidian-properties dd.is-published {
+  color: var(--os-green);
+}
+
+.offsidian-properties dd.is-draft {
+  color: var(--os-warm);
+}
+
+.offsidian-property-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.offsidian-property-tags span {
+  padding: 3px 6px;
+  border: 1px solid rgba(255, 106, 32, 0.13);
+  border-radius: 3px;
+  color: #a57254;
+  background: rgba(255, 106, 32, 0.025);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.54rem;
+}
+
+.offsidian-outline nav {
+  display: grid;
+  margin-top: 5px;
+}
+
+.offsidian-outline nav button {
+  position: relative;
+  width: 100%;
+  min-height: 28px;
+  padding: 5px 7px 5px 11px;
+  overflow: hidden;
+  border: 0;
+  color: #77736f;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.offsidian-outline nav button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.offsidian-outline nav button:hover {
+  color: var(--os-muted);
+}
+
+.offsidian-outline nav button.is-active {
+  color: var(--os-text);
+  background: rgba(255, 106, 32, 0.06);
+}
+
+.offsidian-outline nav button.is-active::before {
+  width: 2px;
+  background: var(--os-orange);
+}
+
+.offsidian-outline nav button.is-depth-3 {
+  padding-left: 23px;
+  color: #66635f;
+  font-size: 0.59rem;
+}
+
+.offsidian-outline nav button span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-inspector-empty {
+  margin: 8px 2px;
+  color: #5f5c58;
+  font-size: 0.62rem;
+  line-height: 1.5;
+}
+
+.offsidian-local-graph-button {
+  display: grid;
+  grid-template-columns: 35px minmax(0, 1fr) auto;
+  width: 100%;
+  align-items: center;
+  gap: 9px;
+  margin: 5px 0 17px;
+  padding: 9px;
+  border: 1px solid rgba(255, 106, 32, 0.15);
+  border-radius: 3px;
+  color: var(--os-muted);
+  background: rgba(255, 106, 32, 0.025);
+  cursor: pointer;
+  text-align: left;
+}
+
+.offsidian-local-graph-button:hover {
+  border-color: rgba(255, 106, 32, 0.3);
+  background: rgba(255, 106, 32, 0.05);
+}
+
+.offsidian-local-graph-button > span {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  place-items: center;
+  border: 1px solid rgba(255, 106, 32, 0.17);
+  color: var(--os-orange-soft);
+}
+
+.offsidian-local-graph-button > span svg {
+  width: 16px;
+  height: 16px;
+}
+
+.offsidian-local-graph-button > div {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.offsidian-local-graph-button strong {
+  color: #c4c1bc;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.offsidian-local-graph-button small {
+  color: var(--os-dim);
+  font-size: 0.55rem;
+}
+
+.offsidian-local-graph-button > svg {
+  width: 13px;
+  height: 13px;
+}
+
+.offsidian-linked-note {
+  display: grid;
+  width: 100%;
+  gap: 2px;
+  padding: 7px 5px;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+  color: var(--os-muted);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.offsidian-linked-note:hover {
+  color: var(--os-text);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.offsidian-linked-note span {
+  overflow: hidden;
+  font-size: 0.63rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-linked-note small {
+  color: #55524f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.51rem;
+}
+
+/* --------------------------------------------------------- search modal */
+.offsidian-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  padding: max(8vh, 68px) 20px 20px;
+  background: rgba(0, 0, 0, 0.72);
+  animation: offsidian-fade-in 140ms ease both;
+}
+
+@keyframes offsidian-fade-in { from { opacity: 0; } }
+
+.offsidian-search-modal {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  width: min(760px, 100%);
+  max-height: min(760px, 82dvh);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 6px;
+  background: #0d0d0e;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  animation: offsidian-modal-in 180ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+@keyframes offsidian-modal-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.985); }
+}
+
+.offsidian-search-input-row {
+  display: flex;
+  height: 58px;
+  align-items: center;
+  gap: 11px;
+  padding: 0 13px 0 17px;
+  border-bottom: 1px solid var(--os-line-strong);
+  color: var(--os-dim);
+}
+
+.offsidian-search-input-row > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--os-orange-soft);
+}
+
+.offsidian-search-input-row input {
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: var(--os-text);
+  background: transparent;
+  font-size: 0.94rem;
+}
+
+.offsidian-search-input-row input::placeholder {
+  color: #5f5c58;
+}
+
+.offsidian-search-input-row > button {
+  display: none;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: var(--os-dim);
+  background: transparent;
+}
+
+.offsidian-search-input-row > button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.offsidian-indexing {
+  color: #5f5c58;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.54rem;
+}
+
+.offsidian-search-filters {
+  display: flex;
+  gap: 5px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--os-line);
+}
+
+.offsidian-search-filters button {
+  display: inline-flex;
+  height: 28px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+  border: 1px solid var(--os-line);
+  border-radius: 999px;
+  color: var(--os-dim);
+  background: rgba(255, 255, 255, 0.012);
+  cursor: pointer;
+  font-size: 0.62rem;
+}
+
+.offsidian-search-filters button:hover,
+.offsidian-search-filters button.is-active {
+  border-color: rgba(255, 106, 32, 0.28);
+  color: var(--os-text);
+  background: rgba(255, 106, 32, 0.055);
+}
+
+.offsidian-search-filters button span {
+  color: #5c5955;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.53rem;
+}
+
+.offsidian-search-results {
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 8px 12px;
+  overscroll-behavior: contain;
+}
+
+.offsidian-results-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  color: #5f5c58;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.54rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.offsidian-search-result {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--os-muted);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.offsidian-search-result:hover,
+.offsidian-search-result.is-active {
+  border-color: rgba(255, 106, 32, 0.14);
+  background: rgba(255, 106, 32, 0.045);
+}
+
+.offsidian-result-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  color: #77736f;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.offsidian-search-result.is-active .offsidian-result-icon {
+  border-color: rgba(255, 106, 32, 0.22);
+  color: var(--os-orange-soft);
+}
+
+.offsidian-result-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.offsidian-result-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.offsidian-result-copy strong {
+  overflow: hidden;
+  color: #d9d6d1;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-result-copy strong mark {
+  color: #fff;
+  background: rgba(255, 106, 32, 0.22);
+}
+
+.offsidian-result-copy > small {
+  overflow: hidden;
+  color: #77736f;
+  font-size: 0.63rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-result-copy > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #56534f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.52rem;
+}
+
+.offsidian-result-copy > span b {
+  color: #403e3b;
+}
+
+.offsidian-result-copy > span svg {
+  width: 10px;
+  height: 10px;
+  color: var(--os-warm);
+  fill: rgba(226, 206, 106, 0.18);
+}
+
+.offsidian-result-open {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  color: transparent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.65rem;
+}
+
+.offsidian-search-result.is-active .offsidian-result-open {
+  color: var(--os-orange-soft);
+}
+
+.offsidian-search-empty {
+  display: grid;
+  min-height: 270px;
+  place-content: center;
+  justify-items: center;
+  gap: 7px;
+  color: var(--os-dim);
+  text-align: center;
+}
+
+.offsidian-search-empty svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+.offsidian-search-empty strong {
+  color: var(--os-muted);
+  font-size: 0.78rem;
+}
+
+.offsidian-search-empty p {
+  margin: 0;
+  font-size: 0.65rem;
+}
+
+.offsidian-search-footer {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 18px;
+  padding: 0 14px;
+  border-top: 1px solid var(--os-line);
+  color: #5e5b58;
+  background: #0a0a0b;
+  font-size: 0.54rem;
+}
+
+.offsidian-search-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.offsidian-search-footer kbd {
+  min-width: 19px;
+  height: 19px;
+  padding: 0 3px;
+  font-size: 0.5rem;
+}
+
+/* ---------------------------------------------------------- graph modal */
+.offsidian-graph-layer {
+  align-items: center;
+  padding-top: 20px;
+}
+
+.offsidian-graph-modal {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(1120px, 100%);
+  height: min(780px, calc(100dvh - 40px));
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 6px;
+  background: #0b0b0c;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  animation: offsidian-modal-in 180ms ease both;
+}
+
+.offsidian-graph-header {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 18px 14px 22px;
+  border-bottom: 1px solid var(--os-line);
+  background: #0f0f10;
+}
+
+.offsidian-graph-header > div {
+  min-width: 0;
+}
+
+.offsidian-kicker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--os-orange-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.offsidian-kicker svg {
+  width: 12px;
+  height: 12px;
+}
+
+.offsidian-graph-header h2 {
+  margin: 5px 0 1px;
+  overflow: hidden;
+  color: var(--os-text);
+  font-size: 1.15rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.offsidian-graph-header p {
+  margin: 0;
+  color: var(--os-dim);
+  font-size: 0.62rem;
+}
+
+.offsidian-graph-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: #09090a;
+}
+
+.offsidian-graph-stage svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+}
+
+.graph-edge {
+  stroke: rgba(255, 255, 255, 0.11);
+  stroke-width: 1;
+}
+
+.graph-edge--out { stroke: rgba(255, 106, 32, 0.28); }
+.graph-edge--in { stroke: rgba(168, 217, 74, 0.2); stroke-dasharray: 4 5; }
+.graph-edge--both { stroke: rgba(255, 154, 97, 0.5); stroke-width: 1.4; }
+
+.graph-node {
+  outline: none;
+  cursor: pointer;
+}
+
+.graph-node circle:first-child {
+  fill: #9b9791;
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 1;
+  transition: r 140ms ease, fill 140ms ease;
+}
+
+.graph-node--outils circle:first-child { fill: #d3ba60; }
+.graph-node--techniques circle:first-child { fill: #d17948; }
+.graph-node--guides circle:first-child { fill: #a8d94a; }
+.graph-node--templates circle:first-child { fill: #7e8c9b; }
+
+.graph-node:hover circle:first-child,
+.graph-node:focus circle:first-child {
+  r: 11px;
+  fill: var(--os-orange);
+}
+
+.graph-node-hit {
+  fill: transparent;
+  stroke: transparent;
+}
+
+.graph-node text {
+  fill: #84807b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 9px;
+  pointer-events: none;
+  transition: fill 140ms ease;
+}
+
+.graph-node:hover text,
+.graph-node:focus text {
+  fill: #f0eee9;
+}
+
+.graph-node--center {
+  cursor: default;
+}
+
+.graph-node--center circle:first-child {
+  fill: var(--os-orange);
+  stroke: #ffc09a;
+  stroke-width: 1.5;
+}
+
+.graph-node-center-ring {
+  fill: transparent;
+  stroke: rgba(255, 106, 32, 0.25);
+  stroke-width: 1;
+}
+
+.graph-node--center text {
+  fill: var(--os-text);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.offsidian-graph-empty {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  color: var(--os-dim);
+}
+
+.offsidian-graph-empty svg {
+  width: 27px;
+  height: 27px;
+}
+
+.offsidian-graph-empty p {
+  font-size: 0.68rem;
+}
+
+.offsidian-graph-footer {
+  display: flex;
+  min-height: 55px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 18px;
+  border-top: 1px solid var(--os-line);
+  color: var(--os-dim);
+  background: #0e0e0f;
+  font-size: 0.57rem;
+}
+
+.offsidian-graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.offsidian-graph-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.offsidian-graph-legend i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8c8883;
+}
+
+.offsidian-graph-legend i.is-out { background: var(--os-orange); }
+.offsidian-graph-legend i.is-in { background: var(--os-green); }
+.offsidian-graph-legend i.is-both { border: 1px solid var(--os-orange-soft); background: var(--os-orange); box-shadow: 0 0 5px rgba(255, 106, 32, 0.4); }
+
+.offsidian-graph-legend svg {
+  width: 10px;
+  height: 10px;
+}
+
+.offsidian-graph-footer p {
+  max-width: 470px;
+  margin: 0;
+  text-align: right;
+}
+
+/* ------------------------------------------------------- loading screen */
+.offsidian-loading {
+  display: grid;
+  width: 100%;
+  height: 100dvh;
+  place-content: center;
+  justify-items: center;
+  padding: 24px;
+  overflow: hidden;
+  color: #efeee9;
+  background: #080809;
+  text-align: center;
+}
+
+.offsidian-loading-kicker {
+  margin: 0 0 8px;
+  color: #77736f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+}
+
+.offsidian-loading h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.offsidian-loading h1 span {
+  color: #ff6a20;
+}
+
+.offsidian-loading-line {
+  display: flex;
+  width: min(320px, 76vw);
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  color: #66635f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.58rem;
+}
+
+.offsidian-loading-line i {
+  position: relative;
+  height: 1px;
+  flex: 1;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.offsidian-loading-line i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: var(--os-orange);
+}
+
+.offsidian-loading-error {
+  max-width: 450px;
+  margin: 22px 0 0;
+  color: #aaa7a2;
+  font-size: 0.73rem;
+  line-height: 1.6;
+}
+
+.offsidian-loading > button {
+  margin-top: 15px;
+  padding: 9px 15px;
+  border: 1px solid rgba(255, 106, 32, 0.3);
+  color: #ff9a61;
+  background: rgba(255, 106, 32, 0.05);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------- mobile drawers */
+.offsidian-sidebar-scrim,
+.offsidian-inspector-scrim,
+.offsidian-mobile-nav,
+.offsidian-mobile-only {
+  display: none;
+}
+
+@media (max-width: 1280px) {
+  .offsidian-topbar {
+    grid-template-columns: minmax(255px, 1fr) minmax(240px, 460px) minmax(210px, 1fr);
+  }
+
+  .offsidian-workspace {
+    grid-template-columns: 274px minmax(0, 1fr);
+  }
+
+  .offsidian-inspector {
+    position: fixed;
+    z-index: 65;
+    top: 58px;
+    right: 0;
+    bottom: 0;
+    width: min(330px, 88vw);
+    border-left: 1px solid var(--os-line-strong);
+    box-shadow: -12px 0 30px rgba(0, 0, 0, 0.4);
+    transform: translateX(103%);
+    visibility: visible;
+    opacity: 1;
+    transition: transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+
+  .offsidian-inspector.is-mobile-open {
+    transform: translateX(0);
+  }
+
+  .offsidian-inspector-scrim {
+    position: fixed;
+    inset: 58px 0 0;
+    z-index: 64;
+    border: 0;
+    background: rgba(0, 0, 0, 0.56);
+  }
+
+  .offsidian-inspector-scrim.is-open {
+    display: block;
+  }
+
+  .offsidian-inspector-button {
+    display: inline-grid;
+    margin: 3px 5px 3px auto;
+  }
+
+  .offsidian-mobile-only {
+    display: inline-grid;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .offsidian-app {
+    grid-template-rows: calc(56px + env(safe-area-inset-top, 0px)) minmax(0, 1fr) calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .offsidian-topbar {
+    height: calc(56px + env(safe-area-inset-top, 0px));
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: env(safe-area-inset-top, 0px) 10px 0;
+  }
+
+  .offsidian-menu-button {
+    display: inline-grid;
+  }
+
+  .offsidian-brand-link,
+  .offsidian-topbar-divider,
+  .offsidian-command-search,
+  .offsidian-readonly,
+  .offsidian-topbar-actions > .offsidian-icon-btn:nth-of-type(1),
+  .offsidian-topbar-actions > .offsidian-icon-btn:nth-of-type(2) {
+    display: none;
+  }
+
+  .offsidian-product-mark strong {
+    font-size: 0.66rem;
+  }
+
+  .offsidian-topbar-actions {
+    grid-column: 2;
+  }
+
+  .offsidian-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-row: 2;
+  }
+
+  .offsidian-sidebar {
+    position: fixed;
+    z-index: 65;
+    top: calc(56px + env(safe-area-inset-top, 0px));
+    bottom: 0;
+    left: 0;
+    width: min(330px, 90vw);
+    border-right: 1px solid var(--os-line-strong);
+    box-shadow: 25px 0 60px rgba(0, 0, 0, 0.55);
+    transform: translateX(-103%);
+    visibility: visible !important;
+    opacity: 1 !important;
+    transition: transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+
+  .offsidian-sidebar.is-mobile-open {
+    transform: translateX(0);
+  }
+
+  .offsidian-sidebar-scrim {
+    position: fixed;
+    inset: calc(56px + env(safe-area-inset-top, 0px)) 0 0;
+    z-index: 64;
+    border: 0;
+    background: rgba(0, 0, 0, 0.56);
+  }
+
+  .offsidian-sidebar-scrim.is-open {
+    display: block;
+  }
+
+  .offsidian-inspector {
+    top: calc(56px + env(safe-area-inset-top, 0px));
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .offsidian-inspector-scrim {
+    inset: calc(56px + env(safe-area-inset-top, 0px)) 0 calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .offsidian-document-column {
+    grid-template-rows: 38px minmax(0, 1fr);
+  }
+
+  .offsidian-tabbar {
+    height: 38px;
+  }
+
+  .offsidian-note-tab {
+    width: min(330px, 82vw);
+  }
+
+  .offsidian-document-shell {
+    padding: 15px 20px 65px;
+  }
+
+  .offsidian-mobile-nav {
+    position: relative;
+    z-index: 50;
+    display: grid;
+    grid-row: 3;
+    grid-template-columns: repeat(4, 1fr);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    border-top: 1px solid var(--os-line-strong);
+    background: #0b0b0c;
+  }
+
+  .offsidian-mobile-nav button {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 3px;
+    border: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    color: #77736f;
+    background: transparent;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .offsidian-mobile-nav button:active {
+    color: var(--os-orange-soft);
+    background: rgba(255, 106, 32, 0.05);
+  }
+
+  .offsidian-mobile-nav svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .offsidian-app.is-focus-mode .offsidian-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .offsidian-document-shell {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .offsidian-breadcrumbs > span,
+  .offsidian-breadcrumbs > svg:nth-of-type(2) {
+    display: none;
+  }
+
+  .offsidian-note-toolbar {
+    align-items: flex-start;
+  }
+
+  .offsidian-note-context {
+    flex-wrap: wrap;
+  }
+
+  .offsidian-note-context > span:nth-child(n + 3) {
+    display: none;
+  }
+
+  .offsidian-note-actions button span {
+    display: none;
+  }
+
+  .offsidian-note-actions button {
+    width: 33px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .offsidian-note-path {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .offsidian-markdown {
+    padding-top: 22px;
+    font-size: 0.94rem;
+    line-height: 1.72;
+  }
+
+  .offsidian-markdown h1 {
+    font-size: 2.08rem;
+  }
+
+  .offsidian-markdown h2 {
+    margin-top: 48px;
+    font-size: 1.48rem;
+  }
+
+  .offsidian-markdown h3 {
+    font-size: 1.12rem;
+  }
+
+  .offsidian-heading-anchor {
+    display: none;
+  }
+
+  .offsidian-callout {
+    padding: 12px 13px;
+  }
+
+  .offsidian-code-block {
+    width: calc(100vw - 32px);
+    margin-left: 0;
+  }
+
+  .offsidian-code-block pre {
+    padding: 15px;
+    font-size: 0.7rem;
+  }
+
+  .offsidian-dataview-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .offsidian-note-pagination {
+    grid-template-columns: 1fr;
+  }
+
+  .offsidian-note-pagination > span {
+    display: none;
+  }
+
+  .offsidian-modal-layer {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .offsidian-search-modal,
+  .offsidian-graph-modal {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .offsidian-search-input-row {
+    min-height: calc(58px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .offsidian-search-input-row > kbd {
+    display: none;
+  }
+
+  .offsidian-search-input-row > button {
+    display: grid;
+  }
+
+  .offsidian-search-result {
+    grid-template-columns: 33px minmax(0, 1fr);
+    padding: 9px 7px;
+  }
+
+  .offsidian-result-icon {
+    width: 33px;
+    height: 33px;
+  }
+
+  .offsidian-result-open,
+  .offsidian-result-copy > small {
+    display: none;
+  }
+
+  .offsidian-search-footer {
+    display: none;
+  }
+
+  .offsidian-search-results {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .offsidian-graph-header {
+    min-height: calc(82px + env(safe-area-inset-top, 0px));
+    padding-top: calc(13px + env(safe-area-inset-top, 0px));
+  }
+
+  .offsidian-graph-stage svg {
+    min-width: 760px;
+    transform: translateX(calc((100vw - 760px) / 2));
+  }
+
+  .offsidian-graph-footer {
+    display: grid;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .offsidian-graph-footer p {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offsidian-app *,
+  .offsidian-app *::before,
+  .offsidian-app *::after,
+  .offsidian-modal-layer,
+  .offsidian-search-modal,
+  .offsidian-graph-modal {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
