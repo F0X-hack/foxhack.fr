@@ -248,6 +248,12 @@ const checks: [string, boolean][] = [
   ],
   ['catalogue outils : catégorie NFC / RFID filtrée', toolsHtml.includes('NFC / RFID')],
   [
+    'catalogue outils : wordmark FoXhack en haut à gauche',
+    toolsHtml.includes('brand-mark brand-mark--wordmark tools-brand__wordmark') &&
+      !toolsHtml.includes('tools-brand__mark') &&
+      mfkey32Shell.includes('assets/mfkey32-mark.svg'),
+  ],
+  [
     'catalogue outils : plus de Revshell / CIDR / emplacements à venir',
     !toolsHtml.includes('Revshell') &&
       !/CIDR/i.test(toolsHtml) &&

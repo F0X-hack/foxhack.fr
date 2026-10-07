@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import BrandMark from '../components/icons/BrandMark'
 
 type ToolHeaderProps = {
   active?: 'catalog'
@@ -11,11 +12,10 @@ export default function ToolHeader({ active = 'catalog' }: ToolHeaderProps) {
       <header className="tools-header">
         <div className="tools-shell tools-header__inner">
           <a className="tools-brand" href="/" aria-label="FoXhack, accueil">
-            <span className="tools-brand__mark" aria-hidden="true">F<span>/</span></span>
-            <span className="tools-brand__wordmark">
-              <strong>FOXHACK</strong>
-              <small>SECURITY TOOLBOX</small>
-            </span>
+            {/* wordmark dessiné (/brand/foxhack-wordmark.svg en masque :
+                il suit la couleur du thème et reste net à toutes les tailles) */}
+            <BrandMark variant="wordmark" className="tools-brand__wordmark" />
+            <span className="tools-brand__caption">SECURITY TOOLBOX</span>
           </a>
 
           <nav className="tools-nav" aria-label="Navigation principale">

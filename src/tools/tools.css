@@ -67,43 +67,31 @@
   display: inline-flex;
   min-width: 210px;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.8rem;
   color: rgb(var(--bone));
   text-decoration: none;
 }
 
-.tools-brand__mark {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid rgb(var(--signal) / 0.6);
-  color: rgb(var(--signal-soft));
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: -0.12em;
-}
-
-.tools-brand__mark span {
-  color: rgb(var(--bone) / 0.58);
-}
-
+/* Wordmark FoXhack (/brand/foxhack-wordmark.svg appliqué en masque) :
+   la taille fixe la hauteur, la largeur suit le rapport 1290 / 384. */
 .tools-brand__wordmark {
-  display: grid;
-  gap: 0.2rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  width: auto;
+  height: 27px;
+  color: rgb(var(--bone));
+  transition: color 140ms ease;
 }
 
-.tools-brand__wordmark strong {
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+.tools-brand:hover .tools-brand__wordmark,
+.tools-brand:focus-visible .tools-brand__wordmark {
+  color: #ffffff;
 }
 
-.tools-brand__wordmark small {
+.tools-brand__caption {
   color: rgb(var(--dim));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.52rem;
   letter-spacing: 0.19em;
+  white-space: nowrap;
 }
 
 .tools-nav {
@@ -807,17 +795,13 @@
     gap: 0.5rem;
   }
 
-  .tools-brand__wordmark strong {
-    font-size: 0.67rem;
+  .tools-brand__wordmark {
+    height: 22px;
   }
 
-  .tools-brand__wordmark small {
-    font-size: 0.45rem;
-  }
-
-  .tools-brand__mark {
-    width: 31px;
-    height: 31px;
+  /* Sur petit écran, le wordmark suffit : la légende cède la place aux liens. */
+  .tools-brand__caption {
+    display: none;
   }
 
   .tools-nav {

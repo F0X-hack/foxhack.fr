@@ -264,7 +264,8 @@ const pool = new MfkeyPool(Math.min(4, navigator.hardwareConcurrency || 2));
 function buildShell() {
   const wordmark = el('img', {
     class: 'app-topbar__wordmark',
-    src: 'https://foxhack.fr/brand/foxhack-wordmark.svg',
+    /* Même origine que la page : le wordmark est servi par le site (public/brand/). */
+    src: '/brand/foxhack-wordmark.svg',
     alt: 'FoXhack',
     referrerpolicy: 'no-referrer',
   });
