@@ -12,6 +12,7 @@
     "dev:clean": "rm -rf node_modules/.vite && vite --host 0.0.0.0 --port 5173",
     "clean": "rm -rf dist dist-ssr node_modules/.vite",
     "check:scrollspy": "node scripts/check-scrollspy.mjs",
+    "check:url": "node scripts/check-section-url.mjs",
     "vault:index": "node scripts/build-offsidian.mjs",
     "check:emoji": "node scripts/strip-emoji.mjs --check",
     "check:offsidian": "tsx scripts/smoke-offsidian.tsx && tsx scripts/smoke-offsidian-dom.tsx",

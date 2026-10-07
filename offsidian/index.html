@@ -29,6 +29,40 @@
     <link rel="preload" as="fetch" crossorigin href="/offsidian/manifest.json" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-512.png" />
+    <!-- Filet de sécurité : ce bloc est en ligne exprès. Si le CSS du bundle
+         ne charge pas, c'est justement le moment où il doit rester lisible. -->
+    <style>
+      #offsidian-boot-error {
+        display: none;
+      }
+      .offsidian-boot-error #offsidian-boot-error {
+        display: block;
+        margin: 4rem auto;
+        max-width: 40rem;
+        padding: 0 1.25rem;
+        color: #ececed;
+        font: 1rem/1.65 ui-monospace, "SFMono-Regular", Consolas, monospace;
+      }
+      .offsidian-boot-error #offsidian-boot-error h2 {
+        margin: 0 0 0.75rem;
+        color: #ff6a20;
+        font-size: 1.35rem;
+        letter-spacing: 0.04em;
+      }
+      .offsidian-boot-error #offsidian-boot-error a,
+      .offsidian-boot-error #offsidian-boot-error button {
+        display: inline-block;
+        margin: 0.5rem 0.5rem 0 0;
+        padding: 0.55rem 0.95rem;
+        border: 1px solid #2a2a30;
+        background: #131316;
+        color: #ff8a4c;
+        font: inherit;
+        font-size: 0.9rem;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -49,6 +83,21 @@
   </head>
   <body class="offsidian-page">
     <div id="offsidian-root"></div>
+    <div id="offsidian-boot-error" role="alert">
+      <h2>OFFSIDIAN / VAULT NON AFFICHÉ</h2>
+      <p>
+        La page est chargée, mais le lecteur de notes ne s'est pas démarré : le
+        fichier JavaScript ou <code>/offsidian/manifest.json</code> n'a pas été
+        servi. Recharger suffit le plus souvent (le navigateur a gardé une
+        vieille copie de la page).
+      </p>
+      <p>
+        <button type="button" onclick="location.reload()">Recharger</button>
+        <a href="/offsidian/">/offsidian/</a>
+        <a href="/offsidian/vault/">Markdown brut</a>
+        <a href="/">Retour au lab</a>
+      </p>
+    </div>
     <noscript>
       <p style="max-width: 42rem; margin: 4rem auto; padding: 0 1.25rem; font: 1rem/1.6 system-ui, sans-serif">
         Offsidian est un lecteur de vault : il a besoin de JavaScript pour ouvrir les
@@ -56,6 +105,37 @@
         <a href="/offsidian/vault/">/offsidian/vault/</a>.
       </p>
     </noscript>
+    <script>
+      /* URL canonique : /offsidian/index.html → /offsidian/ */
+      if (/\/index\.html$/i.test(window.location.pathname)) {
+        window.history.replaceState({}, '', '/offsidian/' + window.location.search + window.location.hash)
+      }
+
+      /* Une page noire sans explication est impossible à diagnostiquer : si un
+         asset casse (404, MIME, cache périmé) ou que React ne monte pas, on
+         affiche le bloc ci-dessus à la place du vide. */
+      ;(function () {
+        function empty() {
+          var root = document.getElementById('offsidian-root')
+          return !root || !root.childElementCount
+        }
+        function show() {
+          /* React a monté, ou montera dans une milliseconde : on ne dit rien.
+             Après le montage, une image de note introuvable ne doit pas faire
+             croire à un lecteur cassé. */
+          if (!empty()) return
+          document.documentElement.classList.add('offsidian-boot-error')
+        }
+        window.addEventListener(
+          'error',
+          function (event) {
+            if (event.target && event.target !== window) show()
+          },
+          true,
+        )
+        window.setTimeout(show, 6000)
+      })()
+    </script>
     <script type="module" src="/src/offsidian-main.tsx"></script>
   </body>
 </html>
